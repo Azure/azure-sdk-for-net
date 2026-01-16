@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.That(volumeName, Is.EqualTo(volume.Id.Name));
             Assert.That(volume.Data.SizeGiB, Is.EqualTo(100));
             Assert.That(volume.Data.CreationData.CreateSource, Is.EqualTo(ElasticSanVolumeCreateOption.None));
-            Assert.IsNull(volume.Data.CreationData.SourceId);
+            Assert.That(volume.Data.CreationData.SourceId, Is.Null);
 
             ElasticSanVolumeResource volume2 = (await _collection.GetAsync(volumeName)).Value;
             Assert.That(volume.Id.Name, Is.EqualTo(volume2.Id.Name));
             Assert.That(volume.Data.SizeGiB, Is.EqualTo(100));
             Assert.That(volume.Data.CreationData.CreateSource, Is.EqualTo(ElasticSanVolumeCreateOption.None));
-            Assert.IsNull(volume.Data.CreationData.SourceId);
+            Assert.That(volume.Data.CreationData.SourceId, Is.Null);
 
             string volumeName2 = Recording.GenerateAssetName("testvolume-");
             _ = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName2, volumeData)).Value;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
 
             Assert.That((bool)await _collection.ExistsAsync(volumeName), Is.True);
             Assert.That((bool)await _collection.ExistsAsync(volumeName + "111"), Is.False);

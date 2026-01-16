@@ -465,7 +465,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(content.Text, Is.Not.Null.Or.Empty);
 
         ChatMessageContext context = chatCompletion.GetMessageContext();
-        Assert.IsNotNull(context);
+        Assert.That(context, Is.Not.Null);
         Assert.That(context.Intent, Is.Not.Null.Or.Empty);
         Assert.That(context.Citations, Has.Count.GreaterThan(0));
         Assert.That(context.Citations[0].FilePath, Is.Not.Null.Or.Empty);
@@ -682,7 +682,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         ChatClient client = GetTestClient();
 
         AsyncCollectionResult<StreamingChatCompletionUpdate> chatUpdates = client.CompleteChatStreamingAsync(messages, options);
-        Assert.IsNotNull(chatUpdates);
+        Assert.That(chatUpdates, Is.Not.Null);
 
         await foreach (StreamingChatCompletionUpdate update in chatUpdates)
         {

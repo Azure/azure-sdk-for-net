@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string accountFilterName = Recording.GenerateAssetName("accountFilter");
             var mediaAsset = await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
-            Assert.IsNotNull(mediaAsset);
+            Assert.That(mediaAsset, Is.Not.Null);
             Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(accountFilterName));
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Tests
             string accountFilterName = Recording.GenerateAssetName("accountFilter");
             await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             var mediaAsset = await accountFilterCollection.GetAsync(accountFilterName);
-            Assert.IsNotNull(mediaAsset);
+            Assert.That(mediaAsset, Is.Not.Null);
             Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(accountFilterName));
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Tests
             string accountFilterName = Recording.GenerateAssetName("accountFilter");
             await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             var list = await accountFilterCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

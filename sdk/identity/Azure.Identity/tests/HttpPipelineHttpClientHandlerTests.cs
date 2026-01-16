@@ -75,14 +75,14 @@ namespace Azure.Core.Tests
             {
                 Assert.That(result.Headers.TryGetValues(expHeader.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(expHeader.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(expHeader.Value));
             }
 
             foreach (var expHeader in request.Content.Headers)
             {
                 Assert.That(result.Headers.TryGetValues(expHeader.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(expHeader.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(expHeader.Value));
             }
 
             // assert no additional headers have been added
@@ -121,14 +121,14 @@ namespace Azure.Core.Tests
             {
                 Assert.That(response.Headers.TryGetValues(header.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(header.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(header.Value));
             }
 
             foreach (var header in httpResponseMessage.Content.Headers)
             {
                 Assert.That(response.Headers.TryGetValues(header.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(header.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(header.Value));
             }
 
             // assert all headers have been accounted for

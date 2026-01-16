@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             var collection = managedInstance.GetManagedInstancePrivateLinks();
 
             // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             string privateLinkName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist

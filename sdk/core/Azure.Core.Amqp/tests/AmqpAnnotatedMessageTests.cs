@@ -76,7 +76,7 @@ namespace Azure.Core.Amqp.Tests
 
             message.Header.DeliveryCount = 99;
             Assert.That(message.HasSection(AmqpMessageSection.Header), Is.True);
-            Assert.NotNull(message.Header);
+            Assert.That(message.Header, Is.Not.Null);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.Core.Amqp.Tests
 
             message.DeliveryAnnotations.Add("test", new object());
             Assert.That(message.HasSection(AmqpMessageSection.DeliveryAnnotations), Is.True);
-            Assert.NotNull(message.DeliveryAnnotations);
+            Assert.That(message.DeliveryAnnotations, Is.Not.Null);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.Core.Amqp.Tests
 
             message.MessageAnnotations.Add("test", new object());
             Assert.That(message.HasSection(AmqpMessageSection.MessageAnnotations), Is.True);
-            Assert.NotNull(message.MessageAnnotations);
+            Assert.That(message.MessageAnnotations, Is.Not.Null);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace Azure.Core.Amqp.Tests
 
             message.Properties.ContentType = "test/unit";
             Assert.That(message.HasSection(AmqpMessageSection.Properties), Is.True);
-            Assert.NotNull(message.Properties);
+            Assert.That(message.Properties, Is.Not.Null);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.Core.Amqp.Tests
 
             message.ApplicationProperties.Add("test", new object());
             Assert.That(message.HasSection(AmqpMessageSection.ApplicationProperties), Is.True);
-            Assert.NotNull(message.ApplicationProperties);
+            Assert.That(message.ApplicationProperties, Is.Not.Null);
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.Core.Amqp.Tests
 
             message.Footer.Add("test", new object());
             Assert.That(message.HasSection(AmqpMessageSection.Footer), Is.True);
-            Assert.NotNull(message.Footer);
+            Assert.That(message.Footer, Is.Not.Null);
         }
 
         [Test]

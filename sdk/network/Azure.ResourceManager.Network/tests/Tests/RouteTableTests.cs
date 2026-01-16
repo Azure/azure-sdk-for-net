@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests
             listRouteTableResponseAP = routeTableCollection.GetAllAsync();
             listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
 
-            Assert.IsEmpty(listRouteTableResponse);
+            Assert.That(listRouteTableResponse, Is.Empty);
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify delete
             AsyncPageable<RouteTableResource> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
             List<RouteTableResource> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listRouteTableResponse);
+            Assert.That(listRouteTableResponse, Is.Empty);
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
 
             // Verify that the subnet reference is null
-            Assert.IsEmpty(getRouteTableResponse.Value.Data.Subnets);
+            Assert.That(getRouteTableResponse.Value.Data.Subnets, Is.Empty);
 
             // Create Vnet with subnet and add a route table
             string vnetName = Recording.GenerateAssetName("azsmnet");

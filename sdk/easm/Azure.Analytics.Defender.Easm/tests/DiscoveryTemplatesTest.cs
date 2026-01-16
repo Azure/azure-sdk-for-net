@@ -34,8 +34,8 @@ namespace Azure.Analytics.Defender.Easm.Tests
         {
             var response =  await client.GetDiscoveryTemplateAsync(TemplateId);
             DiscoveryTemplate discoTemplate = response.Value;
-            Assert.IsNotNull(discoTemplate.Name);
-            Assert.IsNotNull(discoTemplate.Id);
+            Assert.That(discoTemplate.Name, Is.Not.Null);
+            Assert.That(discoTemplate.Id, Is.Not.Null);
         }
     }
 }

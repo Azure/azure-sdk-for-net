@@ -373,7 +373,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             var ex = Assert.Throws<InvalidOperationException>(() => jp.Set("$.trailing."u8, 5));
-            StringAssert.Contains("property", ex!.Message.ToLowerInvariant());
+            Assert.That(ex!.Message.ToLowerInvariant(), Does.Contain("property"));
         }
 
         [Test]
@@ -493,7 +493,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.That(value.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
-            CollectionAssert.AreEqual("Line1\nLine2\tTabbed\"Quote\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+            Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""u8.ToArray()).AsCollection);
 
             // EncodedValue should have the exact byte array we passed in
             Assert.That(jp.TryGetEncodedValue("$.text"u8, out var encodedValue), Is.True);
@@ -518,7 +518,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.That(value.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
-            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+            Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()).AsCollection);
 
             // EncodedValue should have the exact byte array we passed in
             Assert.That(jp.TryGetEncodedValue("$.text"u8, out var encodedValue), Is.True);
@@ -542,7 +542,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.That(value.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
-            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+            Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()).AsCollection);
 
             // EncodedValue should have the exact byte array we passed in
             Assert.That(jp.TryGetEncodedValue("$.text"u8, out var encodedValue), Is.True);

@@ -40,8 +40,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.That(sasQueryParameters.Version, Is.EqualTo(SasQueryParametersInternals.DefaultSasVersionInternal));
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.That(sasQueryParameters.Services, Is.Null);
+            Assert.That(sasQueryParameters.ResourceTypes, Is.Null);
             Assert.That(sasQueryParameters.Protocol, Is.EqualTo(constants.Sas.Protocol));
             Assert.That(sasQueryParameters.StartsOn, Is.EqualTo(constants.Sas.StartTime));
             Assert.That(sasQueryParameters.ExpiresOn, Is.EqualTo(constants.Sas.ExpiryTime));
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(sasQueryParameters.Permissions, Is.EqualTo(Permissions));
             Assert.That(sasQueryParameters.Signature, Is.EqualTo(signature));
             AssertResponseHeaders(constants, sasQueryParameters);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -214,7 +214,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(fileUriBuilder.ShareName, Is.EqualTo("sharename"));
             Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
             Assert.That(fileUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
             Assert.That(fileUriBuilder.Query, Is.Empty);
             Assert.That(fileUriBuilder.Port, Is.EqualTo(10000));
 
@@ -239,7 +239,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(fileUriBuilder.ShareName, Is.EqualTo("sharename"));
             Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.EqualTo("filename"));
             Assert.That(fileUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
             Assert.That(fileUriBuilder.Query, Is.Empty);
             Assert.That(fileUriBuilder.Port, Is.EqualTo(443));
 
@@ -304,8 +304,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.That(sasQueryParameters.Version, Is.EqualTo(SasQueryParametersInternals.DefaultSasVersionInternal));
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.That(sasQueryParameters.Services, Is.Null);
+            Assert.That(sasQueryParameters.ResourceTypes, Is.Null);
             Assert.That(sasQueryParameters.Protocol, Is.EqualTo(constants.Sas.Protocol));
             Assert.That(sasQueryParameters.StartsOn, Is.EqualTo(constants.Sas.StartTime));
             Assert.That(sasQueryParameters.ExpiresOn, Is.EqualTo(constants.Sas.ExpiryTime));
@@ -326,7 +326,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(sasQueryParameters.Permissions, Is.EqualTo(Permissions));
             Assert.That(sasQueryParameters.DelegatedUserObjectId, Is.EqualTo(constants.Sas.DelegatedObjectId));
             Assert.That(sasQueryParameters.Signature, Is.EqualTo(signature));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         private ShareSasBuilder BuildFileSasBuilder(

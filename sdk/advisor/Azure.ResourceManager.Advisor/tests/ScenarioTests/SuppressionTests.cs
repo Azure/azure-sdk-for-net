@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Advisor.Tests
             // get recommendations, we should get a non-empty list
             var collection = Client.GetResourceRecommendationBases(DefaultSubscription.Id);
             var recs = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(recs.Count, 1);
+            Assert.That(recs.Count, Is.GreaterThanOrEqualTo(1));
 
             ResourceRecommendationBaseResource recommendation = null;
 
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Advisor.Tests
                 Assert.That(string.IsNullOrWhiteSpace(rec.Data.Id), Is.False);
                 Assert.That(string.IsNullOrWhiteSpace(rec.Data.Name), Is.False);
                 Assert.That(string.IsNullOrWhiteSpace(rec.Data.RecommendationTypeId), Is.False);
-                Assert.NotNull(rec.Data.Category);
-                Assert.NotNull(rec.Data.Impact);
-                Assert.NotNull(rec.Data.ShortDescription);
+                Assert.That(rec.Data.Category, Is.Not.Null);
+                Assert.That(rec.Data.Impact, Is.Not.Null);
+                Assert.That(rec.Data.ShortDescription, Is.Not.Null);
                 Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Problem), Is.False);
                 Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Solution), Is.False);
                 if (!string.IsNullOrWhiteSpace(rec.Data.ImpactedValue))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Advisor.Tests
             }
 
             // at least one recommendation must have ImpactedValue
-            Assert.NotNull(recommendation);
+            Assert.That(recommendation, Is.Not.Null);
 
             // we should be able to fetch the recommendation by name
             var output = (await collection.GetAsync(recommendation.Data.Name)).Value;

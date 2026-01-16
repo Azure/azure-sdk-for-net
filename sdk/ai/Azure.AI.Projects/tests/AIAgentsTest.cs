@@ -38,7 +38,7 @@ public class AIAgentsTest : ProjectsClientTestBase
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
         );
-        Assert.NotNull(agent.Id);
+        Assert.That(agent.Id, Is.Not.Null);
         Assert.That(modelDeploymentName, Is.EqualTo(agent.Model));
         Assert.That(agent.Name, Is.EqualTo("Math Tutor"));
         Assert.That(agent.Instructions, Is.EqualTo("You are a personal math tutor. Write and run code to answer math questions."));

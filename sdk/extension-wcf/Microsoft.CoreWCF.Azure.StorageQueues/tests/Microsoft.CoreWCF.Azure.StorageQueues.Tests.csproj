@@ -25,7 +25,7 @@
     <PackageReference Include="CoreWCF.Queue" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
+        <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
 

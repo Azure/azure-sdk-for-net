@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private void ValidateEventGridTopic(EventGridTopicResource topic, string expectedName)
         {
-            Assert.IsNotNull(topic);
-            Assert.IsNotNull(topic.Data);
-            Assert.IsNotNull(topic.Data.Id);
+            Assert.That(topic, Is.Not.Null);
+            Assert.That(topic.Data, Is.Not.Null);
+            Assert.That(topic.Data.Id, Is.Not.Null);
             Assert.That(topic.Data.Name, Is.EqualTo(expectedName));
             Assert.That(topic.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/topics"));
             Assert.That(topic.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
@@ -75,24 +75,24 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // AddTag
             var addTagResult = await topic.AddTagAsync(StickerTagKey, StickerTagValue);
-            Assert.IsNotNull(addTagResult);
-            Assert.IsNotNull(addTagResult.Value);
+            Assert.That(addTagResult, Is.Not.Null);
+            Assert.That(addTagResult.Value, Is.Not.Null);
             Assert.That(addTagResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
             Assert.That(addTagResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
 
             // SetTags
             var tags = new Dictionary<string, string> { { EnvTag, TestTag }, { TeamTagKey, TeamTagValue }, { StickerTagKey, StickerTagValue } };
             var setTagsResult = await topic.SetTagsAsync(tags);
-            Assert.IsNotNull(setTagsResult);
-            Assert.IsNotNull(setTagsResult.Value);
+            Assert.That(setTagsResult, Is.Not.Null);
+            Assert.That(setTagsResult.Value, Is.Not.Null);
             Assert.That(setTagsResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
             Assert.That(setTagsResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
 
             // RemoveTag
             await topic.AddTagAsync(RemoveStickerTagKey, RemoveStickerTagValue);
             var removeTagResult = await topic.RemoveTagAsync(RemoveStickerTagKey);
-            Assert.IsNotNull(removeTagResult);
-            Assert.IsNotNull(removeTagResult.Value);
+            Assert.That(removeTagResult, Is.Not.Null);
+            Assert.That(removeTagResult.Value, Is.Not.Null);
             Assert.That(removeTagResult.Value.Data.Tags.ContainsKey(RemoveStickerTagKey), Is.False);
 
             // Exists
@@ -101,23 +101,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // GetAll
             var topicsInResourceGroup = await _eventGridTopicCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(topicsInResourceGroup);
+            Assert.That(topicsInResourceGroup, Is.Not.Null);
             Assert.That(topicsInResourceGroup.Any(t => t.Data.Name == topicName), Is.True);
             var topicsInSubscription = await DefaultSubscription.GetEventGridTopicsAsync().ToEnumerableAsync();
-            Assert.NotNull(topicsInSubscription);
+            Assert.That(topicsInSubscription, Is.Not.Null);
             Assert.That(topicsInSubscription.Any(t => t.Data.Name == topicName), Is.True);
 
             // ListSharedAccessKeys
             var keys = await topic.GetSharedAccessKeysAsync();
-            Assert.IsNotNull(keys);
+            Assert.That(keys, Is.Not.Null);
 
             // RegenerateSharedAccessKey
             var key = await topic.RegenerateKeyAsync(WaitUntil.Completed, new TopicRegenerateKeyContent("key1"));
-            Assert.IsNotNull(key);
+            Assert.That(key, Is.Not.Null);
 
             // GetAsync
             var getAsyncResult = await topic.GetAsync();
-            Assert.IsNotNull(getAsyncResult);
+            Assert.That(getAsyncResult, Is.Not.Null);
             Assert.That(getAsyncResult.Value.Data.Name, Is.EqualTo(topic.Data.Name));
 
             // Delete
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             ValidateEventGridTopic(topic, topicName);
             // get private link resources
             var linkResource = await topic.GetEventGridTopicPrivateLinkResourceAsync("topic");
-            Assert.IsNotNull(linkResource);
+            Assert.That(linkResource, Is.Not.Null);
             // list all private link resources
             System.Collections.Generic.List<EventGridTopicPrivateLinkResource> list = await topic.GetEventGridTopicPrivateLinkResources().ToEnumerableAsync();
-            Assert.NotNull(list);
+            Assert.That(list, Is.Not.Null);
 
             await topic.DeleteAsync(WaitUntil.Completed);
         }

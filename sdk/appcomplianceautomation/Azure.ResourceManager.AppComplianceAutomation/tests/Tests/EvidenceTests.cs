@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             // download evidence current ppe cannot download evidence
             EvidenceFileDownloadRequestContent content = new EvidenceFileDownloadRequestContent();
             EvidenceFileDownloadResult download = await appComplianceReportEvidence.DownloadAsync(content);
-            Assert.IsNotNull(download);
+            Assert.That(download, Is.Not.Null);
 
             // Delete evidence
             // Delete evidence: send request

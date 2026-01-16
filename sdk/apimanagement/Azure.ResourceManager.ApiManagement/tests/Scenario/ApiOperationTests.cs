@@ -47,18 +47,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await CreateApiServiceAsync();
             var list = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
             var api = list.Single();
 
             var collection = api.GetApiOperations();
             var operations = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(operations);
-            Assert.GreaterOrEqual(operations.Count, 1);
+            Assert.That(operations, Is.Not.Null);
+            Assert.That(operations.Count, Is.GreaterThanOrEqualTo(1));
 
             // Get first operation
             var firstOperation = operations.First();
             var getResponse = (await collection.GetAsync(firstOperation.Data.Name)).Value;
-            Assert.NotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Data.Name, Is.EqualTo(firstOperation.Data.Name));
             Assert.That(getResponse.Data.Method, Is.EqualTo(firstOperation.Data.Method));
             Assert.That(getResponse.Data.UriTemplate, Is.EqualTo(firstOperation.Data.UriTemplate));
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
 
             var createResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, newOperationId, newOperation)).Value;
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
             var apiOperationResponse = (await collection.GetAsync(newOperationId)).Value;
-            Assert.NotNull(apiOperationResponse);
+            Assert.That(apiOperationResponse, Is.Not.Null);
             Assert.That(apiOperationResponse.Data.Name, Is.EqualTo(newOperationId));
 
             // Get the Api Operation Etag
             var operationTag = (await apiOperationResponse.GetEntityTagAsync()).Value;
-            Assert.NotNull(operationTag);
+            Assert.That(operationTag, Is.Not.Null);
 
             // Patch the operation
             string patchedName = Recording.GenerateAssetName("patchedName");
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Method = patchedMethod,
             };
             getResponse = (await apiOperationResponse.UpdateAsync(ETag.All, patchOperation)).Value;
-            Assert.NotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(patchedMethod, Is.EqualTo(getResponse.Data.Method));
 
             // Delete the operation

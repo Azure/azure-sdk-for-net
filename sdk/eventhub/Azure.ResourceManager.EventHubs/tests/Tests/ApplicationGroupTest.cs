@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             };
             applicationgroupData.Policies.Add(new EventHubsThrottlingPolicy("Throttlingpolicy3", 3451, "IncomingBytes"));
             EventHubsApplicationGroupResource applicationgroup = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName,applicationgroupData)).Value;
-            Assert.IsNotNull(applicationgroup);
+            Assert.That(applicationgroup, Is.Not.Null);
             Assert.That(applicationGroupName, Is.EqualTo(applicationgroup.Id.Name));
             Assert.That(applicationgroupData.IsEnabled, Is.EqualTo(applicationgroup.Data.IsEnabled));
             Assert.That(applicationgroupData.ClientAppGroupIdentifier, Is.EqualTo(applicationgroup.Data.ClientAppGroupIdentifier));

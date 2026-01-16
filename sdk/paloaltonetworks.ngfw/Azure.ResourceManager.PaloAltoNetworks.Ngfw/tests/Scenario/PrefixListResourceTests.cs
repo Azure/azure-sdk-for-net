@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void Data()
         {
             Assert.That(PrefixListResource.HasData, Is.True);
-            Assert.NotNull(PrefixListResource.Data);
+            Assert.That(PrefixListResource.Data, Is.Not.Null);
         }
 
         [TestCase]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackPrefixResource resource = await LocalRulestackResource.GetLocalRulestackPrefixAsync("dotnetSdkTest0-prefixList");
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             Assert.That(PrefixListResource.Data.Name, Is.EqualTo(resource.Data.Name));
         }
     }

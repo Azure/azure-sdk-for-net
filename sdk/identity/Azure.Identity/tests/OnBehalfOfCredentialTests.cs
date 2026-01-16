@@ -104,7 +104,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion);
             // Assert
-            Assert.NotNull(cred.Client._certificateProvider);
+            Assert.That(cred.Client._certificateProvider, Is.Not.Null);
 
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
@@ -113,7 +113,7 @@ namespace Azure.Identity.Tests
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null, new OnBehalfOfCredentialOptions()));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions());
             // Assert
-            Assert.NotNull(cred.Client._certificateProvider);
+            Assert.That(cred.Client._certificateProvider, Is.Not.Null);
         }
 
         [Test]

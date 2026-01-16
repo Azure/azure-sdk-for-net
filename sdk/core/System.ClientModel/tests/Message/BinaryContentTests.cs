@@ -27,7 +27,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         BinaryData data = BinaryData.FromString(value);
         using BinaryContent content = BinaryContent.Create(data);
 
-        Assert.IsNull(content.MediaType);
+        Assert.That(content.MediaType, Is.Null);
         Assert.That(content.TryComputeLength(out long length), Is.True);
         Assert.That(length, Is.EqualTo(value.Length));
     }
@@ -173,7 +173,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         Assert.AreEqual("application/json", content.MediaType);
         Assert.That(content.TryComputeLength(out long length), Is.True);
-        Assert.Greater(length, 0);
+        Assert.That(length, Is.GreaterThan(0));
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -193,7 +193,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         Assert.AreEqual("application/json", content.MediaType);
         Assert.That(content.TryComputeLength(out long length), Is.True);
-        Assert.Greater(length, 0);
+        Assert.That(length, Is.GreaterThan(0));
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -258,7 +258,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         // Content should have JSON media type, while regular Create should not
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsNull(expectedContent.MediaType);
+        Assert.That(expectedContent.MediaType, Is.Null);
     }
 
     [Test]

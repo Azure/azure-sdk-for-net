@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Logic.Tests
             Assert.That(actual.Data.Name, Is.EqualTo(DefaultTriggerName));
             Assert.That(actual.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Assert.That(actual.Data.State.ToString(), Is.EqualTo("Enabled"));
-            Assert.NotNull(actual.Data.CreatedOn);
-            Assert.NotNull(actual.Data.ChangedOn);
+            Assert.That(actual.Data.CreatedOn, Is.Not.Null);
+            Assert.That(actual.Data.ChangedOn, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task Get()
         {
             var trigger = await _triggerCollection.GetAsync(DefaultTriggerName);
-            Assert.IsNotNull(trigger);
+            Assert.That(trigger, Is.Not.Null);
             ValidateTrigger(trigger.Value);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task GetAll()
         {
             var list = await _triggerCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateTrigger(list.FirstOrDefault());
         }
     }

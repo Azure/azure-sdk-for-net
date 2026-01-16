@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Tests
             var listResult = await _subscription.GetAllPredefinedTagsAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.TagName == _tagName).FirstOrDefault();
             var expectValue = expectTag.Values.Where(x => x.TagValue == "testValue").FirstOrDefault();
-            Assert.IsNull(expectValue);
+            Assert.That(expectValue, Is.Null);
         }
 
         [TestCase]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Tests
             await _subscription.DeletePredefinedTagAsync(_tagName).ConfigureAwait(false);
             var listResult = await _subscription.GetAllPredefinedTagsAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.TagName.Equals(_tagName)).FirstOrDefault();
-            Assert.IsNull(expectTag);
+            Assert.That(expectTag, Is.Null);
         }
     }
 }

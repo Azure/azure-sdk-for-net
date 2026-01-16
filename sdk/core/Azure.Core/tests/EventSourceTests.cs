@@ -65,10 +65,10 @@ namespace Azure.Core.Tests
             Type eventSourceType = typeof(AzureCoreEventSource);
 
             // Assert
-            Assert.NotNull(eventSourceType);
+            Assert.That(eventSourceType, Is.Not.Null);
             Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Core"));
             Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("44cbc7c6-6776-5f3c-36c1-75cd3ef19ea9")));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.That(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"), Is.Not.Empty);
         }
 
         [Test]
@@ -99,28 +99,28 @@ namespace Azure.Core.Tests
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             Assert.That(e.GetProperty<string>("uri"), Is.EqualTo("https://contoso.a.io/api-version=5"));
             Assert.That(e.GetProperty<string>("method"), Is.EqualTo("GET"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Date:3/26/2019{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Header:Value{Environment.NewLine}"));
             Assert.That(e.GetProperty<string>("clientAssembly"), Is.EqualTo("Test-SDK"));
 
             e = _listener.SingleEventById(RequestContentEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
             Assert.That(e.EventName, Is.EqualTo("RequestContent"));
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
-            CollectionAssert.AreEqual(new byte[] { 1, 2, 3, 4, 5 }, e.GetProperty<byte[]>("content"));
+            Assert.That(e.GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 1, 2, 3, 4, 5 }).AsCollection);
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
             Assert.That(e.EventName, Is.EqualTo("Response"));
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             Assert.That(e.GetProperty<int>("status"), Is.EqualTo(200));
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
 
             e = _listener.SingleEventById(ResponseContentEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
             Assert.That(e.EventName, Is.EqualTo("ResponseContent"));
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
-            CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
+            Assert.That(e.GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 6, 7, 8, 9, 0 }).AsCollection);
         }
 
         [Test]
@@ -226,7 +226,7 @@ namespace Azure.Core.Tests
             Assert.That(e.EventName, Is.EqualTo("ErrorResponse"));
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             Assert.That(e.GetProperty<int>("status"), Is.EqualTo(500));
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
 
             e = _listener.SingleEventById(ErrorResponseContentEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
@@ -575,9 +575,9 @@ namespace Azure.Core.Tests
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             Assert.That(e.GetProperty<string>("uri"), Is.EqualTo("https://contoso.a.io/?api-version=5&secret=REDACTED"));
             Assert.That(e.GetProperty<string>("method"), Is.EqualTo("GET"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Date:3/26/2019{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Header:Value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Custom-Header:REDACTED{Environment.NewLine}"));
             Assert.That(e.GetProperty<string>("clientAssembly"), Is.EqualTo("Test-SDK"));
 
             e = _listener.SingleEventById(ResponseEvent);
@@ -585,8 +585,8 @@ namespace Azure.Core.Tests
             Assert.That(e.EventName, Is.EqualTo("Response"));
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             Assert.That(e.GetProperty<int>("status"), Is.EqualTo(200));
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Response-Header:REDACTED{Environment.NewLine}"));
         }
 
         [Test]
@@ -619,9 +619,9 @@ namespace Azure.Core.Tests
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             Assert.That(e.GetProperty<string>("uri"), Is.EqualTo("https://contoso.a.io/?api-version=5&secret=123"));
             Assert.That(e.GetProperty<string>("method"), Is.EqualTo("GET"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Date:3/26/2019{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Header:Value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Custom-Header:Value{Environment.NewLine}"));
             Assert.That(e.GetProperty<string>("clientAssembly"), Is.EqualTo("Test-SDK"));
 
             e = _listener.SingleEventById(ResponseEvent);
@@ -629,8 +629,8 @@ namespace Azure.Core.Tests
             Assert.That(e.EventName, Is.EqualTo("Response"));
             Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             Assert.That(e.GetProperty<int>("status"), Is.EqualTo(200));
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Response-Header:Very secret{Environment.NewLine}"));
         }
 
         private async Task<Response> SendRequest(bool isSeekable, bool isError, Action<MockResponse> setupRequest = null, int maxLength = int.MaxValue)

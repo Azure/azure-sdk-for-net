@@ -71,7 +71,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             // Assert
             Assert.That(client.AccountId, Is.EqualTo(accountId));
             Assert.That(client.AccountDomain, Is.EqualTo(accountDomain));
-            Assert.NotNull(client.SupportedAssetFileTypes);
+            Assert.That(client.SupportedAssetFileTypes, Is.Not.Null);
 
             // Act and assert
 

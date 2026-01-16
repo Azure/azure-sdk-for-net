@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.Storage.Tests
 
         public static void VerifyAccountProperties(StorageAccountResource account, bool useDefaults)
         {
-            Assert.NotNull(account);
-            Assert.NotNull(account.Id);
-            Assert.NotNull(account.Id.Name);
-            Assert.NotNull(account.Data.Location);
-            Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.CreatedOn);
-            Assert.NotNull(account.Data.Sku);
-            Assert.NotNull(account.Data.Sku.Name);
-            Assert.NotNull(account.Data.Sku.Tier);
-            Assert.NotNull(account.Data.PrimaryEndpoints);
+            Assert.That(account, Is.Not.Null);
+            Assert.That(account.Id, Is.Not.Null);
+            Assert.That(account.Id.Name, Is.Not.Null);
+            Assert.That(account.Data.Location, Is.Not.Null);
+            Assert.That(account.Data, Is.Not.Null);
+            Assert.That(account.Data.CreatedOn, Is.Not.Null);
+            Assert.That(account.Data.Sku, Is.Not.Null);
+            Assert.That(account.Data.Sku.Name, Is.Not.Null);
+            Assert.That(account.Data.Sku.Tier, Is.Not.Null);
+            Assert.That(account.Data.PrimaryEndpoints, Is.Not.Null);
 
             if (useDefaults)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 Assert.That(account.Data.Sku.Tier, Is.EqualTo(StorageSkuTier.Standard));
                 Assert.That(account.Data.Kind, Is.EqualTo(DefaultKindStorage));
 
-                Assert.NotNull(account.Data.Tags);
+                Assert.That(account.Data.Tags, Is.Not.Null);
                 Assert.That(account.Data.Tags.Count, Is.EqualTo(2));
                 Assert.That(account.Data.Tags["key1"], Is.EqualTo("value1"));
                 Assert.That(account.Data.Tags["key2"], Is.EqualTo("value2"));

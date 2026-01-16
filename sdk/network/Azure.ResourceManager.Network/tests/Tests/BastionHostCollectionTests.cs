@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task CreateOrUpdate()
         {
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
-            Assert.IsNotNull(bastionHost.Data);
+            Assert.That(bastionHost.Data, Is.Not.Null);
             Assert.That(bastionHost.Data.Name, Is.EqualTo(_bastionName));
             Assert.That(bastionHost.Data.Location, Is.EqualTo(AzureLocation.WestUS2));
             Assert.That(bastionHost.Data.Tags.Count, Is.EqualTo(0));
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
             var bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
-            Assert.IsNotNull(bastion.Value.Data);
+            Assert.That(bastion.Value.Data, Is.Not.Null);
             Assert.That(bastion.Value.Data.Name, Is.EqualTo(_bastionName));
             Assert.That(bastion.Value.Data.Location, Is.EqualTo(AzureLocation.WestUS2));
             Assert.That(bastion.Value.Data.Tags.Count, Is.EqualTo(0));
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Tests
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
             await bastionHost.DeleteAsync(WaitUntil.Completed);
             List<BastionHostResource> bastionList = await _resourceGroup.GetBastionHosts().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(bastionList);
+            Assert.That(bastionList, Is.Empty);
         }
     }
 }

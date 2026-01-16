@@ -16,13 +16,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         public void CovertToListOfPointFReturnsEmptyWhenCoordinatesIsNull()
         {
-            Assert.IsEmpty(ClientCommon.ConvertToListOfPointF(null));
+            Assert.That(ClientCommon.ConvertToListOfPointF(null), Is.Empty);
         }
 
         [Test]
         public void CovertToListOfPointFReturnsEmptyWhenCoordinatesIsEmpty()
         {
-            Assert.IsEmpty(ClientCommon.ConvertToListOfPointF(Array.Empty<float>()));
+            Assert.That(ClientCommon.ConvertToListOfPointF(Array.Empty<float>()), Is.Empty);
         }
 
         [Test]

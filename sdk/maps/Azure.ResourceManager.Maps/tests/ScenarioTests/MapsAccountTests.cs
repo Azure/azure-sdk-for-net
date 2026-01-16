@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Maps.Tests
 
             var accounts = await DefaultSubscription.GetMapsAccountsAsync().ToEnumerableAsync();
 
-            Assert.GreaterOrEqual(accounts.Count, 2);
+            Assert.That(accounts.Count, Is.GreaterThanOrEqualTo(2));
 
             var account1 = accounts.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName1.Data.Name));
@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.Maps.Tests
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
-            Assert.NotNull(keys);
+            Assert.That(keys, Is.Not.Null);
 
             // Validate Key1
-            Assert.NotNull(keys.PrimaryKey);
+            Assert.That(keys.PrimaryKey, Is.Not.Null);
 
             // Validate Key2
-            Assert.NotNull(keys.SecondaryKey);
+            Assert.That(keys.SecondaryKey, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.Maps.Tests
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
-            Assert.NotNull(keys);
+            Assert.That(keys, Is.Not.Null);
             var key2 = keys.SecondaryKey;
-            Assert.NotNull(key2);
+            Assert.That(key2, Is.Not.Null);
 
             // Regenerate keys and verify that keys change
             var regenKeys = (await newAccount.RegenerateKeysAsync(new MapsKeySpecification(MapsKeyType.Secondary))).Value;
             var key2Regen = regenKeys.SecondaryKey;
-            Assert.NotNull(key2Regen);
+            Assert.That(key2Regen, Is.Not.Null);
 
             // Validate key was regenerated
             if (Mode != RecordedTestMode.Playback)

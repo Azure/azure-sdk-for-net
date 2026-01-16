@@ -93,12 +93,12 @@ public class StreamedCollectionTests
         StreamedCollectionClient client = new();
         StreamedValueCollectionResult? values = client.GetValues() as StreamedValueCollectionResult;
 
-        Assert.IsNotNull(values);
+        Assert.That(values, Is.Not.Null);
 
         ClientResult page = values!.GetRawPages().First();
         MockStreamedResponse? response = page.GetRawResponse() as MockStreamedResponse;
 
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
         Assert.That(response?.IsDisposed, Is.False);
 
         int count = 0;
@@ -133,12 +133,12 @@ public class StreamedCollectionTests
         StreamedCollectionClient client = new();
         AsyncStreamedValueCollectionResult? values = client.GetValuesAsync() as AsyncStreamedValueCollectionResult;
 
-        Assert.IsNotNull(values);
+        Assert.That(values, Is.Not.Null);
 
         ClientResult page = await values!.GetRawPagesAsync().FirstAsync();
         MockStreamedResponse? response = page.GetRawResponse() as MockStreamedResponse;
 
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
         Assert.That(response?.IsDisposed, Is.False);
 
         int count = 0;

@@ -89,22 +89,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             Assert.That(analyzeResult.ModelId, Is.EqualTo(expectedClassifierId));
 
-            Assert.IsEmpty(analyzeResult.Content);
-            Assert.IsEmpty(analyzeResult.Paragraphs);
-            Assert.IsEmpty(analyzeResult.Tables);
-            Assert.IsEmpty(analyzeResult.KeyValuePairs);
-            Assert.IsEmpty(analyzeResult.Styles);
-            Assert.IsEmpty(analyzeResult.Languages);
+            Assert.That(analyzeResult.Content, Is.Empty);
+            Assert.That(analyzeResult.Paragraphs, Is.Empty);
+            Assert.That(analyzeResult.Tables, Is.Empty);
+            Assert.That(analyzeResult.KeyValuePairs, Is.Empty);
+            Assert.That(analyzeResult.Styles, Is.Empty);
+            Assert.That(analyzeResult.Languages, Is.Empty);
 
             for (int pageNumber = 1; pageNumber <= analyzeResult.Pages.Count; pageNumber++)
             {
                 var page = analyzeResult.Pages[pageNumber - 1];
 
-                Assert.IsEmpty(page.Words);
-                Assert.IsEmpty(page.SelectionMarks);
-                Assert.IsEmpty(page.Lines);
-                Assert.IsEmpty(page.Barcodes);
-                Assert.IsEmpty(page.Formulas);
+                Assert.That(page.Words, Is.Empty);
+                Assert.That(page.SelectionMarks, Is.Empty);
+                Assert.That(page.Lines, Is.Empty);
+                Assert.That(page.Barcodes, Is.Empty);
+                Assert.That(page.Formulas, Is.Empty);
 
                 AssertSingleEmptySpan(page.Spans);
 
@@ -115,7 +115,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (var document in analyzeResult.Documents)
             {
-                Assert.IsEmpty(document.Fields);
+                Assert.That(document.Fields, Is.Empty);
 
                 AssertSingleEmptySpan(document.Spans);
 
@@ -125,8 +125,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     Assert.That(region.BoundingPolygon.Count, Is.EqualTo(4));
                 }
 
-                Assert.GreaterOrEqual(document.Confidence, 0f);
-                Assert.LessOrEqual(document.Confidence, 1f);
+                Assert.That(document.Confidence, Is.GreaterThanOrEqualTo(0f));
+                Assert.That(document.Confidence, Is.LessThanOrEqualTo(1f));
             }
         }
 

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
             QumuloFileSystemResource fileSystemResource = await CreateQumuloFileSystemResource(ResGroup, Location, fileResourceName);
 
             Assert.That(fileSystemResource.HasData, Is.True);
-            Assert.NotNull(fileSystemResource.Data);
+            Assert.That(fileSystemResource.Data, Is.Not.Null);
             Assert.That(fileSystemResource.Data.Name.Equals(fileResourceName), Is.True);
         }
 

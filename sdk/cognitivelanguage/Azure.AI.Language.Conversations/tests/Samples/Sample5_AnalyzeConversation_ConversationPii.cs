@@ -94,7 +94,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.NotZero(entitiesDetected.Count);
+            Assert.That(entitiesDetected.Count, Is.Not.Zero);
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
 
@@ -179,7 +179,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
 
-            Assert.NotZero(entitiesDetected.Count);
+            Assert.That(entitiesDetected.Count, Is.Not.Zero);
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }

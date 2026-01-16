@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
 
             // GetAll
             var list = await _purviewAccountCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePurviewAccount(list.FirstOrDefault().Data, purviewAccountName);
 
             // Delete
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
 
         private void ValidatePurviewAccount(PurviewAccountData purviewAccount, string purviewAccountName)
         {
-            Assert.IsNotNull(purviewAccount);
-            Assert.IsNotEmpty(purviewAccount.Id);
+            Assert.That(purviewAccount, Is.Not.Null);
+            Assert.That((string)purviewAccount.Id, Is.Not.Empty);
             Assert.That(purviewAccount.Name, Is.EqualTo(purviewAccountName));
             Assert.That(purviewAccount.Location, Is.EqualTo(DefaultLocation));
             Assert.That(purviewAccount.Sku.Name.ToString(), Is.EqualTo("Standard"));

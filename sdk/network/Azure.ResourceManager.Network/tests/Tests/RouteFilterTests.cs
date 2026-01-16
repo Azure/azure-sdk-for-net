@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Network.Tests
                 filterName);
             Assert.That(filter.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Assert.That(filter.Data.Name, Is.EqualTo(filterName));
-            Assert.IsEmpty(filter.Data.Rules);
+            Assert.That(filter.Data.Rules, Is.Empty);
 
             var filters = await filterCollection.GetAllAsync().ToEnumerableAsync();
             Has.One.Equals(filters);
             Assert.That(filters[0].Data.Name, Is.EqualTo(filterName));
-            Assert.IsEmpty(filters[0].Data.Rules);
+            Assert.That(filters[0].Data.Rules, Is.Empty);
 
             var allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             // there could be other filters in the current subscription
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Tests
             await filterRule.DeleteAsync(WaitUntil.Completed);
 
             var rules = await filter.GetRouteFilterRules().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(rules);
+            Assert.That(rules, Is.Empty);
 
             // Delete filter
             await filter.DeleteAsync(WaitUntil.Completed);

@@ -158,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Act
             var jobHost = host.GetJobHost<InstanceCustomActivatorProgram>();
-            Assert.NotNull(jobHost);
+            Assert.That(jobHost, Is.Not.Null);
 
             var result = await jobHost.RunTriggerAsync<string>(InstanceCustomActivatorProgram.TaskSource);
 

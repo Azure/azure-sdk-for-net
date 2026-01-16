@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // assert
             Assert.That(assignment.Value.HasData, Is.True);
-            Assert.NotNull(assignment.Value.Data.Name);
-            Assert.NotNull(assignment.Value.Data.Id);
+            Assert.That(assignment.Value.Data.Name, Is.Not.Null);
+            Assert.That(assignment.Value.Data.Id, Is.Not.Null);
             Assert.That(assignment.Value.Data.Properties.TargetId, Is.EqualTo(vmId));
         }
 
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // assert
             Assert.That(assignment.HasData, Is.True);
-            Assert.NotNull(assignment.Data.Name);
-            Assert.NotNull(assignment.Data.Id);
+            Assert.That(assignment.Data.Name, Is.Not.Null);
+            Assert.That(assignment.Data.Id, Is.Not.Null);
         }
 
         [TestCase]
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // assert
             Assert.That(assignment.HasData, Is.True);
-            Assert.NotNull(assignment.Data.Name);
-            Assert.NotNull(assignment.Data.Id);
+            Assert.That(assignment.Data.Name, Is.Not.Null);
+            Assert.That(assignment.Data.Id, Is.Not.Null);
         }
     }
 }

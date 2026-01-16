@@ -88,11 +88,11 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.Not.Null);
 
             ChatCompletion completion = response.Value;
-            Assert.IsNotNull(completion);
+            Assert.That(completion, Is.Not.Null);
             Assert.That(completion.Id, Is.Not.Null.Or.Empty);
 
             RequestContentFilterResult filter = completion.GetRequestContentFilterResult();
-            Assert.IsNotNull(filter);
+            Assert.That(filter, Is.Not.Null);
             Assert.That(filter.SelfHarm, Is.Not.Null);
             Assert.That(filter.SelfHarm.Filtered, Is.False);
             Assert.That(filter.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
 
             List<CloudHsmClusterPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(privateEndpointConnections);
+            Assert.That(privateEndpointConnections, Is.Not.Null);
 
             CloudHsmClusterPrivateEndpointConnectionResource privateEndpointConnectionResource = privateEndpointConnections.FirstOrDefault();
             var expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
-            Assert.IsNotNull(privateEndpointConnectionResource);
+            Assert.That(privateEndpointConnectionResource, Is.Not.Null);
             Assert.That(privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString(), Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString()));
             Assert.That(privateEndpointConnectionResource.Data.Properties.ConnectionState.Description, Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description));
             Assert.That(privateEndpointConnectionResource.Data.Properties.GroupIds, Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.GroupIds));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             privateEndpointConnectionResource = await _privateEndpointConnectionCollection.GetAsync(privateEndpointConnectionResource.Data.Name);
             expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
-            Assert.IsNotNull(privateEndpoint);
+            Assert.That(privateEndpoint, Is.Not.Null);
             Assert.That(privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString(), Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString()));
             Assert.That(privateEndpointConnectionResource.Data.Properties.ConnectionState.Description, Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description));
             Assert.That(privateEndpointConnectionResource.Data.Properties.GroupIds, Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.GroupIds));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             var expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.That(privateEndpointConnections.Count == 1, Is.True);
-            Assert.IsNotNull(privateEndpointConnectionResource);
+            Assert.That(privateEndpointConnectionResource, Is.Not.Null);
             Assert.That(privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString(), Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString()));
             Assert.That(privateEndpointConnectionResource.Data.Properties.ConnectionState.Description, Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description));
             Assert.That(privateEndpointConnectionResource.Data.Properties.GroupIds, Is.EqualTo(expectedPrivateEndpointManualLinkServiceConnections.GroupIds));

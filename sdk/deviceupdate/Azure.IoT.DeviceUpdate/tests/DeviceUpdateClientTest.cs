@@ -25,7 +25,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 
@@ -40,7 +40,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 
@@ -73,7 +73,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 
@@ -103,7 +103,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
         {
             DeviceUpdateClient client = CreateClient();
             Response response = await client.GetUpdateAsync(TestEnvironment.UpdateProvider, TestEnvironment.UpdateName, TestEnvironment.UpdateVersion);
-            Assert.IsNotNull(response.Content);
+            Assert.That(response.Content, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -129,7 +129,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 

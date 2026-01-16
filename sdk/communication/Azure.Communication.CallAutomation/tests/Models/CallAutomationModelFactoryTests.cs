@@ -73,7 +73,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             Assert.That(transcriptionData.Duration, Is.EqualTo(TimeSpan.FromTicks(duration)));
             Assert.That(transcriptionData.Participant, Is.EqualTo(CommunicationIdentifier.FromRawId(participantRawID)));
             Assert.That(transcriptionData.ResultState, Is.EqualTo(resultState));
-            Assert.IsNotNull(transcriptionData.Words);
+            Assert.That(transcriptionData.Words, Is.Not.Null);
             Assert.That(transcriptionData.Words.Count(), Is.EqualTo(1));
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             Assert.That(properties.CallConnectionId, Is.EqualTo(callConnectionId));
             Assert.That(properties.ServerCallId, Is.EqualTo(serverCallId));
-            Assert.AreNotSame(targets, properties.Targets);
+            Assert.That(properties.Targets, Is.Not.SameAs(targets));
             Assert.That(properties.Targets, Is.EqualTo(targets));
             Assert.That(properties.CallConnectionState, Is.EqualTo(callConnectionState));
             Assert.That(properties.CallbackUri, Is.EqualTo(callbackUri));
@@ -271,7 +271,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
             Assert.That(eventResult.SequenceNumber, Is.EqualTo(sequenceNumber));
             Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
-            Assert.IsNotNull(eventResult.Participants);
+            Assert.That(eventResult.Participants, Is.Not.Null);
             Assert.That(eventResult.Participants.Count(), Is.EqualTo(1));
         }
 
@@ -504,7 +504,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var properties = CallAutomationModelFactory.CallConnectionProperties(
                 targets: null);
 
-            Assert.IsNotNull(properties.Targets);
+            Assert.That(properties.Targets, Is.Not.Null);
             Assert.That(properties.Targets.Count, Is.EqualTo(0));
         }
 
@@ -514,7 +514,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             // Test that default parameter values work correctly
             var participant = CallAutomationModelFactory.CallParticipant();
 
-            Assert.IsNull(participant.Identifier);
+            Assert.That(participant.Identifier, Is.Null);
             Assert.That(participant.IsMuted, Is.False);
             Assert.That(participant.IsOnHold, Is.False);
         }
@@ -526,7 +526,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var originalTargets = new List<CommunicationIdentifier> { _testUser };
             var properties = CallAutomationModelFactory.CallConnectionProperties(targets: originalTargets);
 
-            Assert.AreNotSame(originalTargets, properties.Targets);
+            Assert.That(properties.Targets, Is.Not.SameAs(originalTargets));
             Assert.That(properties.Targets, Is.EqualTo(originalTargets));
 
             // Modifying original should not affect the created instance

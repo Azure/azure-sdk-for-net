@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
         {
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             var notificationHub = await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
-            Assert.IsNotNull(notificationHub);
+            Assert.That(notificationHub, Is.Not.Null);
             Assert.That(notificationHub.Data.Name, Is.EqualTo(notificationHubName));
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             var notificationHub = await _notificationHubCollection.GetAsync(notificationHubName);
-            Assert.IsNotNull(notificationHub);
+            Assert.That(notificationHub, Is.Not.Null);
             Assert.That(notificationHub.Value.Data.Name, Is.EqualTo(notificationHubName));
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             var list = await _notificationHubCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             var notificationHub = await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             var pnsCredential = await notificationHub.GetPnsCredentialsAsync();
-            Assert.IsNotNull(pnsCredential);
+            Assert.That(pnsCredential, Is.Not.Null);
         }
     }
 }

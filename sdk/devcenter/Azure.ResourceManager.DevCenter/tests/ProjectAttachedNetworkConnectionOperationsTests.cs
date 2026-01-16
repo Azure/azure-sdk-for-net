@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // Get one of the networks
             var network = (await project.GetProjectAttachedNetworkConnectionAsync(attachedNetworks.First().Data.Name)).Value;
-            Assert.IsNotNull(network);
+            Assert.That(network, Is.Not.Null);
         }
     }
 }

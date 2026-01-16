@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesResult result1 = resultCollection[0];
 
             Assert.That(result1.Entities.Count, Is.EqualTo(s_document1ExpectedEntitiesOutput.Count));
-            Assert.IsNotNull(result1.Id);
+            Assert.That(result1.Id, Is.Not.Null);
             Assert.AreEqual("1", result1.Id);
 
             foreach (HealthcareEntity entity in result1.Entities)
@@ -125,7 +125,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (relation.RelationType == "DosageOfMedication")
                 {
                     var role = relation.Roles.ElementAt(0);
-                    Assert.IsNotNull(relation.Roles);
+                    Assert.That(relation.Roles, Is.Not.Null);
                     Assert.That(relation.Roles.Count(), Is.EqualTo(2));
                     Assert.That(role.Name, Is.EqualTo("Dosage"));
                     Assert.That(role.Entity.Text, Is.EqualTo("100mg"));
@@ -151,14 +151,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesResult result1 = resultCollection[0];
             Assert.That(result1.Entities.Count, Is.EqualTo(s_document1ExpectedEntitiesOutput.Count));
-            Assert.IsNotNull(result1.Id);
+            Assert.That(result1.Id, Is.Not.Null);
             Assert.That(result1.Id, Is.EqualTo("1"));
             Assert.That(result1.EntityRelations.Count(), Is.EqualTo(2));
 
             foreach (HealthcareEntityRelation relation in result1.EntityRelations)
             {
-                Assert.GreaterOrEqual(relation.ConfidenceScore, 0.0);
-                Assert.LessOrEqual(relation.ConfidenceScore, 1.0);
+                Assert.That(relation.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+                Assert.That(relation.ConfidenceScore, Is.LessThanOrEqualTo(1.0));
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.That(entity.Offset, Is.EqualTo(24));
                     Assert.That(entity.Category, Is.EqualTo(HealthcareEntityCategory.Diagnosis));
                     Assert.That(entity.Length, Is.EqualTo(10));
-                    Assert.IsNotNull(entity.Assertion);
+                    Assert.That(entity.Assertion, Is.Not.Null);
                     Assert.That(entity.Assertion.Certainty.Value, Is.EqualTo(EntityCertainty.NegativePossible));
                 }
 
@@ -219,7 +219,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.That(entity.Category, Is.EqualTo(HealthcareEntityCategory.MedicationName));
                     Assert.That(entity.Length, Is.EqualTo(10));
-                    Assert.IsNotNull(entity.Assertion);
+                    Assert.That(entity.Assertion, Is.Not.Null);
                     Assert.That(entity.Assertion.Certainty.Value, Is.EqualTo(EntityCertainty.NeutralPossible));
                 }
             }
@@ -257,7 +257,7 @@ namespace Azure.AI.TextAnalytics.Tests
             //Take the first page
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
-            Assert.IsNotNull(resultCollection[2].Id);
+            Assert.That(resultCollection[2].Id, Is.Not.Null);
 
             Assert.That(!resultCollection[0].HasError, Is.True);
             Assert.That(!resultCollection[1].HasError, Is.True);
@@ -523,18 +523,18 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
         {
-            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            Assert.That(entities.Count, Is.GreaterThanOrEqualTo(minimumExpectedOutput.Count));
             foreach (HealthcareEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsNotNull(entity.Category);
-                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
-                Assert.GreaterOrEqual(entity.Offset, 0);
-                Assert.Greater(entity.Length, 0);
+                Assert.That(entity.Category, Is.Not.Null);
+                Assert.That(entity.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+                Assert.That(entity.Offset, Is.GreaterThanOrEqualTo(0));
+                Assert.That(entity.Length, Is.GreaterThan(0));
 
                 if (entity.SubCategory != null)
                 {
-                    Assert.IsNotEmpty(entity.SubCategory);
+                    Assert.That(entity.SubCategory, Is.Not.Empty);
                 }
             }
         }
@@ -551,14 +551,14 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 if (includeStatistics)
                 {
-                    Assert.IsNotNull(results.Statistics);
-                    Assert.Greater(results.Statistics.DocumentCount, 0);
-                    Assert.Greater(results.Statistics.TransactionCount, 0);
-                    Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                    Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                    Assert.That(results.Statistics, Is.Not.Null);
+                    Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
                 }
                 else
-                    Assert.IsNull(results.Statistics);
+                    Assert.That(results.Statistics, Is.Null);
             }
 
             foreach (AnalyzeHealthcareEntitiesResult result in results)
@@ -568,15 +568,15 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.That(result.HasError, Is.False);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                Assert.That(result.Statistics, Is.Not.Null);
 
                 // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
                 if (ServiceVersion is not (TextAnalyticsClientOptions.ServiceVersion.V2022_05_01 or TextAnalyticsClientOptions.ServiceVersion.V3_1))
                 {
                     if (includeStatistics)
                     {
-                        Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                        Assert.Greater(result.Statistics.TransactionCount, 0);
+                        Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
                     }
                     else
                     {
@@ -585,8 +585,8 @@ namespace Azure.AI.TextAnalytics.Tests
                     }
                 }
 
-                Assert.IsNotNull(result.Warnings);
-                Assert.IsNotNull(result.EntityRelations);
+                Assert.That(result.Warnings, Is.Not.Null);
+                Assert.That(result.EntityRelations, Is.Not.Null);
                 ValidateDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);
             }
         }

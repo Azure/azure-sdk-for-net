@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableLinkedService service = await DisposableLinkedService.Create (client, this.Recording);
 
             IList<LinkedServiceResource> services = await client.GetLinkedServicesByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(services.Count, 1);
+            Assert.That(services.Count, Is.GreaterThanOrEqualTo(1));
 
             foreach (var expectedLinkedService in services)
             {

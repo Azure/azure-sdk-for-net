@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     typeof(TestPayload));
 
             // Data is a BinaryData so it will always serialize first even if cloudEvent was not constructed by calling Parse.
-            Assert.IsNull(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.That(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty, Is.Null);
 
             List<EventGridEvent> eventsList = new List<EventGridEvent>()
             {
@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             egEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.IsNull(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.That(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty, Is.Null);
         }
 
         [Test]

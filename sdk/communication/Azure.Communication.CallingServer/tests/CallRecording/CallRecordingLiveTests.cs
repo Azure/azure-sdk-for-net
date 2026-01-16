@@ -31,8 +31,8 @@ namespace Azure.Communication.CallingServer
                 string ngrok = "https://localhost";
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(targetUser) };
                 var callResponse = await client.CreateCallAsync(new CallSource(user), targets, new Uri(ngrok)).ConfigureAwait(false);
-                Assert.NotNull(callResponse);
-                Assert.NotNull(callResponse.Value);
+                Assert.That(callResponse, Is.Not.Null);
+                Assert.That(callResponse.Value, Is.Not.Null);
                 string callId = "serverCallId";
                 callConnectionId = callResponse.Value.CallConnection.CallConnectionId;
                 CallRecording callRecording = client.GetCallRecording();
@@ -41,29 +41,29 @@ namespace Azure.Communication.CallingServer
                     RecordingStateCallbackEndpoint = new Uri(ngrok)
                 };
                 var recordingResponse = await callRecording.StartRecordingAsync(recordingOptions).ConfigureAwait(false);
-                Assert.NotNull(recordingResponse.Value);
+                Assert.That(recordingResponse.Value, Is.Not.Null);
 
                 var recordingId = recordingResponse.Value.RecordingId;
-                Assert.NotNull(recordingId);
+                Assert.That(recordingId, Is.Not.Null);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
-                Assert.NotNull(recordingResponse.Value);
-                Assert.NotNull(recordingResponse.Value.RecordingState);
+                Assert.That(recordingResponse.Value, Is.Not.Null);
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
                 Assert.That(RecordingState.Active, Is.EqualTo(recordingResponse.Value.RecordingState));
 
                 await callRecording.PauseRecordingAsync(recordingId);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
-                Assert.NotNull(recordingResponse.Value);
-                Assert.NotNull(recordingResponse.Value.RecordingState);
+                Assert.That(recordingResponse.Value, Is.Not.Null);
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
                 Assert.That(RecordingState.Inactive, Is.EqualTo(recordingResponse.Value.RecordingState));
 
                 await callRecording.ResumeRecordingAsync(recordingId);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
-                Assert.NotNull(recordingResponse.Value);
-                Assert.NotNull(recordingResponse.Value.RecordingState);
+                Assert.That(recordingResponse.Value, Is.Not.Null);
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
                 Assert.That(RecordingState.Active, Is.EqualTo(recordingResponse.Value.RecordingState));
 
                 await callRecording.StopRecordingAsync(recordingId);

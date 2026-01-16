@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var form = operation.Value.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
             Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
-            Assert.NotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
 
             Assert.That(form.Fields.ContainsKey("ReceiptType"), Is.True);
             Assert.That(form.Fields.ContainsKey("MerchantAddress"), Is.True);
@@ -200,7 +200,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var form = operation.Value.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -216,7 +216,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
             Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
-            Assert.NotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
 
             Assert.That(form.Fields.ContainsKey("ReceiptType"), Is.True);
             Assert.That(form.Fields.ContainsKey("MerchantAddress"), Is.True);
@@ -319,7 +319,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                Assert.NotNull(recognizedForm);
+                Assert.That(recognizedForm, Is.Not.Null);
 
                 ValidatePrebuiltForm(
                     recognizedForm,
@@ -329,7 +329,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
                 var sampleField = recognizedForm.Fields["Total"];
-                Assert.IsNotNull(sampleField.ValueData);
+                Assert.That(sampleField.ValueData, Is.Not.Null);
 
                 if (formIndex == 0)
                 {
@@ -397,7 +397,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                Assert.NotNull(recognizedForm);
+                Assert.That(recognizedForm, Is.Not.Null);
 
                 ValidatePrebuiltForm(
                     recognizedForm,
@@ -412,7 +412,7 @@ namespace Azure.AI.FormRecognizer.Tests
                     var sampleField = recognizedForm.Fields["Total"];
                     var expectedValueData = formIndex == 0 ? "$14.50" : "$ 1203.39";
 
-                    Assert.IsNotNull(sampleField.ValueData);
+                    Assert.That(sampleField.ValueData, Is.Not.Null);
                     Assert.That(sampleField.ValueData.Text, Is.EqualTo(expectedValueData));
                 }
             }

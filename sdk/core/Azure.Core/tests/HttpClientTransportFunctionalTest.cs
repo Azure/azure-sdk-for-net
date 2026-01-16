@@ -61,7 +61,7 @@ namespace Azure.Core.Tests
             HttpClient transportClient = transport.Client;
             var handler = (SocketsHttpHandler)GetHandler(transportClient);
             Assert.That(handler.PooledConnectionLifetime, Is.EqualTo(TimeSpan.FromSeconds(300)));
-            Assert.GreaterOrEqual(handler.MaxConnectionsPerServer, 50);
+            Assert.That(handler.MaxConnectionsPerServer, Is.GreaterThanOrEqualTo(50));
         }
 #else
         [Test]

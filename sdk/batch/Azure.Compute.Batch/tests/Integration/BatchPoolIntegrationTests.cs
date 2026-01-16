@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             catch (RequestFailedException e)
             {
-                Assert.Contains(e.Status.ToString(), new[] { "404", });
+                Assert.That(new[] { "404", }, Does.Contain(e.Status.ToString()));
             }
             finally
             {
@@ -123,7 +123,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchPool modfiedPool = operation.Value;
 
                 // verify that some usage exists, we can't predict what usage that might be at the time of the test
-                Assert.NotNull(modfiedPool);
+                Assert.That(modfiedPool, Is.Not.Null);
                 Assert.That(modfiedPool.AllocationState, Is.Not.EqualTo(AllocationState.Resizing));
             }
             finally

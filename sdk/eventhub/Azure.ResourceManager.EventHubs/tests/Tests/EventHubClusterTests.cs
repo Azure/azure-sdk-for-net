@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsClusterCollection clusterCollection = _resourceGroup.GetEventHubsClusters();
             EventHubsClusterData parameter = new EventHubsClusterData(AzureLocation.EastUS2);
             EventHubsClusterResource cluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, parameter)).Value;
-            Assert.NotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(clusterName, Is.EqualTo(cluster.Data.Name));
 
             //get the cluster
             cluster = await clusterCollection.GetAsync(clusterName);
-            Assert.NotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(clusterName, Is.EqualTo(cluster.Data.Name));
 
             //get the namespace under cluster
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 break;
             }
 
-            Assert.NotNull(subResource);
+            Assert.That(subResource, Is.Not.Null);
 
             //update the cluster
             cluster.Data.Tags.Add("key1", "value1");

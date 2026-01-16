@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Tests
         {
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(207));
             IEnumerable<string> actualFailedKeys = response.Value.Results.Where(r => !r.Succeeded).Select(r => r.Key);
-            CollectionAssert.AreEqual(expectedFailedKeys, actualFailedKeys);
+            Assert.That(actualFailedKeys, Is.EqualTo(expectedFailedKeys).AsCollection);
         }
 
         private static void AssertActionFailed(
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Tests
         {
             Assert.That(result.Key, Is.EqualTo(key));
             Assert.That(result.Succeeded, Is.True);
-            Assert.IsNull(result.ErrorMessage);
+            Assert.That(result.ErrorMessage, Is.Null);
             Assert.That(result.Status, Is.EqualTo(expectedStatusCode));
         }
         #endregion Utilities
@@ -644,7 +644,7 @@ namespace Azure.Search.Documents.Tests
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
 
-            StringAssert.StartsWith("Failed to index document(s): 2, 3.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith("Failed to index document(s): 2, 3."));
             RequestFailedException inner = ex.InnerExceptions[0] as RequestFailedException;
             Assert.That(inner.Status, Is.EqualTo(404));
             Assert.That(inner.Message, Is.EqualTo("Document not found."));
@@ -846,7 +846,7 @@ namespace Azure.Search.Documents.Tests
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
             Assert.That(ex.Status, Is.EqualTo(400));
-            StringAssert.StartsWith("The request is invalid.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith("The request is invalid."));
 
             int errorJsonStartIndex = ex.Message.IndexOf("{");
             int errorJsonEndIndex = ex.Message.LastIndexOf("}");
@@ -854,11 +854,11 @@ namespace Azure.Search.Documents.Tests
 
             using var jsonDocument = JsonDocument.Parse(errorJsonContent);
             JsonElement errorElement = jsonDocument.RootElement.GetProperty("error");
-            StringAssert.AreEqualIgnoringCase("OperationNotAllowed", errorElement.GetProperty("code").GetString());
-            StringAssert.StartsWith("The request is invalid.", errorElement.GetProperty("message").GetString());
+            Assert.That(errorElement.GetProperty("code").GetString(), Is.EqualTo("OperationNotAllowed").IgnoreCase);
+            Assert.That(errorElement.GetProperty("message").GetString(), Does.StartWith("The request is invalid."));
             JsonElement details = errorElement.GetProperty("details");
-            StringAssert.AreEqualIgnoringCase("MissingKeyField", details[0].GetProperty("code").GetString());
-            StringAssert.AreEqualIgnoringCase("0: Document key cannot be missing or empty. Parameters: actions", details[0].GetProperty("message").GetString());
+            Assert.That(details[0].GetProperty("code").GetString(), Is.EqualTo("MissingKeyField").IgnoreCase);
+            Assert.That(details[0].GetProperty("message").GetString(), Is.EqualTo("0: Document key cannot be missing or empty. Parameters: actions").IgnoreCase);
         }
 
         [Test]
@@ -1443,7 +1443,7 @@ namespace Azure.Search.Documents.Tests
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
             RequestFailedException inner = ex.InnerException as RequestFailedException;
             Assert.That(inner.Status, Is.EqualTo(404));
-            StringAssert.StartsWith("Document not found.", inner.Message);
+            Assert.That(inner.Message, Does.StartWith("Document not found."));
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

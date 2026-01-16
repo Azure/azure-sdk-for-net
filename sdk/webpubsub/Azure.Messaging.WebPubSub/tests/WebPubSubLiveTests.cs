@@ -56,7 +56,7 @@ namespace Azure.Rest.WebPubSub.Tests
             Assert.That(frames.Count, Is.EqualTo(3));
             Assert.That(frames[0].MessageAsString, Is.EqualTo(textContent));
             Assert.That(frames[1].MessageAsString, Is.EqualTo(jsonContent.ToString()));
-            CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
+            Assert.That(frames[2].MessageBytes, Is.EquivalentTo(binaryContent.ToArray()));
         }
 
         [Ignore("Ignore until live test is supported")]
@@ -92,7 +92,7 @@ namespace Azure.Rest.WebPubSub.Tests
             Assert.That(frames.Count, Is.EqualTo(3));
             Assert.That(frames[0].MessageAsString, Is.EqualTo(textContent));
             Assert.That(frames[1].MessageAsString, Is.EqualTo(jsonContent.ToString()));
-            CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
+            Assert.That(frames[2].MessageBytes, Is.EquivalentTo(binaryContent.ToArray()));
         }
 
         [Ignore("Ignore until live test is supported")]
@@ -127,7 +127,7 @@ namespace Azure.Rest.WebPubSub.Tests
             Assert.That(frames.Count, Is.EqualTo(4));
             // first message must be the "connected" message
             var connected = JsonSerializer.Deserialize<ConnectedMessage>(frames[0].MessageAsString, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-            Assert.NotNull(connected);
+            Assert.That(connected, Is.Not.Null);
             Assert.That(connected.Event, Is.EqualTo("connected"));
             Assert.That(frames[1].MessageAsString, Is.EqualTo(JsonSerializer.Serialize(new
             {
@@ -143,13 +143,13 @@ namespace Azure.Rest.WebPubSub.Tests
                 dataType = "json",
                 data = jsonContent
             })));
-            CollectionAssert.AreEquivalent(JsonSerializer.Serialize(new
+            Assert.That(frames[3].MessageBytes, Is.EquivalentTo(JsonSerializer.Serialize(new
             {
                 type = "message",
                 from = "server",
                 dataType = "binary",
                 data = Convert.ToBase64String(binaryContent.ToArray())
-            }), frames[3].MessageBytes);
+            })));
         }
 
         private sealed class ConnectedMessage

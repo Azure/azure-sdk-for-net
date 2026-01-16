@@ -33,11 +33,11 @@ namespace Azure.Identity.Tests
 
             var cred = new ManagedIdentityCredential(options);
             var token = await cred.GetTokenAsync(new(CredentialTestHelpers.DefaultScope));
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
 
             var cred2 = new ManagedIdentityCredential(managedIdentityId);
             token = await cred2.GetTokenAsync(new(CredentialTestHelpers.DefaultScope));
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         public enum ManagedIdentityIdType

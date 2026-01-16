@@ -57,7 +57,7 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
             {
                 listByKubernetesCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByKubernetesCluster);
+            Assert.That(listByKubernetesCluster, Is.Not.Empty);
 
             // Update
             NetworkCloudKubernetesClusterFeaturePatch patch = new NetworkCloudKubernetesClusterFeaturePatch()
@@ -74,7 +74,7 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
             // Delete
             ArmOperation<NetworkCloudOperationStatusResult> deleteResult = await feature.DeleteAsync(WaitUntil.Completed, "*", "*", CancellationToken.None);
             NetworkCloudOperationStatusResult result = deleteResult.Value;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
     }
 }

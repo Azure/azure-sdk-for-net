@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             privateEndpoint = (await privateEndpointCollection.GetAsync(privateEndpointName)).Value;
             Assert.That(privateEndpointName, Is.EqualTo(privateEndpoint.Data.Name));
             Assert.That(Location, Is.EqualTo(privateEndpoint.Data.Location));
-            Assert.IsEmpty(privateEndpoint.Data.Tags);
+            Assert.That(privateEndpoint.Data.Tags, Is.Empty);
 
             // update
             privateEndpointData.Tags.Add("test", "test");

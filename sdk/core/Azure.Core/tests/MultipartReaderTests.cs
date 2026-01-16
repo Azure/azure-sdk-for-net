@@ -114,7 +114,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\""));
             var buffer = new MemoryStream();
@@ -157,7 +157,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\""));
             var buffer = new MemoryStream();
@@ -174,7 +174,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\""));
             var buffer = new MemoryStream();
@@ -191,7 +191,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\""));
             var buffer = new MemoryStream();
@@ -199,7 +199,7 @@ namespace Azure.Core.Tests
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
             section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(2));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"file1\"; filename=\"a.txt\""));
             Assert.That(section.Headers["Content-Type"][0], Is.EqualTo("text/plain"));
@@ -217,7 +217,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\""));
             var buffer = new MemoryStream();
@@ -225,7 +225,7 @@ namespace Azure.Core.Tests
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
             section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(2));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"file1\"; filename=\"a色.txt\""));
             Assert.That(section.Headers["Content-Type"][0], Is.EqualTo("text/plain"));
@@ -243,7 +243,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\""));
             var buffer = new MemoryStream();
@@ -251,7 +251,7 @@ namespace Azure.Core.Tests
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
             section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(2));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"file1\"; filename=\"a.txt\""));
             Assert.That(section.Headers["Content-Type"][0], Is.EqualTo("text/plain"));
@@ -260,7 +260,7 @@ namespace Azure.Core.Tests
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("Content of a.txt.\r\n"));
 
             section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(2));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"file2\"; filename=\"a.html\""));
             Assert.That(section.Headers["Content-Type"][0], Is.EqualTo("text/html"));
@@ -290,7 +290,7 @@ namespace Azure.Core.Tests
 
             //first section can be read successfully
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\""));
             var read = section.Body.Read(buffer, 0, buffer.Length);
@@ -298,7 +298,7 @@ namespace Azure.Core.Tests
 
             //second section can be read successfully (even though the bottom boundary is truncated)
             section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(2));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"file1\"; filename=\"a.txt\""));
             Assert.That(section.Headers["Content-Type"][0], Is.EqualTo("text/plain"));
@@ -337,7 +337,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\" filename=\"a\uFFFD!.txt\""));
             var buffer = new MemoryStream();
@@ -372,7 +372,7 @@ namespace Azure.Core.Tests
             var reader = new MultipartReader(Boundary, stream);
 
             var section = await reader.ReadNextSectionAsync();
-            Assert.NotNull(section);
+            Assert.That(section, Is.Not.Null);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             // cspell:ignore FFFDU
 #if NETCOREAPP //https://github.com/dotnet/runtime/issues/29017

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Kusto.Tests
             {
                 resourceData = resourceDataCreate;
                 resource = (await createOrUpdateAsync(expectedResourceName, resourceData)).Value;
-                Assert.IsNotNull(resource);
+                Assert.That(resource, Is.Not.Null);
                 validate(
                     expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
                 );
@@ -102,20 +102,20 @@ namespace Azure.ResourceManager.Kusto.Tests
             {
                 resourceData = resourceDataUpdate;
                 resource = (await createOrUpdateAsync(expectedResourceName, resourceData)).Value;
-                Assert.IsNotNull(resource);
+                Assert.That(resource, Is.Not.Null);
                 validate(
                     expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
                 );
             }
 
             resource = (await getAsync(expectedResourceName)).Value;
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             validate(
                 expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
             );
 
             resource = await getAllAsync().FirstOrDefaultAsync(r => expectedFullResourceName == GetResourceName(r));
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             validate(
                 expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
             );
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.Kusto.Tests
             var resource = (await getAsync(resourceName)).Value;
 
             var deleteAsync = resource.GetType().GetMethod("DeleteAsync");
-            Assert.IsNotNull(deleteAsync);
+            Assert.That(deleteAsync, Is.Not.Null);
             var result = deleteAsync.Invoke(resource, new object[] { WaitUntil.Completed, default });
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             await (Task<ArmOperation>)result;
 
             var exists = await existsAsync(resourceName);
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.Kusto.Tests
         {
             if (expected is null)
             {
-                Assert.IsNull(actual);
+                Assert.That(actual, Is.Null);
             }
             else
             {
-                Assert.IsNotNull(actual);
+                Assert.That(actual, Is.Not.Null);
 
                 assertEquals(expected, actual);
             }

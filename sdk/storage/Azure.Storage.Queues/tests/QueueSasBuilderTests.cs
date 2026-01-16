@@ -39,8 +39,8 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.That(sasQueryParameters.Version, Is.EqualTo(SasQueryParametersInternals.DefaultSasVersionInternal));
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.That(sasQueryParameters.Services, Is.Null);
+            Assert.That(sasQueryParameters.ResourceTypes, Is.Null);
             Assert.That(sasQueryParameters.Protocol, Is.EqualTo(constants.Sas.Protocol));
             Assert.That(sasQueryParameters.StartsOn, Is.EqualTo(constants.Sas.StartTime));
             Assert.That(sasQueryParameters.ExpiresOn, Is.EqualTo(constants.Sas.ExpiryTime));
@@ -56,7 +56,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(sasQueryParameters.Permissions, Is.EqualTo(Permissions));
             Assert.That(sasQueryParameters.DelegatedUserObjectId, Is.EqualTo(constants.Sas.DelegatedObjectId));
             Assert.That(sasQueryParameters.Signature, Is.EqualTo(signature));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -75,8 +75,8 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.That(sasQueryParameters.Version, Is.EqualTo(SasQueryParametersInternals.DefaultSasVersionInternal));
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.That(sasQueryParameters.Services, Is.Null);
+            Assert.That(sasQueryParameters.ResourceTypes, Is.Null);
             Assert.That(sasQueryParameters.Protocol, Is.EqualTo(SasProtocol.Https));
             Assert.That(sasQueryParameters.StartsOn, Is.EqualTo(constants.Sas.StartTime));
             Assert.That(sasQueryParameters.ExpiresOn, Is.EqualTo(constants.Sas.ExpiryTime));
@@ -85,7 +85,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(sasQueryParameters.Resource, Is.Empty);
             Assert.That(sasQueryParameters.Permissions, Is.EqualTo(Permissions));
             Assert.That(sasQueryParameters.Signature, Is.EqualTo(signature));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -243,7 +243,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(fileUriBuilder.Host, Is.EqualTo("docker_container"));
             Assert.That(fileUriBuilder.AccountName, Is.EqualTo("devstoreaccount1"));
             Assert.That(fileUriBuilder.QueueName, Is.EqualTo("sharename"));
-            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
             Assert.That(fileUriBuilder.Query, Is.Empty);
             Assert.That(fileUriBuilder.Port, Is.EqualTo(10000));
 
@@ -266,7 +266,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(fileUriBuilder.Host, Is.EqualTo("www.mycustomname.com"));
             Assert.That(fileUriBuilder.AccountName, Is.Empty);
             Assert.That(fileUriBuilder.QueueName, Is.EqualTo("queuename"));
-            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
             Assert.That(fileUriBuilder.Query, Is.Empty);
             Assert.That(fileUriBuilder.Port, Is.EqualTo(443));
 

@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
             var binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         public static void TestFunc(

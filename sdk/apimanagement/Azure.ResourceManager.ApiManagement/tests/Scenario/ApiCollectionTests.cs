@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await foreach (var item in collection.GetAllAsync())
             {
                 var newitem = (await item.GetAsync()).Value;
-                Assert.NotNull(newitem.Data.DisplayName);
+                Assert.That(newitem.Data.DisplayName, Is.Not.Null);
                 await newitem.DeleteAsync(WaitUntil.Completed, ETag.All);
             }
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var api = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
 
             var apiRevisionContracts = await api.GetApiRevisionsByServiceAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(apiRevisionContracts.FirstOrDefault().PrivateUriString);
+            Assert.That(apiRevisionContracts.FirstOrDefault().PrivateUriString, Is.Not.Empty);
         }
 
         [Test]

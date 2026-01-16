@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendMessagesAsync(msgs);
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var message1 = await receiver.PeekMessageAsync();
-                Assert.IsNotNull(message1.SequenceNumber);
+                Assert.That(message1.SequenceNumber, Is.Not.Null);
                 var message2 = await receiver.PeekMessageAsync(message1.SequenceNumber + 1);
                 Assert.That(message2.MessageId, Is.EqualTo(msgs[1].MessageId));
             }
@@ -398,7 +398,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                 }
 
-                Assert.Less(received, messageCount);
+                Assert.That(received, Is.LessThan(messageCount));
 
                 var remaining = messageCount - received;
                 for (int i = 0; i < remaining; i++)
@@ -432,8 +432,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var msg = await receiver.ReceiveMessageAsync();
                 Assert.That(msg.DeliveryCount, Is.EqualTo(1));
                 var end = DateTime.UtcNow;
-                Assert.NotNull(msg);
-                Assert.Less(end - start, TimeSpan.FromSeconds(10));
+                Assert.That(msg, Is.Not.Null);
+                Assert.That(end - start, Is.LessThan(TimeSpan.FromSeconds(10)));
             }
         }
 
@@ -505,7 +505,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -544,7 +544,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -668,7 +668,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
 
                 messageEnum.Reset();
                 string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
@@ -688,7 +688,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var deadLetterMessage = deadLetterReceiver.PeekMessageAsync();
-                Assert.IsNull(deadLetterMessage.Result);
+                Assert.That(deadLetterMessage.Result, Is.Null);
             }
         }
 
@@ -744,7 +744,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
 
                 messageEnum.Reset();
                 string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
@@ -774,7 +774,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var deadLetterMessage = deadLetterReceiver.PeekMessageAsync();
-                Assert.IsNull(deadLetterMessage.Result);
+                Assert.That(deadLetterMessage.Result, Is.Null);
             }
         }
 
@@ -829,7 +829,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // verify that an empty list can be passed
                 deferredMessages = await receiver.ReceiveDeferredMessagesAsync(Array.Empty<long>());
-                Assert.IsEmpty(deferredMessages);
+                Assert.That(deferredMessages, Is.Empty);
             }
         }
 
@@ -878,7 +878,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // verify that an empty array can be passed
                 deferredMessages = await receiver.ReceiveDeferredMessagesAsync(Array.Empty<long>());
-                Assert.IsEmpty(deferredMessages);
+                Assert.That(deferredMessages, Is.Empty);
             }
         }
 
@@ -935,7 +935,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // verify that an empty enumerable can be passed
                 deferredMessages = await receiver.ReceiveDeferredMessagesAsync(Enumerable.Empty<long>());
-                Assert.IsEmpty(deferredMessages);
+                Assert.That(deferredMessages, Is.Empty);
             }
         }
 
@@ -999,7 +999,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -1022,7 +1022,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(receivedMessage.MessageId, Is.EqualTo(sentMessage.MessageId));
 
                 var message = receiver.PeekMessageAsync();
-                Assert.IsNull(message.Result);
+                Assert.That(message.Result, Is.Null);
             }
         }
 
@@ -1065,7 +1065,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await receiver.RenewMessageLockAsync(receivedMessage);
 
-                Assert.Greater(receivedMessage.LockedUntil, firstLockedUntilUtcTime);
+                Assert.That(receivedMessage.LockedUntil, Is.GreaterThan(firstLockedUntilUtcTime));
 
                 // Complete Messages
                 await receiver.CompleteMessageAsync(receivedMessage);
@@ -1074,7 +1074,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(receivedMessage.MessageId, Is.EqualTo(message.MessageId));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -1099,7 +1099,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var start = DateTimeOffset.UtcNow;
                 var receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
                 var end = DateTimeOffset.UtcNow;
-                Assert.IsNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Null);
                 var diff = end - start;
                 Assert.That(diff.TotalSeconds < 10, Is.True);
 
@@ -1107,7 +1107,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // no wait time specified => should default to TryTimeout
                 receivedMessage = await receiver.ReceiveMessageAsync();
                 end = DateTimeOffset.UtcNow;
-                Assert.IsNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Null);
                 diff = end - start;
                 Assert.That(diff.TotalSeconds > 10, Is.True);
             }
@@ -1301,11 +1301,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -1329,11 +1329,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -1357,11 +1357,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -1394,7 +1394,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
 
                 // We cannot know what is left in the queue, so scan forward until we peek
                 // the last message.
@@ -1411,7 +1411,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     }
                 }
 
-                Assert.IsNotNull(lastMessage);
+                Assert.That(lastMessage, Is.Not.Null);
                 Assert.That(lastMessage.MessageId, Is.EqualTo(message.MessageId));
             }
         }
@@ -1434,8 +1434,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.Not.Zero);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
             }
         }
 
@@ -1457,8 +1457,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(ServiceBusReceiver.MaxDeleteMessageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.Not.Zero);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
             }
         }
 
@@ -1480,8 +1480,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(1); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount - 5, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount - 5);
+                Assert.That(numMessagesDeleted, Is.Not.Zero);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount - 5));
 
                 await client.DisposeAsync();
 
@@ -1510,7 +1510,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 var firstMessage = await receiver.ReceiveMessageAsync();
 
-                Assert.IsNotNull(firstMessage, "The first message should have been received.");
+                Assert.That(firstMessage, Is.Not.Null, "The first message should have been received.");
 
                 // Close the client and attempt to receive another message.
 
@@ -1542,7 +1542,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 var firstReceivedBatch = await ReceiveMessagesAsync(halfMessageCount, receiver);
 
-                Assert.IsNotNull(firstReceivedBatch, "The first batch of messages should have been received.");
+                Assert.That(firstReceivedBatch, Is.Not.Null, "The first batch of messages should have been received.");
                 Assert.That(firstReceivedBatch.Count, Is.EqualTo(halfMessageCount), "The first batch of messages should have the correct count.");
 
                 // Close the client and attempt to receive another message batch.
@@ -1574,7 +1574,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 var firstMessage = await receiver.ReceiveMessageAsync();
 
-                Assert.IsNotNull(firstMessage, "The first message should have been received.");
+                Assert.That(firstMessage, Is.Not.Null, "The first message should have been received.");
 
                 // Capture the sequence number and defer the message.
 
@@ -1584,7 +1584,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Receive the deferred message, and defer it again.
 
                 var deferredMessage = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
-                Assert.IsNotNull(deferredMessage, "The deferred message should have been received.");
+                Assert.That(deferredMessage, Is.Not.Null, "The deferred message should have been received.");
 
                 await receiver.DeferMessageAsync(deferredMessage);
 
@@ -1618,7 +1618,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 var firstReceivedBatch = await ReceiveMessagesAsync(halfMessageCount, receiver);
 
-                Assert.IsNotNull(firstReceivedBatch, "The first batch of messages should have been received.");
+                Assert.That(firstReceivedBatch, Is.Not.Null, "The first batch of messages should have been received.");
                 Assert.That(firstReceivedBatch.Count, Is.EqualTo(halfMessageCount), "The first batch of messages should have the correct count.");
 
                 // Capture the sequence numbers and defer the messages.
@@ -1639,7 +1639,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var deferredMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
 
-                Assert.IsNotNull(deferredMessages, "The batch of deferred messages should have been received.");
+                Assert.That(deferredMessages, Is.Not.Null, "The batch of deferred messages should have been received.");
                 Assert.That(deferredMessages.Count, Is.EqualTo(halfMessageCount), "The batch of deferred messages should have the correct count.");
 
                 foreach (var message in deferredMessages)
@@ -1678,7 +1678,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 var firstMessage = await receiver.PeekMessageAsync();
 
-                Assert.IsNotNull(firstMessage, "The first message should have been received.");
+                Assert.That(firstMessage, Is.Not.Null, "The first message should have been received.");
 
                 // Close the client and attempt to peek another message.
 
@@ -1710,7 +1710,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 var firstReceivedBatch = await PeekMessagesAsync(halfMessgageCount, receiver);
 
-                Assert.IsNotNull(firstReceivedBatch, "The first batch of messages should have been received.");
+                Assert.That(firstReceivedBatch, Is.Not.Null, "The first batch of messages should have been received.");
 
                 // Close the client and attempt to peek another message batch.
 
@@ -1880,32 +1880,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     CorrelationId = null
                 };
 
-                Assert.IsNull(message.ReplyTo);
-                Assert.IsNull(message.To);
-                Assert.IsNull(message.CorrelationId);
+                Assert.That(message.ReplyTo, Is.Null);
+                Assert.That(message.To, Is.Null);
+                Assert.That(message.CorrelationId, Is.Null);
 
                 await sender.SendMessageAsync(message);
 
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.IsNull(receivedMessage.ReplyTo);
-                Assert.IsNull(receivedMessage.To);
-                Assert.IsNull(receivedMessage.CorrelationId);
+                Assert.That(receivedMessage.ReplyTo, Is.Null);
+                Assert.That(receivedMessage.To, Is.Null);
+                Assert.That(receivedMessage.CorrelationId, Is.Null);
 
                 // verify default null behavior
 
                 message = new ServiceBusMessage();
 
-                Assert.IsNull(message.ReplyTo);
-                Assert.IsNull(message.To);
-                Assert.IsNull(message.CorrelationId);
+                Assert.That(message.ReplyTo, Is.Null);
+                Assert.That(message.To, Is.Null);
+                Assert.That(message.CorrelationId, Is.Null);
 
                 await sender.SendMessageAsync(message);
 
                 receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.IsNull(receivedMessage.ReplyTo);
-                Assert.IsNull(receivedMessage.To);
-                Assert.IsNull(receivedMessage.CorrelationId);
+                Assert.That(receivedMessage.ReplyTo, Is.Null);
+                Assert.That(receivedMessage.To, Is.Null);
+                Assert.That(receivedMessage.CorrelationId, Is.Null);
 
                 // verify empty string respected
 

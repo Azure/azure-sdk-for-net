@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             PaloAltoNetworksFirewallCollection collection = DefaultResGroup.GetPaloAltoNetworksFirewalls();
             PaloAltoNetworksFirewallResource firewallResource = await collection.GetAsync(DefaultResource1.Data.Name);
-            Assert.IsNotNull(firewallResource);
+            Assert.That(firewallResource, Is.Not.Null);
             AssertTrackedResource(DefaultResource1.Data, firewallResource.Data);
         }
 

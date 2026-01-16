@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("testqueue"));
             Assert.That((bool)await result.ExistsAsync(), Is.True);
         }
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("testqueue"));
             Assert.That((bool)await result.ExistsAsync(), Is.True);
         }
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("testqueue"));
             Assert.That((bool)await result.ExistsAsync(), Is.True);
         }

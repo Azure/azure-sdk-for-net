@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void Data()
         {
             Assert.That(LocalRulestackResource.HasData, Is.True);
-            Assert.NotNull(LocalRulestackResource.Data);
+            Assert.That(LocalRulestackResource.Data, Is.Not.Null);
         }
 
         [TestCase]
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetCertificateObjectLocalRulestackResource()
         {
             LocalRulestackCertificateObjectResource cert = await LocalRulestackResource.GetLocalRulestackCertificateObjectAsync("dotnetSdkTest-cert");
-            Assert.NotNull(cert);
+            Assert.That(cert, Is.Not.Null);
             Assert.That(cert.Data.Name, Is.EqualTo("dotnetSdkTest-cert"));
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetFqdnListLocalRulestackResource()
         {
             LocalRulestackFqdnResource list = await LocalRulestackResource.GetLocalRulestackFqdnAsync("dotnetSdkTest-fqdnList");
-            Assert.NotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Data.Name, Is.EqualTo("dotnetSdkTest-fqdnList"));
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackRuleCollection rulesCollection = LocalRulestackResource.GetLocalRulestackRules();
             LocalRulestackRuleResource rule = await rulesCollection.GetAsync("1000000");
-            Assert.NotNull(rule);
+            Assert.That(rule, Is.Not.Null);
             Assert.That(rule.Data.RuleName, Is.EqualTo("cloud-ngfw-default-rule"));
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetPrefixListResource()
         {
             LocalRulestackPrefixResource list = await LocalRulestackResource.GetLocalRulestackPrefixAsync("dotnetSdkTest-prefixList");
-            Assert.NotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Data.Name, Is.EqualTo("dotnetSdkTest-prefixList"));
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackResource resource = await LocalRulestackResource.GetAsync();
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             Assert.That(LocalRulestackResource.Data.Name, Is.EqualTo(resource.Data.Name));
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void GetAppIds()
         {
             AsyncPageable<string> ids = LocalRulestackResource.GetAppIdsAsync();
-            Assert.NotNull(ids);
+            Assert.That(ids, Is.Not.Null);
         }
 
         [TestCase]
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void GetCountries()
         {
             AsyncPageable<RulestackCountry> countries = LocalRulestackResource.GetCountriesAsync();
-            Assert.NotNull(countries);
+            Assert.That(countries, Is.Not.Null);
         }
 
         [TestCase]
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void GetFirewalls()
         {
             AsyncPageable<string> firewalls = LocalRulestackResource.GetFirewallsAsync();
-            Assert.NotNull(firewalls);
+            Assert.That(firewalls, Is.Not.Null);
         }
 
         [TestCase]
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void GetPredefinedUrlCategories()
         {
             AsyncPageable<PredefinedUrlCategory> response = LocalRulestackResource.GetPredefinedUrlCategoriesAsync();
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [TestCase]
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetSupportInfo()
         {
             FirewallSupportInfo response = await LocalRulestackResource.GetSupportInfoAsync();
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.HelpURL, Is.EqualTo("https://live.paloaltonetworks.com?productSku=PAN-CLOUD-NGFW-AZURE-PAYG"));
         }
     }

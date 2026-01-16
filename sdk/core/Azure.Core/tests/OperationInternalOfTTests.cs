@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
         public void DefaultPropertyInitialization()
         {
             var operationInternal = new OperationInternal<int>(TestOperation.Succeeded(42), ClientDiagnostics, InitialResponse);
-            Assert.IsNotNull(operationInternal.RawResponse);
+            Assert.That(operationInternal.RawResponse, Is.Not.Null);
             Assert.That(operationInternal.HasCompleted, Is.False);
             Assert.That(operationInternal.HasValue, Is.False);
             Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests
 
             Assert.That(thrownException, Is.EqualTo(CustomException));
 
-            Assert.IsNotNull(operationInternal.RawResponse);
+            Assert.That(operationInternal.RawResponse, Is.Not.Null);
             Assert.That(operationInternal.HasValue, Is.False);
             Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
         }
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
 
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            Assert.That(testListener.Scopes, Is.Empty);
         }
 
         [Test]
@@ -236,7 +236,7 @@ namespace Azure.Core.Tests
             if (suppressNestedClientActivities)
             {
                 testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
-                CollectionAssert.IsEmpty(testListener.Scopes);
+                Assert.That(testListener.Scopes, Is.Empty);
             }
 #endif
         }
@@ -259,7 +259,7 @@ namespace Azure.Core.Tests
             if (suppressNestedClientActivities)
             {
                 testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletion", expectedAttributes);
-                CollectionAssert.IsEmpty(testListener.Scopes);
+                Assert.That(testListener.Scopes, Is.Empty);
             }
 #endif
         }
@@ -274,7 +274,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
                 : operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            Assert.That(testListener.Scopes, Is.Empty);
         }
 
         [Test]
@@ -287,7 +287,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)
                 : operationInternal.WaitForCompletion(CancellationToken.None);
 
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            Assert.That(testListener.Scopes, Is.Empty);
         }
 
         [Test]

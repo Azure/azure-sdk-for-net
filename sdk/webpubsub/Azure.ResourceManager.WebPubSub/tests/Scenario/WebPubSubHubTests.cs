@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(webPubSub.Data);
+            Assert.That(webPubSub.Data, Is.Not.Null);
 
             var collection = webPubSub.GetWebPubSubHubs();
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             var hub = await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
-            Assert.IsNotNull(hub.Data);
+            Assert.That(hub.Data, Is.Not.Null);
             Assert.That(hub.Data.Name, Is.EqualTo(webPubSubHubName));
             Assert.That(hub.Data.Properties.AnonymousConnectPolicy, Is.EqualTo("Deny"));
         }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(webPubSub.Data);
+            Assert.That(webPubSub.Data, Is.Not.Null);
 
             var collection = webPubSub.GetWebPubSubHubs();
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(webPubSub.Data);
+            Assert.That(webPubSub.Data, Is.Not.Null);
 
             var collection = webPubSub.GetWebPubSubHubs();
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
             var hub = await collection.GetAsync(webPubSubHubName);
-            Assert.IsNotNull(hub.Value.Data);
+            Assert.That(hub.Value.Data, Is.Not.Null);
             Assert.That(hub.Value.Data.Name, Is.EqualTo(webPubSubHubName));
             Assert.That(hub.Value.Data.Properties.AnonymousConnectPolicy, Is.EqualTo("Deny"));
         }
@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(webPubSub.Data);
+            Assert.That(webPubSub.Data, Is.Not.Null);
 
             var collection = webPubSub.GetWebPubSubHubs();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
             list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]
@@ -139,18 +139,18 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(webPubSub.Data);
+            Assert.That(webPubSub.Data, Is.Not.Null);
 
             var collection = webPubSub.GetWebPubSubHubs();
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             var deleteWebPubSubHub = await collection.GetAsync(webPubSubHubName);
             await deleteWebPubSubHub.Value.DeleteAsync(WaitUntil.Completed);
             list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

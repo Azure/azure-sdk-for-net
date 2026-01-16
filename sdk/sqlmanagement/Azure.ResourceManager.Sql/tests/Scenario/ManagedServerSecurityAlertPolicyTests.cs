@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             string securityAlertPoliciesName = "Default";
             var collection = managedInstance.GetManagedServerSecurityAlertPolicies();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 RetentionDays = 0,
             };
             var securityAlertPolicie = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPoliciesName, data);
-            Assert.IsNotNull(securityAlertPolicie.Value.Data);
+            Assert.That(securityAlertPolicie.Value.Data, Is.Not.Null);
             Assert.That(securityAlertPolicie.Value.Data.Name, Is.EqualTo(securityAlertPoliciesName));
             Assert.That(securityAlertPolicie.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
 
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 3.Get
             var getsecurityAlertPolicie = await collection.GetAsync(securityAlertPoliciesName);
-            Assert.IsNotNull(getsecurityAlertPolicie.Value.Data);
+            Assert.That(getsecurityAlertPolicie.Value.Data, Is.Not.Null);
             Assert.That(getsecurityAlertPolicie.Value.Data.Name, Is.EqualTo(securityAlertPoliciesName));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(securityAlertPoliciesName));
         }

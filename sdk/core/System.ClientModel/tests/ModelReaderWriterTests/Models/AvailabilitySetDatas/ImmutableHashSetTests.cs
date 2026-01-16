@@ -32,8 +32,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
         protected override void CompareCollections(ImmutableHashSet<AvailabilitySetData> expected, ImmutableHashSet<AvailabilitySetData> actual, string format)
         {
-            Assert.IsNotNull(expected);
-            Assert.IsNotNull(actual);
+            Assert.That(expected, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
 
             Assert.That(actual.Count, Is.EqualTo(expected.Count));
             foreach (var actualItem in actual)

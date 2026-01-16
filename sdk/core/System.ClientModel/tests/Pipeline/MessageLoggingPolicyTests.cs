@@ -348,7 +348,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
 
         EventWrittenEventArgs logEvent = listener.GetAndValidateSingleEvent(RequestContentEvent, "RequestContent", EventLevel.Verbose, SystemClientModelEventSourceName); // RequestContentEvent
         Assert.That(logEvent.GetProperty<byte[]>("content"), Is.EqualTo(requestContentLimited));
-        CollectionAssert.IsEmpty(listener.EventsById(RequestContentTextEvent));
+        Assert.That(listener.EventsById(RequestContentTextEvent), Is.Empty);
     }
 
     [Test]
@@ -385,7 +385,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         TestLogger logger = factory!.GetLogger(LoggingPolicyCategoryName);
         LoggerEvent logEvent = logger.GetAndValidateSingleEvent(RequestContentEvent, "RequestContent", LogLevel.Debug);
         Assert.That(logEvent.GetValueFromArguments<byte[]>("content"), Is.EqualTo(requestContentLimited));
-        CollectionAssert.IsEmpty(logger.EventsById(RequestContentTextEvent));
+        Assert.That(logger.EventsById(RequestContentTextEvent), Is.Empty);
     }
 
     [Test]
@@ -420,7 +420,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         EventWrittenEventArgs requestEvent = listener!.GetAndValidateSingleEvent(RequestContentTextEvent, "RequestContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
         Assert.That(requestEvent.GetProperty<string>("content"), Is.EqualTo("Hello"));
 
-        CollectionAssert.IsEmpty(listener!.EventsById(RequestContentEvent));
+        Assert.That(listener!.EventsById(RequestContentEvent), Is.Empty);
     }
 
     [Test]
@@ -456,7 +456,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
         LoggerEvent logEvent = logger.GetAndValidateSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
         Assert.That(logEvent.GetValueFromArguments<string>("content"), Is.EqualTo("Hello"));
-        CollectionAssert.IsEmpty(logger.EventsById(RequestContentEvent)); // RequestContentEvent
+        Assert.That(logger.EventsById(RequestContentEvent), Is.Empty); // RequestContentEvent
     }
 
     [Test]

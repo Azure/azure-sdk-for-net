@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string solutionName = Recording.GenerateAssetName("solution");
             var solution = await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
             var list = await _iotSecuritySolutionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateIotSecuritySolutionResource(list.First(item => item.Data.Name == solutionName), solutionName);
         }
 
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateIotSecuritySolutionResource(IotSecuritySolutionResource solution, string solutionName)
         {
-            Assert.IsNotNull(solution);
-            Assert.IsNotNull(solution.Data.Id);
+            Assert.That(solution, Is.Not.Null);
+            Assert.That(solution.Data.Id, Is.Not.Null);
             Assert.That(solution.Data.Name, Is.EqualTo(solutionName));
             Assert.That(solution.Data.DisplayName, Is.EqualTo(solutionName));
             Assert.That(solution.Data.IotHubs.Count, Is.EqualTo(1));

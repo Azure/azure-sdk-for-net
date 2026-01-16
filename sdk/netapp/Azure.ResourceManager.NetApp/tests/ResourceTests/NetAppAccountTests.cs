@@ -94,22 +94,22 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyNetAppAccountProperties(account1, true, location: AzureLocation.NorthEurope);
             AssertNetAppAccountEqual(account1, await account1.GetAsync());
-            Assert.IsNotEmpty(account1.Data.ActiveDirectories);
-            Assert.NotNull(account1.Data.ActiveDirectories[0]);
+            Assert.That(account1.Data.ActiveDirectories, Is.Not.Empty);
+            Assert.That(account1.Data.ActiveDirectories[0], Is.Not.Null);
 
             //validate if created successfully
             NetAppAccountResource account2 = await netAppAccountCollection.GetAsync(accountName);
             VerifyNetAppAccountProperties(account2, true, location: AzureLocation.NorthEurope);
             AssertNetAppAccountEqual(account1, account2);
             //Validate ActiveDirectory
-            Assert.IsNotEmpty(account2.Data.ActiveDirectories);
-            Assert.NotNull(account2.Data.ActiveDirectories[0]);
+            Assert.That(account2.Data.ActiveDirectories, Is.Not.Empty);
+            Assert.That(account2.Data.ActiveDirectories[0], Is.Not.Null);
             account2.Data.ActiveDirectories[0].Should().BeEquivalentTo(account1.Data.ActiveDirectories[0]);
 
             //remove ad
             account1.Data.ActiveDirectories.Clear();
             account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, account1.Data)).Value;
-            Assert.IsEmpty(account1.Data.ActiveDirectories);
+            Assert.That(account1.Data.ActiveDirectories, Is.Empty);
 
             //delete NetApp account
             await account1.DeleteAsync(WaitUntil.Completed);

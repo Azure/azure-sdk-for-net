@@ -86,7 +86,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        CollectionAssert.AreEqual(bytes, requestBytes);
+        Assert.That(requestBytes, Is.EqualTo(bytes).AsCollection);
     }
 
     [Test]

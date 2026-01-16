@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string schemaName = Recording.GenerateAssetName("schema");
             var schema = await CreateSchema(schemaName);
-            Assert.IsNotNull(schema);
+            Assert.That(schema, Is.Not.Null);
             Assert.That(schema.Data.Name, Is.EqualTo(schemaName));
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string schemaName = Recording.GenerateAssetName("schema");
             await CreateSchema(schemaName);
             var schema = await _schemaCollection.GetAsync(schemaName);
-            Assert.IsNotNull(schema);
+            Assert.That(schema, Is.Not.Null);
             Assert.That(schema.Value.Data.Name, Is.EqualTo(schemaName));
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string schemaName = Recording.GenerateAssetName("schema");
             await CreateSchema(schemaName);
             var list = await _schemaCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
 
                 ClientSecretCredential cred = provider.Credential as ClientSecretCredential;
 
-                Assert.NotNull(cred);
+                Assert.That(cred, Is.Not.Null);
 
                 Assert.That(cred.ClientId, Is.EqualTo("mockclientid"));
 
@@ -78,13 +78,13 @@ namespace Azure.Identity.Tests
             {
                 var provider = new EnvironmentCredential();
                 var cred = provider.Credential as ClientCertificateCredential;
-                Assert.NotNull(cred);
+                Assert.That(cred, Is.Not.Null);
                 Assert.That(cred.ClientId, Is.EqualTo("mockclientid"));
                 Assert.That(cred.TenantId, Is.EqualTo("mocktenantid"));
 
                 var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
 
-                Assert.NotNull(certProvider);
+                Assert.That(certProvider, Is.Not.Null);
                 Assert.That(certProvider.CertificatePath, Is.EqualTo("mockcertificatepath"));
                 Assert.That(certProvider.CertificatePassword, Is.EqualTo(expPassword));
                 Assert.That(cred.Client._includeX5CClaimHeader, Is.EqualTo(includeX5C == "true"));
@@ -131,7 +131,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
             Assert.That(ex.InnerException.Message, Is.EqualTo(expectedInnerExMessage));
 

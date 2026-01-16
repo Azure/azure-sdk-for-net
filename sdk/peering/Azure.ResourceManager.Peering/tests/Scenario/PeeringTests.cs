@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Tests
             data.Direct.PeerAsnId = peerAsn.Data.Id;
             data.Direct.DirectPeeringType = DirectPeeringType.Edge;
             var peering = await _peeringCollection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data);
-            Assert.IsNotNull(peering);
+            Assert.That(peering, Is.Not.Null);
             Assert.That(peering.Value.Data.Name, Is.EqualTo(peeringName));
 
             // Exist
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Peering.Tests
 
             // Get
             var getResponse = await _peeringCollection.GetAsync(peeringName);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Value.Data.Name, Is.EqualTo(peeringName));
 
             // GetAll
             var list = await _peeringCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsNotNull(list.First(item => item.Data.Name == peeringName));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.First(item => item.Data.Name == peeringName), Is.Not.Null);
 
             // Delete
             await peering.Value.DeleteAsync(WaitUntil.Completed);

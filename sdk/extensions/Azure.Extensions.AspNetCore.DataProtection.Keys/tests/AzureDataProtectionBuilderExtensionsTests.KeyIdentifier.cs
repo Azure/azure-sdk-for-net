@@ -25,7 +25,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifierFactory"));
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifierFactory"));
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
     }

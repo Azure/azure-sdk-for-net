@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Tests
             params string[] expectedKeys)
         {
             List<SearchResult<T>> docs = await response.GetResultsAsync().ToListAsync();
-            CollectionAssert.AreEquivalent(expectedKeys, docs.Select(keyAccessor));
+            Assert.That(docs.Select(keyAccessor), Is.EquivalentTo(expectedKeys));
         }
 
         [Test]
@@ -46,11 +46,11 @@ namespace Azure.Search.Documents.Tests
                         QueryType = SearchQueryType.Semantic
                     });
 
-            Assert.NotNull(response.SemanticSearch.Answers);
+            Assert.That(response.SemanticSearch.Answers, Is.Not.Null);
             Assert.That(response.SemanticSearch.Answers.Count, Is.EqualTo(1));
 
-            Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
-            Assert.NotNull(response.SemanticSearch.Answers[0].Text);
+            Assert.That(response.SemanticSearch.Answers[0].Highlights, Is.Not.Null);
+            Assert.That(response.SemanticSearch.Answers[0].Text, Is.Not.Null);
 
             await AssertKeysEqual(
                  response,

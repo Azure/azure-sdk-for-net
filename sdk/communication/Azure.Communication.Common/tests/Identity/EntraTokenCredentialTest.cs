@@ -290,7 +290,7 @@ namespace Azure.Communication.Identity
 
             // Act & Assert
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
-            StringAssert.Contains(lastRetryErrorMessage, ex?.Message);
+            Assert.That(ex?.Message, Does.Contain(lastRetryErrorMessage));
         }
 
         [Test, TestCaseSource(nameof(invalidScopes))]
@@ -313,7 +313,7 @@ namespace Azure.Communication.Identity
 
             // Act & Assert
             var ex = Assert.ThrowsAsync<ArgumentException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
-            StringAssert.Contains("Scopes validation failed. Ensure all scopes start with either", ex?.Message);
+            Assert.That(ex?.Message, Does.Contain("Scopes validation failed. Ensure all scopes start with either"));
         }
 
         [Test]

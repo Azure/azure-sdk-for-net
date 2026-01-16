@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await CreatePartnerNamespace(_resourceGroup, partnerNamespaceName);
             // Get all partner namespaces created within a resourceGroup
             var list = await _partnerNamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePartnerNamespace(list.First(item => item.Data.Name == partnerNamespaceName), partnerNamespaceName);
-            Assert.NotNull(list);
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.That(list, Is.Not.Null);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(partnerNamespaceName, Is.EqualTo(list.FirstOrDefault().Data.Name));
             // Get all partner namespaces created within the subscription irrespective of the resourceGroup
             var namespacesInAzureSubscription = await DefaultSubscription.GetPartnerNamespacesAsync().ToEnumerableAsync();
-            Assert.NotNull(namespacesInAzureSubscription);
-            Assert.GreaterOrEqual(namespacesInAzureSubscription.Count, 1);
+            Assert.That(namespacesInAzureSubscription, Is.Not.Null);
+            Assert.That(namespacesInAzureSubscription.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await topic.UpdateAsync(WaitUntil.Completed, patch);
             // Retrieve the updated partner namespace
             var updatedTopic = await _partnerNamespaceCollection.GetAsync(partnerNamespaceName);
-            Assert.IsNotNull(updatedTopic.Value);
+            Assert.That(updatedTopic.Value, Is.Not.Null);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string topicName = Recording.GenerateAssetName("PartnerNamespace");
             var topic = await CreatePartnerNamespace(_resourceGroup, topicName);
             var keys = await topic.GetSharedAccessKeysAsync();
-            Assert.IsNotNull(keys);
+            Assert.That(keys, Is.Not.Null);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string topicName = Recording.GenerateAssetName("PartnerNamespace");
             var namespaceResource = await CreatePartnerNamespace(_resourceGroup, topicName);
             var newKey = await namespaceResource.RegenerateKeyAsync(new PartnerNamespaceRegenerateKeyContent("key1"));
-            Assert.IsNotNull(newKey);
+            Assert.That(newKey, Is.Not.Null);
         }
 
         [Test]
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var response = await partnerNamespace.GetPartnerNamespacePrivateLinkResourceAsync(privateLinkResourceName);
 
             // Assert
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Data.Name, Is.EqualTo(privateLinkResourceName));
 
             // Cleanup
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private void ValidatePartnerNamespace(PartnerNamespaceResource partnerNamespace, string partnerNamespaceName)
         {
-            Assert.IsNotNull(partnerNamespace);
-            Assert.IsNotNull(partnerNamespace.Data.Id);
+            Assert.That(partnerNamespace, Is.Not.Null);
+            Assert.That(partnerNamespace.Data.Id, Is.Not.Null);
             Assert.That(partnerNamespace.Data.Name, Is.EqualTo(partnerNamespaceName));
             Assert.That(partnerNamespace.Data.IsLocalAuthDisabled, Is.True);
             Assert.That(partnerNamespace.Data.Location, Is.EqualTo(_resourceGroup.Data.Location));

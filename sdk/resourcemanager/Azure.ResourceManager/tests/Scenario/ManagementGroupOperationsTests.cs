@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Tests
                 descendant = desc;
                 break;
             }
-            Assert.IsNull(descendant); //should have no descendants
+            Assert.That(descendant, Is.Null); //should have no descendants
         }
 
         [RecordedTest]

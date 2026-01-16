@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Relay.Tests
 
             //Regenerate Keys on the authorization rule
             RelayAccessKeys keys1 = await _relayAuthRuleResource.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             RelayAccessKeys keys2 = await _relayAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Relay.Tests
 
             //Regenerate Keys on the authorization rule
             RelayAccessKeys keys1 = await _relayAuthRuleResource.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             RelayAccessKeys keys2 = await _relayAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.Relay.Tests
 
             //Regenerate Keys on the authorization rule
             RelayAccessKeys keys1 = await _wcfAuthRuleResource.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             RelayAccessKeys keys2 = await _wcfAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)

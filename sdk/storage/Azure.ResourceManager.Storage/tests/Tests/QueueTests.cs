@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
             StorageQueueResource queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
-            Assert.IsNotNull(queue1);
+            Assert.That(queue1, Is.Not.Null);
             Assert.That(storageQueueName, Is.EqualTo(queue1.Id.Name));
 
             //validate if successfully created
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.That((bool)await _storageQueueCollection.ExistsAsync(storageQueueName), Is.True);
             Assert.That((bool)await _storageQueueCollection.ExistsAsync(storageQueueName + "1"), Is.False);
             StorageQueueData queueData = queue2.Data;
-            Assert.IsEmpty(queueData.Metadata);
+            Assert.That(queueData.Metadata, Is.Empty);
 
             string queueName2 = Recording.GenerateAssetName("queue2");
             var data = new StorageQueueData()
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Storage.Tests
                     queue4 = queue;
             }
             Assert.That(count, Is.EqualTo(2));
-            Assert.IsNotNull(queue3);
-            Assert.IsNotNull(queue4);
+            Assert.That(queue3, Is.Not.Null);
+            Assert.That(queue4, Is.Not.Null);
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
             StorageQueueResource queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
-            Assert.IsNotNull(queue1);
+            Assert.That(queue1, Is.Not.Null);
             Assert.That(storageQueueName, Is.EqualTo(queue1.Id.Name));
 
             //update queue's meta data
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.Storage.Tests
             queueData.Metadata.Add("key2", "value2");
             StorageQueueResource queue2 = await queue1.UpdateAsync(queueData);
             //validate
-            Assert.NotNull(queue2);
-            Assert.NotNull(queue2.Data.Metadata);
+            Assert.That(queue2, Is.Not.Null);
+            Assert.That(queue2.Data.Metadata, Is.Not.Null);
             Assert.That(queue2.Data.Metadata["key1"], Is.EqualTo("value1"));
             Assert.That(queue2.Data.Metadata["key2"], Is.EqualTo("value2"));
         }

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void Data()
         {
             Assert.That(LocalRulesResource.HasData, Is.True);
-            Assert.NotNull(LocalRulesResource.Data);
+            Assert.That(LocalRulesResource.Data, Is.Not.Null);
         }
 
         [TestCase]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetCounters()
         {
             FirewallRuleCounter counter = (await LocalRulesResource.GetCountersAsync()).Value;
-            Assert.IsNotNull(counter);
+            Assert.That(counter, Is.Not.Null);
             Assert.That(LocalRulesResource.Data.RuleName, Is.EqualTo(counter.RuleName));
             Assert.That(LocalRulestackResource.Data.Name, Is.EqualTo(counter.RuleStackName));
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackRuleResource resource = await LocalRulestackResource.GetLocalRulestackRuleAsync("1000000");
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             Assert.That(LocalRulesResource.Data.RuleName, Is.EqualTo(resource.Data.RuleName));
         }
     }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             // Ensure the job is disabled before next test
             // Poll till the job is disabled
             AutoImportJobResource autoImportJob = await this.DefaultAmlFS.GetAutoImportJobs().GetAsync(name);
-            Assert.IsNotNull(autoImportJob);
+            Assert.That(autoImportJob, Is.Not.Null);
             while (autoImportJob.Data.State != AutoImportJobState.Disabled)
             {
                 await Task.Delay(TimeSpan.FromSeconds(5));

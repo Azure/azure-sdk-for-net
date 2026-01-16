@@ -21,7 +21,7 @@ namespace Azure.Core.Tests.DelayStrategies
             OperationPoller poller = new OperationPoller();
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
-            Assert.IsNotNull(delayStrategy);
+            Assert.That(delayStrategy, Is.Not.Null);
             Assert.That(delayStrategy.GetType(), Is.EqualTo(typeof(FixedDelayWithNoJitterStrategy)));
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Core.Tests.DelayStrategies
             OperationPoller poller = new OperationPoller(sequentialDelay);
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
-            Assert.IsNotNull(delayStrategy);
+            Assert.That(delayStrategy, Is.Not.Null);
             Assert.That(delayStrategy.GetType(), Is.EqualTo(typeof(SequentialDelayStrategy)));
         }
 

@@ -182,7 +182,7 @@ namespace Azure.Identity.Broker.Tests
 
         private void ValidateSingleCredSelection(Type expectedType, IReadOnlyList<TokenCredential> chain)
         {
-            Assert.IsNotNull(chain);
+            Assert.That(chain, Is.Not.Null);
             Assert.That(chain.Single(cred => cred.GetType() == expectedType).GetType() == expectedType, Is.True, $"Chain does not contain expected credential type: {expectedType}");
             Assert.That(chain.Count == 1, Is.True, $"Chain contains unexpected number of credentials: {chain.Count}");
         }

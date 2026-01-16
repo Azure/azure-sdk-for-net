@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Name, Is.EqualTo(ipConfigName));
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].PublicIPAddress.Id, Is.EqualTo(getPublicIpAddressResponse.Value.Data.Id));
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Subnet.Id, Is.EqualTo(getSubnetResponse.Value.Data.Id));
-            Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
+            Assert.That(getNicResponse.Value.Data.ResourceGuid, Is.Not.Null);
 
             // Verify List IPConfigurations in NetworkInterface
             var networkInterfaceOperations = (await resourceGroup.GetNetworkInterfaces().GetAsync(nicName)).Value;
             AsyncPageable<NetworkInterfaceIPConfigurationResource> listNicIPConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIPConfigurations().GetAllAsync();
             List<NetworkInterfaceIPConfigurationResource> listNicIPConfigurations = await listNicIPConfigurationsAP.ToEnumerableAsync();
             Assert.That(listNicIPConfigurations.First().Data.Name, Is.EqualTo(ipConfigName));
-            Assert.NotNull(listNicIPConfigurations.First().Data.ETag);
+            Assert.That(listNicIPConfigurations.First().Data.ETag, Is.Not.Null);
 
             // Verify Get IpConfiguration in NetworkInterface
             // TODO: Update after ADO 5975
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify List LoadBalancers in NetworkInterface
             AsyncPageable<LoadBalancerResource> listNicLoadBalancersAP = getNicResponse.Value.GetNetworkInterfaceLoadBalancersAsync();
             List<LoadBalancerResource> listNicLoadBalancers = await listNicLoadBalancersAP.ToEnumerableAsync();
-            Assert.IsEmpty(listNicLoadBalancers);
+            Assert.That(listNicLoadBalancers, Is.Empty);
 
             // Get all Nics
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.Network.Tests
             // Get all Nics in subscription
             AsyncPageable<NetworkInterfaceResource> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
             List<NetworkInterfaceResource> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listNicSubscription);
+            Assert.That(listNicSubscription, Is.Not.Empty);
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete PublicIPAddress
             await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].PublicIPAddress.Id, Is.EqualTo(getPublicIpAddressResponse.Value.Id));
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Subnet.Id, Is.EqualTo(getSubnetResponse.Value.Id));
             Assert.That(getNicResponse.Value.Data.IPConfigurations[1].Subnet.Id, Is.EqualTo(getSubnetResponse.Value.Id));
-            Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
+            Assert.That(getNicResponse.Value.Data.ResourceGuid, Is.Not.Null);
 
             // Get all Nics
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
@@ -397,14 +397,14 @@ namespace Azure.ResourceManager.Network.Tests
             // Get all Nics in subscription
             AsyncPageable<NetworkInterfaceResource> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
             List<NetworkInterfaceResource> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listNicSubscription);
+            Assert.That(listNicSubscription, Is.Not.Empty);
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete PublicIPAddress
             await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -567,14 +567,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(getNicResponse.Value.Data.DnsSettings.InternalDnsNameLabel, Is.EqualTo("idnstest"));
             Assert.That(getNicResponse.Value.Data.DnsSettings.AppliedDnsServers.Count, Is.EqualTo(0));
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Primary, Is.True);
-            Assert.NotNull(getNicResponse.Value.Data.DnsSettings.InternalFqdn);
+            Assert.That(getNicResponse.Value.Data.DnsSettings.InternalFqdn, Is.Not.Null);
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(getNicResponse.Value.Data.VirtualMachine, Is.Null);
             Assert.That(getNicResponse.Value.Data.MacAddress, Is.Null);
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Name, Is.EqualTo(ipConfigName));
-            Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
+            Assert.That(getNicResponse.Value.Data.ResourceGuid, Is.Not.Null);
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Subnet.Id, Is.EqualTo(getSubnetResponse.Value.Id));
             Assert.That(getNicResponse.Value.Data.IPConfigurations[0].PrivateIPAddressVersion, Is.EqualTo(NetworkIPVersion.IPv4));
 
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get all Nics in subscription
             AsyncPageable<NetworkInterfaceResource> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
             List<NetworkInterfaceResource> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listNicSubscription);
+            Assert.That(listNicSubscription, Is.Not.Empty);
 
             // Delete Nic
             var deleteOperation = await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Network.Tests
             ;
             getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete PublicIPAddress
             await putPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -805,17 +805,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(getNicResponse.Value.Data.DnsSettings.DnsServers.Contains("1.0.0.2"), Is.True);
             Assert.That(getNicResponse.Value.Data.DnsSettings.InternalDnsNameLabel, Is.EqualTo("idnstest"));
             Assert.That(getNicResponse.Value.Data.DnsSettings.AppliedDnsServers.Count, Is.EqualTo(0));
-            Assert.NotNull(getNicResponse.Value.Data.DnsSettings.InternalFqdn);
+            Assert.That(getNicResponse.Value.Data.DnsSettings.InternalFqdn, Is.Not.Null);
 
             // IDnsSuffix is a read-only property. Ensure the response contains some value.
-            Assert.NotNull(getNicResponse.Value.Data.DnsSettings.InternalDomainNameSuffix);
+            Assert.That(getNicResponse.Value.Data.DnsSettings.InternalDomainNameSuffix, Is.Not.Null);
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete NSG
             await getNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -1107,14 +1107,14 @@ namespace Azure.ResourceManager.Network.Tests
             var effectiveNsgsOperation = await getNicResponse.Value.GetEffectiveNetworkSecurityGroupsAsync(WaitUntil.Completed);
             Response<EffectiveNetworkSecurityGroupListResult> effectiveNsgs = await effectiveNsgsOperation.WaitForCompletionAsync();
             ;
-            Assert.NotNull(effectiveNsgs);
+            Assert.That(effectiveNsgs, Is.Not.Null);
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete NSG
             await getNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -1204,14 +1204,14 @@ namespace Azure.ResourceManager.Network.Tests
             var effectiveRouteTableOperation = await getNicResponse.Value.GetEffectiveRouteTableAsync(WaitUntil.Completed);
             Response<EffectiveRouteListResult> effectiveRouteTable = await effectiveRouteTableOperation.WaitForCompletionAsync();
             ;
-            Assert.NotNull(effectiveRouteTable);
+            Assert.That(effectiveRouteTable, Is.Not.Null);
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getListNicResponse);
+            Assert.That(getListNicResponse, Is.Empty);
 
             // Delete routetable
             await putRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -1248,8 +1248,8 @@ namespace Azure.ResourceManager.Network.Tests
             nic = await nic.GetAsync("IPConfigurations/Subnet");
             await foreach (NetworkInterfaceIPConfigurationResource ipconfig in nic.GetNetworkInterfaceIPConfigurations())
             {
-                Assert.NotNull(ipconfig.Data.Subnet);
-                Assert.NotNull(ipconfig.Data.Subnet.Id);
+                Assert.That(ipconfig.Data.Subnet, Is.Not.Null);
+                Assert.That(ipconfig.Data.Subnet.Id, Is.Not.Null);
             }
         }
     }

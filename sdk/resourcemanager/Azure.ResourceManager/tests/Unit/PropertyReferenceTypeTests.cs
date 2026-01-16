@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Tests
         {
             var type = typeof(PropertyReferenceTypeAttribute);
             var fieldInfo = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "OptionalProperties");
-            Assert.NotNull(fieldInfo, $"Field 'OptionalProperties' is not found");
+            Assert.That(fieldInfo, Is.Not.Null, $"Field 'OptionalProperties' is not found");
             Assert.That(fieldInfo.PropertyType, Is.EqualTo(typeof(string[])));
             Assert.That(fieldInfo.CanRead, Is.True);
             Assert.That(fieldInfo.CanWrite, Is.False);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
             {
                 var serializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), SerializationConstructor)).FirstOrDefault();
-                Assert.IsNotNull(serializationCtor);
+                Assert.That(serializationCtor, Is.Not.Null);
                 Assert.That(serializationCtor.IsPublic, Is.False, $"Serialization ctor for {refType.Name} should not be public");
             }
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Tests
             {
                 var initializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), InitializationConstructor)).FirstOrDefault();
-                Assert.IsNotNull(initializationCtor, $"Initialization ctro was null for {refType.Name}");
+                Assert.That(initializationCtor, Is.Not.Null, $"Initialization ctro was null for {refType.Name}");
                 Assert.That(refType.IsAbstract == initializationCtor.IsFamily, Is.True, $"If {refType.Name} is abstract then its initialization ctor should be protected");
                 Assert.That(refType.IsAbstract != initializationCtor.IsPublic, Is.True, $"If {refType.Name} is abstract then its initialization ctor should be public");
                 Assert.That(initializationCtor.IsAssembly, Is.False, $"Initialization ctor for {refType.Name} should not be internal");

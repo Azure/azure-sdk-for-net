@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
         {
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             var notificationHubNamespace = await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
-            Assert.IsNotNull(notificationHubNamespace);
+            Assert.That(notificationHubNamespace, Is.Not.Null);
             Assert.That(notificationHubNamespace.Data.Name, Is.EqualTo(notificationHubNamespaceName));
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
             var notificationHubNamespace = await _namespaceCollection.GetAsync(notificationHubNamespaceName);
-            Assert.IsNotNull(notificationHubNamespace);
+            Assert.That(notificationHubNamespace, Is.Not.Null);
             Assert.That(notificationHubNamespace.Value.Data.Name, Is.EqualTo(notificationHubNamespaceName));
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
             var list = await _namespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

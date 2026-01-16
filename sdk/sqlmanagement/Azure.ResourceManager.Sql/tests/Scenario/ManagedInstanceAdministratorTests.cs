@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string vnetName = Recording.GenerateAssetName("vnet-");
             string adminName = Recording.GenerateAssetName("admin-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             var collection = managedInstance.GetManagedInstanceAdministrators();
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 TenantId = Guid.NewGuid(),
             };
             var admin = await collection.CreateOrUpdateAsync(WaitUntil.Completed, adminName, data);
-            Assert.NotNull(admin.Value.Data);
+            Assert.That(admin.Value.Data, Is.Not.Null);
             Assert.That(admin.Value.Data.Name, Is.EqualTo(adminName));
 
             // 2.CheckIfExist
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 3.Get
             var getAdmin = await collection.GetAsync(adminName);
-            Assert.NotNull(getAdmin.Value.Data);
+            Assert.That(getAdmin.Value.Data, Is.Not.Null);
             Assert.That(admin.Value.Data.Name, Is.EqualTo(getAdmin));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // 5.Delete
             var deleteAdmin = await collection.GetAsync(adminName);
             await   deleteAdmin.Value.DeleteAsync(WaitUntil.Completed);
             list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

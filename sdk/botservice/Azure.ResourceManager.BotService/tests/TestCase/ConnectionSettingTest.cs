@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.BotService.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.That(count, Is.GreaterThanOrEqualTo(3));
             //4.Exist
             Assert.That((bool)await collection.ExistsAsync(settingName), Is.True);
             Assert.That((bool)await collection.ExistsAsync(settingName + "1"), Is.False);

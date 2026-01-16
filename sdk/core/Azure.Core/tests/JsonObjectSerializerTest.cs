@@ -150,7 +150,7 @@ namespace Azure.Core.Tests
                         break;
 
                     default:
-                        Assert.IsNull(propertyName, $"Unexpected serialized name '{propertyName}' for member {member.DeclaringType}.{member.Name}");
+                        Assert.That(propertyName, Is.Null, $"Unexpected serialized name '{propertyName}' for member {member.DeclaringType}.{member.Name}");
                         break;
                 }
             }

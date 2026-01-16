@@ -143,7 +143,7 @@ namespace Azure.Core.Tests
             Assert.That(properties["doubleValue"].GetType(), Is.EqualTo(typeof(double)));
             Assert.That(properties["trueValue"].GetType(), Is.EqualTo(typeof(bool)));
             Assert.That(properties["falseValue"].GetType(), Is.EqualTo(typeof(bool)));
-            Assert.IsNull(properties["nullValue"]);
+            Assert.That(properties["nullValue"], Is.Null);
 
             Assert.That(GetSerializedString(model), Is.EqualTo(expected));
         }
@@ -163,18 +163,18 @@ namespace Azure.Core.Tests
             Assert.That(AllValuesAreType(typeof(bool), properties["boolArray"]), Is.True);
             foreach (var item in properties["nullArray"] as object[])
             {
-                Assert.IsNull(item);
+                Assert.That(item, Is.Null);
             }
             var mixList = properties["mixedNullArray"] as object[];
             for (int i = 0; i < 2; i++)
             {
                 if (i == 0)
                 {
-                    Assert.IsNull(mixList[i]);
+                    Assert.That(mixList[i], Is.Null);
                 }
                 else
                 {
-                    Assert.IsNotNull(mixList[i]);
+                    Assert.That(mixList[i], Is.Not.Null);
                 }
             }
             Assert.That(GetSerializedString(model), Is.EqualTo(expected));
@@ -190,10 +190,10 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 3; i++)
             {
                 var obj = objArray[i] as Dictionary<string, object>;
-                Assert.IsNotNull(obj);
+                Assert.That(obj, Is.Not.Null);
                 Assert.That(obj["intValue"], Is.EqualTo(i));
                 var innerObj = obj["objectValue"] as Dictionary<string, object>;
-                Assert.IsNotNull(innerObj);
+                Assert.That(innerObj, Is.Not.Null);
                 Assert.That(innerObj["stringValue"], Is.EqualTo(i.ToString()));
             }
             Assert.That(GetSerializedString(model), Is.EqualTo(expected));
@@ -206,11 +206,11 @@ namespace Azure.Core.Tests
             var model = BinaryData.FromString(expected);
             var properties = model.ToObjectFromJson() as Dictionary<string, object>;
             var arrayArray = properties["arrayArray"] as object[];
-            Assert.IsNotNull(arrayArray);
+            Assert.That(arrayArray, Is.Not.Null);
             for (int i = 0; i < 2; i++)
             {
                 var array = arrayArray[i] as object[];
-                Assert.IsNotNull(array);
+                Assert.That(array, Is.Not.Null);
                 foreach (var item in array)
                 {
                     Assert.That(item, Is.EqualTo(i));
@@ -540,8 +540,8 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.IsNull(data.ToObject<Model>(serializer));
-                Assert.IsNull(await data.ToObjectAsync<Model>(serializer));
+                Assert.That(data.ToObject<Model>(serializer), Is.Null);
+                Assert.That(await data.ToObjectAsync<Model>(serializer), Is.Null);
             }
         }
 
@@ -608,8 +608,8 @@ namespace Azure.Core.Tests
 
             async Task AssertData(BinaryData data)
             {
-                Assert.IsNull(data.ToObject<Model>(serializer));
-                Assert.IsNull(await data.ToObjectAsync<Model>(serializer));
+                Assert.That(data.ToObject<Model>(serializer), Is.Null);
+                Assert.That(await data.ToObjectAsync<Model>(serializer), Is.Null);
             }
         }
 

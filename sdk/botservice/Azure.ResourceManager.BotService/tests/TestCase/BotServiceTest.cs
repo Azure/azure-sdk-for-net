@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BotService.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             //4.Exist
             Assert.That((bool)await collection.ExistsAsync(botName), Is.True);
             Assert.That((bool)await collection.ExistsAsync(botName + "1"), Is.False);

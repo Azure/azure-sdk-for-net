@@ -147,10 +147,10 @@ namespace Azure.AI.FormRecognizer.Tests
 
         protected void ValidatePrebuiltForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(recognizedForm.FormType);
+            Assert.That(recognizedForm.FormType, Is.Not.Null);
             Assert.That(recognizedForm.FormTypeConfidence.HasValue, Is.True);
             Assert.That(recognizedForm.FormTypeConfidence.Value, Is.LessThanOrEqualTo(1.0).Within(0.005));
-            Assert.IsNull(recognizedForm.ModelId);
+            Assert.That(recognizedForm.ModelId, Is.Null);
 
             ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
         }
@@ -160,7 +160,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(recognizedForm.PageRange.FirstPageNumber, Is.EqualTo(expectedFirstPageNumber));
             Assert.That(recognizedForm.PageRange.LastPageNumber, Is.EqualTo(expectedLastPageNumber));
 
-            Assert.NotNull(recognizedForm.Pages);
+            Assert.That(recognizedForm.Pages, Is.Not.Null);
             Assert.That(recognizedForm.Pages.Count, Is.EqualTo(expectedLastPageNumber - expectedFirstPageNumber + 1));
 
             int expectedPageNumber = expectedFirstPageNumber;
@@ -173,7 +173,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedPageNumber++;
             }
 
-            Assert.NotNull(recognizedForm.Fields);
+            Assert.That(recognizedForm.Fields, Is.Not.Null);
 
             foreach (var field in recognizedForm.Fields.Values)
             {
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer.Tests
                     continue;
                 }
 
-                Assert.NotNull(field.Name);
+                Assert.That(field.Name, Is.Not.Null);
 
                 Assert.That(field.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(field.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
@@ -207,9 +207,9 @@ namespace Azure.AI.FormRecognizer.Tests
                 return;
             }
 
-            Assert.Greater(fieldData.PageNumber, 0);
+            Assert.That(fieldData.PageNumber, Is.GreaterThan(0));
 
-            Assert.NotNull(fieldData.BoundingBox.Points);
+            Assert.That(fieldData.BoundingBox.Points, Is.Not.Null);
 
             if (fieldData.BoundingBox.Points.Length != 0)
             {
@@ -218,14 +218,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (selectionMarks)
             {
-                Assert.IsNull(fieldData.Text);
+                Assert.That(fieldData.Text, Is.Null);
             }
             else
             {
-                Assert.NotNull(fieldData.Text);
+                Assert.That(fieldData.Text, Is.Not.Null);
             }
 
-            Assert.NotNull(fieldData.FieldElements);
+            Assert.That(fieldData.FieldElements, Is.Not.Null);
 
             if (!includeFieldElements)
             {
@@ -237,13 +237,13 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             Assert.That(formPage.PageNumber, Is.EqualTo(expectedPageNumber));
 
-            Assert.Greater(formPage.Width, 0.0);
-            Assert.Greater(formPage.Height, 0.0);
+            Assert.That(formPage.Width, Is.GreaterThan(0.0));
+            Assert.That(formPage.Height, Is.GreaterThan(0.0));
 
             Assert.That(formPage.TextAngle, Is.GreaterThan(-180.0).Within(0.01));
             Assert.That(formPage.TextAngle, Is.LessThanOrEqualTo(180.0).Within(0.01));
 
-            Assert.NotNull(formPage.Lines);
+            Assert.That(formPage.Lines, Is.Not.Null);
 
             if (!includeFieldElements)
             {
@@ -253,62 +253,62 @@ namespace Azure.AI.FormRecognizer.Tests
             foreach (var line in formPage.Lines)
             {
                 Assert.That(line.PageNumber, Is.EqualTo(expectedPageNumber));
-                Assert.NotNull(line.BoundingBox.Points);
+                Assert.That(line.BoundingBox.Points, Is.Not.Null);
                 Assert.That(line.BoundingBox.Points.Length, Is.EqualTo(4));
-                Assert.NotNull(line.Text);
+                Assert.That(line.Text, Is.Not.Null);
 
                 if (line.Appearance != null)
                 {
-                    Assert.IsNotNull(line.Appearance.Style);
+                    Assert.That(line.Appearance.Style, Is.Not.Null);
                     Assert.That(line.Appearance.Style.Name == TextStyleName.Handwriting || line.Appearance.Style.Name == TextStyleName.Other, Is.True);
-                    Assert.Greater(line.Appearance.Style.Confidence, 0f);
+                    Assert.That(line.Appearance.Style.Confidence, Is.GreaterThan(0f));
                 }
 
-                Assert.NotNull(line.Words);
-                Assert.Greater(line.Words.Count, 0);
+                Assert.That(line.Words, Is.Not.Null);
+                Assert.That(line.Words.Count, Is.GreaterThan(0));
 
                 foreach (var word in line.Words)
                 {
                     Assert.That(word.PageNumber, Is.EqualTo(expectedPageNumber));
-                    Assert.NotNull(word.BoundingBox.Points);
+                    Assert.That(word.BoundingBox.Points, Is.Not.Null);
                     Assert.That(word.BoundingBox.Points.Length, Is.EqualTo(4));
-                    Assert.NotNull(word.Text);
+                    Assert.That(word.Text, Is.Not.Null);
 
                     Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                     Assert.That(word.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
                 }
             }
 
-            Assert.NotNull(formPage.Tables);
+            Assert.That(formPage.Tables, Is.Not.Null);
 
             foreach (var table in formPage.Tables)
             {
                 Assert.That(table.PageNumber, Is.EqualTo(expectedPageNumber));
-                Assert.Greater(table.ColumnCount, 0);
-                Assert.Greater(table.RowCount, 0);
+                Assert.That(table.ColumnCount, Is.GreaterThan(0));
+                Assert.That(table.RowCount, Is.GreaterThan(0));
                 if (_serviceVersion != FormRecognizerClientOptions.ServiceVersion.V2_0)
                 {
                     Assert.That(table.BoundingBox.Points.Count(), Is.EqualTo(4));
                 }
 
-                Assert.NotNull(table.Cells);
+                Assert.That(table.Cells, Is.Not.Null);
 
                 foreach (var cell in table.Cells)
                 {
                     Assert.That(cell.PageNumber, Is.EqualTo(expectedPageNumber));
-                    Assert.NotNull(cell.BoundingBox.Points);
+                    Assert.That(cell.BoundingBox.Points, Is.Not.Null);
                     Assert.That(cell.BoundingBox.Points.Length, Is.EqualTo(4));
 
-                    Assert.GreaterOrEqual(cell.ColumnIndex, 0);
-                    Assert.GreaterOrEqual(cell.RowIndex, 0);
-                    Assert.GreaterOrEqual(cell.ColumnSpan, 1);
-                    Assert.GreaterOrEqual(cell.RowSpan, 1);
+                    Assert.That(cell.ColumnIndex, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(cell.RowIndex, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(cell.ColumnSpan, Is.GreaterThanOrEqualTo(1));
+                    Assert.That(cell.RowSpan, Is.GreaterThanOrEqualTo(1));
 
                     Assert.That(cell.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                     Assert.That(cell.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
 
-                    Assert.NotNull(cell.Text);
-                    Assert.NotNull(cell.FieldElements);
+                    Assert.That(cell.Text, Is.Not.Null);
+                    Assert.That(cell.FieldElements, Is.Not.Null);
 
                     if (!includeFieldElements)
                     {
@@ -318,32 +318,32 @@ namespace Azure.AI.FormRecognizer.Tests
                     foreach (var element in cell.FieldElements)
                     {
                         Assert.That(element.PageNumber, Is.EqualTo(expectedPageNumber));
-                        Assert.NotNull(element.BoundingBox.Points);
+                        Assert.That(element.BoundingBox.Points, Is.Not.Null);
                         Assert.That(element.BoundingBox.Points.Length, Is.EqualTo(4));
 
                         Assert.That(element is FormWord || element is FormLine || element is FormSelectionMark, Is.True);
 
                         if (element is FormWord || element is FormLine)
                         {
-                            Assert.NotNull(element.Text);
+                            Assert.That(element.Text, Is.Not.Null);
                         }
                         else if (element is FormSelectionMark)
                         {
-                            Assert.IsNull(element.Text);
+                            Assert.That(element.Text, Is.Null);
                         }
                     }
                 }
             }
 
-            Assert.NotNull(formPage.SelectionMarks);
+            Assert.That(formPage.SelectionMarks, Is.Not.Null);
 
             foreach (var selectionMark in formPage.SelectionMarks)
             {
                 Assert.That(selectionMark.PageNumber, Is.EqualTo(expectedPageNumber));
-                Assert.NotNull(selectionMark.BoundingBox.Points);
+                Assert.That(selectionMark.BoundingBox.Points, Is.Not.Null);
                 Assert.That(selectionMark.BoundingBox.Points.Length, Is.EqualTo(4));
-                Assert.IsNull(selectionMark.Text);
-                Assert.NotNull(selectionMark.State);
+                Assert.That(selectionMark.Text, Is.Null);
+                Assert.That(selectionMark.State, Is.Not.Null);
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }

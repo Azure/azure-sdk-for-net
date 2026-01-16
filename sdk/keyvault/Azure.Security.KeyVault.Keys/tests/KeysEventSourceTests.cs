@@ -52,10 +52,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             Type eventSourceType = typeof(KeysEventSource);
 
-            Assert.NotNull(eventSourceType);
+            Assert.That(eventSourceType, Is.Not.Null);
             Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Security-KeyVault-Keys"));
             Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("657a121e-762e-50da-b233-05d7cdb24eb8")));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.That(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"), Is.Not.Empty);
         }
 
         [TestCaseSource(nameof(GetAesOperations))]
@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient client = CreateClient(key, transport);
 
             object result = await thunk(client, "invalid");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
@@ -104,7 +104,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
@@ -131,7 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ));
 
             object result = await thunk(client, "invalid");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.KeyTypeNotSupportedEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
@@ -196,7 +196,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.PrivateKeyRequiredEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
@@ -232,7 +232,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient client = CreateClient(key, new MockTransport(_ => response));
 
             object result = await thunk(client, "invalid");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.PrivateKeyRequiredEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
@@ -261,13 +261,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient client = CreateClient(key, new MockTransport(_ => response), new ThrowingCryptographyProvider());
 
             object result = await thunk(client, null);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.CryptographicExceptionEvent);
             Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
             Assert.That(e.EventName, Is.EqualTo("CryptographicException"));
             Assert.That(e.GetProperty<string>("operation"), Is.EqualTo(operation));
-            StringAssert.StartsWith("System.Security.Cryptography.CryptographicException (0x80092006):", e.GetProperty<string>("message"));
+            Assert.That(e.GetProperty<string>("message"), Does.StartWith("System.Security.Cryptography.CryptographicException (0x80092006):"));
         }
 
         private CryptographyClient CreateClient(KeyVaultKey key, HttpPipelineTransport transport, ICryptographyProvider provider = null)

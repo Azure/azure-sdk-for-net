@@ -98,7 +98,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
                 {
                     for (int j = 0; j < value.TimeSeries.Count; j++)
                     {
-                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
+                        Assert.That(value.TimeSeries[j].Values[i].Total, Is.GreaterThanOrEqualTo(0));
                     }
                 }
             }

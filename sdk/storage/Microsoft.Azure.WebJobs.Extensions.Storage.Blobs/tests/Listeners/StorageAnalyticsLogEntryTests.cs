@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = StorageAnalyticsLogEntry.TryParse(fields);
 
-            Assert.NotNull(entry);
+            Assert.That(entry, Is.Not.Null);
             DateTime expectedRequestStartTime = new DateTime(635457986589681025L, DateTimeKind.Utc);
             Assert.That(entry.RequestStartTime, Is.EqualTo(expectedRequestStartTime));
             Assert.That(entry.RequestStartTime.Kind, Is.EqualTo(DateTimeKind.Utc));
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = StorageAnalyticsLogEntry.TryParse(fields);
 
-            Assert.NotNull(entry);
+            Assert.That(entry, Is.Not.Null);
             Assert.That(entry.ServiceType.HasValue, Is.False);
         }
 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = StorageAnalyticsLogEntry.TryParse(fields);
 
-            Assert.NotNull(entry);
+            Assert.That(entry, Is.Not.Null);
             Assert.That(entry.OperationType.HasValue, Is.False);
         }
 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             BlobPath blobPath = entry.ToBlobPath();
 
-            Assert.NotNull(blobPath);
+            Assert.That(blobPath, Is.Not.Null);
             Assert.That(blobPath.ContainerName, Is.EqualTo(expectedContainerName));
             Assert.That(blobPath.BlobName, Is.EqualTo(expectedBlobName));
         }

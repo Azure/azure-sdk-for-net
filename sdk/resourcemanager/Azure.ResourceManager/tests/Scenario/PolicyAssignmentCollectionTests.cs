@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Tests
             Assert.That(getResult.Data.ExcludedScopes, Is.EqualTo(model.Data.ExcludedScopes));
             if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
-                Assert.NotNull(model.Data.Parameters);
-                Assert.NotNull(getResult.Data.Parameters);
+                Assert.That(model.Data.Parameters, Is.Not.Null);
+                Assert.That(getResult.Data.Parameters, Is.Not.Null);
                 Assert.That(getResult.Data.Parameters.Count, Is.EqualTo(model.Data.Parameters.Count));
                 foreach (KeyValuePair<string, ArmPolicyParameterValue> kv in model.Data.Parameters)
                 {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Tests
             Assert.That(getResult.Data.EnforcementMode, Is.EqualTo(model.Data.EnforcementMode));
             if (model.Data.NonComplianceMessages != null || getResult.Data.NonComplianceMessages != null)
             {
-                Assert.NotNull(model.Data.NonComplianceMessages);
-                Assert.NotNull(getResult.Data.NonComplianceMessages);
+                Assert.That(model.Data.NonComplianceMessages, Is.Not.Null);
+                Assert.That(getResult.Data.NonComplianceMessages, Is.Not.Null);
                 Assert.That(getResult.Data.NonComplianceMessages.Count, Is.EqualTo(model.Data.NonComplianceMessages.Count));
                 for (int i = 0; i < model.Data.NonComplianceMessages.Count; ++i)
                 {

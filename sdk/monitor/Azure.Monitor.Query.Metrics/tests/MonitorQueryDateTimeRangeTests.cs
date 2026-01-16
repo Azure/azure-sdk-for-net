@@ -68,7 +68,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
         public void ParseThrowsFormatExceptionForInvalidInput(string range)
         {
             var ex = Assert.Throws<FormatException>(() => MetricsQueryTimeRange.Parse(range));
-            StringAssert.StartsWith("Unable to parse the DateTimeRange value.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith("Unable to parse the DateTimeRange value."));
         }
     }
 }

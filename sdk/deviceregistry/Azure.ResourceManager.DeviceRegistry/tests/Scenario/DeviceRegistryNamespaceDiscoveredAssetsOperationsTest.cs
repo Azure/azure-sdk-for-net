@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var discoveredAssetCreateOrUpdateResponse = await discoveredAssetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredAssetName, discoveredAssetData, CancellationToken.None);
-            Assert.IsNotNull(discoveredAssetCreateOrUpdateResponse.Value);
+            Assert.That(discoveredAssetCreateOrUpdateResponse.Value, Is.Not.Null);
             Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DeviceRef.DeviceName));
             Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName));
             Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Read DeviceRegistry DiscoveredAsset
             var discoveredAssetReadResponse = await discoveredAssetsCollection.GetAsync(discoveredAssetName, CancellationToken.None);
-            Assert.IsNotNull(discoveredAssetReadResponse.Value);
+            Assert.That(discoveredAssetReadResponse.Value, Is.Not.Null);
             Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DeviceRef.DeviceName));
             Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DeviceRef.EndpointName));
             Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DisplayName));
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 discoveredAssetResourcesListByResourceGroup.AddRange(discoveredAssetEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(discoveredAssetResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(discoveredAssetResourcesListByResourceGroup.Count, 1);
+            Assert.That(discoveredAssetResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(discoveredAssetResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry Asset
             var discoveredAsset = discoveredAssetReadResponse.Value;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var discoveredAssetUpdateResponse = await discoveredAsset.UpdateAsync(WaitUntil.Completed, discoveredAssetPatchData, CancellationToken.None);
-            Assert.IsNotNull(discoveredAssetUpdateResponse.Value);
+            Assert.That(discoveredAssetUpdateResponse.Value, Is.Not.Null);
             Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DeviceRef.DeviceName));
             Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName));
             Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DisplayName));

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             //4.Exists
             Assert.That((bool)await collection.ExistsAsync(name), Is.True);
             Assert.That((bool)await collection.ExistsAsync(envName + "1"), Is.False);

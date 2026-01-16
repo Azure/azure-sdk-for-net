@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string instancePoolName = Recording.GenerateAssetName("instance-pool-");
             var collection = _resourceGroup.GetInstancePools();
             var instancePool = await CreateInstancePool(instancePoolName);
-            Assert.IsNotNull(instancePool);
+            Assert.That(instancePool, Is.Not.Null);
             Assert.That(instancePool.Data.Name, Is.EqualTo(instancePoolName));
             Assert.That(instancePool.Data.VCores, Is.EqualTo(8));
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 4.GetAll
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
 
             //// 5.Delete
             //var deleteInstancePool = await collection.GetAsync(instancePoolName);

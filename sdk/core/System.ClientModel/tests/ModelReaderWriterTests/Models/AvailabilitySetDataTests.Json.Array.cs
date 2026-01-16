@@ -697,7 +697,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model = ModelReaderWriter.Read<ListOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             Assert.That(model!.Items.Count, Is.EqualTo(2));
             Assert.That(model.Items[0].Name, Is.EqualTo("testAS-3375"));
             Assert.That(model.Items[1].Name, Is.EqualTo("testAS-3376"));
@@ -718,7 +718,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model2 = ModelReaderWriter.Read<ListOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
-            Assert.IsNotNull(model2);
+            Assert.That(model2, Is.Not.Null);
             Assert.That(model2!.Items.Count, Is.EqualTo(3));
             Assert.That(model2.Items[0].Name, Is.EqualTo("testAS-3375"));
             Assert.That(model2.Items[1].Name, Is.EqualTo("testAS-3376"));

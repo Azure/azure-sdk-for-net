@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             // create a volumeGroup
             string volumeGroupName = Recording.GenerateAssetName("volumeGroupName-");
             NetAppVolumeGroupResource volumeGroupDetailsResource1 = await CreateVolumeGroup(_volumeGroupCollection, volumeGroupName);
-            Assert.IsNotNull(volumeGroupDetailsResource1);
+            Assert.That(volumeGroupDetailsResource1, Is.Not.Null);
 
             //validate
             NetAppVolumeGroupResource volumeGroupDetailsResource2 = await _volumeGroupCollection.GetAsync(volumeGroupName);
-            Assert.IsNotNull(volumeGroupDetailsResource2);
+            Assert.That(volumeGroupDetailsResource2, Is.Not.Null);
             Assert.That(volumeGroupDetailsResource2.Data.Name, Is.EqualTo(volumeGroupDetailsResource1.Data.Name));
             Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.DeploymentSpecId, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.DeploymentSpecId));
             Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.GroupDescription, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.GroupDescription));

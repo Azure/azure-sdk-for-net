@@ -271,7 +271,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Prefix = destinationPrefix
             };
             IList<BlobItem> items = await destinationContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).ToListAsync();
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         protected internal abstract TSourceObjectClient GetSourceBlob(BlobContainerClient containerClient, string blobName);
@@ -340,13 +340,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 {
                     BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                    Assert.IsEmpty(destinationProperties.Metadata);
-                    Assert.IsNull(destinationProperties.ContentDisposition);
-                    Assert.IsNull(destinationProperties.ContentLanguage);
-                    Assert.IsNull(destinationProperties.CacheControl);
+                    Assert.That(destinationProperties.Metadata, Is.Empty);
+                    Assert.That(destinationProperties.ContentDisposition, Is.Null);
+                    Assert.That(destinationProperties.ContentLanguage, Is.Null);
+                    Assert.That(destinationProperties.CacheControl, Is.Null);
 
                     GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
-                    Assert.IsEmpty(destinationTags.Tags);
+                    Assert.That(destinationTags.Tags, Is.Empty);
                 }
                 else if (propertiesTestType == TransferPropertiesTestType.NewProperties)
                 {

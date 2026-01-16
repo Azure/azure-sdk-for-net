@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string assetName = Recording.GenerateAssetName("asset");
             var mediaAsset = await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
-            Assert.IsNotNull(mediaAsset);
+            Assert.That(mediaAsset, Is.Not.Null);
             Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(assetName));
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Tests
             string assetName = Recording.GenerateAssetName("asset");
             await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
             var mediaAsset = await mediaAssetCollection.GetAsync(assetName);
-            Assert.IsNotNull(mediaAsset);
+            Assert.That(mediaAsset, Is.Not.Null);
             Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(assetName));
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Tests
             string assetName = Recording.GenerateAssetName("asset");
             await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
             var list = await mediaAssetCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

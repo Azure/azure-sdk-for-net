@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Logic.Tests
             data.Properties.NetworkConfiguration.Subnets.Add(new LogicResourceReference() { Id = _vnet.Data.Subnets[2].Id });
             data.Properties.NetworkConfiguration.Subnets.Add(new LogicResourceReference() { Id = _vnet.Data.Subnets[3].Id });
             var serviceEnviroment = await _integrationServiceEnvironmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, serviceEnviromentName, data);
-            Assert.IsNotNull(serviceEnviroment);
+            Assert.That(serviceEnviroment, Is.Not.Null);
             Assert.That(serviceEnviroment.Value.Data.Name, Is.EqualTo(serviceEnviromentName));
 
             // Exist
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Logic.Tests
 
             // Get
             var getResponse = await _integrationServiceEnvironmentCollection.GetAsync(serviceEnviromentName);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Value.Data.Name, Is.EqualTo(serviceEnviromentName));
 
             // GetAll
             var list = await _integrationServiceEnvironmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // Delete
             await serviceEnviroment.Value.DeleteAsync(WaitUntil.Completed);

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             await FollowingCluster.DetachFollowerDatabasesAsync(WaitUntil.Completed, followerDatabaseDefinition);
 
-            Assert.IsNull(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync());
+            Assert.That(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync(), Is.Null);
 
             await ValidateReadWriteDatabase(false);
         }
@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoDatabaseTableLevelSharingProperties expected, KustoDatabaseTableLevelSharingProperties actual
         )
         {
-            CollectionAssert.AreEqual(expected.TablesToExclude, actual.TablesToExclude);
-            CollectionAssert.AreEqual(expected.TablesToInclude, actual.TablesToInclude);
-            CollectionAssert.AreEqual(expected.ExternalTablesToExclude, actual.ExternalTablesToExclude);
-            CollectionAssert.AreEqual(expected.ExternalTablesToInclude, actual.ExternalTablesToInclude);
-            CollectionAssert.AreEqual(expected.MaterializedViewsToExclude, actual.MaterializedViewsToExclude);
-            CollectionAssert.AreEqual(expected.MaterializedViewsToInclude, actual.MaterializedViewsToInclude);
-            CollectionAssert.AreEqual(expected.FunctionsToInclude, actual.FunctionsToInclude);
-            CollectionAssert.AreEqual(expected.FunctionsToExclude, actual.FunctionsToExclude);
+            Assert.That(actual.TablesToExclude, Is.EqualTo(expected.TablesToExclude).AsCollection);
+            Assert.That(actual.TablesToInclude, Is.EqualTo(expected.TablesToInclude).AsCollection);
+            Assert.That(actual.ExternalTablesToExclude, Is.EqualTo(expected.ExternalTablesToExclude).AsCollection);
+            Assert.That(actual.ExternalTablesToInclude, Is.EqualTo(expected.ExternalTablesToInclude).AsCollection);
+            Assert.That(actual.MaterializedViewsToExclude, Is.EqualTo(expected.MaterializedViewsToExclude).AsCollection);
+            Assert.That(actual.MaterializedViewsToInclude, Is.EqualTo(expected.MaterializedViewsToInclude).AsCollection);
+            Assert.That(actual.FunctionsToInclude, Is.EqualTo(expected.FunctionsToInclude).AsCollection);
+            Assert.That(actual.FunctionsToExclude, Is.EqualTo(expected.FunctionsToExclude).AsCollection);
         }
 
         private void ValidateReadOnlyFollowingDatabase(
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoFollowerDatabaseDefinition followerDatabaseDefinition, string expectedAttachedDatabaseConfigurationName
         )
         {
-            Assert.IsNotNull(followerDatabaseDefinition);
+            Assert.That(followerDatabaseDefinition, Is.Not.Null);
             AssertEquality(
                 expectedAttachedDatabaseConfigurationName,
                 followerDatabaseDefinition.AttachedDatabaseConfigurationName

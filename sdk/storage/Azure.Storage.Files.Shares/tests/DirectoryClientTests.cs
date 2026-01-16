@@ -108,7 +108,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             bool exists = await aadDirClient.ExistsAsync();
-            Assert.IsNotNull(exists);
+            Assert.That(exists, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -195,7 +195,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             bool exists = await aadDirClient.ExistsAsync();
-            Assert.IsNotNull(exists);
+            Assert.That(exists, Is.Not.Null);
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             bool exists = await aadDirClient.ExistsAsync();
-            Assert.IsNotNull(exists);
+            Assert.That(exists, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -336,7 +336,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryInfo> response = await directory.CreateAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             var accountName = new ShareUriBuilder(directory.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
             var shareName = new ShareUriBuilder(directory.Uri).ShareName;
@@ -364,7 +364,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryInfo> response = await directory.CreateAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             var accountName = new ShareUriBuilder(directory.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
             TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
@@ -488,7 +488,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e =>
                 {
                     Assert.That(e.ParamName, Is.EqualTo("filePermission"));
-                    StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
+                    Assert.That(e.Message, Does.StartWith("Value must be less than or equal to 8192"));
                 });
         }
 
@@ -665,8 +665,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(response.Value.PosixProperties.Group, Is.EqualTo(group));
             Assert.That(response.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo(fileMode));
 
-            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
-            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+            Assert.That(response.Value.SmbProperties.FileAttributes, Is.Null);
+            Assert.That(response.Value.SmbProperties.FilePermissionKey, Is.Null);
         }
 
         //[TestCase(true)]
@@ -728,7 +728,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryInfo> response = await directory.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -745,7 +745,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryInfo> response = await directory.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.That(response, Is.Null);
         }
 
         [RecordedTest]
@@ -945,7 +945,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response response = await directory.DeleteAsync();
 
             // Assert
-            Assert.IsNotNull(response.Headers.RequestId);
+            Assert.That(response.Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -966,7 +966,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response response = await directory.DeleteAsync();
 
             // Assert
-            Assert.IsNotNull(response.Headers.RequestId);
+            Assert.That(response.Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1070,7 +1070,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryProperties> getPropertiesResponse = await directory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(getPropertiesResponse.Value.ETag);
+            Assert.That(getPropertiesResponse.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1128,9 +1128,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(response.Value.PosixProperties.Group, Is.EqualTo("0"));
             Assert.That(response.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo("0755"));
 
-            Assert.IsNull(response.Value.PosixProperties.LinkCount);
-            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
-            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+            Assert.That(response.Value.PosixProperties.LinkCount, Is.Null);
+            Assert.That(response.Value.SmbProperties.FileAttributes, Is.Null);
+            Assert.That(response.Value.SmbProperties.FilePermissionKey, Is.Null);
         }
 
         [RecordedTest]
@@ -1401,9 +1401,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(response.Value.PosixProperties.Group, Is.EqualTo(group));
             Assert.That(response.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo(fileMode));
 
-            Assert.IsNull(response.Value.PosixProperties.LinkCount);
-            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
-            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+            Assert.That(response.Value.PosixProperties.LinkCount, Is.Null);
+            Assert.That(response.Value.SmbProperties.FileAttributes, Is.Null);
+            Assert.That(response.Value.SmbProperties.FilePermissionKey, Is.Null);
         }
 
         [RecordedTest]
@@ -1622,29 +1622,29 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.That(shareFileItems[0].Name, Is.EqualTo(directoryName));
             Assert.That(shareFileItems[0].IsDirectory, Is.True);
-            Assert.IsNotNull(shareFileItems[0].Id);
+            Assert.That(shareFileItems[0].Id, Is.Not.Null);
             Assert.That(shareFileItems[0].FileAttributes, Is.EqualTo(NtfsFileAttributes.Directory));
-            Assert.IsNotNull(shareFileItems[0].PermissionKey);
+            Assert.That(shareFileItems[0].PermissionKey, Is.Not.Null);
 
-            Assert.IsNotNull(shareFileItems[0].Properties.CreatedOn);
-            Assert.IsNotNull(shareFileItems[0].Properties.LastAccessedOn);
-            Assert.IsNotNull(shareFileItems[0].Properties.LastWrittenOn);
-            Assert.IsNotNull(shareFileItems[0].Properties.ChangedOn);
-            Assert.IsNotNull(shareFileItems[0].Properties.LastModified);
-            Assert.IsNotNull(shareFileItems[0].Properties.ETag);
+            Assert.That(shareFileItems[0].Properties.CreatedOn, Is.Not.Null);
+            Assert.That(shareFileItems[0].Properties.LastAccessedOn, Is.Not.Null);
+            Assert.That(shareFileItems[0].Properties.LastWrittenOn, Is.Not.Null);
+            Assert.That(shareFileItems[0].Properties.ChangedOn, Is.Not.Null);
+            Assert.That(shareFileItems[0].Properties.LastModified, Is.Not.Null);
+            Assert.That(shareFileItems[0].Properties.ETag, Is.Not.Null);
 
             Assert.That(shareFileItems[1].Name, Is.EqualTo(fileName));
             Assert.That(shareFileItems[1].IsDirectory, Is.False);
-            Assert.IsNotNull(shareFileItems[1].Id);
+            Assert.That(shareFileItems[1].Id, Is.Not.Null);
             Assert.That(shareFileItems[1].FileAttributes, Is.EqualTo(NtfsFileAttributes.Archive));
-            Assert.IsNotNull(shareFileItems[1].PermissionKey);
+            Assert.That(shareFileItems[1].PermissionKey, Is.Not.Null);
 
-            Assert.IsNotNull(shareFileItems[1].Properties.CreatedOn);
-            Assert.IsNotNull(shareFileItems[1].Properties.LastAccessedOn);
-            Assert.IsNotNull(shareFileItems[1].Properties.LastWrittenOn);
-            Assert.IsNotNull(shareFileItems[1].Properties.ChangedOn);
-            Assert.IsNotNull(shareFileItems[1].Properties.LastModified);
-            Assert.IsNotNull(shareFileItems[1].Properties.ETag);
+            Assert.That(shareFileItems[1].Properties.CreatedOn, Is.Not.Null);
+            Assert.That(shareFileItems[1].Properties.LastAccessedOn, Is.Not.Null);
+            Assert.That(shareFileItems[1].Properties.LastWrittenOn, Is.Not.Null);
+            Assert.That(shareFileItems[1].Properties.ChangedOn, Is.Not.Null);
+            Assert.That(shareFileItems[1].Properties.LastModified, Is.Not.Null);
+            Assert.That(shareFileItems[1].Properties.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1957,7 +1957,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient subdir = (await dir.CreateSubdirectoryAsync(GetNewDirectoryName())).Value;
 
             Response<ShareDirectoryProperties> properties = await subdir.GetPropertiesAsync();
-            Assert.IsNotNull(properties.Value);
+            Assert.That(properties.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1983,7 +1983,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient file = (await dir.CreateFileAsync(GetNewFileName(), 1024)).Value;
 
             Response<ShareFileProperties> properties = await file.GetPropertiesAsync();
-            Assert.IsNotNull(properties.Value);
+            Assert.That(properties.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2017,7 +2017,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 names.Add(item.Name);
             }
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(name, names);
+            Assert.That(names, Does.Contain(name));
         }
 
         [RecordedTest]
@@ -2037,7 +2037,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 names.Add(item.Name);
             }
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(name, names);
+            Assert.That(names, Does.Contain(name));
         }
 
         [RecordedTest]
@@ -2057,7 +2057,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 names.Add(item.Name);
             }
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(name, names);
+            Assert.That(names, Does.Contain(name));
         }
 
         [RecordedTest]
@@ -2077,7 +2077,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 names.Add(item.Name);
             }
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(name, names);
+            Assert.That(names, Does.Contain(name));
         }
 
         [RecordedTest]
@@ -2453,7 +2453,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryProperties> propertiesResponse = await destDir.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(propertiesResponse.Value.SmbProperties.FilePermissionKey);
+            Assert.That(propertiesResponse.Value.SmbProperties.FilePermissionKey, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2494,7 +2494,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryProperties> propertiesResponse = await destDir.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(propertiesResponse.Value.SmbProperties.FilePermissionKey);
+            Assert.That(propertiesResponse.Value.SmbProperties.FilePermissionKey, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2551,7 +2551,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e =>
                 {
                     Assert.That(e.ParamName, Is.EqualTo("filePermission"));
-                    StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
+                    Assert.That(e.Message, Does.StartWith("Value must be less than or equal to 8192"));
                 });
         }
 
@@ -3013,7 +3013,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -3062,7 +3062,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

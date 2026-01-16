@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Tests.Models
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
             EdgeNGramTokenFilter sut = TokenFilter.DeserializeTokenFilter(jsonDoc.RootElement) as EdgeNGramTokenFilter;
 
-            Assert.NotNull(sut);
+            Assert.That(sut, Is.Not.Null);
             Assert.That(sut.ODataType, Is.EqualTo(odataType));
             Assert.That(sut.Name, Is.EqualTo("test"));
             Assert.That(sut.MinGram, Is.EqualTo(0));

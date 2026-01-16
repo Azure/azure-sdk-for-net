@@ -11,7 +11,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         public void LabelValueAcceptsNull()
         {
             var labelValue = new RouterValue(null);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue1 = new RouterValue(null);
             Assert.That(testValue1, Is.EqualTo(labelValue));
             var testValue2 = new RouterValue(null);
@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             short input = 1;
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             int input = 1;
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }
@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             long input = 1;
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }
@@ -53,7 +53,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             float input = 1;
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }
@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             double input = 1;
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }
@@ -73,7 +73,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             decimal input = 1;
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }
@@ -83,7 +83,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             string input = "1";
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }
@@ -94,7 +94,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         public void LabelValueAcceptsBoolean(bool input)
         {
             var labelValue = new RouterValue(input);
-            Assert.IsNotNull(labelValue);
+            Assert.That(labelValue, Is.Not.Null);
             var testValue = new RouterValue(input);
             Assert.That(testValue, Is.EqualTo(labelValue));
         }

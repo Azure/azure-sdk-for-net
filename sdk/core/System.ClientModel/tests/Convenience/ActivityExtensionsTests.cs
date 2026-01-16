@@ -25,7 +25,7 @@ public class ActivityExtensionsTests
 
         Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
-        Assert.NotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         Assert.That(activity!.OperationName, Is.EqualTo("Client.Method"));
         Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Internal)); // default
         Assert.That(activity.GetCustomProperty(ScmScopeLabel), Is.EqualTo(ScmScopeValue));
@@ -35,7 +35,7 @@ public class ActivityExtensionsTests
         Assert.That(listener.Activities.Count, Is.EqualTo(1));
 
         listener.Activities.TryDequeue(out Activity? listenerActivity);
-        Assert.NotNull(listenerActivity);
+        Assert.That(listenerActivity, Is.Not.Null);
         Assert.That(listenerActivity, Is.EqualTo(activity));
     }
 
@@ -48,8 +48,8 @@ public class ActivityExtensionsTests
 
         using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
-        Assert.IsNull(Activity.Current);
-        Assert.IsNull(activity);
+        Assert.That(Activity.Current, Is.Null);
+        Assert.That(activity, Is.Null);
         Assert.That(listener.Activities.Count, Is.EqualTo(0));
     }
 
@@ -62,8 +62,8 @@ public class ActivityExtensionsTests
 
         using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
-        Assert.IsNotNull(Activity.Current);
-        Assert.IsNotNull(activity);
+        Assert.That(Activity.Current, Is.Not.Null);
+        Assert.That(activity, Is.Not.Null);
         Assert.That(listener.Activities.Count, Is.EqualTo(1));
     }
 
@@ -76,8 +76,8 @@ public class ActivityExtensionsTests
 
         using Activity? activity = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Client);
 
-        Assert.NotNull(activity);
-        Assert.NotNull(Activity.Current);
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(Activity.Current, Is.Not.Null);
         Assert.That(activity!.Kind, Is.EqualTo(ActivityKind.Client));
     }
 
@@ -93,9 +93,9 @@ public class ActivityExtensionsTests
         ClientPipelineOptions options = new() { EnableDistributedTracing = true };
         using Activity? activity = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Internal, context);
 
-        Assert.NotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         Assert.That(activity!.ParentSpanId, Is.EqualTo(spanId));
-        StringAssert.Contains(traceId.ToString(), activity.ParentId);
+        Assert.That(activity.ParentId, Does.Contain(traceId.ToString()));
     }
 
     [Test]
@@ -113,7 +113,7 @@ public class ActivityExtensionsTests
 
         using Activity? activity = activitySource.StartClientActivity(options, "Client.Method", tags: tags);
 
-        Assert.NotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         Assert.That(activity!.Tags.Count(), Is.EqualTo(2));
         Assert.That(activity.Tags.Single(t => t.Key == "tag1").Value, Is.EqualTo("value1"));
         Assert.That(activity.Tags.Single(t => t.Key == "tag2").Value, Is.EqualTo("value2"));
@@ -132,8 +132,8 @@ public class ActivityExtensionsTests
         using Activity? parent = activitySource.StartClientActivity(options, "Client.Method", parentKind);
         using Activity? child = activitySource.StartClientActivity(options, "Client.Method", childKind);
 
-        Assert.NotNull(parent);
-        Assert.NotNull(child);
+        Assert.That(parent, Is.Not.Null);
+        Assert.That(child, Is.Not.Null);
     }
 
     [Test]
@@ -150,7 +150,7 @@ public class ActivityExtensionsTests
         using Activity? parent = activitySource.StartClientActivity(options, "Client.Method", parentKind);
         using Activity? child = activitySource.StartClientActivity(options, "Client.Method", childKind);
 
-        Assert.NotNull(parent);
+        Assert.That(parent, Is.Not.Null);
         Assert.That(parent!.GetCustomProperty(ScmScopeLabel), Is.EqualTo(ScmScopeValue));
         Assert.That(child, Is.Null);
     }
@@ -170,7 +170,7 @@ public class ActivityExtensionsTests
 
         activity?.MarkClientActivityFailed(exception);
 
-        Assert.NotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         Assert.That(activity!.StatusDescription, Is.EqualTo(message));
         Assert.That(activity.Tags.Single(kv => kv.Key == "error.type").Value, Is.EqualTo("500"));
     }
@@ -193,7 +193,7 @@ public class ActivityExtensionsTests
 
         activity?.MarkClientActivityFailed(exception);
 
-        Assert.NotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         Assert.That(activity!.StatusDescription, Is.EqualTo(message));
         Assert.That(activity.Tags.Single(kv => kv.Key == "error.type").Value, Is.EqualTo("System.ArgumentNullException"));
     }
@@ -209,7 +209,7 @@ public class ActivityExtensionsTests
 
         activity?.MarkClientActivityFailed(null);
 
-        Assert.NotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         Assert.That(activity!.StatusDescription, Is.EqualTo(null));
         Assert.That(activity.Tags.Single(kv => kv.Key == "error.type").Value, Is.EqualTo("_OTHER"));
     }

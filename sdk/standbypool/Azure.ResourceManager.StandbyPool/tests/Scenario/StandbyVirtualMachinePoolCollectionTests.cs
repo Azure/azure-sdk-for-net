@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             AsyncPageable<StandbyVirtualMachinePoolResource> standbyVirtualMachinePools = StandbyPoolExtensions.GetStandbyVirtualMachinePoolsAsync(subscription);
             List<StandbyVirtualMachinePoolResource> standbyVirtualMachinePoolResults = await standbyVirtualMachinePools.ToEnumerableAsync();
 
-            Assert.NotNull(standbyVirtualMachinePoolResults);
+            Assert.That(standbyVirtualMachinePoolResults, Is.Not.Null);
             Assert.That(standbyVirtualMachinePoolResults.Count > 0, Is.True);
         }
 

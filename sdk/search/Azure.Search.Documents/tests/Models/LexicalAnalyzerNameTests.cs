@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Tests.Models
                 .Select(p => new { p.Name, Value = (string)p.GetRawConstantValue() });
 
             // Note: tested that declaring an extra property or field does fail the assert.
-            CollectionAssert.AreEquivalent(properties, fields);
+            Assert.That(fields, Is.EquivalentTo(properties));
         }
     }
 }

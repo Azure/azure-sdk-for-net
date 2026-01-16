@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedDnsSecurityRule = await createdDnsSecurityRule.Value.UpdateAsync(WaitUntil.Completed, patchableDnsSecurityRuleData);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedDnsSecurityRule.Value.Data.Tags, patchableDnsSecurityRuleData.Tags);
+            Assert.That(patchableDnsSecurityRuleData.Tags, Is.EquivalentTo(patchedDnsSecurityRule.Value.Data.Tags));
         }
 
         [Test]

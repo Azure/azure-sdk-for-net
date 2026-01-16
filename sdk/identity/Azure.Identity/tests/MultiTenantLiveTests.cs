@@ -36,7 +36,7 @@ namespace Azure.Identity.Tests
             var response = await _client.CallGraphAsync("https://graph.microsoft.com/.default");
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
-            Assert.Greater(response.Value, 0);
+            Assert.That(response.Value, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -59,7 +59,7 @@ namespace Azure.Identity.Tests
             var response = await _client.CallGraphAsync("User.Read");
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
-            Assert.Greater(response.Value, 0);
+            Assert.That(response.Value, Is.GreaterThan(0));
         }
 
         public class IdentityTestClient

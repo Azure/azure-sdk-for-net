@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName1, metricAlertData);
             _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName2, metricAlertData);
 
-            Assert.GreaterOrEqual(metricAlertCollection.GetAllAsync().ToEnumerableAsync().Result.Count, 2);
+            Assert.That(metricAlertCollection.GetAllAsync().ToEnumerableAsync().Result.Count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

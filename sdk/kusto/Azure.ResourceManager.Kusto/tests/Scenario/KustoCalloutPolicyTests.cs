@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             if (expected is null)
             {
-                Assert.IsNull(actual);
+                Assert.That(actual, Is.Null);
             }
             else
             {
-                Assert.IsNotNull(actual);
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.EqualTo(expected.Count), "Lists do not have the same number of elements.");
 
                 foreach (var expectedPolicy in expected)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                             expectedPolicy.OutboundAccess == actualPolicy.OutboundAccess
                     );
 
-                    Assert.IsNotNull(matchingPolicy, "Matching policy not found.");
+                    Assert.That(matchingPolicy, Is.Not.Null, "Matching policy not found.");
                 }
             }
         }

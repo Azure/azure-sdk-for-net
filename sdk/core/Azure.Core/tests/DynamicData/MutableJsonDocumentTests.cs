@@ -187,7 +187,7 @@ namespace Azure.Core.Tests
             Assert.That(mdoc.RootElement.GetProperty("Foo").GetDouble(), Is.EqualTo(1.2));
 
             // 2. New property is present.
-            Assert.IsNotNull(mdoc.RootElement.GetProperty("Bar"));
+            Assert.That(mdoc.RootElement.GetProperty("Bar"), Is.Not.Null);
             Assert.That(mdoc.RootElement.GetProperty("Bar").GetString(), Is.EqualTo("hi"));
 
             // 3. Type round-trips correctly.
@@ -227,7 +227,7 @@ namespace Azure.Core.Tests
             Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble(), Is.EqualTo(1.2));
 
             // 2. New property is present.
-            Assert.IsNotNull(mdoc.RootElement.GetProperty("Foo").GetProperty("B"));
+            Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("B"), Is.Not.Null);
             Assert.That(mdoc.RootElement.GetProperty("Foo").GetProperty("B").GetString(), Is.EqualTo("hi"));
 
             // 3. Type round-trips correctly.
@@ -644,7 +644,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(null);
 
-            Assert.IsNull(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+            Assert.That(mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString(), Is.Null);
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);

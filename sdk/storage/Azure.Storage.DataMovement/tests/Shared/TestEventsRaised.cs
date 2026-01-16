@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
             Assert.That(SingleCompletedEvents.Count, Is.EqualTo(1));
 
             AssertTransferStatusCollection(
@@ -171,10 +171,10 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SingleCompletedEvents);
+            Assert.That(SingleCompletedEvents, Is.Empty);
             Assert.That(SkippedEvents.Count, Is.EqualTo(1));
-            Assert.NotNull(SkippedEvents.First().Source.Uri);
-            Assert.NotNull(SkippedEvents.First().Destination.Uri);
+            Assert.That(SkippedEvents.First().Source.Uri, Is.Not.Null);
+            Assert.That(SkippedEvents.First().Destination.Uri, Is.Not.Null);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -192,14 +192,14 @@ namespace Azure.Storage.DataMovement.Tests
         {
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
-            Assert.IsEmpty(SkippedEvents);
-            Assert.IsEmpty(SingleCompletedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
+            Assert.That(SingleCompletedEvents, Is.Empty);
             Assert.That(FailedEvents.Count, Is.EqualTo(failureCount));
             foreach (TransferItemFailedEventArgs args in FailedEvents)
             {
-                Assert.NotNull(args.Exception);
-                Assert.NotNull(args.Source.Uri);
-                Assert.NotNull(args.Destination.Uri);
+                Assert.That(args.Exception, Is.Not.Null);
+                Assert.That(args.Source.Uri, Is.Not.Null);
+                Assert.That(args.Destination.Uri, Is.Not.Null);
             }
 
             AssertTransferStatusCollection(
@@ -224,7 +224,7 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
             Assert.That(SingleCompletedEvents.Count, Is.EqualTo(transferCount));
 
             AssertTransferStatusCollection(
@@ -256,7 +256,7 @@ namespace Azure.Storage.DataMovement.Tests
                     Assert.That(FailedEvents.Count, Is.EqualTo(expectedFailureCount));
                 });
             }
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -289,7 +289,7 @@ namespace Azure.Storage.DataMovement.Tests
                     Assert.That(FailedEvents.Count, Is.EqualTo(expectedFailureCount));
                 });
             }
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -324,7 +324,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AssertPausedCheck()
         {
             await WaitForStatusEventsAsync().ConfigureAwait(false);
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
             Assert.That(StatusEvents.Last().TransferStatus.State, Is.EqualTo(TransferState.Paused));
         }
 

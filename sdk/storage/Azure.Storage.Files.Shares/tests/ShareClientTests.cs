@@ -108,8 +108,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 Response<ShareFileUploadInfo> info2 = await file2.UploadAsync(stream2);
 
                 // Assert
-                Assert.IsNotNull(info1.Value.ETag);
-                Assert.IsNotNull(info2.Value.ETag);
+                Assert.That(info1.Value.ETag, Is.Not.Null);
+                Assert.That(info2.Value.ETag, Is.Not.Null);
             }
             finally
             {
@@ -168,7 +168,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -212,7 +212,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Permission = permission,
             };
             PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(filePermission);
-            Assert.IsNotNull(infoPermission);
+            Assert.That(infoPermission, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -241,7 +241,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Permission = permission,
             };
             PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(filePermission);
-            Assert.IsNotNull(infoPermission);
+            Assert.That(infoPermission, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -270,7 +270,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Permission = permission,
             };
             PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(filePermission);
-            Assert.IsNotNull(infoPermission);
+            Assert.That(infoPermission, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -349,7 +349,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Response<ShareInfo> response = await share.CreateAsync(quotaInGB: 1);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
                 Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             }
@@ -398,7 +398,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
             Assert.That(propertiesResponse.Value.AccessTier, Is.EqualTo(ShareAccessTier.Hot.ToString()));
-            Assert.IsNotNull(propertiesResponse.Value.AccessTierChangeTime);
+            Assert.That(propertiesResponse.Value.AccessTierChangeTime, Is.Not.Null);
 
             // Cleanup
             await share.DeleteAsync();
@@ -833,7 +833,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Response<ShareInfo> response = await share.CreateAsync(quotaInGB: 1);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
                 Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             }
@@ -870,7 +870,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareInfo> response = await share.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
 
             // Cleanup
             await share.DeleteIfExistsAsync();
@@ -889,7 +889,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareInfo> response = await share.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.That(response, Is.Null);
 
             // Cleanup
             await share.DeleteIfExistsAsync();
@@ -1098,7 +1098,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.That(response.Value.LastModified, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1115,8 +1115,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareProperties> response = await snapshotShareClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.That(response.Value.ETag, Is.Not.Null);
+            Assert.That(response.Value.LastModified, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1171,14 +1171,14 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareProperties> response = await share.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
-            Assert.IsNotNull(response.Value.NextAllowedQuotaDowngradeTime);
-            Assert.IsNotNull(response.Value.ProvisionedEgressMBps);
-            Assert.IsNotNull(response.Value.ProvisionedIngressMBps);
-            Assert.IsNotNull(response.Value.ProvisionedIops);
-            Assert.IsNotNull(response.Value.ProvisionedBandwidthMiBps);
-            Assert.IsNotNull(response.Value.QuotaInGB);
+            Assert.That(response.Value.ETag, Is.Not.Null);
+            Assert.That(response.Value.LastModified, Is.Not.Null);
+            Assert.That(response.Value.NextAllowedQuotaDowngradeTime, Is.Not.Null);
+            Assert.That(response.Value.ProvisionedEgressMBps, Is.Not.Null);
+            Assert.That(response.Value.ProvisionedIngressMBps, Is.Not.Null);
+            Assert.That(response.Value.ProvisionedIops, Is.Not.Null);
+            Assert.That(response.Value.ProvisionedBandwidthMiBps, Is.Not.Null);
+            Assert.That(response.Value.QuotaInGB, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1257,7 +1257,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.That(response.Value.LastModified, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1494,7 +1494,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
@@ -1583,7 +1583,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             ShareSignedIdentifier signedIdentifierResponse = responseAfter.Value.First();
             Assert.AreEqual(1, responseAfter.Value.Count());
             Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
@@ -1591,7 +1591,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(signedIdentifierResponse.AccessPolicy.StartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
             Assert.AreEqual(signedIdentifierResponse.AccessPolicy.ExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
-            Assert.IsNull(signedIdentifierResponse.AccessPolicy.Permissions);
+            Assert.That(signedIdentifierResponse.AccessPolicy.Permissions, Is.Null);
         }
 
         [RecordedTest]
@@ -1616,22 +1616,22 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             // Assert
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
-            Assert.IsNull(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn);
+            Assert.That(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, Is.Null);
 
             // Act
             Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
 
             Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             ShareSignedIdentifier signedIdentifierResponse = responseAfter.Value.First();
             Assert.AreEqual(1, responseAfter.Value.Count());
             Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
             Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
-            Assert.IsNull(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, Is.Null);
             Assert.AreEqual(signedIdentifierResponse.AccessPolicy.Permissions, signedIdentifiers[0].AccessPolicy.Permissions);
         }
 
@@ -1663,10 +1663,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
 
             Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             ShareSignedIdentifier signedIdentifierResponse = responseAfter.Value.First();
             Assert.AreEqual(1, responseAfter.Value.Count());
             Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
@@ -1674,7 +1674,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
             Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.ExpiresOn);
-            Assert.IsNull(signedIdentifierResponse.AccessPolicy.Permissions);
+            Assert.That(signedIdentifierResponse.AccessPolicy.Permissions, Is.Null);
         }
 
         [RecordedTest]
@@ -1707,7 +1707,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
@@ -1735,7 +1735,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareStatistics> response = await share.GetStatisticsAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1836,7 +1836,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareStatistics> response = await share.GetStatisticsAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1849,7 +1849,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareSnapshotInfo> response = await share.CreateSnapshotAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
@@ -1880,7 +1880,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareSnapshotInfo> response = await share.CreateSnapshotAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
@@ -1931,7 +1931,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(ShareAccessTier.Hot.ToString(), response.Value.AccessTier);
             Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
             Assert.AreEqual(5, response.Value.QuotaInGB);
-            Assert.IsNotNull(response.Value.AccessTierChangeTime);
+            Assert.That(response.Value.AccessTierChangeTime, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2138,10 +2138,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
             Assert.AreEqual(3000, response.Value.ProvisionedIops);
             Assert.AreEqual(125, response.Value.ProvisionedBandwidthMiBps);
-            Assert.IsNotNull(response.Value.IncludedBurstIops);
-            Assert.IsNotNull(response.Value.MaxBurstCreditsForIops);
-            Assert.IsNotNull(response.Value.NextAllowedProvisionedIopsDowngradeTime);
-            Assert.IsNotNull(response.Value.NextAllowedProvisionedBandwidthDowngradeTime);
+            Assert.That(response.Value.IncludedBurstIops, Is.Not.Null);
+            Assert.That(response.Value.MaxBurstCreditsForIops, Is.Not.Null);
+            Assert.That(response.Value.NextAllowedProvisionedIopsDowngradeTime, Is.Not.Null);
+            Assert.That(response.Value.NextAllowedProvisionedBandwidthDowngradeTime, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2239,7 +2239,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response response = await share.DeleteAsync(false);
 
             // Assert
-            Assert.IsNotNull(response.Headers.RequestId);
+            Assert.That(response.Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2411,7 +2411,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response response = await share.DeleteAsync(false);
 
             // Assert
-            Assert.IsNotNull(response.Headers.RequestId);
+            Assert.That(response.Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -3272,7 +3272,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -3314,7 +3314,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

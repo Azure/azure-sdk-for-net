@@ -42,16 +42,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
-            Assert.Greater(resourceDetails.CustomDocumentModelCount, 0);
-            Assert.GreaterOrEqual(resourceDetails.CustomDocumentModelLimit, resourceDetails.CustomDocumentModelCount);
+            Assert.That(resourceDetails.CustomDocumentModelCount, Is.GreaterThan(0));
+            Assert.That(resourceDetails.CustomDocumentModelLimit, Is.GreaterThanOrEqualTo(resourceDetails.CustomDocumentModelCount));
 
             ResourceQuotaDetails neuralQuota = resourceDetails.NeuralDocumentModelQuota;
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.GreaterOrEqual(neuralQuota.Used, 0);
-                Assert.GreaterOrEqual(neuralQuota.Quota, neuralQuota.Used);
-                Assert.Greater(neuralQuota.QuotaResetsOn, startTime);
+                Assert.That(neuralQuota.Used, Is.GreaterThanOrEqualTo(0));
+                Assert.That(neuralQuota.Quota, Is.GreaterThanOrEqualTo(neuralQuota.Used));
+                Assert.That(neuralQuota.QuotaResetsOn, Is.GreaterThan(startTime));
             }
             else
             {
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var buildOperationDetails = operationDetails as DocumentModelBuildOperationDetails;
 
-            Assert.IsNotNull(buildOperationDetails);
+            Assert.That(buildOperationDetails, Is.Not.Null);
 
             DocumentAssert.AreEqual(disposableModel.Value, buildOperationDetails.Result);
         }
@@ -129,7 +129,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var buildOperationDetails = operationDetails as DocumentClassifierBuildOperationDetails;
 
-            Assert.IsNotNull(buildOperationDetails);
+            Assert.That(buildOperationDetails, Is.Not.Null);
 
             DocumentAssert.AreEqual(disposableClassifier.Value, buildOperationDetails.Result);
         }
@@ -203,7 +203,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.That(operationSummary.CreatedOn, Is.EqualTo(expected.CreatedOn));
                 Assert.That(operationSummary.LastUpdatedOn, Is.EqualTo(expected.LastUpdatedOn));
 
-                CollectionAssert.AreEquivalent(expected.Tags, operationSummary.Tags);
+                Assert.That(operationSummary.Tags, Is.EquivalentTo(expected.Tags));
             }
         }
 
@@ -220,10 +220,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(operationDetails.Error, Is.Null);
 
             // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(operationDetails.CreatedOn, startTime - TimeSpan.FromHours(4));
-            Assert.Greater(operationDetails.LastUpdatedOn, operationDetails.CreatedOn);
+            Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThan(operationDetails.CreatedOn));
 
-            CollectionAssert.AreEquivalent(tags, operationDetails.Tags);
+            Assert.That(operationDetails.Tags, Is.EquivalentTo(tags));
         }
     }
 }

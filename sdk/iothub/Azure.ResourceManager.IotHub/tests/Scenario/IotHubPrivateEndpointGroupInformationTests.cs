@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             string groupId = $"{iothub.Data.Id}/PrivateLinkResources/iotHub";
             var groupIdInfo = await iothub.GetAllIotHubPrivateEndpointGroupInformation().GetAsync("iotHub");
-            Assert.IsNotNull(groupIdInfo);
+            Assert.That(groupIdInfo, Is.Not.Null);
             Assert.That(groupIdInfo.Value.Data.Id.ToString(), Is.EqualTo(groupId));
             Assert.That(groupIdInfo.Value.Data.Name, Is.EqualTo("iotHub"));
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var list = await iothub.GetAllIotHubPrivateEndpointGroupInformation().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo("iotHub"));
         }
     }

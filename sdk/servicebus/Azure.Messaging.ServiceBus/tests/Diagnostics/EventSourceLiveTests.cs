@@ -350,7 +350,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await Task.Delay(ShortLockDuration.Add(ShortLockDuration));
 
                 var errors = _listener.EventData.Where(e => e.Level == EventLevel.Error && e.EventId != ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent).ToList();
-                Assert.IsEmpty(errors, string.Join(",", errors.Select(EventSourceEventFormatting.Format)));
+                Assert.That(errors, Is.Empty, string.Join(",", errors.Select(EventSourceEventFormatting.Format)));
             }
         }
 
@@ -608,7 +608,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var receiver = client.CreateReceiver(scope.QueueName);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 var message = await receiver.ReceiveMessageAsync();
-                Assert.IsNotNull(message);
+                Assert.That(message, Is.Not.Null);
                 await sender.CloseAsync();
 
                 // link closed event is fired asynchronously, so add a small delay
@@ -631,7 +631,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var receiver = client.CreateReceiver(scope.QueueName);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 var message = await receiver.ReceiveMessageAsync();
-                Assert.IsNotNull(message);
+                Assert.That(message, Is.Not.Null);
                 await receiver.CloseAsync();
 
                 // link closed event is fired asynchronously, so add a small delay

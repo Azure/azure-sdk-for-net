@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             await collector.AddAsync(new EventData(new byte[] { 2 }), "pk2");
 
             // Not physically sent yet since we haven't flushed
-            Assert.IsEmpty(client.SentBatches);
+            Assert.That(client.SentBatches, Is.Empty);
 
             await collector.FlushAsync();
 
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             await collector.AddAsync(e1);
 
             // Not physically sent yet since we haven't flushed
-            Assert.IsEmpty(client.SentBatches);
+            Assert.That(client.SentBatches, Is.Empty);
 
             await collector.FlushAsync();
             Assert.That(client.SentBatches.Count, Is.EqualTo(1));
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             }
 
             // Not yet
-            Assert.IsEmpty(client.SentBatches);
+            Assert.That(client.SentBatches, Is.Empty);
 
             // This will push it over the threshold
             for (int i = 0; i < 60; i++)
@@ -127,12 +127,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             catch (InvalidOperationException e)
             {
                 // Exact error message (and serialization byte size) is subject to change.
-                StringAssert.Contains("Event is too large", e.Message);
+                Assert.That(e.Message, Does.Contain("Event is too large"));
             }
 
             // Verify we didn't queue anything
             await collector.FlushAsync();
-            Assert.IsEmpty(client.SentBatches.Single().Events);
+            Assert.That(client.SentBatches.Single().Events, Is.Empty);
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             }
 
-            Assert.IsEmpty(expected); // Some events where missed.
+            Assert.That(expected, Is.Empty); // Some events where missed.
         }
 
         [Test]

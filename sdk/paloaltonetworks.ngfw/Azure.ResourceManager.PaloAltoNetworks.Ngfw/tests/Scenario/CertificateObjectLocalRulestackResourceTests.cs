@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void Data()
         {
             Assert.That(CertificateObjectLocalRulestackResource.HasData, Is.True);
-            Assert.NotNull(CertificateObjectLocalRulestackResource.Data);
+            Assert.That(CertificateObjectLocalRulestackResource.Data, Is.Not.Null);
         }
 
         [TestCase]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackCertificateObjectResource resource = await LocalRulestackResource.GetLocalRulestackCertificateObjectAsync("dotnetSdkTest-cert");
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             Assert.That(CertificateObjectLocalRulestackResource.Data.Name, Is.EqualTo(resource.Data.Name));
         }
     }

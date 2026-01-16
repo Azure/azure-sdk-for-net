@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 JobPartPlanHeader deserializedHeader = JobPartPlanHeader.Deserialize(stream);
 
-                Assert.IsNotNull(deserializedHeader);
+                Assert.That(deserializedHeader, Is.Not.Null);
 
                 Assert.That(deserializedHeader.SourcePath, Is.EqualTo(sourceBlob.Uri.AbsoluteUri));
                 Assert.That(deserializedHeader.DestinationPath, Is.EqualTo(destinationBlob.Uri.AbsoluteUri));

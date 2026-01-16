@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                     nginxDeployment2 = nginxDeployment;
             }
 
-            Assert.NotNull(nginxDeployment1);
-            Assert.NotNull(nginxDeployment2);
+            Assert.That(nginxDeployment1, Is.Not.Null);
+            Assert.That(nginxDeployment2, Is.Not.Null);
         }
     }
 }

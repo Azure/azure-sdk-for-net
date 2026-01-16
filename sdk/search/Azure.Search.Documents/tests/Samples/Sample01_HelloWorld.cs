@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
 
-            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
+            Assert.That(stats.Value.Counters.IndexCounter.Usage, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClientAsync
 
-            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
+            Assert.That(stats.Value.Counters.IndexCounter.Usage, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -420,7 +420,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     Hotel hotel = result.Document;
 #if !SNIPPET
-                    if (hotel.HotelId == "6") { Assert.IsNotNull(hotel.DescriptionFr); found = true; }
+                    if (hotel.HotelId == "6") { Assert.That(hotel.DescriptionFr, Is.Not.Null); found = true; }
 #endif
 
                     Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");

@@ -27,7 +27,7 @@ namespace Azure.Core.Extensions.Tests
             TestClientWithCredentials client = (TestClientWithCredentials) factory.CreateClient(typeof(TestClientWithCredentials), configuration.GetSection("TestClient"), new EnvironmentCredential(), new TestClientOptions());
 
             Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
-            Assert.IsInstanceOf<EnvironmentCredential>(client.Credential);
+            Assert.That(client.Credential, Is.InstanceOf<EnvironmentCredential>());
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TokenCredential credential = factory.CreateTokenCredential(configuration.GetSection("TestClient"));
 
-            Assert.IsInstanceOf<ClientSecretCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ClientSecretCredential>());
             var clientSecretCredential = (ClientSecretCredential)credential;
 
             Assert.That(clientSecretCredential.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -65,7 +65,7 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TokenCredential credential = factory.CreateTokenCredential(configuration);
 
-            Assert.IsInstanceOf<EnvironmentCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<EnvironmentCredential>());
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace Azure.Core.Extensions.Tests
             TokenCredential credential = factory.CreateTokenCredential(configuration.GetSection("TestClient"));
 
             // credential factory is not used because there is configuration specified
-            Assert.IsInstanceOf<DefaultAzureCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<DefaultAzureCredential>());
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace Azure.Core.Extensions.Tests
             TestClientWithCredentials client = (TestClientWithCredentials) factory.CreateClient(typeof(TestClientWithCredentials), configuration.GetSection("TestClient"), new EnvironmentCredential(), new TestClientOptions());
 
             Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
-            Assert.IsInstanceOf<EnvironmentCredential>(client.Credential);
+            Assert.That(client.Credential, Is.InstanceOf<EnvironmentCredential>());
 
             AzureEventSourceLogForwarder forwarder = provider.GetService<AzureEventSourceLogForwarder>();
             var listener = (AzureEventSourceListener) forwarder.GetType().GetField(

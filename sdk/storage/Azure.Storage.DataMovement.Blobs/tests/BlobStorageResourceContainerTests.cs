@@ -92,7 +92,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Assert
-            Assert.IsNotEmpty(resources);
+            Assert.That(resources, Is.Not.Empty);
             Assert.That(resources.Count, Is.EqualTo(2));
         }
 
@@ -129,8 +129,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Assert
-            Assert.IsEmpty(blobs);
-            Assert.IsEmpty(directories);
+            Assert.That(blobs, Is.Empty);
+            Assert.That(directories, Is.Empty);
         }
 
         [Test]
@@ -260,7 +260,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             StorageResourceItemProperties properties = await resource.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
             Assert.That(resource.ResourceId, Is.EqualTo(DataMovementBlobConstants.ResourceId.BlockBlob));
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             StorageResourceItemProperties properties = await resource.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
             Assert.That(resource.ResourceId, Is.EqualTo(blobResourceId));
         }
 

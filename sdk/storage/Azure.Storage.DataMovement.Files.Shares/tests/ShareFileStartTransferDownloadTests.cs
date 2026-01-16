@@ -141,7 +141,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertSingleCompletedCheck();
@@ -202,7 +202,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertSingleCompletedCheck();

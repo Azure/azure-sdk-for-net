@@ -54,7 +54,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -67,7 +67,7 @@ namespace TestProject
             AssertJsonModel(jsonModel.Type);
             Assert.That(jsonModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
             Assert.That(jsonModel.ContextType, Is.EqualTo(s_modelExpectations[jsonModel.Type.Name].Context));
-            Assert.IsNotNull(jsonModel.PersistableModelProxy);
+            Assert.That(jsonModel.PersistableModelProxy, Is.Not.Null);
             var unknownJsonModel = jsonModel.PersistableModelProxy;
             Assert.That(unknownJsonModel!.Name, Is.EqualTo("UnknownJsonModel"));
             Assert.That(unknownJsonModel.Namespace, Is.EqualTo("TestProject"));
@@ -111,7 +111,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
@@ -175,7 +175,7 @@ namespace TestProject2
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -230,7 +230,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(1));
@@ -276,7 +276,7 @@ namespace _Type.Foo
             Compilation compilation = CompilationHelper.CreateCompilation(source, assemblyName: "Type.Foo");
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("_Type.Foo"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -353,7 +353,7 @@ namespace TestProject
                 contextName: "MyLocalContext");
 
             var result = CompilationHelper.RunSourceGenerator(compilation);
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("MyLocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -412,7 +412,7 @@ namespace TestProject
                 additionalReferences: [depCompilation.ToMetadataReference()]);
 
             var result = CompilationHelper.RunSourceGenerator(compilation);
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -447,7 +447,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -525,7 +525,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -567,7 +567,7 @@ namespace TestProject
                 ]);
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -709,7 +709,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
@@ -759,7 +759,7 @@ namespace TestProject
                 additionalReferences: [MetadataReference.CreateFromFile(typeof(List<>).Assembly.Location)]);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
@@ -803,7 +803,7 @@ namespace TestDependency
             Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
             var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
 
-            Assert.IsNotNull(depResult.GenerationSpec);
+            Assert.That(depResult.GenerationSpec, Is.Not.Null);
             Assert.That(depResult.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(depResult.GenerationSpec.Type.Namespace, Is.EqualTo("TestDependency"));
             Assert.That(depResult.Diagnostics.Length, Is.EqualTo(0));
@@ -838,7 +838,7 @@ namespace TestProject
 
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("MyLocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -847,12 +847,12 @@ namespace TestProject
             Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(1));
 
             var myLocalContext = newCompilation.GetTypeByMetadataName("TestProject.MyLocalContext");
-            Assert.IsNotNull(myLocalContext, "MyLocalContext should not be null.");
+            Assert.That(myLocalContext, Is.Not.Null, "MyLocalContext should not be null.");
 
             var referenceContextFiled = myLocalContext!.GetMembers("s_referenceContexts")
                 .OfType<IFieldSymbol>()
                 .FirstOrDefault(f => f.IsStatic);
-            Assert.IsNotNull(referenceContextFiled, "s_referenceContexts field should not be null.");
+            Assert.That(referenceContextFiled, Is.Not.Null, "s_referenceContexts field should not be null.");
 
             //verify it has TestDependency.LocalContext.Default in its initializer somewhere
             var foundInitializer = false;
@@ -901,7 +901,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source, additionalSuppress: additionalSuppress);
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, additionalSuppress: additionalSuppress);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -976,7 +976,7 @@ namespace TestProject
                 out var newCompilation,
                 additionalSuppress: isError ? ["CS0619"] : null);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -1084,7 +1084,7 @@ namespace TestProject
 
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -1135,7 +1135,7 @@ namespace TestProject
 
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -1208,7 +1208,7 @@ namespace TestProject
 
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -1264,7 +1264,7 @@ namespace TestProject
 
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -1323,7 +1323,7 @@ namespace TestProject
 
             var result =
                 CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
 
             // Verify the new compilation still has warnings for direct usage but not for generated code
             var diagnostics = newCompilation.GetDiagnostics();
@@ -1345,24 +1345,24 @@ namespace TestProject
             Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST001");
 
             Assert.That(startIndex + 2 < contextText.Count, Is.True, "Not enough lines after pragma disable");
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
-            StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
+            Assert.That(contextText[startIndex + 1], Does.Contain("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)"));
+            Assert.That(contextText[startIndex + 2], Does.Contain("#pragma warning restore TEST001"));
 
             startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST002"));
             Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST002");
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.OtherModel)", contextText[startIndex + 1]);
-            StringAssert.Contains("#pragma warning restore TEST002", contextText[startIndex + 2]);
+            Assert.That(contextText[startIndex + 1], Does.Contain("_typeBuilderFactories.Add(typeof(global::TestProject.OtherModel)"));
+            Assert.That(contextText[startIndex + 2], Does.Contain("#pragma warning restore TEST002"));
 
             // Also check the builder files
             var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
             var jsonModelText = jsonModelBuilder.SourceText.ToString();
-            StringAssert.Contains("#pragma warning disable TEST001", jsonModelText);
-            StringAssert.Contains("#pragma warning restore TEST001", jsonModelText);
+            Assert.That(jsonModelText, Does.Contain("#pragma warning disable TEST001"));
+            Assert.That(jsonModelText, Does.Contain("#pragma warning restore TEST001"));
 
             var otherModelBuilder = generatedSources.First(s => s.HintName.Contains("OtherModel_Builder"));
             var otherModelText = otherModelBuilder.SourceText.ToString();
-            StringAssert.Contains("#pragma warning disable TEST002", otherModelText);
-            StringAssert.Contains("#pragma warning restore TEST002", otherModelText);
+            Assert.That(otherModelText, Does.Contain("#pragma warning disable TEST002"));
+            Assert.That(otherModelText, Does.Contain("#pragma warning restore TEST002"));
 
             Assert.That(result.GenerationSpec!.TypeBuilders.Count, Is.EqualTo(2));
             Assert.That(result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
@@ -1411,7 +1411,7 @@ namespace TestProject
 
             var result =
                 CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
 
             // Verify the new compilation still has warnings for direct usage but not for generated code
             var diagnostics = newCompilation.GetDiagnostics();
@@ -1433,19 +1433,19 @@ namespace TestProject
             Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST001");
 
             Assert.That(startIndex + 2 < contextText.Count, Is.True, "Not enough lines after pragma disable");
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
-            StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
+            Assert.That(contextText[startIndex + 1], Does.Contain("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)"));
+            Assert.That(contextText[startIndex + 2], Does.Contain("#pragma warning restore TEST001"));
 
             // Also check the builder files
             var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
             var jsonModelText = jsonModelBuilder.SourceText.ToString();
-            StringAssert.Contains("#pragma warning disable TEST001", jsonModelText);
-            StringAssert.Contains("#pragma warning restore TEST001", jsonModelText);
+            Assert.That(jsonModelText, Does.Contain("#pragma warning disable TEST001"));
+            Assert.That(jsonModelText, Does.Contain("#pragma warning restore TEST001"));
 
             var otherModelBuilder = generatedSources.First(s => s.HintName.Contains("OtherModel_Builder"));
             var otherModelText = otherModelBuilder.SourceText.ToString();
-            StringAssert.DoesNotContain("#pragma warning disable", otherModelText);
-            StringAssert.DoesNotContain("#pragma warning restore", otherModelText);
+            Assert.That(otherModelText, Does.Not.Contain("#pragma warning disable"));
+            Assert.That(otherModelText, Does.Not.Contain("#pragma warning restore"));
 
             Assert.That(result.GenerationSpec!.TypeBuilders.Count, Is.EqualTo(2));
             Assert.That(result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
@@ -1497,7 +1497,7 @@ $$"""
 
             var result =
                 CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
 
             // Verify the new compilation still has warnings for direct usage but not for generated code
             var diagnostics = newCompilation.GetDiagnostics();
@@ -1519,19 +1519,19 @@ $$"""
             Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST001");
 
             Assert.That(startIndex + 2 < contextText.Count, Is.True, "Not enough lines after pragma disable");
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
-            StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
+            Assert.That(contextText[startIndex + 1], Does.Contain("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)"));
+            Assert.That(contextText[startIndex + 2], Does.Contain("#pragma warning restore TEST001"));
 
             // Also check the builder files
             var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
             var jsonModelText = jsonModelBuilder.SourceText.ToString();
-            StringAssert.Contains("#pragma warning disable TEST001", jsonModelText);
-            StringAssert.Contains("#pragma warning restore TEST001", jsonModelText);
+            Assert.That(jsonModelText, Does.Contain("#pragma warning disable TEST001"));
+            Assert.That(jsonModelText, Does.Contain("#pragma warning restore TEST001"));
 
             var otherModelBuilder = generatedSources.First(s => s.HintName.Contains("OtherModel_Builder"));
             var otherModelText = otherModelBuilder.SourceText.ToString();
-            StringAssert.Contains("#pragma warning disable CS0618", otherModelText);
-            StringAssert.Contains("#pragma warning restore CS0618", otherModelText);
+            Assert.That(otherModelText, Does.Contain("#pragma warning disable CS0618"));
+            Assert.That(otherModelText, Does.Contain("#pragma warning restore CS0618"));
 
             Assert.That(result.GenerationSpec!.TypeBuilders.Count, Is.EqualTo(2));
             Assert.That(result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
@@ -1573,7 +1573,7 @@ $$"""
             // The dependency compilation should not have experimental warnings
             var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
 
-            Assert.IsNotNull(depResult.GenerationSpec);
+            Assert.That(depResult.GenerationSpec, Is.Not.Null);
             Assert.That(depResult.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(depResult.GenerationSpec.Type.Namespace, Is.EqualTo("TestDependency"));
             Assert.That(depResult.Diagnostics.Length, Is.EqualTo(0));
@@ -1612,7 +1612,7 @@ $$"""
 
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("MyLocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -1621,12 +1621,12 @@ $$"""
             Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(1));
 
             var myLocalContext = newCompilation.GetTypeByMetadataName("TestProject.MyLocalContext");
-            Assert.IsNotNull(myLocalContext, "MyLocalContext should not be null.");
+            Assert.That(myLocalContext, Is.Not.Null, "MyLocalContext should not be null.");
 
             var referenceContextFiled = myLocalContext!.GetMembers("s_referenceContexts")
                 .OfType<IFieldSymbol>()
                 .FirstOrDefault(f => f.IsStatic);
-            Assert.IsNotNull(referenceContextFiled, "s_referenceContexts field should not be null.");
+            Assert.That(referenceContextFiled, Is.Not.Null, "s_referenceContexts field should not be null.");
         }
 
         [TestCase("JsonModel[]")]
@@ -1682,7 +1682,7 @@ $$"""
                 out var newCompilation,
                 out var generatedSources);
 
-            Assert.IsNotNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Not.Null);
             Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
             Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
             Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
@@ -1743,12 +1743,12 @@ $$"""
 
             // Also check the builder files
             var builders = generatedSources.Where(s => s.HintName.EndsWith("Builder.g.cs"));
-            Assert.IsNotEmpty(builders);
+            Assert.That(builders, Is.Not.Empty);
             foreach (var builder in builders)
             {
                 var builderText = builder.SourceText.ToString();
-                StringAssert.Contains("#pragma warning disable TEST001", builderText);
-                StringAssert.Contains("#pragma warning restore TEST001", builderText);
+                Assert.That(builderText, Does.Contain("#pragma warning disable TEST001"));
+                Assert.That(builderText, Does.Contain("#pragma warning restore TEST001"));
             }
         }
 #endif

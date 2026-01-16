@@ -62,7 +62,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.NotNull(schemaProperties);
+            Assert.That(schemaProperties, Is.Not.Null);
             _schemaProperties = schemaProperties.Value;
             _definition = definition;
         }

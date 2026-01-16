@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Tests
             Assert.That(getResult.Data.Notes, Is.EqualTo(model.Data.Notes));
             if(model.Data.Owners != null || getResult.Data.Owners != null)
             {
-                Assert.NotNull(model.Data.Owners);
-                Assert.NotNull(getResult.Data.Owners);
+                Assert.That(model.Data.Owners, Is.Not.Null);
+                Assert.That(getResult.Data.Owners, Is.Not.Null);
                 Assert.That(getResult.Data.Owners.Count, Is.EqualTo(model.Data.Owners.Count));
                 for(int i = 0; i < model.Data.Owners.Count; ++i)
                 {

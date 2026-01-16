@@ -78,7 +78,7 @@ namespace Azure.Core.Tests
             RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
-            Assert.GreaterOrEqual(message.ProcessingStartTime, beforeSend);
+            Assert.That(message.ProcessingStartTime, Is.GreaterThanOrEqualTo(beforeSend));
             Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(0));
             await gate.Cycle();
             Assert.That(mockPolicy.ShouldRetryCalled, Is.True);
@@ -100,7 +100,7 @@ namespace Azure.Core.Tests
             await task.TimeoutAfterDefault();
             Assert.That(mockPolicy.ShouldRetryCalled, Is.False);
             Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(2));
-            Assert.IsNull(mockPolicy.LastException);
+            Assert.That(mockPolicy.LastException, Is.Null);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
             await task.TimeoutAfterDefault();
             Assert.That(mockPolicy.OnRequestSentCalled, Is.True);
             Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(2));
-            Assert.IsNull(mockPolicy.LastException);
+            Assert.That(mockPolicy.LastException, Is.Null);
         }
 
         [Test]
@@ -194,9 +194,9 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.CycleWithException(new IOException());
 
             AggregateException exception = Assert.ThrowsAsync<AggregateException>(async () => await task.TimeoutAfterDefault());
-            StringAssert.StartsWith("Retry failed after 2 tries.", exception.Message);
-            Assert.IsInstanceOf<InvalidOperationException>(exception.InnerExceptions[0]);
-            Assert.IsInstanceOf<IOException>(exception.InnerExceptions[1]);
+            Assert.That(exception.Message, Does.StartWith("Retry failed after 2 tries."));
+            Assert.That(exception.InnerExceptions[0], Is.InstanceOf<InvalidOperationException>());
+            Assert.That(exception.InnerExceptions[1], Is.InstanceOf<IOException>());
         }
 
         [Test]
@@ -234,8 +234,8 @@ namespace Azure.Core.Tests
             }
 
             AggregateException exception = Assert.ThrowsAsync<AggregateException>(async () => await task.TimeoutAfterDefault());
-            StringAssert.StartsWith("Retry failed after 4 tries.", exception.Message);
-            CollectionAssert.AreEqual(exceptions, exception.InnerExceptions);
+            Assert.That(exception.Message, Does.StartWith("Retry failed after 4 tries."));
+            Assert.That(exception.InnerExceptions, Is.EqualTo(exceptions).AsCollection);
         }
 
         [Test]
@@ -281,7 +281,7 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.Less(TimeSpan.FromHours(4), retryDelay);
+            Assert.That(TimeSpan.FromHours(4), Is.LessThan(retryDelay));
             Assert.That(response.Status, Is.EqualTo(501));
         }
 
@@ -304,7 +304,7 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.Less(TimeSpan.Zero, retryDelay);
+            Assert.That(TimeSpan.Zero, Is.LessThan(retryDelay));
             Assert.That(response.Status, Is.EqualTo(501));
         }
 

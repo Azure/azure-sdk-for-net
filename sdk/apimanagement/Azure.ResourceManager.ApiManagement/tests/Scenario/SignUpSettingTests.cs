@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the existing settings on the service
             var defaultSignupSettings = ApiServiceResource.GetApiManagementPortalSignUpSetting();
             defaultSignupSettings = await defaultSignupSettings.GetAsync();
-            Assert.NotNull(defaultSignupSettings);
+            Assert.That(defaultSignupSettings, Is.Not.Null);
 
             // disable portal signup
             defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled = false;
             defaultSignupSettings = (await defaultSignupSettings.CreateOrUpdateAsync(WaitUntil.Completed, defaultSignupSettings.Data)).Value;
 
-            Assert.NotNull(defaultSignupSettings);
+            Assert.That(defaultSignupSettings, Is.Not.Null);
             Assert.That(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled, Is.False);
 
             defaultSignupSettings = await defaultSignupSettings.GetAsync();
-            Assert.NotNull(defaultSignupSettings);
+            Assert.That(defaultSignupSettings, Is.Not.Null);
             Assert.That(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled, Is.False);
         }
     }

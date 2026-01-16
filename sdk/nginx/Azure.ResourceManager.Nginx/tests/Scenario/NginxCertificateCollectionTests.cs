@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

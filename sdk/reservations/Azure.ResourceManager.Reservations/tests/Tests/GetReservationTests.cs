@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             AsyncPageable<ReservationDetailResource> reservationResponse = response.Value.GetReservationDetails().GetAllAsync();
             List<ReservationDetailResource> reservationResources = await reservationResponse.ToEnumerableAsync();
 
-            Assert.IsNotNull(reservationResources);
+            Assert.That(reservationResources, Is.Not.Null);
             Assert.That(reservationResources.Count, Is.EqualTo(1));
 
             var reservation = reservationResources[0];
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.Reservations.Tests
             AsyncPageable<ReservationDetailResource> reservationResponse = Tenant.GetReservationDetailsAsync();
             List<ReservationDetailResource> reservationResources = await reservationResponse.ToEnumerableAsync();
 
-            Assert.IsNotNull(reservationResources);
+            Assert.That(reservationResources, Is.Not.Null);
             Assert.That(reservationResources.Count, Is.EqualTo(53));
 
             var reservation = reservationResources[0];
-            Assert.IsNotNull(reservation);
-            Assert.IsNotNull(reservation.Data);
+            Assert.That(reservation, Is.Not.Null);
+            Assert.That(reservation.Data, Is.Not.Null);
             Assert.That(reservation.Data.Id.ToString(), Is.EqualTo("/providers/microsoft.capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb"));
             Assert.That(reservation.Data.ResourceType.ToString(), Is.EqualTo("microsoft.capacity/reservationOrders/reservations"));
             Assert.That(reservation.Data.Name, Is.EqualTo("48f6eeec-cf66-4a23-a4be-81d4d7000beb"));
-            Assert.IsNotNull(reservation.Data.Properties);
+            Assert.That(reservation.Data.Properties, Is.Not.Null);
             Assert.That(reservation.Data.Properties.AppliedScopeType, Is.EqualTo(AppliedScopeType.Shared));
             Assert.That(reservation.Data.Properties.Quantity, Is.EqualTo(3));
             Assert.That(reservation.Data.Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Expired));
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Reservations.Tests
 
         private void TestReservationReponse(ReservationDetailData responseData)
         {
-            Assert.IsNotNull(responseData);
+            Assert.That(responseData, Is.Not.Null);
             Assert.That(responseData.Id.ToString(), Is.EqualTo("/providers/microsoft.capacity/reservationOrders/8d233700-d9f3-4021-aba1-f9350f3ac0dc/reservations/ec1a9023-ec6b-44a7-8a49-1402bc2d766b"));
             Assert.That(responseData.ResourceType.ToString(), Is.EqualTo("microsoft.capacity/reservationOrders/reservations"));
             Assert.That(responseData.Name, Is.EqualTo("ec1a9023-ec6b-44a7-8a49-1402bc2d766b"));
             Assert.That(responseData.Version, Is.EqualTo(10));
-            Assert.IsNotNull(responseData.Properties);
+            Assert.That(responseData.Properties, Is.Not.Null);
             Assert.That(responseData.Properties.AppliedScopeType, Is.EqualTo(AppliedScopeType.Shared));
             Assert.That(responseData.Properties.Quantity, Is.EqualTo(3));
             Assert.That(responseData.Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Expired));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Reservations.Tests
         private void TestReservationOrderReponse(Response<ReservationOrderResource> response)
         {
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.Data);
-            Assert.IsNotNull(response.Value.Data.Reservations);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data, Is.Not.Null);
+            Assert.That(response.Value.Data.Reservations, Is.Not.Null);
             Assert.That(response.Value.Data.Reservations.Count, Is.EqualTo(1));
         }
     }

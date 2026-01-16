@@ -60,8 +60,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(parameters.Properties.RoleName, Is.EqualTo("Test Role Definition"));
             Assert.That(parameters.Properties.Description, Is.EqualTo("This is only a test."));
             Assert.That(parameters.Properties.Permissions.Count, Is.EqualTo(1));
-            CollectionAssert.AreEqual(parameters.Properties.Permissions[0].DataActions, new[] { KeyVaultDataAction.BackupHsmKeys });
-            CollectionAssert.AreEqual(parameters.Properties.AssignableScopes, new[] { KeyVaultRoleScope.Global });
+            Assert.That(new[] { KeyVaultDataAction.BackupHsmKeys }, Is.EqualTo(parameters.Properties.Permissions[0].DataActions).AsCollection);
+            Assert.That(new[] { KeyVaultRoleScope.Global }, Is.EqualTo(parameters.Properties.AssignableScopes).AsCollection);
         }
     }
 }

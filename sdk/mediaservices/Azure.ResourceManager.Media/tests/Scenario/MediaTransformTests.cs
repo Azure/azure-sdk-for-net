@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             var mediaTransfer = await CreateMediaTransfer(_mediaService, mediaTransformName);
-            Assert.IsNotNull(mediaTransfer);
+            Assert.That(mediaTransfer, Is.Not.Null);
             Assert.That(mediaTransfer.Data.Name, Is.EqualTo(mediaTransformName));
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Tests
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             await CreateMediaTransfer(_mediaService, mediaTransformName);
             var mediaTransfer = await mediaTransformCollection.GetAsync(mediaTransformName);
-            Assert.IsNotNull(mediaTransfer);
+            Assert.That(mediaTransfer, Is.Not.Null);
             Assert.That(mediaTransfer.Value.Data.Name, Is.EqualTo(mediaTransformName));
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Media.Tests
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             var mediaTransfer = await CreateMediaTransfer(_mediaService, mediaTransformName);
             var list = await mediaTransformCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

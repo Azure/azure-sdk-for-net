@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             _azureSqlDBLinkedServiceName = Recording.GenerateAssetName("LinkedService");
             var azureSqlDBLinkedService = await CreateAzureDBLinkedService(_dataFactory, _azureSqlDBLinkedServiceName, _connectionString);
-            Assert.IsNotNull(azureSqlDBLinkedService);
+            Assert.That(azureSqlDBLinkedService, Is.Not.Null);
             Assert.That(azureSqlDBLinkedService.Data.Name, Is.EqualTo(_azureSqlDBLinkedServiceName));
 
             _azureBlobStorageLinkedServiceName = Recording.GenerateAssetName("LinkedService");
             var azureBlobStorageLinkedService = await CreateAzureBlobStorageLinkedService(_dataFactory, _azureBlobStorageLinkedServiceName, _accessBlobKey);
-            Assert.IsNotNull(azureBlobStorageLinkedService);
+            Assert.That(azureBlobStorageLinkedService, Is.Not.Null);
             Assert.That(azureBlobStorageLinkedService.Data.Name, Is.EqualTo(_azureBlobStorageLinkedServiceName));
 
             _azureDataLakeGen2LinkedServiceName = Recording.GenerateAssetName("LinkedService");
             var azureDataLakeGen2LinkedService = await CreateAzureDataLakeGen2LinkedService(_dataFactory, _azureDataLakeGen2LinkedServiceName, _accessGen2Key);
-            Assert.IsNotNull(azureDataLakeGen2LinkedService);
+            Assert.That(azureDataLakeGen2LinkedService, Is.Not.Null);
             Assert.That(azureDataLakeGen2LinkedService.Data.Name, Is.EqualTo(_azureDataLakeGen2LinkedServiceName));
         }
 
@@ -78,32 +78,32 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             _dataSetAzureSqlSourceName = Recording.GenerateAssetName("DataSet");
             var dataSetAzureSqlSource = await CreateAzureDBDataSet(_dataFactory, _dataSetAzureSqlSourceName, _azureSqlDBLinkedServiceName, "SampleTable1");
-            Assert.IsNotNull(dataSetAzureSqlSource);
+            Assert.That(dataSetAzureSqlSource, Is.Not.Null);
             Assert.That(dataSetAzureSqlSource.Data.Name, Is.EqualTo(_dataSetAzureSqlSourceName));
 
             _dataSetAzureSqlSinkName = Recording.GenerateAssetName("DataSet");
             var dataSetAzureSqlSink = await CreateAzureDBDataSet(_dataFactory, _dataSetAzureSqlSinkName, _azureSqlDBLinkedServiceName, "SampleTable2");
-            Assert.IsNotNull(dataSetAzureSqlSink);
+            Assert.That(dataSetAzureSqlSink, Is.Not.Null);
             Assert.That(dataSetAzureSqlSink.Data.Name, Is.EqualTo(_dataSetAzureSqlSinkName));
 
             _azureBlobStorageSourceName = Recording.GenerateAssetName("DataSet");
             var dataSetAzureStorageSource = await CreateAzureBlobStorageDataSet(_dataFactory, _azureBlobStorageSourceName, _azureBlobStorageLinkedServiceName);
-            Assert.IsNotNull(dataSetAzureStorageSource);
+            Assert.That(dataSetAzureStorageSource, Is.Not.Null);
             Assert.That(dataSetAzureStorageSource.Data.Name, Is.EqualTo(_azureBlobStorageSourceName));
 
             _azureBlobStorageSinkName = Recording.GenerateAssetName("DataSet");
             var dataSetAzureStorageSink = await CreateAzureBlobStorageDataSet(_dataFactory, _azureBlobStorageSinkName, _azureBlobStorageLinkedServiceName);
-            Assert.IsNotNull(dataSetAzureStorageSink);
+            Assert.That(dataSetAzureStorageSink, Is.Not.Null);
             Assert.That(dataSetAzureStorageSink.Data.Name, Is.EqualTo(_azureBlobStorageSinkName));
 
             _azureDataLakeGen2SourceName = Recording.GenerateAssetName("DataSet");
             var dataSetAzureGen2Source = await CreateAzureDataLakeGen2DataSet(_dataFactory, _azureDataLakeGen2SourceName, _azureDataLakeGen2LinkedServiceName);
-            Assert.IsNotNull(dataSetAzureGen2Source);
+            Assert.That(dataSetAzureGen2Source, Is.Not.Null);
             Assert.That(dataSetAzureGen2Source.Data.Name, Is.EqualTo(_azureDataLakeGen2SourceName));
 
             _azureDataLakeGen2SinkName = Recording.GenerateAssetName("DataSet");
             var dataSetAzureGen2Sink = await CreateAzureDataLakeGen2DataSet(_dataFactory, _azureDataLakeGen2SinkName, _azureDataLakeGen2LinkedServiceName);
-            Assert.IsNotNull(dataSetAzureGen2Sink);
+            Assert.That(dataSetAzureGen2Sink, Is.Not.Null);
             Assert.That(dataSetAzureGen2Sink.Data.Name, Is.EqualTo(_azureDataLakeGen2SinkName));
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
             var pipeline = await CreateCopyDataPipeline(_dataFactory, pipelineName, _dataSetAzureSqlSourceName, _dataSetAzureSqlSinkName, _azureBlobStorageSourceName, _azureBlobStorageSinkName,_azureDataLakeGen2SourceName,_azureDataLakeGen2SinkName);
-            Assert.IsNotNull(pipeline);
+            Assert.That(pipeline, Is.Not.Null);
             Assert.That(pipeline.Data.Name, Is.EqualTo(pipelineName));
             _pipelineName = pipeline.Data.Name;
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             DataFactoryPipelineResource pipelineResource = await _dataFactory.GetDataFactoryPipelineAsync(_pipelineName);
             var pipelineTrigger = await pipelineResource.CreateRunAsync();
-            Assert.IsNotNull(pipelineTrigger);
+            Assert.That(pipelineTrigger, Is.Not.Null);
             var result = await _dataFactory.GetPipelineRunAsync(pipelineTrigger.Value.RunId.ToString());
             Assert.That(result.Value.Status, Is.Not.EqualTo("Failed"));
         }

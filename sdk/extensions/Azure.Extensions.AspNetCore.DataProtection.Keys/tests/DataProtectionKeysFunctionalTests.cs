@@ -49,7 +49,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             foreach (var element in testKeyRepository.GetAllElements())
             {
-                StringAssert.Contains("This key is encrypted with Azure Key Vault", element.ToString());
+                Assert.That(element.ToString(), Does.Contain("This key is encrypted with Azure Key Vault"));
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             foreach (var element in testKeyRepository.GetAllElements())
             {
-                StringAssert.Contains("This key is encrypted with Azure", element.ToString());
+                Assert.That(element.ToString(), Does.Contain("This key is encrypted with Azure"));
             }
         }
 

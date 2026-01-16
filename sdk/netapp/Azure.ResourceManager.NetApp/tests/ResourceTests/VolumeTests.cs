@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
-            Assert.NotNull(volumeResource2.Data.ProtocolTypes);
+            Assert.That(volumeResource2.Data.ProtocolTypes, Is.Not.Null);
             volumeResource2.Should().BeEquivalentTo(volumeResource1);
             volumeResource2.Data.ProtocolTypes.Should().Equal(_defaultProtocolTypes);
-            Assert.NotNull(volumeResource2.Data.ExportPolicy);
+            Assert.That(volumeResource2.Data.ExportPolicy, Is.Not.Null);
             volumeResource2.Data.ExportPolicy.Rules.Should().NotBeEmpty();
             Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].RuleIndex, Is.EqualTo(_defaultExportPolicyRule.RuleIndex));
             Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].IsUnixReadOnly, Is.EqualTo(_defaultExportPolicyRule.IsUnixReadOnly));
@@ -444,9 +444,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyVolumeProperties(remoteVolumeResource, false);
             Assert.That(remoteVolumeResource.Data.Location, Is.EqualTo(RemoteLocation));
             remoteVolumeResource.Should().BeEquivalentTo(remoteVolume);
-            Assert.IsNotNull(remoteVolumeResource.Data.DataProtection);
-            Assert.IsNull(remoteVolumeResource.Data.DataProtection.Backup);
-            Assert.IsNull(remoteVolumeResource.Data.DataProtection.Snapshot);
+            Assert.That(remoteVolumeResource.Data.DataProtection, Is.Not.Null);
+            Assert.That(remoteVolumeResource.Data.DataProtection.Backup, Is.Null);
+            Assert.That(remoteVolumeResource.Data.DataProtection.Snapshot, Is.Null);
             Assert.That(remoteVolumeResource.Data.DataProtection.Replication.RemoteVolumeResourceId, Is.EqualTo(replication.RemoteVolumeResourceId));
             Assert.That(remoteVolumeResource.Data.DataProtection.Replication.RemoteVolumeRegion, Is.EqualTo(replication.RemoteVolumeRegion));
             Assert.That(remoteVolumeResource.Data.DataProtection.Replication.ReplicationSchedule, Is.EqualTo(replication.ReplicationSchedule));

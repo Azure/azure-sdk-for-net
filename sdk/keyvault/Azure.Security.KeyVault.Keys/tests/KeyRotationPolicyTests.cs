@@ -50,10 +50,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.That(sut.LifetimeActions.Count, Is.EqualTo(2));
             Assert.That(sut.LifetimeActions[0].Action, Is.EqualTo(KeyRotationPolicyAction.Rotate));
             Assert.That(sut.LifetimeActions[0].TimeBeforeExpiry, Is.EqualTo("P30D"));
-            Assert.IsNull(sut.LifetimeActions[0].TimeAfterCreate);
+            Assert.That(sut.LifetimeActions[0].TimeAfterCreate, Is.Null);
             Assert.That(sut.LifetimeActions[1].Action, Is.EqualTo(KeyRotationPolicyAction.Notify));
             Assert.That(sut.LifetimeActions[1].TimeAfterCreate, Is.EqualTo("P25D"));
-            Assert.IsNull(sut.LifetimeActions[1].TimeBeforeExpiry);
+            Assert.That(sut.LifetimeActions[1].TimeBeforeExpiry, Is.Null);
             Assert.That(sut.ExpiresIn, Is.EqualTo("P45D"));
             Assert.That(sut.CreatedOn, Is.EqualTo(DateTimeOffset.Parse("2021-10-05T22:37:59.0000000+00:00")));
             Assert.That(sut.UpdatedOn, Is.EqualTo(DateTimeOffset.Parse("2021-10-05T22:38:24.0000000+00:00")));

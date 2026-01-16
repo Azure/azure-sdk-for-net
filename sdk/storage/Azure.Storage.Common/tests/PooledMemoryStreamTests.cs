@@ -59,7 +59,7 @@ namespace Azure.Storage.Tests
             arrayPoolStream.Read(poolStreamData, 0, dataSize);
 #pragma warning restore CA2022
 
-            CollectionAssert.AreEqual(originalStreamData, poolStreamData);
+            Assert.That(poolStreamData, Is.EqualTo(originalStreamData).AsCollection);
         }
 
         [Test]

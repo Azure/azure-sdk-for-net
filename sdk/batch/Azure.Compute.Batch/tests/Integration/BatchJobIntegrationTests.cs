@@ -72,7 +72,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     }
                 }
 
-                Assert.IsNotNull(job);
+                Assert.That(job, Is.Not.Null);
                 Assert.That(BatchAllTasksCompleteMode.NoAction, Is.EqualTo(job.AllTasksCompleteMode));
 
                 // verify update job
@@ -80,7 +80,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.ReplaceJobAsync(jobID, job);
                 job = await client.GetJobAsync(jobID);
 
-                Assert.IsNotNull(job);
+                Assert.That(job, Is.Not.Null);
                 Assert.That(BatchAllTasksCompleteMode.TerminateJob, Is.EqualTo(job.AllTasksCompleteMode));
 
                 // create a task
@@ -90,7 +90,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // list task counts
                 BatchTaskCountsResult batchTaskCountsResult = await client.GetJobTaskCountsAsync(jobID);
-                Assert.IsNotNull(batchTaskCountsResult);
+                Assert.That(batchTaskCountsResult, Is.Not.Null);
                 // need to make a loop and ping GetJobTaskCountsAsync to get the status
                 //Assert.AreEqual(batchTaskCountsResult.TaskCounts.Active, 1);
 
@@ -176,7 +176,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchJob job = await client.GetJobAsync(jobID);
 
-                Assert.IsNotNull(job);
+                Assert.That(job, Is.Not.Null);
                 Assert.That(job.Metadata.First().Value, Is.EqualTo("value"));
                 //Assert.AreEqual(job.NetworkConfiguration.SubnetId, subnetID);
             }
@@ -274,7 +274,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 };
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
-                Assert.IsNotNull(taskResult);
+                Assert.That(taskResult, Is.Not.Null);
                 Assert.That(taskResult.BatchTaskCreateResults.Count, Is.EqualTo(taskCount));
 
                 // get the job
@@ -283,7 +283,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 DeleteJobOperation operation = await client.DeleteJobAsync(jobID, force: true);
 
-                Assert.IsNotNull(operation);
+                Assert.That(operation, Is.Not.Null);
 
                 await operation.WaitForCompletionAsync().ConfigureAwait(false);
 

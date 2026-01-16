@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanInstallPatch(){
             MachineInstallPatchesResult resourceData = await installPatch();
 
-            Assert.NotNull(resourceData.Status.ToString());
+            Assert.That(resourceData.Status.ToString(), Is.Not.Null);
         }
 
         [TestCase]

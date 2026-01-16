@@ -28,28 +28,28 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         private void AssertCredPresent(ShareClientConfiguration clientConfig, CredType credType)
         {
-            Assert.IsNotNull(clientConfig);
+            Assert.That(clientConfig, Is.Not.Null);
             switch (credType)
             {
                 case CredType.SharedKey:
-                    Assert.IsNotNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNull(clientConfig.TokenCredential);
-                    Assert.IsNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Not.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Null);
                     break;
                 case CredType.Token:
-                    Assert.IsNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNotNull(clientConfig.TokenCredential);
-                    Assert.IsNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Not.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Null);
                     break;
                 case CredType.Sas:
-                    Assert.IsNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNull(clientConfig.TokenCredential);
-                    Assert.IsNotNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Not.Null);
                     break;
                 case CredType.None:
-                    Assert.IsNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNull(clientConfig.TokenCredential);
-                    Assert.IsNull(clientConfig.SasCredential);
+                    Assert.That(clientConfig.SharedKeyCredential, Is.Null);
+                    Assert.That(clientConfig.TokenCredential, Is.Null);
+                    Assert.That(clientConfig.SasCredential, Is.Null);
                     break;
                 default:
                     throw new ArgumentException("No assertion support for cred type " + credType.ToString());
@@ -85,8 +85,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             ShareDirectoryStorageResourceContainer resource = await provider.FromDirectoryAsync(uri) as ShareDirectoryStorageResourceContainer;
 
-            Assert.IsNotNull(resource);
-            Assert.IsNotNull(resource.ShareDirectoryClient);
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource.ShareDirectoryClient, Is.Not.Null);
             Assert.That(resource.Uri, Is.EqualTo(uri));
             Assert.That(resource.ShareDirectoryClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(resource.ShareDirectoryClient.ClientConfiguration, credType);
@@ -113,9 +113,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             StorageResource resource = await provider.FromFileAsync(uri);
 
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             ShareFileStorageResource fileResource = resource as ShareFileStorageResource;
-            Assert.IsNotNull(fileResource.ShareFileClient);
+            Assert.That(fileResource.ShareFileClient, Is.Not.Null);
             Assert.That(resource.Uri, Is.EqualTo(uri));
             Assert.That(fileResource.ShareFileClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(fileResource.ShareFileClient.ClientConfiguration, credType);
@@ -148,10 +148,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             StorageResource resource = await provider.FromFileAsync(uri);
 
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             Assert.That(resource.Uri, Is.EqualTo(uri));
             ShareFileStorageResource fileResource = resource as ShareFileStorageResource;
-            Assert.IsNotNull(fileResource.ShareFileClient);
+            Assert.That(fileResource.ShareFileClient, Is.Not.Null);
             Assert.That(resource.Uri, Is.EqualTo(uri));
             Assert.That(fileResource.ShareFileClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(fileResource.ShareFileClient.ClientConfiguration, credType);

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
-            Assert.NotNull(topic);
+            Assert.That(topic, Is.Not.Null);
             Assert.That(topicName, Is.EqualTo(topic.Id.Name));
 
             //create a subscription
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 DeadLetteringOnFilterEvaluationExceptions = true
             };
             ServiceBusSubscriptionResource serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, parameters)).Value;
-            Assert.NotNull(serviceBusSubscription);
+            Assert.That(serviceBusSubscription, Is.Not.Null);
             Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
 
             //get created subscription
             serviceBusSubscription = await serviceBusSubscriptionCollection.GetAsync(subscriptionName);
-            Assert.NotNull(serviceBusSubscription);
+            Assert.That(serviceBusSubscription, Is.Not.Null);
             Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
             Assert.That(serviceBusSubscription.Data.Status, Is.EqualTo(ServiceBusMessagingEntityStatus.Active));
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create a topic for autoforward
             string topicName1 = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic1 = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName1, new ServiceBusTopicData() { EnablePartitioning = true})).Value;
-            Assert.NotNull(topic1);
+            Assert.That(topic1, Is.Not.Null);
             Assert.That(topicName1, Is.EqualTo(topic1.Id.Name));
 
             //update subscription and validate
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 ForwardTo = topicName1
             };
             serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, updateParameters)).Value;
-            Assert.NotNull(serviceBusSubscription);
+            Assert.That(serviceBusSubscription, Is.Not.Null);
             Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
             Assert.That(serviceBusSubscription.Data.Status, Is.EqualTo(ServiceBusMessagingEntityStatus.Active));
             Assert.That(serviceBusSubscription.Data.EnableBatchedOperations, Is.True);

@@ -248,7 +248,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 var executions = loggerOutputLines.Where(p => p.Contains("Executing"));
                 Assert.That(executions.Count(), Is.EqualTo(1));
-                StringAssert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected({2}): {0}/{1}', Id=", blob.BlobContainerName, blob.Name, BlobTriggerSource.LogsAndContainerScan), executions.Single());
+                Assert.That(executions.Single(), Does.StartWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected({2}): {0}/{1}', Id=", blob.BlobContainerName, blob.Name, BlobTriggerSource.LogsAndContainerScan)));
 
                 await host.StopAsync();
 
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                     .SelectMany(p => p.FormattedMessage.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.None))
                     .Where(s => s.Contains("KABOOM"))
                     .FirstOrDefault();
-                StringAssert.Contains("KABOOM", invalidMessageLog);
+                Assert.That(invalidMessageLog, Does.Contain("KABOOM"));
             }
         }
 

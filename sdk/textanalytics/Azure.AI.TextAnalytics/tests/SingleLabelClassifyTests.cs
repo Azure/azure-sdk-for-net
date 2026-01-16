@@ -292,7 +292,7 @@ namespace Azure.AI.TextAnalytics.Tests
             // Take the first page
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionsResults = actionsResult.SingleLabelClassifyResults;
-            Assert.IsNotNull(singleLabelClassifyActionsResults);
+            Assert.That(singleLabelClassifyActionsResults, Is.Not.Null);
 
             ClassifyDocumentResultCollection resultCollection = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
             ValidateBatchResult(resultCollection);
@@ -326,10 +326,10 @@ namespace Azure.AI.TextAnalytics.Tests
             // Take the first page
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionsResults = actionsResult.SingleLabelClassifyResults;
-            Assert.IsNotNull(singleLabelClassifyActionsResults);
+            Assert.That(singleLabelClassifyActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "SingleLabelClassify", "SingleLabelClassifyWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, singleLabelClassifyActionsResults.Select(result => result.ActionName));
+            Assert.That(singleLabelClassifyActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -401,11 +401,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateDocumentResult(ClassificationCategory? classification)
         {
-            Assert.IsNotNull(classification);
+            Assert.That(classification, Is.Not.Null);
 
-            Assert.GreaterOrEqual(classification.Value.ConfidenceScore, 0);
-            Assert.LessOrEqual(classification.Value.ConfidenceScore, 1);
-            Assert.NotNull(classification.Value.Category);
+            Assert.That(classification.Value.ConfidenceScore, Is.GreaterThanOrEqualTo(0));
+            Assert.That(classification.Value.ConfidenceScore, Is.LessThanOrEqualTo(1));
+            Assert.That(classification.Value.Category, Is.Not.Null);
         }
 
         private void ValidateBatchResult(ClassifyDocumentResultCollection results, bool includeStatistics = default)
@@ -415,27 +415,27 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
             }
             else
             {
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
             }
 
             foreach (ClassifyDocumentResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(result.HasError, Is.False);
-                Assert.IsNotNull(result.Warnings);
+                Assert.That(result.Warnings, Is.Not.Null);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
                 }
                 else
                 {

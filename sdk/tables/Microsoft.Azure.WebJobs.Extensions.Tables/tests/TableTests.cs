@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 {
                     string functionName = typeof(TProgram).Name + "." + methodName;
                     Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
-                    StringAssert.Contains(expectedErrorMessage, e.InnerException.Message);
+                    Assert.That(e.InnerException.Message, Does.Contain(expectedErrorMessage));
                     return;
                 }
                 Assert.Fail("Invoker should have failed");
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await jobHost.CallAsync(nameof(BindToParameterBindingData.Run));
             ParameterBindingData result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var tableData = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
 
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await jobHost.CallAsync(nameof(BindToParameterBindingData.RunWithAdditionalParams));
             ParameterBindingData result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var tableData = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
 

@@ -162,7 +162,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 await Task.Delay(5000); // Wait util all logs are populated
                 var log = host.GetTestLoggerProvider().GetAllLogMessages()
                     .FirstOrDefault(x => x.Level == Microsoft.Extensions.Logging.LogLevel.Error && x.FormattedMessage == $"PageBlobClient is not supported with {nameof(BlobTriggerSource.EventGrid)}");
-                Assert.IsNotNull(log);
+                Assert.That(log, Is.Not.Null);
             }
         }
 

@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Tests
 
         private static void AssertContainsIds(SuggestResults<Hotel> suggestions, params string[] expectedKeys)
         {
-            Assert.NotNull(suggestions.Results);
-            CollectionAssert.AreEqual(expectedKeys, suggestions.Results.Select(r => r.Document.HotelId).ToArray());
+            Assert.That(suggestions.Results, Is.Not.Null);
+            Assert.That(suggestions.Results.Select(r => r.Document.HotelId).ToArray(), Is.EqualTo(expectedKeys).AsCollection);
         }
 
         [Test]
@@ -41,13 +41,13 @@ namespace Azure.Search.Documents.Tests
                 .Select(h => h.AsDocument());
 
             Assert.That(suggestions.Coverage, Is.Null);
-            Assert.NotNull(suggestions.Results);
-            CollectionAssert.AreEqual(
-                expected.Select(d => d["hotelId"]),
-                suggestions.Results.Select(r => r.Document["hotelId"]));
-            CollectionAssert.AreEqual(
-                expected.Select(d => d["description"]),
-                suggestions.Results.Select(r => r.Text));
+            Assert.That(suggestions.Results, Is.Not.Null);
+            Assert.That(
+                suggestions.Results.Select(r => r.Document["hotelId"]),
+                Is.EqualTo(expected.Select(d => d["hotelId"])).AsCollection);
+            Assert.That(
+                suggestions.Results.Select(r => r.Text),
+                Is.EqualTo(expected.Select(d => d["description"])).AsCollection);
         }
 
         [Test]
@@ -66,13 +66,13 @@ namespace Azure.Search.Documents.Tests
                 .OrderBy(h => h.HotelId);
 
             Assert.That(suggestions.Coverage, Is.Null);
-            Assert.NotNull(suggestions.Results);
-            CollectionAssert.AreEqual(
-                expected.Select(h => h.HotelId),
-                suggestions.Results.Select(r => r.Document.HotelId));
-            CollectionAssert.AreEqual(
-                expected.Select(h => h.Description),
-                suggestions.Results.Select(r => r.Text));
+            Assert.That(suggestions.Results, Is.Not.Null);
+            Assert.That(
+                suggestions.Results.Select(r => r.Document.HotelId),
+                Is.EqualTo(expected.Select(h => h.HotelId)).AsCollection);
+            Assert.That(
+                suggestions.Results.Select(r => r.Text),
+                Is.EqualTo(expected.Select(h => h.Description)).AsCollection);
         }
 
         [Test]
@@ -85,9 +85,9 @@ namespace Azure.Search.Documents.Tests
                     "sg",
                     new SuggestOptions { OrderBy = new[] { "This is not a valid orderby." } }));
             Assert.That(ex.Status, Is.EqualTo(400));
-            StringAssert.StartsWith(
-                "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Does.StartWith("Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'"));
         }
 
         [Test]
@@ -100,9 +100,9 @@ namespace Azure.Search.Documents.Tests
                     "hotel",
                     invalidName));
             Assert.That(ex.Status, Is.EqualTo(400));
-            StringAssert.StartsWith(
-                $"The specified suggester name '{invalidName}' does not exist in this index definition.",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Does.StartWith($"The specified suggester name '{invalidName}' does not exist in this index definition."));
         }
 
         [Test]
@@ -111,9 +111,9 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             SuggestResults<Hotel> suggestions =
                 await resources.GetQueryClient().SuggestAsync<Hotel>("hitel", "sg");
-            Assert.NotNull(suggestions);
-            Assert.NotNull(suggestions.Results);
-            Assert.Zero(suggestions.Results.Count);
+            Assert.That(suggestions, Is.Not.Null);
+            Assert.That(suggestions.Results, Is.Not.Null);
+            Assert.That(suggestions.Results.Count, Is.Zero);
         }
 
         [Test]
@@ -125,8 +125,8 @@ namespace Azure.Search.Documents.Tests
                     "hitel",
                     "sg",
                     new SuggestOptions { UseFuzzyMatching = true });
-            Assert.NotNull(suggestions);
-            Assert.NotNull(suggestions.Results);
+            Assert.That(suggestions, Is.Not.Null);
+            Assert.That(suggestions.Results, Is.Not.Null);
             Assert.That(suggestions.Results.Count, Is.EqualTo(5));
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Tests
                         Size = 1
                     });
             AssertContainsIds(suggestions, "1");
-            StringAssert.StartsWith("Best <b>hotel</b> in town", suggestions.Results.First().Text);
+            Assert.That(suggestions.Results.First().Text, Does.StartWith("Best <b>hotel</b> in town"));
         }
 
         [Test]

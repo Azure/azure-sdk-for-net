@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void Data()
         {
             Assert.That(DefaultResource1.HasData, Is.True);
-            Assert.NotNull(DefaultResource1.Data);
+            Assert.That(DefaultResource1.Data, Is.Not.Null);
         }
 
         [TestCase]
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             await DefaultResource1.SaveLogProfileAsync(logSettings);
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();
-            Assert.IsNotNull(updatedlogProfile);
+            Assert.That(updatedlogProfile, Is.Not.Null);
             Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             await DefaultResource1.SaveLogProfileAsync(logSettings);
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();
-            Assert.IsNotNull(updatedlogProfile);
+            Assert.That(updatedlogProfile, Is.Not.Null);
             Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
         }
 
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetGlobalRulestack()
         {
             GlobalRulestackInfo info = (await DefaultResource1.GetGlobalRulestackAsync()).Value;
-            Assert.IsNotNull(info);
-            Assert.IsEmpty(info.AzureId);
+            Assert.That(info, Is.Not.Null);
+            Assert.That(info.AzureId, Is.Empty);
         }
 
         [TestCase]
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetSupportInfo()
         {
             FirewallSupportInfo response = await DefaultResource1.GetSupportInfoAsync();
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.HelpURL, Is.EqualTo("https://live.paloaltonetworks.com?productSku=PAN-CLOUD-NGFW-AZURE-PAYG"));
         }
     }

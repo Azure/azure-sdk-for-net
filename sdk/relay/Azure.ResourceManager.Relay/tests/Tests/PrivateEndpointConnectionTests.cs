@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Relay.Tests
             var id = _privateEndpointConnectionCollection.Id;
             id = RelayPrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
             RelayPrivateEndpointConnectionResource privateEndpointConnection = Client.GetRelayPrivateEndpointConnectionResource(id);
-            Assert.IsNotNull(privateEndpointConnection);
+            Assert.That(privateEndpointConnection, Is.Not.Null);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _privateEndpointConnectionCollection.GetAsync(name); });

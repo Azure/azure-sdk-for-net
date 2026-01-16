@@ -143,7 +143,7 @@ namespace Azure.Identity.Tests
 
                 Assert.That(cred.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(30)));
                 Assert.That(cred.TenantId, Is.EqualTo(expVisualStudioTenantId ?? expTenantId));
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
                 Assert.That(cred._isChainedCredential, Is.True);
             }
         }
@@ -191,7 +191,7 @@ namespace Azure.Identity.Tests
                 VisualStudioCodeCredential cred = (VisualStudioCodeCredential)factory.CreateVisualStudioCodeCredential();
 
                 Assert.That(cred.TenantId, Is.EqualTo(expVisualStudioCodeTenantId ?? expTenantId));
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
             }
         }
 
@@ -227,14 +227,14 @@ namespace Azure.Identity.Tests
 
                 Assert.That(cred.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(13)));
                 Assert.That(cred.TenantId, Is.EqualTo(expTenantId));
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
                 Assert.That(cred._isChainedCredential, Is.True);
 
                 AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
 
                 Assert.That(credAzd.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(13)));
                 Assert.That(credAzd.TenantId, Is.EqualTo(expTenantId));
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
+                Assert.That(credAzd.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
                 Assert.That(credAzd._isChainedCredential, Is.True);
             }
         }
@@ -271,7 +271,7 @@ namespace Azure.Identity.Tests
 
                 Assert.That(cred.ProcessTimeout, Is.EqualTo(expTimeout ?? TimeSpan.FromSeconds(10)));
                 Assert.That(cred.TenantId, Is.EqualTo(expTenantId));
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
                 Assert.That(cred._isChainedCredential, Is.True);
             }
         }
@@ -326,7 +326,7 @@ namespace Azure.Identity.Tests
 
                 Assert.That(cred.TenantId, Is.EqualTo(expInteractiveBrowserTenantId ?? expTenantId));
                 Assert.That(cred.ClientId, Is.EqualTo(expClientId));
-                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.That(cred.AdditionallyAllowedTenantIds, Is.EquivalentTo(expAdditionallyAllowedTenants));
             }
         }
 
@@ -408,12 +408,12 @@ namespace Azure.Identity.Tests
 
                 for (int i = 0; i < expCredentialTypes.Count; i++)
                 {
-                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                    Assert.That(chain[i], Is.InstanceOf(expCredentialTypes[i]));
                 }
 
                 for (int i = expCredentialTypes.Count; i < chain.Length; i++)
                 {
-                    Assert.IsNull(chain[i]);
+                    Assert.That(chain[i], Is.Null);
                 }
             }
         }
@@ -641,12 +641,12 @@ namespace Azure.Identity.Tests
 
                 for (int i = 0; i < expCredentialTypes.Count; i++)
                 {
-                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                    Assert.That(chain[i], Is.InstanceOf(expCredentialTypes[i]));
                 }
 
                 for (int i = expCredentialTypes.Count; i < chain.Length; i++)
                 {
-                    Assert.IsNull(chain[i]);
+                    Assert.That(chain[i], Is.Null);
                 }
             }
         }
@@ -707,19 +707,19 @@ namespace Azure.Identity.Tests
 
                 for (int i = 0; i < expCredentialTypes.Count; i++)
                 {
-                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                    Assert.That(chain[i], Is.InstanceOf(expCredentialTypes[i]));
                 }
 
                 for (int i = expCredentialTypes.Count; i < chain.Length; i++)
                 {
-                    Assert.IsNull(chain[i]);
+                    Assert.That(chain[i], Is.Null);
                 }
             }
         }
 
         private void ValidateSingleCredSelection(Type expectedType, IReadOnlyList<TokenCredential> chain)
         {
-            Assert.IsNotNull(chain);
+            Assert.That(chain, Is.Not.Null);
             Assert.That(chain.Single(cred => cred.GetType() == expectedType).GetType() == expectedType, Is.True, $"Chain does not contain expected credential type: {expectedType}");
             Assert.That(chain.Count == 1, Is.True, $"Chain contains unexpected number of credentials: {chain.Count}");
         }

@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             containerGroupProfile = (await containerGroupProfiles.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupProfileName, containerGroupProfileData2)).Value;
 
             ContainerGroupProfileRevisionCollection result = containerGroupProfile.GetContainerGroupProfileRevisions();
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             bool revision1exists = await result.ExistsAsync("1");
             Assert.That(revision1exists, Is.True);
             bool revision2exists = await result.ExistsAsync("2");

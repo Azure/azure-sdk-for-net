@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardVerizon);
             SsoUri ssoUri = await cdnProfile.GenerateSsoUriAsync();
-            Assert.NotNull(ssoUri);
+            Assert.That(ssoUri, Is.Not.Null);
             Assert.That(ssoUri.AvailableSsoUri.ToString().StartsWith("https://"), Is.True);
         }
 
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardVerizon);
             SupportedOptimizationTypesListResult optimizationTypesList = await cdnProfile.GetSupportedOptimizationTypesAsync();
-            Assert.NotNull(optimizationTypesList);
-            Assert.NotNull(optimizationTypesList.SupportedOptimizationTypes);
-            Assert.Greater(optimizationTypesList.SupportedOptimizationTypes.Count, 0);
+            Assert.That(optimizationTypesList, Is.Not.Null);
+            Assert.That(optimizationTypesList.SupportedOptimizationTypes, Is.Not.Null);
+            Assert.That(optimizationTypesList.SupportedOptimizationTypes.Count, Is.GreaterThan(0));
         }
 
         [TestCase]

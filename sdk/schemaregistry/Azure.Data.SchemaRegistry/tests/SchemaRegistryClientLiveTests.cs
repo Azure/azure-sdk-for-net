@@ -273,8 +273,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             {
                 return;
             }
-            Assert.IsNotNull(properties);
-            Assert.IsNotNull(properties.Id);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.Id, Is.Not.Null);
             Assert.That(Guid.TryParse(properties.Id, out Guid _), Is.True);
             Assert.That(properties.Format, Is.EqualTo(schemaFormat));
             Assert.That(properties.Name, Is.EqualTo(schemaName));

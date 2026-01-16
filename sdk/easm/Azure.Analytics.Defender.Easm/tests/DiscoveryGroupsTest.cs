@@ -30,15 +30,15 @@ namespace Azure.Analytics.Defender.Easm.Tests
         public async System.Threading.Tasks.Task DiscoveryGroupsListTest()
         {
             var results = client.GetDiscoveryGroupsAsync();
-            Assert.IsNotNull(results);
+            Assert.That(results, Is.Not.Null);
             await foreach (DiscoveryGroup result in results)
             {
-                Assert.IsNotNull(result.Name);
-                Assert.IsNotNull(result.DisplayName);
-                Assert.IsNotNull(result.Description);
-                Assert.IsNotNull(result.Seeds);
-                Assert.IsNotNull(result.Seeds[0].Kind);
-                Assert.IsNotNull(result.Seeds[0].Name);
+                Assert.That(result.Name, Is.Not.Null);
+                Assert.That(result.DisplayName, Is.Not.Null);
+                Assert.That(result.Description, Is.Not.Null);
+                Assert.That(result.Seeds, Is.Not.Null);
+                Assert.That(result.Seeds[0].Kind, Is.Not.Null);
+                Assert.That(result.Seeds[0].Name, Is.Not.Null);
                 break;
             }
         }
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             request.FrequencyMilliseconds = 604800000L;
             request.Tier = "advanced";
             var result = await client.ValidateDiscoveryGroupAsync(request).ConfigureAwait(false);
-            Assert.IsNull(result.Value.Error);
+            Assert.That(result.Value.Error, Is.Null);
         }
         [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryGroupsGetTest()
@@ -64,10 +64,10 @@ namespace Azure.Analytics.Defender.Easm.Tests
             DiscoveryGroup discoGroup = result.Value;
             Assert.That(discoGroup.Name, Is.EqualTo(knownGroupName));
             Assert.That(discoGroup.DisplayName, Is.EqualTo(knownGroupName));
-            Assert.IsNotNull(discoGroup.Description);
-            Assert.IsNotNull(discoGroup.Seeds);
-            Assert.IsNotNull(discoGroup.Seeds[0].Kind);
-            Assert.IsNotNull(discoGroup.Seeds[0].Name);
+            Assert.That(discoGroup.Description, Is.Not.Null);
+            Assert.That(discoGroup.Seeds, Is.Not.Null);
+            Assert.That(discoGroup.Seeds[0].Kind, Is.Not.Null);
+            Assert.That(discoGroup.Seeds[0].Name, Is.Not.Null);
         }
         [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryGroupsCreateOrReplaceTest()
@@ -97,8 +97,8 @@ namespace Azure.Analytics.Defender.Easm.Tests
             var response = client.GetDiscoveryGroupRunsAsync(knownGroupName).ConfigureAwait(false);
             await foreach (var run in response)
             {
-                Assert.IsNotNull(run.State);
-                Assert.IsNotNull(run.TotalAssetsFoundCount);
+                Assert.That(run.State, Is.Not.Null);
+                Assert.That(run.TotalAssetsFoundCount, Is.Not.Null);
             }
         }
         private bool? doSeedsMatch(DiscoverySource seed, DiscoverySource discoSource)

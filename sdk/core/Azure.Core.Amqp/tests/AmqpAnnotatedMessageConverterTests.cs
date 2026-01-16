@@ -195,8 +195,8 @@ namespace Azure.Core.Amqp.Tests
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
 
-            Assert.IsNotNull(message, "The AMQP message should have been created.");
-            Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
 
             // The collection comparisons built into the test assertions do not recognize
             // the property sets as equivalent, but a manual inspection proves the properties exist
@@ -224,14 +224,14 @@ namespace Azure.Core.Amqp.Tests
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
 
-            Assert.IsNotNull(message, "The AMQP message should have been created.");
-            Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
 
             var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(key, out object value);
             var uriProperty = value as Uri;
 
             Assert.That(containsValue, Is.True, $"The message properties did not contain the Uri property");
-            Assert.IsNotNull(uriProperty, "The property value was not a Uri.");
+            Assert.That(uriProperty, Is.Not.Null, "The property value was not a Uri.");
             Assert.That(uriProperty, Is.EqualTo(expectedUri), "The property value did not match.");
         }
 
@@ -250,7 +250,7 @@ namespace Azure.Core.Amqp.Tests
 
             var annotatedMessage = FromAmqpMessage(message);
 
-            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.That(annotatedMessage, Is.Not.Null, "The message should have been created.");
             Assert.That(annotatedMessage.ApplicationProperties.Any(), Is.True, "The message should have a set of application properties.");
 
             // The collection comparisons built into the test assertions do not recognize
@@ -280,14 +280,14 @@ namespace Azure.Core.Amqp.Tests
 
             var annotatedMessage = FromAmqpMessage(message);
 
-            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.That(annotatedMessage, Is.Not.Null, "The message should have been created.");
             Assert.That(annotatedMessage.ApplicationProperties.Any(), Is.True, "The message should have a set of application properties.");
 
             var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(key, out object value);
             var uriProperty = value as Uri;
 
             Assert.That(containsValue, Is.True, $"The message properties did not contain the Uri property");
-            Assert.IsNotNull(uriProperty, "The property value was not a Uri.");
+            Assert.That(uriProperty, Is.Not.Null, "The property value was not a Uri.");
             Assert.That(uriProperty, Is.EqualTo(expectedUri), "The property value did not match.");
         }
 
@@ -300,8 +300,8 @@ namespace Azure.Core.Amqp.Tests
 
              using AmqpMessage message = ToAmqpMessage(annotatedMessage);
 
-            Assert.IsNotNull(message, "The AMQP message should have been created.");
-            Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
 
             var propertyKey = annotatedMessage.ApplicationProperties.Keys.First();
             var propertyValue = propertyValueAccessor(annotatedMessage.ApplicationProperties[propertyKey]);
@@ -323,7 +323,7 @@ namespace Azure.Core.Amqp.Tests
 
             var annotatedMessage = FromAmqpMessage(message);
 
-            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.That(annotatedMessage, Is.Not.Null, "The message should have been created.");
             Assert.That(annotatedMessage.ApplicationProperties.Any(), Is.True, "The message should have a set of application properties.");
 
             var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(typeDescriptor.ToString(), out object value);
@@ -340,14 +340,14 @@ namespace Azure.Core.Amqp.Tests
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
 
-            Assert.IsNotNull(message, "The AMQP message should have been created.");
-            Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
 
             var propertyKey = annotatedMessage.ApplicationProperties.Keys.First();
             var containsValue = message.ApplicationProperties.Map.TryGetValue(propertyKey, out object streamValue);
 
             Assert.That(containsValue, Is.True, "The message properties did not contain the property.");
-            Assert.IsInstanceOf<ArraySegment<byte>>(streamValue, "The message property stream was not read correctly.");
+            Assert.That(streamValue, Is.InstanceOf<ArraySegment<byte>>(), "The message property stream was not read correctly.");
             Assert.That(contents, Is.EqualTo(((ArraySegment<byte>)streamValue).ToArray()), "The property value did not match.");
         }
 
@@ -360,14 +360,14 @@ namespace Azure.Core.Amqp.Tests
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
 
-            Assert.IsNotNull(message, "The AMQP message should have been created.");
-            Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
 
             var propertyKey = annotatedMessage.ApplicationProperties.Keys.First();
             var containsValue = message.ApplicationProperties.Map.TryGetValue(propertyKey, out object streamValue);
 
             Assert.That(containsValue, Is.True, "The message properties did not contain the property.");
-            Assert.IsInstanceOf<ArraySegment<byte>>(streamValue, "The message property stream was not read correctly.");
+            Assert.That(streamValue, Is.InstanceOf<ArraySegment<byte>>(), "The message property stream was not read correctly.");
             Assert.That(contents, Is.EqualTo(((ArraySegment<byte>)streamValue).ToArray()), "The property value did not match.");
         }
 
@@ -383,7 +383,7 @@ namespace Azure.Core.Amqp.Tests
 
             var annotatedMessage = FromAmqpMessage(message);
 
-            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.That(annotatedMessage, Is.Not.Null, "The message should have been created.");
             Assert.That(annotatedMessage.ApplicationProperties.Any(), Is.True, "The message should have a set of application properties.");
 
             var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(propertyKey, out var messageValue);
@@ -403,7 +403,7 @@ namespace Azure.Core.Amqp.Tests
 
             var annotatedMessage = FromAmqpMessage(message);
 
-            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.That(annotatedMessage, Is.Not.Null, "The message should have been created.");
             Assert.That(annotatedMessage.ApplicationProperties.Any(), Is.True, "The message should have a set of application properties.");
 
             var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(propertyKey, out var messageValue);
@@ -423,7 +423,7 @@ namespace Azure.Core.Amqp.Tests
 
             var annotatedMessage = FromAmqpMessage(message);
 
-            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.That(annotatedMessage, Is.Not.Null, "The message should have been created.");
             Assert.That(annotatedMessage.ApplicationProperties.Any(), Is.False, "The message should not have a set of application properties.");
 
             var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(typeDescriptor.ToString(), out var messageValue);
@@ -534,7 +534,7 @@ namespace Azure.Core.Amqp.Tests
             Assert.That(message.Header.Priority, Is.EqualTo(1));
             Assert.That(message.Header.TimeToLive, Is.EqualTo(TimeSpan.FromSeconds(60)));
             // because AMQP only has millisecond resolution, allow for up to a 1ms difference when round-tripping
-            Assert.IsNotNull(message.Properties.CreationTime);
+            Assert.That(message.Properties.CreationTime, Is.Not.Null);
             // AbsoluteExpiryTime is set based on TTL and CreationTime for outgoing messages
             Assert.That(message.Properties.CreationTime + TimeSpan.FromSeconds(60), Is.EqualTo(message.Properties.AbsoluteExpiryTime.Value).Within(1).Milliseconds);
             Assert.That(message.Properties.ContentEncoding, Is.EqualTo("compress"));

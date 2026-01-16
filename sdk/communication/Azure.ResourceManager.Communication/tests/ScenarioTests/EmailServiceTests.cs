@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             var emailService = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
-            Assert.IsNotNull(emailService);
+            Assert.That(emailService, Is.Not.Null);
             Assert.That(emailService.Data.Name, Is.EqualTo(emailServiceName));
             Assert.That(emailService.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
             Assert.That(emailService.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var emailService1 = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var patch = new EmailServiceResourcePatch();
             var emailService2 = (await emailService1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.IsNotNull(emailService2);
+            Assert.That(emailService2, Is.Not.Null);
             Assert.That(emailService2.Data.Name, Is.EqualTo(emailService1.Data.Name));
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetEmailServiceResources();
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var emailService = await collection.GetAsync(emailServiceName);
-            Assert.IsNotNull(emailService);
+            Assert.That(emailService, Is.Not.Null);
             Assert.That(emailService.Value.Data.Name, Is.EqualTo(emailServiceName));
             Assert.That(emailService.Value.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
             Assert.That(emailService.Value.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var list = await _resourceGroup.GetEmailServiceResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(emailServiceName));
             Assert.That(list.FirstOrDefault().Data.Location.ToString(), Is.EqualTo(_location.ToString()));
             Assert.That(list.FirstOrDefault().Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));

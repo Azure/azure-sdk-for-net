@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxCertificateResourceIdentifier = NginxCertificateResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxCertificateName);
 
             Assert.That(nginxCertificate.HasData, Is.True);
-            Assert.NotNull(nginxCertificate.Data);
+            Assert.That(nginxCertificate.Data, Is.Not.Null);
             Assert.That(nginxCertificate.Data.Name.Equals(nginxCertificateName, StringComparison.InvariantCultureIgnoreCase), Is.True);
             Assert.That(nginxCertificate.Data.Id.Equals(nginxCertificateResourceIdentifier), Is.True);
             Assert.That(nginxCertificate.Data.ResourceType.Equals(NginxCertificateResource.ResourceType), Is.True);
-            Assert.IsNull(nginxCertificate.Data.SystemData);
-            Assert.IsNull(nginxCertificate.Data.Location);
-            Assert.IsNotNull(nginxCertificate.Data.Properties.ProvisioningState);
+            Assert.That(nginxCertificate.Data.SystemData, Is.Null);
+            Assert.That(nginxCertificate.Data.Location, Is.Null);
+            Assert.That(nginxCertificate.Data.Properties.ProvisioningState, Is.Not.Null);
             Assert.That(nginxCertificate.Data.Properties.CertificateVirtualPath.Equals(certificateVirtualPath), Is.True);
             Assert.That(nginxCertificate.Data.Properties.KeyVirtualPath.Equals(keyVirtualPath), Is.True);
             Assert.That(nginxCertificate.Data.Properties.KeyVaultSecretId.Equals(TestEnvironment.KeyVaultSecretId), Is.True);
-            Assert.IsNotNull(nginxCertificate.Data.Properties.Sha1Thumbprint);
-            Assert.IsNotNull(nginxCertificate.Data.Properties.KeyVaultSecretVersion);
-            Assert.IsNotNull(nginxCertificate.Data.Properties.KeyVaultSecretCreated);
-            Assert.IsNotNull(nginxCertificate.Data.Properties.CertificateError);
+            Assert.That(nginxCertificate.Data.Properties.Sha1Thumbprint, Is.Not.Null);
+            Assert.That(nginxCertificate.Data.Properties.KeyVaultSecretVersion, Is.Not.Null);
+            Assert.That(nginxCertificate.Data.Properties.KeyVaultSecretCreated, Is.Not.Null);
+            Assert.That(nginxCertificate.Data.Properties.CertificateError, Is.Not.Null);
         }
 
         [TestCase]

@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             Response<PlaywrightQuotaResource> getResponse = await _quotaCollection.GetAsync(PlaywrightQuotaName.ExecutionMinutes);
             PlaywrightQuotaResource quotaResource = getResponse.Value;
 
-            Assert.IsNotNull(quotaResource);
+            Assert.That(quotaResource, Is.Not.Null);
             Assert.That(quotaResource.HasData, Is.True);
-            Assert.IsNotNull(quotaResource.Data.Properties);
+            Assert.That(quotaResource.Data.Properties, Is.Not.Null);
             Assert.That(quotaResource.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
-            Assert.IsNotNull(quotaResource.Data.Properties.FreeTrial);
+            Assert.That(quotaResource.Data.Properties.FreeTrial, Is.Not.Null);
             Assert.That(quotaResource.Data.Name.Contains("ExecutionMinutes"), Is.True);
         }
 
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             // Test List quotas for the workspace
             List<PlaywrightQuotaResource> allQuotas = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsNotEmpty(allQuotas);
+            Assert.That(allQuotas, Is.Not.Empty);
             bool foundExecutionMinutesQuota = false;
 
             foreach (PlaywrightQuotaResource quota in allQuotas)
             {
-                Assert.IsNotNull(quota);
+                Assert.That(quota, Is.Not.Null);
                 Assert.That(quota.HasData, Is.True);
-                Assert.IsNotNull(quota.Data.Properties);
+                Assert.That(quota.Data.Properties, Is.Not.Null);
                 Assert.That(quota.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
-                Assert.IsNotNull(quota.Data.Properties.FreeTrial);
+                Assert.That(quota.Data.Properties.FreeTrial, Is.Not.Null);
 
                 if (quota.Data.Name.Contains("ExecutionMinutes"))
                 {

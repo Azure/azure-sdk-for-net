@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnsZone = await CreateDnsZone(dnsZoneName, _resourceGroup);
-            Assert.NotNull(dnsZone);
+            Assert.That(dnsZone, Is.Not.Null);
             Assert.That(dnsZone.Data.Name, Is.EqualTo(dnsZoneName));
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreateDnsZone(dnsZoneName, _resourceGroup);
             var dnsZone = await _dnsZoneCollection.GetAsync(dnsZoneName);
-            Assert.IsNotNull(dnsZone);
+            Assert.That(dnsZone, Is.Not.Null);
             Assert.That(dnsZone.Value.Data.Name, Is.EqualTo(dnsZoneName));
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreateDnsZone(dnsZoneName, _resourceGroup);
             var list = await _dnsZoneCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Count, Is.EqualTo(1));
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(dnsZoneName));
         }
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             var recordSets = await dnszone.GetAllRecordDataAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(recordSets);
-            Assert.IsNotNull(recordSets[0].DnsNSRecords);
-            Assert.IsNotNull(recordSets[1].DnsSoaRecordInfo);
+            Assert.That(recordSets, Is.Not.Empty);
+            Assert.That(recordSets[0].DnsNSRecords, Is.Not.Null);
+            Assert.That(recordSets[1].DnsSoaRecordInfo, Is.Not.Null);
 
             Assert.That(recordSets[2].DnsAaaaRecords.Count, Is.EqualTo(2));
             Assert.That(recordSets[2].DnsAaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55"));

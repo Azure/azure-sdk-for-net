@@ -93,31 +93,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, T originalTyped)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
             }
 
             public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, object original)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(original));
             }
 
             public static void ITableEntity([Table(TableNameExpression, PartitionKey, RowKey)] ITableEntity entity, object original)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(((TableEntity)entity)["Value"], Is.EqualTo(original));
             }
 
             public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity, T originalTyped)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
             }
 
             public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] JObject entity, object original)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(JsonConvert.SerializeObject(entity["Value"]), Is.EqualTo(JsonConvert.SerializeObject(original)));
             }
         }
@@ -151,31 +151,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void CustomTableEntity([Table("{tbl}", "{pk}", "{rk}")] CustomTableEntity<T> entity, T originalTyped)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
             }
 
             public static void TableEntity([Table("{tbl}", "{pk}", "{rk}")] TableEntity entity, object original)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(original));
             }
 
             public static void ITableEntity([Table("{tbl}", "{pk}", "{rk}")] ITableEntity entity, object original)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(((TableEntity)entity)["Value"], Is.EqualTo(original));
             }
 
             public static void PocoTableEntity([Table("{tbl}", "{pk}", "{rk}")] PocoTableEntity<T> entity, T originalTyped)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
             }
 
             public static void JObject([Table("{tbl}", "{pk}", "{rk}")] JObject entity, object original)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(JsonConvert.SerializeObject(entity["Value"]), Is.EqualTo(JsonConvert.SerializeObject(original)));
             }
         }
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(values.Value1Base));
 
                 await ClearTableAsync();
@@ -327,11 +327,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Assert
             if (entityType == "ITableEntityExplicit")
             {
-                StringAssert.Contains("Expected ITableEntity instance to have TableEntity type", exception.ToString());
+                Assert.That(exception.ToString(), Does.Contain("Expected ITableEntity instance to have TableEntity type"));
             }
             else
             {
-                StringAssert.Contains("The specified entity already exists", exception.ToString());
+                Assert.That(exception.ToString(), Does.Contain("The specified entity already exists"));
             }
         }
 
@@ -359,7 +359,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Assert
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
+            Assert.That(entity, Is.Not.Null);
             Assert.That(entity["Value"], Is.EqualTo(values.Value2Base));
         }
 
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Assert
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
+            Assert.That(entity, Is.Not.Null);
             Assert.That(entity["Value"], Is.EqualTo(values.Value1Base));
         }
 
@@ -525,16 +525,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Assert
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
+            Assert.That(entity, Is.Not.Null);
             Assert.That(entity["Value"], Is.EqualTo(values.Value1Base));
             // etag should be interpreted as an Odata etag and not stored with the "etag" or "Etag" key
-            Assert.IsNull(entity["Etag"]);
-            Assert.IsNull(entity["etag"]);
+            Assert.That(entity["Etag"], Is.Null);
+            Assert.That(entity["etag"], Is.Null);
             TableEntity entity2 = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey + "1");
-            Assert.NotNull(entity2);
+            Assert.That(entity2, Is.Not.Null);
             Assert.That(entity2["Value"], Is.EqualTo(values.Value2Base));
-            Assert.IsNull(entity["Etag"]);
-            Assert.IsNull(entity["etag"]);
+            Assert.That(entity["Etag"], Is.Null);
+            Assert.That(entity["etag"], Is.Null);
         }
 
         private class CanAddEntityUsingCollectorProgram<T>
@@ -663,16 +663,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Assert
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
+            Assert.That(entity, Is.Not.Null);
             Assert.That(entity["Value"], Is.EqualTo(values.Value1Base));
             // etag should be interpreted as an Odata etag and not stored with the "etag" or "Etag" key
-            Assert.IsNull(entity["Etag"]);
-            Assert.IsNull(entity["etag"]);
+            Assert.That(entity["Etag"], Is.Null);
+            Assert.That(entity["etag"], Is.Null);
             TableEntity entity2 = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey + "1");
-            Assert.NotNull(entity2);
+            Assert.That(entity2, Is.Not.Null);
             Assert.That(entity2["Value"], Is.EqualTo(values.Value2Base));
-            Assert.IsNull(entity["Etag"]);
-            Assert.IsNull(entity["etag"]);
+            Assert.That(entity["Etag"], Is.Null);
+            Assert.That(entity["etag"], Is.Null);
         }
 
         private class CanAddEntityUsingAsyncCollectorProgram<T>
@@ -804,7 +804,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(values.Value2Base));
             }
         }
@@ -841,7 +841,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(values.Value2Base));
             }
         }
@@ -878,7 +878,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(null));
             }
         }
@@ -887,28 +887,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, T originalTyped, T expectedTyped)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
                 entity.Value = expectedTyped;
             }
 
             public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, object original, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(original));
                 entity["Value"] = expected;
             }
 
             public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] JObject entity, object original, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(JsonConvert.SerializeObject(entity["Value"]), Is.EqualTo(JsonConvert.SerializeObject(original)));
                 entity["Value"] = expected == null ? JValue.CreateNull() : JToken.FromObject(expected);
             }
 
             public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity, T originalTyped, T expectedTyped)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
                 entity.Value = expectedTyped;
             }
@@ -933,7 +933,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.ETag, Is.EqualTo(response.Headers.ETag));
             }
         }
@@ -962,7 +962,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.ETag, Is.EqualTo(response.Headers.ETag));
             }
         }
@@ -984,7 +984,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Assert
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
+            Assert.That(entity, Is.Not.Null);
             Assert.That(entity.ETag, Is.Not.EqualTo(response.Headers.ETag));
             entity.TryGetValue("Value", out var value);
             Assert.That(value, Is.EqualTo(new byte[] { 1, 2, 3, 5 }));
@@ -1007,7 +1007,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Assert
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
+            Assert.That(entity, Is.Not.Null);
             Assert.That(entity.ETag, Is.EqualTo(response.Headers.ETag));
             entity.TryGetValue("Value", out var value);
             Assert.That(value, Is.EqualTo(new byte[] { 1, 2, 3, 4 }));
@@ -1017,13 +1017,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void PocoTableEntityChangesValue([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<byte[]> entity)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 entity.Value[3] = 5;
             }
 
             public static void PocoTableEntityChangesReferenceToSameValue([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<byte[]> entity)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 var copy = new byte[entity.Value.Length];
                 Array.Copy(entity.Value, copy, entity.Value.Length);
                 entity.Value = copy;
@@ -1035,22 +1035,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
             }
 
             public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
             }
 
             public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
             }
 
             public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
             }
         }
 
@@ -1079,7 +1079,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Assert
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
+            Assert.That(entity, Is.Not.Null);
             Assert.That(entity["Value"], Is.EqualTo(values.Value2Base));
         }
 
@@ -1087,7 +1087,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static async Task CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, TableClient client, T originalTyped, T expectedTyped, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
 
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -1101,7 +1101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public static async Task TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object original, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(original));
 
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -1115,7 +1115,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public static async Task JObject([Table(TableNameExpression, PartitionKey, RowKey)] JObject entity, TableClient client, object original, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(JsonConvert.SerializeObject(entity["Value"]), Is.EqualTo(JsonConvert.SerializeObject(original)));
 
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -1156,18 +1156,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private void AssertInvocationETagFailure(string expectedParameterName, Exception exception)
         {
-            Assert.IsInstanceOf<FunctionInvocationException>(exception);
+            Assert.That(exception, Is.InstanceOf<FunctionInvocationException>());
 
-            Assert.IsInstanceOf<InvalidOperationException>(exception.InnerException);
+            Assert.That(exception.InnerException, Is.InstanceOf<InvalidOperationException>());
             string expectedMessage = String.Format(CultureInfo.InvariantCulture,
                 "Error while handling parameter {0} after function returned:", expectedParameterName);
             Assert.That(exception.InnerException.Message, Is.EqualTo(expectedMessage));
 
             Exception innerException = exception.InnerException.InnerException;
-            Assert.IsInstanceOf<RequestFailedException>(innerException);
+            Assert.That(innerException, Is.InstanceOf<RequestFailedException>());
 
             RequestFailedException invalidOperationException = (RequestFailedException)innerException;
-            Assert.NotNull(invalidOperationException.Message);
+            Assert.That(invalidOperationException.Message, Is.Not.Null);
             //"Precondition Failed",
             Assert.That(invalidOperationException.Message, Contains.Substring("UpdateConditionNotSatisfied").Or.Contains("Precondition Failed"));
         }
@@ -1176,7 +1176,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static async Task CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, TableClient client, T originalTyped, T expectedTyped, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
 
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -1189,7 +1189,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public static async Task TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object original, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity["Value"], Is.EqualTo(original));
 
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -1202,7 +1202,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public static async Task JObject([Table(TableNameExpression, PartitionKey, RowKey)] JObject entity, TableClient client, object original, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(JsonConvert.SerializeObject(entity["Value"]), Is.EqualTo(JsonConvert.SerializeObject(original)));
 
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -1215,7 +1215,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public static async Task PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity, TableClient client, T originalTyped, T expectedTyped, object expected)
             {
-                Assert.NotNull(entity);
+                Assert.That(entity, Is.Not.Null);
                 Assert.That(entity.Value, Is.EqualTo(originalTyped));
 
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -1242,12 +1242,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Exception exception = functionException.InnerException;
 
             // Assert
-            Assert.NotNull(exception);
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.Not.Null);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Error while handling parameter entity after function returned:"));
             Exception innerException = exception.InnerException;
-            Assert.NotNull(innerException);
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.That(innerException, Is.Not.Null);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(innerException.Message,
                 Is.EqualTo("When binding to a table entity, the partition key must not be changed."));
         }
@@ -1289,12 +1289,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Exception exception = functionException.InnerException;
 
             // Assert
-            Assert.NotNull(exception);
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.Not.Null);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Error while handling parameter entity after function returned:"));
             Exception innerException = exception.InnerException;
-            Assert.NotNull(innerException);
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.That(innerException, Is.Not.Null);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(innerException.Message,
                 Is.EqualTo("When binding to a table entity, the row key must not be changed."));
         }

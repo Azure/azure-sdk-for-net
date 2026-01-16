@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // GetAll
             var list = await _nodeTypeCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePurviewAccount(list.FirstOrDefault().Data, nodeTypeName);
         }
 
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidatePurviewAccount(ServiceFabricManagedNodeTypeData nodeType, string nodeTypeName)
         {
-            Assert.IsNotNull(nodeType);
-            Assert.IsNotEmpty(nodeType.Id);
+            Assert.That(nodeType, Is.Not.Null);
+            Assert.That((string)nodeType.Id, Is.Not.Empty);
             Assert.That(nodeType.Name, Is.EqualTo(nodeTypeName));
             Assert.That(nodeType.DataDiskLetter, Is.EqualTo("S"));
             Assert.That(nodeType.DataDiskSizeInGB, Is.EqualTo(256));

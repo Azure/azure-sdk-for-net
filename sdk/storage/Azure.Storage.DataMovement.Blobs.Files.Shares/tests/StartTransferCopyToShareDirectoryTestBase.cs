@@ -205,7 +205,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 destinationContainer.GetRootDirectoryClient() :
                 destinationContainer.GetDirectoryClient(destinationPrefix);
             IList<ShareFileItem> items = await destinationDirectory.GetFilesAndDirectoriesAsync(cancellationToken: cancellationToken).ToListAsync();
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         protected override async Task VerifyResultsAsync(
@@ -267,10 +267,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 {
                     ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
-                    Assert.IsEmpty(destinationProperties.Metadata);
-                    Assert.IsNull(destinationProperties.ContentDisposition);
-                    Assert.IsNull(destinationProperties.ContentLanguage);
-                    Assert.IsNull(destinationProperties.CacheControl);
+                    Assert.That(destinationProperties.Metadata, Is.Empty);
+                    Assert.That(destinationProperties.ContentDisposition, Is.Null);
+                    Assert.That(destinationProperties.ContentLanguage, Is.Null);
+                    Assert.That(destinationProperties.CacheControl, Is.Null);
                 }
                 else if (propertiesTestType == TransferPropertiesTestType.NewProperties)
                 {

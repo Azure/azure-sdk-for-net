@@ -98,7 +98,7 @@ namespace Azure.AI.VoiceLive.Tests
             // Second enumeration attempt should throw InvalidOperationException when MoveNextAsync invoked.
             await using var enumerator2 = session.GetUpdatesAsync().GetAsyncEnumerator();
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await enumerator2.MoveNextAsync());
-            StringAssert.Contains("Only one update enumeration", ex?.Message);
+            Assert.That(ex?.Message, Does.Contain("Only one update enumeration"));
         }
 
         [Test]

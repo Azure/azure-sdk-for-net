@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Consumption.Tests
         public async Task GetAll()
         {
             var list = await _consumptionBudgetCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateConsumptionBudget(list.FirstOrDefault().Data);
         }
 
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Consumption.Tests
 
         private void ValidateConsumptionBudget(ConsumptionBudgetData budget)
         {
-            Assert.IsNotNull(budget);
-            Assert.IsNotEmpty(budget.Id);
+            Assert.That(budget, Is.Not.Null);
+            Assert.That((string)budget.Id, Is.Not.Empty);
             Assert.That(budget.Name, Is.EqualTo(_budgetName));
             Assert.That(budget.Amount, Is.EqualTo(100));
             Assert.That(budget.TimeGrain, Is.EqualTo(BudgetTimeGrainType.Monthly));

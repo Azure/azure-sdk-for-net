@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 x => x.Value.Status == RouterJobStatus.WaitingForActivation,
                 TimeSpan.FromSeconds(30));
             Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.WaitingForActivation));
-            Assert.NotNull(job.Value.ScheduledAt);
+            Assert.That(job.Value.ScheduledAt, Is.Not.Null);
             Assert.That(job.Value.ScheduledAt, Is.EqualTo(timeToEnqueueJob).Within(30).Seconds);
 
             var updateJobToStartMatching =
@@ -73,7 +73,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 });
 
             Assert.That(updateJobToStartMatching.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
-            Assert.NotNull(updateJobToStartMatching.Value.ScheduledAt);
+            Assert.That(updateJobToStartMatching.Value.ScheduledAt, Is.Not.Null);
             Assert.That(updateJobToStartMatching.Value.MatchingMode.GetType(), Is.EqualTo(typeof(QueueAndMatchMode)));
 
             var worker = await Poll(async () => await client.GetWorkerAsync(registerWorker.Value.Id),
@@ -83,8 +83,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
 
             var offer = worker.Value.Offers.Single(x => x.JobId == updateJobToStartMatching.Value.Id);
             Assert.That(offer.CapacityCost, Is.EqualTo(1));
-            Assert.IsNotNull(offer.OfferedAt);
-            Assert.IsNotNull(offer.ExpiresAt);
+            Assert.That(offer.OfferedAt, Is.Not.Null);
+            Assert.That(offer.ExpiresAt, Is.Not.Null);
 
             var accept = await client.AcceptJobOfferAsync(worker.Value.Id, offer.OfferId);
             Assert.That(accept.Value.JobId, Is.EqualTo(createJob.Value.Id));
@@ -110,13 +110,13 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.That(complete.Status, Is.EqualTo(200));
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt);
+            Assert.That(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt, Is.Not.Null);
             Assert.That(finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId, Is.EqualTo(worker.Value.Id));
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompletedAt);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
-            Assert.IsNotEmpty(finalJobState.Value.Notes);
+            Assert.That(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompletedAt, Is.Not.Null);
+            Assert.That(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt, Is.Not.Null);
+            Assert.That(finalJobState.Value.Notes, Is.Not.Empty);
             Assert.That(finalJobState.Value.Notes.Count == 2, Is.True);
-            Assert.NotNull(finalJobState.Value.ScheduledAt);
+            Assert.That(finalJobState.Value.ScheduledAt, Is.Not.Null);
 
             // delete worker for straggling offers if any
             await client.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false });

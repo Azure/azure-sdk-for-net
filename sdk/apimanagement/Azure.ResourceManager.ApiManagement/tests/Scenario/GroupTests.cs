@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, newGroupId, parameters);
             var groupContract = (await collection.GetAsync(newGroupId)).Value;
-            Assert.NotNull(groupContract);
+            Assert.That(groupContract, Is.Not.Null);
             Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
             Assert.That(groupContract.Data.IsBuiltIn, Is.False);
-            Assert.NotNull(groupContract.Data.Description);
+            Assert.That(groupContract.Data.Description, Is.Not.Null);
             Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
 
             // update the group
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get the updatedGroup
             var updatedResponse = (await groupContract.GetAsync()).Value;
-            Assert.NotNull(updatedResponse);
+            Assert.That(updatedResponse, Is.Not.Null);
             Assert.That(updatedResponse.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
             Assert.That(updatedResponse.Data.IsBuiltIn, Is.False);
-            Assert.NotNull(updatedResponse.Data.Description);
+            Assert.That(updatedResponse.Data.Description, Is.Not.Null);
             Assert.That(updatedResponse.Data.Description, Is.EqualTo(updateParameters.Description));
             Assert.That(updatedResponse.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
 

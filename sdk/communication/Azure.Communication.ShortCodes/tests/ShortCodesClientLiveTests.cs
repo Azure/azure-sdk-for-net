@@ -37,7 +37,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             #endregion Snippet:GetShortCodes
 
-            Assert.NotNull(shortCodes);
+            Assert.That(shortCodes, Is.Not.Null);
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Azure.Communication.ShortCodes.Tests
             var pageable = client.GetUSProgramBriefsAsync();
             var programBriefs = await pageable.ToEnumerableAsync();
 
-            Assert.NotNull(programBriefs);
+            Assert.That(programBriefs, Is.Not.Null);
         }
 
         [Test]

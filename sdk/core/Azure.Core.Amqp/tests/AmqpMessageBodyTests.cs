@@ -59,7 +59,7 @@ namespace Azure.Core.Amqp.Tests
             var body = new AmqpMessageBody(Array.Empty<ReadOnlyMemory<byte>>());
             Assert.That(body.BodyType, Is.EqualTo(AmqpMessageBodyType.Data));
             Assert.That(body.TryGetData(out var data), Is.True);
-            Assert.NotNull(data);
+            Assert.That(data, Is.Not.Null);
 
             Assert.That(body.TryGetValue(out var value), Is.False);
             Assert.That(value, Is.Null);
@@ -74,7 +74,7 @@ namespace Azure.Core.Amqp.Tests
             var body = AmqpMessageBody.FromData(Array.Empty<ReadOnlyMemory<byte>>());
             Assert.That(body.BodyType, Is.EqualTo(AmqpMessageBodyType.Data));
             Assert.That(body.TryGetData(out var data), Is.True);
-            Assert.NotNull(data);
+            Assert.That(data, Is.Not.Null);
 
             Assert.That(body.TryGetValue(out var value), Is.False);
             Assert.That(value, Is.Null);

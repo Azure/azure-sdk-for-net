@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Unit
             };
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.IsNull(dataSourceInfo.ResourceUri);
-            Assert.IsNull(dataSourceSetInfo.ResourceUri);
+            Assert.That(dataSourceInfo.ResourceUri, Is.Null);
+            Assert.That(dataSourceSetInfo.ResourceUri, Is.Null);
 #pragma warning restore CS0618 // Type or member is obsolete
             Assert.That(dataSourceInfo.ResourceUriString, Is.EqualTo("/sub/test"));
-            Assert.NotNull("/sub/test", dataSourceSetInfo.ResourceUriString);
+            Assert.That("/sub/test", Is.Not.Null, dataSourceSetInfo.ResourceUriString);
         }
     }
 }

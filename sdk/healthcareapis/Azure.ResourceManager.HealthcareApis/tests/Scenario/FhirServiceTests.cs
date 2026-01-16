@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _fhirServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateFhirService(list.FirstOrDefault().Data, fhirServiceName);
 
             // Delete
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
         private void ValidateFhirService(FhirServiceData fhirService, string fhirServiceName)
         {
-            Assert.IsNotNull(fhirService);
-            Assert.IsNotNull(fhirService.ETag);
+            Assert.That(fhirService, Is.Not.Null);
+            Assert.That(fhirService.ETag, Is.Not.Null);
             Assert.That(fhirService.Id.Name, Is.EqualTo(fhirServiceName));
             Assert.That(fhirService.Kind.ToString(), Is.EqualTo("fhir-R4"));
             Assert.That(fhirService.Location, Is.EqualTo(DefaultLocation));

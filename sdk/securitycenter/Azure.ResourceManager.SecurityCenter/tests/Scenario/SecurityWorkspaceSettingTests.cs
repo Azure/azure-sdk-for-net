@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 WorkspaceId = new ResourceIdentifier($"<WORKSPACE_ID>")
             };
             var workspaceSetting = await _workspaceSettingCollection.CreateOrUpdateAsync(WaitUntil.Completed, _workspaceSettingName, data);
-            Assert.IsNotNull(workspaceSetting);
+            Assert.That(workspaceSetting, Is.Not.Null);
 
             // Exist
             bool flag = await _workspaceSettingCollection.ExistsAsync(_workspaceSettingName);
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             // Get
             var getResponse = await _workspaceSettingCollection.GetAsync(_workspaceSettingName);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
             var list = await _workspaceSettingCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

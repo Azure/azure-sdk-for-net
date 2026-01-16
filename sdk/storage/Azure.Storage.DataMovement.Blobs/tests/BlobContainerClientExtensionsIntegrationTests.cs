@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.IsNotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             var blobItems = await containerClient.GetBlobsAsync().ToListAsync();
@@ -161,7 +161,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await transferOperation.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.IsNotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             var blobItems = await containerClient.GetBlobsAsync().ToListAsync();
@@ -205,7 +205,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
-            Assert.NotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transferOperation.Status.HasFailedItems, Is.EqualTo(true));
@@ -239,7 +239,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
-            Assert.NotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transferOperation.Status.HasSkippedItems, Is.EqualTo(true));
@@ -269,7 +269,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Assert
-            Assert.IsNotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             testEventsRaised.AssertUnexpectedFailureCheck();
             await testEventsRaised.AssertContainerCompletedCheck(4);
@@ -356,7 +356,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             string[] allLocalFilePaths = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
@@ -393,7 +393,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await transferOperation.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             string[] allLocalFilePaths = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
@@ -430,7 +430,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transferOperation.Status.HasFailedItems, Is.EqualTo(true));
@@ -469,7 +469,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transferOperation.Status.HasSkippedItems, Is.EqualTo(true));
@@ -500,7 +500,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transferOperation);
+            Assert.That(transferOperation, Is.Not.Null);
             Assert.That(transferOperation.HasCompleted, Is.True);
             testEventsRaised.AssertUnexpectedFailureCheck();
             await testEventsRaised.AssertContainerCompletedCheck(4);

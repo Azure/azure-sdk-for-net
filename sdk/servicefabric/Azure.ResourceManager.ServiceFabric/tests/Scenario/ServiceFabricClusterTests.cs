@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
         {
             string clusterName = SessionRecording.GenerateAssetName("cluster");
             var cluster = await CreateServiceFabricCluster(_resourceGroup, clusterName);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
             string clusterName = SessionRecording.GenerateAssetName("cluster");
             await CreateServiceFabricCluster(_resourceGroup, clusterName);
             var cluster = await _serviceFabricClusterCollection.GetAsync(clusterName);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Name, Is.EqualTo(clusterName));
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
             string clusterName = SessionRecording.GenerateAssetName("cluster");
             await CreateServiceFabricCluster(_resourceGroup, clusterName);
             var list = await _serviceFabricClusterCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

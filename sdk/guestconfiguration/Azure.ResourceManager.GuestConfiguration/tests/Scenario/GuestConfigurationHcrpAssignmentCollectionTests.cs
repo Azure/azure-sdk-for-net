@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // Get created guest configuration assignment
             Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationHcrpAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationHcrpAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
-            Assert.IsNotNull(guestAssignmentResourceRetrieved);
+            Assert.That(guestAssignmentResourceRetrieved, Is.Not.Null);
             Assert.That(guestAssignmentResourceRetrieved.Data.Location, Is.EqualTo(gcAssignmentData.Location));
 
             // Update guest configuration assignment
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // get guest configuration assignment
             Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationHcrpAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
-            Assert.IsNotNull(guestAssignmentResourceRetrieved);
+            Assert.That(guestAssignmentResourceRetrieved, Is.Not.Null);
 
             // Get reports
             AsyncPageable<GuestConfigurationAssignmentReport> gcAssignmentReportsRetrieved = guestAssignmentResourceRetrieved.GetReportsAsync();
             await foreach (GuestConfigurationAssignmentReport gcReport in gcAssignmentReportsRetrieved)
             {
-                Assert.NotNull(gcReport);
+                Assert.That(gcReport, Is.Not.Null);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
             await foreach (GuestConfigurationHcrpAssignmentResource gcAssignment in gcAssignments)
             {
-                Assert.NotNull(gcAssignment);
+                Assert.That(gcAssignment, Is.Not.Null);
             }
         }
     }

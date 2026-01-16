@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Tests
             var subscription = await client.GetDefaultSubscriptionAsync();
             var providerCollection = subscription.GetResourceProviders();
             var version = await providerCollection.GetApiVersionAsync(new ResourceType("Microsoft.Compute/virtualMachines"));
-            Assert.NotNull(version);
+            Assert.That(version, Is.Not.Null);
             Assert.That(policy.GetCount("Microsoft.Compute"), Is.EqualTo(1));
             Assert.That(policy.GetCount("Microsoft.Network"), Is.EqualTo(0));
 
             version = await providerCollection.GetApiVersionAsync(new ResourceType("Microsoft.Compute/availabilitySets"));
-            Assert.NotNull(version);
+            Assert.That(version, Is.Not.Null);
             Assert.That(policy.GetCount("Microsoft.Compute"), Is.EqualTo(1));
             Assert.That(policy.GetCount("Microsoft.Network"), Is.EqualTo(0));
         }

@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
 
             var identityProviderContract = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, IdentityProviderType.Facebook, identityProviderCreateParameters)).Value;
-            Assert.NotNull(identityProviderContract);
+            Assert.That(identityProviderContract, Is.Not.Null);
             Assert.That(identityProviderContract.Data.IdentityProviderType, Is.EqualTo(IdentityProviderType.Facebook));
 
             // list
             var listIdentityProviders = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listIdentityProviders.Count, 1);
+            Assert.That(listIdentityProviders.Count, Is.GreaterThanOrEqualTo(1));
 
             // patch identity provider
             string patchedSecret = Recording.GenerateAssetName("clientSecret");

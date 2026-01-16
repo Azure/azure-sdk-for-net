@@ -217,7 +217,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             await _adaptor.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out var states);
-            Assert.NotNull(states);
+            Assert.That(states, Is.Not.Null);
             var updated = states[0].DecodeConnectionStates();
             Assert.That(updated.Count, Is.EqualTo(1));
             Assert.That(updated["counter"].ToObjectFromJson<int>(), Is.EqualTo(10));
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             await _adaptor.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
-            Assert.NotNull(states);
+            Assert.That(states, Is.Not.Null);
             updated = states[0].DecodeConnectionStates();
             Assert.That(updated.Count, Is.EqualTo(2));
             Assert.That(updated["new"].ToObjectFromJson<string>(), Is.EqualTo("new"));
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             await _adaptor.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
-            Assert.NotNull(states);
+            Assert.That(states, Is.Not.Null);
             updated = states[0].DecodeConnectionStates();
             Assert.That(updated.Count, Is.EqualTo(2));
             Assert.That(updated["new1"].ToObjectFromJson<string>(), Is.EqualTo("new1"));
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
             {
-                Assert.NotNull(request);
+                Assert.That(request, Is.Not.Null);
                 Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
 
                 return new ValueTask<ConnectEventResponse>(new ConnectEventResponse
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             public override ValueTask<UserEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
             {
-                Assert.NotNull(request);
+                Assert.That(request, Is.Not.Null);
                 Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
                 var response = new UserEventResponse("ACK");
                 // simple tests.
@@ -451,14 +451,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             // test exceptions
             public override Task OnConnectedAsync(ConnectedEventRequest request)
             {
-                Assert.NotNull(request);
+                Assert.That(request, Is.Not.Null);
                 Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
                 return Task.CompletedTask;
             }
 
             public override Task OnDisconnectedAsync(DisconnectedEventRequest request)
             {
-                Assert.NotNull(request);
+                Assert.That(request, Is.Not.Null);
                 Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
                 return Task.CompletedTask;
             }

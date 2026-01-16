@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
 
             // getall
             var list = await _dpsCertificateCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateDpsCertificate(list.FirstOrDefault().Data, certName);
 
             // delete
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
 
         private void ValidateDpsCertificate(DeviceProvisioningServicesCertificateData dpsData, string dpsName)
         {
-            Assert.IsNotNull(dpsData);
-            Assert.IsNotNull(dpsData.Id);
-            Assert.IsNotNull(dpsData.ETag);
+            Assert.That(dpsData, Is.Not.Null);
+            Assert.That(dpsData.Id, Is.Not.Null);
+            Assert.That(dpsData.ETag, Is.Not.Null);
             Assert.That(dpsName, Is.EqualTo(dpsData.Name));
             Assert.That(dpsData.ResourceType.ToString(), Is.EqualTo("Microsoft.Devices/provisioningServices/Certificates"));
         }

@@ -55,8 +55,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             IntegrationRuntimeListResponse integrations = await client.ListAsync ();
             foreach (IntegrationRuntimeResource integration in integrations.Value)
             {
-                Assert.NotNull (integration.Id);
-                Assert.NotNull (integration.Name);
+                Assert.That(integration.Id, Is.Not.Null);
+                Assert.That(integration.Name, Is.Not.Null);
             }
         }
     }

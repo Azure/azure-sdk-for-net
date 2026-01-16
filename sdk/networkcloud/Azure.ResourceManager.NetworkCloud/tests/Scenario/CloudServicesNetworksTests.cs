@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             await foreach (NetworkCloudCloudServicesNetworkResource item in cloudServicesNetworkCollection.GetAllAsync()) {
                 cloudServicesNetworkListByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(cloudServicesNetworkListByResourceGroup);
+            Assert.That(cloudServicesNetworkListByResourceGroup, Is.Not.Empty);
 
             // List by Subscription
             var cloudServicesNetworkListBySubscription = new List<NetworkCloudCloudServicesNetworkResource>();
             await foreach (NetworkCloudCloudServicesNetworkResource item in SubscriptionResource.GetNetworkCloudCloudServicesNetworksAsync()) {
                 cloudServicesNetworkListBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(cloudServicesNetworkListBySubscription);
+            Assert.That(cloudServicesNetworkListBySubscription, Is.Not.Empty);
 
             // Delete
             var response = await cloudServicesNetwork.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

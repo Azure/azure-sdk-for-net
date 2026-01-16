@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(result.Data.Frontend.Response.Headers.FirstOrDefault(), Is.EqualTo("Content-type"));
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
 
             result = await collection.GetAsync("applicationinsights");
-            Assert.NotNull(result.Data);
+            Assert.That(result.Data, Is.Not.Null);
 
             var resultTrue = (await collection.ExistsAsync("applicationinsights")).Value;
             var resultFalse = (await collection.ExistsAsync("foo")).Value;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(resultFalse, Is.False);
 
             var resultNew = await result.GetAsync();
-            Assert.NotNull(resultNew.Value.Data);
+            Assert.That(resultNew.Value.Data, Is.Not.Null);
 
             await resultNew.Value.DeleteAsync(WaitUntil.Completed, ETag.All);
             resultFalse = (await collection.ExistsAsync("applicationinsights")).Value;

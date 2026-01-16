@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             var model = EventGridModelFactory.MapsGeofenceEventProperties(new[]{"geometry"}, Array.Empty<MapsGeofenceGeometry>(), Array.Empty<string>(), true);
 
-            CollectionAssert.Contains(model.ExpiredGeofenceGeometryId, "geometry");
+            Assert.That(model.ExpiredGeofenceGeometryId, Has.Member("geometry"));
             Assert.That(model.IsEventPublished, Is.True);
         }
 
@@ -318,7 +318,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             // empty params
             model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData(contentType: "contentTypeIsRequired");
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
         }
 
         [Test]

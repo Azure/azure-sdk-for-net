@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
         {
             AzureLocation loc = location;
             Assert.That(loc.Name, Is.EqualTo(location));
-            Assert.IsNull(loc.DisplayName);
+            Assert.That(loc.DisplayName, Is.Null);
         }
 
         [TestCase(true, "West Us", "West Us")]

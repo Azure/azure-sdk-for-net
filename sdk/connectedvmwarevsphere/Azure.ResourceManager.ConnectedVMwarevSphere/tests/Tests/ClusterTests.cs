@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             ArmOperation<VMwareClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             VMwareClusterResource cluster = lro.Value;
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             VMwareClusterData resourceData = cluster.Data;
             Assert.That(clusterName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareClusterResource result = await collection.GetAsync(clusterName);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Check exists
             bool isExist = await collection.ExistsAsync(clusterName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             // Get if exists
             NullableResponse<VMwareClusterResource> response = await collection.GetIfExistsAsync(clusterName);
             result = response.HasValue ? response.Value : null;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // List
             isExist = false;

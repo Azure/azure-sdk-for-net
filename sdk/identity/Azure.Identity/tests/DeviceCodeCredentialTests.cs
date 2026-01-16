@@ -184,7 +184,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { testEnvironment.KeyvaultScope }), cancelSource.Token));
-            Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockException)));
         }
 
         [Test]

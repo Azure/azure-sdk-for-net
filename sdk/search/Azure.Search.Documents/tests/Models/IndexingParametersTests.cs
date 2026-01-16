@@ -15,14 +15,14 @@ namespace Azure.Search.Documents.Tests.Models
         public void ConfigurationInitializesIndexingParametersConfiguration()
         {
             IndexingParameters parameters = new IndexingParameters();
-            Assert.IsNull(parameters.IndexingParametersConfiguration);
+            Assert.That(parameters.IndexingParametersConfiguration, Is.Null);
 
             // Setting Configuration should initialize IndexingParametersConfiguration
-            Assert.IsNotNull(parameters.Configuration);
+            Assert.That(parameters.Configuration, Is.Not.Null);
             Assert.That(parameters.Configuration.Count, Is.EqualTo(0));
 
             parameters.Configuration["customTestProperty"] = "custom";
-            Assert.IsNotNull(parameters.IndexingParametersConfiguration);
+            Assert.That(parameters.IndexingParametersConfiguration, Is.Not.Null);
             Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
         }
 
@@ -127,25 +127,25 @@ namespace Azure.Search.Documents.Tests.Models
 
             IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
 
-            Assert.IsNull(configuration.ParsingMode);
-            Assert.IsNull(configuration.ExcludedFileNameExtensions);
-            Assert.IsNull(configuration.IndexedFileNameExtensions);
-            Assert.IsNull(configuration.FailOnUnsupportedContentType);
-            Assert.IsNull(configuration.FailOnUnprocessableDocument);
-            Assert.IsNull(configuration.IndexStorageMetadataOnlyForOversizedDocuments);
-            Assert.IsNull(configuration.DelimitedTextHeaders);
-            Assert.IsNull(configuration.DelimitedTextDelimiter);
-            Assert.IsNull(configuration.FirstLineContainsHeaders);
-            Assert.IsNull(configuration.DocumentRoot);
-            Assert.IsNull(configuration.DataToExtract);
-            Assert.IsNull(configuration.ImageAction);
-            Assert.IsNull(configuration.AllowSkillsetToReadFileData);
-            Assert.IsNull(configuration.PdfTextRotationAlgorithm);
-            Assert.IsNull(configuration.ExecutionEnvironment);
-            Assert.IsNull(configuration.QueryTimeout);
+            Assert.That(configuration.ParsingMode, Is.Null);
+            Assert.That(configuration.ExcludedFileNameExtensions, Is.Null);
+            Assert.That(configuration.IndexedFileNameExtensions, Is.Null);
+            Assert.That(configuration.FailOnUnsupportedContentType, Is.Null);
+            Assert.That(configuration.FailOnUnprocessableDocument, Is.Null);
+            Assert.That(configuration.IndexStorageMetadataOnlyForOversizedDocuments, Is.Null);
+            Assert.That(configuration.DelimitedTextHeaders, Is.Null);
+            Assert.That(configuration.DelimitedTextDelimiter, Is.Null);
+            Assert.That(configuration.FirstLineContainsHeaders, Is.Null);
+            Assert.That(configuration.DocumentRoot, Is.Null);
+            Assert.That(configuration.DataToExtract, Is.Null);
+            Assert.That(configuration.ImageAction, Is.Null);
+            Assert.That(configuration.AllowSkillsetToReadFileData, Is.Null);
+            Assert.That(configuration.PdfTextRotationAlgorithm, Is.Null);
+            Assert.That(configuration.ExecutionEnvironment, Is.Null);
+            Assert.That(configuration.QueryTimeout, Is.Null);
 
             Assert.That(configuration.Count(), Is.EqualTo(1));
-            Assert.IsNull(configuration["customTestProperty"]);
+            Assert.That(configuration["customTestProperty"], Is.Null);
         }
 
         [Test]
@@ -184,8 +184,8 @@ namespace Azure.Search.Documents.Tests.Models
             };
 
             Assert.That(keys.Count, Is.EqualTo(2));
-            CollectionAssert.Contains(keys, "parsingMode");
-            CollectionAssert.Contains(keys, "customTestProperty");
+            Assert.That(keys, Has.Member("parsingMode"));
+            Assert.That(keys, Has.Member("customTestProperty"));
 
             parameters.Configuration.Clear();
 
@@ -207,8 +207,8 @@ namespace Azure.Search.Documents.Tests.Models
             };
 
             Assert.That(values.Count, Is.EqualTo(2));
-            CollectionAssert.Contains(values, BlobIndexerParsingMode.Json);
-            CollectionAssert.Contains(values, "custom");
+            Assert.That(values, Has.Member(BlobIndexerParsingMode.Json));
+            Assert.That(values, Has.Member("custom"));
 
             parameters.Configuration.Clear();
 
@@ -337,7 +337,7 @@ namespace Azure.Search.Documents.Tests.Models
             KeyValuePair<string, object>[] pairs = new KeyValuePair<string, object>[parameters.Configuration.Count + 1];
             parameters.Configuration.CopyTo(pairs, 1);
 
-            Assert.IsNull(pairs[0].Key);
+            Assert.That(pairs[0].Key, Is.Null);
 
             // Dictionary order is guaranteed, so check the last one which should be from AdditionalProperties.
             Assert.That(pairs[3].Key, Is.EqualTo("customTestProperty"));
@@ -355,7 +355,7 @@ namespace Azure.Search.Documents.Tests.Models
             };
 
             Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
-            CollectionAssert.Contains(parameters.Configuration.Keys, "customTestProperty");
+            Assert.That(parameters.Configuration.Keys, Has.Member("customTestProperty"));
 
             parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration
             {
@@ -363,7 +363,7 @@ namespace Azure.Search.Documents.Tests.Models
             };
 
             Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
-            CollectionAssert.Contains(parameters.Configuration.Keys, "parsingMode");
+            Assert.That(parameters.Configuration.Keys, Has.Member("parsingMode"));
         }
 
         [Test]
@@ -380,7 +380,7 @@ namespace Azure.Search.Documents.Tests.Models
             parameters.Configuration.Remove("parsingMode");
 
             Assert.That(parameters.Configuration.Count, Is.EqualTo(0));
-            Assert.IsNull(parameters.IndexingParametersConfiguration.ParsingMode);
+            Assert.That(parameters.IndexingParametersConfiguration.ParsingMode, Is.Null);
         }
 
         [Test]

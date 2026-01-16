@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get authorization rule
             authorizationRule = await ruleCollection.GetAsync(ruleName);
             Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get all authorization rules
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //update authorization rule
             parameter.Rights.Add(EventHubsAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //delete authorization rule
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             EventHubsAccessKeys keys1 = await authorizationRule.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             EventHubsAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
@@ -552,14 +552,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             if (expectedNamespace.Identity != null)
             {
-                Assert.IsNotNull(actualNamespace.Identity);
+                Assert.That(actualNamespace.Identity, Is.Not.Null);
                 Assert.That(actualNamespace.Identity.ManagedServiceIdentityType, Is.EqualTo(expectedNamespace.Identity.ManagedServiceIdentityType));
                 Assert.That(actualNamespace.Identity.PrincipalId, Is.EqualTo(expectedNamespace.Identity.PrincipalId));
                 Assert.That(actualNamespace.Identity.TenantId, Is.EqualTo(expectedNamespace.Identity.TenantId));
 
                 if (expectedNamespace.Identity.UserAssignedIdentities != null)
                 {
-                    Assert.NotNull(actualNamespace.Identity.UserAssignedIdentities);
+                    Assert.That(actualNamespace.Identity.UserAssignedIdentities, Is.Not.Null);
                     Assert.That(actualNamespace.Identity.UserAssignedIdentities.Count, Is.EqualTo(expectedNamespace.Identity.UserAssignedIdentities.Count));
                 }
                 else
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
                 if (expectedNamespace.Encryption != null)
                 {
-                    Assert.NotNull(actualNamespace.Encryption);
+                    Assert.That(actualNamespace.Encryption, Is.Not.Null);
                     Assert.That(actualNamespace.Encryption.KeyVaultProperties.Count, Is.EqualTo(expectedNamespace.Encryption.KeyVaultProperties.Count));
                 }
                 else
@@ -650,9 +650,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //get the network rule set
             EventHubsNetworkRuleSetResource networkRuleSet = await eventHubNamespace.GetEventHubsNetworkRuleSet().GetAsync();
-            Assert.NotNull(networkRuleSet);
-            Assert.NotNull(networkRuleSet.Data.IPRules);
-            Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
+            Assert.That(networkRuleSet, Is.Not.Null);
+            Assert.That(networkRuleSet.Data.IPRules, Is.Not.Null);
+            Assert.That(networkRuleSet.Data.VirtualNetworkRules, Is.Not.Null);
             Assert.That(networkRuleSet.Data.VirtualNetworkRules.Count, Is.EqualTo(3));
             Assert.That(networkRuleSet.Data.IPRules.Count, Is.EqualTo(5));
 

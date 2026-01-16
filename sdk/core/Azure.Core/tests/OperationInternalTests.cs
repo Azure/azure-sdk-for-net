@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
         public void DefaultPropertyInitialization()
         {
             var operationInternal = new OperationInternal(TestOperation.Succeeded(), ClientDiagnostics, InitialResponse);
-            Assert.IsNotNull(operationInternal.RawResponse);
+            Assert.That(operationInternal.RawResponse, Is.Not.Null);
             Assert.That(operationInternal.HasCompleted, Is.False);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
 
             Assert.That(thrownException, Is.EqualTo(CustomException));
 
-            Assert.IsNotNull(operationInternal.RawResponse);
+            Assert.That(operationInternal.RawResponse, Is.Not.Null);
         }
 
         [Test]
@@ -140,7 +140,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
 
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            Assert.That(testListener.Scopes, Is.Empty);
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace Azure.Core.Tests
             if (suppressNestedClientActivities)
             {
                 testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
-                CollectionAssert.IsEmpty(testListener.Scopes);
+                Assert.That(testListener.Scopes, Is.Empty);
             }
 #endif
         }
@@ -233,7 +233,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
                 : operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            Assert.That(testListener.Scopes, Is.Empty);
         }
 
         [Test]

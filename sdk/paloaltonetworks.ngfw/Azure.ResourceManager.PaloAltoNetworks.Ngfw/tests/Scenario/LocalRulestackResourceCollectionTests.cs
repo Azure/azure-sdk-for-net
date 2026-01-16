@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackCollection collection = DefaultResGroup.GetLocalRulestacks();
             LocalRulestackResource firewallResource = await collection.GetAsync(DefaultResource1.Data.Name);
-            Assert.IsNotNull(firewallResource);
+            Assert.That(firewallResource, Is.Not.Null);
             AssertTrackedResource(DefaultResource1.Data, firewallResource.Data);
         }
 

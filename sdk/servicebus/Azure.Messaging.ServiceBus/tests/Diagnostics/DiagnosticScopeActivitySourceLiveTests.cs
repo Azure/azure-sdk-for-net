@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     await sender.CancelScheduledMessageAsync(seq);
                 }
             }
-            Assert.IsEmpty(listener.Activities);
+            Assert.That(listener.Activities, Is.Empty);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(receiveActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace, MessagingDiagnosticOperation.Receive, received.Count);
 
                     var receiveLinkedActivities = receiveActivity.Links.ToList();
-                    Assert.Greater(receiveLinkedActivities.Count, 0);
+                    Assert.That(receiveLinkedActivities.Count, Is.GreaterThan(0));
                     for (int i = 0; i < receiveLinkedActivities.Count; i++)
                     {
                         Assert.That(receiveLinkedActivities[i].Context.TraceId, Is.EqualTo(sendActivities[i].Context.TraceId));
@@ -219,7 +219,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var msg in msgs)
                 {
                     var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
-                    Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
+                    Assert.That(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.Not.Null);
 
                     var messageActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.MessageActivityName);
                     AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, default, 1);
@@ -436,10 +436,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             IList<Activity> messageActivities = new List<Activity>();
             foreach (var msg in messages)
             {
-                Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
+                Assert.That(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.Not.Null);
                 var messageActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.MessageActivityName);
                 messageActivities.Add(messageActivity);
-                CollectionAssert.Contains(messageActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, sender.EntityPath));
+                Assert.That(messageActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, sender.EntityPath)));
                 AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, default, 1);
                 Assert.That(messageActivity.Source.Name, Is.EqualTo(DiagnosticProperty.DiagnosticNamespace + ".Message"));
             }
@@ -460,21 +460,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         private void AssertCommonTags(Activity activity, string entityName, string fullyQualifiedNamespace, MessagingDiagnosticOperation operation, int messageCount)
         {
             var tags = activity.TagObjects.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, entityName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, entityName)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.ServiceBusServiceContext)));
 
             if (operation != default)
             {
-                CollectionAssert.Contains(tags,
-                    new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
+                Assert.That(tags,
+                    Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString())));
             }
 
             if (messageCount > 1)
-                CollectionAssert.Contains(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, messageCount));
+                Assert.That(tags, Has.Member(new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, messageCount)));
             else
-                CollectionAssert.DoesNotContain(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, messageCount));
+                Assert.That(tags, Has.No.Member(new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, messageCount)));
         }
 
         private static TestAppContextSwitch SetAppConfigSwitch()

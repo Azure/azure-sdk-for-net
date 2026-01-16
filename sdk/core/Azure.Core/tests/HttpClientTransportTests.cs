@@ -141,9 +141,9 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo(headerValue));
 
             Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            CollectionAssert.AreEqual(new[] { headerValue }, values);
+            Assert.That(values, Is.EqualTo(new[] { headerValue }).AsCollection);
 
-            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
+            Assert.That(response.Headers, Has.Member(new HttpHeader(headerName, headerValue)));
         }
 
         private static Request CreateRequest(HttpClientTransport transport, byte[] bytes = null)

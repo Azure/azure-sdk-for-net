@@ -93,7 +93,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             Console.WriteLine($"x-ms-response-id: {xMsResponseId}");
             #endregion Snippet:SimSwapVerifyHeaderRetrievalTest
 
-            Assert.IsNotEmpty(xMsResponseId);
+            Assert.That(xMsResponseId, Is.Not.Empty);
         }
 
         [RecordedTest]

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             string encryptionProtectorName = "current";
             var collection = managedInstance.GetManagedInstanceEncryptionProtectors();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 IsAutoRotationEnabled = false,
             };
             var encryption = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionProtectorName, data);
-            Assert.IsNotNull(encryption.Value.Data);
+            Assert.That(encryption.Value.Data, Is.Not.Null);
             Assert.That(encryption.Value.Data.Name, Is.EqualTo(encryptionProtectorName));
             Assert.That(encryption.Value.Data.ServerKeyName, Is.EqualTo("ServiceManaged"));
             Assert.That(encryption.Value.Data.ServerKeyType.ToString(), Is.EqualTo("ServiceManaged"));
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 3.Get
             var getEncryption = await collection.GetAsync(encryptionProtectorName);
-            Assert.IsNotNull(encryption.Value.Data);
+            Assert.That(encryption.Value.Data, Is.Not.Null);
             Assert.That(getEncryption.Value.Data.Name, Is.EqualTo(encryptionProtectorName));
             Assert.That(getEncryption.Value.Data.ServerKeyName, Is.EqualTo("ServiceManaged"));
             Assert.That(getEncryption.Value.Data.ServerKeyType.ToString(), Is.EqualTo("ServiceManaged"));
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(encryptionProtectorName));
         }

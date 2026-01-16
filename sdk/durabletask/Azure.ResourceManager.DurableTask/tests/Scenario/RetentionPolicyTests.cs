@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             DurableTaskRetentionPolicyDetails completedPolicy = singletonRetentionPolicy.Data.Properties.RetentionPolicies
                 .SingleOrDefault(p => p.OrchestrationState == DurableTaskPurgeableOrchestrationState.Completed);
 
-            Assert.NotNull(completedPolicy, "Expected a retention policy with OrchestrationState=Completed.");
+            Assert.That(completedPolicy, Is.Not.Null, "Expected a retention policy with OrchestrationState=Completed.");
             Assert.That(completedPolicy.RetentionPeriodInDays, Is.EqualTo(3), "Unexpected retention days for Completed state.");
 
             await singletonRetentionPolicy.DeleteAsync(WaitUntil.Completed);

@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             var accounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBAccountsAsync().ToEnumerableAsync();
-            Assert.IsNotNull(accounts);
+            Assert.That(accounts, Is.Not.Null);
 
             var accountInList = accounts.Single(account => account.Data.Name == _databaseAccountName);
-            Assert.IsNotNull(accountInList);
+            Assert.That(accountInList, Is.Not.Null);
             VerifyCosmosDBAccount(account, accountInList);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             var accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(accounts);
+            Assert.That(accounts, Is.Not.Empty);
             Assert.That(accounts, Has.Count.EqualTo(1));
 
             VerifyCosmosDBAccount(account, accounts[0]);
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             CosmosDBAccountKeyList keys = await account.GetKeysAsync();
-            Assert.IsNotNull(keys.PrimaryMasterKey);
-            Assert.IsNotNull(keys.PrimaryReadonlyMasterKey);
-            Assert.IsNotNull(keys.SecondaryMasterKey);
-            Assert.IsNotNull(keys.SecondaryReadonlyMasterKey);
+            Assert.That(keys.PrimaryMasterKey, Is.Not.Null);
+            Assert.That(keys.PrimaryReadonlyMasterKey, Is.Not.Null);
+            Assert.That(keys.SecondaryMasterKey, Is.Not.Null);
+            Assert.That(keys.SecondaryReadonlyMasterKey, Is.Not.Null);
 
             CosmosDBAccountReadOnlyKeyList readOnlyKeys = await account.GetReadOnlyKeysAsync();
-            Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
-            Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
+            Assert.That(readOnlyKeys.PrimaryReadonlyMasterKey, Is.Not.Null);
+            Assert.That(readOnlyKeys.SecondaryReadonlyMasterKey, Is.Not.Null);
 
             await account.RegenerateKeyAsync(WaitUntil.Completed, new CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind.Primary));
             await account.RegenerateKeyAsync(WaitUntil.Completed, new CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind.Secondary));
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             foreach (var item in connectionStrings)
             {
-                Assert.IsNotNull(item.KeyKind);
-                Assert.IsNotNull(item.KeyType);
+                Assert.That(item.KeyKind, Is.Not.Null);
+                Assert.That(item.KeyType, Is.Not.Null);
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             List<CosmosDBBaseUsage> usages = await account.GetUsagesAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(usages);
+            Assert.That(usages, Is.Not.Empty);
         }
 
         [Test]
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             List<CosmosDBMetricDefinition> metricDefinitions =
                 await account.GetMetricDefinitionsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(metricDefinitions);
+            Assert.That(metricDefinitions, Is.Not.Empty);
 
             const string filter = "(name.value eq 'Total Requests') and timeGrain eq duration'PT5M'";
             var metrics = await account.GetMetricsAsync(filter).ToEnumerableAsync();
-            Assert.IsNotNull(metrics);
+            Assert.That(metrics, Is.Not.Null);
 
             var regionMetrics = await account.GetMetricsDatabaseAccountRegionsAsync(AzureLocation.WestUS, filter).ToEnumerableAsync();
-            Assert.IsNotNull(regionMetrics);
+            Assert.That(regionMetrics, Is.Not.Null);
         }
 
         [Test]
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await account.DeleteAsync(WaitUntil.Completed);
 
             List<CosmosDBAccountResource> accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(accounts);
+            Assert.That(accounts, Is.Not.Null);
             Assert.That(accounts.Any(a => a.Id == account.Id), Is.False);
         }
 

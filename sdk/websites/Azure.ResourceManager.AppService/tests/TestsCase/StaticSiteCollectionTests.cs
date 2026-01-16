@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]

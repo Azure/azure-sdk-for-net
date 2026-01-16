@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.That(processor.EntityPath, Is.EqualTo("entityPath"));
 
             var processor2 = provider.CreateProcessor(_client, "entityPath", processorOptions);
-            Assert.AreNotSame(processor, processor2);
+            Assert.That(processor2, Is.Not.SameAs(processor));
 
             options.PrefetchCount = 100;
             options.MaxConcurrentCalls = 5;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.That(processor.EntityPath, Is.EqualTo("entityPath"));
 
             var processor2 = provider.CreateSessionProcessor(_client, "entityPath", processorOptions);
-            Assert.AreNotSame(processor, processor2);
+            Assert.That(processor2, Is.Not.SameAs(processor));
 
             options.PrefetchCount = 100;
             options.MaxConcurrentSessions = 5;
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.That(sender1.FullyQualifiedNamespace, Is.EqualTo(_client.FullyQualifiedNamespace));
 
             var sender2 = provider.CreateMessageSender(_secondaryClient, "entityPath");
-            Assert.AreNotSame(sender1, sender2);
+            Assert.That(sender2, Is.Not.SameAs(sender1));
             Assert.That(sender2.EntityPath, Is.EqualTo("entityPath"));
             Assert.That(sender2.FullyQualifiedNamespace, Is.EqualTo(_secondaryClient.FullyQualifiedNamespace));
         }
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.That(receiver1.FullyQualifiedNamespace, Is.EqualTo(_client.FullyQualifiedNamespace));
 
             var receiver2 = provider.CreateBatchMessageReceiver(_secondaryClient, "entityPath", new ServiceBusReceiverOptions());
-            Assert.AreNotSame(receiver1, receiver2);
+            Assert.That(receiver2, Is.Not.SameAs(receiver1));
             Assert.That(receiver2.EntityPath, Is.EqualTo("entityPath"));
             Assert.That(receiver2.FullyQualifiedNamespace, Is.EqualTo(_secondaryClient.FullyQualifiedNamespace));
         }

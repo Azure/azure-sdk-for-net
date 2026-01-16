@@ -51,20 +51,20 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
             // Get
             Response<FluidRelayServerResource> getFluidRelayResponse = await fluidRelayServerResourceCollection.GetAsync(fluidRelayServerName);
             FluidRelayServerResource fluidRelayServerResource = getFluidRelayResponse.Value;
-            Assert.IsNotNull(fluidRelayServerResource);
+            Assert.That(fluidRelayServerResource, Is.Not.Null);
             Assert.That(fluidRelayServerResource.Data.Name, Is.EqualTo(fluidRelayServerName));
 
             // Get Keys
             Response<FluidRelayServerKeys> getKeyFluidRelayResponse = await fluidRelayServerResource.GetKeysAsync();
             FluidRelayServerKeys fluidRelayServerKeys = getKeyFluidRelayResponse.Value;
-            Assert.IsNotNull(fluidRelayServerKeys.SecondaryKey);
-            Assert.IsNotNull(fluidRelayServerKeys.PrimaryKey);
+            Assert.That(fluidRelayServerKeys.SecondaryKey, Is.Not.Null);
+            Assert.That(fluidRelayServerKeys.PrimaryKey, Is.Not.Null);
 
             //list by subscription
             AsyncPageable<FluidRelayServerResource> fluidRelayServerResourceCollection2 = GetFluidRelayServerCollectionBySubscriptionAsync();
             await foreach (FluidRelayServerResource server in fluidRelayServerResourceCollection2)
             {
-                Assert.IsNotNull(server.Data.Name);
+                Assert.That(server.Data.Name, Is.Not.Null);
             }
             Assert.That(await fluidRelayServerResourceCollection2.GetAsyncEnumerator().MoveNextAsync(), Is.True);
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
             FluidRelayContainerCollection FluidRelayContainerResourceCollection = await GetFluidRelayContainerCollectionAsync("lin-demo", "dotNetSDKTest");
             Response<FluidRelayContainerResource> getFluidRelayResponse = await FluidRelayContainerResourceCollection.GetAsync("19b201e5-a5f6-4f90-b3c0-bc36b650e64e");
             FluidRelayContainerResource fluidRelayContainerResource = getFluidRelayResponse.Value;
-            Assert.IsNotNull(fluidRelayContainerResource);
+            Assert.That(fluidRelayContainerResource, Is.Not.Null);
         }
     }
 }

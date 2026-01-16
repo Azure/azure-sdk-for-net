@@ -113,7 +113,7 @@ namespace Azure.Generator.Tests.Common
                     AssertJsonArrayEquivalency(expected, result);
                     break;
                 default:
-                    Assert.AreEqual(expected.ToString(), result.ToString());
+                    Assert.That(result.ToString(), Is.EqualTo(expected.ToString()));
                     break;
             }
         }
@@ -228,7 +228,7 @@ namespace Azure.Generator.Tests.Common
                 }
                 finally
                 {
-                    Assert.IsTrue(gotException);
+                    Assert.That(gotException, Is.True);
                 }
 
                 gotException = false;
@@ -243,7 +243,7 @@ namespace Azure.Generator.Tests.Common
                 }
                 finally
                 {
-                    Assert.IsTrue(gotException);
+                    Assert.That(gotException, Is.True);
                 }
             }
         }
@@ -263,7 +263,7 @@ namespace Azure.Generator.Tests.Common
                 {
                     exceptionCaught = true;
                 }
-                Assert.IsTrue(exceptionCaught, "Expected FormatException to be thrown when deserializing wire format as json");
+                Assert.That(exceptionCaught, Is.True, "Expected FormatException to be thrown when deserializing wire format as json");
             }
         }
     }

@@ -31,7 +31,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.That(dict.TryGetValue($"{lookupName}.List<{expectation.TypeName}>", out var listModel), Is.True);
             Assert.That(listModel!.Type.Name, Is.EqualTo($"List<{expectation.TypeName}>"));
             Assert.That(listModel.Type.Namespace, Is.EqualTo("System.Collections.Generic"));
-            Assert.IsNotNull(listModel.Type.ItemType);
+            Assert.That(listModel.Type.ItemType, Is.Not.Null);
             Assert.That(listModel.Kind, Is.EqualTo(TypeBuilderKind.IList));
             Assert.That(listModel.Type.TypeCaseName, Is.EqualTo($"List_{expectation.TypeName}_"));
             Assert.That(listModel.Type.CamelCaseName, Is.EqualTo($"list_{expectation.TypeName}_"));

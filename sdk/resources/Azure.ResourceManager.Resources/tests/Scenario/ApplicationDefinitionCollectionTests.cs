@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.Data.Authorizations, Is.EqualTo(model.Data.Authorizations));
             if (model.Data.Authorizations != null || getResult.Data.Authorizations != null)
             {
-                Assert.NotNull(model.Data.Authorizations);
-                Assert.NotNull(getResult.Data.Authorizations);
+                Assert.That(model.Data.Authorizations, Is.Not.Null);
+                Assert.That(getResult.Data.Authorizations, Is.Not.Null);
                 Assert.That(getResult.Data.Authorizations.Count, Is.EqualTo(model.Data.Authorizations.Count));
                 for (int i = 0; i < model.Data.Authorizations.Count; ++i)
                 {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Resources.Tests
             }
             if (model.Data.Artifacts != null || getResult.Data.Artifacts != null)
             {
-                Assert.NotNull(model.Data.Artifacts);
-                Assert.NotNull(getResult.Data.Artifacts);
+                Assert.That(model.Data.Artifacts, Is.Not.Null);
+                Assert.That(getResult.Data.Artifacts, Is.Not.Null);
                 Assert.That(getResult.Data.Artifacts.Count, Is.EqualTo(model.Data.Artifacts.Count));
                 for (int i = 0; i < model.Data.Artifacts.Count; ++i)
                 {
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.Data.CreateUiDefinition, Is.EqualTo(model.Data.CreateUiDefinition));
             if (model.Data.NotificationPolicy != null || getResult.Data.NotificationPolicy != null)
             {
-                Assert.NotNull(model.Data.NotificationPolicy);
-                Assert.NotNull(getResult.Data.NotificationPolicy);
+                Assert.That(model.Data.NotificationPolicy, Is.Not.Null);
+                Assert.That(getResult.Data.NotificationPolicy, Is.Not.Null);
                 if (model.Data.NotificationPolicy.NotificationEndpoints != null || getResult.Data.NotificationPolicy.NotificationEndpoints != null)
                 {
-                    Assert.NotNull(model.Data.NotificationPolicy.NotificationEndpoints);
-                    Assert.NotNull(getResult.Data.NotificationPolicy.NotificationEndpoints);
+                    Assert.That(model.Data.NotificationPolicy.NotificationEndpoints, Is.Not.Null);
+                    Assert.That(getResult.Data.NotificationPolicy.NotificationEndpoints, Is.Not.Null);
                     Assert.That(getResult.Data.NotificationPolicy.NotificationEndpoints.Count, Is.EqualTo(model.Data.NotificationPolicy.NotificationEndpoints.Count));
                     for (int i = 0; i < model.Data.NotificationPolicy.NotificationEndpoints.Count; ++i)
                     {
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Resources.Tests
             }
             if (model.Data.LockingPolicy != null || getResult.Data.LockingPolicy != null)
             {
-                Assert.NotNull(model.Data.LockingPolicy);
-                Assert.NotNull(getResult.Data.LockingPolicy);
+                Assert.That(model.Data.LockingPolicy, Is.Not.Null);
+                Assert.That(getResult.Data.LockingPolicy, Is.Not.Null);
                 if (model.Data.LockingPolicy.AllowedActions != null || getResult.Data.LockingPolicy.AllowedActions != null)
                 {
-                    Assert.NotNull(model.Data.LockingPolicy.AllowedActions);
-                    Assert.NotNull(getResult.Data.LockingPolicy.AllowedActions);
+                    Assert.That(model.Data.LockingPolicy.AllowedActions, Is.Not.Null);
+                    Assert.That(getResult.Data.LockingPolicy.AllowedActions, Is.Not.Null);
                     Assert.That(getResult.Data.LockingPolicy.AllowedActions.Count, Is.EqualTo(model.Data.LockingPolicy.AllowedActions.Count));
                     for (int i = 0; i < model.Data.LockingPolicy.AllowedActions.Count; ++i)
                     {
@@ -137,20 +137,20 @@ namespace Azure.ResourceManager.Resources.Tests
             }
             if (model.Data.DeploymentPolicy != null || getResult.Data.DeploymentPolicy != null)
             {
-                Assert.NotNull(model.Data.DeploymentPolicy);
-                Assert.NotNull(getResult.Data.DeploymentPolicy);
+                Assert.That(model.Data.DeploymentPolicy, Is.Not.Null);
+                Assert.That(getResult.Data.DeploymentPolicy, Is.Not.Null);
                 Assert.That(getResult.Data.DeploymentPolicy.DeploymentMode, Is.EqualTo(model.Data.DeploymentPolicy.DeploymentMode));
             }
             if (model.Data.ManagementPolicy != null || getResult.Data.ManagementPolicy != null)
             {
-                Assert.NotNull(model.Data.ManagementPolicy);
-                Assert.NotNull(getResult.Data.ManagementPolicy);
+                Assert.That(model.Data.ManagementPolicy, Is.Not.Null);
+                Assert.That(getResult.Data.ManagementPolicy, Is.Not.Null);
                 Assert.That(getResult.Data.ManagementPolicy.Mode, Is.EqualTo(model.Data.ManagementPolicy.Mode));
             }
             if (model.Data.Policies != null || getResult.Data.Policies != null)
             {
-                Assert.NotNull(model.Data.Policies);
-                Assert.NotNull(getResult.Data.Policies);
+                Assert.That(model.Data.Policies, Is.Not.Null);
+                Assert.That(getResult.Data.Policies, Is.Not.Null);
                 Assert.That(getResult.Data.Policies.Count, Is.EqualTo(model.Data.Policies.Count));
                 for (int i = 0; i < model.Data.Policies.Count; ++i)
                 {

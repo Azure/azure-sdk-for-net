@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             Assert.That(getResult.Data.ETag, Is.EqualTo(model.Data.ETag));
             if (model.Data.Identity != null || getResult.Data.Identity != null)
             {
-                Assert.NotNull(model.Data.Identity);
-                Assert.NotNull(getResult.Data.Identity);
+                Assert.That(model.Data.Identity, Is.Not.Null);
+                Assert.That(getResult.Data.Identity, Is.Not.Null);
                 Assert.That(getResult.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(model.Data.Identity.ManagedServiceIdentityType));
             }
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
-                Assert.NotNull(model.Data.Properties);
-                Assert.NotNull(getResult.Data.Properties);
+                Assert.That(model.Data.Properties, Is.Not.Null);
+                Assert.That(getResult.Data.Properties, Is.Not.Null);
                 Assert.That(getResult.Data.Properties.SourceLocation, Is.EqualTo(model.Data.Properties.SourceLocation));
                 Assert.That(getResult.Data.Properties.TargetLocation, Is.EqualTo(model.Data.Properties.TargetLocation));
             }

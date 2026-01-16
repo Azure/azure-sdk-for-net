@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Communication.Tests
 
             var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
-            Assert.IsNotNull(senderUsername);
+            Assert.That(senderUsername, Is.Not.Null);
             Assert.That(senderUsername.Data.Username, Is.EqualTo(username));
             Assert.That(senderUsername.Data.DisplayName, Is.EqualTo(displayName));
         }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
             var actualSenderUsername = await collection.GetAsync(username);
-            Assert.IsNotNull(actualSenderUsername);
+            Assert.That(actualSenderUsername, Is.Not.Null);
             Assert.That(username, Is.EqualTo(actualSenderUsername.Value.Data.Username));
             Assert.That(displayName, Is.EqualTo(actualSenderUsername.Value.Data.DisplayName));
         }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
             var list = await _domainResource.GetSenderUsernameResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Any(s => s.HasData && s.Data.Username == username), Is.True);
             Assert.That(list.Any(s => s.HasData && s.Data.DisplayName == displayName), Is.True);
         }

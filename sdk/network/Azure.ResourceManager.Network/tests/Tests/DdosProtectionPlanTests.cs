@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var ddosProtectionPlanData = ddosProtectionPlan.Data;
             ValidateCommon(ddosProtectionPlanData, name);
-            Assert.IsEmpty(ddosProtectionPlanData.Tags);
+            Assert.That(ddosProtectionPlanData.Tags, Is.Empty);
 
             // update
             var data = new DdosProtectionPlanData(TestEnvironment.Location);
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That((bool)await container.ExistsAsync(name), Is.False);
 
             ddosProtectionPlans = await container.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(ddosProtectionPlans);
+            Assert.That(ddosProtectionPlans, Is.Empty);
 
             // list all
             ddosProtectionPlans = await _subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
-            Assert.IsEmpty(ddosProtectionPlans);
+            Assert.That(ddosProtectionPlans, Is.Empty);
         }
 
         private void ValidateCommon(DdosProtectionPlanData data, string name)

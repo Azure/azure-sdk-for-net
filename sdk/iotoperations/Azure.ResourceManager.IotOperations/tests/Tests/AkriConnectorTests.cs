@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 );
             IotOperationsAkriConnectorResource createdConnector = resp.Value;
 
-            Assert.IsNotNull(createdConnector);
-            Assert.IsNotNull(createdConnector.Data);
-            Assert.IsNotNull(createdConnector.Data.Properties);
+            Assert.That(createdConnector, Is.Not.Null);
+            Assert.That(createdConnector.Data, Is.Not.Null);
+            Assert.That(createdConnector.Data.Properties, Is.Not.Null);
 
             // Delete AkriConnectorResource
             await createdConnector.DeleteAsync(WaitUntil.Completed);

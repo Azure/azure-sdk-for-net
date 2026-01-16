@@ -505,7 +505,7 @@ namespace Azure.Maps.Routing.Tests
             Response<RouteRangeResult> result = client.GetRouteRange(options);
             #endregion
 
-            Assert.IsNotNull(result.Value.ReachableRange.Center);
+            Assert.That(result.Value.ReachableRange.Center, Is.Not.Null);
             Assert.That(result.Value.ReachableRange.Boundary.Count > 10, Is.True);
         }
 

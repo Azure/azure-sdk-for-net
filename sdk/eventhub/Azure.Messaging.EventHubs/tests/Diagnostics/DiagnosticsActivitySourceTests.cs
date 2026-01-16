@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
             await producer.SendAsync(new[] { new EventData(ReadOnlyMemory<byte>.Empty) });
 
-            Assert.IsEmpty(testListener.Activities);
+            Assert.That(testListener.Activities, Is.Empty);
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
 
-            Assert.IsEmpty(testListener.Activities);
+            Assert.That(testListener.Activities, Is.Empty);
         }
 
         /// <summary>
@@ -594,7 +594,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Validate the diagnostics.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.IsEmpty(listener.Activities);
+            Assert.That(listener.Activities, Is.Empty);
         }
 
         /// <summary>
@@ -630,9 +630,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace)));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName)));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext)));
             cancellationSource.Cancel();
         }
 
@@ -642,24 +642,24 @@ namespace Azure.Messaging.EventHubs.Tests
         private void AssertCommonTags(Activity activity, string eventHubName, string endpoint, MessagingDiagnosticOperation operation, int eventCount)
         {
             var tags = activity.TagObjects.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, endpoint));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, endpoint)));
 
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext)));
             if (operation != default)
             {
-                CollectionAssert.Contains(tags,
-                    new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
+                Assert.That(tags,
+                    Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString())));
+                Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName)));
             }
             else
             {
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
+                Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName)));
             }
 
             if (eventCount > 1)
-                CollectionAssert.Contains(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount));
+                Assert.That(tags, Has.Member(new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount)));
             else
-                CollectionAssert.DoesNotContain(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount));
+                Assert.That(tags, Has.No.Member(new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount)));
         }
 
         /// <summary>

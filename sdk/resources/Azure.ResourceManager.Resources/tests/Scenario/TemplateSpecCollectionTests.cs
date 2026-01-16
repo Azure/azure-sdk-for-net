@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Tests
             foreach (var kv in model.Data.Versions)
             {
                 var getTemplateSpecVersionInfo = getResult.Data.Versions[kv.Key];
-                Assert.NotNull(getTemplateSpecVersionInfo);
+                Assert.That(getTemplateSpecVersionInfo, Is.Not.Null);
                 Assert.That(getResult.Data.Versions[kv.Key].Description, Is.EqualTo(model.Data.Versions[kv.Key].Description));
                 Assert.That(getResult.Data.Versions[kv.Key].TimeCreated, Is.EqualTo(model.Data.Versions[kv.Key].TimeCreated));
                 Assert.That(getResult.Data.Versions[kv.Key].TimeModified, Is.EqualTo(model.Data.Versions[kv.Key].TimeModified));

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Get()
         {
             var pricing = await _pricingCollection.GetAsync("VirtualMachines");
-            Assert.IsNotNull(pricing);
+            Assert.That(pricing, Is.Not.Null);
             Assert.That(pricing.Value.Data.Name, Is.EqualTo("VirtualMachines"));
             Assert.That(pricing.Value.Data.PricingTier.ToString(), Is.EqualTo("Standard"));
             Assert.That(pricing.Value.Data.SubPlan, Is.EqualTo("P2"));
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _pricingCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Exists(item => item.Data.Name == "VirtualMachines"), Is.True);
             Assert.That(list.Exists(item => item.Data.Name == "SqlServers"), Is.True);
             Assert.That(list.Exists(item => item.Data.Name == "AppServices"), Is.True);

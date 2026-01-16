@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             var apiManagementService = (await collection.GetAsync(apiName)).Value;
-            Assert.NotNull(apiManagementService.Data.Name);
+            Assert.That(apiManagementService.Data.Name, Is.Not.Null);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             var apiManagementServices = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(apiManagementServices.Count, 1);
+            Assert.That(apiManagementServices.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]

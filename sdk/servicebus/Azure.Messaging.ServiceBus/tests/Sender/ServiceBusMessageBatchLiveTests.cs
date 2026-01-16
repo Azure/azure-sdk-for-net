@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                             // instrumented message
                             Assert.That(diff < 250, Is.True, diff.ToString());
                         }
-                        Assert.Greater(batch.Count, 0);
+                        Assert.That(batch.Count, Is.GreaterThan(0));
                         await sender.SendMessagesAsync(batch);
                     }
                 }

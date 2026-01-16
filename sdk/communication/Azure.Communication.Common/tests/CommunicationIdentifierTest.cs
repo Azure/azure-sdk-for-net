@@ -240,19 +240,19 @@ namespace Azure.Communication
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768")).WithValue(nameof(TeamsExtensionUserIdentifier)));
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130")).WithValue(nameof(UnknownIdentifier)));
 
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("4:+14255550123"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130"));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("4:+14255550123")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130")));
 
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("4:+14255550123"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130"));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("4:+14255550123")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130")));
         }
 
         [Test]

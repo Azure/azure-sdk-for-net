@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketResource result = lro.Value;
 
             // the variable result is a resource
-            Assert.IsNotNull(result.Data);
+            Assert.That(result.Data, Is.Not.Null);
             Assert.That(result.Data.Name, Is.EqualTo($"{_volumeResource.Data.Name}/{bucketName}"));
             Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketResource bucketResult = await netAppBucket.GetAsync();
             string bucketResourceName = bucketResult.Data.Name;
 
-            Assert.IsNotNull(bucketResult.Data);
+            Assert.That(bucketResult.Data, Is.Not.Null);
             Assert.That(bucketResult.Data.Name, Is.EqualTo($"{_volumeResource.Data.Name}/{bucketName}"));
             Console.WriteLine($"GET Succeeded on id: {bucketResult.Data.Id}");
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
-            Assert.GreaterOrEqual(buckets.Count, 1);
+            Assert.That(buckets.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(buckets.Any(r => r.Data.Name.Split('/').Last() == bucketName), Is.True);
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketResource result = lro.Value;
 
             // the variable result is a resource
-            Assert.IsNotNull(result.Data);
+            Assert.That(result.Data, Is.Not.Null);
             Assert.That(result.Data.Name.Split('/').Last(), Is.EqualTo(bucketName));
             Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketResource netAppBucket = Client.GetNetAppBucketResource(result.Data.Id);
             // invoke the operation
             NetAppBucketResource bucketResult = await netAppBucket.GetAsync();
-            Assert.IsNotNull(bucketResult.Data);
+            Assert.That(bucketResult.Data, Is.Not.Null);
             Assert.That(bucketResult.Data.Name.Split('/').Last(), Is.EqualTo(bucketName));
             Console.WriteLine($"GET Succeeded on id: {bucketResult.Data.Id}");
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             ArmOperation<NetAppBucketResource> lroUpdate = await netAppBucket.UpdateAsync(WaitUntil.Completed, patch);
             NetAppBucketResource updateResult = lroUpdate.Value;
-            Assert.IsNotNull(updateResult.Data);
+            Assert.That(updateResult.Data, Is.Not.Null);
             await LiveDelay(30000);
             NetAppBucketResource updateResultData = await netAppBucket.GetAsync();
 
@@ -292,14 +292,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketResource result = lro.Value;
 
             // the variable result is a resource
-            Assert.IsNotNull(result.Data);
+            Assert.That(result.Data, Is.Not.Null);
             Assert.That(result.Data.Name.Split('/').Last(), Is.EqualTo(bucketName));
             Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
             // get the created resource
             NetAppBucketResource netAppBucket = Client.GetNetAppBucketResource(result.Data.Id);
             NetAppBucketResource resultData = await netAppBucket.GetAsync();
-            Assert.IsNotNull(resultData.Data);
+            Assert.That(resultData.Data, Is.Not.Null);
             Assert.That(resultData.Data.Name.Split('/').Last(), Is.EqualTo(bucketName));
             Console.WriteLine($"GET Succeeded on id: {resultData.Data.Id}");
 

@@ -149,7 +149,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 Prefix = destinationPrefix,
             };
             IList<BlobItem> items = await destinationContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).ToListAsync();
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         protected override async Task VerifyResultsAsync(

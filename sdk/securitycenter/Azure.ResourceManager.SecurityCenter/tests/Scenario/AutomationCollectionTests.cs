@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string automationName = Recording.GenerateAssetName("automation");
             await CreateSecurityAutomation(automationName);
             var list = await _automationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAutomation(list.First(item => item.Data.Name == automationName), automationName);
         }
 
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateAutomation(SecurityAutomationResource automation, string automationName)
         {
-            Assert.IsNotNull(automation);
-            Assert.IsNotNull(automation.Data.Id);
+            Assert.That(automation, Is.Not.Null);
+            Assert.That(automation.Data.Id, Is.Not.Null);
             Assert.That(automation.Data.Name, Is.EqualTo(automationName));
             Assert.That(automation.Data.Location, Is.EqualTo(DefaultLocation));
             Assert.That(automation.Data.Sources.First().EventSource.ToString(), Is.EqualTo("Assessments"));

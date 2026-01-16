@@ -325,10 +325,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         public void StopAsync_LogListenerDetails()
         {
             Assert.DoesNotThrow(() => _listener.StopAsync(CancellationToken.None));
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")));
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")));
+            Assert.That(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")), Is.Not.Null);
+            Assert.That(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")), Is.Not.Null);
         }
 
         [Test]
@@ -338,10 +338,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             {
                 _listener.Started = false;
                 Assert.ThrowsAsync<InvalidOperationException>(() => _listener.StopAsync(CancellationToken.None));
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")));
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")));
+                Assert.That(_loggerProvider.GetAllLogMessages()
+                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")), Is.Not.Null);
+                Assert.That(_loggerProvider.GetAllLogMessages()
+                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")), Is.Not.Null);
             }
             finally
             {
@@ -366,10 +366,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         [Test]
@@ -389,10 +389,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         [Test]
@@ -413,10 +413,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessSessionMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         [Test]
@@ -437,10 +437,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessSessionMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         private Task ExceptionReceivedHandler(ProcessErrorEventArgs eventArgs)

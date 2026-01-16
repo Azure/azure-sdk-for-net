@@ -163,7 +163,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -181,7 +181,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
@@ -250,7 +250,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
         private static void VerifyExpectedMetadata(Stream metadata)
         {
-            Assert.IsNotNull(metadata);
+            Assert.That(metadata, Is.Not.Null);
             JsonElement expected = JsonDocument.Parse(DummyRecordingMetadata).RootElement;
             JsonElement actual = JsonDocument.Parse(metadata).RootElement;
             Assert.That(actual.GetProperty("chunkDocumentId").GetString(), Is.EqualTo(expected.GetProperty("chunkDocumentId").GetString()));
@@ -258,7 +258,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
         private static void VerifyExpectedRecording(Response<Stream> recording, int recordingLength)
         {
-            Assert.IsNotNull(recording.Value);
+            Assert.That(recording.Value, Is.Not.Null);
             Assert.That(recording.Value.GetType().Name.Contains(typeof(RetriableStream).Name), Is.True);
             Assert.That(recording.Value.Length, Is.EqualTo(recordingLength));
         }

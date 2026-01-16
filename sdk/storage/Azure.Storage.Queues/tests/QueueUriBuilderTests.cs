@@ -37,7 +37,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.Empty);
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.EqualTo("comp=list"));
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -62,7 +62,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -87,7 +87,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.Messages, Is.True);
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -112,7 +112,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.Messages, Is.True);
             Assert.That(queueUriBuilder.MessageId, Is.EqualTo("messageId"));
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -137,7 +137,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -169,8 +169,8 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
             Assert.That(queueUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
             Assert.That(queueUriBuilder.Sas.Resource, Is.EqualTo("b"));
-            Assert.IsNull(queueUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(queueUriBuilder.Sas.Services);
+            Assert.That(queueUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(queueUriBuilder.Sas.Services, Is.Null);
             Assert.That(queueUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
             Assert.That(queueUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
             Assert.That(queueUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
@@ -199,7 +199,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.Empty);
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.EqualTo("comp=list"));
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -224,7 +224,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -249,7 +249,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.Messages, Is.True);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -274,7 +274,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.Messages, Is.True);
             Assert.That(queueUriBuilder.MessageId, Is.EqualTo("messageId"));
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -299,7 +299,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.Empty);
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -324,7 +324,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -349,7 +349,7 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.QueueName, Is.Empty);
             Assert.That(queueUriBuilder.Messages, Is.False);
             Assert.That(queueUriBuilder.MessageId, Is.Empty);
-            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
             Assert.That(queueUriBuilder.Query, Is.Empty);
 
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -381,8 +381,8 @@ namespace Azure.Storage.Queues.Test
             Assert.That(queueUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
             Assert.That(queueUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
             Assert.That(queueUriBuilder.Sas.Resource, Is.EqualTo("b"));
-            Assert.IsNull(queueUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(queueUriBuilder.Sas.Services);
+            Assert.That(queueUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(queueUriBuilder.Sas.Services, Is.Null);
             Assert.That(queueUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
             Assert.That(queueUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
             Assert.That(queueUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
@@ -412,7 +412,7 @@ namespace Azure.Storage.Queues.Test
         {
             var queueUriBuilder = new QueueUriBuilder(new Uri("http://notaurl"));
 
-            Assert.IsEmpty(queueUriBuilder.AccountName);
+            Assert.That(queueUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]

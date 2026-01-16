@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
+        <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" />

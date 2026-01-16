@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeEntitiesResult documentResult = result.FirstOrDefault();
             Assert.That(documentResult.HasError, Is.False);
-            Assert.GreaterOrEqual(documentResult.Entities.Count, 3);
+            Assert.That(documentResult.Entities.Count, Is.GreaterThanOrEqualTo(3));
 
             foreach (CategorizedEntity entity in documentResult.Entities)
             {
@@ -169,7 +169,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.That(options.IncludeStatistics, Is.True);
-            Assert.IsNull(options.ModelVersion);
+            Assert.That(options.ModelVersion, Is.Null);
         }
 
         [RecordedTest]
@@ -204,7 +204,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.That(options.IncludeStatistics, Is.True);
-            Assert.IsNull(options.ModelVersion);
+            Assert.That(options.ModelVersion, Is.Null);
         }
 
         [RecordedTest]
@@ -263,10 +263,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults = resultCollection.RecognizeEntitiesResults;
 
-            Assert.IsNotNull(RecognizeEntitiesActionsResults);
+            Assert.That(RecognizeEntitiesActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "RecognizeEntities", "RecognizeEntitiesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, RecognizeEntitiesActionsResults.Select(result => result.ActionName));
+            Assert.That(RecognizeEntitiesActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -293,20 +293,20 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
-            Assert.IsNotNull(entities.Warnings);
-            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            Assert.That(entities.Warnings, Is.Not.Null);
+            Assert.That(entities.Count, Is.GreaterThanOrEqualTo(minimumExpectedOutput.Count));
             foreach (CategorizedEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
                 Assert.That(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase), Is.True);
-                Assert.IsNotNull(entity.Category);
-                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
-                Assert.GreaterOrEqual(entity.Offset, 0);
-                Assert.Greater(entity.Length, 0);
+                Assert.That(entity.Category, Is.Not.Null);
+                Assert.That(entity.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+                Assert.That(entity.Offset, Is.GreaterThanOrEqualTo(0));
+                Assert.That(entity.Length, Is.GreaterThan(0));
 
                 if (entity.SubCategory != null)
                 {
-                    Assert.IsNotEmpty(entity.SubCategory);
+                    Assert.That(entity.SubCategory, Is.Not.Empty);
                 }
             }
         }
@@ -320,14 +320,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
             foreach (RecognizeEntitiesResult result in results)
             {
@@ -335,12 +335,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.That(result.HasError, Is.False);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                Assert.That(result.Statistics, Is.Not.Null);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
                 }
                 else
                 {

@@ -40,7 +40,7 @@ namespace Azure.Generator.Tests
             var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
 
             var statement = AzureClientGenerator.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
-            Assert.IsNotNull(statement);
+            Assert.That(statement, Is.Not.Null);
 
             return statement.ToDisplayString();
         }
@@ -61,7 +61,7 @@ namespace Azure.Generator.Tests
                 data,
                 new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
                 SerializationFormat.Default);
-            Assert.IsNotNull(expression);
+            Assert.That(expression, Is.Not.Null);
 
             return expression.ToDisplayString();
         }
@@ -73,9 +73,9 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(Guid), actual?.FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual?.IsFrameworkType, Is.True);
+            Assert.That(actual?.FrameworkType, Is.EqualTo(typeof(Guid)));
         }
 
         [Test]
@@ -85,9 +85,9 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(IPAddress), actual?.FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual?.IsFrameworkType, Is.True);
+            Assert.That(actual?.FrameworkType, Is.EqualTo(typeof(IPAddress)));
         }
 
         [Test]
@@ -97,9 +97,9 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(IPAddress), actual?.FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual?.IsFrameworkType, Is.True);
+            Assert.That(actual?.FrameworkType, Is.EqualTo(typeof(IPAddress)));
         }
 
         [Test]
@@ -109,9 +109,9 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(ETag), actual?.FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual?.IsFrameworkType, Is.True);
+            Assert.That(actual?.FrameworkType, Is.EqualTo(typeof(ETag)));
         }
 
         [Test]
@@ -121,9 +121,9 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(AzureLocation), actual?.FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual?.IsFrameworkType, Is.True);
+            Assert.That(actual?.FrameworkType, Is.EqualTo(typeof(AzureLocation)));
         }
 
         [Test]
@@ -133,9 +133,9 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(ResourceIdentifier), actual?.FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual?.IsFrameworkType, Is.True);
+            Assert.That(actual?.FrameworkType, Is.EqualTo(typeof(ResourceIdentifier)));
         }
 
         [Test]
@@ -145,9 +145,9 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(ResponseError), actual?.FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual?.IsFrameworkType, Is.True);
+            Assert.That(actual?.FrameworkType, Is.EqualTo(typeof(ResponseError)));
         }
 
         [TestCase(typeof(Guid))]
@@ -160,7 +160,7 @@ namespace Azure.Generator.Tests
             var factory = new TestTypeFactory();
 
             var actual = factory.InvokeCreateFrameworkType(expectedType.FullName!);
-            Assert.AreEqual(expectedType, actual);
+            Assert.That(actual, Is.EqualTo(expectedType));
         }
 
         [Test]
@@ -174,10 +174,10 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual!.IsGenericType);
-            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
-            Assert.AreEqual(typeof(string), actual.Arguments[0].FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual!.IsGenericType, Is.True);
+            Assert.That(actual.FrameworkType.GetGenericTypeDefinition(), Is.EqualTo(typeof(DataFactoryElement<>)));
+            Assert.That(actual.Arguments[0].FrameworkType, Is.EqualTo(typeof(string)));
         }
 
         [Test]
@@ -191,10 +191,10 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual!.IsGenericType);
-            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
-            Assert.AreEqual(typeof(int), actual.Arguments[0].FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual!.IsGenericType, Is.True);
+            Assert.That(actual.FrameworkType.GetGenericTypeDefinition(), Is.EqualTo(typeof(DataFactoryElement<>)));
+            Assert.That(actual.Arguments[0].FrameworkType, Is.EqualTo(typeof(int)));
         }
 
         [Test]
@@ -208,10 +208,10 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual!.IsGenericType);
-            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
-            Assert.AreEqual(typeof(bool), actual.Arguments[0].FrameworkType);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual!.IsGenericType, Is.True);
+            Assert.That(actual.FrameworkType.GetGenericTypeDefinition(), Is.EqualTo(typeof(DataFactoryElement<>)));
+            Assert.That(actual.Arguments[0].FrameworkType, Is.EqualTo(typeof(bool)));
         }
 
         [Test]
@@ -225,11 +225,11 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual!.IsGenericType);
-            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual!.IsGenericType, Is.True);
+            Assert.That(actual.FrameworkType.GetGenericTypeDefinition(), Is.EqualTo(typeof(DataFactoryElement<>)));
             // The inner type should be IList<string>
-            Assert.IsTrue(actual.Arguments[0].IsGenericType);
+            Assert.That(actual.Arguments[0].IsGenericType, Is.True);
         }
 
         [Test]
@@ -243,7 +243,7 @@ namespace Azure.Generator.Tests
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
             // Should fall back to default behavior, not create a DataFactoryElement
-            Assert.IsTrue(actual!.Equals(typeof(File)));
+            Assert.That(actual!.Equals(typeof(File)), Is.True);
         }
 
         [Test]
@@ -257,11 +257,11 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual!.IsGenericType);
-            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual!.IsGenericType, Is.True);
+            Assert.That(actual.FrameworkType.GetGenericTypeDefinition(), Is.EqualTo(typeof(DataFactoryElement<>)));
             // The inner type should be the model type
-            Assert.AreEqual("TestModel", actual.Arguments[0].Name);
+            Assert.That(actual.Arguments[0].Name, Is.EqualTo("TestModel"));
         }
 
         [Test]
@@ -275,12 +275,12 @@ namespace Azure.Generator.Tests
             var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
 
             var statement = AzureClientGenerator.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
-            Assert.IsNotNull(statement);
+            Assert.That(statement, Is.Not.Null);
 
             var displayString = statement.ToDisplayString();
             // Should use WriteObjectValue pattern which internally uses IJsonModel
-            Assert.IsTrue(
-                displayString.Contains("WriteObjectValue") && displayString.Contains("DataFactoryElement"),
+            Assert.That(
+                displayString.Contains("WriteObjectValue") && displayString.Contains("DataFactoryElement"), Is.True,
                 $"Expected serialization to use WriteObjectValue pattern for DataFactoryElement, but got: {displayString}");
         }
 
@@ -297,12 +297,12 @@ namespace Azure.Generator.Tests
                 data,
                 new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
                 SerializationFormat.Default);
-            Assert.IsNotNull(expression);
+            Assert.That(expression, Is.Not.Null);
 
             var displayString = expression.ToDisplayString();
-            Assert.AreEqual(
-                "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)",
-                displayString);
+            Assert.That(
+                displayString, Is.EqualTo(
+                "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)"));
         }
     }
 }

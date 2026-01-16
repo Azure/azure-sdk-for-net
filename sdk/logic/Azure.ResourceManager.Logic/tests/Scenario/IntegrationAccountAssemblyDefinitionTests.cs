@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             var assemblyDefinition = await CreateAssemblyDefinition(assemblyDefinitionName);
-            Assert.IsNotNull(assemblyDefinition);
+            Assert.That(assemblyDefinition, Is.Not.Null);
             Assert.That(assemblyDefinition.Data.Name, Is.EqualTo(assemblyDefinitionName));
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             await CreateAssemblyDefinition(assemblyDefinitionName);
             var assemblyDefinition = await _assemblyDefinitionCollection.GetAsync(assemblyDefinitionName);
-            Assert.IsNotNull(assemblyDefinition);
+            Assert.That(assemblyDefinition, Is.Not.Null);
             Assert.That(assemblyDefinition.Value.Data.Name, Is.EqualTo(assemblyDefinitionName));
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             await CreateAssemblyDefinition(assemblyDefinitionName);
             var list = await _assemblyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 
             var result = await scaler.GetScaleResultAsync(new TargetScalerContext());
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.TargetWorkerCount, Is.EqualTo(expectedTargetWorkerCount));
 
             result = await scaler.GetScaleResultAsync(new TargetScalerContext());
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             var cacheReads = loggerProvider.GetAllLogMessages().Where(x => x.FormattedMessage.Contains("Recent writes were detected from cache for ")).Count();
             Assert.That(cacheReads, Is.EqualTo(excpectedChachReads));
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.TargetWorkerCount, Is.EqualTo(expectedTargetWorkerCount));
         }
 

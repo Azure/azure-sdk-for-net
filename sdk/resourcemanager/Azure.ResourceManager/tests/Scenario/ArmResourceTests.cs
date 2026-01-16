@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             Func<ArmClient, TestObject> factory = (armClient) => { return new TestObject(armClient); };
             TestObject obj1 = subscription.GetCachedClient(factory);
-            Assert.IsNotNull(obj1);
-            Assert.IsNotNull(obj1.Client);
+            Assert.That(obj1, Is.Not.Null);
+            Assert.That(obj1.Client, Is.Not.Null);
             TestObject obj2 = subscription.GetCachedClient(factory);
-            Assert.IsNotNull(obj2);
-            Assert.IsNotNull(obj2.Client);
+            Assert.That(obj2, Is.Not.Null);
+            Assert.That(obj2.Client, Is.Not.Null);
             Assert.That(ReferenceEquals(obj1, obj2), Is.True);
             Assert.That(ReferenceEquals(obj1.Client, obj2.Client), Is.True);
         }

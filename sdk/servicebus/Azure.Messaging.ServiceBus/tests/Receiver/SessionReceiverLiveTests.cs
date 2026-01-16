@@ -331,7 +331,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -356,8 +356,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.Not.Zero);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
             }
         }
 
@@ -388,8 +388,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.That(numMessagesDeleted, Is.Not.Zero);
+                Assert.That(numMessagesDeleted, Is.LessThanOrEqualTo(messageCount));
             }
         }
 
@@ -430,7 +430,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -528,7 +528,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
@@ -553,7 +553,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var deadLetterMessage = await deadLetterReceiver.PeekMessageAsync();
-                Assert.IsNull(deadLetterMessage);
+                Assert.That(deadLetterMessage, Is.Null);
             }
         }
 
@@ -601,7 +601,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
@@ -618,17 +618,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         messageEnum.MoveNext();
                         Assert.That(msg.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
                         Assert.That(msg.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
-                        Assert.IsNull(msg.DeadLetterErrorDescription);
-                        Assert.IsNull(msg.DeadLetterReason);
-                        Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterReasonHeader]);
-                        Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterErrorDescriptionHeader]);
+                        Assert.That(msg.DeadLetterErrorDescription, Is.Null);
+                        Assert.That(msg.DeadLetterReason, Is.Null);
+                        Assert.That(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterReasonHeader], Is.Not.Null);
+                        Assert.That(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterErrorDescriptionHeader], Is.Not.Null);
                         await deadLetterReceiver.CompleteMessageAsync(msg);
                     }
                 }
                 Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var deadLetterMessage = await deadLetterReceiver.PeekMessageAsync();
-                Assert.IsNull(deadLetterMessage);
+                Assert.That(deadLetterMessage, Is.Null);
             }
         }
 
@@ -713,7 +713,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await receiver.RenewSessionLockAsync();
 
-                Assert.Greater(receiver.SessionLockedUntil, firstLockedUntilUtcTime);
+                Assert.That(receiver.SessionLockedUntil, Is.GreaterThan(firstLockedUntilUtcTime));
 
                 // Complete Messages
                 await receiver.CompleteMessageAsync(receivedMessage);
@@ -725,7 +725,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 }
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
             }
         }
 
@@ -870,7 +870,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await receiver.CompleteMessageAsync(receivedMessage);
 
                 var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.That(peekedMessage.Result, Is.Null);
 
                 sessionStateString = "Completed Message On Session!";
                 sessionState = new BinaryData(sessionStateString);
@@ -882,7 +882,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Can clear the session state by setting to null
                 await receiver.SetSessionStateAsync(null);
-                Assert.IsNull(await receiver.GetSessionStateAsync());
+                Assert.That(await receiver.GetSessionStateAsync(), Is.Null);
             }
         }
 
@@ -1042,7 +1042,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                 }
 
-                Assert.Less(received, messageCount);
+                Assert.That(received, Is.LessThan(messageCount));
 
                 var remaining = messageCount - received;
                 for (int i = 0; i < remaining; i++)
@@ -1077,8 +1077,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var msg = await receiver.ReceiveMessageAsync();
                 Assert.That(msg.DeliveryCount, Is.EqualTo(1));
                 var end = DateTime.UtcNow;
-                Assert.NotNull(msg);
-                Assert.Less(end - start, TimeSpan.FromSeconds(10));
+                Assert.That(msg, Is.Not.Null);
+                Assert.That(end - start, Is.LessThan(TimeSpan.FromSeconds(10)));
             }
         }
 
@@ -1123,7 +1123,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // the receive link should not have been closed due to the other accept call timing out
                 var message = await receiver.ReceiveMessageAsync();
-                Assert.IsNotNull(message);
+                Assert.That(message, Is.Not.Null);
             }
         }
 

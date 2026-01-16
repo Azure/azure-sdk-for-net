@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxDeploymentApiKeyResourceIdentifier = NginxDeploymentApiKeyResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxDeploymentApiKeyName);
 
             Assert.That(nginxDeploymentApiKey.HasData, Is.True);
-            Assert.NotNull(nginxDeploymentApiKey.Data);
+            Assert.That(nginxDeploymentApiKey.Data, Is.Not.Null);
             Assert.That(nginxDeploymentApiKey.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase), Is.True);
             Assert.That(nginxDeploymentApiKey.Data.Id.Equals(nginxDeploymentApiKeyResourceIdentifier), Is.True);
             Assert.That(nginxDeploymentApiKey.Data.Id.ResourceType.Equals(NginxDeploymentApiKeyResource.ResourceType), Is.True);
             Assert.That(nginxDeploymentApiKey.Data.SystemData, Is.Null);
-            Assert.NotNull(nginxDeploymentApiKey.Data.Properties.Hint);
-            Assert.NotNull(nginxDeploymentApiKey.Data.Properties.EndOn);
+            Assert.That(nginxDeploymentApiKey.Data.Properties.Hint, Is.Not.Null);
+            Assert.That(nginxDeploymentApiKey.Data.Properties.EndOn, Is.Not.Null);
         }
 
         [TestCase]
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource nginxDeploymentApiKey = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
             NginxDeploymentApiKeyResource response = await nginxDeploymentApiKey.GetAsync();
 
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase), Is.True);
             ResourceDataHelper.AssertResourceData(nginxDeploymentApiKey.Data, response.Data);
         }

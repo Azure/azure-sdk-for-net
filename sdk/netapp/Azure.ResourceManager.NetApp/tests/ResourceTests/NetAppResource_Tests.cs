@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             NetAppQuotaAvailabilityContent quotaAvailabilityContent = new("account1", NetAppQuotaAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, _resourceGroup.Id.Name);
             Response<NetAppCheckAvailabilityResult> checkQuotaResult = await DefaultSubscription.CheckNetAppQuotaAvailabilityAsync(DefaultLocation, quotaAvailabilityContent);
-            Assert.IsNotNull(checkQuotaResult);
+            Assert.That(checkQuotaResult, Is.Not.Null);
             Assert.That(checkQuotaResult.Value.IsAvailable, Is.True);
         }
 
@@ -38,25 +38,25 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task GetQuotaLimit()
         {
             Response<NetAppSubscriptionQuotaItem> quotaLimitsResponse = await DefaultSubscription.GetNetAppQuotaLimitAsync(DefaultLocation, "totalVolumesPerSubscription");
-            Assert.IsNotNull(quotaLimitsResponse);
+            Assert.That(quotaLimitsResponse, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task ListQuotaLimits()
         {
             AsyncPageable<NetAppSubscriptionQuotaItem> quotaLimitsResponse = DefaultSubscription.GetNetAppQuotaLimitsAsync(DefaultLocation);
-            Assert.IsNotNull(quotaLimitsResponse);
+            Assert.That(quotaLimitsResponse, Is.Not.Null);
             List<NetAppSubscriptionQuotaItem> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
-            Assert.IsNotEmpty(qutoaItemlist);
+            Assert.That(qutoaItemlist, Is.Not.Empty);
         }
 
         [RecordedTest]
         public async Task QueryRegionInfoTest()
         {
             Response<NetAppRegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoNetAppResourceAsync(DefaultLocation);
-            Assert.IsNotNull(regionInfo);
-            Assert.IsNotNull(regionInfo.Value.StorageToNetworkProximity);
-            Assert.IsNotNull(regionInfo.Value.AvailabilityZoneMappings);
+            Assert.That(regionInfo, Is.Not.Null);
+            Assert.That(regionInfo.Value.StorageToNetworkProximity, Is.Not.Null);
+            Assert.That(regionInfo.Value.AvailabilityZoneMappings, Is.Not.Null);
         }
     }
 }

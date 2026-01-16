@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             //get an errorSummary
             Response<SpringBootSiteErrorSummaryResource> getErrorSummaryReponse = await errorSummaryCollection.GetAsync("default", CancellationToken.None);
-            Assert.IsNotNull(getErrorSummaryReponse.Value);
+            Assert.That(getErrorSummaryReponse.Value, Is.Not.Null);
         }
     }
 }

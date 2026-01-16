@@ -188,7 +188,7 @@ namespace Azure.Core.TestFramework.Tests
                 }
                 catch (InvalidOperationException e)
                 {
-                    StringAssert.Contains("kaboom", e.Message);
+                    Assert.That(e.Message, Does.Contain("kaboom"));
                 }
 
                 try
@@ -198,7 +198,7 @@ namespace Azure.Core.TestFramework.Tests
                 }
                 catch (InvalidOperationException e)
                 {
-                    StringAssert.Contains("kaboom", e.Message);
+                    Assert.That(e.Message, Does.Contain("kaboom"));
                 }
 
                 Assert.That(WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount, Is.EqualTo(1));

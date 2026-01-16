@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.That(count, Is.GreaterThanOrEqualTo(3));
             //4.Exists
             Assert.That((bool)await containerAppManagedEnvironmentCollection.ExistsAsync(envName), Is.True);
             Assert.That((bool)await containerAppManagedEnvironmentCollection.ExistsAsync(envName + "1"), Is.False);

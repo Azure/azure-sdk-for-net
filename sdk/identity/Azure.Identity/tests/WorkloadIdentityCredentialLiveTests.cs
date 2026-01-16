@@ -59,7 +59,7 @@ namespace Azure.Identity.Tests
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
 
             // ensure subsequent calls before the token expires are served from the token cache
             AccessToken cachedToken = await credential.GetTokenAsync(tokenRequestContext);

@@ -219,8 +219,8 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""{ "foo" : null }""");
 
-            Assert.IsNull((CustomType)jsonData.Foo);
-            Assert.IsNull((int?)jsonData.Foo);
+            Assert.That((CustomType)jsonData.Foo, Is.Null);
+            Assert.That((int?)jsonData.Foo, Is.Null);
             Assert.IsNull(jsonData.Foo);
             Assert.IsNull(jsonData.foo);
         }
@@ -230,8 +230,8 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""[ null ]""");
 
-            Assert.IsNull((CustomType)jsonData[0]);
-            Assert.IsNull((int?)jsonData[0]);
+            Assert.That((CustomType)jsonData[0], Is.Null);
+            Assert.That((int?)jsonData[0], Is.Null);
             Assert.IsNull(jsonData[0]);
         }
 
@@ -242,8 +242,8 @@ namespace Azure.Core.Tests
 
             jsonData.Foo = null;
 
-            Assert.IsNull((CustomType)jsonData.Foo);
-            Assert.IsNull((int?)jsonData.Foo);
+            Assert.That((CustomType)jsonData.Foo, Is.Null);
+            Assert.That((int?)jsonData.Foo, Is.Null);
             Assert.IsNull(jsonData.Foo);
             Assert.IsNull(jsonData.foo);
         }
@@ -255,8 +255,8 @@ namespace Azure.Core.Tests
 
             jsonData[0] = null;
 
-            Assert.IsNull((CustomType)jsonData[0]);
-            Assert.IsNull((int?)jsonData[0]);
+            Assert.That((CustomType)jsonData[0], Is.Null);
+            Assert.That((int?)jsonData[0], Is.Null);
             Assert.IsNull(jsonData[0]);
         }
 

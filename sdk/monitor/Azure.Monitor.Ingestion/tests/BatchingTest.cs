@@ -47,8 +47,8 @@ namespace Azure.Monitor.Ingestion.Tests
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
             Assert.That(x.Length, Is.EqualTo(2));
-            Assert.Greater(x[0].Logs.Count, 10000);
-            Assert.Less(x[1].Logs.Count, 10000);
+            Assert.That(x[0].Logs.Count, Is.GreaterThan(10000));
+            Assert.That(x[1].Logs.Count, Is.LessThan(10000));
         }
 
         [Test]
@@ -108,11 +108,11 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.That(x.Length, Is.EqualTo(testCase.ExpectedBatchIds.Length));
             foreach (var (expectedBatch, batch) in testCase.ExpectedBatchIds.Zip(x, ValueTuple.Create))
             {
-                CollectionAssert.AreEqual(
-                    expectedBatch,
+                Assert.That(
                     batch.Logs
                         .Select(log => ((BinaryData)log).ToObjectFromJson<Dictionary<string, string>>())
-                        .Select(dict => dict.Single().Key));
+                        .Select(dict => dict.Single().Key),
+                    Is.EqualTo(expectedBatch).AsCollection);
             }
 
             Assert.That(x.Max(b => b.LogsData.ToMemory().Length), Is.EqualTo(testCase.ExpectedMaxSerializedItemSize));

@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
             var loggedEvents = _listener.EventsById(AzureIdentityEventSource.UnableToParseAccountDetailsFromTokenEvent);
             TokenHelper.ParseAccountInfoFromToken("header.token.signature");
 
-            CollectionAssert.IsNotEmpty(loggedEvents);
+            Assert.That(loggedEvents, Is.Not.Empty);
         }
 
         [Test]

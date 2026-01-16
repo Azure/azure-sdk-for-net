@@ -53,29 +53,29 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var notifications = await collection.GetAllAsync().ToEnumerableAsync();
 
-            Assert.NotNull(notifications);
+            Assert.That(notifications, Is.Not.Null);
             Assert.That(notifications.Count, Is.EqualTo(7));
 
             var firstNotification = notifications.FirstOrDefault();
-            Assert.NotNull(firstNotification);
-            Assert.NotNull(firstNotification.Data.Title);
-            Assert.NotNull(firstNotification.Data.Recipients);
-            Assert.IsEmpty(firstNotification.Data.Recipients.Emails);
-            Assert.IsEmpty(firstNotification.Data.Recipients.Users);
-            Assert.NotNull(firstNotification.Data.Description);
+            Assert.That(firstNotification, Is.Not.Null);
+            Assert.That(firstNotification.Data.Title, Is.Not.Null);
+            Assert.That(firstNotification.Data.Recipients, Is.Not.Null);
+            Assert.That(firstNotification.Data.Recipients.Emails, Is.Empty);
+            Assert.That(firstNotification.Data.Recipients.Users, Is.Empty);
+            Assert.That(firstNotification.Data.Description, Is.Not.Null);
 
             // add a recipient to the notification
             string userEmail = "contoso@microsoft.com";
             var recipientEmailContract = (await firstNotification.CreateOrUpdateNotificationRecipientEmailAsync(userEmail)).Value;
 
-            Assert.NotNull(recipientEmailContract);
+            Assert.That(recipientEmailContract, Is.Not.Null);
             Assert.That(recipientEmailContract.Email, Is.EqualTo(userEmail));
 
             // get the notification details
             var notificationContract = (await collection.GetAsync(firstNotification.Data.Name)).Value;
-            Assert.NotNull(notificationContract);
-            Assert.NotNull(notificationContract.Data.Recipients);
-            Assert.IsEmpty(notificationContract.Data.Recipients.Users);
+            Assert.That(notificationContract, Is.Not.Null);
+            Assert.That(notificationContract.Data.Recipients, Is.Not.Null);
+            Assert.That(notificationContract.Data.Recipients.Users, Is.Empty);
             Assert.That(notificationContract.Data.Recipients.Emails.Count, Is.EqualTo(1));
 
             // delete the recipient email
@@ -88,19 +88,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var userCollection = ApiServiceResource.GetApiManagementUsers();
             var listUsersResponse = await userCollection.GetAllAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listUsersResponse);
+            Assert.That(listUsersResponse, Is.Not.Null);
             Assert.That(listUsersResponse.Count, Is.EqualTo(1));
 
             // add a recipient to the notification
             var recipientUserContract = (await firstNotification.CreateOrUpdateNotificationRecipientUserAsync(listUsersResponse.FirstOrDefault().Data.Name)).Value;
 
-            Assert.NotNull(recipientUserContract);
+            Assert.That(recipientUserContract, Is.Not.Null);
             Assert.That(recipientUserContract.UserId, Is.EqualTo(listUsersResponse.First().Id));
 
             // get the notification details
             notificationContract = (await collection.GetAsync(firstNotification.Data.Name)).Value;
-            Assert.NotNull(notificationContract);
-            Assert.NotNull(notificationContract.Data.Recipients);
+            Assert.That(notificationContract, Is.Not.Null);
+            Assert.That(notificationContract.Data.Recipients, Is.Not.Null);
             Assert.That(notificationContract.Data.Recipients.Users.Count, Is.EqualTo(1));
 
             // delete the recipient user

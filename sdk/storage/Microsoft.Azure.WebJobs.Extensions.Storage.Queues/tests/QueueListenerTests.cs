@@ -483,7 +483,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Make sure the message was processed and deleted.
             await Task.Delay(TimeSpan.FromSeconds(10));
             messageFromCloud = await queue.ReceiveMessageAsync();
-            Assert.IsNull(messageFromCloud);
+            Assert.That(messageFromCloud, Is.Null);
         }
 
         [Test]
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueClient queue = new QueueClient(new Uri(string.Format("https://test.queue.core.windows.net/{0}", HostQueueNames.GetHostQueueName("12345"))));
             QueueProcessor queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
             Assert.That(processorFactoryInvoked, Is.False);
-            Assert.AreNotSame(expectedQueueProcessor, queueProcessor);
+            Assert.That(queueProcessor, Is.Not.SameAs(expectedQueueProcessor));
             queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.That(poisonMessageHandlerInvoked, Is.True);
 
@@ -518,7 +518,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                     Assert.That(mockProcessorContext.Queue, Is.SameAs(queue));
                     Assert.That(mockProcessorContext.PoisonQueue, Is.SameAs(poisonQueue));
                     Assert.That(mockProcessorContext.Options.MaxDequeueCount, Is.EqualTo(queueConfig.MaxDequeueCount));
-                    Assert.NotNull(mockProcessorContext.Logger);
+                    Assert.That(mockProcessorContext.Logger, Is.Not.Null);
 
                     processorFactoryContext = mockProcessorContext;
                 })
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>())).Throws(exception);
 
             var result = await _listener.ExecuteAsync(cancellationToken);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             await result.Wait;
         }
 
@@ -806,7 +806,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 drainModeManager: null);
 
             var result = localListener.GetTargetScaler();
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         public class TestFixture : IDisposable

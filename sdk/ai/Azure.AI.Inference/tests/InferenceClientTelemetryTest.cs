@@ -280,7 +280,7 @@ namespace Azure.AI.Inference.Tests
                             // Assert.AreEqual(CompletionsFinishReason.ToolCalls, choice.FinishReason,
                             //   $"Unexpected finish reason - '{choice.FinishReason}', content - '{choice.Message.Content }'");
 
-                            Assert.NotNull(choice.Message.ToolCalls);
+                            Assert.That(choice.Message.ToolCalls, Is.Not.Null);
                             Assert.That(choice.Message.ToolCalls.Count, Is.EqualTo(2));
                         }
 

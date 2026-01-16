@@ -67,11 +67,11 @@ namespace Azure.Identity.Tests
             var loggedEvents = _listener.EventsById(AzureIdentityEventSource.AuthenticatedAccountDetailsEvent);
             if (isOptionSet)
             {
-                CollectionAssert.IsNotEmpty(loggedEvents);
+                Assert.That(loggedEvents, Is.Not.Empty);
             }
             else
             {
-                CollectionAssert.IsEmpty(loggedEvents);
+                Assert.That(loggedEvents, Is.Empty);
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.Identity.Tests
                         if (containsClaims)
                         {
                             var claims = System.Text.Json.JsonSerializer.Deserialize<Claims>(claimsJson);
-                            CollectionAssert.Contains(claims.access_token.xms_cc.values, "CP1");
+                            Assert.That(claims.access_token.xms_cc.values, Has.Member("CP1"));
                         }
                     }
                 }
@@ -419,7 +419,7 @@ namespace Azure.Identity.Tests
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
             Assert.That(actualToken.Token, Is.EqualTo(token));
-            Assert.IsNotNull(actualToken.RefreshOn);
+            Assert.That(actualToken.RefreshOn, Is.Not.Null);
         }
 
         [Test]

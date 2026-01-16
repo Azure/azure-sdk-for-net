@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         public void AaaaRecordData_Empty_Test()
         {
             DnsAaaaRecordData aaaa = ArmDnsModelFactory.DnsAaaaRecordData(null, null, default, null, null, null, null, null, null, null);
-            Assert.IsNull(aaaa.Id);
-            Assert.IsNull(aaaa.Name);
-            Assert.IsNull(aaaa.SystemData);
-            Assert.IsEmpty(aaaa.Metadata);
-            Assert.IsNull(aaaa.TtlInSeconds);
-            Assert.IsNull(aaaa.Fqdn);
-            Assert.IsNull(aaaa.ProvisioningState);
-            Assert.IsNull(aaaa.TargetResource);
-            Assert.IsEmpty(aaaa.DnsAaaaRecords);
+            Assert.That(aaaa.Id, Is.Null);
+            Assert.That(aaaa.Name, Is.Null);
+            Assert.That(aaaa.SystemData, Is.Null);
+            Assert.That(aaaa.Metadata, Is.Empty);
+            Assert.That(aaaa.TtlInSeconds, Is.Null);
+            Assert.That(aaaa.Fqdn, Is.Null);
+            Assert.That(aaaa.ProvisioningState, Is.Null);
+            Assert.That(aaaa.TargetResource, Is.Null);
+            Assert.That(aaaa.DnsAaaaRecords, Is.Empty);
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.That(recordData.Fqdn, Is.EqualTo(fqdn));
             Assert.That(recordData.ETag, Is.EqualTo(etag));
             Assert.That(recordData.TtlInSeconds, Is.EqualTo(ttl));
-            Assert.IsNull(recordData.TargetResource);
+            Assert.That(recordData.TargetResource, Is.Null);
         }
     }
 }

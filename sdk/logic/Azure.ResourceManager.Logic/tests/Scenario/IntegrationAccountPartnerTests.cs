@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string partnerName = Recording.GenerateAssetName("partner");
             var partner = await CreatePartner(partnerName);
-            Assert.IsNotNull(partner);
+            Assert.That(partner, Is.Not.Null);
             Assert.That(partner.Data.Name, Is.EqualTo(partnerName));
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string partnerName = Recording.GenerateAssetName("partner");
             await CreatePartner(partnerName);
             var partner = await _partnerCollection.GetAsync(partnerName);
-            Assert.IsNotNull(partner);
+            Assert.That(partner, Is.Not.Null);
             Assert.That(partner.Value.Data.Name, Is.EqualTo(partnerName));
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string partnerName = Recording.GenerateAssetName("partner");
             await CreatePartner(partnerName);
             var list = await _partnerCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Tests
             var serviceName = "my-svc-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
-            Assert.NotNull(service);
+            Assert.That(service, Is.Not.Null);
             Assert.That(service.Endpoint, Is.EqualTo(endpoint));
             Assert.That(service.ServiceName, Is.EqualTo(serviceName));
 
@@ -43,8 +43,8 @@ namespace Azure.Search.Documents.Tests
             // Make sure we're not repeating Header/Query names already defined
             // in the base ClientOptions
             SearchClientOptions options = new SearchClientOptions(ServiceVersion);
-            Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
-            Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
+            Assert.That(GetDuplicates(options.Diagnostics.LoggedHeaderNames), Is.Empty);
+            Assert.That(GetDuplicates(options.Diagnostics.LoggedQueryParameters), Is.Empty);
 
             // CollectionAssert.Unique doesn't give you the duplicate values
             // which is less helpful than it could be
@@ -197,28 +197,28 @@ namespace Azure.Search.Documents.Tests
             try
             {
                 Assert.That(createdConnection, Is.EqualTo(connection).Using(SearchIndexerDataSourceConnectionComparer.Shared));
-                Assert.IsNull(createdConnection.ConnectionString); // Should not be returned since it contains sensitive information.
+                Assert.That(createdConnection.ConnectionString, Is.Null); // Should not be returned since it contains sensitive information.
 
                 // Update the connection.
                 createdConnection.Description = "Updated description";
                 SearchIndexerDataSourceConnection updatedConnection = await client.CreateOrUpdateDataSourceConnectionAsync(createdConnection, onlyIfUnchanged: true);
 
                 Assert.That(updatedConnection, Is.EqualTo(createdConnection).Using(SearchIndexerDataSourceConnectionComparer.Shared));
-                Assert.IsNull(updatedConnection.ConnectionString); // Should not be returned since it contains sensitive information.
+                Assert.That(updatedConnection.ConnectionString, Is.Null); // Should not be returned since it contains sensitive information.
                 Assert.That(updatedConnection.ETag, Is.Not.EqualTo(createdConnection.ETag));
 
                 // Get the connection.
                 connection = await client.GetDataSourceConnectionAsync(connectionName);
 
                 Assert.That(connection, Is.EqualTo(updatedConnection).Using(SearchIndexerDataSourceConnectionComparer.Shared));
-                Assert.IsNull(connection.ConnectionString); // Should not be returned since it contains sensitive information.
+                Assert.That(connection.ConnectionString, Is.Null); // Should not be returned since it contains sensitive information.
                 Assert.That(connection.ETag, Is.EqualTo(updatedConnection.ETag));
 
                 // Delete the connection.
                 await client.DeleteDataSourceConnectionAsync(connection, onlyIfUnchanged: true);
 
                 Response<IReadOnlyList<string>> names = await client.GetDataSourceConnectionNamesAsync();
-                CollectionAssert.DoesNotContain(names.Value, connectionName);
+                Assert.That(names.Value, Has.No.Member(connectionName));
             }
             catch
             {
@@ -615,7 +615,7 @@ namespace Azure.Search.Documents.Tests
                 await client.DeleteSkillsetAsync(skillset, onlyIfUnchanged: true);
 
                 Response<IReadOnlyList<string>> names = await client.GetSkillsetNamesAsync();
-                CollectionAssert.DoesNotContain(names.Value, skillsetName);
+                Assert.That(names.Value, Has.No.Member(skillsetName));
             }
             catch
             {

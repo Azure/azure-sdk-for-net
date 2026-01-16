@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByCluster);
+            Assert.That(listByCluster, Is.Not.Empty);
 
             // Update
             NetworkCloudBareMetalMachineKeySetPatch patch = new NetworkCloudBareMetalMachineKeySetPatch()

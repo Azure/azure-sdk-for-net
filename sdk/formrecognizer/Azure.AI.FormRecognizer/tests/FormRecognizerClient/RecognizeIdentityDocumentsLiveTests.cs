@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedFormCollection formCollection = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formCollection.Single();
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var form = operation.Value.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the ID document. We are not testing the service here, but the SDK.
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
             Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
-            Assert.NotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
 
             Assert.That(form.Fields.ContainsKey("Address"), Is.True);
             Assert.That(form.Fields.ContainsKey("CountryRegion"), Is.True);
@@ -158,7 +158,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
-            Assert.IsEmpty(recognizedForms);
+            Assert.That(recognizedForms, Is.Empty);
         }
 
         /// <summary>

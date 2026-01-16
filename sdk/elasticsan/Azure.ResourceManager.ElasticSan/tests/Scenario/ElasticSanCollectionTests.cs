@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.That(elasticSan1.Id.Name, Is.EqualTo(elasticSanName));
             Assert.That(elasticSan1.Data.BaseSizeTiB, Is.EqualTo(2));
             Assert.That(elasticSan1.Data.ExtendedCapacitySizeTiB, Is.EqualTo(7));
-            Assert.IsEmpty(elasticSan1.Data.Tags);
-            Assert.IsEmpty(elasticSan1.Data.AvailabilityZones);
+            Assert.That(elasticSan1.Data.Tags, Is.Empty);
+            Assert.That(elasticSan1.Data.AvailabilityZones, Is.Empty);
             Assert.That(elasticSan1.Data.PublicNetworkAccess, Is.EqualTo(null));
-            Assert.IsNull(elasticSan1.Data.ScaleUpProperties);
+            Assert.That(elasticSan1.Data.ScaleUpProperties, Is.Null);
 
             await elasticSan1.DeleteAsync(WaitUntil.Completed);
         }
@@ -77,15 +77,15 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             // Test for ElasticSan PE properties
             Assert.That(elasticSan1.Data.PrivateEndpointConnections.Count, Is.EqualTo(3));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].Name);
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].PrivateEndpointId);
+            Assert.That(elasticSan1.Data.PrivateEndpointConnections[0].Name, Is.Not.Empty);
+            Assert.That((string)elasticSan1.Data.PrivateEndpointConnections[0].PrivateEndpointId, Is.Not.Empty);
             Assert.That(elasticSan1.Data.PrivateEndpointConnections[0].ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[1].Name);
+            Assert.That(elasticSan1.Data.PrivateEndpointConnections[1].Name, Is.Not.Empty);
             Assert.That(elasticSan1.Data.PrivateEndpointConnections[1].ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[1].PrivateEndpointId);
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[2].Name);
+            Assert.That((string)elasticSan1.Data.PrivateEndpointConnections[1].PrivateEndpointId, Is.Not.Empty);
+            Assert.That(elasticSan1.Data.PrivateEndpointConnections[2].Name, Is.Not.Empty);
             Assert.That(elasticSan1.Data.PrivateEndpointConnections[2].ConnectionState.Status.ToString(), Is.EqualTo("Pending"));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[2].PrivateEndpointId);
+            Assert.That((string)elasticSan1.Data.PrivateEndpointConnections[2].PrivateEndpointId, Is.Not.Empty);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             //get a summary
             Response<SpringBootSiteSummaryResource> getSummaryReponse = await summaryCollection.GetAsync("default", CancellationToken.None);
-            Assert.IsNotNull(getSummaryReponse.Value);
+            Assert.That(getSummaryReponse.Value, Is.Not.Null);
         }
     }
 }

@@ -293,7 +293,7 @@ namespace Azure.AI.VoiceLive.Tests
             var responseDone = responses.Where((r) => r is SessionUpdateResponseDone);
             Assert.That(responseDone.Count() == 1, Is.True);
             var response = SafeCast<SessionUpdateResponseDone>(responseDone.First());
-            Assert.IsNotNull(response.Response);
+            Assert.That(response.Response, Is.Not.Null);
             var outputItems = response.Response.Output.Where((item) =>
                 {
                     if (item is not SessionResponseMessageItem)
@@ -308,7 +308,7 @@ namespace Azure.AI.VoiceLive.Tests
             var textParts = messageItem.Content.Where((part) => part.Type == ContentPartType.Text);
             Assert.That(textParts.Count() == 1, Is.True);
             var textPart = SafeCast<ResponseTextContentPart>(textParts.First());
-            StringAssert.Contains("Ted", textPart.Text);
+            Assert.That(textPart.Text, Does.Contain("Ted"));
         }
 
         [LiveOnly]
@@ -371,7 +371,7 @@ namespace Azure.AI.VoiceLive.Tests
             var responseDone = responses.Where((r) => r is SessionUpdateResponseDone);
             Assert.That(responseDone.Count() == 1, Is.True);
             var response = SafeCast<SessionUpdateResponseDone>(responseDone.First());
-            Assert.IsNotNull(response.Response);
+            Assert.That(response.Response, Is.Not.Null);
             var outputItems = response.Response.Output.Where((item) =>
                 {
                     if (item is not SessionResponseMessageItem)
@@ -386,7 +386,7 @@ namespace Azure.AI.VoiceLive.Tests
             var textParts = messageItem.Content.Where((part) => part.Type == ContentPartType.Text);
             Assert.That(textParts.Count() == 1, Is.True);
             var textPart = SafeCast<ResponseTextContentPart>(textParts.First());
-            StringAssert.Contains("Frank", textPart.Text);
+            Assert.That(textPart.Text, Does.Contain("Frank"));
 
             // Update the instructions
             options.Instructions = "Your name is Samantha. Never forget that!";
@@ -401,7 +401,7 @@ namespace Azure.AI.VoiceLive.Tests
             responseDone = responses.Where((r) => r is SessionUpdateResponseDone);
             Assert.That(responseDone.Count() == 1, Is.True);
             response = SafeCast<SessionUpdateResponseDone>(responseDone.First());
-            Assert.IsNotNull(response.Response);
+            Assert.That(response.Response, Is.Not.Null);
             outputItems = response.Response.Output.Where((item) =>
                 {
                     if (item is not SessionResponseMessageItem)
@@ -416,7 +416,7 @@ namespace Azure.AI.VoiceLive.Tests
             textParts = messageItem.Content.Where((part) => part.Type == ContentPartType.Text);
             Assert.That(textParts.Count() == 1, Is.True);
             textPart = SafeCast<ResponseTextContentPart>(textParts.First());
-            StringAssert.Contains("Samantha", textPart.Text);
+            Assert.That(textPart.Text, Does.Contain("Samantha"));
         }
 
         [Ignore("NoTurnDetection nto returned on update, even though it works")]
@@ -515,7 +515,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(responseDone.Count() == 1, Is.True);
             var response = SafeCast<SessionUpdateResponseDone>(responseDone.First());
 
-            Assert.IsNotNull(response.Response);
+            Assert.That(response.Response, Is.Not.Null);
             var outputItems = response.Response.Output.Where((item) =>
                 {
                     if (item is not SessionResponseMessageItem)
@@ -585,7 +585,7 @@ namespace Azure.AI.VoiceLive.Tests
                         Assert.That(responseCreated.Type, Is.EqualTo(ServerEventType.ResponseCreated));
 
                         var response = responseCreated.Response;
-                        Assert.IsNotNull(response);
+                        Assert.That(response, Is.Not.Null);
                         Assert.That(response.Status, Is.EqualTo(SessionResponseStatus.InProgress));
 
                         responseId = response.Id;
@@ -596,7 +596,7 @@ namespace Azure.AI.VoiceLive.Tests
                     case SessionUpdateResponseOutputItemAdded outputItem:
                         Assert.That(outputItem.ResponseId, Is.EqualTo(responseId));
                         Assert.That(outputItem.OutputIndex, Is.EqualTo(0));
-                        Assert.IsNotNull(outputItem.Item);
+                        Assert.That(outputItem.Item, Is.Not.Null);
 
                         responseItemId = outputItem.Item.Id;
 
@@ -621,7 +621,7 @@ namespace Azure.AI.VoiceLive.Tests
 
                     case SessionUpdateConversationItemCreated newConversationItem:
                         Assert.That(newConversationItem.PreviousItemId, Is.EqualTo(previousItemId));
-                        Assert.IsNotNull(newConversationItem.Item);
+                        Assert.That(newConversationItem.Item, Is.Not.Null);
 
                         switch (newConversationItem.Item)
                         {
@@ -641,7 +641,7 @@ namespace Azure.AI.VoiceLive.Tests
                     case SessionUpdateResponseContentPartAdded contentPartAdded:
                         Assert.That(contentPartAdded.ResponseId, Is.EqualTo(responseId));
                         Assert.That(contentPartAdded.ItemId, Is.EqualTo(responseItemId));
-                        Assert.IsNotNull(contentPartAdded.Part);
+                        Assert.That(contentPartAdded.Part, Is.Not.Null);
                         Assert.That(contentPartAdded.OutputIndex == 0, Is.True);
                         Assert.That(contentPartAdded.ContentIndex >= 0, Is.True);
 
@@ -749,13 +749,13 @@ namespace Azure.AI.VoiceLive.Tests
 
                         break;
                     case SessionUpdateResponseDone responseDone:
-                        Assert.IsNotNull(responseDone.Response);
+                        Assert.That(responseDone.Response, Is.Not.Null);
 
                         Assert.That(responseDone.Response.Status, Is.EqualTo(SessionResponseStatus.Completed));
                         Assert.That(responseDone.Response.Id, Is.EqualTo(responseId));
 
                         var usage = responseDone.Response.Usage;
-                        Assert.IsNotNull(usage);
+                        Assert.That(usage, Is.Not.Null);
                         Assert.That(usage.InputTokenDetails.AudioTokens + usage.InputTokenDetails.TextTokens + usage.InputTokenDetails.CachedTokens,
                             Is.EqualTo(usage.InputTokens));
                         Assert.That(usage.InputTokenDetails.CachedTokensDetails.TextTokens + usage.InputTokenDetails.CachedTokensDetails.AudioTokens,

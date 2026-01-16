@@ -250,8 +250,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
 
-            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Name);
-            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
+            Assert.That(response.FirstOrDefault().PrimaryLanguage.Name, Is.Null);
+            Assert.That(response.FirstOrDefault().PrimaryLanguage.Iso6391Name, Is.Not.Null);
         }
 
         [Test]
@@ -293,8 +293,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
 
-            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Name);
-            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
+            Assert.That(response.FirstOrDefault().PrimaryLanguage.Name, Is.Not.Null);
+            Assert.That(response.FirstOrDefault().PrimaryLanguage.Iso6391Name, Is.Null);
         }
 
         // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
@@ -593,7 +593,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             CategorizedEntityCollection response = await client.RecognizeEntitiesAsync("Microsoft was founded");
 
-            Assert.IsNotNull(response.FirstOrDefault().Category);
+            Assert.That(response.FirstOrDefault().Category, Is.Not.Null);
         }
 
         [Test]

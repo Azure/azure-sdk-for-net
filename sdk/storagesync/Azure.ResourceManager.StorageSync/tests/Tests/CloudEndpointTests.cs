@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create CloudEndpoint
             CloudEndpointResource cloudEndpointResource = (await _storageSyncGroupResource.GetCloudEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;
-            Assert.NotNull(cloudEndpointResource);
+            Assert.That(cloudEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, true);
         }
 
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create CloudEndpoint
             CloudEndpointResource cloudEndpointResource = (await _storageSyncGroupResource.GetCloudEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;
-            Assert.NotNull(cloudEndpointResource);
+            Assert.That(cloudEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, true);
 
             // Get CloudEndpoint
             cloudEndpointResource = (await _storageSyncGroupResource.GetCloudEndpointAsync(_cloudEndpointName)).Value;
-            Assert.NotNull(cloudEndpointResource);
+            Assert.That(cloudEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, false);
         }
 
@@ -82,16 +82,16 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Get CloudEndpointCollection
             CloudEndpointCollection cloudEndpointCollection = _storageSyncGroupResource.GetCloudEndpoints();
-            Assert.NotNull(cloudEndpointCollection);
+            Assert.That(cloudEndpointCollection, Is.Not.Null);
 
             // Create CloudEndpoint
             CloudEndpointResource cloudEndpointResource = (await cloudEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;
-            Assert.NotNull(cloudEndpointResource);
+            Assert.That(cloudEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, true);
 
             // Verify CloundEndpointCollection contains a single CloudEndpoint
             List<CloudEndpointResource> cloudEndpointResources = await cloudEndpointCollection.ToEnumerableAsync();
-            Assert.NotNull(cloudEndpointResources);
+            Assert.That(cloudEndpointResources, Is.Not.Null);
             Assert.That(cloudEndpointResources.Count(), Is.EqualTo(1));
 
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResources.First(), false);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Get CloudEndpointCollection
             CloudEndpointCollection cloundEndpointCollection = _storageSyncGroupResource.GetCloudEndpoints();
-            Assert.NotNull(cloundEndpointCollection);
+            Assert.That(cloundEndpointCollection, Is.Not.Null);
 
             // Delete CloudEndpoint before its created.
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncGroupResource.GetCloudEndpointAsync(_cloudEndpointName)).Value?.Delete(WaitUntil.Completed));
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Create CloudEndpoint
             CloudEndpointResource cloudEndpointResource = (await cloundEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;
-            Assert.NotNull(cloudEndpointResource);
+            Assert.That(cloudEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, true);
 
             // Delete CloudEndpoint
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create CloudEndpoint
             CloudEndpointResource cloudEndpointResource = (await _storageSyncGroupResource.GetCloudEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;
-            Assert.NotNull(cloudEndpointResource);
+            Assert.That(cloudEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, true);
 
             // Trigger change detection with directory

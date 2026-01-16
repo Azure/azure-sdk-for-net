@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // GetAll
             var list = await policyAttestationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAttestation(list.FirstOrDefault(item => attestationName == item.Data.Name).Data, attestationName);
 
             // Delete
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // GetAll
             var list = await policyAttestationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAttestation(list.FirstOrDefault().Data, attestationName);
 
             // Delete
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
         private void ValidateAttestation(PolicyAttestationData attestation, string attestationName)
         {
-            Assert.IsNotNull(attestation);
-            Assert.IsNotEmpty(attestation.Id);
+            Assert.That(attestation, Is.Not.Null);
+            Assert.That((string)attestation.Id, Is.Not.Empty);
             Assert.That(attestation.Name, Is.EqualTo(attestationName));
             Assert.That(attestation.Comments, Is.EqualTo(".NET SDK Test"));
             Assert.That(attestation.ComplianceState.ToString(), Is.EqualTo("Compliant"));

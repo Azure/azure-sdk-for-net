@@ -86,7 +86,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareServiceProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
             var accountName = new ShareUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
             var accountName = new ShareUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
@@ -402,14 +402,14 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).FirstOrDefault();
 
             // Assert
-            Assert.IsNotNull(premiumShareItem.Properties.ETag);
-            Assert.IsNotNull(premiumShareItem.Properties.LastModified);
-            Assert.IsNotNull(premiumShareItem.Properties.NextAllowedQuotaDowngradeTime);
-            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedEgressMBps);
-            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIngressMBps);
-            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIops);
-            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedBandwidthMiBps);
-            Assert.IsNotNull(premiumShareItem.Properties.QuotaInGB);
+            Assert.That(premiumShareItem.Properties.ETag, Is.Not.Null);
+            Assert.That(premiumShareItem.Properties.LastModified, Is.Not.Null);
+            Assert.That(premiumShareItem.Properties.NextAllowedQuotaDowngradeTime, Is.Not.Null);
+            Assert.That(premiumShareItem.Properties.ProvisionedEgressMBps, Is.Not.Null);
+            Assert.That(premiumShareItem.Properties.ProvisionedIngressMBps, Is.Not.Null);
+            Assert.That(premiumShareItem.Properties.ProvisionedIops, Is.Not.Null);
+            Assert.That(premiumShareItem.Properties.ProvisionedBandwidthMiBps, Is.Not.Null);
+            Assert.That(premiumShareItem.Properties.QuotaInGB, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -454,7 +454,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
             Assert.That(shareItem.IsDeleted, Is.True);
-            Assert.IsNotNull(shareItem.VersionId);
+            Assert.That(shareItem.VersionId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -485,7 +485,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.That(shareItemForShare.Properties.AccessTier, Is.EqualTo(ShareAccessTier.Hot.ToString()));
-            Assert.IsNotNull(shareItemForShare.Properties.AccessTierChangeTime);
+            Assert.That(shareItemForShare.Properties.AccessTierChangeTime, Is.Not.Null);
             Assert.That(shareItemForShare.Properties.AccessTierTransitionState, Is.EqualTo("pending-from-transactionOptimized"));
         }
 
@@ -610,10 +610,10 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareItem shareItem = shares.FirstOrDefault();
 
             // Assert
-            Assert.IsNotNull(shareItem.Properties.IncludedBurstIops);
-            Assert.IsNotNull(shareItem.Properties.MaxBurstCreditsForIops);
-            Assert.IsNotNull(shareItem.Properties.NextAllowedProvisionedIopsDowngradeTime);
-            Assert.IsNotNull(shareItem.Properties.NextAllowedProvisionedBandwidthDowngradeTime);
+            Assert.That(shareItem.Properties.IncludedBurstIops, Is.Not.Null);
+            Assert.That(shareItem.Properties.MaxBurstCreditsForIops, Is.Not.Null);
+            Assert.That(shareItem.Properties.NextAllowedProvisionedIopsDowngradeTime, Is.Not.Null);
+            Assert.That(shareItem.Properties.NextAllowedProvisionedBandwidthDowngradeTime, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -701,7 +701,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startTime, expiryTime);
 
             // Assert
-            Assert.IsNotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -861,8 +861,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential, out sasBuilderStringToSign)
             };
             Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
-            Assert.IsNotNull(clientStringToSign);
-            Assert.IsNotNull(sasBuilderStringToSign);
+            Assert.That(clientStringToSign, Is.Not.Null);
+            Assert.That(sasBuilderStringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -894,7 +894,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

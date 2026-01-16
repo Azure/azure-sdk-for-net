@@ -68,7 +68,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         List<SapInstanceData> listSapInstances = await SapDiscoveryTestsHelpers
             .GetSapInstancesListAsync(sapDiscoverySiteResource);
 
-        Assert.IsNotNull(listSapInstances);
+        Assert.That(listSapInstances, Is.Not.Null);
 
         const string expectedSapInstancesListPath = @"TestData/ExpectedGetSapInstanceList.json";
 
@@ -83,13 +83,13 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 
         // Get SapInstance
         ResourceIdentifier sapInstanceId = listSapInstances.First().Id;
-        Assert.IsNotNull(sapInstanceId);
+        Assert.That(sapInstanceId, Is.Not.Null);
         SapInstanceResource sapInstance = await sapDiscoverySiteResource.GetSapInstanceAsync(sapInstanceId.Name);
 
         // Get Server Instances List
 
         List<SapDiscoveryServerInstanceData> serverInstancesList = await SapDiscoveryTestsHelpers.GetServerInstancesList(sapInstance);
-        Assert.IsNotNull(serverInstancesList);
+        Assert.That(serverInstancesList, Is.Not.Null);
 
         const string expectedServerInstanceListPath = @"TestData/ExpectedGetServerInstancesList.json";
 
@@ -138,9 +138,10 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         ArmOperation<OperationStatusResult> importEntitiesOp =
             await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
 
-        Assert.IsNotNull(await SapDiscoveryTestsHelpers.TrackTillConditionReachedForAsyncOperationAsync(
+        Assert.That(await SapDiscoveryTestsHelpers.TrackTillConditionReachedForAsyncOperationAsync(
             new Func<Task<bool>>(async () => await SapDiscoveryTestsHelpers.TrackForDiscoveryExcelInputSasUriAsync(
                 client, importEntitiesOp)), 300),
+            Is.Not.Null,
             "SAS Uri generation failed");
 
         // Skipping Upload while TestMode as playback, as

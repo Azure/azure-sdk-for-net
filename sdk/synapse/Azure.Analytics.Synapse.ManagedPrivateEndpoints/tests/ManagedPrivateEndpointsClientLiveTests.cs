@@ -55,15 +55,15 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
                     GroupId = groupId
                 }
             });
-            Assert.NotNull(managedPrivateEndpoint);
+            Assert.That(managedPrivateEndpoint, Is.Not.Null);
             Assert.That(managedPrivateEndpoint.Name, Is.EqualTo(managedPrivateEndpointName));
             Assert.That(managedPrivateEndpoint.Properties.PrivateLinkResourceId, Is.EqualTo(privateLinkResourceId));
             Assert.That(managedPrivateEndpoint.Properties.GroupId, Is.EqualTo(groupId));
 
             // List managed private endpoints
             List<ManagedPrivateEndpoint> privateEndpoints = await client.ListAsync(managedVnetName).ToEnumerableAsync();
-            Assert.NotNull(privateEndpoints);
-            CollectionAssert.IsNotEmpty(privateEndpoints);
+            Assert.That(privateEndpoints, Is.Not.Null);
+            Assert.That(privateEndpoints, Is.Not.Empty);
             Assert.That(privateEndpoints.Any(pe => pe.Name == managedPrivateEndpointName), Is.True);
 
             // Get managed private endpoint

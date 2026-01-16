@@ -78,9 +78,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             ITriggerData data = _binding.BindAsync(messageContent, null).GetAwaiter().GetResult();
 
             // Assert
-            Assert.NotNull(data);
-            Assert.NotNull(data.ValueProvider);
-            Assert.NotNull(data.BindingData);
+            Assert.That(data, Is.Not.Null);
+            Assert.That(data.ValueProvider, Is.Not.Null);
+            Assert.That(data.BindingData, Is.Not.Null);
             Assert.That(data.BindingData.ContainsKey(userPropertyName), Is.True);
             Assert.That(data.BindingData[userPropertyName], Is.EqualTo(userProperty.GetValue(expectedObject, null)));
         }

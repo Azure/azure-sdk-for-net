@@ -75,7 +75,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.NotNull(response.Content);
+            Assert.That(response.Content, Is.Not.Null);
             Assert.That(jsonDocument.RootElement.GetProperty("testId").ToString(), Is.EqualTo(_testId));
         }
 
@@ -93,7 +93,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             var loadTestResponse = await _loadTestAdministrationClient.GetTestAsync(_testId);
             var loadTest = loadTestResponse.Value;
-            Assert.NotNull(loadTest);
+            Assert.That(loadTest, Is.Not.Null);
             Assert.That(loadTest.TestId, Is.EqualTo(_testId));
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
                foreach (var value in page.Values)
                {
-                    Assert.NotNull(value.TestId);
+                    Assert.That(value.TestId, Is.Not.Null);
 
                     Console.WriteLine(value.ToString());
                }
@@ -129,7 +129,7 @@ namespace Azure.Developer.LoadTesting.Tests
                 }
                 else
                 {
-                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
+                    Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageSizeHint));
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace Azure.Developer.LoadTesting.Tests
             var fileGetResponse = await _loadTestAdministrationClient.GetTestFileAsync(_testId, _fileName);
 
             var file = fileGetResponse.Value;
-            Assert.NotNull(file);
+            Assert.That(file, Is.Not.Null);
             Assert.That(file.FileName, Is.EqualTo(_fileName));
         }
 
@@ -238,9 +238,9 @@ namespace Azure.Developer.LoadTesting.Tests
 
             var appComponentsResponse = await _loadTestAdministrationClient.GetAppComponentsAsync(_testId);
             var appComponents = appComponentsResponse.Value;
-            Assert.NotNull(appComponents);
+            Assert.That(appComponents, Is.Not.Null);
             var component = appComponents.Components.Values.FirstOrDefault();
-            Assert.NotNull(component);
+            Assert.That(component, Is.Not.Null);
             Assert.AreEqual(_resourceId, component.ResourceId.ToString());
         }
 
@@ -312,9 +312,9 @@ namespace Azure.Developer.LoadTesting.Tests
 
             var serverMetricsResponse = await _loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId);
             var serverMetrics = serverMetricsResponse.Value;
-            Assert.NotNull(serverMetrics);
+            Assert.That(serverMetrics, Is.Not.Null);
             var metric = serverMetrics.Metrics.Values.FirstOrDefault();
-            Assert.NotNull(metric);
+            Assert.That(metric, Is.Not.Null);
             Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
         }
 
@@ -400,7 +400,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             var testProfileResponse = await _loadTestAdministrationClient.GetTestProfileAsync(_testProfileId);
             var testProfile = testProfileResponse.Value;
-            Assert.NotNull(testProfile);
+            Assert.That(testProfile, Is.Not.Null);
             Assert.AreEqual(_testProfileId, testProfile.TestProfileId);
             Assert.AreEqual(_targetResourceId, testProfile.TargetResourceId.ToString());
         }
@@ -410,12 +410,12 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task ListTestProfile()
         {
             var testProfilesResponse = _loadTestAdministrationClient.GetTestProfilesAsync();
-            Assert.NotNull(testProfilesResponse);
+            Assert.That(testProfilesResponse, Is.Not.Null);
             await foreach (var page in testProfilesResponse.AsPages())
             {
                 foreach (var value in page.Values)
                 {
-                    Assert.NotNull(value.TestProfileId);
+                    Assert.That(value.TestProfileId, Is.Not.Null);
                 }
             }
         }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.That(count, Is.GreaterThanOrEqualTo(3));
         }
     }
 }

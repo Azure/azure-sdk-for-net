@@ -50,10 +50,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             PageRangesInfo pageRangesInfo = await snapshot2Client.GetManagedDiskPageRangesDiffAsync(previousSnapshotUri: snapshot1SASUri);
 
             // Assert
-            Assert.IsNotNull(pageRangesInfo.LastModified);
-            Assert.IsNotNull(pageRangesInfo.ETag);
-            CollectionAssert.IsNotEmpty(pageRangesInfo.ClearRanges);
-            CollectionAssert.IsNotEmpty(pageRangesInfo.PageRanges);
+            Assert.That(pageRangesInfo.LastModified, Is.Not.Null);
+            Assert.That(pageRangesInfo.ETag, Is.Not.Null);
+            Assert.That(pageRangesInfo.ClearRanges, Is.Not.Empty);
+            Assert.That(pageRangesInfo.PageRanges, Is.Not.Empty);
 
             // Assert page diff
             var pageRange = pageRangesInfo.PageRanges.First();
@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
+                Assert.That(response.Value.PageRanges, Is.Not.Null);
             }
         }
 

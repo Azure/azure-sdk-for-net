@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // Get one of the images
             var image = (await galleryResource.GetDevCenterImageAsync(images.First().Data.Name)).Value;
-            Assert.IsNotNull(image);
+            Assert.That(image, Is.Not.Null);
         }
     }
 }

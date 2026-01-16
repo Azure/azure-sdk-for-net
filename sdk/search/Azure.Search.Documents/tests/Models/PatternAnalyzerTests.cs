@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Tests.Models
             using JsonDocument doc = JsonDocument.Parse(stream.ToArray());
             PatternAnalyzer actual = LexicalAnalyzer.DeserializeLexicalAnalyzer(doc.RootElement) as PatternAnalyzer;
 
-            CollectionAssert.AreEqual(expected.Flags, actual?.Flags);
+            Assert.That(actual?.Flags, Is.EqualTo(expected.Flags).AsCollection);
         }
 
         private static IEnumerable<PatternAnalyzer> RoundtripsRegexFlagsData

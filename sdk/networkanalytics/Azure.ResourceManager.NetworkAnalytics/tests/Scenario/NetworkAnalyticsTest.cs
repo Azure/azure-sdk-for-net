@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Tests.Scenario
             // Get Data Product
             Response<DataProductResource> getDataProductResponse = await dataProduct.GetAsync();
             DataProductResource dataProductFetched = getDataProductResponse.Value;
-            Assert.IsNotNull(dataProductFetched);
+            Assert.That(dataProductFetched, Is.Not.Null);
             Assert.That(dataProductFetched.Data.Location, Is.EqualTo(dataProduct.Data.Location));
 
             // Delete Data Product

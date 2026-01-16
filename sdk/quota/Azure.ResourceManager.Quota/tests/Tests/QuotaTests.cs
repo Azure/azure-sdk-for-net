@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             var response = await Client.GetCurrentQuotaLimitBases(new ResourceIdentifier(Scope)).CreateOrUpdateAsync(WaitUntil.Started, ResourceName, data);
 
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [TestCase]

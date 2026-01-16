@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Tests
             string peeringServiceName = Recording.GenerateAssetName("peeringService");
             await CreateAtmanPeeringService(_resourceGroup, peeringServiceName);
             var list = await _peeringServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePeeringService(list.First(item => item.Data.Name == peeringServiceName), peeringServiceName);
         }
 
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Peering.Tests
             var peeringService = await CreateAtmanPeeringService(_resourceGroup, peeringServiceName);
             var response = await peeringService.GetAvailableLocationsAsync();
             var list = response.Value.ToList();
-            Assert.IsNotEmpty(list);
-            Assert.IsNotNull(list.First(item => item.Name == "eastus"));
-            Assert.IsNotNull(list.First(item => item.Name == "westus"));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.First(item => item.Name == "eastus"), Is.Not.Null);
+            Assert.That(list.First(item => item.Name == "westus"), Is.Not.Null);
         }
 
         private void ValidatePeeringService(PeeringServiceResource peeringService,string peeringServiceName)
         {
-            Assert.IsNotNull(peeringService);
+            Assert.That(peeringService, Is.Not.Null);
             Assert.That(peeringService.Data.Name, Is.EqualTo(peeringServiceName));
             Assert.That(peeringService.Data.PeeringServiceLocation, Is.EqualTo("South Australia"));
             Assert.That(peeringService.Data.PeeringServiceProvider, Is.EqualTo("Atman"));

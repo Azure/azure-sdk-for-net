@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Get()
         {
             var mediaPrivateLinkResource = await mediaPrivateLinkResourceCollection.GetAsync("keydelivery");
-            Assert.IsNotNull(mediaPrivateLinkResource);
+            Assert.That(mediaPrivateLinkResource, Is.Not.Null);
             Assert.That(mediaPrivateLinkResource.Value.Data.Name, Is.EqualTo("keydelivery"));
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task GetAll()
         {
             var list = await mediaPrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(3));
         }
     }

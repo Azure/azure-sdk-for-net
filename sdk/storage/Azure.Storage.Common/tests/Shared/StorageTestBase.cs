@@ -168,8 +168,8 @@ namespace Azure.Storage.Test.Shared
 
         public virtual void AssertDictionaryEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
-            Assert.IsNotNull(expected, "Expected metadata is null");
-            Assert.IsNotNull(actual, "Actual metadata is null");
+            Assert.That(expected, Is.Not.Null, "Expected metadata is null");
+            Assert.That(actual, Is.Not.Null, "Actual metadata is null");
 
             Assert.That(actual.Count, Is.EqualTo(expected.Count), "Metadata counts are not equal");
 

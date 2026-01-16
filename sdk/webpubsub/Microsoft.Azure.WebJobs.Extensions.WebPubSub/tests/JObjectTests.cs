@@ -132,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var test = @"{""code"":""unauthorized"",""errorMessage"":""not valid user.""}";
 
             var result = BuildResponse(test, RequestType.Connect);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 
             var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var states);
@@ -148,13 +148,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = BuildResponse(test, RequestType.Connect, true);
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var value);
             Assert.That(stateExist, Is.True);
             var states = value.SingleOrDefault().DecodeConnectionStates();
-            Assert.NotNull(states);
+            Assert.That(states, Is.Not.Null);
             Assert.That(states.Count, Is.EqualTo(1));
             Assert.That(states.ContainsKey("testKey"), Is.True);
 
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = BuildResponse(test, RequestType.Connect, false);
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             var stateExist = result.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var value);
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = BuildResponse(test, RequestType.User);
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             var message = await result.Content.ReadAsStringAsync();
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = BuildResponse(test, RequestType.User);
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
         }
 
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = BuildResponse(test, RequestType.User);
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
         }
 
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var content = await result.Content.ReadAsStringAsync();
             var actual = JObject.Parse(content);
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -250,8 +250,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var serialize = JObject.FromObject(test);
 
-            Assert.NotNull(serialize["request"]);
-            Assert.NotNull(serialize["response"]);
+            Assert.That(serialize["request"], Is.Not.Null);
+            Assert.That(serialize["response"], Is.Not.Null);
             Assert.That(serialize["errorMessage"].Value<string>(), Is.EqualTo(null));
             Assert.That(serialize["hasError"].Value<bool>(), Is.EqualTo(false));
             Assert.That(serialize["isPreflight"].Value<bool>(), Is.EqualTo(false));
@@ -274,9 +274,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var serialize = JObject.FromObject(test);
             var request = serialize["request"];
 
-            Assert.NotNull(request);
+            Assert.That(request, Is.Not.Null);
             Assert.That(request["subprotocols"].ToObject<string[]>(), Is.EqualTo(subprotocol));
-            Assert.NotNull(serialize["response"]);
+            Assert.That(serialize["response"], Is.Not.Null);
             Assert.That(serialize["errorMessage"].Value<string>(), Is.EqualTo(null));
             Assert.That(serialize["hasError"].Value<bool>(), Is.EqualTo(false));
             Assert.That(serialize["isPreflight"].Value<bool>(), Is.EqualTo(false));
@@ -291,9 +291,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var serialize = JObject.FromObject(test);
             var request = serialize["request"];
 
-            Assert.NotNull(request);
+            Assert.That(request, Is.Not.Null);
             Assert.That(request["data"].Value<string>(), Is.EqualTo("test"));
-            Assert.NotNull(serialize["response"]);
+            Assert.That(serialize["response"], Is.Not.Null);
             Assert.That(serialize["errorMessage"].Value<string>(), Is.EqualTo(null));
             Assert.That(serialize["hasError"].Value<bool>(), Is.EqualTo(false));
             Assert.That(serialize["isPreflight"].Value<bool>(), Is.EqualTo(false));
@@ -307,9 +307,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var serialize = JObject.FromObject(test);
             var request = serialize["request"];
 
-            Assert.NotNull(request);
+            Assert.That(request, Is.Not.Null);
             Assert.That(request["reason"].Value<string>(), Is.EqualTo("dropped"));
-            Assert.NotNull(serialize["response"]);
+            Assert.That(serialize["response"], Is.Not.Null);
             Assert.That(serialize["errorMessage"].Value<string>(), Is.EqualTo(null));
             Assert.That(serialize["hasError"].Value<bool>(), Is.EqualTo(false));
             Assert.That(serialize["isPreflight"].Value<bool>(), Is.EqualTo(false));
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var response = serialize["response"];
 
             Assert.That(serialize["request"], Is.Null);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response["status"].Value<int>(), Is.EqualTo(400));
             Assert.That(response["body"].Value<string>(), Is.EqualTo("Invalid Request"));
             Assert.That(serialize["errorMessage"].Value<string>(), Is.EqualTo("Invalid Request"));
@@ -374,19 +374,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var jObj = JObject.FromObject(test);
             var request = jObj["request"];
 
-            Assert.NotNull(request);
+            Assert.That(request, Is.Not.Null);
             Assert.That(request["data"].Value<string>(), Is.EqualTo("test"));
-            Assert.NotNull(jObj["response"]);
+            Assert.That(jObj["response"], Is.Not.Null);
             Assert.That(jObj["errorMessage"].Value<string>(), Is.EqualTo(null));
             Assert.That(jObj["hasError"].Value<bool>(), Is.EqualTo(false));
             Assert.That(jObj["isPreflight"].Value<bool>(), Is.EqualTo(false));
 
             var context1 = request["connectionContext"];
-            Assert.NotNull(context1);
+            Assert.That(context1, Is.Not.Null);
             var states1 = context1["states"];
-            Assert.NotNull(states1);
+            Assert.That(states1, Is.Not.Null);
             Assert.That(states1["aKey"].Value<string>(), Is.EqualTo("\"aValue\""));
-            Assert.NotNull(states1);
+            Assert.That(states1, Is.Not.Null);
             Assert.That(states1["bKey"].Value<int>(), Is.EqualTo(123));
         }
 
@@ -413,20 +413,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var jObj = JObject.Parse(JsonConvert.SerializeObject(test));
             var request = jObj["request"];
-            Assert.NotNull(request);
+            Assert.That(request, Is.Not.Null);
             Assert.That(request["data"].Value<string>(), Is.EqualTo("test"));
-            Assert.NotNull(jObj["response"]);
+            Assert.That(jObj["response"], Is.Not.Null);
             Assert.That(jObj["errorMessage"].Value<string>(), Is.EqualTo(null));
             Assert.That(jObj["hasError"].Value<bool>(), Is.EqualTo(false));
             Assert.That(jObj["isPreflight"].Value<bool>(), Is.EqualTo(false));
             var context1 = request["connectionContext"];
-            Assert.NotNull(context1);
+            Assert.That(context1, Is.Not.Null);
             var states1 = context1["states"];
-            Assert.NotNull(states1);
+            Assert.That(states1, Is.Not.Null);
             Assert.That(states1["aKey"].Value<string>(), Is.EqualTo("aValue"));
             Assert.That(states1["bKey"].Value<int>(), Is.EqualTo(123));
             var classStates = states1["cKey"];
-            Assert.NotNull(classStates);
+            Assert.That(classStates, Is.Not.Null);
             Assert.That(classStates["Title"].Value<string>(), Is.EqualTo("GA"));
         }
 
@@ -449,20 +449,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 },
                 headers: null);
 
-            Assert.IsInstanceOf<BinaryData>(ctx.ConnectionStates["aKey"]);
-            Assert.IsInstanceOf<string>(ctx.States["aKey"]);
+            Assert.That(ctx.ConnectionStates["aKey"], Is.InstanceOf<BinaryData>());
+            Assert.That(ctx.States["aKey"], Is.InstanceOf<string>());
             Assert.That(ctx.ConnectionStates["aKey"].ToObjectFromJson<string>(), Is.EqualTo("aValue"));
             Assert.That(ctx.States["aKey"], Is.EqualTo("\"aValue\""));
 
-            Assert.IsInstanceOf<BinaryData>(ctx.ConnectionStates["bKey"]);
-            Assert.IsInstanceOf<string>(ctx.States["bKey"]);
+            Assert.That(ctx.ConnectionStates["bKey"], Is.InstanceOf<BinaryData>());
+            Assert.That(ctx.States["bKey"], Is.InstanceOf<string>());
             Assert.That(ctx.ConnectionStates["bKey"].ToObjectFromJson<int>(), Is.EqualTo(123));
             Assert.That(ctx.States["bKey"], Is.EqualTo("123"));
 
-            Assert.IsInstanceOf<BinaryData>(ctx.ConnectionStates["cKey"]);
-            Assert.IsInstanceOf<string>(ctx.States["cKey"]);
+            Assert.That(ctx.ConnectionStates["cKey"], Is.InstanceOf<BinaryData>());
+            Assert.That(ctx.States["cKey"], Is.InstanceOf<string>());
             Assert.That(ctx.ConnectionStates["cKey"].ToObjectFromJson<StateTestClass>().Version, Is.EqualTo(42));
-            StringAssert.StartsWith("{", (string)ctx.States["cKey"]);
+            Assert.That((string)ctx.States["cKey"], Does.StartWith("{"));
         }
 
         [TestCase]
@@ -513,7 +513,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 connectionId: "connectionId",
                 userId: "userA",
                 connectionStates: states);
-            CollectionAssert.AreEquivalent(ctx.ConnectionStates.Keys, ctx.States.Keys);
+            Assert.That(ctx.States.Keys, Is.EquivalentTo(ctx.ConnectionStates.Keys));
             Assert.That(ctx.States["aKey"], Is.EqualTo(ctx.ConnectionStates["aKey"].ToString()));
             Assert.That(ctx.States["bKey"], Is.EqualTo(ctx.ConnectionStates["bKey"].ToString()));
             Assert.That(ctx.States["cKey"], Is.EqualTo(ctx.ConnectionStates["cKey"].ToString()));
@@ -553,7 +553,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var serialized = SystemJson.JsonSerializer.Serialize(input);
             var deserialized = SystemJson.JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(serialized, jsonOption);
 
-            Assert.NotNull(deserialized);
+            Assert.That(deserialized, Is.Not.Null);
             Assert.That(deserialized.Count, Is.EqualTo(0));
         }
 
@@ -576,8 +576,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.That(decoded.Count, Is.EqualTo(5));
             Assert.That(decoded["aKey"].ToString(), Is.EqualTo("aValue"));
             Assert.That(((BinaryData)decoded["bKey"]).ToObjectFromJson<int>(), Is.EqualTo(123));
-            Assert.NotNull(((BinaryData)decoded["cKey"]).ToObjectFromJson<StateTestClass>());
-            Assert.NotNull(((BinaryData)decoded["dKey"]).ToObjectFromJson<StateTestClass>());
+            Assert.That(((BinaryData)decoded["cKey"]).ToObjectFromJson<StateTestClass>(), Is.Not.Null);
+            Assert.That(((BinaryData)decoded["dKey"]).ToObjectFromJson<StateTestClass>(), Is.Not.Null);
             Assert.That(((BinaryData)decoded["eKey"]).ToObjectFromJson<DateTime>(), Is.EqualTo(testTime));
         }
 

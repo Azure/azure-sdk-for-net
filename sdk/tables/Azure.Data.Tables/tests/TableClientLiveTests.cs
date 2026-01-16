@@ -954,7 +954,7 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
-            Assert.IsNotNull(retrievedEntity, "The entity should not be null");
+            Assert.That(retrievedEntity, Is.Not.Null, "The entity should not be null");
             Assert.That(TimeSpan.Compare(
                 retrievedEntity!.TimespanProperty.Value, interval) == 0,
                 Is.True,
@@ -1518,7 +1518,7 @@ namespace Azure.Data.Tables.Tests
         {
             var entity = new CustomizeSerializationEntity { PartitionKey = "partition", RowKey = "1", CurrentCount = 10, LastCount = 5, NamedProperty = "foo" };
 
-            Assert.NotZero(entity.CountDiff);
+            Assert.That(entity.CountDiff, Is.Not.Zero);
 
             await client.AddEntityAsync(entity);
 

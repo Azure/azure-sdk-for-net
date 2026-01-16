@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(receiveScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                     var receiveLinkedActivities = receiveScope.LinkedActivities;
-                    Assert.Greater(receiveLinkedActivities.Count, 0);
+                    Assert.That(receiveLinkedActivities.Count, Is.GreaterThan(0));
                     for (int i = 0; i < receiveLinkedActivities.Count; i++)
                     {
                         Assert.That(receiveLinkedActivities[i].ParentId, Is.EqualTo(sendActivities[i].ParentId));
@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var msg in msgs)
                 {
                     var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
-                    Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
+                    Assert.That(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.Not.Null);
 
                     var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
                     AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
@@ -200,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     if (scope.Name == DiagnosticProperty.ProcessMessageActivityName)
                     {
-                        Assert.IsNotNull(messageActivities);
+                        Assert.That(messageActivities, Is.Not.Null);
                         Assert.That(
                             scope.Activity.ParentId,
                             Is.EqualTo(messageActivities[messageProcessedCt].Traceparent));
@@ -259,7 +259,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     if (scope.Name == DiagnosticProperty.ProcessSessionMessageActivityName)
                     {
-                        Assert.IsNotNull(messageActivities);
+                        Assert.That(messageActivities, Is.Not.Null);
                         Assert.That(
                             scope.Activity.ParentId,
                             Is.EqualTo(messageActivities[messageProcessedCt].Traceparent));
@@ -345,7 +345,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             IList<Activity> messageActivities = new List<Activity>();
             foreach (var msg in msgs)
             {
-                Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
+                Assert.That(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.Not.Null);
                 var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
                 messageActivities.Add(messageScope.Activity);
                 AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
@@ -365,9 +365,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         private void AssertCommonTags(Activity activity, string entityName, string fullyQualifiedNamespace)
         {
             var tags = activity.Tags;
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, entityName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, fullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, entityName)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, fullyQualifiedNamespace)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext)));
         }
     }
 }

@@ -54,7 +54,7 @@ internal class ExtensionTests(bool async)
         Assert.That(messages.Count, Is.EqualTo(1));
         Assert.That(messages[0].IsError, Is.False);
         Assert.That(messages[0].Code, Is.EqualTo("no-unused-params"));
-        StringAssert.Contains("endpoint", messages[0].Message);
+        Assert.That(messages[0].Message, Does.Contain("endpoint"));
     }
 
     [Test]
@@ -74,7 +74,7 @@ internal class ExtensionTests(bool async)
         Assert.That(messages.Count, Is.EqualTo(2));
         Assert.That(messages[1].IsError, Is.True);
         Assert.That(messages[1].Code, Is.EqualTo("BCP033"));
-        StringAssert.Contains("int", messages[1].Message);
+        Assert.That(messages[1].Message, Does.Contain("int"));
     }
 
     [Test]

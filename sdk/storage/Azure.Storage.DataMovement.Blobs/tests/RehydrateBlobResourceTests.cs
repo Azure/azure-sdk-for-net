@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
-            Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+            Assert.That(storageResource, Is.InstanceOf(typeof(BlockBlobStorageResource)));
         }
 
         [Test]
@@ -230,11 +230,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
             if (isSource)
             {
-                Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(BlockBlobStorageResource)));
             }
             else
             {
-                Assert.IsInstanceOf(typeof(PageBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(PageBlobStorageResource)));
             }
         }
 
@@ -308,11 +308,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
             if (isSource)
             {
-                Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(BlockBlobStorageResource)));
             }
             else
             {
-                Assert.IsInstanceOf(typeof(AppendBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(AppendBlobStorageResource)));
             }
         }
 
@@ -392,7 +392,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
-            Assert.IsInstanceOf(typeof(BlobStorageResourceContainer), storageResource);
+            Assert.That(storageResource, Is.InstanceOf(typeof(BlobStorageResourceContainer)));
         }
     }
 }

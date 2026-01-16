@@ -73,18 +73,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentParagraph sampleParagraph = result.Paragraphs[0];
 
             Assert.That(sampleParagraph.Content, Is.EqualTo("Dr. Avery Smith Senior Researcher Cloud & Al Department"));
-            Assert.IsNull(sampleParagraph.Role);
+            Assert.That(sampleParagraph.Role, Is.Null);
 
             AnalyzedDocument document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the business card. We are not testing the service here, but the SDK.
 
             Assert.That(document.DocumentType, Is.EqualTo("businessCard"));
 
-            Assert.NotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
 
             Assert.That(document.Fields.ContainsKey("ContactNames"), Is.True);
             Assert.That(document.Fields.ContainsKey("JobTitles"), Is.True);
@@ -186,7 +186,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 var analyzedDocument = result.Documents[documentIndex];
                 var expectedPageNumber = documentIndex + 1;
 
-                Assert.NotNull(analyzedDocument);
+                Assert.That(analyzedDocument, Is.Not.Null);
 
                 ValidateAnalyzedDocument(
                     analyzedDocument,
@@ -255,15 +255,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
-            Assert.IsNotEmpty(document.DocumentType);
+            Assert.That(document.DocumentType, Is.Not.Empty);
             Assert.That(page.Height, Is.EqualTo(2200));
             Assert.That(page.PageNumber, Is.EqualTo(1));
             Assert.That(page.Unit, Is.EqualTo(DocumentPageLengthUnit.Pixel));
             Assert.That(page.Width, Is.EqualTo(1700));
 
-            Assert.IsNotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
             var name = "PurchaseOrderNumber";
-            Assert.IsNotNull(document.Fields[name]);
+            Assert.That(document.Fields[name], Is.Not.Null);
             Assert.That(document.Fields[name].FieldType, Is.EqualTo(DocumentFieldType.String));
             Assert.That(document.Fields[name].Content, Is.EqualTo("948284"));
         }
@@ -295,10 +295,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedLastPageNumber: 1);
 
             // Testing that we shuffle things around correctly so checking only once per property.
-            Assert.IsNotEmpty(document.DocumentType);
-            Assert.IsNotNull(document.Fields);
+            Assert.That(document.DocumentType, Is.Not.Empty);
+            Assert.That(document.Fields, Is.Not.Null);
             var name = "AMEX_SELECTION_MARK";
-            Assert.IsNotNull(document.Fields[name]);
+            Assert.That(document.Fields[name], Is.Not.Null);
             Assert.That(document.Fields[name].FieldType, Is.EqualTo(DocumentFieldType.SelectionMark));
             Assert.That(document.Fields[name].Value.AsSelectionMarkState(), Is.EqualTo(DocumentSelectionMarkState.Selected));
         }
@@ -460,20 +460,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.IsEmpty(result.Paragraphs);
-            Assert.IsEmpty(result.KeyValuePairs);
-            Assert.IsEmpty(result.Styles);
-            Assert.IsEmpty(result.Tables);
+            Assert.That(result.Paragraphs, Is.Empty);
+            Assert.That(result.KeyValuePairs, Is.Empty);
+            Assert.That(result.Styles, Is.Empty);
+            Assert.That(result.Tables, Is.Empty);
 
             AnalyzedDocument blankDocument = result.Documents.Single();
 
-            Assert.IsEmpty(blankDocument.Spans);
+            Assert.That(blankDocument.Spans, Is.Empty);
 
             DocumentPage blankPage = result.Pages.Single();
 
-            Assert.IsEmpty(blankPage.Lines);
-            Assert.IsEmpty(blankPage.Words);
-            Assert.IsEmpty(blankPage.SelectionMarks);
+            Assert.That(blankPage.Lines, Is.Empty);
+            Assert.That(blankPage.Words, Is.Empty);
+            Assert.That(blankPage.SelectionMarks, Is.Empty);
         }
 
         [RecordedTest]
@@ -547,13 +547,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (DocumentLine line in page.Lines)
             {
-                Assert.NotNull(line.Content);
+                Assert.That(line.Content, Is.Not.Null);
             }
 
             foreach (DocumentWord word in page.Words)
             {
-                Assert.NotNull(word.Content);
-                Assert.GreaterOrEqual(word.Confidence, 0);
+                Assert.That(word.Content, Is.Not.Null);
+                Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0));
             }
 
             DocumentStyle style = result.Styles.First();
@@ -594,10 +594,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             for (int i = 0; i < cells.Count; i++)
             {
-                Assert.GreaterOrEqual(cells[i].RowIndex, 0, $"Cell with content {cells[i].Content} should have row index greater than or equal to zero.");
-                Assert.Less(cells[i].RowIndex, sampleTable.RowCount, $"Cell with content {cells[i].Content} should have row index less than {sampleTable.RowCount}.");
-                Assert.GreaterOrEqual(cells[i].ColumnIndex, 0, $"Cell with content {cells[i].Content} should have column index greater than or equal to zero.");
-                Assert.Less(cells[i].ColumnIndex, sampleTable.ColumnCount, $"Cell with content {cells[i].Content} should have column index less than {sampleTable.ColumnCount}.");
+                Assert.That(cells[i].RowIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cells[i].Content} should have row index greater than or equal to zero.");
+                Assert.That(cells[i].RowIndex, Is.LessThan(sampleTable.RowCount), $"Cell with content {cells[i].Content} should have row index less than {sampleTable.RowCount}.");
+                Assert.That(cells[i].ColumnIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cells[i].Content} should have column index greater than or equal to zero.");
+                Assert.That(cells[i].ColumnIndex, Is.LessThan(sampleTable.ColumnCount), $"Cell with content {cells[i].Content} should have column index less than {sampleTable.ColumnCount}.");
 
                 Assert.That(cells[i].RowSpan, Is.EqualTo(1), $"Cell with content {cells[i].Content} should have a row span of 1.");
                 Assert.That(cells[i].ColumnSpan, Is.EqualTo(1), $"Cell with content {cells[i].Content} should have a column span of 1.");
@@ -648,14 +648,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the ID document. We are not testing the service here, but the SDK.
 
             Assert.That(document.DocumentType, Is.EqualTo("idDocument.driverLicense"));
 
-            Assert.NotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
 
             Assert.That(document.Fields.ContainsKey("Address"), Is.True);
             Assert.That(document.Fields.ContainsKey("CountryRegion"), Is.True);
@@ -726,14 +726,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzedDocument document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
 
             Assert.That(document.DocumentType, Is.EqualTo("invoice"));
 
-            Assert.NotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
 
             Assert.That(document.Fields.ContainsKey("AmountDue"), Is.True);
             Assert.That(document.Fields.ContainsKey("BillingAddress"), Is.True);
@@ -898,7 +898,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 CurrencyValue unitPrice = unitPricefield.Value.AsCurrency();
                 string unit = unitfield?.Value.AsString();
 
-                Assert.IsNotNull(dateField);
+                Assert.That(dateField, Is.Not.Null);
                 DateTimeOffset date = dateField.Value.AsDate();
 
                 var expectedItem = expectedItems[itemIndex];
@@ -946,14 +946,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var document = result.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
 
             Assert.That(document.DocumentType, Is.EqualTo("invoice"));
 
-            Assert.NotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
 
             Assert.That(document.Fields.ContainsKey("VendorName"), Is.True);
             Assert.That(document.Fields.ContainsKey("RemittanceAddressRecipient"), Is.True);
@@ -1031,7 +1031,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentParagraph sampleParagraph = result.Paragraphs[0];
 
             Assert.That(sampleParagraph.Content, Is.EqualTo("Contoso"));
-            Assert.IsNull(sampleParagraph.Role);
+            Assert.That(sampleParagraph.Role, Is.Null);
 
             DocumentTable table = result.Tables.Single();
 
@@ -1058,10 +1058,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (DocumentTableCell cell in cells)
             {
-                Assert.GreaterOrEqual(cell.RowIndex, 0, $"Cell with content {cell.Content} should have row index greater than or equal to zero.");
-                Assert.Less(cell.RowIndex, table.RowCount, $"Cell with content {cell.Content} should have row index less than {table.RowCount}.");
-                Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with content {cell.Content} should have column index greater than or equal to zero.");
-                Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with content {cell.Content} should have column index less than {table.ColumnCount}.");
+                Assert.That(cell.RowIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cell.Content} should have row index greater than or equal to zero.");
+                Assert.That(cell.RowIndex, Is.LessThan(table.RowCount), $"Cell with content {cell.Content} should have row index less than {table.RowCount}.");
+                Assert.That(cell.ColumnIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cell.Content} should have column index greater than or equal to zero.");
+                Assert.That(cell.ColumnIndex, Is.LessThan(table.ColumnCount), $"Cell with content {cell.Content} should have column index less than {table.ColumnCount}.");
 
                 if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
                 {
@@ -1075,7 +1075,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     Assert.That(cell.RowSpan, Is.EqualTo(expectedRowSpan), $"Cell with content {cell.Content} should have a row span of {expectedRowSpan}.");
                 }
 
-                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with content {cell.Content} should have a row index less than or equal to two.");
+                Assert.That(cell.RowIndex, Is.LessThanOrEqualTo(2), $"Cell with content {cell.Content} should have a row index less than or equal to two.");
                 Assert.That(cell.Content, Is.EqualTo(expectedContent[cell.RowIndex, cell.ColumnIndex]));
             }
         }
@@ -1234,9 +1234,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(page.Height, Is.EqualTo(11));
             Assert.That(page.Angle, Is.EqualTo(0));
             Assert.That(page.Lines.Count, Is.EqualTo(18));
-            Assert.IsEmpty(result.Tables);
+            Assert.That(result.Tables, Is.Empty);
 
-            Assert.IsNotEmpty(result.Languages);
+            Assert.That(result.Languages, Is.Not.Empty);
         }
 
         #endregion
@@ -1275,14 +1275,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzedDocument document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
             Assert.That(document.DocumentType, Is.EqualTo("receipt.retailMeal"));
 
-            Assert.NotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
 
             Assert.That(document.Fields.ContainsKey("MerchantAddress"), Is.True);
             Assert.That(document.Fields.ContainsKey("MerchantName"), Is.True);
@@ -1389,7 +1389,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 var analyzedDocument = result.Documents[documentIndex];
                 var expectedPageNumber = documentIndex + 1;
 
-                Assert.NotNull(analyzedDocument);
+                Assert.That(analyzedDocument, Is.Not.Null);
 
                 ValidateAnalyzedDocument(
                     analyzedDocument,
@@ -1398,7 +1398,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
                 var sampleField = analyzedDocument.Fields["Total"];
-                Assert.IsNotNull(sampleField.Content);
+                Assert.That(sampleField.Content, Is.Not.Null);
 
                 if (documentIndex == 0)
                 {
@@ -1438,7 +1438,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 var page = result.Pages[pageIndex];
                 var expectedPageNumber = pageIndex + 1;
 
-                Assert.NotNull(page);
+                Assert.That(page, Is.Not.Null);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -1558,7 +1558,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedLastPageNumber: 1);
 
             AnalyzedDocument document = result.Documents.Single();
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1587,22 +1587,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.IsEmpty(result.KeyValuePairs);
-            Assert.IsEmpty(result.Styles);
-            Assert.IsEmpty(result.Tables);
+            Assert.That(result.KeyValuePairs, Is.Empty);
+            Assert.That(result.Styles, Is.Empty);
+            Assert.That(result.Tables, Is.Empty);
 
             if (result.Documents.Count > 0)
             {
                 AnalyzedDocument blankDocument = result.Documents.Single();
 
-                Assert.IsEmpty(blankDocument.Fields);
+                Assert.That(blankDocument.Fields, Is.Empty);
             }
 
             DocumentPage blankPage = result.Pages.Single();
 
-            Assert.IsEmpty(blankPage.Lines);
-            Assert.IsEmpty(blankPage.Words);
-            Assert.IsEmpty(blankPage.SelectionMarks);
+            Assert.That(blankPage.Lines, Is.Empty);
+            Assert.That(blankPage.Words, Is.Empty);
+            Assert.That(blankPage.SelectionMarks, Is.Empty);
         }
 
         [RecordedTest]
@@ -1684,7 +1684,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.That(kvp.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(kvp.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
 
-                Assert.NotNull(kvp.Key);
+                Assert.That(kvp.Key, Is.Not.Null);
 
                 foreach (BoundingRegion region in kvp.Key.BoundingRegions)
                 {
@@ -1742,13 +1742,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             {
                 Assert.That(language.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(language.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
-                Assert.NotNull(language.Locale);
+                Assert.That(language.Locale, Is.Not.Null);
             }
         }
 
         private void ValidateAnalyzedDocument(AnalyzedDocument document, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(document.DocumentType);
+            Assert.That(document.DocumentType, Is.Not.Null);
             Assert.That(document.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.005));
 
             foreach (BoundingRegion region in document.BoundingRegions)
@@ -1756,7 +1756,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
             }
 
-            Assert.NotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
 
             foreach (DocumentField field in document.Fields.Values)
             {
@@ -1781,8 +1781,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateBoundingRegion(BoundingRegion region, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(region);
-            Assert.NotNull(region.BoundingPolygon);
+            Assert.That(region, Is.Not.Null);
+            Assert.That(region.BoundingPolygon, Is.Not.Null);
 
             if (region.BoundingPolygon.Count != 0)
             {
@@ -1796,27 +1796,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             Assert.That(page.PageNumber, Is.EqualTo(expectedPageNumber));
 
-            Assert.Greater(page.Width, 0.0);
-            Assert.Greater(page.Height, 0.0);
+            Assert.That(page.Width, Is.GreaterThan(0.0));
+            Assert.That(page.Height, Is.GreaterThan(0.0));
 
             Assert.That(page.Angle, Is.GreaterThan(-180.0).Within(0.01));
             Assert.That(page.Angle, Is.LessThanOrEqualTo(180.0).Within(0.01));
 
-            Assert.NotNull(page.Lines);
+            Assert.That(page.Lines, Is.Not.Null);
 
             foreach (DocumentLine line in page.Lines)
             {
-                Assert.NotNull(line.BoundingPolygon);
+                Assert.That(line.BoundingPolygon, Is.Not.Null);
                 Assert.That(line.BoundingPolygon.Count, Is.EqualTo(4));
             }
 
             ValidateSpanListsAreSortedAndDontOverlap(page.Lines.Select(l => l.Spans).ToList());
 
-            Assert.NotNull(page.Words);
+            Assert.That(page.Words, Is.Not.Null);
 
             foreach (DocumentWord word in page.Words)
             {
-                Assert.NotNull(word.BoundingPolygon);
+                Assert.That(word.BoundingPolygon, Is.Not.Null);
                 Assert.That(word.BoundingPolygon.Count, Is.EqualTo(4));
 
                 Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
@@ -1825,11 +1825,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateSpansAreSortedAndDontOverlap(page.Words.Select(w => w.Span).ToList());
 
-            Assert.NotNull(page.SelectionMarks);
+            Assert.That(page.SelectionMarks, Is.Not.Null);
 
             foreach (DocumentSelectionMark selectionMark in page.SelectionMarks)
             {
-                Assert.NotNull(selectionMark.BoundingPolygon);
+                Assert.That(selectionMark.BoundingPolygon, Is.Not.Null);
                 Assert.That(selectionMark.BoundingPolygon.Count, Is.EqualTo(4));
 
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
@@ -1844,8 +1844,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
             }
 
-            Assert.Greater(table.ColumnCount, 0);
-            Assert.Greater(table.RowCount, 0);
+            Assert.That(table.ColumnCount, Is.GreaterThan(0));
+            Assert.That(table.RowCount, Is.GreaterThan(0));
 
             foreach (DocumentTableCell cell in table.Cells)
             {
@@ -1854,11 +1854,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
                 }
 
-                Assert.GreaterOrEqual(cell.ColumnIndex, 0);
-                Assert.GreaterOrEqual(cell.RowIndex, 0);
-                Assert.GreaterOrEqual(cell.ColumnSpan, 1);
-                Assert.GreaterOrEqual(cell.RowSpan, 1);
-                Assert.NotNull(cell.Content);
+                Assert.That(cell.ColumnIndex, Is.GreaterThanOrEqualTo(0));
+                Assert.That(cell.RowIndex, Is.GreaterThanOrEqualTo(0));
+                Assert.That(cell.ColumnSpan, Is.GreaterThanOrEqualTo(1));
+                Assert.That(cell.RowSpan, Is.GreaterThanOrEqualTo(1));
+                Assert.That(cell.Content, Is.Not.Null);
             }
         }
 
@@ -1866,7 +1866,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             for (int i = 0; i < spans.Count - 1; i++)
             {
-                Assert.GreaterOrEqual(spans[i + 1].Index, spans[i].Index + spans[i].Length);
+                Assert.That(spans[i + 1].Index, Is.GreaterThanOrEqualTo(spans[i].Index + spans[i].Length));
             }
         }
 
@@ -1882,7 +1882,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 DocumentSpan lastCurrentSpan = currentSpans.Last();
                 DocumentSpan firstNextSpan = nextSpans.First();
 
-                Assert.GreaterOrEqual(firstNextSpan.Index, lastCurrentSpan.Index + lastCurrentSpan.Length);
+                Assert.That(firstNextSpan.Index, Is.GreaterThanOrEqualTo(lastCurrentSpan.Index + lastCurrentSpan.Length));
             }
 
             // Could be empty if document page contained no lines, for example.

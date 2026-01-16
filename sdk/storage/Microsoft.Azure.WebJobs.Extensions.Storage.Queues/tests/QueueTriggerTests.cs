@@ -140,12 +140,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToStringProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'message'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<DecoderFallbackException>(innerException);
-            StringAssert.IsMatch("Unable to translate bytes \\[FF\\] at index .*? from specified code page to Unicode.",
-                innerException.Message);
+            Assert.That(innerException, Is.InstanceOf<DecoderFallbackException>());
+            Assert.That(innerException.Message,
+                Does.Match("Unable to translate bytes \\[FF\\] at index .*? from specified code page to Unicode."));
         }
 
         [Test]
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 return;
             }
 
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Value, Is.EqualTo(expected.Value));
             Assert.That(actual.Int32Value, Is.EqualTo(expected.Int32Value));
             AssertEqual(expected.Child, actual.Child);
@@ -274,10 +274,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'message'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
             const string expectedInnerMessage = "Binding parameters to complex objects (such as 'Poco') uses " +
                 "Json.NET serialization. 1. Bind the parameter type as 'string' instead of 'Poco' to get the raw " +
                 "values and avoid JSON deserialization, or2. Change the queue payload to be valid json. The JSON " +
@@ -301,10 +301,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'message'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
             string expectedInnerMessage = "Binding parameters to complex objects (such as 'Poco') uses Json.NET " +
                 "serialization. 1. Bind the parameter type as 'string' instead of 'Poco' to get the raw values " +
                 "and avoid JSON deserialization, or2. Change the queue payload to be valid json. The JSON parser " +
@@ -378,10 +378,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'queueTrigger'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(innerException.Message, Is.EqualTo("Binding data does not contain expected value 'queueTrigger'."));
         }
 
@@ -430,8 +430,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToIdBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            CollectionAssert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
         }
 
         [Test]
@@ -473,8 +473,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPopReceiptBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            CollectionAssert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
         }
 
         [Test]
@@ -587,7 +587,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.MessageText, Is.EqualTo(expectedContents));
         }
 
@@ -769,7 +769,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             var method = programType.GetMethod("Run");
-            Assert.NotNull(method);
+            Assert.That(method, Is.Not.Null);
 
             var result = await FunctionalTest.CallAsync<TResult>(b => ConfigureQueues(b), programType, method, new Dictionary<string, object>
             {

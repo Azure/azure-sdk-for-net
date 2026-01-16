@@ -43,14 +43,14 @@ namespace Azure.Health.Insights.CancerProfiling.Tests
             try
             {
                 var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, request);
-                Assert.IsNotNull(operation);
+                Assert.That(operation, Is.Not.Null);
                 Response response = operation.GetRawResponse();
-                Assert.IsNotNull(response);
+                Assert.That(response, Is.Not.Null);
                 Assert.That(response.Status == (int)HttpStatusCode.OK, Is.True);
                 OncoPhenotypeResults results = FetchResults(response);
-                Assert.IsNotEmpty(results.Patients);
+                Assert.That(results.Patients, Is.Not.Empty);
                 var patient = results.Patients[0];
-                Assert.IsNotEmpty(patient.Inferences);
+                Assert.That(patient.Inferences, Is.Not.Empty);
             }
             catch (System.Exception ex)
             {

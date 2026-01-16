@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.IotOperations.Tests
             IotOperationsBrokerListenerResource brokerListenerResource =
                 await brokerListenerResourceCollection.GetAsync(BrokersListenersName);
 
-            Assert.IsNotNull(brokerListenerResource);
-            Assert.IsNotNull(brokerListenerResource.Data);
+            Assert.That(brokerListenerResource, Is.Not.Null);
+            Assert.That(brokerListenerResource.Data, Is.Not.Null);
             Assert.That(BrokersListenersName, Is.EqualTo(brokerListenerResource.Data.Name));
 
             // Create new BrokerListener
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 );
 
             IotOperationsBrokerListenerResource createdBrokerListener = resp.Value;
-            Assert.IsNotNull(createdBrokerListener);
-            Assert.IsNotNull(createdBrokerListener.Data);
-            Assert.IsNotNull(createdBrokerListener.Data.Properties);
+            Assert.That(createdBrokerListener, Is.Not.Null);
+            Assert.That(createdBrokerListener.Data, Is.Not.Null);
+            Assert.That(createdBrokerListener.Data.Properties, Is.Not.Null);
 
             // Delete BrokerListener
             await createdBrokerListener.DeleteAsync(WaitUntil.Completed);

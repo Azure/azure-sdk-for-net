@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
 
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response);
         }
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callConnection.GetCallConnectionProperties();
 
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response);
         }
@@ -72,7 +72,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetCallConnectionProperties());
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.HangUpAsync(false).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.HangUp(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(targetParticipant).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(targetParticipant));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantsAsync(participantsToAdd).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -213,7 +213,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipants(participantsToAdd));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -246,7 +246,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantAsync(participantMri).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -257,7 +257,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipant(participantMri));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -290,7 +290,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantsAsync().ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -301,7 +301,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipants());
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -334,7 +334,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantsAsync(participants).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -345,7 +345,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipants(participants));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -357,7 +357,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(200, null, connectionId);
 
             var response = callConnection.GetCallMedia();
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.CallConnectionId, Is.EqualTo(connectionId));
         }
 

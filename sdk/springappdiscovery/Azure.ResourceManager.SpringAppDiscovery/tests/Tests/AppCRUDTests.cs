@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //get an app
             Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
             SpringBootAppResource appModelResource = appResponse.Value;
-            Assert.IsNotNull(appModelResource);
+            Assert.That(appModelResource, Is.Not.Null);
             SpringBootAppData appModelData = appModelResource.Data;
-            Assert.IsNotNull(appModelData);
+            Assert.That(appModelData, Is.Not.Null);
 
             //patch an app
             KeyValuePair<string, string> myKeyValuePair = new KeyValuePair<string, string>("appKey", "appValue");
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         {
             Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
             SpringBootAppResource appModelResource = appResponse.Value;
-            Assert.IsNotNull(appModelResource);
+            Assert.That(appModelResource, Is.Not.Null);
             SpringBootAppData appModelData = appModelResource.Data;
-            Assert.IsNotNull(appModelData);
+            Assert.That(appModelData, Is.Not.Null);
             IDictionary<string, string> tags = appModelData.Tags;
             return tags.Contains(myKeyValuePair);
         }

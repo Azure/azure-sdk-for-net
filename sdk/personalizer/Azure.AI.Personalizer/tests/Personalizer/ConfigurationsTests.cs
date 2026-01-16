@@ -64,7 +64,7 @@ namespace Azure.AI.Personalizer.Tests
                 arguments: "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
             );
             PersonalizerPolicy updatedPolicy = await client.UpdatePersonalizerPolicyAsync(newPolicy);
-            Assert.NotNull(updatedPolicy);
+            Assert.That(updatedPolicy, Is.Not.Null);
             Assert.That(updatedPolicy.Arguments, Is.EqualTo(newPolicy.Arguments));
             await Delay(30000);
             PersonalizerPolicy policy = await client.GetPersonalizerPolicyAsync();

@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Tests
                 mgmtGroup = item;
                 break;
             }
-            Assert.IsNotNull(mgmtGroup, "No management groups found in list");
-            Assert.IsNotNull(mgmtGroup.Data.DisplayName, "DisplayName was null");
-            Assert.IsNotNull(mgmtGroup.Data.Id, "Id was null");
-            Assert.IsNotNull(mgmtGroup.Data.Name, "Name was null");
-            Assert.IsNotNull(mgmtGroup.Data.TenantId, "TenantId was null");
-            Assert.IsNotNull(mgmtGroup.Data.ResourceType, "Type was null");
-            Assert.IsEmpty(mgmtGroup.Data.Children);
-            Assert.IsNull(mgmtGroup.Data.Details);
+            Assert.That(mgmtGroup, Is.Not.Null, "No management groups found in list");
+            Assert.That(mgmtGroup.Data.DisplayName, Is.Not.Null, "DisplayName was null");
+            Assert.That(mgmtGroup.Data.Id, Is.Not.Null, "Id was null");
+            Assert.That(mgmtGroup.Data.Name, Is.Not.Null, "Name was null");
+            Assert.That(mgmtGroup.Data.TenantId, Is.Not.Null, "TenantId was null");
+            Assert.That(mgmtGroup.Data.ResourceType, Is.Not.Null, "Type was null");
+            Assert.That(mgmtGroup.Data.Children, Is.Empty);
+            Assert.That(mgmtGroup.Data.Details, Is.Null);
         }
 
         [RecordedTest]

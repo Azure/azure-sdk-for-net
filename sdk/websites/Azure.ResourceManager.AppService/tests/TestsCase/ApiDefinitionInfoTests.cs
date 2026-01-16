@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var options = new ModelReaderWriterOptions("J");
             using var doc = JsonDocument.Parse(json);
             var result = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(doc.RootElement, options);
-            Assert.IsNull(result.Uri);
+            Assert.That(result.Uri, Is.Null);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             writer.Flush();
 
             string output = Encoding.UTF8.GetString(memoryStream.ToArray());
-            StringAssert.DoesNotContain("\"url\"", output);
+            Assert.That(output, Does.Not.Contain("\"url\""));
         }
     }
 }

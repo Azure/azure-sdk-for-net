@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             // List by Subscription
             var listBySubscription = new List<NetworkCloudL2NetworkResource>();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
 
             // Update
             NetworkCloudL2NetworkPatch patch = new NetworkCloudL2NetworkPatch()

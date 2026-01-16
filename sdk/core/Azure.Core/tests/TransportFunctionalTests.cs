@@ -119,7 +119,7 @@ namespace Azure.Core.Tests
 
             // InfiniteStream has a length of long.MaxValue check that it got sent correctly
             Assert.That(contentLength, Is.EqualTo(infiniteStream.Length));
-            Assert.Greater(infiniteStream.Length, int.MaxValue);
+            Assert.That(infiniteStream.Length, Is.GreaterThan(int.MaxValue));
         }
 
         [Test]
@@ -288,10 +288,10 @@ namespace Azure.Core.Tests
             Assert.That(request.Headers.TryGetValue(headerName.ToUpper(), out value), Is.True);
             Assert.That(value, Is.EqualTo(headerValue));
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(request.Headers, Is.EqualTo(new[]
             {
                  new HttpHeader(headerName, headerValue),
-             }, request.Headers);
+             }).AsCollection);
 
             await ExecuteRequest(request, transport);
 
@@ -311,10 +311,10 @@ namespace Azure.Core.Tests
             Request request = transport.CreateRequest();
 
             Assert.That(request.Headers.TryGetValue(headerName, out string value), Is.False);
-            Assert.IsNull(value);
+            Assert.That(value, Is.Null);
 
             Assert.That(request.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.False);
-            Assert.IsNull(values);
+            Assert.That(values, Is.Null);
         }
 
         [TestCaseSource(nameof(HeadersWithValues))]
@@ -346,17 +346,17 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo(joinedHeaderValues));
 
             Assert.That(request.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+            Assert.That(values, Is.EqualTo(new[] { headerValue, anotherHeaderValue }).AsCollection);
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(request.Headers, Is.EqualTo(new[]
             {
                 new HttpHeader(headerName, joinedHeaderValues),
-            }, request.Headers);
+            }).AsCollection);
 
             await ExecuteRequest(request, transport);
 
-            StringAssert.Contains(headerValue, httpHeaderValues.ToString());
-            StringAssert.Contains(anotherHeaderValue, httpHeaderValues.ToString());
+            Assert.That(httpHeaderValues.ToString(), Does.Contain(headerValue));
+            Assert.That(httpHeaderValues.ToString(), Does.Contain(anotherHeaderValue));
         }
 
         [TestCaseSource(nameof(HeadersWithValues))]
@@ -380,9 +380,9 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo(headerValue));
 
             Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            CollectionAssert.AreEqual(new[] { headerValue }, values);
+            Assert.That(values, Is.EqualTo(new[] { headerValue }).AsCollection);
 
-            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
+            Assert.That(response.Headers, Has.Member(new HttpHeader(headerName, headerValue)));
         }
 
         [TestCaseSource(nameof(HeadersWithValues))]
@@ -416,9 +416,9 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo(joinedHeaderValues));
 
             Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+            Assert.That(values, Is.EqualTo(new[] { headerValue, anotherHeaderValue }).AsCollection);
 
-            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
+            Assert.That(response.Headers, Has.Member(new HttpHeader(headerName, joinedHeaderValues)));
         }
 
         [TestCaseSource(nameof(HeadersWithValues))]
@@ -478,10 +478,10 @@ namespace Azure.Core.Tests
             Assert.That(request.Headers.TryGetValue(headerName.ToUpper(), out value), Is.True);
             Assert.That(value, Is.EqualTo(headerValue));
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(request.Headers, Is.EqualTo(new[]
             {
                 new HttpHeader(headerName, headerValue),
-            }, request.Headers);
+            }).AsCollection);
 
             await ExecuteRequest(request, transport);
 
@@ -512,7 +512,7 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(request, transport);
 
-            CollectionAssert.AreEqual(bytes, requestBytes);
+            Assert.That(requestBytes, Is.EqualTo(bytes).AsCollection);
         }
 
         [Test]
@@ -541,7 +541,7 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(request, transport);
 
-            CollectionAssert.AreEqual(stream.ToArray(), requestBytes);
+            Assert.That(requestBytes, Is.EqualTo(stream.ToArray()).AsCollection);
             Assert.That(requestBytes.Length, Is.EqualTo(10 * 1024));
         }
 
@@ -628,7 +628,7 @@ namespace Azure.Core.Tests
             using TestServer testServer = new TestServer(context => { });
             var transport = GetTransport();
             Request request = transport.CreateRequest();
-            Assert.IsNotEmpty(request.ClientRequestId);
+            Assert.That(request.ClientRequestId, Is.Not.Empty);
             Assert.That(Guid.TryParse(request.ClientRequestId, out _), Is.True);
             request.Method = RequestMethod.Get;
             request.Uri.Reset(testServer.Address);
@@ -819,7 +819,7 @@ namespace Azure.Core.Tests
                 Response response = await ExecuteRequest(request, transport);
                 Assert.That(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens), Is.True);
                 Assert.That(tokens.Count(), Is.EqualTo(2));
-                CollectionAssert.AreEqual(new[] { "A", "B" }, tokens);
+                Assert.That(tokens, Is.EqualTo(new[] { "A", "B" }).AsCollection);
             }
         }
 
@@ -840,7 +840,7 @@ namespace Azure.Core.Tests
                 Response response = await ExecuteRequest(request, transport);
                 Assert.That(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens), Is.True);
                 Assert.That(tokens.Count(), Is.EqualTo(1));
-                CollectionAssert.AreEqual(new[] { "A,B" }, tokens);
+                Assert.That(tokens, Is.EqualTo(new[] { "A,B" }).AsCollection);
             }
         }
 
@@ -858,7 +858,7 @@ namespace Azure.Core.Tests
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await ExecuteRequest(request, transport));
-                Assert.IsNotEmpty(exception.Message);
+                Assert.That(exception.Message, Is.Not.Empty);
                 Assert.That(exception.Status, Is.EqualTo(0));
             }
         }
@@ -877,9 +877,9 @@ namespace Azure.Core.Tests
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await ExecuteRequest(request, transport));
-                Assert.IsNotEmpty(exception.Message);
+                Assert.That(exception.Message, Is.Not.Empty);
                 Assert.That(exception.Status, Is.EqualTo(0));
-                Assert.IsNotEmpty(exception.InnerException.Message);
+                Assert.That(exception.InnerException.Message, Is.Not.Empty);
             }
         }
 
@@ -1079,8 +1079,8 @@ namespace Azure.Core.Tests
                         Assert.Multiple(
                             () =>
                             {
-                                Assert.NotNull(cert, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Certificate)} should not be null");
-                                Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.CertificateAuthorityChain)} should not be null");
+                                Assert.That(cert, Is.Not.Null, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Certificate)} should not be null");
+                                Assert.That(chain, Is.Not.Null, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.CertificateAuthorityChain)} should not be null");
                             });
                     }
                 }
@@ -1102,7 +1102,7 @@ namespace Azure.Core.Tests
                     var cert = context.Connection.ClientCertificate;
                     if (setClientCertificate)
                     {
-                        Assert.NotNull(cert);
+                        Assert.That(cert, Is.Not.Null);
                         Assert.That(cert, Is.EqualTo(clientCert));
                     }
                     else
@@ -1146,7 +1146,7 @@ namespace Azure.Core.Tests
                     var cert = context.Connection.ClientCertificate;
                     if (setClientCertificate)
                     {
-                        Assert.NotNull(cert);
+                        Assert.That(cert, Is.Not.Null);
                         Assert.That(cert, Is.EqualTo(clientCert));
                         validatedCert = true;
                     }
@@ -1204,13 +1204,13 @@ namespace Azure.Core.Tests
                         var cert = context.Connection.ClientCertificate;
                         if (setClientCertificate)
                         {
-                            Assert.NotNull(cert);
+                            Assert.That(cert, Is.Not.Null);
                             Assert.That(cert, Is.EqualTo(anotherCert));
                             validatedCert = true;
                         }
                         else
                         {
-                            Assert.NotNull(cert);
+                            Assert.That(cert, Is.Not.Null);
                             Assert.That(cert, Is.EqualTo(clientCert));
                             validatedCert = true;
                         }
@@ -1259,7 +1259,7 @@ namespace Azure.Core.Tests
             using (TestServer testServer = new TestServer(
                        async context =>
                        {
-                           Assert.Zero(context.Request.Headers["Expect"].Count);
+                           Assert.That(context.Request.Headers["Expect"].Count, Is.Zero);
                            await context.Response.WriteAsync("");
                        }))
             {

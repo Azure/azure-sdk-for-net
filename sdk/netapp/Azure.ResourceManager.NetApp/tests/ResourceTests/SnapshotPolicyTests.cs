@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Validate if created properly
             NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
-            Assert.IsNotNull(snapshotVolumeResource.Data.DataProtection);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Backup);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Replication);
+            Assert.That(snapshotVolumeResource.Data.DataProtection, Is.Not.Null);
+            Assert.That(snapshotVolumeResource.Data.DataProtection.Backup, Is.Null);
+            Assert.That(snapshotVolumeResource.Data.DataProtection.Replication, Is.Null);
             Assert.That(snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId, Is.EqualTo(snapshotPolicyProperties.SnapshotPolicyId));
 
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
@@ -220,15 +220,15 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Validate if created properly
             NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
-            Assert.IsNotNull(snapshotVolumeResource.Data.DataProtection);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Backup);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Replication);
+            Assert.That(snapshotVolumeResource.Data.DataProtection, Is.Not.Null);
+            Assert.That(snapshotVolumeResource.Data.DataProtection.Backup, Is.Null);
+            Assert.That(snapshotVolumeResource.Data.DataProtection.Replication, Is.Null);
             Assert.That(snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId, Is.EqualTo(snapshotPolicyProperties.SnapshotPolicyId));
 
             //List volumes
             //List<SnapshotPolicyResource> snapshotPoliciesList = await _snapshotPolicyCollection.GetAllAsync().ToEnumerableAsync();
             List<NetAppVolumeResource> volumesList = await snapshotPolicyResource1.GetVolumesAsync().ToEnumerableAsync();
-            Assert.IsNotNull(volumesList);
+            Assert.That(volumesList, Is.Not.Null);
             volumesList.Should().HaveCount(1);
             volumesList[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
             await volumeResource1.DeleteAsync(WaitUntil.Completed);

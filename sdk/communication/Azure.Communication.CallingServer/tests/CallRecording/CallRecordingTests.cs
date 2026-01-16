@@ -68,7 +68,7 @@ namespace Azure.Communication.CallingServer
         {
             CallRecording callRecording = getMockCallRecording(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(operation(callRecording));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallingServer
             CallRecording callRecording = getMockCallRecording(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(operation(callRecording));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 

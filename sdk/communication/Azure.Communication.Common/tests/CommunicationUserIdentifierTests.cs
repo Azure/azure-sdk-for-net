@@ -39,8 +39,8 @@ namespace Azure.Communication
         public void constructWithValidId()
         {
             CommunicationUserIdentifier result = new(_id);
-            Assert.NotNull(result.Id);
-            Assert.NotNull(result.GetHashCode());
+            Assert.That(result.Id, Is.Not.Null);
+            Assert.That(result.GetHashCode(), Is.Not.Null);
         }
     }
 }

@@ -47,20 +47,20 @@ namespace Azure.AI.Translation.Document.Tests
             var translations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
-            Assert.GreaterOrEqual(translations.Count, 1);
+            Assert.That(translations.Count, Is.GreaterThanOrEqualTo(1));
             TranslationStatusResult oneTranslation = translations[0];
             Assert.That(oneTranslation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.That(oneTranslation.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
-            Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsSucceeded, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsTotal, 0);
+            Assert.That(oneTranslation.DocumentsCanceled, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsFailed, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsInProgress, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsNotStarted, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsSucceeded, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsTotal, Is.GreaterThanOrEqualTo(0));
 
             if (oneTranslation.Status == DocumentTranslationStatus.Succeeded)
             {
-                Assert.Greater(oneTranslation.TotalCharactersCharged, 0);
+                Assert.That(oneTranslation.TotalCharactersCharged, Is.GreaterThan(0));
             }
             else
             {
@@ -87,12 +87,12 @@ namespace Azure.AI.Translation.Document.Tests
 
             var documentFormats = await client.GetSupportedFormatsAsync(FileFormatType.Document);
 
-            Assert.GreaterOrEqual(documentFormats.Value.Value.Count, 0);
+            Assert.That(documentFormats.Value.Value.Count, Is.GreaterThanOrEqualTo(0));
             foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value.Value)
             {
                 Assert.That(string.IsNullOrEmpty(fileFormat.Format), Is.False);
-                Assert.IsNotNull(fileFormat.FileExtensions);
-                Assert.IsNotNull(fileFormat.FormatVersions);
+                Assert.That(fileFormat.FileExtensions, Is.Not.Null);
+                Assert.That(fileFormat.FormatVersions, Is.Not.Null);
             }
         }
 
@@ -105,12 +105,12 @@ namespace Azure.AI.Translation.Document.Tests
 
             var glossaryFormats = await client.GetSupportedFormatsAsync(FileFormatType.Glossary);
 
-            Assert.GreaterOrEqual(glossaryFormats.Value.Value.Count, 0);
+            Assert.That(glossaryFormats.Value.Value.Count, Is.GreaterThanOrEqualTo(0));
             foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value.Value)
             {
                 Assert.That(string.IsNullOrEmpty(glossaryFormat.Format), Is.False);
-                Assert.IsNotNull(glossaryFormat.FileExtensions);
-                Assert.IsNotNull(glossaryFormat.FormatVersions);
+                Assert.That(glossaryFormat.FileExtensions, Is.Not.Null);
+                Assert.That(glossaryFormat.FormatVersions, Is.Not.Null);
 
                 if (glossaryFormat.Format == "XLIFF")
                 {
@@ -134,20 +134,20 @@ namespace Azure.AI.Translation.Document.Tests
 
             List<TranslationStatusResult> translations = await client.GetTranslationStatusesAsync().ToEnumerableAsync();
 
-            Assert.GreaterOrEqual(translations.Count, 1);
+            Assert.That(translations.Count, Is.GreaterThanOrEqualTo(1));
             TranslationStatusResult oneTranslation = translations[0];
             Assert.That(oneTranslation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.That(oneTranslation.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
-            Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsSucceeded, 0);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsTotal, 0);
+            Assert.That(oneTranslation.DocumentsCanceled, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsFailed, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsInProgress, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsNotStarted, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsSucceeded, Is.GreaterThanOrEqualTo(0));
+            Assert.That(oneTranslation.DocumentsTotal, Is.GreaterThanOrEqualTo(0));
 
             if (oneTranslation.Status == DocumentTranslationStatus.Succeeded)
             {
-                Assert.Greater(oneTranslation.TotalCharactersCharged, 0);
+                Assert.That(oneTranslation.TotalCharactersCharged, Is.GreaterThan(0));
             }
             else
             {

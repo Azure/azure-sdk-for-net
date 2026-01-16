@@ -166,8 +166,8 @@ namespace Azure.Storage.Blobs.Test
 
             foreach (byte[] bytes in sink.Staged.Values.Select(val => val.Data))
             {
-                Assert.LessOrEqual(bytes.Length, 100);
-                Assert.GreaterOrEqual(bytes.Length, 50);
+                Assert.That(bytes.Length, Is.LessThanOrEqualTo(100));
+                Assert.That(bytes.Length, Is.GreaterThanOrEqualTo(50));
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.That(sink.Staged.Count, Is.EqualTo(2));
             // First two should be merged
-            CollectionAssert.AreEqual(new byte[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()].Data);
+            Assert.That(sink.Staged[sink.Blocks.First()].Data, Is.EqualTo(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }).AsCollection);
             Assert.That(info, Is.EqualTo(s_response));
             Assert.That(testPool.TotalRents, Is.EqualTo(2));
             Assert.That(testPool.CurrentCount, Is.EqualTo(0));
@@ -220,10 +220,10 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.That(blockId.Length, Is.EqualTo(64));
                 // Should be base64 string
-                Assert.NotNull(Convert.FromBase64String(blockId));
+                Assert.That(Convert.FromBase64String(blockId), Is.Not.Null);
             }
 
-            CollectionAssert.AllItemsAreUnique(sink.Staged.Keys);
+            Assert.That(sink.Staged.Keys, Is.Unique);
             Assert.That(info, Is.EqualTo(s_response));
             AssertStaged(sink, content);
         }
@@ -369,9 +369,9 @@ namespace Azure.Storage.Blobs.Test
         private static void AssertStaged(StagingSink sink, TestStream stream)
         {
             Assert.That(sink.Staged.Count, Is.EqualTo(sink.Blocks.Length));
-            CollectionAssert.AreEqual(
-                stream.AllBytes,
-                sink.Blocks.SelectMany(block => sink.Staged[block].Data));
+            Assert.That(
+                sink.Blocks.SelectMany(block => sink.Staged[block].Data),
+                Is.EqualTo(stream.AllBytes).AsCollection);
         }
 
         private class StagingSink

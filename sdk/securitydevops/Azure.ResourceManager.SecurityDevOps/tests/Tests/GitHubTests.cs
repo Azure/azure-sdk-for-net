@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             var gitHubConnector = (await gitHubConnectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, connectorData)).Value;
 
-            Assert.IsNotNull(gitHubConnector);
+            Assert.That(gitHubConnector, Is.Not.Null);
             Assert.That(gitHubConnector.Data.Properties.ProvisioningState, Is.EqualTo(ProvisioningState.Succeeded));
             Assert.That(gitHubConnector.Data.Name, Is.EqualTo(connectorName));
             Assert.That(gitHubConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
         public async Task GetGitHubConnectors()
         {
             var connectors = await DefaultSubscription.GetGitHubConnectorsAsync().ToEnumerableAsync();
-            Assert.IsNotNull(connectors);
+            Assert.That(connectors, Is.Not.Null);
             Assert.That(connectors.Count, Is.EqualTo(1));
 
             var connector = connectors[0];
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             GitHubConnectorResource gitHubConnector = await Client.GetGitHubConnectorResource(gitHubConnectorId).GetAsync();
 
-            Assert.IsNotNull(gitHubConnector);
+            Assert.That(gitHubConnector, Is.Not.Null);
             Assert.That(gitHubConnector.Data.Name, Is.EqualTo(gitHubConnectorId.Name));
             Assert.That(gitHubConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
         }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             // Get connector and verify it exists
             GitHubConnectorResource connector = await Client.GetGitHubConnectorResource(connectorId).GetAsync();
-            Assert.IsNotNull(connector);
+            Assert.That(connector, Is.Not.Null);
 
             // Delete
             await connector.DeleteAsync(WaitUntil.Completed);

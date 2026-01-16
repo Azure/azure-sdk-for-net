@@ -160,7 +160,7 @@ namespace Azure.Core.Tests
                 extractedStream.Dispose();
             }
 
-            Assert.Greater(reqNum, requestCount);
+            Assert.That(reqNum, Is.GreaterThan(requestCount));
         }
 
         [Test]

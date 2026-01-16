@@ -603,7 +603,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Validate the diagnostics.
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.IsEmpty(listener.Scopes);
+            Assert.That(listener.Scopes, Is.Empty);
         }
 
         /// <summary>

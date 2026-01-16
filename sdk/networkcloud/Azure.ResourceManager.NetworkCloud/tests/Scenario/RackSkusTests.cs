@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
 
             var rackSkuName = listBySubscription[0].Data.Name;
 

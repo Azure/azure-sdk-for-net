@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string certificateName = Recording.GenerateAssetName("cert");
             var cert = await CreateCertificate(certificateName);
-            Assert.IsNotNull(cert);
+            Assert.That(cert, Is.Not.Null);
             Assert.That(cert.Data.Name, Is.EqualTo(certificateName));
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string certificateName = Recording.GenerateAssetName("cert");
             await CreateCertificate(certificateName);
             var cert = await _certificateCollection.GetAsync(certificateName);
-            Assert.IsNotNull(cert);
+            Assert.That(cert, Is.Not.Null);
             Assert.That(cert.Value.Data.Name, Is.EqualTo(certificateName));
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string certificateName = Recording.GenerateAssetName("cert");
             await CreateCertificate(certificateName);
             var list = await _certificateCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

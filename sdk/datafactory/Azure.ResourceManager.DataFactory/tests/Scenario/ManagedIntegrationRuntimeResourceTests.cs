@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create a ManagedIntegrationRuntime
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
             var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            Assert.IsNotNull(integrationRuntime);
+            Assert.That(integrationRuntime, Is.Not.Null);
             // Exists
             bool flag = await dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.That(flag, Is.True);
             // Get
             var integrationRuntimeGet = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName);
-            Assert.IsNotNull(integrationRuntime);
+            Assert.That(integrationRuntime, Is.Not.Null);
             Assert.That(integrationRuntimeGet.Value.Data.Name, Is.EqualTo(integrationRuntimeName));
             // GetAll
             var list = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             // Delete
             await integrationRuntime.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
 
             var result = await dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
-            Assert.IsNotNull(result.Value.Id);
+            Assert.That(result.Value.Id, Is.Not.Null);
         }
     }
 }

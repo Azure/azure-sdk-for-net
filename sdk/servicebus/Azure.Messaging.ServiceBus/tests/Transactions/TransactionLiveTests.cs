@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
             };
@@ -63,14 +63,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
 
                 receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 receivedMessage = await receiver.ReceiveMessageAsync();
 
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message2.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
             };
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync();
-                Assert.NotNull(msg);
+                Assert.That(msg, Is.Not.Null);
             };
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 received = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
 
-                Assert.NotNull(received);
+                Assert.That(received, Is.Not.Null);
                 await receiver.CompleteMessageAsync(received);
             };
         }
@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
 
-                Assert.IsNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Null);
             };
         }
 
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceiver receiver = sessionEnabled ? await client.AcceptNextSessionAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
 
                 var receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(
                     receivedMessage.Body.ToString(),
                     Is.EqualTo(message.Body.ToString()));
@@ -275,9 +275,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await sender.SendMessageAsync(message2);
 
                 ServiceBusReceivedMessage receivedMessage1 = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage1);
+                Assert.That(receivedMessage1, Is.Not.Null);
                 ServiceBusReceivedMessage receivedMessage2 = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage2);
+                Assert.That(receivedMessage2, Is.Not.Null);
 
                 transaction = new CommittableTransaction();
                 using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
@@ -315,7 +315,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await sender.SendMessageAsync(message1);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -338,7 +338,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 // Assert that send did succeed
                 receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message2.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
 
@@ -367,7 +367,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await sender1.SendMessageAsync(message);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
 
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -401,13 +401,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     {
                         await tcs.Task;
                     }
-                    Assert.IsNull(Transaction.Current);
+                    Assert.That(Transaction.Current, Is.Null);
                     await sender1.SendMessageAsync(message).ConfigureAwait(false);
                     if (!transactionFirst)
                     {
                         tcs.SetResult(true);
                     }
-                    Assert.IsNull(Transaction.Current);
+                    Assert.That(Transaction.Current, Is.Null);
                     await sender2.SendMessageAsync(message).ConfigureAwait(false);
                 }
 
@@ -432,7 +432,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await sender.SendMessageAsync(message1);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -461,7 +461,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await sender.SendMessageAsync(message1);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.NotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -531,7 +531,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             }
 
             receivedMessage = await receiverA.ReceiveMessageAsync();
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
         }
 
        [Test]
@@ -562,17 +562,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             // transaction wasn't committed - verify that it was rolled back
             receivedMessage = await receiverA.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
             await receiverA.AbandonMessageAsync(receivedMessage);
 
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
 
             receivedMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
 
             var receiverC = noTxClient.CreateReceiver(queueC.QueueName);
             receivedMessage = await receiverC.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
 
             receivedMessage = await receiverA.ReceiveMessageAsync();
 
@@ -585,11 +585,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ts.Complete();
             }
             receivedMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
             receivedMessage = await receiverB.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
             receivedMessage = await receiverC.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
         }
 
         [Test]
@@ -620,17 +620,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             // transaction wasn't committed - verify that it was rolled back
             receivedMessage = await receiverA.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
             await receiverA.AbandonMessageAsync(receivedMessage);
 
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
 
             receivedMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
 
             var receiverC = noTxClient.CreateReceiver(topicC.TopicName, topicC.SubscriptionNames.First());
             receivedMessage = await receiverC.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
 
             receivedMessage = await receiverA.ReceiveMessageAsync();
 
@@ -643,11 +643,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ts.Complete();
             }
             receivedMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
             receivedMessage = await receiverB.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
             receivedMessage = await receiverC.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
         }
 
         [Test]
@@ -742,10 +742,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             }
 
             var receivedMessageC = await receiverC.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessageC);
+            Assert.That(receivedMessageC, Is.Not.Null);
 
             receivedMessageB = await receiverB.ReceiveMessageAsync();
-            Assert.IsNull(receivedMessageB);
+            Assert.That(receivedMessageB, Is.Null);
 
             await senderB.SendMessageAsync(message);
             // If the transaction succeeds, then all the operations occurred on the same partition.
@@ -810,11 +810,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await Task.Delay(TimeSpan.FromSeconds(2));
             await receiverB.AbandonMessageAsync(receivedMessageB);
             receivedMessageB = await receiverB.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessageB);
+            Assert.That(receivedMessageB, Is.Not.Null);
             await receiverB.AbandonMessageAsync(receivedMessageB);
 
             var receivedMessageC = await receiverC.ReceiveMessageAsync();
-            Assert.IsNull(receivedMessageC);
+            Assert.That(receivedMessageC, Is.Null);
 
             // If the transaction succeeds, then all the operations occurred on the same partition.
             using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -830,7 +830,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             }
 
             receivedMessageB = await receiverB.ReceiveMessageAsync();
-            Assert.IsNull(receivedMessageB);
+            Assert.That(receivedMessageB, Is.Null);
         }
 
         [Test]
@@ -875,7 +875,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             // transaction wasn't committed - verify that it was rolled back
             ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
         }
 
         [Test]
@@ -920,13 +920,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await processorA.StopProcessingAsync();
 
             ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
 
             receivedMessage = await receiverB.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
 
             receivedMessage = await receiverC.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
         }
 
         [Test]
@@ -970,7 +970,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             // transaction wasn't committed - verify that it was rolled back
             ServiceBusSessionReceiver receiverA = await client.AcceptNextSessionAsync(queueA.QueueName);
             ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
-            Assert.IsNotNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Not.Null);
         }
 
         [Test]
@@ -1058,7 +1058,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             }
 
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
-            Assert.IsNotNull(await receiverB.ReceiveMessageAsync());
+            Assert.That(await receiverB.ReceiveMessageAsync(), Is.Not.Null);
         }
 
         private ServiceBusClient CreateCrossEntityTxnClient() =>

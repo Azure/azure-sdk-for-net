@@ -168,11 +168,11 @@ namespace Azure.AI.Inference.Tests.Utilities
                 {
                     if (measurement is double d)
                     {
-                        Assert.Greater(d, 0);
+                        Assert.That(d, Is.GreaterThan(0));
                     }
                     else
                     {
-                        Assert.Greater((long)measurement, 0);
+                        Assert.That((long)measurement, Is.GreaterThan(0));
                     }
                 }
             }

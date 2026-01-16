@@ -109,7 +109,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
             var testRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
             var testRun = testRunResponse.Value;
-            Assert.NotNull(testRun);
+            Assert.That(testRun, Is.Not.Null);
             Assert.That(testRun.TestRunId, Is.EqualTo(_testRunId));
             Assert.That(testRun.TestId, Is.EqualTo(_testId));
         }
@@ -121,7 +121,7 @@ namespace Azure.Developer.LoadTesting.Tests
             await _testRunOperation.WaitForCompletionAsync();
 
             var testRunFileResponse = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
-            Assert.NotNull(testRunFileResponse.Value);
+            Assert.That(testRunFileResponse.Value, Is.Not.Null);
             Assert.That(testRunFileResponse.Value.FileName, Is.EqualTo(_fileName));
             Assert.That(testRunFileResponse.Value.ValidationStatus, Is.EqualTo(FileValidationStatus.ValidationSuccess));
         }
@@ -159,7 +159,7 @@ namespace Azure.Developer.LoadTesting.Tests
                 }
                 else
                 {
-                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
+                    Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageSizeHint));
                 }
             }
         }
@@ -178,7 +178,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task StopTestRun()
         {
             var stopResponse = await _loadTestRunClient.StopTestRunAsync(_testRunId);
-            Assert.NotNull(stopResponse.Value);
+            Assert.That(stopResponse.Value, Is.Not.Null);
             Assert.That(stopResponse.Value.TestId, Is.EqualTo(_testId));
             Assert.That(stopResponse.Value.TestRunId, Is.EqualTo(_testRunId));
         }
@@ -248,7 +248,7 @@ namespace Azure.Developer.LoadTesting.Tests
             var appComponentsResponse = await _loadTestRunClient.GetAppComponentsAsync(_testRunId);
             var appComponents = appComponentsResponse.Value;
             var component = appComponents.Components.Values.FirstOrDefault();
-            Assert.NotNull(component);
+            Assert.That(component, Is.Not.Null);
             Assert.AreEqual(_resourceId, component.ResourceId.ToString());
         }
 
@@ -325,7 +325,7 @@ namespace Azure.Developer.LoadTesting.Tests
             var serverMetricsResponse = await _loadTestRunClient.GetServerMetricsConfigAsync(_testRunId);
             var serverMetrics = serverMetricsResponse.Value;
             var metric = serverMetrics.Metrics.Values.FirstOrDefault();
-            Assert.NotNull(metric);
+            Assert.That(metric, Is.Not.Null);
             Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
         }
 
@@ -336,11 +336,11 @@ namespace Azure.Developer.LoadTesting.Tests
             await _testRunOperation.WaitForCompletionAsync();
 
             var getTestRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
-            Assert.NotNull(getTestRunResponse.Value);
+            Assert.That(getTestRunResponse.Value, Is.Not.Null);
             var testRun = getTestRunResponse.Value;
 
             var getMetricNamespaces = await _loadTestRunClient.GetMetricNamespacesAsync(_testRunId);
-            Assert.NotNull(getMetricNamespaces.Value);
+            Assert.That(getMetricNamespaces.Value, Is.Not.Null);
             var metricNamespaces = getMetricNamespaces.Value;
 
             var getMetricDefinitions = await _loadTestRunClient.GetMetricDefinitionsAsync(
@@ -358,7 +358,7 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 foreach (var item in page.Values)
                 {
-                    Assert.NotNull(item.Data);
+                    Assert.That(item.Data, Is.Not.Null);
                 }
             }
         }
@@ -414,7 +414,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             var testProfileRunResponse = await _loadTestRunClient.GetTestProfileRunAsync(_testProfileRunId);
             var testProfileRun = testProfileRunResponse.Value;
-            Assert.NotNull(testProfileRun);
+            Assert.That(testProfileRun, Is.Not.Null);
             Assert.AreEqual(_testProfileRunId, testProfileRun.TestProfileRunId);
             Assert.AreEqual(_testProfileId, testProfileRun.TestProfileId);
         }
@@ -439,7 +439,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task DeleteTestProfileRun()
         {
             Response response = await _loadTestRunClient.DeleteTestProfileRunAsync(_testProfileRunId);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
     }
 }

@@ -366,7 +366,7 @@ namespace TestProject1
             }
             else
             {
-                Assert.IsNotNull(result.GenerationSpec);
+                Assert.That(result.GenerationSpec, Is.Not.Null);
                 Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
                 Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
                 Assert.That(result.GenerationSpec.Modifier, Is.EqualTo("public"));
@@ -404,13 +404,13 @@ namespace TestProject1
 
                 if (type == LocalBaseModel)
                 {
-                    Assert.IsNotNull(dict[fullName].PersistableModelProxy);
+                    Assert.That(dict[fullName].PersistableModelProxy, Is.Not.Null);
                     AssertUnknownLocalBaseModel(dict[fullName].PersistableModelProxy!);
 
                     if (dupeModel)
                     {
                         var dupeFullName = $"TestProject1.{type}";
-                        Assert.IsNotNull(dict[dupeFullName].PersistableModelProxy);
+                        Assert.That(dict[dupeFullName].PersistableModelProxy, Is.Not.Null);
                         AssertUnknownLocalBaseModel(dict[dupeFullName].PersistableModelProxy!, "TestProject1");
                     }
                 }
@@ -540,7 +540,7 @@ $$"""
         private static void AssertBaseModelBuilder(TypeBuilderSpec baseModel)
         {
             Assert.That(baseModel.Modifier, Is.EqualTo("internal"));
-            Assert.IsNotNull(baseModel.PersistableModelProxy);
+            Assert.That(baseModel.PersistableModelProxy, Is.Not.Null);
             AssertBaseModel(baseModel.Type);
             Assert.That(baseModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
             Assert.That(baseModel.ContextType, Is.EqualTo(s_modelExpectations[baseModel.Type.Name].Context));
@@ -558,7 +558,7 @@ $$"""
         private static void AssertTestProject1LocalBaseModelBuilder(TypeBuilderSpec localBaseModel)
         {
             Assert.That(localBaseModel.Modifier, Is.EqualTo("internal"));
-            Assert.IsNotNull(localBaseModel.PersistableModelProxy);
+            Assert.That(localBaseModel.PersistableModelProxy, Is.Not.Null);
             AssertLocalBaseModel(localBaseModel.Type, "TestProject1");
             Assert.That(localBaseModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
             Assert.That(localBaseModel.ContextType, Is.EqualTo(s_modelExpectations[localBaseModel.Type.Name].Context));
@@ -567,7 +567,7 @@ $$"""
         private static void AssertLocalBaseModelBuilder(TypeBuilderSpec localBaseModel)
         {
             Assert.That(localBaseModel.Modifier, Is.EqualTo("internal"));
-            Assert.IsNotNull(localBaseModel.PersistableModelProxy);
+            Assert.That(localBaseModel.PersistableModelProxy, Is.Not.Null);
             AssertLocalBaseModel(localBaseModel.Type);
             Assert.That(localBaseModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
             Assert.That(localBaseModel.ContextType, Is.EqualTo(s_modelExpectations[localBaseModel.Type.Name].Context));

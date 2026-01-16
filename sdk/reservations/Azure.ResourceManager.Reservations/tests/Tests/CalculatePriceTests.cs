@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.That(price.Properties.BillingCurrencyTotal.Amount > 0, Is.True);
             Assert.That(price.Properties.PricingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
             Assert.That(price.Properties.PricingCurrencyTotal.Amount > 0, Is.True);
-            Assert.IsNotEmpty(price.Properties.ReservationOrderId.ToString());
+            Assert.That(price.Properties.ReservationOrderId.ToString(), Is.Not.Empty);
 
             if (billingPlan.Equals("Upfront"))
             {
-                Assert.IsEmpty(price.Properties.PaymentSchedule);
+                Assert.That(price.Properties.PaymentSchedule, Is.Empty);
             }
             else
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 {
                     Assert.That(item.PricingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
                     Assert.That(item.PricingCurrencyTotal.Amount > 0, Is.True);
-                    Assert.IsNotNull(item.DueOn);
+                    Assert.That(item.DueOn, Is.Not.Null);
                     Assert.That(item.Status, Is.EqualTo(PaymentStatus.Scheduled));
                 }
             }

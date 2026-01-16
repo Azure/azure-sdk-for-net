@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _fhirDestinationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateHealthcareApisIotFhirDestination(list.FirstOrDefault().Data, fhirDestinationName);
 
             // Delete
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
         private void ValidateHealthcareApisIotFhirDestination(HealthcareApisIotFhirDestinationData fhirDestination, string fhirDestinationName)
         {
-            Assert.IsNotNull(fhirDestination);
-            Assert.IsNotNull(fhirDestination.ETag);
-            Assert.IsNotNull(fhirDestination.FhirMappingContent);
+            Assert.That(fhirDestination, Is.Not.Null);
+            Assert.That(fhirDestination.ETag, Is.Not.Null);
+            Assert.That(fhirDestination.FhirMappingContent, Is.Not.Null);
             Assert.That(fhirDestination.Id.Name, Is.EqualTo(fhirDestinationName));
             Assert.That(fhirDestination.Location, Is.EqualTo(DefaultLocation));
             Assert.That(fhirDestination.ResourceIdentityResolutionType.ToString(), Is.EqualTo("Create"));

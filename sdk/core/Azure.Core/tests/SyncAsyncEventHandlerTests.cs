@@ -305,7 +305,7 @@ namespace Azure.Core.Tests
                             s => s.Name == $"{nameof(TestClient)}.{nameof(TestClient.Working)}");
 
                     Assert.That(Activity.Current.OperationName, Is.EqualTo($"{nameof(TestClient)}.{nameof(TestClient.DoWork)}"));
-                    Assert.IsNull(scope);
+                    Assert.That(scope, Is.Null);
                     return Task.CompletedTask;
                 };
             await client.DoWorkAsync();
@@ -485,7 +485,7 @@ namespace Azure.Core.Tests
             client.Working += test.Handle;
             await client.DoWorkAsync();
 
-            Assert.IsNotNull(test.LastEventArgs);
+            Assert.That(test.LastEventArgs, Is.Not.Null);
         }
 
         [Test]
@@ -606,7 +606,7 @@ namespace Azure.Core.Tests
             }
             catch (AggregateException ex)
             {
-                Assert.IsInstanceOf<InvalidOperationException>(ex.InnerException);
+                Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
                 Assert.That(ex.InnerException.Message, Is.EqualTo("Boom!"));
             }
 
@@ -634,7 +634,7 @@ namespace Azure.Core.Tests
             }
             catch (AggregateException ex)
             {
-                Assert.IsInstanceOf<InvalidOperationException>(ex.InnerException);
+                Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
                 Assert.That(ex.InnerException.Message, Is.EqualTo("Boom!"));
             }
 
@@ -667,9 +667,9 @@ namespace Azure.Core.Tests
             catch (AggregateException ex)
             {
                 var messages = ex.InnerExceptions.Select(e => e.Message).ToList();
-                Assert.Contains(nameof(TestClient.Working), messages);
-                Assert.Contains("Bar", messages);
-                Assert.Contains("Baz", messages);
+                Assert.That(messages, Does.Contain(nameof(TestClient.Working)));
+                Assert.That(messages, Does.Contain("Bar"));
+                Assert.That(messages, Does.Contain("Baz"));
                 Assert.That(messages.Count, Is.EqualTo(3));
             }
 
@@ -694,8 +694,8 @@ namespace Azure.Core.Tests
             }
             catch (AggregateException outer)
             {
-                Assert.IsInstanceOf<AggregateException>(outer.InnerException);
-                Assert.IsInstanceOf<InvalidOperationException>(outer.InnerException.InnerException);
+                Assert.That(outer.InnerException, Is.InstanceOf<AggregateException>());
+                Assert.That(outer.InnerException.InnerException, Is.InstanceOf<InvalidOperationException>());
             }
         }
         #endregion

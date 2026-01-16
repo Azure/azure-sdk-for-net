@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Search.Tests
                 HostingMode = SearchServiceHostingMode.Default
             };
             var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Data.Name, Is.EqualTo(name));
             Assert.That(result.Data.Location, Is.EqualTo(DefaultLocation));
             Assert.That(result.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Search.Tests
             var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
 
             result = (await SearchCollection.GetAsync(name)).Value;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Data.Name, Is.EqualTo(name));
             Assert.That(result.Data.Location, Is.EqualTo(DefaultLocation));
             Assert.That(result.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Search.Tests
             };
             await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var result = (await SearchCollection.ExistsAsync(name)).Value;
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result == true, Is.True);
         }
     }

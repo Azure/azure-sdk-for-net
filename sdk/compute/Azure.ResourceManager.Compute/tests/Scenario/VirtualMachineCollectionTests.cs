@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     vm2 = vm;
             }
 
-            Assert.NotNull(vm1);
-            Assert.NotNull(vm2);
+            Assert.That(vm1, Is.Not.Null);
+            Assert.That(vm2, Is.Not.Null);
         }
     }
 }

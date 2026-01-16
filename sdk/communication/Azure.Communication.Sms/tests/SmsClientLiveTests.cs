@@ -86,7 +86,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsNotEmpty(ex.Message);
+                Assert.That(ex.Message, Is.Not.Empty);
                 Assert.That(ex.Message.Contains("401"), Is.True); // Unauthorized
                 Console.WriteLine(ex.Message);
             }

@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // Get new api to check it was added
             var apiGetResponse = (await apiCollection.GetAsync(newApiId)).Value;
-            Assert.NotNull(apiGetResponse);
+            Assert.That(apiGetResponse, Is.Not.Null);
             Assert.That(apiGetResponse.Data.Name, Is.EqualTo(newApiId));
             Assert.That(apiGetResponse.Data.DisplayName, Is.EqualTo(newApiName));
             Assert.That(apiGetResponse.Data.Description, Is.EqualTo(newApiDescription));
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 };
             }
             var schemaContract = (await schemaCollection.CreateOrUpdateAsync(WaitUntil.Completed, newSchemaId, schemaData)).Value;
-            Assert.NotNull(schemaContract);
+            Assert.That(schemaContract, Is.Not.Null);
             Assert.That(schemaContract.Data.ContentType, Is.EqualTo(schemaData.ContentType));
-            Assert.NotNull(schemaContract.Data.Definitions);
+            Assert.That(schemaContract.Data.Definitions, Is.Not.Null);
             Assert.That(schemaContract.Data.Value, Is.Null);
 
             // list the schemas attached to the api
             var schemasList = await schemaCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(schemasList);
+            Assert.That(schemasList, Is.Not.Null);
             Assert.That(schemasList.Count, Is.EqualTo(1));
             Assert.That(schemasList.FirstOrDefault().Data.ContentType, Is.EqualTo(schemaData.ContentType));
 

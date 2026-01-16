@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
             var updatedVoice = sessionUpdated.Session.Voice;
-            Assert.IsNotNull(updatedVoice);
+            Assert.That(updatedVoice, Is.Not.Null);
 
             var standardVoice = SafeCast<AzureStandardVoice>(updatedVoice);
             Assert.That(standardVoice.Name, Is.EqualTo(voice.Name));

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             listRouteResponseAP = getRouteTableResponse.Value.GetRoutes().GetAllAsync();
             listRouteResponse = await listRouteResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listRouteResponse);
+            Assert.That(listRouteResponse, Is.Empty);
 
             // Delete RouteTable
             await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify delete
             AsyncPageable<RouteTableResource> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
             List<RouteTableResource> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listRouteTableResponse);
+            Assert.That(listRouteTableResponse, Is.Empty);
         }
 
         [Test]
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify delete
             AsyncPageable<RouteTableResource> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
             List<RouteTableResource> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listRouteTableResponse);
+            Assert.That(listRouteTableResponse, Is.Empty);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.That(count, Is.GreaterThanOrEqualTo(3));
             //4.Exists
             Assert.That((bool)await container.ExistsAsync(name), Is.True);
             Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);

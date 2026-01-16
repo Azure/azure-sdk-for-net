@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Tests.Spatial
         public void CreateNull()
         {
             Assert.That(SpatialProxyFactory.TryCreate(null, out GeographyProxy proxy), Is.False);
-            Assert.IsNull(proxy);
+            Assert.That(proxy, Is.Null);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Tests.Spatial
         public void CreateFails(object value)
         {
             Assert.That(SpatialProxyFactory.TryCreate(value, out GeographyProxy proxy), Is.False);
-            Assert.IsNull(proxy);
+            Assert.That(proxy, Is.Null);
         }
 
         [TestCase(null, false)]

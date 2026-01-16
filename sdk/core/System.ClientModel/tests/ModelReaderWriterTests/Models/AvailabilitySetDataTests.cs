@@ -40,7 +40,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Dictionary<string, string> expectedTags = new Dictionary<string, string>() { { "key", "value" } };
 
             Assert.That(model.Id!.ToString(), Is.EqualTo("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375"));
-            CollectionAssert.AreEquivalent(expectedTags, model.Tags);
+            Assert.That(model.Tags, Is.EquivalentTo(expectedTags));
             Assert.That(model.Location, Is.EqualTo("eastus"));
             Assert.That(model.Name, Is.EqualTo("testAS-3375"));
             Assert.That(model.ResourceType!.ToString(), Is.EqualTo("Microsoft.Compute/availabilitySets"));
@@ -91,7 +91,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             }
             if (!skips.Contains("tags"))
             {
-                CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
+                Assert.That(model2.Tags, Is.EquivalentTo(model.Tags));
             }
         }
     }

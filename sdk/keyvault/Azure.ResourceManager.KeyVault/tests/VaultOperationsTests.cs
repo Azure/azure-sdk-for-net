@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             KeyVaultCreateOrUpdateContent content = new KeyVaultCreateOrUpdateContent(Location, vaultProperties);
             ArmOperation<KeyVaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, content);
             KeyVaultData createdVault = rawVault.Value.Data;
-            Assert.IsNotNull(createdVault);
+            Assert.That(createdVault, Is.Not.Null);
             Assert.That(createdVault.Name, Is.EqualTo(VaultName));
         }
 
@@ -206,8 +206,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ArmOperation<KeyVaultResource> createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
                 KeyVaultResource vaultValue = createdVault.Value;
 
-                Assert.NotNull(vaultValue);
-                Assert.NotNull(vaultValue.Id);
+                Assert.That(vaultValue, Is.Not.Null);
+                Assert.That(vaultValue.Id, Is.Not.Null);
                 resourceIds.Add(vaultValue.Id);
                 vaultList.Add(vaultValue);
             }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.That(resourceIds.Count == 0, Is.True);
 
             AsyncPageable<KeyVaultResource> allVaults = VaultCollection.GetAllAsync(top);
-            Assert.NotNull(vaults);
+            Assert.That(vaults, Is.Not.Null);
 
             // Delete
             foreach (var item in vaultList)
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
                 KeyVaultResource createdVault = createdRawVault.Value;
 
-                Assert.NotNull(createdVault.Data);
-                Assert.NotNull(createdVault.Data.Id);
+                Assert.That(createdVault.Data, Is.Not.Null);
+                Assert.That(createdVault.Data.Id, Is.Not.Null);
                 resourceIds.Add(createdVault.Data.Id);
                 vaultList.Add(createdVault);
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
 
             List<DeletedKeyVaultResource> deletedVaults = Subscription.GetDeletedKeyVaultsAsync().ToEnumerableAsync().Result;
-            Assert.NotNull(deletedVaults);
+            Assert.That(deletedVaults, Is.Not.Null);
 
             foreach (var v in deletedVaults)
             {
@@ -334,8 +334,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             KeyVaultAccessPolicy[] expectedPolicies,
             Dictionary<string, string> expectedTags)
         {
-            Assert.NotNull(vaultData);
-            Assert.NotNull(vaultData.Properties);
+            Assert.That(vaultData, Is.Not.Null);
+            Assert.That(vaultData.Properties, Is.Not.Null);
 
             string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 expectedPolicies,
                 expectedTags);
 
-            Assert.NotNull(vaultData.Properties.NetworkRuleSet);
+            Assert.That(vaultData.Properties.NetworkRuleSet, Is.Not.Null);
             Assert.That(vaultData.Properties.NetworkRuleSet.DefaultAction, Is.EqualTo(networkRuleSet.DefaultAction));
             Assert.That(vaultData.Properties.NetworkRuleSet.Bypass, Is.EqualTo(networkRuleSet.Bypass));
             Assert.That(vaultData.Properties.NetworkRuleSet.IPRules != null && vaultData.Properties.NetworkRuleSet.IPRules.Count == 2, Is.True);

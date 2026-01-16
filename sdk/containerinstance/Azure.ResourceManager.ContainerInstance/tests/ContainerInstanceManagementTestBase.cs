@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 
         protected void VerifyContainerGroupProperties(ContainerGroupData expected, ContainerGroupData actual)
         {
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             if (expected.Name != null)
                 Assert.That(actual.Name, Is.EqualTo(expected.Name));
             Assert.That(actual.Location, Is.EqualTo(expected.Location));
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.That(actual.Identity?.ManagedServiceIdentityType, Is.EqualTo(expected.Identity?.ManagedServiceIdentityType));
             Assert.That(actual.Sku, Is.EqualTo(expected.Sku));
             Assert.That(actual.Diagnostics?.LogAnalytics.WorkspaceId, Is.EqualTo(expected.Diagnostics?.LogAnalytics.WorkspaceId));
-            Assert.NotNull(actual.Containers);
+            Assert.That(actual.Containers, Is.Not.Null);
             Assert.That(actual.Containers.Count, Is.EqualTo(1));
             if (expected.Priority != ContainerGroupPriority.Spot)
             {
-                Assert.NotNull(actual.IPAddress);
-                Assert.NotNull(actual.IPAddress.IP);
+                Assert.That(actual.IPAddress, Is.Not.Null);
+                Assert.That(actual.IPAddress.IP, Is.Not.Null);
             }
             Assert.That(actual.EncryptionProperties?.KeyName, Is.EqualTo(expected.EncryptionProperties?.KeyName));
             Assert.That(actual.EncryptionProperties?.KeyVersion, Is.EqualTo(expected.EncryptionProperties?.KeyVersion));
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.That(actual.Priority, Is.EqualTo(expected.Priority));
             if (expected.Sku == ContainerGroupSku.Confidential)
             {
-                Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
+                Assert.That(actual.ConfidentialComputeProperties?.CcePolicy, Is.Not.Null);
                 Assert.That(actual.Containers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.Containers[0].SecurityContext?.IsPrivileged));
                 Assert.That(actual.InitContainers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.InitContainers[0].SecurityContext?.IsPrivileged));
             }
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 
         protected void VerifyContainerGroupProfileProperties(ContainerGroupProfileData expected, ContainerGroupProfileData actual)
         {
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             if (expected.Name != null)
                 Assert.That(actual.Name, Is.EqualTo(expected.Name));
             Assert.That(actual.Location, Is.EqualTo(expected.Location));
@@ -564,11 +564,11 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.That(actual.RestartPolicy, Is.EqualTo(expected.RestartPolicy));
             Assert.That(actual.Sku, Is.EqualTo(expected.Sku));
             Assert.That(actual.Diagnostics?.LogAnalytics.WorkspaceId, Is.EqualTo(expected.Diagnostics?.LogAnalytics.WorkspaceId));
-            Assert.NotNull(actual.Containers);
+            Assert.That(actual.Containers, Is.Not.Null);
             Assert.That(actual.Containers.Count, Is.EqualTo(1));
             if (expected.Priority != ContainerGroupPriority.Spot)
             {
-                Assert.NotNull(actual.IPAddress);
+                Assert.That(actual.IPAddress, Is.Not.Null);
             }
             Assert.That(actual.EncryptionProperties?.KeyName, Is.EqualTo(expected.EncryptionProperties?.KeyName));
             Assert.That(actual.EncryptionProperties?.KeyVersion, Is.EqualTo(expected.EncryptionProperties?.KeyVersion));
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.That(actual.Priority, Is.EqualTo(expected.Priority));
             if (expected.Sku == ContainerGroupSku.Confidential)
             {
-                Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
+                Assert.That(actual.ConfidentialComputeProperties?.CcePolicy, Is.Not.Null);
                 Assert.That(actual.Containers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.Containers[0].SecurityContext?.IsPrivileged));
                 Assert.That(actual.InitContainers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.InitContainers[0].SecurityContext?.IsPrivileged));
             }

@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.That(bindingData["TransactionPartitionKey"], Is.SameAs(message.TransactionPartitionKey));
 
             IDictionary<string, object> bindingDataUserProps = bindingData["ApplicationProperties"] as IDictionary<string, object>;
-            Assert.NotNull(bindingDataUserProps);
+            Assert.That(bindingDataUserProps, Is.Not.Null);
             Assert.That(bindingDataUserProps["prop1"], Is.EqualTo("value1"));
             Assert.That(bindingDataUserProps["prop2"], Is.EqualTo("value2"));
         }

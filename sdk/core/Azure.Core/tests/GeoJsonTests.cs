@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
         public void GeoObjectParseParsesJson()
         {
             var point = GeoPoint.Parse("{\"type\":\"Point\",\"coordinates\":[1,2]}");
-            Assert.IsInstanceOf<GeoPoint>(point);
+            Assert.That(point, Is.InstanceOf<GeoPoint>());
             Assert.That(new GeoPosition(1, 2), Is.EqualTo(((GeoPoint)point).Coordinates));
         }
     }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
             ValidateCommon(applicationSecurityGroupData, name);
-            Assert.IsEmpty(applicationSecurityGroupData.Tags);
+            Assert.That(applicationSecurityGroupData.Tags, Is.Empty);
 
             applicationSecurityGroupData.Tags.Add("tag1", "value1");
             applicationSecurityGroupData.Tags.Add("tag2", "value2");
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That((bool)await collection.ExistsAsync(name), Is.False);
 
             applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(applicationSecurityGroups);
+            Assert.That(applicationSecurityGroups, Is.Empty);
 
             // list all
             applicationSecurityGroups = await _subscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
-            Assert.IsEmpty(applicationSecurityGroups);
+            Assert.That(applicationSecurityGroups, Is.Empty);
         }
 
         private void ValidateCommon(ApplicationSecurityGroupData data, string name)

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [Test]
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         internal void CompareStorageTaskData(StorageTaskData expected, StorageTaskData actual)
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
             if (expected.Action.Else == null)
             {
-                Assert.IsNull(actual.Action.Else);
+                Assert.That(actual.Action.Else, Is.Null);
             }
             else
             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
             if (expected.Action.Else == null)
             {
-                Assert.IsNull(actual.Action.Else);
+                Assert.That(actual.Action.Else, Is.Null);
             }
             else
             {

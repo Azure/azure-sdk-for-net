@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <!-- ECParameters is defined in netstandard2.0 but not net462 (introduced in net47). Test against net462 to make sure a TypeLoadException is not thrown when referencing JsonWebKey. -->
@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
+        <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />

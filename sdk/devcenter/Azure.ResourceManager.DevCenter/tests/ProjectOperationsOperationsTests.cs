@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
             DevCenterProjectResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData)).Value;
 
-            Assert.NotNull(createdResource);
-            Assert.NotNull(createdResource.Data);
+            Assert.That(createdResource, Is.Not.Null);
+            Assert.That(createdResource.Data, Is.Not.Null);
 
             // List Projects
             List<DevCenterProjectResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // Get
             Response<DevCenterProjectResource> retrievedProject = await resourceCollection.GetAsync(projectName);
-            Assert.NotNull(retrievedProject.Value);
-            Assert.NotNull(retrievedProject.Value.Data);
+            Assert.That(retrievedProject.Value, Is.Not.Null);
+            Assert.That(retrievedProject.Value.Data, Is.Not.Null);
 
             // Delete
             ArmOperation deleteOp = await retrievedProject.Value.DeleteAsync(WaitUntil.Completed);

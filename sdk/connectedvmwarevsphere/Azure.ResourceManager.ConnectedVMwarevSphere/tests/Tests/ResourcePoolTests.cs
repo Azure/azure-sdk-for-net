@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             ArmOperation<VMwareResourcePoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, data);
             VMwareResourcePoolResource resourcePool = lro.Value;
-            Assert.IsNotNull(resourcePool);
+            Assert.That(resourcePool, Is.Not.Null);
             VMwareResourcePoolData resourceData = resourcePool.Data;
             Assert.That(resourcePoolName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareResourcePoolResource result = await collection.GetAsync(resourcePoolName);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Check exists
             bool isExist = await collection.ExistsAsync(resourcePoolName);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             // Get if exists
             NullableResponse<VMwareResourcePoolResource> response = await collection.GetIfExistsAsync(resourcePoolName);
             result = response.HasValue ? response.Value : null;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // List
             isExist = false;

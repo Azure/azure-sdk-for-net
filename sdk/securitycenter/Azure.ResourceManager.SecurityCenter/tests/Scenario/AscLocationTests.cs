@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _ascLocationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAscLocation(list.First(item => item.Data.Name == _existAscLocationName), _existAscLocationName);
         }
 
         private void ValidateAscLocation(SecurityCenterLocationResource ascLocation, string ascLocationName)
         {
-            Assert.IsNotNull(ascLocation);
-            Assert.IsNotNull(ascLocation.Data.Id);
+            Assert.That(ascLocation, Is.Not.Null);
+            Assert.That(ascLocation.Data.Id, Is.Not.Null);
             Assert.That(ascLocation.Data.Name, Is.EqualTo(ascLocationName));
             Assert.That(ascLocation.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/locations"));
         }

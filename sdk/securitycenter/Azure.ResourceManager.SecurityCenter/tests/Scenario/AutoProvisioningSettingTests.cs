@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var autoProvisioningSetting = await CreateAutoProvisioningSetting();
             var list = await _autoProvisioningSettingCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAutoProvisioningSetting(list.First(item => item.Data.Name == _automationName));
         }
 
         private void ValidateAutoProvisioningSetting(AutoProvisioningSettingResource autoProvisioningSetting, string automationName = "default")
         {
-            Assert.IsNotNull(autoProvisioningSetting);
-            Assert.IsNotNull(autoProvisioningSetting.Data.Id);
+            Assert.That(autoProvisioningSetting, Is.Not.Null);
+            Assert.That(autoProvisioningSetting.Data.Id, Is.Not.Null);
             Assert.That(autoProvisioningSetting.Data.Name, Is.EqualTo(automationName));
             Assert.That(autoProvisioningSetting.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/autoProvisioningSettings"));
         }

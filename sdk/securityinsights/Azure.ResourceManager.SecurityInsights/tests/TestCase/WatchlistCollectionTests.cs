@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.That(count, Is.GreaterThanOrEqualTo(3));
             //4Exists
             Assert.That((bool)await collection.ExistsAsync(name), Is.True);
             Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);

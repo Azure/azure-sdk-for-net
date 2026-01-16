@@ -110,47 +110,47 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(model.ServiceVersion, Is.EqualTo(ServiceVersionString));
 
             // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(model.CreatedOn, startTime - TimeSpan.FromHours(4));
+            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             }
             else
             {
-                Assert.IsNull(model.ExpiresOn);
+                Assert.That(model.ExpiresOn, Is.Null);
             }
 
-            CollectionAssert.AreEquivalent(options.Tags, model.Tags);
+            Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
 
             Assert.That(model.DocumentTypes.Count, Is.EqualTo(1));
 
             DocumentTypeDetails documentType = model.DocumentTypes[modelId];
 
-            Assert.IsNull(documentType.Description);
+            Assert.That(documentType.Description, Is.Null);
             Assert.That(documentType.BuildMode, Is.EqualTo(buildMode));
 
             if (buildMode == DocumentBuildMode.Template)
             {
-                CollectionAssert.AreEquivalent(documentType.FieldConfidence.Keys, documentType.FieldSchema.Keys);
+                Assert.That(documentType.FieldSchema.Keys, Is.EquivalentTo(documentType.FieldConfidence.Keys));
 
                 foreach (float confidence in documentType.FieldConfidence.Values)
                 {
-                    Assert.GreaterOrEqual(confidence, 0f);
-                    Assert.LessOrEqual(confidence, 1f);
+                    Assert.That(confidence, Is.GreaterThanOrEqualTo(0f));
+                    Assert.That(confidence, Is.LessThanOrEqualTo(1f));
                 }
             }
             else
             {
-                Assert.IsEmpty(documentType.FieldConfidence);
+                Assert.That(documentType.FieldConfidence, Is.Empty);
             }
 
             foreach (DocumentFieldSchema fieldSchema in documentType.FieldSchema.Values)
             {
-                Assert.IsNull(fieldSchema.Description);
-                Assert.IsNull(fieldSchema.Example);
-                Assert.IsNull(fieldSchema.Items);
-                Assert.IsEmpty(fieldSchema.Properties);
+                Assert.That(fieldSchema.Description, Is.Null);
+                Assert.That(fieldSchema.Example, Is.Null);
+                Assert.That(fieldSchema.Items, Is.Null);
+                Assert.That(fieldSchema.Properties, Is.Empty);
             }
 
             DocumentFieldSchema merchantSchema = documentType.FieldSchema["Merchant"];
@@ -214,10 +214,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(model.ServiceVersion, Is.EqualTo(ServiceVersionString));
 
             // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(model.CreatedOn, startTime - TimeSpan.FromHours(4));
-            Assert.Greater(model.ExpiresOn, model.CreatedOn);
+            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
 
-            CollectionAssert.AreEquivalent(tags, model.Tags);
+            Assert.That(model.Tags, Is.EquivalentTo(tags));
 
             // (TODO) Reenable validation once the following service issue has been fixed: https://github.com/Azure/azure-sdk-for-net/issues/37172
             // AssertDocumentTypeDictionariesAreEquivalent(sourceModel.DocumentTypes, model.DocumentTypes);
@@ -267,18 +267,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(model.ServiceVersion, Is.EqualTo(ServiceVersionString));
 
             // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(model.CreatedOn, startTime - TimeSpan.FromHours(4));
+            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             }
             else
             {
-                Assert.IsNull(model.ExpiresOn);
+                Assert.That(model.ExpiresOn, Is.Null);
             }
 
-            CollectionAssert.AreEquivalent(tags, model.Tags);
+            Assert.That(model.Tags, Is.EquivalentTo(tags));
 
             Assert.That(model.DocumentTypes.Count, Is.EqualTo(2));
 
@@ -388,7 +388,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.That(model.CreatedOn, Is.EqualTo(expected.CreatedOn));
                 Assert.That(model.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
 
-                CollectionAssert.AreEquivalent(expected.Tags, model.Tags);
+                Assert.That(model.Tags, Is.EquivalentTo(expected.Tags));
             }
         }
 
@@ -433,9 +433,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(copyAuthorization.TargetModelId, Is.EqualTo(modelId));
             Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
             Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
-            Assert.IsNotNull(copyAuthorization.AccessToken);
-            Assert.IsNotEmpty(copyAuthorization.AccessToken);
-            Assert.Greater(copyAuthorization.ExpiresOn, Recording.UtcNow);
+            Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
+            Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
+            Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
         }
     }
 }

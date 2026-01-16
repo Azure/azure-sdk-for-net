@@ -108,7 +108,7 @@ namespace Azure.Maps.Rendering.Tests
             }
             #endregion
 
-            Assert.IsNotNull(image);
+            Assert.That(image, Is.Not.Null);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Azure.Maps.Rendering.Tests
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
-            Assert.IsNotNull(client);
+            Assert.That(client, Is.Not.Null);
 
             #region Snippet:RenderStaticImagesWithPinsAndPaths
             // Prepare pushpin styles
@@ -177,8 +177,8 @@ namespace Azure.Maps.Rendering.Tests
             }
             #endregion
 
-            Assert.IsNotNull(staticImageOptions);
-            Assert.IsNotNull(image);
+            Assert.That(staticImageOptions, Is.Not.Null);
+            Assert.That(image, Is.Not.Null);
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Azure.Maps.Rendering.Tests
             }
             #endregion
 
-            Assert.IsNotNull(mapTile);
+            Assert.That(mapTile, Is.Not.Null);
         }
 
         [Test]
@@ -240,7 +240,7 @@ namespace Azure.Maps.Rendering.Tests
             }
             #endregion
 
-            Assert.IsNotNull(mapTile);
+            Assert.That(mapTile, Is.Not.Null);
         }
 
         [Test]
@@ -261,7 +261,7 @@ namespace Azure.Maps.Rendering.Tests
             }
             #endregion
 
-            Assert.IsNotNull(tileSetMetadata);
+            Assert.That(tileSetMetadata, Is.Not.Null);
         }
     }
 }

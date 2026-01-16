@@ -39,17 +39,17 @@ namespace Azure.Messaging.WebPubSub.Tests
             var expiresAt = DateTimeOffset.UtcNow + TimeSpan.FromMinutes(5);
             var uri = serviceClient.GetClientAccessUri(expiresAt, userId, roles);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             var jwt = JwtTokenHandler.ReadJwtToken(token);
 
             var audience = jwt.Claims.FirstOrDefault(s => s.Type == "aud");
-            Assert.NotNull(audience);
+            Assert.That(audience, Is.Not.Null);
             Assert.That(audience.Value, Is.EqualTo("http://localhost:8080/client/hubs/hub"));
             var iat = jwt.Claims.FirstOrDefault(s => s.Type == "iat")?.Value;
-            Assert.NotNull(iat);
+            Assert.That(iat, Is.Not.Null);
             Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
-            Assert.NotNull(exp);
+            Assert.That(exp, Is.Not.Null);
             Assert.That(long.TryParse(exp, out var expireAt), Is.True);
 
             // default expire after should be ~5 minutes (~300 seconds)
@@ -65,7 +65,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             }
             else
             {
-                Assert.IsEmpty(sub);
+                Assert.That(sub, Is.Empty);
             }
 
             var roleClaims = jwt.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToArray();
@@ -75,7 +75,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             }
             else
             {
-                Assert.IsEmpty(roleClaims);
+                Assert.That(roleClaims, Is.Empty);
             }
         }
 
@@ -89,17 +89,17 @@ namespace Azure.Messaging.WebPubSub.Tests
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var uri = serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(5), userId, roles);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             var jwt = JwtTokenHandler.ReadJwtToken(token);
 
             var audience = jwt.Claims.FirstOrDefault(s => s.Type == "aud");
-            Assert.NotNull(audience);
+            Assert.That(audience, Is.Not.Null);
             Assert.That(audience.Value, Is.EqualTo("http://localhost:8080/client/hubs/hub"));
             var iat = jwt.Claims.FirstOrDefault(s => s.Type == "iat")?.Value;
-            Assert.NotNull(iat);
+            Assert.That(iat, Is.Not.Null);
             Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
-            Assert.NotNull(exp);
+            Assert.That(exp, Is.Not.Null);
             Assert.That(long.TryParse(exp, out var expireAt), Is.True);
 
             // default expire after should be ~5 minutes (~300 seconds)
@@ -115,7 +115,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             }
             else
             {
-                Assert.IsEmpty(sub);
+                Assert.That(sub, Is.Empty);
             }
 
             var roleClaims = jwt.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToArray();
@@ -125,7 +125,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             }
             else
             {
-                Assert.IsEmpty(roleClaims);
+                Assert.That(roleClaims, Is.Empty);
             }
         }
 
@@ -141,9 +141,9 @@ namespace Azure.Messaging.WebPubSub.Tests
             urlBuilder.Query = string.Empty;
             Assert.That(urlBuilder.Uri.ToString(), Is.EqualTo(expectedUrl));
             var token1 = HttpUtility.ParseQueryString(uri1.Query).Get("access_token");
-            Assert.NotNull(token1);
+            Assert.That(token1, Is.Not.Null);
             var token2 = HttpUtility.ParseQueryString(uri2.Query).Get("access_token");
-            Assert.NotNull(token2);
+            Assert.That(token2, Is.Not.Null);
             var jwt1 = JwtTokenHandler.ReadJwtToken(token1);
             var jwt2 = JwtTokenHandler.ReadJwtToken(token2);
             Assert.That(jwt2.Header.Kid, Is.EqualTo(jwt1.Header.Kid));

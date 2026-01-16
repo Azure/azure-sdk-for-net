@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             var id = _privateEndpointConnectionCollection.Id;
             id = EventHubsPrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
             EventHubsPrivateEndpointConnectionResource privateEndpointConnection = Client.GetEventHubsPrivateEndpointConnectionResource(id);
-            Assert.IsNotNull(privateEndpointConnection);
+            Assert.That(privateEndpointConnection, Is.Not.Null);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _privateEndpointConnectionCollection.GetAsync(name); });

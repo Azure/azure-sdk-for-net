@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Tests
             _ = await CreateGenericAvailabilitySetAsync(rg2.Id);
 
             var count = await GetResourceCountAsync(subscription.GetGenericResourcesAsync());
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Tests
             //`createdTime`, `changedTime` and `provisioningState`
             await foreach (var genericResource in subscription.GetGenericResourcesAsync(expand: "createdTime"))
             {
-                Assert.NotNull(genericResource.Data.CreatedOn);
+                Assert.That(genericResource.Data.CreatedOn, Is.Not.Null);
                 Assert.That(genericResource.Data.ChangedOn, Is.Null);
                 Assert.That(genericResource.Data.ProvisioningState, Is.Null);
                 count++;
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Tests
             await foreach (var genericResource in subscription.GetGenericResourcesAsync(expand: "changedTime,provisioningState"))
             {
                 Assert.That(genericResource.Data.CreatedOn, Is.Null);
-                Assert.NotNull(genericResource.Data.ChangedOn);
-                Assert.NotNull(genericResource.Data.ProvisioningState);
+                Assert.That(genericResource.Data.ChangedOn, Is.Not.Null);
+                Assert.That(genericResource.Data.ProvisioningState, Is.Not.Null);
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]

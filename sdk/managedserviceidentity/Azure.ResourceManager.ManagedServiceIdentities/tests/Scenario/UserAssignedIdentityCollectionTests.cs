@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             var collection = resourceGroup.GetUserAssignedIdentities();
             var userAssignedIdentity = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
 
-            Assert.NotNull(userAssignedIdentity.Data.TenantId);
-            Assert.NotNull(userAssignedIdentity.Data.ClientId);
-            Assert.NotNull(userAssignedIdentity.Data.PrincipalId);
+            Assert.That(userAssignedIdentity.Data.TenantId, Is.Not.Null);
+            Assert.That(userAssignedIdentity.Data.ClientId, Is.Not.Null);
+            Assert.That(userAssignedIdentity.Data.PrincipalId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

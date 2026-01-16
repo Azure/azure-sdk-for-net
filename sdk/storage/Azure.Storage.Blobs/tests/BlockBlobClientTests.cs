@@ -144,7 +144,7 @@ namespace Azure.Storage.Blobs.Test
             BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(blobProperties);
+            Assert.That(blobProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -243,7 +243,7 @@ namespace Azure.Storage.Blobs.Test
                     content: stream);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -388,7 +388,7 @@ namespace Azure.Storage.Blobs.Test
                     });
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -462,7 +462,7 @@ namespace Azure.Storage.Blobs.Test
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.That(progressBag.Count > 1, Is.True, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
+                Assert.That(data.LongLength, Is.GreaterThanOrEqualTo(progressBag.Max()), "Final progress has unexpected value");
             }
 
             // Assert
@@ -1465,7 +1465,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: new BlobRequestConditions { LeaseId = leaseId });
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1530,7 +1530,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions.ToBlobRequestConditions());
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -1781,7 +1781,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CommitBlockListAsync(commitList);
 
             // Assert
-            Assert.IsNotNull(response.Value.VersionId);
+            Assert.That(response.Value.VersionId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2335,7 +2335,7 @@ namespace Azure.Storage.Blobs.Test
                         options: options);
 
                     // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                    Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
                 }
             }
         }
@@ -2537,7 +2537,7 @@ namespace Azure.Storage.Blobs.Test
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.That(progressBag.Count > 1, Is.True, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
+                Assert.That(data.LongLength, Is.GreaterThanOrEqualTo(progressBag.Max()), "Final progress has unexpected value");
             }
 
             // Assert
@@ -2648,7 +2648,7 @@ namespace Azure.Storage.Blobs.Test
                     content: stream);
 
                 // Assert
-                Assert.IsNotNull(response.Value.VersionId);
+                Assert.That(response.Value.VersionId, Is.Not.Null);
             }
         }
 
@@ -2764,7 +2764,7 @@ namespace Azure.Storage.Blobs.Test
             }
             // Verify the file name exists in the filesystem
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(blobName, names);
+            Assert.That(names, Does.Contain(blobName));
         }
 
         [RecordedTest]
@@ -2790,7 +2790,7 @@ namespace Azure.Storage.Blobs.Test
             }
             // Verify the file name exists in the filesystem
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(blobName, names);
+            Assert.That(names, Does.Contain(blobName));
         }
 
         [RecordedTest]

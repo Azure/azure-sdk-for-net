@@ -129,7 +129,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.That(options.IncludeStatistics, Is.True);
-            Assert.IsNull(options.ModelVersion);
+            Assert.That(options.ModelVersion, Is.Null);
         }
 
         [RecordedTest]
@@ -158,7 +158,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.That(options.IncludeStatistics, Is.True);
-            Assert.IsNull(options.ModelVersion);
+            Assert.That(options.ModelVersion, Is.Null);
         }
 
         [RecordedTest]
@@ -217,10 +217,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
 
-            Assert.IsNotNull(ExtractKeyPhrasesActionsResults);
+            Assert.That(ExtractKeyPhrasesActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "ExtractKeyPhrases", "ExtractKeyPhrasesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, ExtractKeyPhrasesActionsResults.Select(result => result.ActionName));
+            Assert.That(ExtractKeyPhrasesActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -246,8 +246,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
         {
-            Assert.IsNotNull(keyPhrases.Warnings);
-            Assert.GreaterOrEqual(keyPhrases.Count, minKeyPhrasesCount);
+            Assert.That(keyPhrases.Warnings, Is.Not.Null);
+            Assert.That(keyPhrases.Count, Is.GreaterThanOrEqualTo(minKeyPhrasesCount));
         }
 
         private void ValidateBatchDocumentsResult(
@@ -259,14 +259,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
             foreach (ExtractKeyPhrasesResult result in results)
             {
@@ -274,12 +274,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.That(result.HasError, Is.False);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                Assert.That(result.Statistics, Is.Not.Null);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
                 }
                 else
                 {

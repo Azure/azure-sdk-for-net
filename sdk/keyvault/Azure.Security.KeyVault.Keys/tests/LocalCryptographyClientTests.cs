@@ -376,7 +376,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             WrapResult wrapped = await client.WrapKeyAsync(algorithm, TestKey);
             UnwrapResult unwrapped = await client.UnwrapKeyAsync(algorithm, wrapped.EncryptedKey);
 
-            CollectionAssert.AreEqual(TestKey, unwrapped.Key);
+            Assert.That(unwrapped.Key, Is.EqualTo(TestKey).AsCollection);
         }
         #endregion
 

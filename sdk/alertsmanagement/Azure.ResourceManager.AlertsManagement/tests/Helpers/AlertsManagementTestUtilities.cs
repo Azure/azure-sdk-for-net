@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
 
                 foreach (var value in exp)
                 {
-                    Assert.Contains(value, (System.Collections.ICollection)act);
+                    Assert.That((System.Collections.ICollection)act, Does.Contain(value));
                 }
             }
         }

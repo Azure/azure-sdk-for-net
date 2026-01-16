@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             var azureDevOpsConnector = (await azureDevOpsConnectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, connectorData)).Value;
 
-            Assert.IsNotNull(azureDevOpsConnector);
+            Assert.That(azureDevOpsConnector, Is.Not.Null);
             Assert.That(azureDevOpsConnector.Data.Properties.ProvisioningState, Is.EqualTo(ProvisioningState.Succeeded));
             Assert.That(azureDevOpsConnector.Data.Name, Is.EqualTo(connectorName));
             Assert.That(azureDevOpsConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
         public async Task GetAzureDevOpsConnectors()
         {
             var connectors = await (await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup)).Value.GetAzureDevOpsConnectors().ToEnumerableAsync();
-            Assert.IsNotNull(connectors);
+            Assert.That(connectors, Is.Not.Null);
             Assert.That(connectors.Count, Is.EqualTo(1));
 
             var connector = connectors[0];
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             AzureDevOpsConnectorResource azDevopsConnector = await Client.GetAzureDevOpsConnectorResource(adoConnectorId).GetAsync();
 
-            Assert.IsNotNull(azDevopsConnector);
+            Assert.That(azDevopsConnector, Is.Not.Null);
             Assert.That(azDevopsConnector.Data.Name, Is.EqualTo(adoConnectorId.Name));
             Assert.That(azDevopsConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
         }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             // Get connector and verify it exists
             AzureDevOpsConnectorResource azDevopsConnector = await Client.GetAzureDevOpsConnectorResource(adoConnectorId).GetAsync();
-            Assert.IsNotNull(azDevopsConnector);
+            Assert.That(azDevopsConnector, Is.Not.Null);
 
             // Delete
             await azDevopsConnector.DeleteAsync(WaitUntil.Completed);

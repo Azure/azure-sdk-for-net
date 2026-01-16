@@ -263,7 +263,7 @@ namespace Azure.Communication.Rooms.Test
 
                 // Get Deleted Room
                 RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
-                Assert.NotNull(ex);
+                Assert.That(ex, Is.Not.Null);
                 Assert.That(ex?.Status, Is.EqualTo(404));
             }
             catch (RequestFailedException ex)
@@ -354,7 +354,7 @@ namespace Azure.Communication.Rooms.Test
 
                 // Get Deleted Room
                 RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
-                Assert.NotNull(ex);
+                Assert.That(ex, Is.Not.Null);
                 Assert.That(ex?.Status, Is.EqualTo(404));
             }
             catch (RequestFailedException ex)
@@ -547,7 +547,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -568,7 +568,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -587,7 +587,7 @@ namespace Azure.Communication.Rooms.Test
             };
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -608,7 +608,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -628,7 +628,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -650,7 +650,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -669,7 +669,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync("invalid_id"));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -785,7 +785,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -814,7 +814,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -842,7 +842,7 @@ namespace Azure.Communication.Rooms.Test
             };
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -871,7 +871,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -898,7 +898,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync("invalid_id", roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -925,7 +925,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync("invalid_id", roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -952,7 +952,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -983,7 +983,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -999,7 +999,7 @@ namespace Azure.Communication.Rooms.Test
             };
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.AddOrUpdateParticipantsAsync(createRoomResponse.Value.Id, participants: roomParticipants));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -1341,7 +1341,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -1359,7 +1359,7 @@ namespace Azure.Communication.Rooms.Test
             // Assert:
             Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -1379,7 +1379,7 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert:
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(invalidRoomId));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -1534,21 +1534,21 @@ namespace Azure.Communication.Rooms.Test
 
         private void ValidateRoom(CommunicationRoom? room)
         {
-            Assert.NotNull(room);
-            Assert.NotNull(room?.Id);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.ValidFrom);
-            Assert.NotNull(room?.ValidUntil);
-            Assert.NotNull(room?.PstnDialOutEnabled);
+            Assert.That(room, Is.Not.Null);
+            Assert.That(room?.Id, Is.Not.Null);
+            Assert.That(room?.CreatedAt, Is.Not.Null);
+            Assert.That(room?.ValidFrom, Is.Not.Null);
+            Assert.That(room?.ValidUntil, Is.Not.Null);
+            Assert.That(room?.PstnDialOutEnabled, Is.Not.Null);
         }
 
         private void ValidateRoom(CommunicationRoom? room, CreateRoomOptions roomCreateOptions)
         {
-            Assert.NotNull(room);
-            Assert.NotNull(room?.Id);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.ValidFrom);
-            Assert.NotNull(room?.ValidUntil);
+            Assert.That(room, Is.Not.Null);
+            Assert.That(room?.Id, Is.Not.Null);
+            Assert.That(room?.CreatedAt, Is.Not.Null);
+            Assert.That(room?.ValidFrom, Is.Not.Null);
+            Assert.That(room?.ValidUntil, Is.Not.Null);
             Assert.That(roomCreateOptions.PstnDialOutEnabled.HasValue ? roomCreateOptions?.PstnDialOutEnabled : false, Is.EqualTo(room?.PstnDialOutEnabled));
             Console.Write("Room Id: " + room?.Id);
             Console.Write("CreatedAt: " + room?.CreatedAt);
@@ -1559,11 +1559,11 @@ namespace Azure.Communication.Rooms.Test
 
         private void ValidateRoom(CommunicationRoom? room, UpdateRoomOptions roomUpdateOptions)
         {
-            Assert.NotNull(room);
-            Assert.NotNull(room?.Id);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.ValidFrom);
+            Assert.That(room, Is.Not.Null);
+            Assert.That(room?.Id, Is.Not.Null);
+            Assert.That(room?.CreatedAt, Is.Not.Null);
+            Assert.That(room?.CreatedAt, Is.Not.Null);
+            Assert.That(room?.ValidFrom, Is.Not.Null);
             Assert.That(roomUpdateOptions.PstnDialOutEnabled.HasValue ? roomUpdateOptions.PstnDialOutEnabled : room?.PstnDialOutEnabled, Is.EqualTo(room?.PstnDialOutEnabled));
         }
     }

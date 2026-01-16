@@ -104,8 +104,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
             Assert.That(classifier.Description, Is.EqualTo(description));
             Assert.That(classifier.ServiceVersion, Is.EqualTo(ServiceVersionString));
-            Assert.Greater(classifier.CreatedOn, startTime);
-            Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
+            Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
+            Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
             DocumentAssert.AreEquivalent(documentTypes, classifier.DocumentTypes);
         }
@@ -149,8 +149,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
             Assert.That(classifier.Description, Is.EqualTo(description));
             Assert.That(classifier.ServiceVersion, Is.EqualTo(ServiceVersionString));
-            Assert.Greater(classifier.CreatedOn, startTime);
-            Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
+            Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
+            Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
             DocumentAssert.AreEquivalent(documentTypes, classifier.DocumentTypes);
         }

@@ -33,7 +33,7 @@ namespace Azure.Identity.Broker.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Azure.Identity.Broker.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -64,13 +64,13 @@ namespace Azure.Identity.Broker.Tests
             var response = isAsync ?
                 await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None) :
                 client.Get(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None);
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(200));
 
             response = isAsync ?
                 await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None) :
                 client.Get(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None);
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(200));
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Identity.Broker.Tests
             var response = isAsync ?
                 await client.GetAsync(resourceUri, CancellationToken.None) :
                 client.Get(resourceUri, CancellationToken.None);
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(200));
         }
 

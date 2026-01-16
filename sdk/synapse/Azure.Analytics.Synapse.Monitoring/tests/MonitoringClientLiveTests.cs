@@ -40,8 +40,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Tests
         {
             MonitoringClient client = CreateClient();
             SparkJobListViewResponse sparkJobList = await client.GetSparkJobListAsync();
-            Assert.NotNull(sparkJobList);
-            CollectionAssert.IsNotEmpty(sparkJobList.SparkJobs);
+            Assert.That(sparkJobList, Is.Not.Null);
+            Assert.That(sparkJobList.SparkJobs, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -49,8 +49,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Tests
         {
             MonitoringClient client = CreateClient();
             SqlQueryStringDataModel sqlQuery = await client.GetSqlJobQueryStringAsync();
-            Assert.NotNull(sqlQuery);
-            Assert.IsNotNull(sqlQuery.Query);
+            Assert.That(sqlQuery, Is.Not.Null);
+            Assert.That(sqlQuery.Query, Is.Not.Null);
         }
     }
 }

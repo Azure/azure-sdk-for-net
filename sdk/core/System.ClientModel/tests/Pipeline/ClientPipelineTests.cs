@@ -342,11 +342,11 @@ public class ClientPipelineTests : SyncAsyncTestBase
 
         PipelineMessage message = pipeline.CreateMessage(testUri, testMethod, testClassifier);
 
-        Assert.IsNotNull(message);
+        Assert.That(message, Is.Not.Null);
         Assert.That(message.Request.Uri, Is.EqualTo(testUri));
         Assert.That(message.Request.Method, Is.EqualTo(testMethod));
         Assert.That(message.ResponseClassifier, Is.EqualTo(testClassifier));
-        Assert.IsNotNull(message.NetworkTimeout);
+        Assert.That(message.NetworkTimeout, Is.Not.Null);
     }
 
     [Test]
@@ -373,7 +373,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
 
         PipelineMessage message = pipeline.CreateMessage(testUri, testMethod);
 
-        Assert.IsNotNull(message);
+        Assert.That(message, Is.Not.Null);
         Assert.That(message.Request.Uri, Is.EqualTo(testUri));
         Assert.That(message.Request.Method, Is.EqualTo(testMethod));
         Assert.That(message.ResponseClassifier, Is.EqualTo(PipelineMessageClassifier.Default));

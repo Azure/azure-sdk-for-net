@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 byte[] expected = reader.ReadBytes((int)fileStream.Length);
                 byte[] actual = dataStream.ToArray();
 
-                CollectionAssert.AreEqual(expected, actual);
+                Assert.That(actual, Is.EqualTo(expected).AsCollection);
             }
         }
 
@@ -118,23 +118,23 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Assert.That(data.Version, Is.EqualTo(DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion));
             Assert.That(data.IsBlobTypeSet, Is.EqualTo(false));
-            Assert.IsNull(data.BlobType);
+            Assert.That(data.BlobType, Is.Null);
             Assert.That(data.IsContentTypeSet, Is.EqualTo(false));
-            Assert.IsEmpty(data.ContentTypeBytes);
+            Assert.That(data.ContentTypeBytes, Is.Empty);
             Assert.That(data.IsContentEncodingSet, Is.EqualTo(false));
-            Assert.IsEmpty(data.ContentEncodingBytes);
+            Assert.That(data.ContentEncodingBytes, Is.Empty);
             Assert.That(data.IsContentLanguageSet, Is.EqualTo(false));
-            Assert.IsEmpty(data.ContentLanguageBytes);
+            Assert.That(data.ContentLanguageBytes, Is.Empty);
             Assert.That(data.IsContentDispositionSet, Is.EqualTo(false));
-            Assert.IsEmpty(data.ContentDispositionBytes);
+            Assert.That(data.ContentDispositionBytes, Is.Empty);
             Assert.That(data.IsCacheControlSet, Is.EqualTo(false));
-            Assert.IsEmpty(data.CacheControlBytes);
+            Assert.That(data.CacheControlBytes, Is.Empty);
             Assert.That(data.IsAccessTierSet, Is.EqualTo(false));
-            Assert.IsNull(data.AccessTierValue);
+            Assert.That(data.AccessTierValue, Is.Null);
             Assert.That(data.IsMetadataSet, Is.EqualTo(false));
-            Assert.IsNull(data.Metadata);
+            Assert.That(data.Metadata, Is.Null);
             Assert.That(data.PreserveTags, Is.EqualTo(false));
-            Assert.IsNull(data.Tags);
+            Assert.That(data.Tags, Is.Null);
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 byte[] actual = dataStream.ToArray();
 
                 // Verify
-                CollectionAssert.AreEqual(expected, actual);
+                Assert.That(actual, Is.EqualTo(expected).AsCollection);
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 byte[] actual = dataStream.ToArray();
 
                 // Verify
-                CollectionAssert.AreEqual(expected, actual);
+                Assert.That(actual, Is.EqualTo(expected).AsCollection);
             }
         }
 
@@ -275,9 +275,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(data.IsAccessTierSet, Is.EqualTo(true));
             Assert.That(data.AccessTierValue, Is.EqualTo(DefaultAccessTier));
             Assert.That(data.IsMetadataSet, Is.EqualTo(true));
-            CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
+            Assert.That(data.Metadata, Is.EquivalentTo(DefaultMetadata));
             Assert.That(data.PreserveTags, Is.EqualTo(false));
-            CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
+            Assert.That(data.Tags, Is.EquivalentTo(DefaultTags));
         }
 
         private void VerifySampleValues_Version4(BlobDestinationCheckpointDetails data)
@@ -298,9 +298,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(data.IsAccessTierSet, Is.EqualTo(true));
             Assert.That(data.AccessTierValue, Is.EqualTo(DefaultAccessTier));
             Assert.That(data.IsMetadataSet, Is.EqualTo(true));
-            CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
+            Assert.That(data.Metadata, Is.EquivalentTo(DefaultMetadata));
             Assert.That(data.PreserveTags, Is.EqualTo(false));
-            CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
+            Assert.That(data.Tags, Is.EquivalentTo(DefaultTags));
         }
 
         [Test]

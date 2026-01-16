@@ -175,14 +175,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     Interlocked.Increment(ref messageCt);
                     Assert.That(args.SessionId, Is.EqualTo(message.SessionId));
-                    Assert.IsNotNull(args.SessionLockedUntil);
+                    Assert.That(args.SessionLockedUntil, Is.Not.Null);
                 }
 
                 await Task.WhenAll(completionSources.Select(source => source.Task));
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(15));
+                Assert.That(stop - start, Is.LessThan(TimeSpan.FromSeconds(15)));
 
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed
@@ -277,14 +277,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     Interlocked.Increment(ref messageCt);
                     Assert.That(args.SessionId, Is.EqualTo(message.SessionId));
-                    Assert.IsNotNull(args.SessionLockedUntil);
+                    Assert.That(args.SessionLockedUntil, Is.Not.Null);
                 }
 
                 await Task.WhenAll(completionSources.Select(source => source.Task));
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(15));
+                Assert.That(stop - start, Is.LessThan(TimeSpan.FromSeconds(15)));
 
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed
@@ -427,7 +427,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     int count = Interlocked.Increment(ref messageCt);
                     Assert.That(args.SessionId, Is.EqualTo(message.SessionId));
-                    Assert.IsNotNull(args.SessionLockedUntil);
+                    Assert.That(args.SessionLockedUntil, Is.Not.Null);
                     if (count == numThreads)
                     {
                         tcs.SetResult(true);
@@ -443,7 +443,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     // when abandoning, it is possible we could process the same message more than once
                     // since the service will make the message available immediately
-                    Assert.LessOrEqual(numThreads, messageCt);
+                    Assert.That(numThreads, Is.LessThanOrEqualTo(messageCt));
                 }
                 else
                 {
@@ -502,7 +502,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         }
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.That(args.SessionId, Is.EqualTo(message.SessionId));
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        Assert.That(args.SessionLockedUntil, Is.Not.Null);
                     }
                     finally
                     {
@@ -560,9 +560,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ErrorHandler(ProcessErrorEventArgs args)
                 {
-                    Assert.IsNotNull(args.CancellationToken);
-                    Assert.NotNull(args);
-                    Assert.NotNull(args.Exception);
+                    Assert.That(args.CancellationToken, Is.Not.Null);
+                    Assert.That(args, Is.Not.Null);
+                    Assert.That(args.Exception, Is.Not.Null);
                     if (args.Exception is InvalidOperationException)
                     {
                         exceptionReceivedHandlerCalled = true;
@@ -603,8 +603,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ErrorHandler(ProcessErrorEventArgs args)
                 {
-                    Assert.NotNull(args);
-                    Assert.NotNull(args.Exception);
+                    Assert.That(args, Is.Not.Null);
+                    Assert.That(args.Exception, Is.Not.Null);
                     if (args.Exception is InvalidOperationException)
                     {
                         exceptionReceivedHandlerCalled = true;
@@ -678,7 +678,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.That(message.SessionId, Is.EqualTo(sessionId));
                         Assert.That(args.SessionId, Is.EqualTo(sessionId));
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        Assert.That(args.SessionLockedUntil, Is.Not.Null);
                     }
                     finally
                     {
@@ -807,7 +807,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // introduce a small delay so that the service honors the renewal request
                     await Task.Delay(500);
                     await args.RenewSessionLockAsync();
-                    Assert.Greater(args.SessionLockedUntil, initialLockedUntil);
+                    Assert.That(args.SessionLockedUntil, Is.GreaterThan(initialLockedUntil));
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += SessionErrorHandler;
@@ -1025,7 +1025,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                     var msg = await receiver.ReceiveMessageAsync(ShortLockDuration);
-                    Assert.IsNotNull(msg);
+                    Assert.That(msg, Is.Not.Null);
                 }
                 else
                 {
@@ -1126,7 +1126,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.That(options.SessionIds.Contains(message.SessionId), Is.True);
                         Assert.That(options.SessionIds.Contains(args.SessionId), Is.True);
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        Assert.That(args.SessionLockedUntil, Is.Not.Null);
                     }
                     finally
                     {
@@ -1272,7 +1272,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.That(options.SessionIds.Contains(message.SessionId), Is.True);
                         Assert.That(options.SessionIds.Contains(args.SessionId), Is.True);
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        Assert.That(args.SessionLockedUntil, Is.Not.Null);
                     }
                     finally
                     {
@@ -1294,10 +1294,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     Assert.That(sessionClosedEvents[sessionId], Is.EqualTo(sessionOpenEvents[sessionId]));
 
                     // there should either be at least as many session closed events as lock lost count.
-                    Assert.GreaterOrEqual(sessionClosedEvents[sessionId], lockLostCount);
+                    Assert.That(sessionClosedEvents[sessionId], Is.GreaterThanOrEqualTo(lockLostCount));
                     // greater or equal because there could be multiple threads receiving from the same
                     // session in which chase they would each get the lock lost error
-                    Assert.GreaterOrEqual(sessionErrorEventCt, lockLostCount * numSessions);
+                    Assert.That(sessionErrorEventCt, Is.GreaterThanOrEqualTo(lockLostCount * numSessions));
                 }
 
                 Assert.That(messageCt, Is.EqualTo(numSessions * messagesPerSession));
@@ -1378,7 +1378,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                         Assert.That(sessionId.Contains(message.SessionId), Is.True);
                         Assert.That(sessionId.Contains(args.SessionId), Is.True);
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        Assert.That(args.SessionLockedUntil, Is.Not.Null);
                     }
                     finally
                     {
@@ -1524,7 +1524,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.That(sessionId.Contains(message.SessionId), Is.True);
                         Assert.That(sessionId.Contains(args.SessionId), Is.True);
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        Assert.That(args.SessionLockedUntil, Is.Not.Null);
                         switch (errorSource)
                         {
                             case ServiceBusErrorSource.Receive:
@@ -1632,7 +1632,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.That(sessionId.Contains(message.SessionId), Is.True);
                         Assert.That(sessionId.Contains(args.SessionId), Is.True);
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        Assert.That(args.SessionLockedUntil, Is.Not.Null);
                     }
                     finally
                     {
@@ -1696,7 +1696,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             sessionId,
                             1,
                             (key, value) => value + 1);
-                        Assert.LessOrEqual(sessionDict[sessionId], maxCallsPerSession);
+                        Assert.That(sessionDict[sessionId], Is.LessThanOrEqualTo(maxCallsPerSession));
                         // add a small delay to help verify that no other threads
                         // will be processing this session concurrently.
                         await Task.Delay(TimeSpan.FromSeconds(2));
@@ -1775,7 +1775,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 stopWatch.Stop();
 
                 Assert.That(messageCt, Is.EqualTo(totalMessages));
-                Assert.Less(stopWatch.Elapsed, TimeSpan.FromSeconds(10));
+                Assert.That(stopWatch.Elapsed, Is.LessThan(TimeSpan.FromSeconds(10)));
             }
         }
 
@@ -1831,7 +1831,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "sessionId");
                 var msg = await receiver.ReceiveMessageAsync();
-                Assert.IsNotNull(msg);
+                Assert.That(msg, Is.Not.Null);
 
                 Assert.That(
                     async () => await processor.StartProcessingAsync(),
@@ -1914,7 +1914,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var receiver = client.CreateReceiver(scope.QueueName);
                 // poll for the lock duration to make sure that messages are actually gone rather than just locked
                 var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
-                Assert.IsNull(msg);
+                Assert.That(msg, Is.Null);
             }
         }
 
@@ -2147,7 +2147,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 60)
                     {
-                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 20);
+                        Assert.That(processor.InnerProcessor.TaskTuples.Count, Is.GreaterThanOrEqualTo(20));
                     }
                     if (count == 75)
                     {
@@ -2157,7 +2157,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (count == 95)
                     {
-                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.That(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), Is.LessThanOrEqualTo(1));
                     }
                 }
 
@@ -2213,7 +2213,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (count == 100)
                     {
                         // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
-                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
+                        Assert.That(processor.InnerProcessor.TaskTuples.Count, Is.GreaterThan(10));
                     }
                 }
 
@@ -2272,7 +2272,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (count == 100)
                     {
                         // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
-                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
+                        Assert.That(processor.InnerProcessor.TaskTuples.Count, Is.GreaterThan(10));
                     }
                 }
 
@@ -2336,7 +2336,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 60)
                     {
-                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 1);
+                        Assert.That(processor.InnerProcessor.TaskTuples.Count, Is.GreaterThanOrEqualTo(1));
                     }
                     if (count == 75)
                     {
@@ -2347,7 +2347,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (count == 95)
                     {
-                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.That(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), Is.LessThanOrEqualTo(1));
                     }
                 }
 
@@ -2391,14 +2391,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         ProcessorReceiveActions receiveActions = args.GetReceiveActions();
                         var received = await receiveActions.ReceiveMessagesAsync(messageCount);
-                        Assert.IsNotEmpty(received);
+                        Assert.That(received, Is.Not.Empty);
                         count = Interlocked.Add(ref receivedCount, received.Count);
 
                         var peeked = await receiveActions.PeekMessagesAsync(2);
                         Assert.That(peeked.Count, Is.EqualTo(2));
                         var lastSeq = peeked[1].SequenceNumber;
                         var nextPeek = await receiveActions.PeekMessagesAsync(1);
-                        Assert.Greater(nextPeek.Single().SequenceNumber, lastSeq);
+                        Assert.That(nextPeek.Single().SequenceNumber, Is.GreaterThan(lastSeq));
 
                         var peekWithSeq = await receiveActions.PeekMessagesAsync(1, fromSequenceNumber: lastSeq);
                         Assert.That(peekWithSeq.Single().SequenceNumber, Is.EqualTo(lastSeq));
@@ -2544,7 +2544,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     await processor.CloseAsync();
                 }
                 // add allowance for last few batches of messages that may not be processed in time
-                Assert.GreaterOrEqual(processedCount, sentCount - 60);
+                Assert.That(processedCount, Is.GreaterThanOrEqualTo(sentCount - 60));
 
                 async Task SendMessagesAsync(CancellationToken cancellationToken)
                 {
@@ -2673,7 +2673,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.That(lockLostArgs.Message.LockToken, Is.EqualTo(args.Message.LockToken));
                         Assert.That(lockLostArgs.SessionLockedUntil, Is.EqualTo(args.SessionLockedUntil));
                         var lockLostException = lockLostArgs.Exception as ServiceBusException;
-                        Assert.IsNotNull(lockLostException);
+                        Assert.That(lockLostException, Is.Not.Null);
                         Assert.That(lockLostException.Reason, Is.EqualTo(ServiceBusFailureReason.SessionLockLost));
                         return Task.CompletedTask;
                     };

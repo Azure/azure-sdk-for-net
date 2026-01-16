@@ -238,7 +238,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertContainerCompletedCheck(2);
@@ -306,7 +306,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertContainerCompletedCheck(2);
@@ -327,7 +327,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Ensure the Symlink file was skipped and not copied
             Assert.That(sourceFileNames.Count, Is.EqualTo(2));
             Assert.That(destFileNames.Count, Is.EqualTo(1));
-            Assert.Contains("item1-symlink", sourceFileNames);
+            Assert.That(sourceFileNames, Does.Contain("item1-symlink"));
             Assert.That(destFileNames.Contains("item1-symlink"), Is.False);
             Assert.That(destFileNames[0], Is.EqualTo("item1"));
         }

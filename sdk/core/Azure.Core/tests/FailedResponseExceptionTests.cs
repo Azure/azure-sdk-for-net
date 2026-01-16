@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo("Value"));
             Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
             Assert.That(requestId, Is.EqualTo("123"));
-            Assert.IsNull(rawResponse.ContentStream);
+            Assert.That(rawResponse.ContentStream, Is.Null);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo("Value"));
             Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
             Assert.That(requestId, Is.EqualTo("123"));
-            Assert.IsNull(rawResponse.ContentStream);
+            Assert.That(rawResponse.ContentStream, Is.Null);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo("Value"));
             Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
             Assert.That(requestId, Is.EqualTo("123"));
-            Assert.IsNull(rawResponse.ContentStream);
+            Assert.That(rawResponse.ContentStream, Is.Null);
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Azure.Core.Tests
             Assert.That(value, Is.EqualTo("text/json"));
             Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
             Assert.That(requestId, Is.EqualTo("123"));
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
             Assert.That(rawResponse.Content.ToString(), Is.EqualTo("{\"errorCode\": 1}"));
         }
@@ -241,7 +241,7 @@ namespace Azure.Core.Tests
             Assert.That(exception.Message, Is.EqualTo(formattedResponse));
             Response rawResponse = exception.GetRawResponse();
 
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
             Assert.That(rawResponse.Content.ToString(), Is.EqualTo("{\"errorCode\": 1}"));
         }
@@ -471,7 +471,7 @@ namespace Azure.Core.Tests
             Assert.That(exception.ErrorCode, Is.EqualTo("StatusCode"));
             Response rawResponse = exception.GetRawResponse();
 
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
             Assert.That(rawResponse.Content.ToString(), Is.EqualTo(errorContent));
         }
@@ -514,7 +514,7 @@ namespace Azure.Core.Tests
             Assert.That(exception.ErrorCode, Is.EqualTo("StatusCode"));
 
             Response rawResponse = exception.GetRawResponse();
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
             Assert.That(rawResponse.Content.ToString(), Is.EqualTo(errorContent));
         }

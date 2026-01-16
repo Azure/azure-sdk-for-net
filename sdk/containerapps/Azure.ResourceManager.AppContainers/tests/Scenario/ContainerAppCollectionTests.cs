@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
             // List
             var listResult = await ContainerAppCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(listResult);
+            Assert.That(listResult, Is.Not.Empty);
             Assert.That(resourceName, Is.EqualTo(listResult[0].Data.Name));
 
             // Delete

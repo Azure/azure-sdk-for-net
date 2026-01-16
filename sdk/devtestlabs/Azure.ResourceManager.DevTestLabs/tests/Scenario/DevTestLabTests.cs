@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
         private void ValidateDevTestLab(DevTestLabData lab, string labName)
         {
-            Assert.IsNotNull(lab);
-            Assert.IsNotNull(lab.CreatedOn);
-            Assert.IsNotEmpty(lab.Id);
+            Assert.That(lab, Is.Not.Null);
+            Assert.That(lab.CreatedOn, Is.Not.Null);
+            Assert.That((string)lab.Id, Is.Not.Empty);
             Assert.That(lab.Name, Is.EqualTo(labName));
             Assert.That(lab.PremiumDataDisks, Is.EqualTo(DevTestLabPremiumDataDisk.Disabled));
             Assert.That(lab.ProvisioningState, Is.EqualTo("Succeeded"));

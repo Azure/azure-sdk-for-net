@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Attestation.Tests
             var connections = await endpointCollection.GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
             var privateEndpointConnectionData = connections.FirstOrDefault().Data;
-            Assert.NotNull(privateEndpointConnectionData);
+            Assert.That(privateEndpointConnectionData, Is.Not.Null);
             Assert.That(privateEndpointConnectionData.ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
             //3.GetAll
             var list = await endpointCollection.GetAllAsync().ToEnumerableAsync();

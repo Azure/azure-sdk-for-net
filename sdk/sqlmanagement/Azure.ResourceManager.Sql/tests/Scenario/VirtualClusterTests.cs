@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             // 1.CheckIfExist
             string virtualClusterName = (await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync()).FirstOrDefault().Data.Name;
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 2.Get
             var getVirtualCluster = await _resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName);
-            Assert.IsNotNull(getVirtualCluster.Value.Data);
+            Assert.That(getVirtualCluster.Value.Data, Is.Not.Null);
             Assert.That(getVirtualCluster.Value.Data.Name, Is.EqualTo(virtualClusterName));
             Assert.That(getVirtualCluster.Value.Data.Location.ToString(), Is.EqualTo("westus2"));
 
             // 3.GetAll
             var list = await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(virtualClusterName));
             Assert.That(list.FirstOrDefault().Data.Location.ToString(), Is.EqualTo("westus2"));
 

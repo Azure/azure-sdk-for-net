@@ -50,7 +50,7 @@ namespace Azure.Communication.CallingServer
                 Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
                 Assert.That(properties.Value.Targets.Count, Is.EqualTo(2));
                 callConnectionId = properties.Value.CallConnectionId;
-                Assert.IsNotEmpty(callConnectionId);
+                Assert.That(callConnectionId, Is.Not.Empty);
 
                 var participants = await createCallResult.CallConnection.GetParticipantsAsync().ConfigureAwait(false);
                 Assert.That(participants.Value.Count, Is.EqualTo(3));
@@ -108,7 +108,7 @@ namespace Azure.Communication.CallingServer
                 Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
                 Assert.That(properties.Value.Targets.Count, Is.EqualTo(3));
                 callConnectionId = properties.Value.CallConnectionId;
-                Assert.IsNotEmpty(callConnectionId);
+                Assert.That(callConnectionId, Is.Not.Empty);
 
                 var participants = await createCallResult.CallConnection.GetParticipantsAsync().ConfigureAwait(false);
                 Assert.That(participants.Value.Count, Is.EqualTo(4));
@@ -168,7 +168,7 @@ namespace Azure.Communication.CallingServer
                 wasConnected = true;
                 Assert.That(properties.Value.Targets.Count, Is.EqualTo(2));
                 callConnectionId = properties.Value.CallConnectionId;
-                Assert.IsNotEmpty(callConnectionId);
+                Assert.That(callConnectionId, Is.Not.Empty);
 
                 var participants = await createCallResult.CallConnection.GetParticipantsAsync().ConfigureAwait(false);
                 Assert.That(participants.Value.Count, Is.EqualTo(3));
@@ -233,7 +233,7 @@ namespace Azure.Communication.CallingServer
                 wasConnected = true;
                 Assert.That(properties.Value.Targets.Count, Is.EqualTo(2));
                 callConnectionId = properties.Value.CallConnectionId;
-                Assert.IsNotEmpty(callConnectionId);
+                Assert.That(callConnectionId, Is.Not.Empty);
 
                 var participants = await createCallResult.CallConnection.GetParticipantsAsync().ConfigureAwait(false);
                 Assert.That(participants.Value.Count, Is.EqualTo(3));
@@ -292,7 +292,7 @@ namespace Azure.Communication.CallingServer
                 Response<CallConnectionProperties> properties = await createCallResult.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
                 Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
                 var callConnectionId = properties.Value.CallConnectionId;
-                Assert.IsNotEmpty(callConnectionId);
+                Assert.That(callConnectionId, Is.Not.Empty);
 
                 var transferResult = await client.GetCallConnection(callConnectionId).TransferCallToParticipantAsync(new CommunicationUserIdentifier(TestEnvironment.TargetUserId2)).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);

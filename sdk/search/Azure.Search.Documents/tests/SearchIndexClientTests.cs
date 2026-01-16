@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Tests
             var serviceName = "my-svc-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
-            Assert.NotNull(service);
+            Assert.That(service, Is.Not.Null);
             Assert.That(service.Endpoint, Is.EqualTo(endpoint));
             Assert.That(service.ServiceName, Is.EqualTo(serviceName));
 
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Tests
 
             var indexName = "my-index-name";
             var client = service.GetSearchClient(indexName);
-            Assert.NotNull(client);
+            Assert.That(client, Is.Not.Null);
             Assert.That(client.Endpoint, Is.EqualTo(endpoint));
             Assert.That(client.ServiceName, Is.EqualTo(serviceName));
             Assert.That(client.IndexName, Is.EqualTo(indexName));
@@ -89,8 +89,8 @@ namespace Azure.Search.Documents.Tests
             // Make sure we're not repeating Header/Query names already defined
             // in the base ClientOptions
             SearchClientOptions options = new SearchClientOptions(ServiceVersion);
-            Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
-            Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
+            Assert.That(GetDuplicates(options.Diagnostics.LoggedHeaderNames), Is.Empty);
+            Assert.That(GetDuplicates(options.Diagnostics.LoggedQueryParameters), Is.Empty);
 
             // CollectionAssert.Unique doesn't give you the duplicate values
             // which is less helpful than it could be
@@ -118,18 +118,18 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
             Response<SearchServiceStatistics> response = await client.GetServiceStatisticsAsync();
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.Counters);
-            Assert.IsNotNull(response.Value.Counters.DataSourceCounter);
-            Assert.IsNotNull(response.Value.Counters.DocumentCounter);
-            Assert.IsNotNull(response.Value.Counters.IndexCounter);
-            Assert.IsNotNull(response.Value.Counters.IndexerCounter);
-            Assert.IsNotNull(response.Value.Counters.StorageSizeCounter);
-            Assert.IsNotNull(response.Value.Counters.SynonymMapCounter);
-            Assert.IsNotNull(response.Value.Limits);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Counters, Is.Not.Null);
+            Assert.That(response.Value.Counters.DataSourceCounter, Is.Not.Null);
+            Assert.That(response.Value.Counters.DocumentCounter, Is.Not.Null);
+            Assert.That(response.Value.Counters.IndexCounter, Is.Not.Null);
+            Assert.That(response.Value.Counters.IndexerCounter, Is.Not.Null);
+            Assert.That(response.Value.Counters.StorageSizeCounter, Is.Not.Null);
+            Assert.That(response.Value.Counters.SynonymMapCounter, Is.Not.Null);
+            Assert.That(response.Value.Limits, Is.Not.Null);
 
-            Assert.NotZero(response.Value.Counters.IndexCounter.Quota ?? 0L);
-            Assert.NotZero(response.Value.Counters.IndexCounter.Usage);
+            Assert.That(response.Value.Counters.IndexCounter.Quota ?? 0L, Is.Not.Zero);
+            Assert.That(response.Value.Counters.IndexCounter.Usage, Is.Not.Zero);
         }
 
         [Test]
@@ -141,9 +141,9 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
             Response<ListIndexStatsSummary> response = await client.GetIndexStatsSummaryAsync();
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.IndexesStatistics);
-            Assert.GreaterOrEqual(response.Value.IndexesStatistics.Count, 1);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.IndexesStatistics, Is.Not.Null);
+            Assert.That(response.Value.IndexesStatistics.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(response.Value.IndexesStatistics.Any(summary => summary.Name == resources.IndexName), Is.True);
         }
 
@@ -686,19 +686,19 @@ namespace Azure.Search.Documents.Tests
 
             // Create and compare reasoning effort
             KnowledgeBase actualAgent = await client.CreateKnowledgeBaseAsync(knowledgeBase);
-            Assert.IsNotNull(actualAgent.RetrievalReasoningEffort);
-            Assert.IsInstanceOf<KnowledgeRetrievalMediumReasoningEffort>(actualAgent.RetrievalReasoningEffort);
+            Assert.That(actualAgent.RetrievalReasoningEffort, Is.Not.Null);
+            Assert.That(actualAgent.RetrievalReasoningEffort, Is.InstanceOf<KnowledgeRetrievalMediumReasoningEffort>());
 
             // Update to LowReasoningEffort
             actualAgent.RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort();
             KnowledgeBase updatedAgent = await client.CreateOrUpdateKnowledgeBaseAsync(actualAgent);
-            Assert.IsNotNull(updatedAgent.RetrievalReasoningEffort);
-            Assert.IsInstanceOf<KnowledgeRetrievalLowReasoningEffort>(updatedAgent.RetrievalReasoningEffort);
+            Assert.That(updatedAgent.RetrievalReasoningEffort, Is.Not.Null);
+            Assert.That(updatedAgent.RetrievalReasoningEffort, Is.InstanceOf<KnowledgeRetrievalLowReasoningEffort>());
 
             // Get and verify the reasoning effort persisted
             KnowledgeBase fetchedAgent = await client.GetKnowledgeBaseAsync(knowledgeBaseName);
-            Assert.IsNotNull(fetchedAgent.RetrievalReasoningEffort);
-            Assert.IsInstanceOf<KnowledgeRetrievalLowReasoningEffort>(fetchedAgent.RetrievalReasoningEffort);
+            Assert.That(fetchedAgent.RetrievalReasoningEffort, Is.Not.Null);
+            Assert.That(fetchedAgent.RetrievalReasoningEffort, Is.InstanceOf<KnowledgeRetrievalLowReasoningEffort>());
 
             await client.DeleteKnowledgeBaseAsync(knowledgeBaseName);
             await client.DeleteKnowledgeSourceAsync(knowledgeSource.Name);
@@ -818,14 +818,14 @@ namespace Azure.Search.Documents.Tests
             var remoteSharePointKnowledgeSource = new RemoteSharePointKnowledgeSource("sharepoint");
 
             KnowledgeSource createdKs = await client.CreateKnowledgeSourceAsync(remoteSharePointKnowledgeSource);
-            Assert.IsNotNull(createdKs);
+            Assert.That(createdKs, Is.Not.Null);
 
             createdKs.Description = "Updated description";
             RemoteSharePointKnowledgeSource updatedKs = (RemoteSharePointKnowledgeSource)await client.CreateOrUpdateKnowledgeSourceAsync(createdKs);
             Assert.That(updatedKs.Description, Is.EqualTo("Updated description"));
 
             KnowledgeSource fetchedKs = await client.GetKnowledgeSourceAsync(remoteSharePointKnowledgeSource.Name);
-            Assert.IsNotNull(fetchedKs);
+            Assert.That(fetchedKs, Is.Not.Null);
             Assert.That(fetchedKs.Description, Is.EqualTo("Updated description"));
 
             await client.DeleteKnowledgeSourceAsync(remoteSharePointKnowledgeSource.Name);
@@ -844,7 +844,7 @@ namespace Azure.Search.Documents.Tests
             webKs.WebParameters.Domains.BlockedDomains.Add(new WebKnowledgeSourceDomain("blocked.com"));
 
             KnowledgeSource createdKs = await client.CreateKnowledgeSourceAsync(webKs);
-            Assert.IsNotNull(createdKs);
+            Assert.That(createdKs, Is.Not.Null);
             Assert.That(createdKs is WebKnowledgeSource, Is.True);
             var createdWebKs = createdKs as WebKnowledgeSource;
             Assert.That(createdWebKs.WebParameters.Domains.AllowedDomains.Count, Is.EqualTo(1));
@@ -857,7 +857,7 @@ namespace Azure.Search.Documents.Tests
             Assert.That(updatedKs.WebParameters.Domains.BlockedDomains.Count, Is.EqualTo(1));
 
             KnowledgeSource fetchedKs = await client.GetKnowledgeSourceAsync(webKs.Name);
-            Assert.IsNotNull(fetchedKs);
+            Assert.That(fetchedKs, Is.Not.Null);
             Assert.That(fetchedKs.Description, Is.EqualTo("Updated description"));
 
             await client.DeleteKnowledgeSourceAsync(webKs.Name);

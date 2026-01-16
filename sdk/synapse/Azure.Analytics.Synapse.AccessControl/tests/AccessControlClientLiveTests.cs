@@ -106,9 +106,9 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
-            Assert.NotNull(role.RoleAssignmentId);
-            Assert.NotNull(role.RoleAssignmentRoleDefinitionId);
-            Assert.NotNull(role.RoleAssignmentPrincipalId);
+            Assert.That(role.RoleAssignmentId, Is.Not.Null);
+            Assert.That(role.RoleAssignmentRoleDefinitionId, Is.Not.Null);
+            Assert.That(role.RoleAssignmentPrincipalId, Is.Not.Null);
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("name").ToString(), Is.EqualTo(expectedRoleDefinitionJson.GetProperty("name").ToString()));
             }
 
-            Assert.GreaterOrEqual(roleDefinitionsJson.RootElement.GetArrayLength(), 1);
+            Assert.That(roleDefinitionsJson.RootElement.GetArrayLength(), Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("scope").ToString(), Is.EqualTo(expectedRoleAssignmentJson.GetProperty("scope").ToString()));
             }
 
-            Assert.GreaterOrEqual(roleAssignmentsJson.GetArrayLength(), 1);
+            Assert.That(roleAssignmentsJson.GetArrayLength(), Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]

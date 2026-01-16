@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableSparkJobDefinition sparkJobDefinition = await DisposableSparkJobDefinition.Create (client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
 
             IList<SparkJobDefinitionResource> jobs = await client.GetSparkJobDefinitionsByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(jobs.Count, 1);
+            Assert.That(jobs.Count, Is.GreaterThanOrEqualTo(1));
 
             foreach (var expectedJob in jobs)
             {

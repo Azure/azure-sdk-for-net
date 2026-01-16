@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
             if (model.Data.Identity != null || getResult.Data.Identity != null)
             {
-                Assert.NotNull(model.Data.Identity);
-                Assert.NotNull(getResult.Data.Identity);
+                Assert.That(model.Data.Identity, Is.Not.Null);
+                Assert.That(getResult.Data.Identity, Is.Not.Null);
                 Assert.That(getResult.Data.Identity.PrincipalId, Is.EqualTo(model.Data.Identity.PrincipalId));
                 Assert.That(getResult.Data.Identity.TenantId, Is.EqualTo(model.Data.Identity.TenantId));
                 Assert.That(getResult.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(model.Data.Identity.ManagedServiceIdentityType));
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             Assert.That(getResult.Data.AccountName, Is.EqualTo(model.Data.AccountName));
             if (model.Data.DiagnosticStorageProperties != null || getResult.Data.DiagnosticStorageProperties != null)
             {
-                Assert.NotNull(model.Data.DiagnosticStorageProperties);
-                Assert.NotNull(getResult.Data.DiagnosticStorageProperties);
+                Assert.That(model.Data.DiagnosticStorageProperties, Is.Not.Null);
+                Assert.That(getResult.Data.DiagnosticStorageProperties, Is.Not.Null);
                 Assert.That(getResult.Data.DiagnosticStorageProperties.AuthenticationType, Is.EqualTo(model.Data.DiagnosticStorageProperties.AuthenticationType));
                 Assert.That(getResult.Data.DiagnosticStorageProperties.ConnectionString, Is.EqualTo(model.Data.DiagnosticStorageProperties.ConnectionString));
                 Assert.That(getResult.Data.DiagnosticStorageProperties.ResourceId, Is.EqualTo(model.Data.DiagnosticStorageProperties.ResourceId));
@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             Assert.That(updateParameters.Location, Is.EqualTo(updatedAccount.Data.Location));
             if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
             {
-                Assert.NotNull(updatedAccount.Data.Identity);
-                Assert.NotNull(updateParameters.Identity);
+                Assert.That(updatedAccount.Data.Identity, Is.Not.Null);
+                Assert.That(updateParameters.Identity, Is.Not.Null);
                 Assert.That(updateParameters.Identity.ManagedServiceIdentityType, Is.EqualTo(updatedAccount.Data.Identity.ManagedServiceIdentityType));
             }
         }
 
         public static void AssertInstanceUpdate(DeviceUpdateInstanceResource updatedInstance, string key, string value)
         {
-            Assert.GreaterOrEqual(updatedInstance.Data.Tags.Count, 1);
+            Assert.That(updatedInstance.Data.Tags.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(updatedInstance.Data.Tags.ContainsKey(key), Is.True);
             Assert.That(value, Is.EqualTo(updatedInstance.Data.Tags[key]));
         }

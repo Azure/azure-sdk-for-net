@@ -42,7 +42,7 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
 
             using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(5));
             QueueMessage message = await queueClient.ReceiveMessageAsync(null, cancellationTokenSource.Token);
-            Assert.IsNotNull(message.MessageText);
+            Assert.That(message.MessageText, Is.Not.Null);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
 
             using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(5));
             QueueMessage message = await queueClient.ReceiveMessageAsync(null, cancellationTokenSource.Token);
-            Assert.IsNotNull(message.MessageText);
+            Assert.That(message.MessageText, Is.Not.Null);
         }
 
         [Test]

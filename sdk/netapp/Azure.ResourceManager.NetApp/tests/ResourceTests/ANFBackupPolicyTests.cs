@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Validate if created properly
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
-            Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
-            Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
-            Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
+            Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
+            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
             Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId, Is.EqualTo(backupPolicyProperties.BackupPolicyId));
 
             //Disable backupPolicy to avoid server side issue

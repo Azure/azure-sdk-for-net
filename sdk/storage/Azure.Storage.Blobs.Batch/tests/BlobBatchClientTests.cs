@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Test
             ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
                 async () => await client.SubmitBatchAsync(batch));
 
-            StringAssert.Contains("Cannot submit an empty batch", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Cannot submit an empty batch"));
         }
 
         [RecordedTest]
@@ -98,7 +98,7 @@ namespace Azure.Storage.Blobs.Test
                 () => batch.SetBlobAccessTier(uris[1], AccessTier.Cool));
             batch.Dispose();
 
-            StringAssert.Contains("already being used for Delete operations", ex.Message);
+            Assert.That(ex.Message, Does.Contain("already being used for Delete operations"));
         }
 
         [RecordedTest]
@@ -113,7 +113,7 @@ namespace Azure.Storage.Blobs.Test
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => batch.DeleteBlob(uris[1]));
 
-            StringAssert.Contains("already being used for SetAccessTier operations", ex.Message);
+            Assert.That(ex.Message, Does.Contain("already being used for SetAccessTier operations"));
         }
 
         [RecordedTest]
@@ -142,7 +142,7 @@ namespace Azure.Storage.Blobs.Test
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => { var _ = response.ClientRequestId; });
 
-            StringAssert.Contains("Cannot use the Response before calling BlobBatchClient.SubmitBatch", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Cannot use the Response before calling BlobBatchClient.SubmitBatch"));
         }
 
         [RecordedTest]
@@ -186,7 +186,7 @@ namespace Azure.Storage.Blobs.Test
             ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
                 async () => await client2.SubmitBatchAsync(batch1));
 
-            StringAssert.Contains("BlobBatchClient used to create the BlobBatch must be used to submit it", ex.Message);
+            Assert.That(ex.Message, Does.Contain("BlobBatchClient used to create the BlobBatch must be used to submit it"));
         }
 
         [RecordedTest]
@@ -560,7 +560,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Status, Is.EqualTo(404));
             Assert.That(BlobErrorCode.ContainerNotFound == ex.ErrorCode, Is.True);
             await scenario.AssertDeleted(good);
@@ -579,7 +579,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.DeleteBlobsAsync(uris));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Status, Is.EqualTo(404));
             Assert.That(BlobErrorCode.ContainerNotFound == ex.ErrorCode, Is.True);
 
@@ -936,7 +936,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Status, Is.EqualTo(404));
             Assert.That(BlobErrorCode.ContainerNotFound == ex.ErrorCode, Is.True);
             await scenario.AssertTiers(AccessTier.Cool, good);
@@ -955,7 +955,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Status, Is.EqualTo(404));
             Assert.That(BlobErrorCode.ContainerNotFound == ex.ErrorCode, Is.True);
 

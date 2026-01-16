@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.That(abandonedMessage.ApplicationProperties["datetime"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeNow).Within(TimeSpan.FromMilliseconds(1)));
             Assert.That(abandonedMessage.ApplicationProperties["datetimeoffset"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeOffsetNow).Within(TimeSpan.FromMilliseconds(1)));
             Assert.That(abandonedMessage.ApplicationProperties["guid"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.Guid));
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.SessionActionsCache);
+            Assert.That(provider.SessionActionsCache, Is.Empty);
         }
 
         [Test]
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         SessionId = message.SessionId,
                     },
                     new MockServerCallContext());
-                Assert.IsNotEmpty(test.SessionState);
+                Assert.That(test.SessionState, Is.Not.Empty);
                 Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 _waitHandle1.Set();
             }
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         SessionId = message.SessionId,
                     },
                     new MockServerCallContext());
-                Assert.IsNotEmpty(test.SessionState);
+                Assert.That(test.SessionState, Is.Not.Empty);
                 Assert.That(message.Body.ToArray(), Is.EqualTo(predefinedData));
                 _waitHandle1.Set();
             }

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             await sqlpoolCreate.UpdateAsync(WaitUntil.Completed, sqlPoolPatchInfo);
 
             var sqlpoolUpdate = (await sqlPoolCollection.GetAsync(sqlpoolName)).Value;
-            Assert.NotNull(sqlpoolUpdate.Data.Tags);
+            Assert.That(sqlpoolUpdate.Data.Tags, Is.Not.Null);
             Assert.That(sqlpoolUpdate.Data.Tags["TestTag"], Is.EqualTo("TestUpdate"));
 
             // list sqlpool from workspace

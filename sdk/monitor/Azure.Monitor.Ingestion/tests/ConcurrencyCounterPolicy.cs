@@ -26,7 +26,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Interlocked.Increment(ref Count);
             ProcessNext(message, pipeline);
             //in the sync case, the number of threads running should not exceed 1
-            Assert.GreaterOrEqual(1, Count);
+            Assert.That(1, Is.GreaterThanOrEqualTo(Count));
             Interlocked.Decrement(ref Count);
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Interlocked.Increment(ref Count);
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             //in the async case, the number of threads running should not exceed the specified _maxConcurrency
-            Assert.GreaterOrEqual(_maxConcurrency, Count);
+            Assert.That(_maxConcurrency, Is.GreaterThanOrEqualTo(Count));
             MaxCount = Math.Max(Count, MaxCount);
             Interlocked.Decrement(ref Count);
         }

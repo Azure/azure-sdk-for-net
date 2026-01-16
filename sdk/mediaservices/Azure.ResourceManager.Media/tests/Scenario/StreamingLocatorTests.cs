@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             var streamingLocator = await CreateStreamingLocator(streamingLocatorName);
-            Assert.IsNotNull(streamingLocator);
+            Assert.That(streamingLocator, Is.Not.Null);
             Assert.That(streamingLocator.Data.Name, Is.EqualTo(streamingLocatorName));
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             await CreateStreamingLocator(streamingLocatorName);
             var streamingLocator = await streamingLocatorCollection.GetAsync(streamingLocatorName);
-            Assert.IsNotNull(streamingLocator);
+            Assert.That(streamingLocator, Is.Not.Null);
             Assert.That(streamingLocator.Value.Data.Name, Is.EqualTo(streamingLocatorName));
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             await CreateStreamingLocator(streamingLocatorName);
             var list = await streamingLocatorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

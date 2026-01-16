@@ -28,7 +28,7 @@ namespace Azure.Communication.CallingServer
             Uri metadataEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}/content/acsmetadata");
             CallRecording callRecordingClient = client.GetCallRecording();
             Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
-            Assert.IsNotNull(metadata);
+            Assert.That(metadata, Is.Not.Null);
             JsonElement actual = JsonDocument.Parse(metadata).RootElement;
             Assert.That(actual.GetProperty("chunkDocumentId").ToString(), Is.EqualTo(documentId));
         }
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallingServer
             try
             {
                 Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
-                Assert.IsNotNull(metadata);
+                Assert.That(metadata, Is.Not.Null);
                 JsonElement actual = JsonDocument.Parse(metadata).RootElement;
                 Assert.That(actual.GetProperty("chunkDocumentId").ToString(), Is.EqualTo(nonExistentDocumentId));
             }
@@ -81,7 +81,7 @@ namespace Azure.Communication.CallingServer
             Uri metadataEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}/content/acsmetadata");
             CallRecording callRecordingClient = client.GetCallRecording();
             Response<Stream> response = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint, new HttpRange(0, length));
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.GetRawResponse().Headers.ContentLength, Is.EqualTo(length));
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Communication.CallingServer
             Uri metadataEndpoint = new Uri($"https://eu-storage.asm.skype.com/v1/objects/{documentId}/content/acsmetadata");
             CallRecording callRecordingClient = client.GetCallRecording();
             Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
-            Assert.IsNotNull(metadata);
+            Assert.That(metadata, Is.Not.Null);
             JsonElement actual = JsonDocument.Parse(metadata).RootElement;
             Assert.That(actual.GetProperty("chunkDocumentId").ToString(), Is.EqualTo(documentId));
         }

@@ -83,7 +83,7 @@ namespace Azure.Monitor.Ingestion.Tests
             foreach (RequestFailedException exception in exceptions.InnerExceptions)
             {
                 Assert.That(exception.ErrorCode, Is.EqualTo("ContentLengthLimitExceeded"));
-                Assert.IsNull(exception.InnerException);
+                Assert.That(exception.InnerException, Is.Null);
                 Assert.That(exception.Status, Is.EqualTo(413));
             }
         }
@@ -116,7 +116,7 @@ namespace Azure.Monitor.Ingestion.Tests
             foreach (RequestFailedException exception in exceptions.InnerExceptions)
             {
                 Assert.That(exception.ErrorCode, Is.EqualTo("ContentLengthLimitExceeded"));
-                Assert.IsNull(exception.InnerException);
+                Assert.That(exception.InnerException, Is.Null);
                 Assert.That(exception.Status, Is.EqualTo(413));
             }
         }
@@ -144,9 +144,9 @@ namespace Azure.Monitor.Ingestion.Tests
             Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 isTriggered = true;
-                Assert.IsInstanceOf<RequestFailedException>(e.Exception);
+                Assert.That(e.Exception, Is.InstanceOf<RequestFailedException>());
                 Assert.That(((RequestFailedException)(e.Exception)).ErrorCode, Is.EqualTo("ContentLengthLimitExceeded"));
-                Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
+                Assert.That(((RequestFailedException)(e.Exception)).InnerException, Is.Null);
                 Assert.That(((RequestFailedException)(e.Exception)).Status, Is.EqualTo(413));
                 return Task.CompletedTask;
             }
@@ -181,9 +181,9 @@ namespace Azure.Monitor.Ingestion.Tests
             Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 isTriggered = true;
-                Assert.IsInstanceOf<RequestFailedException>(e.Exception);
+                Assert.That(e.Exception, Is.InstanceOf<RequestFailedException>());
                 Assert.That(((RequestFailedException)(e.Exception)).ErrorCode, Is.EqualTo("ContentLengthLimitExceeded"));
-                Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
+                Assert.That(((RequestFailedException)(e.Exception)).InnerException, Is.Null);
                 Assert.That(((RequestFailedException)(e.Exception)).Status, Is.EqualTo(413));
                 return Task.CompletedTask;
             }
@@ -232,9 +232,9 @@ namespace Azure.Monitor.Ingestion.Tests
             {
                 cts.Cancel();
                 isTriggered = true;
-                Assert.IsInstanceOf<RequestFailedException>(e.Exception);
+                Assert.That(e.Exception, Is.InstanceOf<RequestFailedException>());
                 Assert.That(((RequestFailedException)(e.Exception)).ErrorCode, Is.EqualTo("ContentLengthLimitExceeded"));
-                Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
+                Assert.That(((RequestFailedException)(e.Exception)).InnerException, Is.Null);
                 Assert.That(((RequestFailedException)(e.Exception)).Status, Is.EqualTo(413));
                 return Task.CompletedTask;
             }
@@ -259,9 +259,9 @@ namespace Azure.Monitor.Ingestion.Tests
             var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false); });
             Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
-                Assert.IsInstanceOf<RequestFailedException>(e.Exception);
+                Assert.That(e.Exception, Is.InstanceOf<RequestFailedException>());
                 Assert.That(((RequestFailedException)(e.Exception)).ErrorCode, Is.EqualTo("ContentLengthLimitExceeded"));
-                Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
+                Assert.That(((RequestFailedException)(e.Exception)).InnerException, Is.Null);
                 Assert.That(((RequestFailedException)(e.Exception)).Status, Is.EqualTo(413));
                 throw e.Exception;
             }
@@ -278,9 +278,9 @@ namespace Azure.Monitor.Ingestion.Tests
             options.MaxConcurrency = 8;
             var entries = GenerateEntries(80000, Recording.Now.DateTime);
             Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
-            Assert.Greater(policy.MaxCount, 1);
+            Assert.That(policy.MaxCount, Is.GreaterThan(1));
             //Check the response
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(204));
             Assert.That(response.IsError, Is.False);
         }

@@ -52,25 +52,25 @@ namespace Azure.ResourceManager.Media.Tests
             // Create
             string jobName = Recording.GenerateAssetName("job");
             var job = await CreateDefautMediaTransferJob(jobName);
-            Assert.IsNotNull(job);
+            Assert.That(job, Is.Not.Null);
             Assert.That(job.Data.Name, Is.EqualTo(jobName));
             // Check exists
             bool flag = await mediaTransformJobCollection.ExistsAsync(jobName);
             Assert.That(flag, Is.True);
             // Get
             var result = await mediaTransformJobCollection.GetAsync(jobName);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Value.Data.Name, Is.EqualTo(jobName));
             // Get all
             var list = await mediaTransformJobCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Cancel
             while (result.Value.Data.State != MediaJobState.Canceled)
             {
                 var cancelResult = await job.CancelJobAsync();
                 Assert.That(cancelResult.Status == 200, Is.True);
                 result = await mediaTransformJobCollection.GetAsync(jobName);
-                Assert.IsNotNull(result);
+                Assert.That(result, Is.Not.Null);
             }
             // Delete
             await job.DeleteAsync(WaitUntil.Completed);

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var abandonedMessage = (await client.CreateReceiver(FirstQueueScope.QueueName).ReceiveMessagesAsync(1)).Single();
             Assert.That(abandonedMessage.Body.ToString(), Is.EqualTo("foobar"));
             Assert.That(abandonedMessage.ApplicationProperties["key"], Is.EqualTo("value"));
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var abandonedMessage = (await client.CreateReceiver(FirstQueueScope.QueueName).ReceiveMessagesAsync(1)).Single();
             Assert.That(abandonedMessage.Body.ToString(), Is.EqualTo("foobar"));
             Assert.That(abandonedMessage.ApplicationProperties["key"], Is.EqualTo("value"));
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         public class ServiceBusBindToMessageAndComplete
@@ -367,27 +367,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         await SettlementService.Complete(
                             new CompleteRequest { Locktoken = message.LockToken },
                             new MockServerCallContext()));
-                StringAssert.Contains(
-                    "Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid.",
-                    exception.ToString());
+                Assert.That(
+                    exception.ToString(),
+                    Does.Contain("Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid."));
 
                 exception = Assert.ThrowsAsync<RpcException>(
                     async () =>
                         await SettlementService.Defer(
                             new DeferRequest { Locktoken = message.LockToken },
                             new MockServerCallContext()));
-                StringAssert.Contains(
-                    "Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid.",
-                    exception.ToString());
+                Assert.That(
+                    exception.ToString(),
+                    Does.Contain("Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid."));
 
                 exception = Assert.ThrowsAsync<RpcException>(
                     async () =>
                         await SettlementService.Deadletter(
                             new DeadletterRequest() { Locktoken = message.LockToken },
                             new MockServerCallContext()));
-                StringAssert.Contains(
-                    "Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid.",
-                    exception.ToString());
+                Assert.That(
+                    exception.ToString(),
+                    Does.Contain("Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid."));
 
                 // The service doesn't throw when an already settled message gets abandoned over the mgmt link, so we won't
                 // test for that here.

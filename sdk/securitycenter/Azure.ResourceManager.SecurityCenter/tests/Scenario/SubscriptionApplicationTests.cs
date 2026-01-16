@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var applicationId = Recording.Random.NewGuid().ToString();
             await CreateSubscriptionApplicationResource(applicationId);
             var list = await _subAppCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSubscriptionApplication(list.First(item => item.Data.Name == applicationId), applicationId);
         }
 
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateSubscriptionApplication(SubscriptionSecurityApplicationResource subApp, string applicationId)
         {
-            Assert.IsNotNull(subApp);
-            Assert.IsNotNull(subApp.Data.Id);
+            Assert.That(subApp, Is.Not.Null);
+            Assert.That(subApp.Data.Id, Is.Not.Null);
             Assert.That(subApp.Data.Name, Is.EqualTo(applicationId));
             Assert.That(subApp.Data.SourceResourceType, Is.EqualTo(ApplicationSourceResourceType.Assessments));
             Assert.That(subApp.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/applications"));

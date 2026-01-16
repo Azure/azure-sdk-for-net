@@ -20,10 +20,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DecryptParameters options = CryptographyModelFactory.DecryptParameters(EncryptionAlgorithm.A128Cbc, buffer, null, null);
 
             Assert.That(options.Algorithm, Is.EqualTo(EncryptionAlgorithm.A128Cbc));
-            CollectionAssert.AreEqual(buffer, options.Ciphertext);
-            Assert.IsNull(options.Iv);
-            Assert.IsNull(options.AuthenticationTag);
-            Assert.IsNull(options.AdditionalAuthenticatedData);
+            Assert.That(options.Ciphertext, Is.EqualTo(buffer).AsCollection);
+            Assert.That(options.Iv, Is.Null);
+            Assert.That(options.AuthenticationTag, Is.Null);
+            Assert.That(options.AdditionalAuthenticatedData, Is.Null);
         }
 
         [Test]
@@ -33,10 +33,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DecryptParameters options = CryptographyModelFactory.DecryptParameters(EncryptionAlgorithm.A128Cbc, buffer, buffer, buffer, buffer);
 
             Assert.That(options.Algorithm, Is.EqualTo(EncryptionAlgorithm.A128Cbc));
-            CollectionAssert.AreEqual(buffer, options.Ciphertext);
-            CollectionAssert.AreEqual(buffer, options.Iv);
-            CollectionAssert.AreEqual(buffer, options.AuthenticationTag);
-            CollectionAssert.AreEqual(buffer, options.AdditionalAuthenticatedData);
+            Assert.That(options.Ciphertext, Is.EqualTo(buffer).AsCollection);
+            Assert.That(options.Iv, Is.EqualTo(buffer).AsCollection);
+            Assert.That(options.AuthenticationTag, Is.EqualTo(buffer).AsCollection);
+            Assert.That(options.AdditionalAuthenticatedData, Is.EqualTo(buffer).AsCollection);
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EncryptParameters options = CryptographyModelFactory.EncryptParameters(EncryptionAlgorithm.A128Cbc, buffer);
 
             Assert.That(options.Algorithm, Is.EqualTo(EncryptionAlgorithm.A128Cbc));
-            CollectionAssert.AreEqual(buffer, options.Plaintext);
-            Assert.IsNull(options.Iv);
-            Assert.IsNull(options.AdditionalAuthenticatedData);
+            Assert.That(options.Plaintext, Is.EqualTo(buffer).AsCollection);
+            Assert.That(options.Iv, Is.Null);
+            Assert.That(options.AdditionalAuthenticatedData, Is.Null);
         }
 
         [Test]
@@ -62,9 +62,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EncryptParameters options = CryptographyModelFactory.EncryptParameters(EncryptionAlgorithm.A128Cbc, buffer, buffer, buffer);
 
             Assert.That(options.Algorithm, Is.EqualTo(EncryptionAlgorithm.A128Cbc));
-            CollectionAssert.AreEqual(buffer, options.Plaintext);
-            CollectionAssert.AreEqual(buffer, options.Iv);
-            CollectionAssert.AreEqual(buffer, options.AdditionalAuthenticatedData);
+            Assert.That(options.Plaintext, Is.EqualTo(buffer).AsCollection);
+            Assert.That(options.Iv, Is.EqualTo(buffer).AsCollection);
+            Assert.That(options.AdditionalAuthenticatedData, Is.EqualTo(buffer).AsCollection);
         }
     }
 }

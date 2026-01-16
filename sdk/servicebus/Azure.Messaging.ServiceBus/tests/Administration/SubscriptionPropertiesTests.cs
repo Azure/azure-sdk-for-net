@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
             Assert.That(ex.ParamName, Is.EqualTo($"ForwardTo"));
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
             Assert.That(ex.ParamName, Is.EqualTo($"ForwardDeadLetteredMessagesTo"));
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             MockResponse response = new MockResponse(200);
             response.SetContent(subscriptionDescriptionXml);
             SubscriptionProperties subscriptionDesc = await SubscriptionPropertiesExtensions.ParseResponseAsync("abcd", response);
-            Assert.NotNull(subscriptionDesc.UnknownProperties);
+            Assert.That(subscriptionDesc.UnknownProperties, Is.Not.Null);
             XDocument doc = SubscriptionPropertiesExtensions.Serialize(subscriptionDesc);
 
             XName subscriptionDescriptionElementName = XName.Get("SubscriptionDescription", AdministrationClientConstants.ServiceBusNamespace);
@@ -188,7 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             XNode actualChildNode = serializedSubscriptionDescritionElement.FirstNode;
             while (expectedChildNode != null)
             {
-                Assert.NotNull(actualChildNode);
+                Assert.That(actualChildNode, Is.Not.Null);
                 Assert.That(XNode.DeepEquals(expectedChildNode, actualChildNode), Is.True, $"SubscriptionDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
                 expectedChildNode = expectedChildNode.NextNode;
                 actualChildNode = actualChildNode.NextNode;

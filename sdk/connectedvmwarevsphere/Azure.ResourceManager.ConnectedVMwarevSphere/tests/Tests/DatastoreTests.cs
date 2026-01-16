@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             ArmOperation<VMwareDatastoreResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, datastoreName, data);
             VMwareDatastoreResource datastore = lro.Value;
-            Assert.IsNotNull(datastore);
+            Assert.That(datastore, Is.Not.Null);
             VMwareDatastoreData resourceData = datastore.Data;
             Assert.That(datastoreName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareDatastoreResource result = await collection.GetAsync(datastoreName);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Check exists
             bool isExist = await collection.ExistsAsync(datastoreName);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             // Get if exists
             NullableResponse<VMwareDatastoreResource> response = await collection.GetIfExistsAsync(datastoreName);
             result = response.HasValue ? response.Value : null;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // List
             isExist = false;

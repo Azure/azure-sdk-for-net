@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
         public void SerializeDefaultValue()
         {
             var data = ModelReaderWriter.Write(default(RehydrationToken));
-            Assert.NotNull(data);
+            Assert.That(data, Is.Not.Null);
         }
     }
 }

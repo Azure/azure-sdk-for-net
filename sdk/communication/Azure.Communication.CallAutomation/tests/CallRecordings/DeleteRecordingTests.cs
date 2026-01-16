@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl)));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl)));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(401));
         }
     }

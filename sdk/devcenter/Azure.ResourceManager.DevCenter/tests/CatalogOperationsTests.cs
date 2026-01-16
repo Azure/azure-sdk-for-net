@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
             DevCenterCatalogResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, catalogData)).Value;
 
-            Assert.NotNull(createdResource);
-            Assert.NotNull(createdResource.Data);
+            Assert.That(createdResource, Is.Not.Null);
+            Assert.That(createdResource.Data, Is.Not.Null);
 
             // List
             List<DevCenterCatalogResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // Get
             Response<DevCenterCatalogResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
-            Assert.NotNull(retrievedResource.Value);
-            Assert.NotNull(retrievedResource.Value.Data);
+            Assert.That(retrievedResource.Value, Is.Not.Null);
+            Assert.That(retrievedResource.Value.Data, Is.Not.Null);
 
             // Delete
             ArmOperation deleteOp = await retrievedResource.Value.DeleteAsync(WaitUntil.Completed);

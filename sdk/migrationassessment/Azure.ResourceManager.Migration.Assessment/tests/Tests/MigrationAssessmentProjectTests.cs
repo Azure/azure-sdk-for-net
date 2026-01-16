@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             await response.WaitForCompletionAsync();
             assessmentProjectResource = response.Value;
             Assert.That(response.HasCompleted, Is.True);
-            Assert.IsNotNull(assessmentProjectResource);
+            Assert.That(assessmentProjectResource, Is.Not.Null);
         }
 
         [TearDown]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessment Project
             assessmentProjectResource = await assessmentProjectCollection.GetAsync(assessmentProjName);
             Assert.That(assessmentProjectResource.Data.ProvisioningState, Is.EqualTo(MigrationAssessmentProvisioningState.Succeeded));
-            Assert.IsNotNull(assessmentProjectResource.Id);
+            Assert.That(assessmentProjectResource.Id, Is.Not.Null);
 
             // Update Assessment Project
             var assessmentProjectPatch = new MigrationAssessmentProjectPatch();
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             // Get Assessment Project Summary
             var assessmentProjectSummaryResource = await collection.GetAsync("default");
-            Assert.IsNotNull(assessmentProjectSummaryResource);
+            Assert.That(assessmentProjectSummaryResource, Is.Not.Null);
 
             // Get All Assessment Project Summaries
             var allAssessmentProjectSummaries = collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(allAssessmentProjectSummaries);
-            Assert.GreaterOrEqual(allAssessmentProjectSummaries.Result.Count, 1);
+            Assert.That(allAssessmentProjectSummaries, Is.Not.Null);
+            Assert.That(allAssessmentProjectSummaries.Result.Count, Is.GreaterThanOrEqualTo(1));
         }
     }
 }

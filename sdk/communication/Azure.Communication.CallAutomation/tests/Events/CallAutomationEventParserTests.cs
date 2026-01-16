@@ -260,8 +260,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(calConnected.CallConnectionId, Is.EqualTo(callConnectionId));
                 Assert.That(calConnected.ServerCallId, Is.EqualTo(serverCallId));
                 Assert.That(calConnected.CorrelationId, Is.EqualTo(correlationId));
-                Assert.IsNull(calConnected.OperationContext);
-                Assert.IsNull(calConnected.ResultInformation);
+                Assert.That(calConnected.OperationContext, Is.Null);
+                Assert.That(calConnected.ResultInformation, Is.Null);
             }
             else
             {
@@ -318,8 +318,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(callDisconnected.CallConnectionId, Is.EqualTo(callConnectionId));
                 Assert.That(callDisconnected.ServerCallId, Is.EqualTo(serverCallId));
                 Assert.That(callDisconnected.CorrelationId, Is.EqualTo(correlationId));
-                Assert.IsNull(callDisconnected.OperationContext);
-                Assert.IsNull(callDisconnected.ResultInformation);
+                Assert.That(callDisconnected.OperationContext, Is.Null);
+                Assert.That(callDisconnected.ResultInformation, Is.Null);
             }
             else
             {
@@ -410,8 +410,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(participantsUpdated.CallConnectionId, Is.EqualTo(callConnectionId));
                 Assert.That(participantsUpdated.ServerCallId, Is.EqualTo(serverCallId));
                 Assert.That(participantsUpdated.CorrelationId, Is.EqualTo(correlationId));
-                Assert.IsNull(participantsUpdated.OperationContext);
-                Assert.IsNull(participantsUpdated.ResultInformation);
+                Assert.That(participantsUpdated.OperationContext, Is.Null);
+                Assert.That(participantsUpdated.ResultInformation, Is.Null);
                 Assert.That(participantsUpdated.Participants.Count, Is.EqualTo(2));
                 Assert.That(participantsUpdated.Participants[0].Identifier.RawId, Is.EqualTo("8:acs:12345"));
                 Assert.That(participantsUpdated.Participants[0].IsMuted, Is.False);
@@ -576,7 +576,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 if (recognizeResult is DtmfResult dtmfResultReturned)
                 {
                     string toneResults = dtmfResultReturned.ConvertToString();
-                    Assert.NotZero(dtmfResultReturned.Tones.Count());
+                    Assert.That(dtmfResultReturned.Tones.Count(), Is.Not.Zero);
                     Assert.That(dtmfResultReturned.Tones.First(), Is.EqualTo(DtmfTone.Five));
                     Assert.That(toneResults, Is.EqualTo("56#"));
                 }
@@ -614,7 +614,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(recognizeCompleted.ResultInformation?.Code, Is.EqualTo(200));
                 if (recognizeResult is DtmfResult dtmfResultReturned)
                 {
-                    Assert.NotZero(dtmfResultReturned.Tones.Count());
+                    Assert.That(dtmfResultReturned.Tones.Count(), Is.Not.Zero);
                     Assert.That(dtmfResultReturned.Tones.First(), Is.EqualTo(DtmfTone.Five));
                 }
             }

@@ -88,7 +88,7 @@ namespace Azure.Maps.TimeZones.Tests
         {
             var client = CreateClient();
             var response = await client.GetIanaVersionAsync();
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]

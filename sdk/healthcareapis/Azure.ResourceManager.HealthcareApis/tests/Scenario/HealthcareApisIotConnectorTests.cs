@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _iotConnectorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateHealthcareApisIotConnector(list.FirstOrDefault().Data, iotConnectorName);
 
             // Delete
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
         private void ValidateHealthcareApisIotConnector(HealthcareApisIotConnectorData iotConnector, string iotConnectorName)
         {
-            Assert.IsNotNull(iotConnector);
-            Assert.IsNotNull(iotConnector.ETag);
-            Assert.IsNotNull(iotConnector.DeviceMappingContent);
+            Assert.That(iotConnector, Is.Not.Null);
+            Assert.That(iotConnector.ETag, Is.Not.Null);
+            Assert.That(iotConnector.DeviceMappingContent, Is.Not.Null);
             Assert.That(iotConnector.Id.Name, Is.EqualTo(iotConnectorName));
             Assert.That(iotConnector.Location, Is.EqualTo(DefaultLocation));
             Assert.That(iotConnector.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/iotconnectors"));

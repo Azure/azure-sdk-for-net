@@ -61,15 +61,15 @@ namespace Azure.Core.Tests
 
             Assert.That(activity.OperationName, Is.EqualTo("Azure.Core.Http.Request"));
 
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.status_code", "201"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "UNSET"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "client"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("http.status_code", "201")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("http.url", "http://example.com/")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("http.method", "GET")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("http.user_agent", "agent")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("requestId", clientRequestId)));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("serviceRequestId", "server request id")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("otel.status_code", "UNSET")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("kind", "client")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests")));
         }
 
         [Test]
@@ -95,8 +95,8 @@ namespace Azure.Core.Tests
 
             await requestTask;
 
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/?api-version=v2&sas=REDACTED"));
-            CollectionAssert.IsEmpty(activity.Tags.Where(kvp => kvp.Value.Contains("secret")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("http.url", "http://example.com/?api-version=v2&sas=REDACTED")));
+            Assert.That(activity.Tags.Where(kvp => kvp.Value.Contains("secret")), Is.Empty);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Azure.Core.Tests
 
             await requestTask;
 
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("otel.status_code", "ERROR")));
         }
 
         [Test]
@@ -257,13 +257,13 @@ namespace Azure.Core.Tests
             (string, object, object) isEnabledCall = testListener.IsEnabledCalls.Dequeue();
 
             Assert.That(startEvent.Key, Is.EqualTo("Azure.Core.Http.Request.Start"));
-            Assert.IsInstanceOf<HttpMessage>(startEvent.Value);
+            Assert.That(startEvent.Value, Is.InstanceOf<HttpMessage>());
 
             Assert.That(stopEvent.Key, Is.EqualTo("Azure.Core.Http.Request.Stop"));
-            Assert.IsInstanceOf<HttpMessage>(stopEvent.Value);
+            Assert.That(stopEvent.Value, Is.InstanceOf<HttpMessage>());
 
             Assert.That(isEnabledCall.Item1, Is.EqualTo("Azure.Core.Http.Request"));
-            Assert.IsInstanceOf<HttpMessage>(isEnabledCall.Item2);
+            Assert.That(isEnabledCall.Item2, Is.InstanceOf<HttpMessage>());
         }
 
         [Test]
@@ -332,19 +332,19 @@ namespace Azure.Core.Tests
                 Assert.That(activity.DisplayName, Is.EqualTo("GET"));
 
                 Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Client));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("http.response.status_code", 201));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("url.full", url));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.request.method", "GET"));
-                Assert.IsEmpty(activity.Tags.Where(kvp => kvp.Key == "http.user_agent"));
-                Assert.IsEmpty(activity.Tags.Where(kvp => kvp.Key == "requestId"));
-                Assert.IsEmpty(activity.Tags.Where(kvp => kvp.Key == "serviceRequestId"));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, int>("http.response.status_code", 201)));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("url.full", url)));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("http.request.method", "GET")));
+                Assert.That(activity.Tags.Where(kvp => kvp.Key == "http.user_agent"), Is.Empty);
+                Assert.That(activity.Tags.Where(kvp => kvp.Key == "requestId"), Is.Empty);
+                Assert.That(activity.Tags.Where(kvp => kvp.Key == "serviceRequestId"), Is.Empty);
 
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.client_request_id", clientRequestId));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.service_request_id", "server request id"));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("az.client_request_id", clientRequestId)));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("az.service_request_id", "server request id")));
 
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("server.address", "example.com"));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, object>("server.port", port ?? 443));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("server.address", "example.com")));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, object>("server.port", port ?? 443)));
+                Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests")));
             }
             finally
             {
@@ -378,7 +378,7 @@ namespace Azure.Core.Tests
                 await requestTask;
 
                 Assert.That(testListener.Activities.Count, Is.EqualTo(1));
-                CollectionAssert.Contains(testListener.Activities.Single().TagObjects, new KeyValuePair<string, int>("http.response.status_code", 201));
+                Assert.That(testListener.Activities.Single().TagObjects, Has.Member(new KeyValuePair<string, int>("http.response.status_code", 201)));
             }
             finally
             {
@@ -403,9 +403,9 @@ namespace Azure.Core.Tests
 
             var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
 
-            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "System.Net.Http.HttpRequestException"));
+            Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("error.type", "System.Net.Http.HttpRequestException")));
             Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
-            StringAssert.Contains("Test exception", activity.StatusDescription);
+            Assert.That(activity.StatusDescription, Does.Contain("Test exception"));
         }
 
         [Test]
@@ -424,10 +424,10 @@ namespace Azure.Core.Tests
 
             var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
 
-            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "500"));
+            Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("error.type", "500")));
             Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
-            Assert.IsNull(activity.StatusDescription);
-            Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == "otel.status_code"));
+            Assert.That(activity.StatusDescription, Is.Null);
+            Assert.That(activity.TagObjects.Where(t => t.Key == "otel.status_code"), Is.Empty);
         }
 
         [Test]
@@ -452,11 +452,11 @@ namespace Azure.Core.Tests
 
             var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
 
-            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, object>("http.request.resend_count", 42));
-            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "500"));
+            Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, object>("http.request.resend_count", 42)));
+            Assert.That(activity.TagObjects, Has.Member(new KeyValuePair<string, string>("error.type", "500")));
             Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
-            Assert.IsNull(activity.StatusDescription);
-            Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == "otel.status_code"));
+            Assert.That(activity.StatusDescription, Is.Null);
+            Assert.That(activity.TagObjects.Where(t => t.Key == "otel.status_code"), Is.Empty);
         }
 #endif
     }

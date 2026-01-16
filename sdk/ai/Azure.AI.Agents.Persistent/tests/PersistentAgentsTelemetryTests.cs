@@ -101,7 +101,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         {
             admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new DefaultAzureCredential(), opts));
         }
-        Assert.IsNotNull(admClient);
+        Assert.That(admClient, Is.Not.Null);
         return new PersistentAgentsClient(admClient);
     }
 
@@ -641,7 +641,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
         // Verify list_messages span explicitly
         IEnumerable<Activity> spans = _exporter.GetExportedActivities().Where(s => s.DisplayName == "list_messages");
-        Assert.Greater(spans.Count(), 0);
+        Assert.That(spans.Count(), Is.GreaterThan(0));
 
         List<ActivityEvent> events = [];
         var expectedListMessagesAttributes = new Dictionary<string, object>
@@ -691,7 +691,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.thread.run.id", "*" }
         };
         spans = _exporter.GetExportedActivities().Where(s => s.DisplayName == "list_run_steps");
-        Assert.Greater(spans.Count(), 0);
+        Assert.That(spans.Count(), Is.GreaterThan(0));
         List<ActivityEvent> runStepsSpanEvents = [];
         foreach (Activity listRunStepsSpan in spans)
         {
@@ -699,7 +699,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             Assert.That(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes), Is.True);
         }
 
-        Assert.Greater(runStepsSpanEvents.Count(), 5, "Deep research typically have more than 5 steps.");
+        Assert.That(runStepsSpanEvents.Count(), Is.GreaterThan(5), "Deep research typically have more than 5 steps.");
         List<(string, Dictionary<string, object>)> expectedListRunStepsEvents =
         [
             ("gen_ai.run_step.message_creation", new Dictionary<string, object>
@@ -1294,7 +1294,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     #region Helpers
     private void CheckCreateAgentEvent(Activity createAgentSpan, string modelName, string agentName, string content)
     {
-        Assert.IsNotNull(createAgentSpan);
+        Assert.That(createAgentSpan, Is.Not.Null);
         var expectedCreateAgentAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1319,7 +1319,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
     private void CheckCreateThreadSpan(Activity createThreadSpan, string modelName, RunStatus? status = null, string operation="create_thread")
     {
-        Assert.IsNotNull(createThreadSpan);
+        Assert.That(createThreadSpan, Is.Not.Null);
         var expectedProcessThreadRunAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1340,7 +1340,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
     private void CheckCreateMessageSpan(Activity createMessageActivity, string content)
     {
-        Assert.IsNotNull(createMessageActivity);
+        Assert.That(createMessageActivity, Is.Not.Null);
         var expectedCreateMessageAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1366,7 +1366,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
     private void CheckSubmitToolOutputSpan(Activity submitActivity, string content)
     {
-        Assert.IsNotNull(submitActivity);
+        Assert.That(submitActivity, Is.Not.Null);
         var expectedSubmitToolOutputsAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1391,7 +1391,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     private void CheckListMessages(Activity listActivity, string[] contents, string[] roles)
     {
         Assert.That(contents.Length == roles.Length, "The list of contents must have the same length as the list of roles." );
-        Assert.IsNotNull(listActivity);
+        Assert.That(listActivity, Is.Not.Null);
         var expectedListMessagesAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1425,7 +1425,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     private void CheckProcessThreadRun(Activity threadRun, string modelName, string[] contents, string[] roles)
     {
         Assert.That(contents.Length == roles.Length, "The list of contents must have the same length as the list of roles.");
-        Assert.IsNotNull(threadRun);
+        Assert.That(threadRun, Is.Not.Null);
         var expectedProcessThreadRunAttributesAfterTool = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1474,7 +1474,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     private void CheckRunSteps(Activity runStepActivity, string[] contents, string[] events)
     {
         Assert.That(contents.Length == events.Length, "The list of contents must have the same length as the list of events.");
-        Assert.IsNotNull(runStepActivity);
+        Assert.That(runStepActivity, Is.Not.Null);
         var expectedListRunStepsAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1516,7 +1516,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
     public void CheckThreadRunAttribute(Activity threadRunActivity, string modelName, string operation= "get_thread_run", string status=default)
     {
-        Assert.IsNotNull(threadRunActivity);
+        Assert.That(threadRunActivity, Is.Not.Null);
         var expectedGetThreadRunAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },

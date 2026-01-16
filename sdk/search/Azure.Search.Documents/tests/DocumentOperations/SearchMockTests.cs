@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Tests
             {
                 FacetResult expectedFacet = expectedFacets[i++];
                 Assert.That(actualFacet.Count, Is.EqualTo(expectedFacet.Count));
-                CollectionAssert.IsSubsetOf(actualFacet.Keys, expectedFacet.Keys);
+                Assert.That(actualFacet.Keys, Is.SubsetOf(expectedFacet.Keys));
                 foreach (string key in expectedFacet.Keys)
                 {
                     Assert.That(

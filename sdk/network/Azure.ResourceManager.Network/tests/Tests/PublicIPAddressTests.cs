@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get PublicIPAddress
             Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
             Assert.That(getPublicIpAddressResponse.Value.Data.IdleTimeoutInMinutes, Is.EqualTo(4));
-            Assert.NotNull(getPublicIpAddressResponse.Value.Data.ResourceGuid);
+            Assert.That(getPublicIpAddressResponse.Value.Data.ResourceGuid, Is.Not.Null);
 
             // Get List of PublicIPAddress
             AsyncPageable<PublicIPAddressResource> getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get List of PublicIPAddressResource in a subscription
             AsyncPageable<PublicIPAddressResource> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddressResource> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
+            Assert.That(getPublicIpAddressListSubscriptionResponse, Is.Not.Empty);
 
             // Delete PublicIPAddress
             var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get PublicIPAddress
             getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
             getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getPublicIpAddressListResponse);
+            Assert.That(getPublicIpAddressListResponse, Is.Empty);
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get List of PublicIPAddressResource in a subscription
             AsyncPageable<PublicIPAddressResource> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddressResource> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
+            Assert.That(getPublicIpAddressListSubscriptionResponse, Is.Not.Empty);
 
             // Delete PublicIPAddress
             var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get PublicIPAddress
             getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
             getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getPublicIpAddressListResponse);
+            Assert.That(getPublicIpAddressListResponse, Is.Empty);
         }
 
         [Test]
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get PublicIPAddress
             Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(ipv6PublicIpName);
-            Assert.NotNull(getPublicIpAddressResponse);
+            Assert.That(getPublicIpAddressResponse, Is.Not.Null);
 
             Assert.That(getPublicIpAddressResponse.Value.Data.PublicIPAddressVersion, Is.EqualTo(NetworkIPVersion.IPv6));
             Assert.That(getPublicIpAddressResponse.Value.Data.IdleTimeoutInMinutes, Is.EqualTo(4));
-            Assert.NotNull(getPublicIpAddressResponse.Value.Data.ResourceGuid);
+            Assert.That(getPublicIpAddressResponse.Value.Data.ResourceGuid, Is.Not.Null);
 
             // Get List of PublicIPAddress
             AsyncPageable<PublicIPAddressResource> getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get List of PublicIPAddressResource in a subscription
             AsyncPageable<PublicIPAddressResource> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddressResource> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
+            Assert.That(getPublicIpAddressListSubscriptionResponse, Is.Not.Empty);
 
             // Delete PublicIPAddress
             var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get PublicIPAddress
             getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
             getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(getPublicIpAddressListResponse);
+            Assert.That(getPublicIpAddressListResponse, Is.Empty);
 
             // Also check IPv4 PublicIP
             // Create the parameter for PUT PublicIPAddress
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get PublicIPAddress
             Response<PublicIPAddressResource> getIpv4PublicIpAddressResponse = await publicIPAddressCollection.GetAsync(ipv4PublicIpName);
-            Assert.NotNull(getIpv4PublicIpAddressResponse);
+            Assert.That(getIpv4PublicIpAddressResponse, Is.Not.Null);
 
             Assert.That(getIpv4PublicIpAddressResponse.Value.Data.PublicIPAddressVersion, Is.EqualTo(NetworkIPVersion.IPv4));
             Assert.That(getIpv4PublicIpAddressResponse.Value.Data.IdleTimeoutInMinutes, Is.EqualTo(4));
-            Assert.NotNull(getIpv4PublicIpAddressResponse.Value.Data.ResourceGuid);
+            Assert.That(getIpv4PublicIpAddressResponse.Value.Data.ResourceGuid, Is.Not.Null);
 
             // Delete PublicIPAddress
             await getIpv4PublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);

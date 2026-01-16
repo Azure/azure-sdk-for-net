@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
             var response = Response.FromValue(new TestPayload("test_name"), response: null);
             TestPayload value = response.Value;
 
-            Assert.IsNotNull(value);
+            Assert.That(value, Is.Not.Null);
             Assert.That(value.Name, Is.EqualTo("test_name"));
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
             var response = Response.FromValue(new TestPayload("test_name"), response: null);
             TestPayload value = response;
 
-            Assert.IsNotNull(value);
+            Assert.That(value, Is.Not.Null);
             Assert.That(value.Name, Is.EqualTo("test_name"));
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Core.Tests
             {
                 string s = response;
             });
-            StringAssert.StartsWith("The implicit cast from Response<System.String> to System.String failed because the Response<System.String> was null.", exception.Message);
+            Assert.That(exception.Message, Does.StartWith("The implicit cast from Response<System.String> to System.String failed because the Response<System.String> was null."));
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Azure.Core.Tests
             response.ContentStream = new MemoryStream(responseBody, 0, responseBody.Length, writable: false, publiclyVisible: false);
 
             Assert.DoesNotThrow(() => { BinaryData d = response.Content; });
-            CollectionAssert.AreEqual(responseBody, response.Content.ToArray());
+            Assert.That(response.Content.ToArray(), Is.EqualTo(responseBody).AsCollection);
         }
 
         [Test]

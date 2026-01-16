@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
             // Assert
             var result = await _fabricCapacityCollection.GetAsync(capacityName);
-            Assert.IsNotNull(result?.Value?.Data);
+            Assert.That(result?.Value?.Data, Is.Not.Null);
             AssertTrackedResource(capacity.Data, result.Value.Data);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var result = await _fabricCapacityCollection.GetAsync(TestEnvironment.CapacityName);
 
             // Assert
-            Assert.IsNotNull(result?.Value?.Data);
+            Assert.That(result?.Value?.Data, Is.Not.Null);
             AssertFabricCapacity(result.Value.Data);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
             // Assert
-            Assert.IsNotNull(result?.Value);
+            Assert.That(result?.Value, Is.Not.Null);
             Assert.That(result.Value.IsNameAvailable, Is.False);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
             // Assert
-            Assert.IsNotNull(result?.Value);
+            Assert.That(result?.Value, Is.Not.Null);
             Assert.That(result.Value.IsNameAvailable, Is.True);
         }
 

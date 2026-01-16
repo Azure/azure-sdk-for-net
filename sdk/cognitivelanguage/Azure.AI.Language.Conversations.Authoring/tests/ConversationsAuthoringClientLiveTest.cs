@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Response response = await projectAuthoringClient.CreateProjectAsync(projectData);
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             //Assert.AreEqual(201, response.Status);
 
             Console.WriteLine($"Project created with status: {response.Status}");
@@ -153,7 +153,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert the operation and response
-            Assert.IsNotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected operation status to be 200 (OK).");
 
             // Extract and check the operation-location header
@@ -237,7 +237,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert the operation and response
-            Assert.IsNotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected operation status to be 200 (OK).");
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -336,7 +336,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(202), "Expected operation status to be 202 (Accepted).");
 
             // Print operation-location header
@@ -360,7 +360,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The export operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The export operation should not be null.");
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected operation status to be 200 (OK).");
 
             // Extract and check the operation-location header
@@ -383,11 +383,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             // Assert
-            Assert.IsNotNull(response, "The response should not be null.");
-            Assert.IsNotNull(projectMetadata, "The project metadata should not be null.");
+            Assert.That(response, Is.Not.Null, "The response should not be null.");
+            Assert.That(projectMetadata, Is.Not.Null, "The project metadata should not be null.");
             Assert.That(projectMetadata.ProjectName, Is.EqualTo(projectName), "The project name in the response does not match the requested project name.");
-            Assert.IsNotNull(projectMetadata.CreatedOn, "Created DateTime should not be null.");
-            Assert.IsNotNull(projectMetadata.LastModifiedOn, "Last Modified DateTime should not be null.");
+            Assert.That(projectMetadata.CreatedOn, Is.Not.Null, "Created DateTime should not be null.");
+            Assert.That(projectMetadata.LastModifiedOn, Is.Not.Null, "Last Modified DateTime should not be null.");
         }
 
         [RecordedTest]
@@ -402,7 +402,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             //Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
             Console.WriteLine($"DeleteProjectAsync with status: {operation.GetRawResponse().Status}");
             // Extract and validate the operation-location header
@@ -438,7 +438,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected operation status to be 200 (OK).");
 
             // Extract and validate the operation-location header
@@ -485,11 +485,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(202), "Expected operation status to be 202.");
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
-            Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
+            Assert.That(operationLocation, Is.Not.Null, "Expected operation-location header to be present.");
         }
 
         [RecordedTest]
@@ -507,7 +507,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(cancelOperation, "The cancellation operation should not be null.");
+            Assert.That(cancelOperation, Is.Not.Null, "The cancellation operation should not be null.");
             //Assert.AreEqual(200, cancelOperation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
             Console.WriteLine($"Project created with status: {cancelOperation.GetRawResponse().Status}");
             // Extract and validate the operation-location header
@@ -527,54 +527,54 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelAuthoringClient.GetModelEvaluationSummaryAsync(            );
 
             // Assert
-            Assert.IsNotNull(evaluationSummaryResponse, "The evaluation summary response should not be null.");
+            Assert.That(evaluationSummaryResponse, Is.Not.Null, "The evaluation summary response should not be null.");
             var evaluationSummary = evaluationSummaryResponse.Value;
-            Assert.IsNotNull(evaluationSummary, "The evaluation summary value should not be null.");
+            Assert.That(evaluationSummary, Is.Not.Null, "The evaluation summary value should not be null.");
 
             // Entities evaluation summary
             var entitiesEval = evaluationSummary.EntitiesEvaluation;
-            Assert.IsNotNull(entitiesEval, "Entities evaluation summary should not be null.");
-            Assert.IsNotNull(entitiesEval.Entities, "Entities collection should not be null.");
-            Assert.IsNotNull(entitiesEval.MicroF1, "Entities Micro F1 should not be null.");
-            Assert.IsNotNull(entitiesEval.MicroPrecision, "Entities Micro Precision should not be null.");
-            Assert.IsNotNull(entitiesEval.MicroRecall, "Entities Micro Recall should not be null.");
-            Assert.IsNotNull(entitiesEval.MacroF1, "Entities Macro F1 should not be null.");
-            Assert.IsNotNull(entitiesEval.MacroPrecision, "Entities Macro Precision should not be null.");
-            Assert.IsNotNull(entitiesEval.MacroRecall, "Entities Macro Recall should not be null.");
+            Assert.That(entitiesEval, Is.Not.Null, "Entities evaluation summary should not be null.");
+            Assert.That(entitiesEval.Entities, Is.Not.Null, "Entities collection should not be null.");
+            Assert.That(entitiesEval.MicroF1, Is.Not.Null, "Entities Micro F1 should not be null.");
+            Assert.That(entitiesEval.MicroPrecision, Is.Not.Null, "Entities Micro Precision should not be null.");
+            Assert.That(entitiesEval.MicroRecall, Is.Not.Null, "Entities Micro Recall should not be null.");
+            Assert.That(entitiesEval.MacroF1, Is.Not.Null, "Entities Macro F1 should not be null.");
+            Assert.That(entitiesEval.MacroPrecision, Is.Not.Null, "Entities Macro Precision should not be null.");
+            Assert.That(entitiesEval.MacroRecall, Is.Not.Null, "Entities Macro Recall should not be null.");
 
             foreach (var entity in entitiesEval.Entities)
             {
-                Assert.IsNotNull(entity.Key, "Entity key should not be null.");
-                Assert.IsNotNull(entity.Value.F1, $"F1 score for entity '{entity.Key}' should not be null.");
-                Assert.IsNotNull(entity.Value.Precision, $"Precision for entity '{entity.Key}' should not be null.");
-                Assert.IsNotNull(entity.Value.Recall, $"Recall for entity '{entity.Key}' should not be null.");
-                Assert.IsNotNull(entity.Value.TruePositiveCount, $"True Positives for entity '{entity.Key}' should not be null.");
-                Assert.IsNotNull(entity.Value.TrueNegativeCount, $"True Negatives for entity '{entity.Key}' should not be null.");
-                Assert.IsNotNull(entity.Value.FalsePositiveCount, $"False Positives for entity '{entity.Key}' should not be null.");
-                Assert.IsNotNull(entity.Value.FalseNegativeCount, $"False Negatives for entity '{entity.Key}' should not be null.");
+                Assert.That(entity.Key, Is.Not.Null, "Entity key should not be null.");
+                Assert.That(entity.Value.F1, Is.Not.Null, $"F1 score for entity '{entity.Key}' should not be null.");
+                Assert.That(entity.Value.Precision, Is.Not.Null, $"Precision for entity '{entity.Key}' should not be null.");
+                Assert.That(entity.Value.Recall, Is.Not.Null, $"Recall for entity '{entity.Key}' should not be null.");
+                Assert.That(entity.Value.TruePositiveCount, Is.Not.Null, $"True Positives for entity '{entity.Key}' should not be null.");
+                Assert.That(entity.Value.TrueNegativeCount, Is.Not.Null, $"True Negatives for entity '{entity.Key}' should not be null.");
+                Assert.That(entity.Value.FalsePositiveCount, Is.Not.Null, $"False Positives for entity '{entity.Key}' should not be null.");
+                Assert.That(entity.Value.FalseNegativeCount, Is.Not.Null, $"False Negatives for entity '{entity.Key}' should not be null.");
             }
 
             // Intents evaluation summary
             var intentsEval = evaluationSummary.IntentsEvaluation;
-            Assert.IsNotNull(intentsEval, "Intents evaluation summary should not be null.");
-            Assert.IsNotNull(intentsEval.Intents, "Intents collection should not be null.");
-            Assert.IsNotNull(intentsEval.MicroF1, "Intents Micro F1 should not be null.");
-            Assert.IsNotNull(intentsEval.MicroPrecision, "Intents Micro Precision should not be null.");
-            Assert.IsNotNull(intentsEval.MicroRecall, "Intents Micro Recall should not be null.");
-            Assert.IsNotNull(intentsEval.MacroF1, "Intents Macro F1 should not be null.");
-            Assert.IsNotNull(intentsEval.MacroPrecision, "Intents Macro Precision should not be null.");
-            Assert.IsNotNull(intentsEval.MacroRecall, "Intents Macro Recall should not be null.");
+            Assert.That(intentsEval, Is.Not.Null, "Intents evaluation summary should not be null.");
+            Assert.That(intentsEval.Intents, Is.Not.Null, "Intents collection should not be null.");
+            Assert.That(intentsEval.MicroF1, Is.Not.Null, "Intents Micro F1 should not be null.");
+            Assert.That(intentsEval.MicroPrecision, Is.Not.Null, "Intents Micro Precision should not be null.");
+            Assert.That(intentsEval.MicroRecall, Is.Not.Null, "Intents Micro Recall should not be null.");
+            Assert.That(intentsEval.MacroF1, Is.Not.Null, "Intents Macro F1 should not be null.");
+            Assert.That(intentsEval.MacroPrecision, Is.Not.Null, "Intents Macro Precision should not be null.");
+            Assert.That(intentsEval.MacroRecall, Is.Not.Null, "Intents Macro Recall should not be null.");
 
             foreach (var intent in intentsEval.Intents)
             {
-                Assert.IsNotNull(intent.Key, "Intent key should not be null.");
-                Assert.IsNotNull(intent.Value.F1, $"F1 score for intent '{intent.Key}' should not be null.");
-                Assert.IsNotNull(intent.Value.Precision, $"Precision for intent '{intent.Key}' should not be null.");
-                Assert.IsNotNull(intent.Value.Recall, $"Recall for intent '{intent.Key}' should not be null.");
-                Assert.IsNotNull(intent.Value.TruePositiveCount, $"True Positives for intent '{intent.Key}' should not be null.");
-                Assert.IsNotNull(intent.Value.TrueNegativeCount, $"True Negatives for intent '{intent.Key}' should not be null.");
-                Assert.IsNotNull(intent.Value.FalsePositiveCount, $"False Positives for intent '{intent.Key}' should not be null.");
-                Assert.IsNotNull(intent.Value.FalseNegativeCount, $"False Negatives for intent '{intent.Key}' should not be null.");
+                Assert.That(intent.Key, Is.Not.Null, "Intent key should not be null.");
+                Assert.That(intent.Value.F1, Is.Not.Null, $"F1 score for intent '{intent.Key}' should not be null.");
+                Assert.That(intent.Value.Precision, Is.Not.Null, $"Precision for intent '{intent.Key}' should not be null.");
+                Assert.That(intent.Value.Recall, Is.Not.Null, $"Recall for intent '{intent.Key}' should not be null.");
+                Assert.That(intent.Value.TruePositiveCount, Is.Not.Null, $"True Positives for intent '{intent.Key}' should not be null.");
+                Assert.That(intent.Value.TrueNegativeCount, Is.Not.Null, $"True Negatives for intent '{intent.Key}' should not be null.");
+                Assert.That(intent.Value.FalsePositiveCount, Is.Not.Null, $"False Positives for intent '{intent.Key}' should not be null.");
+                Assert.That(intent.Value.FalseNegativeCount, Is.Not.Null, $"False Negatives for intent '{intent.Key}' should not be null.");
             }
         }
 
@@ -593,34 +593,34 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(results, "The evaluation results should not be null.");
+            Assert.That(results, Is.Not.Null, "The evaluation results should not be null.");
 
             await foreach (UtteranceEvaluationResult result in results)
             {
                 // Validate text and language
-                Assert.IsNotNull(result.Text, "The result text should not be null.");
-                Assert.IsNotNull(result.Language, "The result language should not be null.");
+                Assert.That(result.Text, Is.Not.Null, "The result text should not be null.");
+                Assert.That(result.Language, Is.Not.Null, "The result language should not be null.");
 
                 // Validate intents result
-                Assert.IsNotNull(result.IntentsResult, "The intents result should not be null.");
-                Assert.IsNotNull(result.IntentsResult.ExpectedIntent, "The expected intent should not be null.");
-                Assert.IsNotNull(result.IntentsResult.PredictedIntent, "The predicted intent should not be null.");
+                Assert.That(result.IntentsResult, Is.Not.Null, "The intents result should not be null.");
+                Assert.That(result.IntentsResult.ExpectedIntent, Is.Not.Null, "The expected intent should not be null.");
+                Assert.That(result.IntentsResult.PredictedIntent, Is.Not.Null, "The predicted intent should not be null.");
 
                 // Validate entities result
-                Assert.IsNotNull(result.EntitiesResult, "The entities result should not be null.");
-                Assert.IsNotNull(result.EntitiesResult.ExpectedEntities, "The expected entities list should not be null.");
-                Assert.IsNotNull(result.EntitiesResult.PredictedEntities, "The predicted entities list should not be null.");
+                Assert.That(result.EntitiesResult, Is.Not.Null, "The entities result should not be null.");
+                Assert.That(result.EntitiesResult.ExpectedEntities, Is.Not.Null, "The expected entities list should not be null.");
+                Assert.That(result.EntitiesResult.PredictedEntities, Is.Not.Null, "The predicted entities list should not be null.");
 
                 foreach (var entity in result.EntitiesResult.ExpectedEntities)
                 {
-                    Assert.IsNotNull(entity.Category, "The expected entity category should not be null.");
+                    Assert.That(entity.Category, Is.Not.Null, "The expected entity category should not be null.");
                     Assert.That(entity.Offset >= 0, Is.True, "The expected entity offset should be non-negative.");
                     Assert.That(entity.Length > 0, Is.True, "The expected entity length should be positive.");
                 }
 
                 foreach (var entity in result.EntitiesResult.PredictedEntities)
                 {
-                    Assert.IsNotNull(entity.Category, "The predicted entity category should not be null.");
+                    Assert.That(entity.Category, Is.Not.Null, "The predicted entity category should not be null.");
                     Assert.That(entity.Offset >= 0, Is.True, "The predicted entity offset should be non-negative.");
                     Assert.That(entity.Length > 0, Is.True, "The predicted entity length should be positive.");
                 }
@@ -640,7 +640,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
                 waitUntil: WaitUntil.Completed
                 );
             // Assert
-            Assert.IsNotNull(operation, "The operation result should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation result should not be null.");
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected operation status to be 200 (OK).");
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -659,7 +659,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Response response = await modelAuthoringClient.DeleteTrainedModelAsync();
 
             // Assert
-            Assert.IsNotNull(response, "The response should not be null.");
+            Assert.That(response, Is.Not.Null, "The response should not be null.");
             Assert.That(response.Status, Is.EqualTo(204), "Expected status to be 204 (No Content) indicating successful deletion.");
         }
 
@@ -681,7 +681,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected status to be 200 (OK).");
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -702,7 +702,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             //Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected status to be 200 (OK).");
             Console.WriteLine($"Project created with status: {operation.GetRawResponse().Status}");
             //string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -725,7 +725,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             //Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected status to be 200 (OK).");
             Console.WriteLine($"Project created with status: {operation.GetRawResponse().Status}");
         }
@@ -770,13 +770,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "The operation should not be null.");
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(202), "Expected status to be 202 (Accepted).");
 
             Console.WriteLine($"Deployment created with status: {operation.GetRawResponse().Status}");
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
-            Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
+            Assert.That(operationLocation, Is.Not.Null, "Expected operation-location header to be present.");
         }
 
         [RecordedTest]
@@ -792,18 +792,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Response<ConversationAuthoringProjectDeployment> response = await deploymentAuthoringClient.GetDeploymentAsync();
 
             // Assert
-            Assert.IsNotNull(response, "The response should not be null.");
+            Assert.That(response, Is.Not.Null, "The response should not be null.");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected status to be 200 (OK).");
 
             ConversationAuthoringProjectDeployment deployment = response.Value;
 
-            Assert.IsNotNull(deployment, "Deployment details should not be null.");
-            Assert.IsNotNull(deployment.DeploymentName, "DeploymentName should not be null.");
-            Assert.IsNotNull(deployment.ModelId, "ModelId should not be null.");
-            Assert.IsNotNull(deployment.LastTrainedOn, "LastTrainedOn should not be null.");
-            Assert.IsNotNull(deployment.LastDeployedOn, "LastDeployedOn should not be null.");
-            Assert.IsNotNull(deployment.DeploymentExpiredOn, "DeploymentExpiredOn should not be null.");
-            Assert.IsNotNull(deployment.ModelTrainingConfigVersion, "ModelTrainingConfigVersion should not be null.");
+            Assert.That(deployment, Is.Not.Null, "Deployment details should not be null.");
+            Assert.That(deployment.DeploymentName, Is.Not.Null, "DeploymentName should not be null.");
+            Assert.That(deployment.ModelId, Is.Not.Null, "ModelId should not be null.");
+            Assert.That(deployment.LastTrainedOn, Is.Not.Null, "LastTrainedOn should not be null.");
+            Assert.That(deployment.LastDeployedOn, Is.Not.Null, "LastDeployedOn should not be null.");
+            Assert.That(deployment.DeploymentExpiredOn, Is.Not.Null, "DeploymentExpiredOn should not be null.");
+            Assert.That(deployment.ModelTrainingConfigVersion, Is.Not.Null, "ModelTrainingConfigVersion should not be null.");
         }
 
         [RecordedTest]
@@ -815,16 +815,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             await foreach (ConversationAuthoringAssignedProjectDeploymentsMetadata meta in pageable)
             {
-                Assert.IsNotNull(meta, "Metadata item should not be null.");
-                Assert.IsNotNull(meta.ProjectName, "ProjectName should not be null.");
-                Assert.IsNotEmpty(meta.ProjectName, "ProjectName should not be empty.");
-                Assert.IsNotNull(meta.DeploymentsMetadata, "DeploymentsMetadata should not be null.");
+                Assert.That(meta, Is.Not.Null, "Metadata item should not be null.");
+                Assert.That(meta.ProjectName, Is.Not.Null, "ProjectName should not be null.");
+                Assert.That(meta.ProjectName, Is.Not.Empty, "ProjectName should not be empty.");
+                Assert.That(meta.DeploymentsMetadata, Is.Not.Null, "DeploymentsMetadata should not be null.");
 
                 foreach (ConversationAuthoringAssignedProjectDeploymentMetadata deployment in meta.DeploymentsMetadata)
                 {
-                    Assert.IsNotNull(deployment, "Deployment metadata should not be null.");
-                    Assert.IsNotNull(deployment.DeploymentName, "DeploymentName should not be null.");
-                    Assert.IsNotEmpty(deployment.DeploymentName, "DeploymentName should not be empty.");
+                    Assert.That(deployment, Is.Not.Null, "Deployment metadata should not be null.");
+                    Assert.That(deployment.DeploymentName, Is.Not.Null, "DeploymentName should not be null.");
+                    Assert.That(deployment.DeploymentName, Is.Not.Empty, "DeploymentName should not be empty.");
 
                     Assert.That(
                         deployment.LastDeployedOn,
@@ -853,13 +853,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             // Assert each resource item as we stream results
             await foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
             {
-                Assert.IsNotNull(resource, "Resource item should not be null.");
+                Assert.That(resource, Is.Not.Null, "Resource item should not be null.");
 
-                Assert.IsNotNull(resource.ResourceId, "ResourceId should not be null.");
-                Assert.IsNotEmpty(resource.ResourceId, "ResourceId should not be empty.");
+                Assert.That(resource.ResourceId, Is.Not.Null, "ResourceId should not be null.");
+                Assert.That(resource.ResourceId, Is.Not.Empty, "ResourceId should not be empty.");
 
-                Assert.IsNotNull(resource.Region, "Region should not be null.");
-                Assert.IsNotEmpty(resource.Region, "Region should not be empty.");
+                Assert.That(resource.Region, Is.Not.Null, "Region should not be null.");
+                Assert.That(resource.Region, Is.Not.Empty, "Region should not be empty.");
             }
         }
 
@@ -894,7 +894,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
                 Assert.Fail($"BeginDeleteDeploymentFromResourcesAsync failed: {e.Message}");
             }
 
-            Assert.IsNotNull(operation, "Operation should not be null.");
+            Assert.That(operation, Is.Not.Null, "Operation should not be null.");
 
             // Await completion
             try

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == aaaaRecordName).Data, aaaaRecordName);
 
             // Delete
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == aRecordName).Data, aRecordName);
 
             // Delete
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                     }
                 }
             });
-            Assert.IsNotNull(caaRecord);
-            Assert.IsNotNull(caaRecord.Value.Data.ETag);
+            Assert.That(caaRecord, Is.Not.Null);
+            Assert.That(caaRecord.Value.Data.ETag, Is.Not.Null);
             Assert.That(caaRecord.Value.Data.Name, Is.EqualTo(name));
             Assert.That(caaRecord.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
             Assert.That(caaRecord.Value.Data.ResourceType.Type, Is.EqualTo("dnszones/CAA"));
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // get
             var getResponse = await collection.GetAsync(name);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
             Assert.That(getResponse.Value.Data.DnsCaaRecords[0].Value, Is.EqualTo("caa1.contoso.com"));
             Assert.That(getResponse.Value.Data.DnsCaaRecords[1].Value, Is.EqualTo("caa2.contoso.com"));
 
             // getall
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // delete
             await caaRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == cnameRecordName).Data, cnameRecordName);
 
             // Delete
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == dsRecordName).Data, dsRecordName);
 
             // Delete
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == mxRecordName).Data, mxRecordName);
 
             // Delete
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == naptrRecordName).Data, naptrRecordName);
 
             // Delete
@@ -507,8 +507,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                     new DnsNSRecordInfo(){ DnsNSDomainName  = dnsNSDomainValue2},
                 }
             });
-            Assert.IsNotNull(NSRecord);
-            Assert.IsNotNull(NSRecord.Value.Data.ETag);
+            Assert.That(NSRecord, Is.Not.Null);
+            Assert.That(NSRecord.Value.Data.ETag, Is.Not.Null);
             Assert.That(NSRecord.Value.Data.Name, Is.EqualTo(_recordSetName));
             Assert.That(NSRecord.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
             Assert.That(NSRecord.Value.Data.ResourceType.Type, Is.EqualTo("dnszones/NS"));
@@ -526,14 +526,14 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // get
             var getResponse = await collection.GetAsync(_recordSetName);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
             Assert.That(getResponse.Value.Data.DnsNSRecords[0].DnsNSDomainName, Is.EqualTo(dnsNSDomainValue1));
             Assert.That(getResponse.Value.Data.DnsNSRecords[1].DnsNSDomainName, Is.EqualTo(dnsNSDomainValue2));
 
             // getall
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // delete
             await NSRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == ptrRecordName).Data, ptrRecordName);
 
             // Delete
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             };
             var soaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, soaRecordName, data);
             ValidateRecordBaseInfo(soaRecord.Value.Data, soaRecordName);
-            Assert.IsNotNull(soaRecord.Value.Data.DnsSoaRecord.Email);
+            Assert.That(soaRecord.Value.Data.DnsSoaRecord.Email, Is.Not.Null);
             Assert.That(soaRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("dnszones/SOA"));
             Assert.That(soaRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
             Assert.That(soaRecord.Value.Data.DnsSoaRecord.RefreshTimeInSeconds > 0, Is.True);
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // Get
             var getResponse = await collection.GetAsync(soaRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, soaRecordName);
-            Assert.IsNotNull(getResponse.Value.Data.DnsSoaRecord.Email);
+            Assert.That(getResponse.Value.Data.DnsSoaRecord.Email, Is.Not.Null);
             Assert.That(getResponse.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("dnszones/SOA"));
             Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
             Assert.That(getResponse.Value.Data.DnsSoaRecord.RefreshTimeInSeconds > 0, Is.True);
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == soaRecordName).Data, soaRecordName);
 
             // Delete - Type SOA cannot delete
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == srvRecordName).Data, srvRecordName);
 
             // Delete
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == tlsaRecordName).Data, tlsaRecordName);
 
             // Delete
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == txtRecordName).Data, txtRecordName);
 
             // Delete
@@ -840,8 +840,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         private void ValidateRecordBaseInfo(DnsBaseRecordData recordData, string recordName)
         {
-            Assert.IsNotNull(recordData);
-            Assert.IsNotNull(recordData.ETag);
+            Assert.That(recordData, Is.Not.Null);
+            Assert.That(recordData.ETag, Is.Not.Null);
             Assert.That(recordData.Name, Is.EqualTo(recordName));
         }
     }

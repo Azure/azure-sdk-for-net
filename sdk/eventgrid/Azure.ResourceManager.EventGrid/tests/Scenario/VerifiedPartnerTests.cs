@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task GetAll()
         {
             var list = await _verifiedPartnerCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateVerifiedPartner(list.First(item => item.Data.Name == _existPartnerName));
         }
 
         private void ValidateVerifiedPartner(VerifiedPartnerResource verifiedPartner)
         {
-            Assert.IsNotNull(verifiedPartner);
-            Assert.IsNotNull(verifiedPartner.Data.PartnerRegistrationImmutableId);
+            Assert.That(verifiedPartner, Is.Not.Null);
+            Assert.That(verifiedPartner.Data.PartnerRegistrationImmutableId, Is.Not.Null);
             Assert.That(verifiedPartner.Data.Name, Is.EqualTo(_existPartnerName));
             Assert.That(verifiedPartner.Data.PartnerDisplayName, Is.EqualTo(_existPartnerName));
             Assert.That(verifiedPartner.Data.OrganizationName, Is.EqualTo("Auth0, Inc."));

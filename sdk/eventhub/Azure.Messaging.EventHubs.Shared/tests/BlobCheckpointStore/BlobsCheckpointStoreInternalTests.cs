@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
             mockLog.Verify(m => m.ClaimOwnershipStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
             mockLog.Verify(m => m.ClaimOwnershipComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
         }
@@ -234,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
         }
@@ -269,7 +269,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.IsEmpty(result);
+            Assert.That(result, Is.Empty);
 
             mockLog.Verify(m => m.OwnershipNotClaimable(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.ConditionNotMet.ToString()))));
         }
@@ -320,7 +320,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var target = new BlobCheckpointStoreInternal(mockBlobContainerClient);
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
             Assert.That(setMetadataCalled, "SetMetadata should have been called.");
             Assert.That(uploadBlobCalled, "UploadBlob should have been called.");

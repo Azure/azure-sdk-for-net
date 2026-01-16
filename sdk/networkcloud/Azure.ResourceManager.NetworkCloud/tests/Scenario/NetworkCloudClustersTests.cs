@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             // List by Subscription
             var listBySubscription = new List<NetworkCloudClusterResource>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
 
             // Patch Upgrade Strategy
              NetworkCloudClusterPatch patch2 = new NetworkCloudClusterPatch()
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch2);
-            Assert.IsNotNull(strategyResult.Value);
+            Assert.That(strategyResult.Value, Is.Not.Null);
 
             // Patch Secret Archive Settings
             NetworkCloudClusterPatch patch3 = new NetworkCloudClusterPatch()
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 }
             };
             var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);
-            Assert.IsNotNull(secretArchiveResult.Value);
+            Assert.That(secretArchiveResult.Value, Is.Not.Null);
 
             // Patch VulnerabilityScanningContainerScan
             try
@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     VulnerabilityScanningContainerScan = VulnerabilityScanningSettingsContainerScan.Enabled
                 };
                 var vulnerabilityScanResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch4);
-                Assert.IsNotNull(vulnerabilityScanResult.Value);
+                Assert.That(vulnerabilityScanResult.Value, Is.Not.Null);
             }
             catch (Exception ex)
             {
-                StringAssert.Contains("cluster conditions do not pass validation for cluster", ex.Message);
-                StringAssert.Contains("ClusterDeployedCondition is not True", ex.Message);
+                Assert.That(ex.Message, Does.Contain("cluster conditions do not pass validation for cluster"));
+                Assert.That(ex.Message, Does.Contain("ClusterDeployedCondition is not True"));
             }
 
             // Cluster Update Version
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             catch (Exception ex)
             {
                 // special case: if the cluster was never deployed, version update (CUVA) is not allowed
-                StringAssert.Contains($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True", ex.Message);
+                Assert.That(ex.Message, Does.Contain($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True"));
             }
 
              // Continue Cluster Update Version
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             catch (Exception ex)
             {
                 // special case: if the cluster was never deployed, version update (CUVA) is not allowed
-                StringAssert.Contains($"cluster {clusterName} does not have suitable conditions to continue to update", ex.Message);
+                Assert.That(ex.Message, Does.Contain($"cluster {clusterName} does not have suitable conditions to continue to update"));
             }
 
             // Delete

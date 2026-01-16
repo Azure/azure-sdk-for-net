@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var result = RequestValidator.IsValidationRequest(method, originHeader, out var requestHosts);
             Assert.IsFalse(result);
-            Assert.IsNull(requestHosts);
+            Assert.That(requestHosts, Is.Null);
         }
 
         [TestCase(null)]
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var result = RequestValidator.IsValidationRequest("OPTIONS", originHeader, out var requestHosts);
             Assert.IsFalse(result);
-            Assert.IsNull(requestHosts);
+            Assert.That(requestHosts, Is.Null);
         }
 
         [Test]
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var result = RequestValidator.IsValidationRequest("OPTIONS", "a,b", out var requestHosts);
             Assert.IsTrue(result);
-            Assert.IsNotNull(requestHosts);
-            CollectionAssert.AreEqual(new[] { "a", "b" }, requestHosts);
+            Assert.That(requestHosts, Is.Not.Null);
+            Assert.That(requestHosts, Is.EqualTo(new[] { "a", "b" }).AsCollection);
         }
 
         [Test]

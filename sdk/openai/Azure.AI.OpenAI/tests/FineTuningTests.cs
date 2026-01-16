@@ -72,7 +72,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             azureStatus = newFile.GetAzureOpenAIFileStatus();
         }
 
-        Assert.That(azureStatus, Is.EqualTo(AzureOpenAIFileStatus.Error), "Expected file id {0} to be in error state, but it was {1}", newFile.Id, azureStatus);
+        Assert.That(azureStatus, Is.EqualTo(AzureOpenAIFileStatus.Error), $"Expected file id {newFile.Id} to be in error state, but it was {azureStatus}");
         Assert.That(newFile.StatusDetails.ToLower(), Does.Contain("validation of jsonl"));
     }
 
@@ -177,7 +177,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
         FineTuningJob job = await client.GetJobsAsync().GetFirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
 
-        Assert.NotNull(job);
+        Assert.That(job, Is.Not.Null);
         Assert.That(job.Status, Is.EqualTo("succeeded"));
 
         var evt = await job.GetEventsAsync(new() { PageSize = 1 }).GetFirstOrDefaultAsync();

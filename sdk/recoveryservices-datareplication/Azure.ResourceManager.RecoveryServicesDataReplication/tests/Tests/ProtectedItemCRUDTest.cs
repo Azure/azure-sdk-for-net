@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             var getProtectedItemOperation = await vault.GetDataReplicationProtectedItems().GetAsync(
                 DataReplicationTestUtilities.DefaultProtectedItemName);
             var protecteItemModelResource = getProtectedItemOperation.Value;
-            Assert.IsNotNull(protecteItemModelResource);
+            Assert.That(protecteItemModelResource, Is.Not.Null);
 
             bool canDelete = protecteItemModelResource.Data.Properties.AllowedJobs.Contains("DisableProtection");
             for (int i = 0; i < DataReplicationTestUtilities.RetryCount; i++)

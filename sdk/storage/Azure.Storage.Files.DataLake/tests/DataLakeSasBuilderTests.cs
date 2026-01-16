@@ -130,7 +130,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 // Just make sure the call succeeds.
             }
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -457,7 +457,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sasFileSystemClient.ExistsAsync(),
-                e => Assert.IsNotNull(e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.Not.Null));
         }
 
         [RecordedTest]
@@ -538,7 +538,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 // Just make sure the call succeeds.
             }
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -788,8 +788,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.That(sasQueryParameters.Version, Is.EqualTo(SasQueryParametersInternals.DefaultSasVersionInternal));
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.That(sasQueryParameters.Services, Is.Null);
+            Assert.That(sasQueryParameters.ResourceTypes, Is.Null);
             Assert.That(sasQueryParameters.Protocol, Is.EqualTo(constants.Sas.Protocol));
             Assert.That(sasQueryParameters.StartsOn, Is.EqualTo(constants.Sas.StartTime));
             Assert.That(sasQueryParameters.ExpiresOn, Is.EqualTo(constants.Sas.ExpiryTime));

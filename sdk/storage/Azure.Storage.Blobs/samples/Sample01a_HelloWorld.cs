@@ -157,9 +157,9 @@ namespace Azure.Storage.Blobs.Samples
                 names.Add(blob.Name);
             }
             Assert.That(names.Count, Is.EqualTo(3));
-            Assert.Contains("first", names);
-            Assert.Contains("second", names);
-            Assert.Contains("third", names);
+            Assert.That(names, Does.Contain("first"));
+            Assert.That(names, Does.Contain("second"));
+            Assert.That(names, Does.Contain("third"));
             container.Delete();
         }
 

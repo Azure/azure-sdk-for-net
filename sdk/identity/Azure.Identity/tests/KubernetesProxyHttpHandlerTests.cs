@@ -168,7 +168,7 @@ namespace Azure.Identity.Tests
             // Test with success response
             var (response, request) = await SendRequestAndCapture(content: requestContent, method: HttpMethod.Post);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.IsNotNull(request.Content);
+            Assert.That(request.Content, Is.Not.Null);
             Assert.That(request.Content.TryComputeLength(out var length) && length > 0, Is.True);
 
             // Test with error response
@@ -255,7 +255,7 @@ namespace Azure.Identity.Tests
             // Get initial handler instance and certificate thumbprint
             var initialInnerHandler = handler.InnerHandler;
             var initialCallback = (initialInnerHandler as HttpClientHandler)?.ServerCertificateCustomValidationCallback;
-            Assert.IsNotNull(initialCallback, "Initial handler should have certificate validation callback");
+            Assert.That(initialCallback, Is.Not.Null, "Initial handler should have certificate validation callback");
 
             var cert1Thumbprint = PemReader.LoadCertificate(cert1.AsSpan(), allowCertificateOnly: true).Thumbprint;
             var cert2Thumbprint = PemReader.LoadCertificate(cert2.AsSpan(), allowCertificateOnly: true).Thumbprint;
@@ -278,12 +278,12 @@ namespace Azure.Identity.Tests
 
             // Verify handler was reloaded - the inner handler instance should be different
             var finalInnerHandler = handler.InnerHandler;
-            Assert.AreNotSame(initialInnerHandler, finalInnerHandler,
+            Assert.That(finalInnerHandler, Is.Not.SameAs(initialInnerHandler),
                 "Handler should be recreated after CA file change");
 
             // Verify the new handler has certificate validation configured
             var finalCallback = (finalInnerHandler as HttpClientHandler)?.ServerCertificateCustomValidationCallback;
-            Assert.IsNotNull(finalCallback, "Reloaded handler should have certificate validation callback");
+            Assert.That(finalCallback, Is.Not.Null, "Reloaded handler should have certificate validation callback");
         }
 
         [Test]
@@ -336,7 +336,7 @@ namespace Azure.Identity.Tests
 
             // Verify handler was reloaded during concurrent requests
             var finalInnerHandler = handler.InnerHandler;
-            Assert.AreNotSame(initialInnerHandler, finalInnerHandler,
+            Assert.That(finalInnerHandler, Is.Not.SameAs(initialInnerHandler),
                 "Handler should be recreated after CA file change, even during concurrent requests");
         }
 
@@ -414,7 +414,8 @@ namespace Azure.Identity.Tests
 
             // Verify the handler has certificate validation configured (proving CA data was used)
             var innerHandler = handler.InnerHandler as HttpClientHandler;
-            Assert.IsNotNull(innerHandler?.ServerCertificateCustomValidationCallback,
+            Assert.That(innerHandler?.ServerCertificateCustomValidationCallback,
+                Is.Not.Null,
                 "Handler should be configured with certificate validation when CA data is provided");
 
             // The key point: with inline CA data, there's no file to monitor, so no reloading logic applies
@@ -443,7 +444,7 @@ namespace Azure.Identity.Tests
             Assert.DoesNotThrow(() =>
             {
                 var handler = new KubernetesProxyHttpHandler(CreateTestConfig(caData: validCaPem));
-                Assert.IsNotNull(handler);
+                Assert.That(handler, Is.Not.Null);
             }, "Handler creation with valid CA PEM should succeed");
 
             // Test invalid CA PEM throws exception
@@ -465,13 +466,13 @@ namespace Azure.Identity.Tests
             // Verify certificate can be loaded from PEM data
             var validCaPem = GetTestCertificatePem();
             var cert = PemReader.LoadCertificate(validCaPem.AsSpan(), allowCertificateOnly: true);
-            Assert.IsNotNull(cert, "CA certificate should be loadable from PEM data");
+            Assert.That(cert, Is.Not.Null, "CA certificate should be loadable from PEM data");
 
             // Verify handler creation with CA data configures certificate validation
             Assert.DoesNotThrow(() =>
             {
                 var handler = new KubernetesProxyHttpHandler(CreateTestConfig(caData: validCaPem));
-                Assert.IsNotNull(handler);
+                Assert.That(handler, Is.Not.Null);
             }, "Handler should be created successfully with valid CA data");
         }
 
@@ -498,7 +499,8 @@ namespace Azure.Identity.Tests
             };
             var handlerWithCa = new KubernetesProxyHttpHandler(proxyConfig);
             var innerHandlerWithCa = handlerWithCa.InnerHandler as HttpClientHandler;
-            Assert.IsNotNull(innerHandlerWithCa?.ServerCertificateCustomValidationCallback,
+            Assert.That(innerHandlerWithCa?.ServerCertificateCustomValidationCallback,
+                Is.Not.Null,
                 "Should configure callback when CA data provided");
 
             // Test without CA data - should not configure callback
@@ -511,7 +513,8 @@ namespace Azure.Identity.Tests
             };
             var handlerNoCa = new KubernetesProxyHttpHandler(proxyConfigNoCa);
             var innerHandlerNoCa = handlerNoCa.InnerHandler as HttpClientHandler;
-            Assert.IsNull(innerHandlerNoCa?.ServerCertificateCustomValidationCallback,
+            Assert.That(innerHandlerNoCa?.ServerCertificateCustomValidationCallback,
+                Is.Null,
                 "Should NOT configure callback when no CA data provided");
 
             // Test callback behavior - verify it configures chain policy and handles edge cases
@@ -671,7 +674,7 @@ namespace Azure.Identity.Tests
             Assert.That(loggedEvents, Is.Not.Empty, "Should log when CA certificate changes");
 
             // Verify handler WAS reloaded
-            Assert.AreNotSame(initialInnerHandler, handler.InnerHandler,
+            Assert.That(handler.InnerHandler, Is.Not.SameAs(initialInnerHandler),
                 "Handler should be reloaded when CA certificate changes");
         }
 

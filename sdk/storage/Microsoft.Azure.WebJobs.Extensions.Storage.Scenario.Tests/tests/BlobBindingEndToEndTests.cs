@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         public async Task OneTimeSetUp()
         {
             string connectionString = TestEnvironment.PrimaryStorageAccountConnectionString;
-            Assert.IsNotEmpty(connectionString);
+            Assert.That(connectionString, Is.Not.Empty);
             _fixture = new TestFixture();
             await _fixture.InitializeAsync(TestEnvironment);
         }
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             var ex = Assert.ThrowsAsync<FunctionInvocationException>(() =>
             _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("CloudBlobContainerBinding_WithModelBinding"), arguments));
             // CloudBlobContainerBinding_WithModelBinding is suppose to bind to a container
-            Assert.IsInstanceOf<FormatException>(ex.InnerException.InnerException);
+            Assert.That(ex.InnerException.InnerException, Is.InstanceOf<FormatException>());
         }
 
         [Test]
@@ -496,7 +496,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             foreach (var blob in blobs)
             {
                 string content = await blob.DownloadTextAsync();
-                StringAssert.StartsWith(TestData, content);
+                Assert.That(content, Does.StartWith(TestData));
             }
             _numBlobsRead = blobs.Count();
         }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             await bigDatapoolCreated.UpdateAsync(bigdataPoolPatchInfo);
 
             var bigDatapoolUpdate = (await bigdatapoolCollection.GetAsync(bigDatapoolName)).Value;
-            Assert.NotNull(bigDatapoolUpdate.Data.Tags);
+            Assert.That(bigDatapoolUpdate.Data.Tags, Is.Not.Null);
             Assert.That(bigDatapoolUpdate.Data.Tags["TestTag"], Is.EqualTo("TestUpdate"));
 
             // Enable Auto-scale and Auto-pause

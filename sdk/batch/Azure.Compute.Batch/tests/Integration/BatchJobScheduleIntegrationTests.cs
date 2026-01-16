@@ -80,7 +80,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // get the job schedule and verify
                 BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
-                Assert.NotNull(batchJobSchedule);
+                Assert.That(batchJobSchedule, Is.Not.Null);
                 Assert.That(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, Is.EqualTo("2019-datacenter-smalldisk"));
 
                 // disable the schedule
@@ -273,7 +273,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
 
                 BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
-                Assert.NotNull(batchJobSchedule);
+                Assert.That(batchJobSchedule, Is.Not.Null);
 
                 response = await client.ReplaceJobScheduleAsync(jobScheduleId, batchJobSchedule);
                 Assert.That(response.Status, Is.EqualTo(200));
@@ -337,7 +337,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchJobSchedule patchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
 
-                Assert.IsNotNull(patchJobSchedule);
+                Assert.That(patchJobSchedule, Is.Not.Null);
                 Assert.That(patchJobSchedule.Metadata.First().Value, Is.EqualTo("value"));
             }
             finally

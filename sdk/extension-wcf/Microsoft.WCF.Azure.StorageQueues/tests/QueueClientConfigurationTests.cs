@@ -23,7 +23,7 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
             Task assertionChecks = null;
             channel.Open();
             Assert.That(configureQueueClientCalled, Is.True);
-            Assert.IsNotNull(assertionChecks);
+            Assert.That(assertionChecks, Is.Not.Null);
             assertionChecks.RunSynchronously();
             await assertionChecks;
 

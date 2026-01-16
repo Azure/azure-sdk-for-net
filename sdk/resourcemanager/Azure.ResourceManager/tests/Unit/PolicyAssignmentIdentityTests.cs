@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test My PolicyAssignment",
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
             };
-            Assert.IsNull(data.ManagedIdentity);
-            Assert.IsNull(data.Identity);
+            Assert.That(data.ManagedIdentity, Is.Null);
+            Assert.That(data.Identity, Is.Null);
 
             data.ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
             Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
 
             data.ManagedIdentity = null;
-            Assert.IsNull(data.Identity);
-            Assert.IsNull(data.ManagedIdentity);
+            Assert.That(data.Identity, Is.Null);
+            Assert.That(data.ManagedIdentity, Is.Null);
         }
 
         [TestCase]
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test My PolicyAssignment",
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
             };
-            Assert.IsNull(data.ManagedIdentity);
-            Assert.IsNull(data.Identity);
+            Assert.That(data.ManagedIdentity, Is.Null);
+            Assert.That(data.Identity, Is.Null);
 
             data.Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.None);
             Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
             Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
 
             data.Identity = null;
-            Assert.IsNull(data.Identity);
-            Assert.IsNull(data.ManagedIdentity);
+            Assert.That(data.Identity, Is.Null);
+            Assert.That(data.ManagedIdentity, Is.Null);
         }
 
         [TestCase]

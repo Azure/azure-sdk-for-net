@@ -572,8 +572,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn, Is.Null);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode, Is.Null);
         }
 
         [Test]
@@ -598,20 +598,20 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert that the base blob does not have an immutability policy.
                 Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
-                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
-                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+                Assert.That(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn, Is.Null);
+                Assert.That(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode, Is.Null);
 
                 // Assert that the blob snapshot has an immuability policy.
                 propertiesResponse = await snapshotClient.GetPropertiesAsync();
-                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
-                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+                Assert.That(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn, Is.Not.Null);
+                Assert.That(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode, Is.Not.Null);
 
                 await snapshotClient.DeleteImmutabilityPolicyAsync();
 
                 // Assert
                 propertiesResponse = await snapshotClient.GetPropertiesAsync();
-                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
-                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+                Assert.That(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn, Is.Null);
+                Assert.That(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode, Is.Null);
             }
             finally
             {
@@ -646,20 +646,20 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert that the base blob does not have an immutability policy
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn, Is.Null);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode, Is.Null);
 
             // Assert that the blob version does have an immutability policy
             propertiesResponse = await versionClient.GetPropertiesAsync();
-            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
-            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn, Is.Not.Null);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode, Is.Not.Null);
 
             await versionClient.DeleteImmutabilityPolicyAsync();
 
             // Assert blob version does not have an immutability policy
             propertiesResponse = await versionClient.GetPropertiesAsync();
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn, Is.Null);
+            Assert.That(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode, Is.Null);
         }
 
         [Test]

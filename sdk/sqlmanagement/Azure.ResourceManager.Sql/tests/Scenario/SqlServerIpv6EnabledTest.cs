@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.That((await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value, Is.EqualTo(true));
 
             // Verify IPv6 is enabled
-            Assert.IsNotNull(SqlServer.Value);
+            Assert.That(SqlServer.Value, Is.Not.Null);
             Assert.That(SqlServer.Value.Data.IsIPv6Enabled.ToString(), Is.EqualTo("Enabled"));
 
             // 2. Disable IPv6

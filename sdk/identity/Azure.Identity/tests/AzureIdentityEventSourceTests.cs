@@ -52,10 +52,10 @@ namespace Azure.Identity.Tests
             Type eventSourceType = typeof(AzureIdentityEventSource);
 
             // Assert
-            Assert.NotNull(eventSourceType);
+            Assert.That(eventSourceType, Is.Not.Null);
             Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Identity"));
             Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("50c8e6e8-b11b-5998-63f4-3944e66d312a")));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.That(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"), Is.Not.Empty);
         }
 
         [Test]

@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Tests
             string json = "{\"notId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
             using var jsonDocument = JsonDocument.Parse(json);
             GenericResourceData data = GenericResourceData.DeserializeGenericResourceData(jsonDocument.RootElement);
-            Assert.IsNull(data.Id);
-            Assert.IsNull(data.Kind);
+            Assert.That(data.Id, Is.Null);
+            Assert.That(data.Kind, Is.Null);
         }
     }
 }

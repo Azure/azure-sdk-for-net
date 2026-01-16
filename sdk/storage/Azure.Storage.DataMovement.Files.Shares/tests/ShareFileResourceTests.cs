@@ -104,7 +104,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 StorageResourceReadStreamResult result = await storageResource.ReadStreamInternalAsync();
 
                 // Assert
-                Assert.NotNull(result);
+                Assert.That(result, Is.Not.Null);
                 Assert.That(data, Is.EqualTo(result.Content.AsBytes().ToArray()));
             }
             mock.Verify(b => b.DownloadAsync(It.IsAny<ShareFileDownloadOptions>(), It.IsAny<CancellationToken>()),
@@ -139,7 +139,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 StorageResourceReadStreamResult result = await storageResource.ReadStreamInternalAsync();
 
                 // Assert
-                Assert.NotNull(result);
+                Assert.That(result, Is.Not.Null);
                 byte[] dataAt5 = new byte[data.Length - position];
                 Array.Copy(data, position, dataAt5, 0, data.Length - position);
                 Assert.That(data, Is.EqualTo(result.Content.AsBytes().ToArray()));
@@ -1967,7 +1967,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, out object permissionKeyObject);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.ResourceLength, Is.EqualTo(length));
             Assert.That((Metadata)metadataObject, Is.EqualTo(DefaultFileMetadata));
             Assert.That((string)cacheControlObject, Is.EqualTo(DefaultCacheControl));
@@ -2056,7 +2056,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object destinationPermissionKeyObject);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.ResourceLength, Is.EqualTo(length));
             Assert.That((Metadata)metadataObject, Is.EqualTo(DefaultFileMetadata));
             Assert.That((string)cacheControlObject, Is.EqualTo(DefaultCacheControl));
@@ -2179,7 +2179,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource resource = new(mockFile.Object);
             string actualPermission = await resource.GetPermissionsInternalAsync();
 
-            Assert.IsNull(actualPermission);
+            Assert.That(actualPermission, Is.Null);
             mockFile.VerifyNoOtherCalls();
             mockShare.VerifyNoOtherCalls();
         }

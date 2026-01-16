@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Tests
             _subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var tagLro = await _subscription.CreateOrUpdatePredefinedTagAsync(_tagName);
             var result = await _subscription.GetAllPredefinedTagsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(result.Count, 1, "List result less than 1");
+            Assert.That(result.Count, Is.GreaterThanOrEqualTo(1), "List result less than 1");
             var expectTag = result.Where(x => x.TagName.StartsWith("tagName")).FirstOrDefault();
-            Assert.NotNull(expectTag);
+            Assert.That(expectTag, Is.Not.Null);
         }
     }
 }

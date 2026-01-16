@@ -228,7 +228,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var scope in scopes)
             {
                 Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-                Assert.IsEmpty(scope.LinkedActivities);
+                Assert.That(scope.LinkedActivities, Is.Empty);
                 Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
             }
             cancellationSource.Cancel();

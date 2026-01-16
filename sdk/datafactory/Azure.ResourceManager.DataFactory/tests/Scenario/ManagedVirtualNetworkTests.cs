@@ -37,18 +37,18 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create a Virtual Network
             string managedVirtualNetworkName = Recording.GenerateAssetName("managedVirtualNetwork-");
             var managedVirtualNetwork = await CreateDefaultManagedVirtualNetworkResource(dataFactory, managedVirtualNetworkName);
-            Assert.IsNotNull(managedVirtualNetwork);
+            Assert.That(managedVirtualNetwork, Is.Not.Null);
             Assert.That(managedVirtualNetwork.Data.Name, Is.EqualTo(managedVirtualNetworkName));
             // Exists
             bool flag = await dataFactory.GetDataFactoryManagedVirtualNetworks().ExistsAsync(managedVirtualNetworkName);
             Assert.That(flag, Is.True);
             // Get
             var managedVirtualNetworkGet = await dataFactory.GetDataFactoryManagedVirtualNetworks().GetAsync(managedVirtualNetworkName);
-            Assert.IsNotNull(managedVirtualNetwork);
+            Assert.That(managedVirtualNetwork, Is.Not.Null);
             Assert.That(managedVirtualNetworkGet.Value.Data.Name, Is.EqualTo(managedVirtualNetworkName));
             // GetAll
             var list = await dataFactory.GetDataFactoryManagedVirtualNetworks().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
         }
     }

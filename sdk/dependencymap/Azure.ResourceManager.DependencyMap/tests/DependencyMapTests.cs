@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DependencyMap.Tests
             Assert.That(createMapsOperations.GetRawResponse().Status == 200, Is.True);
 
             var mapsResource = await mapsCollection.GetAsync(mapName);
-            Assert.IsNotNull(mapsResource);
+            Assert.That(mapsResource, Is.Not.Null);
             Assert.That(mapsResource.Value.Data.Name, Is.EqualTo(mapName));
             Assert.That(mapsResource.GetRawResponse().Status == 200, Is.True);
 

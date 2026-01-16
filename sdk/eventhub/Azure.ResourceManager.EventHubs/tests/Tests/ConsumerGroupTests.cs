@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create consumer group
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
             EventHubsConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new EventHubsConsumerGroupData())).Value;
-            Assert.NotNull(consumerGroup);
+            Assert.That(consumerGroup, Is.Not.Null);
             Assert.That(consumerGroupName, Is.EqualTo(consumerGroup.Id.Name));
 
             //validate if created successfully
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create consumer group
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
             EventHubsConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new EventHubsConsumerGroupData())).Value;
-            Assert.NotNull(consumerGroup);
+            Assert.That(consumerGroup, Is.Not.Null);
             Assert.That(consumerGroupName, Is.EqualTo(consumerGroup.Id.Name));
 
             //update consumer group and validate

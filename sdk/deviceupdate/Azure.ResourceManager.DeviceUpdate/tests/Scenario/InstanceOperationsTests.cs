@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateInstanceResource instance = await CreateInstance(account, instanceName);
             string key = "newTag", value = "newValue";
             DeviceUpdateInstanceResource updatedInstance = await instance.AddTagAsync(key, value);
-            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { key, value } }, updatedInstance.Data.Tags);
+            Assert.That(updatedInstance.Data.Tags, Is.EquivalentTo(new Dictionary<string, string> { { key, value } }));
         }
     }
 }

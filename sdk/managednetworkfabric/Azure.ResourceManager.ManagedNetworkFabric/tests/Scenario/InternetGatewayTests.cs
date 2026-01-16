@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // invoke the get operation
             NetworkFabricInternetGatewayResource result = await networkFabricInternetGateway.GetAsync();
             NetworkFabricInternetGatewayData resourceData = result.Data;
-            Assert.IsNotNull(resourceData);
+            Assert.That(resourceData, Is.Not.Null);
             Assert.That(TestEnvironment.InternetGatewayName, Is.EqualTo(resourceData.Name));
             TestContext.Out.WriteLine($"Get Operation Succeeded on id: {resourceData.Id}");
 

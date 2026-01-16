@@ -27,7 +27,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureBlobXmlRepository>(options.Value.XmlRepository);
+            Assert.That(options.Value.XmlRepository, Is.InstanceOf<AzureBlobXmlRepository>());
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureBlobXmlRepository>(options.Value.XmlRepository);
+            Assert.That(options.Value.XmlRepository, Is.InstanceOf<AzureBlobXmlRepository>());
         }
     }
 }

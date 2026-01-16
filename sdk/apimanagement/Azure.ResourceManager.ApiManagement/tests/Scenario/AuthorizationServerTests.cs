@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var authCollection = ApiServiceResource.GetApiManagementAuthorizationServers();
 
             var listResponse = await authCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listResponse);
-            Assert.IsEmpty(listResponse);
+            Assert.That(listResponse, Is.Not.Null);
+            Assert.That(listResponse, Is.Empty);
 
             // create server
             string authsid = Recording.GenerateAssetName("authsid");
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 TokenBodyParameters = { new TokenBodyParameterContract(Recording.GenerateAssetName("tokenname"), Recording.GenerateAssetName("tokenvalue")) }
             };
             var createResponse = (await authCollection.CreateOrUpdateAsync(WaitUntil.Completed, authsid, authorizationServerContract)).Value;
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
 
             // get to check is was created
             var getResponse = (await authCollection.GetAsync(authsid)).Value;
-            Assert.NotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Data.Name, Is.EqualTo(authsid));
             Assert.That(getResponse.Data.DisplayName, Is.EqualTo(authorizationServerContract.DisplayName));
             Assert.That(getResponse.Data.Description, Is.EqualTo(authorizationServerContract.Description));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list again
             listResponse = await authCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listResponse);
+            Assert.That(listResponse, Is.Not.Null);
             Assert.That(listResponse.Count, Is.EqualTo(1));
             Assert.That(listResponse.First().Data.ClientSecret, Is.Null);
 

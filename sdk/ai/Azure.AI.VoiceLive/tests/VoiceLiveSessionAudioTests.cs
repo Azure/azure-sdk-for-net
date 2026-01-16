@@ -250,7 +250,7 @@ namespace Azure.AI.VoiceLive.Tests
                 }
             }
 
-            CollectionAssert.AreEqual(new[] { "input_audio.turn.start", "input_audio.turn.append", "input_audio.turn.end" }, turnEvents, "Unexpected turn event sequence");
+            Assert.That(turnEvents, Is.EqualTo(new[] { "input_audio.turn.start", "input_audio.turn.append", "input_audio.turn.end" }).AsCollection, "Unexpected turn event sequence");
         }
 
         [Test]

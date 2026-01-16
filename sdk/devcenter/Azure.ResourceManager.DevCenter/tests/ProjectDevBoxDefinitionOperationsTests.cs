@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // Get one of the definitions
             var network = (await project.GetProjectDevBoxDefinitionAsync(devBoxDefinitions.First().Data.Name)).Value;
-            Assert.IsNotNull(network);
+            Assert.That(network, Is.Not.Null);
         }
     }
 }

@@ -44,17 +44,17 @@ namespace Azure.Management.ResourceGraph.Tests
             };
 
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
-            Assert.IsNotNull(resultResponse);
+            Assert.That(resultResponse, Is.Not.Null);
             //top response
             Assert.That(resultResponse.Count, Is.EqualTo(2));
             Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.IsNull(resultResponse.SkipToken);
+            Assert.That(resultResponse.SkipToken, Is.Null);
             Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.NotNull(resultResponse.Data);
-            Assert.NotNull(resultResponse.Facets);
+            Assert.That(resultResponse.Data, Is.Not.Null);
+            Assert.That(resultResponse.Facets, Is.Not.Null);
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Count, Is.EqualTo(2));
             Assert.That(list[0].Count, Is.EqualTo(3));
             Assert.That(list[1].Count, Is.EqualTo(3));
@@ -76,14 +76,14 @@ namespace Azure.Management.ResourceGraph.Tests
             };
 
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
-            Assert.IsNotNull(resultResponse);
+            Assert.That(resultResponse, Is.Not.Null);
             //top response
             Assert.That(resultResponse.Count, Is.EqualTo(2));
             Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.IsNull(resultResponse.SkipToken);
+            Assert.That(resultResponse.SkipToken, Is.Null);
             Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.NotNull(resultResponse.Data);
-            Assert.NotNull(resultResponse.Facets);
+            Assert.That(resultResponse.Data, Is.Not.Null);
+            Assert.That(resultResponse.Facets, Is.Not.Null);
 
             //data columns
             StreamReader reader = new StreamReader(resultResponse.Data.ToStream());
@@ -94,16 +94,16 @@ namespace Azure.Management.ResourceGraph.Tests
             };
             var table = JsonSerializer.Deserialize<Table>(content, options);
             //Data columns
-            Assert.NotNull(table.Columns);
+            Assert.That(table.Columns, Is.Not.Null);
             Assert.That(table.Columns.Count, Is.EqualTo(3));
-            Assert.NotNull(table.Columns[0].Name);
-            Assert.NotNull(table.Columns[1].Name);
-            Assert.NotNull(table.Columns[2].Name);
+            Assert.That(table.Columns[0].Name, Is.Not.Null);
+            Assert.That(table.Columns[1].Name, Is.Not.Null);
+            Assert.That(table.Columns[2].Name, Is.Not.Null);
             Assert.That(table.Columns[0].Type, Is.EqualTo(ColumnDataType.String));
             Assert.That(table.Columns[1].Type, Is.EqualTo(ColumnDataType.Object));
             Assert.That(table.Columns[2].Type, Is.EqualTo(ColumnDataType.Object));
             //Data rows
-            Assert.NotNull(table.Rows);
+            Assert.That(table.Rows, Is.Not.Null);
             Assert.That(table.Rows.Count, Is.EqualTo(2));
             Assert.That(table.Rows[0].Count, Is.EqualTo(3));
             Assert.That(((JsonElement)table.Rows[0][0]).ValueKind, Is.EqualTo(JsonValueKind.String));
@@ -126,17 +126,17 @@ namespace Azure.Management.ResourceGraph.Tests
             };
 
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
-            Assert.IsNotNull(resultResponse);
+            Assert.That(resultResponse, Is.Not.Null);
             //top response
             Assert.That(resultResponse.Count, Is.EqualTo(6));
             Assert.That(resultResponse.TotalRecords, Is.EqualTo(161));
-            Assert.NotNull(resultResponse.SkipToken);
+            Assert.That(resultResponse.SkipToken, Is.Not.Null);
             Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.NotNull(resultResponse.Data);
-            Assert.NotNull(resultResponse.Facets);
+            Assert.That(resultResponse.Data, Is.Not.Null);
+            Assert.That(resultResponse.Facets, Is.Not.Null);
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Count, Is.EqualTo(6));
             Assert.That(list[0].Count, Is.EqualTo(1));
             Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
@@ -175,22 +175,22 @@ namespace Azure.Management.ResourceGraph.Tests
             //top-level
             Assert.That(resultResponse.Count, Is.EqualTo(8));
             Assert.That(resultResponse.TotalRecords, Is.EqualTo(8));
-            Assert.IsNull(resultResponse.SkipToken);
+            Assert.That(resultResponse.SkipToken, Is.Null);
             Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.NotNull(resultResponse.Data);
-            Assert.NotNull(resultResponse.Facets);
+            Assert.That(resultResponse.Data, Is.Not.Null);
+            Assert.That(resultResponse.Facets, Is.Not.Null);
             Assert.That(resultResponse.Facets.Count, Is.EqualTo(2));
 
             //Valid facet fields
             var result = (FacetResult)resultResponse.Facets[0];
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(2));
             Assert.That(result.TotalRecords, Is.EqualTo(4));
             Assert.That(result.Expression, Is.EqualTo(validExpression));
 
             // Valid facet data
             var result_data = result.Data.ToObjectFromJson<IList<IDictionary<string, object>>>();
-            Assert.IsNotNull(result_data);
+            Assert.That(result_data, Is.Not.Null);
             Assert.That(result_data.Count, Is.EqualTo(2));
             Assert.That(result_data[0].Count, Is.EqualTo(2));
             Assert.That(((JsonElement)result_data[0]["location"]).ValueKind, Is.EqualTo(JsonValueKind.String));
@@ -198,12 +198,12 @@ namespace Azure.Management.ResourceGraph.Tests
 
             //invalid facet
             FacetError error = (FacetError)resultResponse.Facets[1];
-            Assert.IsNotNull(error);
+            Assert.That(error, Is.Not.Null);
             Assert.That(error.Expression, Is.EqualTo(invalidExpression));
-            Assert.NotNull(error.Errors);
+            Assert.That(error.Errors, Is.Not.Null);
             Assert.That(error.Errors.Count >= 1 && error.Errors.Count <= int.MaxValue, Is.True);
-            Assert.NotNull(error.Errors[0].Code);
-            Assert.NotNull(error.Errors[1].Code);
+            Assert.That(error.Errors[0].Code, Is.Not.Null);
+            Assert.That(error.Errors[1].Code, Is.Not.Null);
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace Azure.Management.ResourceGraph.Tests
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await tenant.GetResourcesAsync(queryContent); });
-            Assert.IsNotNull(exception);
+            Assert.That(exception, Is.Not.Null);
             return Task.CompletedTask;
         }
 
@@ -227,14 +227,14 @@ namespace Azure.Management.ResourceGraph.Tests
             // Top-level response fields
             Assert.That(resultResponse.Count, Is.EqualTo(2));
             Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.IsNull(resultResponse.SkipToken);
+            Assert.That(resultResponse.SkipToken, Is.Null);
             Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.NotNull(resultResponse.Data);
-            Assert.NotNull(resultResponse.Facets);
+            Assert.That(resultResponse.Data, Is.Not.Null);
+            Assert.That(resultResponse.Facets, Is.Not.Null);
 
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Count, Is.EqualTo(2));
             Assert.That(list[0].Count, Is.EqualTo(3));
             Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
@@ -254,14 +254,14 @@ namespace Azure.Management.ResourceGraph.Tests
             // Top-level response fields
             Assert.That(resultResponse.Count, Is.EqualTo(2));
             Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.IsNull(resultResponse.SkipToken);
+            Assert.That(resultResponse.SkipToken, Is.Null);
             Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.NotNull(resultResponse.Data);
-            Assert.NotNull(resultResponse.Facets);
+            Assert.That(resultResponse.Data, Is.Not.Null);
+            Assert.That(resultResponse.Facets, Is.Not.Null);
 
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Count, Is.EqualTo(2));
             Assert.That(list[0].Count, Is.EqualTo(3));
             Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
@@ -281,14 +281,14 @@ namespace Azure.Management.ResourceGraph.Tests
             // Top-level response fields
             Assert.That(resultResponse.Count, Is.EqualTo(2));
             Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.IsNull(resultResponse.SkipToken);
+            Assert.That(resultResponse.SkipToken, Is.Null);
             Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.NotNull(resultResponse.Data);
-            Assert.NotNull(resultResponse.Facets);
+            Assert.That(resultResponse.Data, Is.Not.Null);
+            Assert.That(resultResponse.Facets, Is.Not.Null);
 
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
             Assert.That(list.Count, Is.EqualTo(2));
             Assert.That(list[0].Count, Is.EqualTo(3));
             Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));

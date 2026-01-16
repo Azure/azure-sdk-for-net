@@ -228,7 +228,7 @@ namespace Azure.Search.Documents.Tests
         public void MicrosoftSpatialPolygonsThrows(object geography, string expectedException)
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(() => SearchFilter.Create($"{geography}"));
-            StringAssert.StartsWith(expectedException, ex.Message);
+            Assert.That(ex.Message, Does.StartWith(expectedException));
         }
 
         private static IEnumerable GetMicrosoftSpatialPolygonsThrowsData()

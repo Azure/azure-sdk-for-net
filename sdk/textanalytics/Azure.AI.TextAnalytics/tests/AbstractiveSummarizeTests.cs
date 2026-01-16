@@ -255,7 +255,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsResult actionsResults = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionResults = actionsResults.AbstractiveSummarizeResults;
-            Assert.IsNotNull(abstractiveSummarizeActionResults);
+            Assert.That(abstractiveSummarizeActionResults, Is.Not.Null);
 
             AbstractiveSummarizeResultCollection resultCollection = abstractiveSummarizeActionResults.FirstOrDefault().DocumentsResults;
             ValidateBatchResult(resultCollection);
@@ -282,15 +282,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
             }
             else
             {
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
             }
 
             foreach (AbstractiveSummarizeResult result in results)
@@ -300,8 +300,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
                 }
                 else
                 {
@@ -309,27 +309,27 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
                 }
 
-                Assert.IsNotNull(result.Warnings);
-                Assert.Greater(result.Summaries.Count, 0);
+                Assert.That(result.Warnings, Is.Not.Null);
+                Assert.That(result.Summaries.Count, Is.GreaterThan(0));
 
                 foreach (AbstractiveSummary summary in result.Summaries)
                 {
                     string originalDocument = s_batchDocuments.Where(document => document.Id == result.Id).FirstOrDefault().Text;
                     Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
-                    Assert.Less(summary.Text.Length, originalDocument.Length);
+                    Assert.That(summary.Text.Length, Is.LessThan(originalDocument.Length));
 
                     char[] separators = { '.', '!', '?' };
                     string[] sentences = summary.Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                    Assert.Greater(sentences.Length, 0);
+                    Assert.That(sentences.Length, Is.GreaterThan(0));
 
-                    Assert.IsNotNull(summary.Contexts);
-                    Assert.Greater(summary.Contexts.Count, 0);
+                    Assert.That(summary.Contexts, Is.Not.Null);
+                    Assert.That(summary.Contexts.Count, Is.GreaterThan(0));
 
                     foreach (AbstractiveSummaryContext context in summary.Contexts)
                     {
-                        Assert.GreaterOrEqual(context.Offset, 0);
-                        Assert.GreaterOrEqual(context.Length, 0);
-                        Assert.LessOrEqual(context.Offset + context.Length, originalDocument.Length);
+                        Assert.That(context.Offset, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(context.Length, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(context.Offset + context.Length, Is.LessThanOrEqualTo(originalDocument.Length));
                     }
                 }
             }

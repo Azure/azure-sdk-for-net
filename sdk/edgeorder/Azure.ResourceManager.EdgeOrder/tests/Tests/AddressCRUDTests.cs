@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Get
             Response<EdgeOrderAddressResource> getAddressResponse = await addressResourceCollection.GetAsync(addressName);
             EdgeOrderAddressResource addressResource = getAddressResponse.Value;
-            Assert.IsNotNull(addressResource);
+            Assert.That(addressResource, Is.Not.Null);
 
             // Update
             contactDetails.ContactName = "Updated contact name";
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Get
             getAddressResponse = await addressResourceCollection.GetAsync(addressName);
             addressResource = getAddressResponse.Value;
-            Assert.IsNotNull(addressResource);
+            Assert.That(addressResource, Is.Not.Null);
             Assert.That(string.Equals(addressResource.Data.ContactDetails.ContactName, "Updated contact name"), Is.True);
 
             // Delete

@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             if (useTrainingLabels)
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.Tests
             await operation.WaitForCompletionAsync();
 
             Assert.That(operation.HasValue, Is.True);
-            Assert.GreaterOrEqual(operation.Value.Count, 1);
+            Assert.That(operation.Value.Count, Is.GreaterThanOrEqualTo(1));
 
             RecognizedForm form = operation.Value.Single();
 
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
-            Assert.IsNotEmpty(form.FormType);
+            Assert.That(form.FormType, Is.Not.Empty);
             Assert.That(form.FormTypeConfidence.HasValue, Is.True);
             Assert.That(form.Pages.Count, Is.EqualTo(1));
             Assert.That(form.Pages[0].Height, Is.EqualTo(2200));
@@ -124,9 +124,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.Pages[0].Unit, Is.EqualTo(LengthUnit.Pixel));
             Assert.That(form.Pages[0].Width, Is.EqualTo(1700));
 
-            Assert.IsNotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
             var name = "PurchaseOrderNumber";
-            Assert.IsNotNull(form.Fields[name]);
+            Assert.That(form.Fields[name], Is.Not.Null);
             Assert.That(form.Fields[name].Value.ValueType, Is.EqualTo(FieldValueType.String));
             Assert.That(form.Fields[name].ValueData.Text, Is.EqualTo("948284"));
         }
@@ -152,7 +152,7 @@ namespace Azure.AI.FormRecognizer.Tests
             await operation.WaitForCompletionAsync();
 
             Assert.That(operation.HasValue, Is.True);
-            Assert.GreaterOrEqual(operation.Value.Count, 1);
+            Assert.That(operation.Value.Count, Is.GreaterThanOrEqualTo(1));
 
             RecognizedForm form = operation.Value.Single();
 
@@ -160,10 +160,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
 
             // Testing that we shuffle things around correctly so checking only once per property.
-            Assert.IsNotEmpty(form.FormType);
-            Assert.IsNotNull(form.Fields);
+            Assert.That(form.FormType, Is.Not.Empty);
+            Assert.That(form.Fields, Is.Not.Null);
             var name = "AMEX_SELECTION_MARK";
-            Assert.IsNotNull(form.Fields[name]);
+            Assert.That(form.Fields[name], Is.Not.Null);
             Assert.That(form.Fields[name].Value.ValueType, Is.EqualTo(FieldValueType.SelectionMark));
             Assert.That(form.Fields[name].Value.AsSelectionMarkState(), Is.EqualTo(SelectionMarkState.Selected));
         }
@@ -377,7 +377,7 @@ namespace Azure.AI.FormRecognizer.Tests
             await operation.WaitForCompletionAsync();
 
             Assert.That(operation.HasValue, Is.True);
-            Assert.GreaterOrEqual(operation.Value.Count, 1);
+            Assert.That(operation.Value.Count, Is.GreaterThanOrEqualTo(1));
 
             RecognizedForm form = operation.Value.Single();
 
@@ -398,10 +398,10 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.Pages[0].Unit, Is.EqualTo(LengthUnit.Pixel));
             Assert.That(form.Pages[0].Width, Is.EqualTo(1700));
 
-            Assert.IsNotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
             var name = "field-0";
-            Assert.IsNotNull(form.Fields[name]);
-            Assert.IsNotNull(form.Fields[name].LabelData.Text);
+            Assert.That(form.Fields[name], Is.Not.Null);
+            Assert.That(form.Fields[name].LabelData.Text, Is.Not.Null);
             Assert.That(form.Fields[name].Value.ValueType, Is.EqualTo(FieldValueType.String));
 
             // Disable this verification for now.
@@ -450,8 +450,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             FormField secondFormFieldInPage = recognizedForms[1].Fields.Values.Where(field => field.LabelData.Text.Contains("Company Name:")).FirstOrDefault();
 
-            Assert.IsNotNull(secondFormFieldInPage);
-            Assert.IsNotNull(secondFormFieldInPage.ValueData);
+            Assert.That(secondFormFieldInPage, Is.Not.Null);
+            Assert.That(secondFormFieldInPage.ValueData, Is.Not.Null);
             Assert.That(secondFormFieldInPage.ValueData.Text, Is.EqualTo("Southridge Video"));
         }
 
@@ -543,8 +543,8 @@ namespace Azure.AI.FormRecognizer.Tests
                     var expectedValueData = formIndex == 0 ? "300.00" : "3000.00";
 
                     FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains("Subtotal:")).FirstOrDefault();
-                    Assert.IsNotNull(fieldInPage);
-                    Assert.IsNotNull(fieldInPage.ValueData);
+                    Assert.That(fieldInPage, Is.Not.Null);
+                    Assert.That(fieldInPage.ValueData, Is.Not.Null);
                     Assert.That(fieldInPage.ValueData.Text, Is.EqualTo(expectedValueData));
                 }
             }
@@ -580,9 +580,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
         private void ValidateModelWithNoLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(recognizedForm.FormType);
+            Assert.That(recognizedForm.FormType, Is.Not.Null);
             Assert.That(recognizedForm.FormTypeConfidence.HasValue, Is.False);
-            Assert.IsNotNull(recognizedForm.ModelId);
+            Assert.That(recognizedForm.ModelId, Is.Not.Null);
             Assert.That(recognizedForm.ModelId, Is.EqualTo(modelId));
 
             ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
@@ -590,7 +590,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         private void ValidateModelWithLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(recognizedForm.FormType);
+            Assert.That(recognizedForm.FormType, Is.Not.Null);
             Assert.That(recognizedForm.FormTypeConfidence.HasValue, Is.True);
             Assert.That(recognizedForm.ModelId, Is.EqualTo(modelId));
 

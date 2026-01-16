@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
 
             // The list endpoint should also return the newly created hub
             DurableTaskHubResource listHub = await collection.GetAllAsync().FirstOrDefaultAsync(t => t.Data.Name == "MyHub");
-            Assert.NotNull(listHub);
+            Assert.That(listHub, Is.Not.Null);
             Assert.That(listHub.Data.Name, Is.EqualTo(hub.Data.Name));
 
             await hub.DeleteAsync(WaitUntil.Completed);

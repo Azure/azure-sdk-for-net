@@ -153,10 +153,10 @@ public class PipelineMessageTests : SyncAsyncTestBase
 
             response = message.ExtractResponse();
 
-            Assert.IsNull(message.Response);
+            Assert.That(message.Response, Is.Null);
         }
 
-        Assert.NotNull(response!.ContentStream);
+        Assert.That(response!.ContentStream, Is.Not.Null);
 
         byte[] clientBytes = new byte[serverBytes.Length];
         int readLength = 0;
@@ -166,7 +166,7 @@ public class PipelineMessageTests : SyncAsyncTestBase
         }
 
         Assert.That(readLength, Is.EqualTo(serverBytes.Length));
-        CollectionAssert.AreEqual(serverBytes, clientBytes);
+        Assert.That(clientBytes, Is.EqualTo(serverBytes).AsCollection);
     }
 
     #region Helpers

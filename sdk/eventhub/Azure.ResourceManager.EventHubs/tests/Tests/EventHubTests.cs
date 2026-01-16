@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
             EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
-            Assert.NotNull(eventHub);
+            Assert.That(eventHub, Is.Not.Null);
             Assert.That(eventhubName, Is.EqualTo(eventHub.Id.Name));
 
             //validate if created successfully
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, parameter)).Value;
 
             //validate
-            Assert.NotNull(eventHub);
+            Assert.That(eventHub, Is.Not.Null);
             Assert.That(eventHubName, Is.EqualTo(eventHub.Id.Name));
             Assert.That(parameter.Status, Is.EqualTo(eventHub.Data.Status));
             Assert.That(parameter.PartitionCount, Is.EqualTo(eventHub.Data.PartitionCount));
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubResource eventHub1 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName1, parameter1)).Value;
 
             //validate
-            Assert.NotNull(eventHub1);
+            Assert.That(eventHub1, Is.Not.Null);
             Assert.That(eventHubName1, Is.EqualTo(eventHub1.Id.Name));
             Assert.That(parameter1.Status, Is.EqualTo(eventHub1.Data.Status));
             Assert.That(parameter1.PartitionCount, Is.EqualTo(eventHub1.Data.PartitionCount));
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubResource eventHub2 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName2, parameter2)).Value;
 
             //validate
-            Assert.NotNull(eventHub2);
+            Assert.That(eventHub2, Is.Not.Null);
             Assert.That(eventHubName2, Is.EqualTo(eventHub2.Id.Name));
             Assert.That(parameter2.Status, Is.EqualTo(eventHub2.Data.Status));
             Assert.That(parameter2.PartitionCount, Is.EqualTo(eventHub2.Data.PartitionCount));
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     eventHub2 = eventHub;
             }
             Assert.That(count, Is.EqualTo(2));
-            Assert.NotNull(eventHub1);
-            Assert.NotNull(eventHub2);
+            Assert.That(eventHub1, Is.Not.Null);
+            Assert.That(eventHub2, Is.Not.Null);
         }
 
         [Test]
@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get authorization rule
             authorizationRule = await ruleCollection.GetAsync(ruleName);
             Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get all authorization rules
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //update authorization rule
             parameter.Rights.Add(EventHubsAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //delete authorization rule
@@ -270,13 +270,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             EventHubsAccessKeys keys1 = await authorizationRule.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             EventHubsAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(KeyType.PrimaryKey));
 

@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.Network.Tests
 
             foreach (NetworkIPConfiguration ipconfig in subnet.Value.Data.IPConfigurations)
             {
-                Assert.NotNull(ipconfig.Id);
+                Assert.That(ipconfig.Id, Is.Not.Null);
                 //Assert.NotNull(ipconfig.Name);
                 //Assert.NotNull(ipconfig.Etag);
-                Assert.NotNull(ipconfig.PrivateIPAddress);
+                Assert.That(ipconfig.PrivateIPAddress, Is.Not.Null);
             }
         }
     }

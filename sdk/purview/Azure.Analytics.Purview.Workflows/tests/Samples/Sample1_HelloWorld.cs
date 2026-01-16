@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
                 Console.WriteLine(bodyJson.GetProperty("name").ToString());
             }
 
-            Assert.IsNotNull(workflowList);
+            Assert.That(workflowList, Is.Not.Null);
         }
 
         [Test]

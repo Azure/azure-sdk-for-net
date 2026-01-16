@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Tests.Models
         {
             SearchOptions searchOptions = new();
 
-            Assert.IsNull(searchOptions.QueryType);
+            Assert.That(searchOptions.QueryType, Is.Null);
 
             // We can set `QueryType` to one of the valid values from the `SearchQueryType` enum.
             searchOptions.QueryType = SearchQueryType.Full;
@@ -34,25 +34,25 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.None);
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo($"{QueryAnswerType.None}"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo($"{QueryAnswerType.Extractive}"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer("none");
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.None));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.Null);
         }
 
         [Test]
@@ -61,25 +61,25 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
             searchOptions.SemanticSearch.QueryAnswer.Count = 0;
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.EqualTo(0));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|count-0"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.Count = 100;
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.EqualTo(100));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|count-100"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|count-3";
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.EqualTo(3));
             Assert.That($"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}", Is.EqualTo("unknown"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
         }
 
         [Test]
@@ -88,25 +88,25 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
             searchOptions.SemanticSearch.QueryAnswer.Threshold = 0;
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.EqualTo(0));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|threshold-0"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.Threshold = 0.9;
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.EqualTo(0.9));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|threshold-0.9"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|threshold-0.5";
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.EqualTo(0.5));
             Assert.That($"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}", Is.EqualTo("unknown"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
         }
 
         [Test]
@@ -115,28 +115,28 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
             searchOptions.SemanticSearch.QueryAnswer.MaxCharLength = 1;
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.EqualTo(1));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|maxcharlength-1"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.MaxCharLength = 300;
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.EqualTo(300));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|maxcharlength-300"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|maxcharlength-300";
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.EqualTo(300));
             Assert.That($"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}", Is.EqualTo("unknown"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.Null);
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
             searchOptions.SemanticSearch.QueryAnswer.Count = 0;
@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
             searchOptions.SemanticSearch.QueryAnswer.Count = 0;
@@ -182,7 +182,7 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.EqualTo(0));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|count-0,maxcharlength-0"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.Count = 100;
             searchOptions.SemanticSearch.QueryAnswer.MaxCharLength = 300;
@@ -190,13 +190,13 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.EqualTo(300));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw, Is.EqualTo("extractive|count-100,maxcharlength-300"));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(QueryAnswerType.Extractive));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
 
             searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|maxcharlength-500,count-3";
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.Count, Is.EqualTo(3));
             Assert.That(searchOptions.SemanticSearch.QueryAnswer.MaxCharLength, Is.EqualTo(500));
             Assert.That($"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}", Is.EqualTo("unknown"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.That(searchOptions.SemanticSearch.QueryAnswer.Threshold, Is.Null);
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryCaption);
+            Assert.That(searchOptions.SemanticSearch.QueryCaption, Is.Null);
 
             searchOptions.SemanticSearch.QueryCaption = new QueryCaption(QueryCaptionType.None);
             Assert.That(searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw, Is.EqualTo($"{QueryCaptionType.None}"));
@@ -259,7 +259,7 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryCaption);
+            Assert.That(searchOptions.SemanticSearch.QueryCaption, Is.Null);
 
             searchOptions.SemanticSearch.QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = false };
             Assert.That(searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw, Is.EqualTo($"{QueryCaptionType.Extractive}|highlight-False"));
@@ -272,7 +272,7 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryCaption);
+            Assert.That(searchOptions.SemanticSearch.QueryCaption, Is.Null);
 
             searchOptions.SemanticSearch.QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { MaxCharLength = 300 };
             Assert.That(searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw, Is.EqualTo($"{QueryCaptionType.Extractive}|highlight-True,maxcharlength-300"));
@@ -326,19 +326,19 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites);
+            Assert.That(searchOptions.SemanticSearch.QueryRewrites, Is.Null);
 
             searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.None);
             Assert.That(searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw, Is.EqualTo($"{QueryRewritesType.None}"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryRewrites.Count, Is.Null);
 
             searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.Generative);
             Assert.That(searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw, Is.EqualTo($"{QueryRewritesType.Generative}"));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryRewrites.Count, Is.Null);
 
             searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites("none");
             Assert.That(searchOptions.SemanticSearch.QueryRewrites.RewritesType, Is.EqualTo(QueryRewritesType.None));
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites.Count);
+            Assert.That(searchOptions.SemanticSearch.QueryRewrites.Count, Is.Null);
         }
 
         [Test]
@@ -347,7 +347,7 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites);
+            Assert.That(searchOptions.SemanticSearch.QueryRewrites, Is.Null);
 
             searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.Generative);
             searchOptions.SemanticSearch.QueryRewrites.Count = 0;
@@ -426,7 +426,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void VectorSearchOption()
         {
             SearchOptions searchOptions = new();
-            Assert.IsNull(searchOptions.VectorSearch);
+            Assert.That(searchOptions.VectorSearch, Is.Null);
 
             searchOptions.VectorSearch = new();
             ReadOnlyMemory<float> vectors = new float[] { -0.011113605f, -0.01902812f, 0.047524072f };
@@ -434,7 +434,7 @@ namespace Azure.Search.Documents.Tests.Models
 
             Assert.That(searchOptions.VectorSearch.Queries.Count, Is.EqualTo(1));
             Assert.That((searchOptions.VectorSearch.Queries[0] as VectorizedQuery).Vector, Is.EqualTo(vectors));
-            Assert.IsNull(searchOptions.VectorSearch.FilterMode);
+            Assert.That(searchOptions.VectorSearch.FilterMode, Is.Null);
 
             searchOptions.VectorSearch.FilterMode = VectorFilterMode.PostFilter;
             Assert.That(searchOptions.VectorSearch.Queries.Count, Is.EqualTo(1));

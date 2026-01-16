@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static void AssertProfileUpdate(ProfileResource updatedProfile, string key, string value)
         {
-            Assert.GreaterOrEqual(updatedProfile.Data.Tags.Count, 1);
+            Assert.That(updatedProfile.Data.Tags.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(updatedProfile.Data.Tags.ContainsKey(key), Is.True);
             Assert.That(value, Is.EqualTo(updatedProfile.Data.Tags[key]));
         }
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.Origin != null || getResult.Data.Origin != null)
             {
-                Assert.NotNull(model.Data.Origin);
-                Assert.NotNull(getResult.Data.Origin);
+                Assert.That(model.Data.Origin, Is.Not.Null);
+                Assert.That(getResult.Data.Origin, Is.Not.Null);
                 Assert.That(getResult.Data.Origin.Id, Is.EqualTo(model.Data.Origin.Id));
             }
             Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.HealthProbeSettings != null || getResult.Data.HealthProbeSettings != null)
             {
-                Assert.NotNull(model.Data.HealthProbeSettings);
-                Assert.NotNull(getResult.Data.HealthProbeSettings);
+                Assert.That(model.Data.HealthProbeSettings, Is.Not.Null);
+                Assert.That(getResult.Data.HealthProbeSettings, Is.Not.Null);
                 Assert.That(getResult.Data.HealthProbeSettings.ProbeIntervalInSeconds, Is.EqualTo(model.Data.HealthProbeSettings.ProbeIntervalInSeconds));
                 Assert.That(getResult.Data.HealthProbeSettings.ProbePath, Is.EqualTo(model.Data.HealthProbeSettings.ProbePath));
                 Assert.That(getResult.Data.HealthProbeSettings.ProbeProtocol, Is.EqualTo(model.Data.HealthProbeSettings.ProbeProtocol));
@@ -325,16 +325,16 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.LoadBalancingSettings != null || getResult.Data.LoadBalancingSettings != null)
             {
-                Assert.NotNull(model.Data.LoadBalancingSettings);
-                Assert.NotNull(getResult.Data.LoadBalancingSettings);
+                Assert.That(model.Data.LoadBalancingSettings, Is.Not.Null);
+                Assert.That(getResult.Data.LoadBalancingSettings, Is.Not.Null);
                 Assert.That(getResult.Data.LoadBalancingSettings.SampleSize, Is.EqualTo(model.Data.LoadBalancingSettings.SampleSize));
                 Assert.That(getResult.Data.LoadBalancingSettings.SuccessfulSamplesRequired, Is.EqualTo(model.Data.LoadBalancingSettings.SuccessfulSamplesRequired));
                 Assert.That(getResult.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds, Is.EqualTo(model.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds));
             }
             if (model.Data.HealthProbeSettings != null || getResult.Data.HealthProbeSettings != null)
             {
-                Assert.NotNull(model.Data.HealthProbeSettings);
-                Assert.NotNull(getResult.Data.HealthProbeSettings);
+                Assert.That(model.Data.HealthProbeSettings, Is.Not.Null);
+                Assert.That(getResult.Data.HealthProbeSettings, Is.Not.Null);
                 Assert.That(getResult.Data.HealthProbeSettings.ProbeIntervalInSeconds, Is.EqualTo(model.Data.HealthProbeSettings.ProbeIntervalInSeconds));
                 Assert.That(getResult.Data.HealthProbeSettings.ProbePath, Is.EqualTo(model.Data.HealthProbeSettings.ProbePath));
                 Assert.That(getResult.Data.HealthProbeSettings.ProbeProtocol, Is.EqualTo(model.Data.HealthProbeSettings.ProbeProtocol));
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.That(getResult.Data.TlsSettings.MinimumTlsVersion, Is.EqualTo(model.Data.TlsSettings.MinimumTlsVersion));
             if (model.Data.TlsSettings.Secret != null || getResult.Data.TlsSettings.Secret != null)
             {
-                Assert.NotNull(model.Data.TlsSettings.Secret);
-                Assert.NotNull(getResult.Data.TlsSettings.Secret);
+                Assert.That(model.Data.TlsSettings.Secret, Is.Not.Null);
+                Assert.That(getResult.Data.TlsSettings.Secret, Is.Not.Null);
                 Assert.That(getResult.Data.TlsSettings.Secret.Id, Is.EqualTo(model.Data.TlsSettings.Secret.Id));
             }
             if (model.Data.DnsZone != null || getResult.Data.DnsZone != null)
             {
-                Assert.NotNull(model.Data.DnsZone);
-                Assert.NotNull(getResult.Data.DnsZone);
+                Assert.That(model.Data.DnsZone, Is.Not.Null);
+                Assert.That(getResult.Data.DnsZone, Is.Not.Null);
                 Assert.That(getResult.Data.DnsZone.Id, Is.EqualTo(model.Data.DnsZone.Id));
             }
             Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
@@ -392,8 +392,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
             if (model.Data.ValidationProperties != null || getResult.Data.ValidationProperties != null)
             {
-                Assert.NotNull(model.Data.ValidationProperties);
-                Assert.NotNull(getResult.Data.ValidationProperties);
+                Assert.That(model.Data.ValidationProperties, Is.Not.Null);
+                Assert.That(getResult.Data.ValidationProperties, Is.Not.Null);
                 Assert.That(getResult.Data.ValidationProperties.ValidationToken, Is.EqualTo(model.Data.ValidationProperties.ValidationToken));
                 Assert.That(getResult.Data.ValidationProperties.ExpiresOn, Is.EqualTo(model.Data.ValidationProperties.ExpiresOn));
             }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicyResource updatedPolicy, string key, string value)
         {
-            Assert.GreaterOrEqual(updatedPolicy.Data.Tags.Count, 1);
+            Assert.That(updatedPolicy.Data.Tags.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(updatedPolicy.Data.Tags.ContainsKey(key), Is.True);
             Assert.That(value, Is.EqualTo(updatedPolicy.Data.Tags[key]));
         }

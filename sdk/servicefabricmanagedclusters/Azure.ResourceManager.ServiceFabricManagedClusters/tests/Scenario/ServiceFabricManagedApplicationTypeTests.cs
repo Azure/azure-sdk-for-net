@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // GetAll
             var list = await _appTypeCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateServiceFabricManagedApplicationType(list.FirstOrDefault().Data, appTypeName);
 
             // Delete
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationTypeData appType, string appTypeName)
         {
-            Assert.IsNotNull(appType);
-            Assert.IsNotEmpty(appType.Id);
+            Assert.That(appType, Is.Not.Null);
+            Assert.That((string)appType.Id, Is.Not.Empty);
             Assert.That(appType.Name, Is.EqualTo(appTypeName));
             Assert.That(appType.Location, Is.EqualTo(DefaultLocation));
             Assert.That(appType.ProvisioningState, Is.EqualTo("Succeeded"));

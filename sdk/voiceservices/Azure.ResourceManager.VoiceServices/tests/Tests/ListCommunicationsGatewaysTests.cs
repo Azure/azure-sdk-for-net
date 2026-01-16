@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
             var communicationsGateways = Subscription.GetVoiceServicesCommunicationsGatewaysAsync();
             var comminicationsGatewaysResult = await communicationsGateways.ToEnumerableAsync();
 
-            Assert.NotNull(comminicationsGatewaysResult);
+            Assert.That(comminicationsGatewaysResult, Is.Not.Null);
             Assert.That(comminicationsGatewaysResult.Count >= 1, Is.True);
         }
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
             var communicationsGateways = _rg.GetVoiceServicesCommunicationsGateways().GetAllAsync();
             var communicationsGatewaysResult = await communicationsGateways.ToEnumerableAsync();
 
-            Assert.NotNull(communicationsGatewaysResult);
+            Assert.That(communicationsGatewaysResult, Is.Not.Null);
 
             // Filter the result for entries in our resource group
             var filteredCommunicationsGateways = communicationsGatewaysResult.Where(cg => cg.Id.ResourceGroupName == _rg.Id.ResourceGroupName);

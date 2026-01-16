@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             // Get
             Response<AutonomousDatabaseResource> getAdbsResponse = await _adbsCollection.GetAsync(_adbsName);
             AutonomousDatabaseResource adbsResource = getAdbsResponse.Value;
-            Assert.IsNotNull(adbsResource);
+            Assert.That(adbsResource, Is.Not.Null);
             return adbsResource;
         }
 

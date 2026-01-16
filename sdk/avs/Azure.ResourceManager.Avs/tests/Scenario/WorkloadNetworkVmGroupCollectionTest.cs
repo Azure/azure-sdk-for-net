@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
             NullableResponse<WorkloadNetworkVmGroupResource> response = await collection.GetIfExistsAsync(WORKLOAD_NETWORK_NAME);
             WorkloadNetworkVmGroupResource result = response.HasValue ? response.Value : null;
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Data.Name, Is.EqualTo(WORKLOAD_NETWORK_NAME));
         }
     }

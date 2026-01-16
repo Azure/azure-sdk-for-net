@@ -219,7 +219,7 @@ namespace Azure.Core.Tests
         {
             Assert.That(actual.Scheme, Is.EqualTo(expected.Scheme));
 
-            CollectionAssert.AreEquivalent(expected.Parameters, actual.Parameters);
+            Assert.That(actual.Parameters, Is.EquivalentTo(expected.Parameters));
         }
     }
 }

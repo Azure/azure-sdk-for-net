@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             string[] contentType = eventData.ContentType.Split('+');
             Assert.That(contentType.Length, Is.EqualTo(2));
             Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType[1], Is.Not.Empty);
 
             Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
 
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             contentType = eventData.ContentType.Split('+');
             Assert.That(contentType.Length, Is.EqualTo(2));
             Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType[1], Is.Not.Empty);
 
             // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
+            Assert.That(deserialized, Is.Not.Null);
             Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
             Assert.That(deserialized.Age, Is.EqualTo(42));
 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             eventData.ContentType.Split('+');
             Assert.That(contentType.Length, Is.EqualTo(2));
             Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType[1], Is.Not.Empty);
 
             await serializer.DeserializeAsync<Employee>(eventData);
 
@@ -80,10 +80,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             contentType = eventData.ContentType.Split('+');
             Assert.That(contentType.Length, Is.EqualTo(2));
             Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType[1], Is.Not.Empty);
 
             // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
+            Assert.That(deserialized, Is.Not.Null);
             Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
             Assert.That(deserialized.Age, Is.EqualTo(42));
 

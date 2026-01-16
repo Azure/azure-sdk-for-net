@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement.Tests
             using Stream content = result.Content;
 
             // Assert
-            Assert.NotNull(content);
+            Assert.That(content, Is.Not.Null);
             TestHelper.AssertSequenceEqual(data, content.AsBytes().ToArray());
         }
 
@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Tests
             using Stream content = result.Content;
 
             // Assert
-            Assert.NotNull(content);
+            Assert.That(content, Is.Not.Null);
             byte[] copiedData = new byte[data.Length - readPosition];
             Array.Copy(data, readPosition, copiedData, 0, data.Length - readPosition);
             TestHelper.AssertSequenceEqual(copiedData, content.AsBytes().ToArray());
@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             using FileStream pathStream = new FileStream(path, FileMode.Open);
-            Assert.NotNull(pathStream);
+            Assert.That(pathStream, Is.Not.Null);
             TestHelper.AssertSequenceEqual(data, pathStream.AsBytes().ToArray());
         }
 
@@ -241,7 +241,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             using FileStream pathStream = new FileStream(path, FileMode.Open);
-            Assert.NotNull(pathStream);
+            Assert.That(pathStream, Is.Not.Null);
             pathStream.Seek(writePosition, SeekOrigin.Begin);
             TestHelper.AssertSequenceEqual(data, pathStream.AsBytes().ToArray());
         }
@@ -283,9 +283,9 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItemProperties result = await storageResource.GetPropertiesAsync();
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(size, Is.EqualTo(result.ResourceLength));
-            Assert.NotNull(result.RawProperties);
+            Assert.That(result.RawProperties, Is.Not.Null);
         }
 
         [Test]

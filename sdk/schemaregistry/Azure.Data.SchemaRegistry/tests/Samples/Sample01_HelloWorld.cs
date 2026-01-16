@@ -84,7 +84,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = avroClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.NotNull(schemaProperties);
+            Assert.That(schemaProperties, Is.Not.Null);
             _avroSchemaProperties = schemaProperties.Value;
             _avroDefinition = definition;
         }
@@ -135,7 +135,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = jsonClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.NotNull(schemaProperties);
+            Assert.That(schemaProperties, Is.Not.Null);
             _jsonSchemaProperties = schemaProperties.Value;
             _jsonDefinition = definition;
         }
@@ -174,7 +174,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = customClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.NotNull(schemaProperties);
+            Assert.That(schemaProperties, Is.Not.Null);
             _customSchemaProperties = schemaProperties.Value;
             _customDefinition = definition;
         }

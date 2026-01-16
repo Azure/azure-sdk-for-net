@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Tests
             IList<TransferOperation> transfers = await manager.GetTransfersAsync().ToListAsync();
 
             // Assert
-            Assert.IsEmpty(transfers);
+            Assert.That(transfers, Is.Empty);
         }
 
         [Test]
@@ -197,7 +197,7 @@ namespace Azure.Storage.DataMovement.Tests
             IList<TransferOperation> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert
-            Assert.IsEmpty(result);
+            Assert.That(result, Is.Empty);
         }
 
         [Test]
@@ -377,8 +377,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.That(actual.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'), Is.EqualTo(expected.DestinationUri.AbsoluteUri.TrimEnd('\\', '/')));
             Assert.That(actual.IsContainer, Is.EqualTo(expected.IsContainer));
 
-            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.SourceCheckpointDetails);
-            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.DestinationCheckpointDetails);
+            Assert.That(actual.SourceCheckpointDetails, Is.EqualTo(MockResourceCheckpointDetails.DefaultInstance.Bytes).AsCollection);
+            Assert.That(actual.DestinationCheckpointDetails, Is.EqualTo(MockResourceCheckpointDetails.DefaultInstance.Bytes).AsCollection);
         }
 
         private string GetTypeIdForProvider(string providerId)

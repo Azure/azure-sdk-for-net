@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             RestorableCosmosDBAccountResource restorableDBA = restorableAccounts.Where(account => account.Data.AccountName == expectedRestorableDatabaseAccountName).Single();
             Assert.That(CosmosDBApiType.Sql, Is.EqualTo(restorableDBA.Data.ApiType));
-            Assert.IsNotNull(restorableDBA.Data.CreatedOn);
+            Assert.That(restorableDBA.Data.CreatedOn, Is.Not.Null);
             Assert.That(restorableDBA.Data.DeletedOn, Is.Null, $"Actual DeletedOn: {restorableDBA.Data.DeletedOn}");
-            Assert.IsNotNull(restorableDBA.Data.OldestRestorableOn);
-            Assert.IsNotNull(restorableDBA.Data.RestorableLocations);
+            Assert.That(restorableDBA.Data.OldestRestorableOn, Is.Not.Null);
+            Assert.That(restorableDBA.Data.RestorableLocations, Is.Not.Null);
         }
 
         private async Task<CosmosDBAccountResource> RestoreAndVerifyRestoredAccount(AccountType accountType, RestorableCosmosDBAccountResource restorableAccount, CosmosDBAccountRestoreParameters restoreParameters, AzureLocation location, AzureLocation armLocation, bool IsFreeTierEnabled = false)
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
-            Assert.NotNull(restoredDatabaseAccount);
-            Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
+            Assert.That(restoredDatabaseAccount, Is.Not.Null);
+            Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
             Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
             Assert.That(restoredDatabaseAccount.Data.RestoreParameters.IsRestoreWithTtlDisabled, Is.True);
             Assert.That(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy, Is.True);

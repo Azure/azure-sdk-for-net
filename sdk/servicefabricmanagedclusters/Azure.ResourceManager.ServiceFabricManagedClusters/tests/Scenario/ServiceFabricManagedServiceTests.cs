@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // GetAll
             var list = await _clusterCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePurviewAccount(list.FirstOrDefault().Data, clusterName);
 
             // Delete
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidatePurviewAccount(ServiceFabricManagedClusterData cluster, string clusterName)
         {
-            Assert.IsNotNull(cluster);
-            Assert.IsNotEmpty(cluster.Id);
+            Assert.That(cluster, Is.Not.Null);
+            Assert.That((string)cluster.Id, Is.Not.Empty);
             Assert.That(cluster.Name, Is.EqualTo(clusterName));
             Assert.That(cluster.Location, Is.EqualTo(DefaultLocation));
             Assert.That(cluster.ClientConnectionPort, Is.EqualTo(19000));

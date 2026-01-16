@@ -31,7 +31,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.That(dict.TryGetValue($"{lookupName}.List<List<{expectation.TypeName}>>", out var listListModel), Is.True);
             Assert.That(listListModel!.Type.Name, Is.EqualTo($"List<List<{expectation.TypeName}>>"));
             Assert.That(listListModel.Type.Namespace, Is.EqualTo("System.Collections.Generic"));
-            Assert.IsNotNull(listListModel.Type.ItemType);
+            Assert.That(listListModel.Type.ItemType, Is.Not.Null);
             Assert.That(listListModel.Kind, Is.EqualTo(TypeBuilderKind.IList));
             Assert.That(listListModel.Type.ArrayRank, Is.EqualTo(0));
             Assert.That(listListModel.Type.TypeCaseName, Is.EqualTo($"List_List_{expectation.TypeName}_"));
@@ -41,7 +41,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             var genericArgument = listListModel.Type.ItemType!;
             Assert.That(genericArgument.Name, Is.EqualTo($"List<{expectation.TypeName}>"));
             Assert.That(genericArgument.Namespace, Is.EqualTo("System.Collections.Generic"));
-            Assert.IsNotNull(genericArgument.ItemType);
+            Assert.That(genericArgument.ItemType, Is.Not.Null);
             Assert.That(genericArgument.ArrayRank, Is.EqualTo(0));
             Assert.That(genericArgument.TypeCaseName, Is.EqualTo($"List_{expectation.TypeName}_"));
             Assert.That(genericArgument.CamelCaseName, Is.EqualTo($"list_{expectation.TypeName}_"));
@@ -49,7 +49,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.That(dict.TryGetValue($"{lookupName}.List<{expectation.TypeName}>", out innerList), Is.True);
             Assert.That(innerList!.Type.Name, Is.EqualTo($"List<{expectation.TypeName}>"));
             Assert.That(innerList.Type.Namespace, Is.EqualTo("System.Collections.Generic"));
-            Assert.IsNotNull(innerList.Type.ItemType);
+            Assert.That(innerList.Type.ItemType, Is.Not.Null);
             Assert.That(innerList.Kind, Is.EqualTo(TypeBuilderKind.IList));
             Assert.That(innerList.Type.ArrayRank, Is.EqualTo(0));
             Assert.That(innerList.Type.TypeCaseName, Is.EqualTo($"List_{expectation.TypeName}_"));

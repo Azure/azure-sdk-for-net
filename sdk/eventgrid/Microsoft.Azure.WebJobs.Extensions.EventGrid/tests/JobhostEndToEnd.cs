@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.That(expectOut, Is.EqualTo(_functionOut));
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider");
+            Assert.That(categories, Has.Member("Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider"));
             _functionOut = null;
         }
 
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             public void TestEventGridToNuget_Single([EventGridTrigger] EventGridEvent value)
             {
                 _functionOut = value.Subject;
-                Assert.IsNotNull(value.Data);
+                Assert.That(value.Data, Is.Not.Null);
             }
 
             public void TestEventGridToCollection_Batch([EventGridTrigger] EventGridEvent[] values)
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             await host.GetJobHost().CallAsync($"OutputCloudEventBindingParams.{functionName}");
 
             var categories = provider.GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider");
+            Assert.That(categories, Has.Member("Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider"));
 
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (CloudEvent eve in cloudEvents)
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             public void TestEventGridToNuget_Single([EventGridTrigger] CloudEvent value)
             {
                 _functionOut = value.Subject;
-                Assert.IsNotNull(value.Data);
+                Assert.That(value.Data, Is.Not.Null);
             }
 
             public void TestEventGridToCollection_Batch([EventGridTrigger] CloudEvent[] values)

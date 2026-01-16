@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.That(sourceResource.Uri.LocalPath, Is.EqualTo(directoryPath));
                 Assert.That(destinationResource.Uri.AbsoluteUri, Is.EqualTo(blobUri));
                 Assert.That(transferOptions, Is.EqualTo(options));
-                Assert.IsInstanceOf<BlobStorageResourceContainer>(destinationResource);
+                Assert.That(destinationResource, Is.InstanceOf<BlobStorageResourceContainer>());
 
                 assertionComplete = true;
             };
@@ -104,7 +104,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.That(destinationResource.Uri.LocalPath, Is.EqualTo(directoryPath));
                 Assert.That(sourceResource.Uri.AbsoluteUri, Is.EqualTo(blobUri));
                 Assert.That(transferOptions, Is.EqualTo(options));
-                Assert.IsInstanceOf(expSourceResourceType, sourceResource);
+                Assert.That(sourceResource, Is.InstanceOf(expSourceResourceType));
 
                 assertionComplete = true;
             };

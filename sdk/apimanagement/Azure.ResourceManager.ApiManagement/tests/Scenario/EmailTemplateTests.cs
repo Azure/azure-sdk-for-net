@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var collection = ApiServiceResource.GetApiManagementEmailTemplates();
 
             var emailTemplates = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(emailTemplates);
+            Assert.That(emailTemplates, Is.Not.Null);
             Assert.That(emailTemplates.Count, Is.EqualTo(14));
 
             var firstTemplate = emailTemplates.First();
-            Assert.NotNull(firstTemplate);
-            Assert.NotNull(firstTemplate.Data.Name);
-            Assert.NotNull(firstTemplate.Data.Subject);
-            Assert.NotNull(firstTemplate.Data.Title);
+            Assert.That(firstTemplate, Is.Not.Null);
+            Assert.That(firstTemplate.Data.Name, Is.Not.Null);
+            Assert.That(firstTemplate.Data.Subject, Is.Not.Null);
+            Assert.That(firstTemplate.Data.Title, Is.Not.Null);
             Assert.That(firstTemplate.Data.IsDefault, Is.True);
 
             var content = new ApiManagementEmailTemplateCreateOrUpdateContent()
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Subject = "New Subject"
             };
             var publisherEmailTemplate = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, firstTemplate.Data.Name, content)).Value;
-            Assert.NotNull(publisherEmailTemplate);
+            Assert.That(publisherEmailTemplate, Is.Not.Null);
 
             var publisherEmailTemplateResponse = (await collection.GetAsync(publisherEmailTemplate.Data.Name)).Value;
-            Assert.NotNull(publisherEmailTemplateResponse);
+            Assert.That(publisherEmailTemplateResponse, Is.Not.Null);
             Assert.That(publisherEmailTemplateResponse.Data.Subject, Is.EqualTo("New Subject"));
             Assert.That(publisherEmailTemplateResponse.Data.IsDefault, Is.False);
-            Assert.NotNull(publisherEmailTemplateResponse.Data.Body);
-            Assert.NotNull(publisherEmailTemplateResponse.Data.Parameters);
+            Assert.That(publisherEmailTemplateResponse.Data.Body, Is.Not.Null);
+            Assert.That(publisherEmailTemplateResponse.Data.Parameters, Is.Not.Null);
 
             content = new ApiManagementEmailTemplateCreateOrUpdateContent()
             {
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var updatePublisherEmailTemplate = (await publisherEmailTemplateResponse.UpdateAsync(ETag.All, content)).Value;
             var updatePublisherEmailTemplateResponse = (await updatePublisherEmailTemplate.GetAsync()).Value;
-            Assert.NotNull(updatePublisherEmailTemplateResponse);
+            Assert.That(updatePublisherEmailTemplateResponse, Is.Not.Null);
             Assert.That(updatePublisherEmailTemplateResponse.Data.Subject, Is.EqualTo("Updated Subject"));
 
             // reset the template to default
             await updatePublisherEmailTemplateResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             publisherEmailTemplate = (await collection.GetAsync(publisherEmailTemplate.Data.Name)).Value;
-            Assert.NotNull(publisherEmailTemplate);
+            Assert.That(publisherEmailTemplate, Is.Not.Null);
             Assert.That(publisherEmailTemplate.Data.IsDefault, Is.True);
         }
     }

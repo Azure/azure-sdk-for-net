@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // verifying restored database
             GremlinDatabaseResource restoredDatabase = await _restoredDatabaseAccount.GetGremlinDatabaseAsync(restorableDatabase.Resource.DatabaseName);
-            Assert.NotNull(restoredDatabase);
+            Assert.That(restoredDatabase, Is.Not.Null);
 
             // verifying restored graph
             GremlinGraphResource restoredGraph = await restoredDatabase.GetGremlinGraphAsync(restorableGraph.Resource.GraphName);
-            Assert.NotNull(restoredGraph);
+            Assert.That(restoredGraph, Is.Not.Null);
         }
 
         [Test]
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateUpdateParameters.Capabilities.Add(new CosmosDBAccountCapability("EnableGremlin", null));
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
-            Assert.NotNull(restoredDatabaseAccount);
-            Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
+            Assert.That(restoredDatabaseAccount, Is.Not.Null);
+            Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
             Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
             Assert.That(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy, Is.True);
 
@@ -237,10 +237,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var backupInformation = await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, restoreLocation);
 
             DateTime? oldTime = _restorableDatabaseAccount.Data.SystemData.CreatedOn.Value.DateTime;
-            Assert.NotNull(oldTime);
+            Assert.That(oldTime, Is.Not.Null);
 
-            Assert.NotNull(backupInformation);
-            Assert.NotNull(backupInformation.Value.ContinuousBackupInformation);
+            Assert.That(backupInformation, Is.Not.Null);
+            Assert.That(backupInformation.Value.ContinuousBackupInformation, Is.Not.Null);
             Assert.That(backupInformation.Value.ContinuousBackupInformation.LatestRestorableTimestamp.Value.DateTime > oldTime, Is.True);
         }
 

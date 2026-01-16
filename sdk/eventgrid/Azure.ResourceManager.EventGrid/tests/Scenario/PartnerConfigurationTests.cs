@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
 
-            Assert.IsNotNull(configuration);
+            Assert.That(configuration, Is.Not.Null);
             Assert.That(configuration.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerConfigurations"));
 
             // Authorize partner in configuration
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DefaultMaximumExpirationTimeInDays = 14,
             };
             var response = await configuration.UpdateAsync(WaitUntil.Completed, partnerConfigurationPatch);
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // List all partner configurations under the entire subscription
             var partnerConfigurationsInSubscription = await DefaultSubscription.GetPartnerConfigurationsAsync().ToEnumerableAsync();
 
-            Assert.NotNull(partnerConfigurationsInSubscription);
+            Assert.That(partnerConfigurationsInSubscription, Is.Not.Null);
 
-            Assert.GreaterOrEqual(partnerConfigurationsInSubscription.Count, 1);
+            Assert.That(partnerConfigurationsInSubscription.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete
             await configuration.DeleteAsync(WaitUntil.Completed);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
             var response = await configuration.GetAsync();
-            Assert.IsNotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerConfigurations"));
         }
 

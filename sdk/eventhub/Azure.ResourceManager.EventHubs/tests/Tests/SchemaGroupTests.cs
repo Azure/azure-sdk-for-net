@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 SchemaType = EventHubsSchemaType.Avro
             };
             EventHubsSchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
-            Assert.NotNull(schemaGroup);
+            Assert.That(schemaGroup, Is.Not.Null);
             Assert.That(schemaGroup.Id.Name, Is.EqualTo(schemaGroupName));
 
             //validate if created successfully

@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Ignore("Skipped: tenant requires MFA; test no longer valid for TME tenant.")]
@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests
 
             AuthenticationRecord record = await cred.AuthenticateAsync();
 
-            Assert.IsNotNull(record);
+            Assert.That(record, Is.Not.Null);
 
             Assert.That(record.Username, Is.EqualTo(username));
             Assert.That(record.TenantId, Is.EqualTo(tenantId));
@@ -70,7 +70,7 @@ namespace Azure.Identity.Tests
 
             AuthenticationRecord record = await cred.AuthenticateAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }));
 
-            Assert.IsNotNull(record);
+            Assert.That(record, Is.Not.Null);
 
             Assert.That(record.Username, Is.EqualTo(username));
             Assert.That(record.TenantId, Is.EqualTo(tenantId));

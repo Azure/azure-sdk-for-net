@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.insights");
             ResourceProviderResource result = response.Value;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             ResourceIdentifier fakeId = new ResourceIdentifier(result.Data.Id.ToString() + "x");
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceProviderResource(new ResourceIdentifier(fakeId)).GetAsync());
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Tests
             Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.compute");
             var result = response.Value;
             var register = await result.RegisterAsync();
-            Assert.IsNotNull(register);
+            Assert.That(register, Is.Not.Null);
         }
 
         [TestCase]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
             Response<ResourceProviderResource> response = await providerCollection.GetAsync("Microsoft.HealthBot");
             var result = response.Value;
             var unregister = await result.UnregisterAsync();
-            Assert.IsNotNull(unregister);
+            Assert.That(unregister, Is.Not.Null);
         }
 
         [TestCase]

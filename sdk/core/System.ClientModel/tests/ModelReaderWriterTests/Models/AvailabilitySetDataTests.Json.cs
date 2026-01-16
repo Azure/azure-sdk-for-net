@@ -279,7 +279,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(pointer, expectedValue);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
+            Assert.That(model.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
             Assert.That(model.Patch.GetJson("$.foobar.x"u8).ToArray(), Is.EqualTo("{\"y\":123}"u8.ToArray()));
             Assert.That(model.Patch.GetInt32("$.foobar.x.y"u8), Is.EqualTo(123));
             Assert.That(model.Patch.GetNullableValue<int>("$.foobar.x.y"u8), Is.EqualTo(123));
@@ -294,7 +294,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model2 = GetRoundTripModel(data);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
+            Assert.That(model2.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
             Assert.That(model2.Patch.GetJson("$.foobar.x"u8).ToArray(), Is.EqualTo("{\"y\":123}"u8.ToArray()));
             Assert.That(model2.Patch.GetInt32("$.foobar.x.y"u8), Is.EqualTo(123));
             Assert.That(model2.Patch.GetNullableValue<int>("$.foobar.x.y"u8), Is.EqualTo(123));
@@ -318,7 +318,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 }
             }));
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
+            Assert.That(model.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
             Assert.That(
                 model.Patch.ToString(),
                 Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]"));
@@ -329,7 +329,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":{\"y\":123}}}"));
 
             var model2 = GetRoundTripModel(data);
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
+            Assert.That(model2.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
             Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2);
@@ -344,7 +344,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(pointer, expectedValue);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
+            Assert.That(model.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
             Assert.That(model.Patch.ToString(), Is.EqualTo("[]"));
             Assert.That(
                 model.Sku.Patch.ToString(),
@@ -432,14 +432,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         private AvailabilitySetData GetInitialModel()
         {
             var model = ModelReaderWriter.Read<AvailabilitySetData>(BinaryData.FromString(JsonPayload));
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             return model!;
         }
 
         private static AvailabilitySetData GetRoundTripModel(BinaryData data)
         {
             var model2 = ModelReaderWriter.Read<AvailabilitySetData>(data);
-            Assert.IsNotNull(model2);
+            Assert.That(model2, Is.Not.Null);
             return model2!;
         }
 

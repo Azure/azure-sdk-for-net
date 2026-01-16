@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = rgOp.Value;
             var genericResourceOperations = Client.GetGenericResource(rg.Id);
             var genericResource = await genericResourceOperations.GetAsync();
-            Assert.IsNotNull(genericResource.Value);
+            Assert.That(genericResource.Value, Is.Not.Null);
             Assert.That(genericResource.Value.Data.Name.Equals(rgName), Is.True);
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Tests
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgOp.Value.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             var op = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, asetId, data);
-            Assert.NotNull(op.Value);
+            Assert.That(op.Value, Is.Not.Null);
         }
     }
 }

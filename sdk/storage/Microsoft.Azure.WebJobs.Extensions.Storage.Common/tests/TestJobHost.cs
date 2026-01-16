@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             {
                 string functionName = typeof(TProgram).Name + "." + methodName;
                 Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
-                StringAssert.Contains(expectedErrorMessage, e.InnerException.Message);
+                Assert.That(e.InnerException.Message, Does.Contain(expectedErrorMessage));
                 return;
             }
             Assert.That(false, Is.True, "Invoker should have failed");

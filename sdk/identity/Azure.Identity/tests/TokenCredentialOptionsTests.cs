@@ -161,11 +161,11 @@ namespace Azure.Identity.Tests
         {
             if (original is ISupportsAdditionallyAllowedTenants && clone is ISupportsAdditionallyAllowedTenants)
             {
-                CollectionAssert.AreEqual(original.AdditionallyAllowedTenants, clone.AdditionallyAllowedTenants);
+                Assert.That(clone.AdditionallyAllowedTenants, Is.EqualTo(original.AdditionallyAllowedTenants).AsCollection);
             }
             else
             {
-                CollectionAssert.AreNotEqual(original.AdditionallyAllowedTenants, clone.AdditionallyAllowedTenants);
+                Assert.That(clone.AdditionallyAllowedTenants, Is.Not.EqualTo(original.AdditionallyAllowedTenants).AsCollection);
             }
 
             if (original is ISupportsDisableInstanceDiscovery && clone is ISupportsDisableInstanceDiscovery)
@@ -203,7 +203,7 @@ namespace Azure.Identity.Tests
             {
                 if (propInfo.PropertyType is IEnumerable)
                 {
-                    CollectionAssert.AreEqual((IEnumerable)propInfo.GetValue(original), (IEnumerable)propInfo.GetValue(clone));
+                    Assert.That((IEnumerable)propInfo.GetValue(clone), Is.EqualTo((IEnumerable)propInfo.GetValue(original)).AsCollection);
                 }
                 else
                 {
@@ -305,7 +305,7 @@ namespace Azure.Identity.Tests
             // assert that all ISupports* intefaces on the source in the in known interfaces
             var iSupportsInterfaces = sourceType.GetInterfaces().Where(i => i.Name.StartsWith("ISupports"));
 
-            CollectionAssert.IsSubsetOf(iSupportsInterfaces, s_KnownISupportsInterfaces);
+            Assert.That(iSupportsInterfaces, Is.SubsetOf(s_KnownISupportsInterfaces));
 
             // create source instance and set values for all the supported intefaces
             var source = Activator.CreateInstance(sourceType, true);
@@ -333,13 +333,13 @@ namespace Azure.Identity.Tests
             // clone the source and assert that the correct types is returned and all ISupports* interfaces the cloned type supports have been copied
             var destination = sourceType.GetMethod("Clone", BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(destinationType).Invoke(source, null);
 
-            Assert.NotNull(destination);
+            Assert.That(destination, Is.Not.Null);
 
-            Assert.IsInstanceOf(destinationType, destination);
+            Assert.That(destination, Is.InstanceOf(destinationType));
 
             if (source is ISupportsAdditionallyAllowedTenants aatSource && destination is ISupportsAdditionallyAllowedTenants aatDestination)
             {
-                CollectionAssert.AreEqual(aatSource.AdditionallyAllowedTenants, aatDestination.AdditionallyAllowedTenants);
+                Assert.That(aatDestination.AdditionallyAllowedTenants, Is.EqualTo(aatSource.AdditionallyAllowedTenants).AsCollection);
             }
 
             if (source is ISupportsDisableInstanceDiscovery didSource && destination is ISupportsDisableInstanceDiscovery didDestination)

@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.Plan != null || getResult.Data.Plan != null)
             {
-                Assert.NotNull(model.Data.Plan);
-                Assert.NotNull(getResult.Data.Plan);
+                Assert.That(model.Data.Plan, Is.Not.Null);
+                Assert.That(getResult.Data.Plan, Is.Not.Null);
                 Assert.That(getResult.Data.Plan.Name, Is.EqualTo(model.Data.Plan.Name));
                 Assert.That(getResult.Data.Plan.Product, Is.EqualTo(model.Data.Plan.Product));
                 Assert.That(getResult.Data.Plan.PromotionCode, Is.EqualTo(model.Data.Plan.PromotionCode));
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
             if (model.Data.BillingDetails != null || getResult.Data.BillingDetails != null)
             {
-                Assert.NotNull(model.Data.BillingDetails);
-                Assert.NotNull(getResult.Data.BillingDetails);
+                Assert.That(model.Data.BillingDetails, Is.Not.Null);
+                Assert.That(getResult.Data.BillingDetails, Is.Not.Null);
                 Assert.That(getResult.Data.BillingDetails.ResourceUsageId, Is.EqualTo(model.Data.BillingDetails.ResourceUsageId));
             }
             if (model.Data.JitAccessPolicy != null || getResult.Data.JitAccessPolicy != null)
             {
-                Assert.NotNull(model.Data.JitAccessPolicy);
-                Assert.NotNull(getResult.Data.JitAccessPolicy);
+                Assert.That(model.Data.JitAccessPolicy, Is.Not.Null);
+                Assert.That(getResult.Data.JitAccessPolicy, Is.Not.Null);
                 Assert.That(getResult.Data.JitAccessPolicy.JitAccessEnabled, Is.EqualTo(model.Data.JitAccessPolicy.JitAccessEnabled));
                 Assert.That(getResult.Data.JitAccessPolicy.JitApprovalMode, Is.EqualTo(model.Data.JitAccessPolicy.JitApprovalMode));
                 Assert.That(getResult.Data.JitAccessPolicy.JitApprovers.Count, Is.EqualTo(model.Data.JitAccessPolicy.JitApprovers.Count));
@@ -158,23 +158,23 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.Data.ManagementMode, Is.EqualTo(model.Data.ManagementMode));
             if (model.Data.CustomerSupport != null || getResult.Data.CustomerSupport != null)
             {
-                Assert.NotNull(model.Data.CustomerSupport);
-                Assert.NotNull(getResult.Data.CustomerSupport);
+                Assert.That(model.Data.CustomerSupport, Is.Not.Null);
+                Assert.That(getResult.Data.CustomerSupport, Is.Not.Null);
                 Assert.That(getResult.Data.CustomerSupport.ContactName, Is.EqualTo(model.Data.CustomerSupport.ContactName));
                 Assert.That(getResult.Data.CustomerSupport.Email, Is.EqualTo(model.Data.CustomerSupport.Email));
                 Assert.That(getResult.Data.CustomerSupport.Phone, Is.EqualTo(model.Data.CustomerSupport.Phone));
             }
             if (model.Data.SupportUris != null || getResult.Data.SupportUris != null)
             {
-                Assert.NotNull(model.Data.SupportUris);
-                Assert.NotNull(getResult.Data.SupportUris);
+                Assert.That(model.Data.SupportUris, Is.Not.Null);
+                Assert.That(getResult.Data.SupportUris, Is.Not.Null);
                 Assert.That(getResult.Data.SupportUris.AzureGovernmentUri, Is.EqualTo(model.Data.SupportUris.AzureGovernmentUri));
                 Assert.That(getResult.Data.SupportUris.AzurePublicCloudUri, Is.EqualTo(model.Data.SupportUris.AzurePublicCloudUri));
             }
             if (model.Data.Artifacts != null || getResult.Data.Artifacts != null)
             {
-                Assert.NotNull(model.Data.Artifacts);
-                Assert.NotNull(getResult.Data.Artifacts);
+                Assert.That(model.Data.Artifacts, Is.Not.Null);
+                Assert.That(getResult.Data.Artifacts, Is.Not.Null);
                 Assert.That(getResult.Data.Artifacts.Count, Is.EqualTo(model.Data.Artifacts.Count));
                 for (int i = 0; i < model.Data.Artifacts.Count; ++i)
                 {
@@ -185,16 +185,16 @@ namespace Azure.ResourceManager.Resources.Tests
             }
             if (model.Data.CreatedBy != null || getResult.Data.CreatedBy != null)
             {
-                Assert.NotNull(model.Data.CreatedBy);
-                Assert.NotNull(getResult.Data.CreatedBy);
+                Assert.That(model.Data.CreatedBy, Is.Not.Null);
+                Assert.That(getResult.Data.CreatedBy, Is.Not.Null);
                 Assert.That(getResult.Data.CreatedBy.ObjectId, Is.EqualTo(model.Data.CreatedBy.ObjectId));
                 Assert.That(getResult.Data.CreatedBy.Puid, Is.EqualTo(model.Data.CreatedBy.Puid));
                 Assert.That(getResult.Data.CreatedBy.ApplicationId, Is.EqualTo(model.Data.CreatedBy.ApplicationId));
             }
             if (model.Data.UpdatedBy != null || getResult.Data.UpdatedBy != null)
             {
-                Assert.NotNull(model.Data.UpdatedBy);
-                Assert.NotNull(getResult.Data.UpdatedBy);
+                Assert.That(model.Data.UpdatedBy, Is.Not.Null);
+                Assert.That(getResult.Data.UpdatedBy, Is.Not.Null);
                 Assert.That(getResult.Data.UpdatedBy.ObjectId, Is.EqualTo(model.Data.UpdatedBy.ObjectId));
                 Assert.That(getResult.Data.UpdatedBy.Puid, Is.EqualTo(model.Data.UpdatedBy.Puid));
                 Assert.That(getResult.Data.UpdatedBy.ApplicationId, Is.EqualTo(model.Data.UpdatedBy.ApplicationId));

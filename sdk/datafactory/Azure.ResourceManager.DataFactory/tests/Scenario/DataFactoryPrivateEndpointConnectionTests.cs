@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 },
             };
             var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
-            Assert.IsNotNull(connection);
+            Assert.That(connection, Is.Not.Null);
         }
 
         [Test]
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             // GetAll
             var list = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // Get
             string connectionName = list.FirstOrDefault().Data.Name;
             var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAsync(connectionName);
-            Assert.IsNotNull(connection);
+            Assert.That(connection, Is.Not.Null);
             Assert.That(connection.Value.Data.Name, Is.EqualTo(connectionName));
 
             // Exist

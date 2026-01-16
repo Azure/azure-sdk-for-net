@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackFqdnCollection collection = LocalRulestack.GetLocalRulestackFqdns();
             LocalRulestackFqdnResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
-            Assert.IsNotNull(listsResource);
+            Assert.That(listsResource, Is.Not.Null);
             Assert.That(DefaultResource1.Data.Name, Is.EqualTo(listsResource.Data.Name));
         }
 

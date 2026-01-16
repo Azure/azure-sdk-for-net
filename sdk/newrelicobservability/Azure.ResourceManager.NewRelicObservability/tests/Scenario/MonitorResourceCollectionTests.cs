@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
     }
 }

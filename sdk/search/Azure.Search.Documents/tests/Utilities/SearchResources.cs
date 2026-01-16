@@ -424,7 +424,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>A <see cref="SearchClient"/> instance.</returns>
         public SearchClient GetSearchClient(SearchClientOptions options = null)
         {
-            Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
+            Assert.That(IndexName, Is.Not.Null, "No index was created for these TestResources!");
             return TestFixture.InstrumentClient(
                 GetIndexClient(options).GetSearchClient(IndexName));
         }
@@ -436,7 +436,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>A <see cref="SearchClient"/> instance.</returns>
         public SearchClient GetQueryClient(SearchClientOptions options = null)
         {
-            Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
+            Assert.That(IndexName, Is.Not.Null, "No index was created for these TestResources!");
             return TestFixture.InstrumentClient(
                 new SearchClient(
                     Endpoint,

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         protected static void AssertAutoscale(ThroughputSettingData throughput)
         {
-            Assert.NotNull(throughput.Resource.AutoscaleSettings);
+            Assert.That(throughput.Resource.AutoscaleSettings, Is.Not.Null);
             Assert.That(throughput.Resource.AutoscaleSettings.MaxThroughput, Is.GreaterThan(0));
         }
 

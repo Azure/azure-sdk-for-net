@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             string dpsName = Recording.GenerateAssetName("dps");
             await CreateDefaultDps(_resourceGroup, dpsName);
             var list = await _dpsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateDeviceProvisioningServices(list.FirstOrDefault().Data, dpsName);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
 
         private void ValidateDeviceProvisioningServices(DeviceProvisioningServiceData dpsData, string dpsName)
         {
-            Assert.IsNotNull(dpsData);
+            Assert.That(dpsData, Is.Not.Null);
             Assert.That(dpsData.Name, Is.EqualTo(dpsName));
             Assert.That(dpsData.Properties.IsDataResidencyEnabled, Is.EqualTo(false));
             Assert.That(dpsData.Sku.Name.ToString(), Is.EqualTo("S1"));

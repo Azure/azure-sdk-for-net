@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 
             // Get
             DataReplicationFabricResource resource = await rg.GetDataReplicationFabrics().GetAsync(fabricName);
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
 
             // Delete
             var deleteVaultOperation = await resource.DeleteAsync(WaitUntil.Completed);

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
             ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
-            Assert.IsNotNull(rg);
+            Assert.That(rg, Is.Not.Null);
             HostPoolCollection hostPoolCollection = rg.GetHostPools();
             HostPoolData hostPoolData = new HostPoolData(
                 DefaultLocation,
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolName,
                 hostPoolData);
 
-            Assert.IsNotNull(op);
+            Assert.That(op, Is.Not.Null);
             Assert.That(op.HasCompleted, Is.True);
             Assert.That(hostPoolName, Is.EqualTo(op.Value.Data.Name));
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolName,
                 hostPoolData);
 
-            Assert.IsNotNull(op);
+            Assert.That(op, Is.Not.Null);
             Assert.That(op.HasCompleted, Is.True);
             Assert.That(hostPoolName, Is.EqualTo(op.Value.Data.Name));
             Assert.That(op.Value.Data.FriendlyName, Is.EqualTo("Friendly Name"));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             HostPoolResource hostPool = getOp.Value;
             ArmOperation deleteOp = await hostPool.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteOp);
+            Assert.That(deleteOp, Is.Not.Null);
 
             Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(200));
 
             deleteOp = await hostPool.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteOp);
+            Assert.That(deleteOp, Is.Not.Null);
 
             Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(204));
 

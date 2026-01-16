@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var form = operation.Value.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -94,7 +94,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
             Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
-            Assert.NotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
 
             Assert.That(form.Fields.ContainsKey("ContactNames"), Is.True);
             Assert.That(form.Fields.ContainsKey("JobTitles"), Is.True);
@@ -186,7 +186,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var form = operation.Value.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
             Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
-            Assert.NotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
 
             Assert.That(form.Fields.ContainsKey("ContactNames"), Is.True);
             Assert.That(form.Fields.ContainsKey("JobTitles"), Is.True);
@@ -367,7 +367,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                Assert.NotNull(recognizedForm);
+                Assert.That(recognizedForm, Is.Not.Null);
 
                 ValidatePrebuiltForm(
                     recognizedForm,

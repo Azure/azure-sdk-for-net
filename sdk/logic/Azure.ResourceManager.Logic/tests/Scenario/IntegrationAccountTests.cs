@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string integrationAccountName = SessionRecording.GenerateAssetName("intergrationAccount");
             var integrationAccount = await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
-            Assert.IsNotNull(integrationAccount);
+            Assert.That(integrationAccount, Is.Not.Null);
             Assert.That(integrationAccount.Data.Name, Is.EqualTo(integrationAccountName));
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string integrationAccountName = SessionRecording.GenerateAssetName("intergrationAccount");
             await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
             var integrationAccount = await _integrationAccountCollection.GetAsync(integrationAccountName);
-            Assert.IsNotNull(integrationAccount);
+            Assert.That(integrationAccount, Is.Not.Null);
             Assert.That(integrationAccount.Value.Data.Name, Is.EqualTo(integrationAccountName));
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string integrationAccountName = SessionRecording.GenerateAssetName("intergrationAccount");
             await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
             var list = await _integrationAccountCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

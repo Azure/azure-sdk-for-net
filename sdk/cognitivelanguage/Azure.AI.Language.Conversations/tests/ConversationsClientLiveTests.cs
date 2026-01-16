@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
             // assert - main object
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(conversationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty((IEnumerable)conversationPrediction.Intents);
+            Assert.That((IEnumerable)conversationPrediction.Intents, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty((IEnumerable)orchestrationPrediction.Intents);
+            Assert.That((IEnumerable)orchestrationPrediction.Intents, Is.Not.Empty);
 
             // cast top intent
             dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
@@ -119,8 +119,8 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.That((string)topIntent.TargetProjectKind, Is.EqualTo("Conversation"));
 
             // assert entities and intents
-            Assert.IsNotEmpty((IEnumerable)topIntent.Result.Prediction.Entities);
-            Assert.IsNotEmpty((IEnumerable)topIntent.Result.Prediction.Intents);
+            Assert.That((IEnumerable)topIntent.Result.Prediction.Entities, Is.Not.Empty);
+            Assert.That((IEnumerable)topIntent.Result.Prediction.Intents, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -149,7 +149,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
@@ -166,7 +166,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty((IEnumerable)orchestrationPrediction.Intents);
+            Assert.That((IEnumerable)orchestrationPrediction.Intents, Is.Not.Empty);
 
             // cast top intent
             dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
@@ -200,7 +200,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
@@ -217,7 +217,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty((IEnumerable)orchestrationPrediction.Intents);
+            Assert.That((IEnumerable)orchestrationPrediction.Intents, Is.Not.Empty);
 
             // cast top intent
             dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
@@ -299,16 +299,16 @@ namespace Azure.AI.Language.Conversations.Tests
             AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(data);
-            Assert.NotNull(analyzeConversationOperation);
+            Assert.That(analyzeConversationOperation, Is.Not.Null);
 
             AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
-            Assert.IsNotNull(jobResults.Actions);
+            Assert.That(jobResults.Actions, Is.Not.Null);
 
             foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
             {
                 SummaryResult results = task.Results;
 
-                Assert.NotNull(results);
+                Assert.That(results, Is.Not.Null);
 
                 foreach (ConversationsSummaryResult conversation in results.Conversations)
                 {
@@ -316,7 +316,7 @@ namespace Azure.AI.Language.Conversations.Tests
                     Console.WriteLine("Summaries:");
                     foreach (SummaryResultItem summary in conversation.Summaries)
                     {
-                        Assert.NotNull(summary.Text);
+                        Assert.That(summary.Text, Is.Not.Null);
                         Assert.That((string)summary.Aspect, Is.EqualTo("issue").Or.EqualTo("resolution"));
                     }
                 }
@@ -474,7 +474,7 @@ namespace Azure.AI.Language.Conversations.Tests
                                     string expectedMaskPattern = $@"\[{entity.Category}-?\d*\]";
 
                                     // Perform case-insensitive regex match
-                                    StringAssert.IsMatch("(?i)" + expectedMaskPattern, redactedText,
+                                    Assert.That(redactedText, Does.Match("(?i)" + expectedMaskPattern),
                                     $"Expected redacted text to contain an entity mask similar to '[{entity.Category}]' but got: {redactedText}");
                                 }
                             }
@@ -559,7 +559,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 }
             }
             // Ensure PII was detected
-            Assert.NotZero(detectedEntities.Count);
+            Assert.That(detectedEntities.Count, Is.Not.Zero);
 
             // Verify the HTTP response is successful
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));

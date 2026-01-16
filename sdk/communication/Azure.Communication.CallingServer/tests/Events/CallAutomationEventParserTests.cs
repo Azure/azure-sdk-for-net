@@ -281,7 +281,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
                 Assert.That(recognizeCompleted.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(recognizeCompleted.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(recognizeCompleted.ResultInformation.Code, Is.EqualTo(200));
-                Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
+                Assert.That(recognizeCompleted.CollectTonesResult.Tones.Count(), Is.Not.Zero);
                 Assert.That(recognizeCompleted.CollectTonesResult.Tones.First(), Is.EqualTo(DtmfTone.Five));
             }
             else

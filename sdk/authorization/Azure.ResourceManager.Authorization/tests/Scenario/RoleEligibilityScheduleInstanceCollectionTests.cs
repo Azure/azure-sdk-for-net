@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
             var collection = await GetRoleEligibilityScheduleInstanceCollectionAsync();
             var roleEligibilityScheduleInstances = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(roleEligibilityScheduleInstances.Count, 0);
+            Assert.That(roleEligibilityScheduleInstances.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [RecordedTest]

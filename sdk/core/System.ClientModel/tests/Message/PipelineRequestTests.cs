@@ -23,8 +23,8 @@ public class PipelineRequestTests
         string clientRequestId = message.Request.ClientRequestId;
 
         // Assert - Should be auto-generated and not null
-        Assert.IsNotNull(clientRequestId);
-        Assert.IsNotEmpty(clientRequestId);
+        Assert.That(clientRequestId, Is.Not.Null);
+        Assert.That(clientRequestId, Is.Not.Empty);
     }
 
     [Test]
@@ -53,8 +53,8 @@ public class PipelineRequestTests
         string clientRequestId = message.Request.ClientRequestId;
 
         // Assert - Should be auto-generated and consistent
-        Assert.IsNotNull(clientRequestId);
-        Assert.IsNotEmpty(clientRequestId);
+        Assert.That(clientRequestId, Is.Not.Null);
+        Assert.That(clientRequestId, Is.Not.Empty);
         Assert.That(message.Request.ClientRequestId, Is.EqualTo(clientRequestId));
     }
 
@@ -92,8 +92,8 @@ public class PipelineRequestTests
         pipeline.Send(message);
 
         // Assert - Custom policy should be able to access ClientRequestId
-        Assert.IsNotNull(capturedRequestId);
-        Assert.IsNotEmpty(capturedRequestId);
+        Assert.That(capturedRequestId, Is.Not.Null);
+        Assert.That(capturedRequestId, Is.Not.Empty);
         Assert.That(capturedRequestId, Is.EqualTo(message.Request.ClientRequestId));
     }
 

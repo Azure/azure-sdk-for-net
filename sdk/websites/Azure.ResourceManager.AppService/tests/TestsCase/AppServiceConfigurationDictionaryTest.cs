@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             WebSiteResource webSiteResource = await webSiteCollection.GetAsync("FunctionApp1Lwm");
             AppServiceConfigurationDictionary appDic = await webSiteResource.GetApplicationSettingsAsync();
             AppServiceConfigurationDictionary metaData = await webSiteResource.GetMetadataAsync();
-            Assert.NotZero(appDic.Properties.Count);
-            Assert.NotNull(metaData.Properties);
+            Assert.That(appDic.Properties.Count, Is.Not.Zero);
+            Assert.That(metaData.Properties, Is.Not.Null);
         }
 
         //Manual operation needed to create website/function resource, get it from existing one.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var wbSiteSlotID = WebSiteSlotResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, "Lwm_Rg", "testSite01lwm", "siteSlot01");
             WebSiteSlotResource wsSlotResource = Client.GetWebSiteSlotResource(wbSiteSlotID);
             AppServiceConfigurationDictionary appset = await wsSlotResource.GetApplicationSettingsSlotAsync();
-            Assert.GreaterOrEqual(appset.Properties.Count, 1);
+            Assert.That(appset.Properties.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         //Manual operation needed to create website/function resource, get it from existing one.
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             WebSiteResource webSiteResource = await webSiteCollection.GetAsync("FunctionApp1Lwm");
             SiteFunctionResource siteFuncResource = await webSiteResource.GetSiteFunctionAsync("HttpTrigger1");
             var funtionKeys = (await siteFuncResource.GetFunctionKeysAsync()).Value;
-            Assert.GreaterOrEqual(funtionKeys.Properties.Count, 1);
+            Assert.That(funtionKeys.Properties.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         //Manual operation needed to create website/function resource, get it from existing one.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var siteSlotFunction = SiteSlotFunctionResource.CreateResourceIdentifier(subId, "Lwm_Rg", "FunctionApp1Lwm", "FunctionApp1Slot", "HttpTrigger1");
             var slot = Client.GetSiteSlotFunctionResource(siteSlotFunction);
             var funtionKeys = (await slot.GetFunctionKeysSlotAsync()).Value;
-            Assert.NotZero(funtionKeys.Properties.Count);
+            Assert.That(funtionKeys.Properties.Count, Is.Not.Zero);
         }
 
         //Manual operation needed to create website/function resource, get it from existing one.
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                 Properties = { { "key1", "val1" }, { "key2", "val2" }, { "key3", "val3" } },
             });
             var appsettStaticFunctionBuild = (await staticSiteBuild.GetStaticSiteBuildAppSettingsAsync()).Value;
-            Assert.NotZero(staticResour1.Properties.Count);
-            Assert.NotZero(staticResour2.Properties.Count);
-            Assert.NotZero(appset.Properties.Count);
-            Assert.NotZero(appsettStaticBuild.Properties.Count);
-            Assert.NotZero(appsettStaticFunctionBuild.Properties.Count);
+            Assert.That(staticResour1.Properties.Count, Is.Not.Zero);
+            Assert.That(staticResour2.Properties.Count, Is.Not.Zero);
+            Assert.That(appset.Properties.Count, Is.Not.Zero);
+            Assert.That(appsettStaticBuild.Properties.Count, Is.Not.Zero);
+            Assert.That(appsettStaticFunctionBuild.Properties.Count, Is.Not.Zero);
         }
     }
 }

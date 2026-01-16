@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         {
             var connectionInfo = new SocketIOConnectionInfo(connectionString);
 
-            Assert.NotNull(connectionInfo.KeyCredential);
+            Assert.That(connectionInfo.KeyCredential, Is.Not.Null);
             Assert.That(connectionInfo.ConnectionString, Is.EqualTo(connectionString));
             Assert.That(connectionInfo.Endpoint.ToString(), Is.EqualTo(expectedEndpoint));
             Assert.That(connectionInfo.TokenCredential, Is.Null);
@@ -36,16 +36,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var clientConnection = service.GetNegotiationResult(userId);
 
-            Assert.NotNull(clientConnection);
+            Assert.That(clientConnection, Is.Not.Null);
             Assert.That(clientConnection.Endpoint.AbsoluteUri, Is.EqualTo(expectedEndpoint));
             Assert.That(clientConnection.Path, Is.EqualTo(expectedPath));
-            Assert.NotNull(clientConnection.Token);
+            Assert.That(clientConnection.Token, Is.Not.Null);
 
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(clientConnection.Token);
 
             if (string.IsNullOrEmpty(userId))
             {
-                Assert.IsNull(jwt.Subject);
+                Assert.That(jwt.Subject, Is.Null);
             }
             else
             {
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             Assert.That(info.KeyCredential, Is.Null);
             Assert.That(info.ConnectionString, Is.Null);
             Assert.That(info.Endpoint.ToString(), Is.EqualTo(endpoint));
-            Assert.NotNull(info.TokenCredential);
+            Assert.That(info.TokenCredential, Is.Not.Null);
 
             var configs = new WebPubSubValidationOptions(info);
 

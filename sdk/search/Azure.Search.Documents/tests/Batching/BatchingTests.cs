@@ -273,7 +273,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -295,7 +295,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await DelayAsync(TimeSpan.FromMilliseconds(500));
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -497,7 +497,7 @@ namespace Azure.Search.Documents.Tests
             }
             catch (InvalidOperationException ex)
             {
-                StringAssert.Contains(nameof(Hotel), ex.Message);
+                Assert.That(ex.Message, Does.Contain(nameof(Hotel)));
             }
         }
         #endregion
@@ -520,7 +520,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
 
             await DelayAsync(TimeSpan.FromSeconds(5), EventDelay);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -590,7 +590,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await DelayAsync(TimeSpan.FromMilliseconds(500), EventDelay);
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -664,7 +664,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
 
             await DelayAsync(TimeSpan.FromSeconds(3), EventDelay);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
         }
         #endregion
 
@@ -712,7 +712,7 @@ namespace Azure.Search.Documents.Tests
 
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
-            Assert.Zero(pending.Count);
+            Assert.That(pending.Count, Is.Zero);
         }
         #endregion
 
@@ -957,7 +957,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
-            Assert.LessOrEqual(data.Length, sent);
+            Assert.That(data.Length, Is.LessThanOrEqualTo(sent));
         }
 
         [Test]
@@ -975,7 +975,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
-            Assert.LessOrEqual(data.Length, completed);
+            Assert.That(data.Length, Is.LessThanOrEqualTo(completed));
         }
 
         [Test]
@@ -1035,10 +1035,10 @@ namespace Azure.Search.Documents.Tests
         {
             Type eventSourceType = typeof(AzureSearchDocumentsEventSource);
 
-            Assert.NotNull(eventSourceType);
+            Assert.That(eventSourceType, Is.Not.Null);
             Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Search-Documents"));
             Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("ecf8d17a-8cd1-5cb8-7adb-5d7d3221a642")));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.That(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"), Is.Not.Empty);
         }
         #endregion
 
@@ -1072,25 +1072,25 @@ namespace Azure.Search.Documents.Tests
             Assert.That(eventData[2].EventName, Is.EqualTo("PendingQueueResized"));         // 3. All events are pulled out of the pending queue.
             Assert.That(eventData[2].GetProperty<int>("queueSize"), Is.EqualTo(0));
             Assert.That(eventData[3].EventName, Is.EqualTo("BatchSubmitted"));              // 4. A batch is created for submission and contains all events.
-            Assert.NotNull(eventData[3].GetProperty<string>("endPoint"));
+            Assert.That(eventData[3].GetProperty<string>("endPoint"), Is.Not.Null);
             Assert.That(eventData[3].GetProperty<int>("batchSize"), Is.EqualTo(512));
             Assert.That(eventData[4].EventName, Is.EqualTo("BatchActionPayloadTooLarge"));  // 5. Service responded to the index request with a 'payload too large' exception.
             Assert.That(eventData[4].Level, Is.EqualTo(EventLevel.Warning));                //    This event is logged at 'Warning' level.
             Assert.That(eventData[4].GetProperty<int>("batchActionCount"), Is.EqualTo(512));
             Assert.That(eventData[5].EventName, Is.EqualTo("BatchActionCountUpdated"));     // 6. Batch is split up and default action count is updated.
             Assert.That(eventData[5].Level, Is.EqualTo(EventLevel.Warning));                //    This event is logged at 'Warning' level.
-            Assert.NotNull(eventData[5].GetProperty<string>("endPoint"));
+            Assert.That(eventData[5].GetProperty<string>("endPoint"), Is.Not.Null);
             Assert.That(eventData[5].GetProperty<int>("oldBatchCount"), Is.EqualTo(512));
             Assert.That(eventData[5].GetProperty<int>("newBatchCount"), Is.EqualTo(256));
             Assert.That(eventData[6].EventName, Is.EqualTo("RetryQueueResized"));           // 7. Second part of the batch is pushed into the retry queue.
             Assert.That(eventData[6].GetProperty<int>("queueSize"), Is.EqualTo(256));
             Assert.That(eventData[7].EventName, Is.EqualTo("BatchSubmitted"));              // 8. First part of the batch is submitted.
-            Assert.NotNull(eventData[7].GetProperty<string>("endPoint"));
+            Assert.That(eventData[7].GetProperty<string>("endPoint"), Is.Not.Null);
             Assert.That(eventData[7].GetProperty<int>("batchSize"), Is.EqualTo(256));
             Assert.That(eventData[8].EventName, Is.EqualTo("RetryQueueResized"));           // 9. Remaining events are pulled out of the retry queue.
             Assert.That(eventData[8].GetProperty<int>("queueSize"), Is.EqualTo(0));
             Assert.That(eventData[9].EventName, Is.EqualTo("BatchSubmitted"));              // 10. Second part of the batch is submitted.
-            Assert.NotNull(eventData[9].GetProperty<string>("endPoint"));
+            Assert.That(eventData[9].GetProperty<string>("endPoint"), Is.Not.Null);
             Assert.That(eventData[9].GetProperty<int>("batchSize"), Is.EqualTo(256));
 
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -1254,7 +1254,7 @@ namespace Azure.Search.Documents.Tests
             indexer.ActionSent += e => { sent++; return Task.CompletedTask; };
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
-            Assert.Less(1, sent);
+            Assert.That(1, Is.LessThan(sent));
         }
 
         [Test]

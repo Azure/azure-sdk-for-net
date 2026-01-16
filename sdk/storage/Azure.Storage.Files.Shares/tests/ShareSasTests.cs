@@ -873,7 +873,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -902,7 +902,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -931,7 +931,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasFile.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -963,7 +963,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasFile.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

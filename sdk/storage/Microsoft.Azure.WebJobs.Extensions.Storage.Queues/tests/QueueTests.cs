@@ -243,7 +243,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 SubOject prop1) // Bind to a object
             {
                 // binding to subobject work
-                Assert.NotNull(prop1);
+                Assert.That(prop1, Is.Not.Null);
                 Assert.That(prop1.xyz, Is.EqualTo("abc"));
 
                 Assert.That(xyz, Is.EqualTo("bad"));
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo(QueueName));
             var queue = queueServiceClient.GetQueueClient(QueueName);
             Assert.That((bool)await queue.ExistsAsync(), Is.True);
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             var queue = queueServiceClient.GetQueueClient(QueueName);
             IEnumerable<QueueMessage> messages = (await queue.ReceiveMessagesAsync(10)).Value;
-            Assert.NotNull(messages);
+            Assert.That(messages, Is.Not.Null);
             Assert.That(messages.Count(), Is.EqualTo(1));
             QueueMessage message = messages.Single();
             Assert.That(message.MessageText, Is.EqualTo(expectedContent));

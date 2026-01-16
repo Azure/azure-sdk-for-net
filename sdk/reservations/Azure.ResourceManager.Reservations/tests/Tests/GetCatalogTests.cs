@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
 
-            Assert.NotNull(catalogResult);
+            Assert.That(catalogResult, Is.Not.Null);
             Assert.That(catalogResult.Count > 0, Is.True);
             TestGetCatalogResponse(catalogResult, "NetAppStorage", null, true, "westus", "West US");
         }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Reservations.Tests
 
         private void TestGetCatalogResponse(List<ReservationCatalog> catalogResult, string resourceTypeName, string alternateResourceTypeName = null, bool hasLocation = false, string location = null, string locationDisplayName = null)
         {
-            Assert.NotNull(catalogResult);
+            Assert.That(catalogResult, Is.Not.Null);
             Assert.That(catalogResult.Count > 0, Is.True);
 
             catalogResult.ForEach(item =>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Reservations.Tests
 
                 if (hasLocation)
                 {
-                    Assert.NotNull(item.Locations);
+                    Assert.That(item.Locations, Is.Not.Null);
                     Assert.That(item.Locations.Count == 1, Is.True);
                     Assert.That(item.Locations[0].Name, Is.EqualTo(location));
                     Assert.That(item.Locations[0].DisplayName, Is.EqualTo(locationDisplayName));

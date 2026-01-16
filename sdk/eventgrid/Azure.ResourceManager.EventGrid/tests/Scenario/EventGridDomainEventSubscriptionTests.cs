@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
                 })).Value;
 
-            Assert.NotNull(createDomainResponse);
+            Assert.That(createDomainResponse, Is.Not.Null);
             Assert.That(domainName, Is.EqualTo(createDomainResponse.Data.Name));
 
             // Get the created domain
             var getDomainResponse = (await DomainCollection.GetAsync(domainName)).Value;
-            Assert.NotNull(getDomainResponse);
+            Assert.That(getDomainResponse, Is.Not.Null);
             Assert.That(getDomainResponse.Data.ProvisioningState, Is.EqualTo(EventGridDomainProvisioningState.Succeeded));
             Assert.That(getDomainResponse.Data.Location, Is.EqualTo(location));
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.That(domainEventSubscriptionExistsBeforeCreate, Is.False);
 
             var eventSubscriptionResponse = (await domainEventSubscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
-            Assert.NotNull(eventSubscriptionResponse);
+            Assert.That(eventSubscriptionResponse, Is.Not.Null);
             Assert.That(eventSubscriptionName, Is.EqualTo(eventSubscriptionResponse.Data.Name));
 
             var domainEventSubscriptionExistsAfterCreate = (await domainEventSubscriptionsCollection.ExistsAsync(eventSubscriptionName)).Value;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Get the created event subscription
             eventSubscriptionResponse = await domainEventSubscriptionsCollection.GetAsync(eventSubscriptionName);
-            Assert.NotNull(eventSubscriptionResponse);
+            Assert.That(eventSubscriptionResponse, Is.Not.Null);
             Assert.That(eventSubscriptionResponse.Data.ProvisioningState, Is.EqualTo(EventSubscriptionProvisioningState.Succeeded));
             Assert.That(eventSubscriptionResponse.Data.Filter.SubjectBeginsWith, Is.EqualTo("TestPrefix"));
             Assert.That(eventSubscriptionResponse.Data.Filter.SubjectEndsWith, Is.EqualTo("TestSuffix"));
@@ -109,16 +109,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Test getting full URL and delivery attributes
             var fullUrlResponse = (await eventSubscriptionResponse.GetFullUriAsync()).Value;
-            Assert.NotNull(fullUrlResponse);
-            Assert.NotNull(fullUrlResponse.Endpoint);
+            Assert.That(fullUrlResponse, Is.Not.Null);
+            Assert.That(fullUrlResponse.Endpoint, Is.Not.Null);
 
             var deliveryAttributesResponse = await eventSubscriptionResponse.GetDeliveryAttributesAsync().ToEnumerableAsync();
-            Assert.NotNull(deliveryAttributesResponse);
+            Assert.That(deliveryAttributesResponse, Is.Not.Null);
 
             // List domain event subscriptions
             var listDomainEventSubscriptionsResponse = await domainEventSubscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listDomainEventSubscriptionsResponse);
-            Assert.GreaterOrEqual(listDomainEventSubscriptionsResponse.Count, 1);
+            Assert.That(listDomainEventSubscriptionsResponse, Is.Not.Null);
+            Assert.That(listDomainEventSubscriptionsResponse.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete the event subscription
             await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domainTopicEventSubscriptionExistsBeforeCreate = (await domainEventSubscriptionsCollection.ExistsAsync(eventSubscriptionName)).Value;
             Assert.That(domainTopicEventSubscriptionExistsBeforeCreate, Is.False);
             var domainTopicEventSubscriptionResponse = (await domainTopicEventSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
-            Assert.NotNull(domainTopicEventSubscriptionResponse);
+            Assert.That(domainTopicEventSubscriptionResponse, Is.Not.Null);
             Assert.That(eventSubscriptionName, Is.EqualTo(domainTopicEventSubscriptionResponse.Data.Name));
             var domainTopicEventSubscriptionExistsAfterCreate = (await domainTopicEventSubscriptionCollection.ExistsAsync(eventSubscriptionName)).Value;
             Assert.That(domainTopicEventSubscriptionExistsAfterCreate, Is.True);
 
             // Get the created event subscription
             domainTopicEventSubscriptionResponse = await domainTopicEventSubscriptionCollection.GetAsync(eventSubscriptionName);
-            Assert.NotNull(domainTopicEventSubscriptionResponse);
+            Assert.That(domainTopicEventSubscriptionResponse, Is.Not.Null);
             Assert.That(domainTopicEventSubscriptionResponse.Data.ProvisioningState, Is.EqualTo(EventSubscriptionProvisioningState.Succeeded));
             Assert.That(domainTopicEventSubscriptionResponse.Data.Filter.SubjectBeginsWith, Is.EqualTo("TestPrefix"));
             Assert.That(domainTopicEventSubscriptionResponse.Data.Filter.SubjectEndsWith, Is.EqualTo("TestSuffix"));
@@ -180,23 +180,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
             domainTopicEventSubscriptionResponse = (await domainTopicEventSubscriptionResponse.UpdateAsync(WaitUntil.Completed, domainTopicEventSubscriptionUpdateParameters)).Value;
 
             // Validate update
-            Assert.NotNull(domainTopicEventSubscriptionResponse);
+            Assert.That(domainTopicEventSubscriptionResponse, Is.Not.Null);
             Assert.That(domainTopicEventSubscriptionResponse.Data.Filter.SubjectEndsWith, Is.EqualTo(".png"));
             Assert.That(domainTopicEventSubscriptionResponse.Data.Filter.SubjectBeginsWith, Is.EqualTo("UpdatedPrefix"));
             Assert.That(domainTopicEventSubscriptionResponse.Data.Labels.Contains("UpdatedDomainTopicLabel1"), Is.True);
 
             // List domain topic event subscriptions
             var listDomainTopicEventSubscriptionsResponse = await domainTopicEventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listDomainTopicEventSubscriptionsResponse);
-            Assert.GreaterOrEqual(listDomainTopicEventSubscriptionsResponse.Count, 1);
+            Assert.That(listDomainTopicEventSubscriptionsResponse, Is.Not.Null);
+            Assert.That(listDomainTopicEventSubscriptionsResponse.Count, Is.GreaterThanOrEqualTo(1));
 
             // Test getting full URL and delivery attributes
             fullUrlResponse = (await domainTopicEventSubscriptionResponse.GetFullUriAsync()).Value;
-            Assert.NotNull(fullUrlResponse);
-            Assert.NotNull(fullUrlResponse.Endpoint);
+            Assert.That(fullUrlResponse, Is.Not.Null);
+            Assert.That(fullUrlResponse.Endpoint, Is.Not.Null);
 
             deliveryAttributesResponse = await domainTopicEventSubscriptionResponse.GetDeliveryAttributesAsync().ToEnumerableAsync();
-            Assert.NotNull(deliveryAttributesResponse);
+            Assert.That(deliveryAttributesResponse, Is.Not.Null);
 
             // Delete the domain topic event subscription
             await domainTopicEventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createdValidSub = (await eventSubscriptions.CreateOrUpdateAsync(WaitUntil.Completed, validSubscriptionName, validSub)).Value;
-            Assert.NotNull(createdValidSub);
+            Assert.That(createdValidSub, Is.Not.Null);
 
             // Delete the valid subscription
             await createdValidSub.DeleteAsync(WaitUntil.Completed);

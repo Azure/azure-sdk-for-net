@@ -235,13 +235,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create a receiver that we can use to peek the message
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
-                Assert.IsNotNull(await receiver.PeekMessageAsync());
+                Assert.That(await receiver.PeekMessageAsync(), Is.Not.Null);
 
                 // cancel the scheduled messaged, thereby deleting from the service
                 #region Snippet:ServiceBusCancelScheduled
                 await sender.CancelScheduledMessageAsync(seq);
                 #endregion
-                Assert.IsNull(await receiver.PeekMessageAsync());
+                Assert.That(await receiver.PeekMessageAsync(), Is.Null);
             }
         }
 

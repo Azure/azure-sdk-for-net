@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             // Create a MHSM
             ArmOperation<ManagedHsmResource> managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, MHSMName, parameters).ConfigureAwait(false);
-            Assert.NotNull(managedHsm.Value);
-            Assert.NotNull(managedHsm.Value.Id);
+            Assert.That(managedHsm.Value, Is.Not.Null);
+            Assert.That(managedHsm.Value.Id, Is.Not.Null);
             ValidateVault(managedHsm.Value.Data,
                 MHSMName,
                 ResGroupName,
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             try
             {
                 Response<DeletedManagedHsmResource> deletedMhsm = await Subscription.GetDeletedManagedHsmAsync(Location, MHSMName);
-                Assert.NotNull(deletedMhsm.Value);
-                Assert.NotNull(deletedMhsm.Value.Data.Properties.DeletedOn);
+                Assert.That(deletedMhsm.Value, Is.Not.Null);
+                Assert.That(deletedMhsm.Value.Data.Properties.DeletedOn, Is.Not.Null);
                 await deletedMhsm.Value.PurgeDeletedAsync(WaitUntil.Completed);
             }
             catch (Exception)
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             int expectedSoftDeleteRetentionInDays,
             Dictionary<string, string> expectedTags)
         {
-            Assert.NotNull(managedHsmData);
-            Assert.NotNull(managedHsmData.Properties);
+            Assert.That(managedHsmData, Is.Not.Null);
+            Assert.That(managedHsmData.Properties, Is.Not.Null);
 
             string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/managedHSMs/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);

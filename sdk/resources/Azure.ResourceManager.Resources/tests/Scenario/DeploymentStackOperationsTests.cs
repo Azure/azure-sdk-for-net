@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Tests
             DeploymentStackResource deploymentStack = (await rg.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
 
-            Assert.IsNotNull(deploymentStackTemplate);
+            Assert.That(deploymentStackTemplate, Is.Not.Null);
 
             // TODO: Output is off by a little and may be how the template is being read.
             //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Tests
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
             DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
 
-            Assert.IsNotNull(deploymentStackValidateResult);
+            Assert.That(deploymentStackValidateResult, Is.Not.Null);
             await rg.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Tests
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             DeploymentStackResource deploymentStack = (await subscription.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
-            Assert.IsNotNull(deploymentStackTemplate);
+            Assert.That(deploymentStackTemplate, Is.Not.Null);
 
             // TODO: Output is off by a little and may be how the template is being read.
             //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
-            Assert.NotNull(deploymentStackValidateResult);
+            Assert.That(deploymentStackValidateResult, Is.Not.Null);
         }
 
         /* MG Scoped Deployment Stack Tests */
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources.Tests
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             DeploymentStackResource deploymentStack = (await managementGroup.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
             var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
-            Assert.IsNotNull(deploymentStackTemplate);
+            Assert.That(deploymentStackTemplate, Is.Not.Null);
 
             // TODO: Output is off by a little and may be how the template is being read.
             //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
             DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
-            Assert.IsNotNull(deploymentStackValidateResult);
+            Assert.That(deploymentStackValidateResult, Is.Not.Null);
         }
     }
 }

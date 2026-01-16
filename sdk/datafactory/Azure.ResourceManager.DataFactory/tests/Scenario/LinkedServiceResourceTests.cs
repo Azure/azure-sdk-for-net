@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string accessKey = GetStorageAccountAccessKey(resourceGroup);
             string linkedServiceName = Recording.GenerateAssetName("adf_linkedservice_");
             var linkedService = await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            Assert.IsNotNull(linkedService);
+            Assert.That(linkedService, Is.Not.Null);
             Assert.That(linkedService.Data.Name, Is.EqualTo(linkedServiceName));
             //Exist
             bool flag = await dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
             Assert.That(flag, Is.True);
             //Get
             var linkedServiceGet = await dataFactory.GetDataFactoryLinkedServices().GetAsync(linkedServiceName);
-            Assert.IsNotNull(linkedServiceGet);
+            Assert.That(linkedServiceGet, Is.Not.Null);
             Assert.That(linkedServiceGet.Value.Data.Name, Is.EqualTo(linkedServiceName));
             //Get All
             var list = await dataFactory.GetDataFactoryLinkedServices().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
             //Delete
             await linkedService.DeleteAsync(WaitUntil.Completed);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string linkedServiceAKVName = Recording.GenerateAssetName($"adf_linkedservice_akv_");
             await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceAKVName);
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedServiceFunc(dataFactory, linkedServiceAKVName, integrationRuntimeName));
-            Assert.NotNull(result.Value.Id);
+            Assert.That(result.Value.Id, Is.Not.Null);
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateDefaultAzureKeyVaultLinkedService(DataFactoryResource dataFactory, string linkedServiceName)

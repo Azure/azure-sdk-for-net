@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate if created successfully
             FileShareData shareData = share1.Data;
-            Assert.IsEmpty(shareData.Metadata);
+            Assert.That(shareData.Metadata, Is.Empty);
             FileShareResource share2 = await _fileShareCollection.GetAsync(fileShareName);
             AssertFileShareEqual(share1, share2);
             Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName), Is.True);
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.Storage.Tests
                     share4 = share;
             }
             Assert.That(count, Is.EqualTo(2));
-            Assert.IsNotNull(share3);
-            Assert.IsNotNull(share4);
+            Assert.That(share3, Is.Not.Null);
+            Assert.That(share4, Is.Not.Null);
         }
 
         [Test]
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareResource share2 = await share1.UpdateAsync(shareData);
 
             //validate
-            Assert.NotNull(share2.Data.Metadata);
+            Assert.That(share2.Data.Metadata, Is.Not.Null);
             Assert.That(shareData.ShareQuota, Is.EqualTo(share2.Data.ShareQuota));
             Assert.That(shareData.Metadata, Is.EqualTo(share2.Data.Metadata));
             FileShareResource share3 = await _fileShareCollection.GetAsync(fileShareName);
-            Assert.NotNull(share3.Data.Metadata);
+            Assert.That(share3.Data.Metadata, Is.Not.Null);
             Assert.That(shareData.ShareQuota, Is.EqualTo(share3.Data.ShareQuota));
             Assert.That(shareData.Metadata, Is.EqualTo(share3.Data.Metadata));
         }
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //release lease share
             leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
-            Assert.IsNull(leaseResponse.LeaseId);
+            Assert.That(leaseResponse.LeaseId, Is.Null);
 
             //lease share snapshot
             leaseResponse = await share.LeaseAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"),
@@ -509,14 +509,14 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Get share usage
             var usage = (_fileService.GetFileServiceUsage()).GetAsync().Result.Value.Data;
-            Assert.IsNotNull(usage.Properties.FileShareLimits);
+            Assert.That(usage.Properties.FileShareLimits, Is.Not.Null);
             Assert.That(usage.Properties.FileShareLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0, Is.True);
             Assert.That(usage.Properties.FileShareLimits.MaxProvisionedIops.Value > 0, Is.True);
             Assert.That(usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value > 0, Is.True);
             Assert.That(usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value > 0, Is.True);
             Assert.That(usage.Properties.FileShareLimits.MinProvisionedIops.Value > 0, Is.True);
             Assert.That(usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value > 0, Is.True);
-            Assert.IsNotNull(usage.Properties.BurstingConstants);
+            Assert.That(usage.Properties.BurstingConstants, Is.Not.Null);
             Assert.That(usage.Properties.FileShareRecommendations.BandwidthScalar.Value > 0, Is.True);
             Assert.That(usage.Properties.FileShareRecommendations.BaseBandwidthMiBPerSec.Value > 0, Is.True);
             Assert.That(usage.Properties.FileShareRecommendations.BaseIops.Value > 0, Is.True);
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0, Is.True);
             Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedIops.Value > 0, Is.True);
             Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedStorageGiB.Value > 0, Is.True);
-            Assert.IsNotNull(usage.Properties.StorageAccountUsage);
+            Assert.That(usage.Properties.StorageAccountUsage, Is.Not.Null);
 
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");

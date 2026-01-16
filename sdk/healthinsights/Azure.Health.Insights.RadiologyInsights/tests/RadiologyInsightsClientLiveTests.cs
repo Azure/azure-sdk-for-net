@@ -41,14 +41,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             var jobId = "job1714464002036";
             var operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, request);
 
-            Assert.IsNotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Response response = operation.GetRawResponse();
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status == (int)HttpStatusCode.OK, Is.True);
             RadiologyInsightsInferenceResult results = FetchResults(response);
-            Assert.IsNotEmpty(results.PatientResults);
+            Assert.That(results.PatientResults, Is.Not.Empty);
             var patient = results.PatientResults[0];
-            Assert.IsNotEmpty(patient.Inferences);
+            Assert.That(patient.Inferences, Is.Not.Empty);
         }
 
         private RequestContent GetRequestContent(string resourceName)

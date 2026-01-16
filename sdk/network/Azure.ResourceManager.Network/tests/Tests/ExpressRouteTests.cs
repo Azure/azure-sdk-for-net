@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<BgpServiceCommunity> communitiesAsync = subscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
-            Assert.IsNotEmpty(communities);
+            Assert.That(communities, Is.Not.Empty);
             Assert.That(communities.Any(c => c.BgpCommunities.Any(b => b.IsAuthorizedToUse.HasValue ? b.IsAuthorizedToUse.Value : false)));
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
             Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
-            Assert.NotNull(circuit.Data.Peerings);
+            Assert.That(circuit.Data.Peerings, Is.Not.Null);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
             Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
-            Assert.NotNull(circuit.Data.Peerings);
+            Assert.That(circuit.Data.Peerings, Is.Not.Null);
         }
     }
 }

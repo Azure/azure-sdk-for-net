@@ -58,9 +58,9 @@ namespace Azure.AI.Inference.Tests
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new RecordedResponse(completions, traceContent);
             Assert.That(response.Id, Is.EqualTo("4567"));
-            CollectionAssert.AreEqual(
-                new[] {"content_filter", null, "stop"},
-                response.FinishReasons);
+            Assert.That(
+                response.FinishReasons,
+                Is.EqualTo(new[] { "content_filter", null, "stop" }).AsCollection);
             Assert.That(response.Model, Is.EqualTo("Phi2000"));
             Assert.That(response.CompletionTokens, Is.EqualTo(15));
             Assert.That(response.PromptTokens, Is.EqualTo(10));
@@ -70,10 +70,10 @@ namespace Azure.AI.Inference.Tests
             {
                 var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[i]);
                 var message = choiceEvent["message"];
-                Assert.NotNull(message);
+                Assert.That(message, Is.Not.Null);
                 if (traceContent)
                 {
-                    Assert.NotNull(message["content"]);
+                    Assert.That(message["content"], Is.Not.Null);
                     Assert.That(message["content"].GetValue<string>(), Is.EqualTo(messages[i]));
                     Assert.That(message["tool_calls"], Is.Null);
                 }
@@ -91,7 +91,7 @@ namespace Azure.AI.Inference.Tests
                     Assert.That(choiceEvent["finish_reason"], Is.Null);
                 }
 
-                Assert.NotNull(choiceEvent["index"]);
+                Assert.That(choiceEvent["index"], Is.Not.Null);
                 Assert.That(choiceEvent["index"].GetValue<int>(), Is.EqualTo(i));
             }
         }
@@ -161,14 +161,14 @@ namespace Azure.AI.Inference.Tests
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new RecordedResponse(completions, traceContent);
             Assert.That(response.Id, Is.EqualTo("12"));
-            CollectionAssert.AreEqual(
-                new List<string>()
+            Assert.That(
+                response.FinishReasons,
+                Is.EqualTo(new List<string>()
                 {
                     CompletionsFinishReason.ToolCalls.ToString(),
                     CompletionsFinishReason.ToolCalls.ToString(),
                     CompletionsFinishReason.ContentFiltered.ToString()
-                },
-                response.FinishReasons);
+                }).AsCollection);
 
             Assert.That(response.Model, Is.EqualTo("Phi2001"));
             Assert.That(response.CompletionTokens, Is.EqualTo(15));
@@ -178,7 +178,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[i]);
                 var message = choiceEvent["message"];
-                Assert.NotNull(message);
+                Assert.That(message, Is.Not.Null);
                 if (traceContent || i == 2)
                 {
                     if (traceContent)
@@ -201,7 +201,7 @@ namespace Azure.AI.Inference.Tests
                 }
                 else
                 {
-                    Assert.IsInstanceOf(typeof(JsonArray), message["tool_calls"]);
+                    Assert.That(message["tool_calls"], Is.InstanceOf(typeof(JsonArray)));
                     JsonArray toolCallsArray = message["tool_calls"].AsArray();
                     Assert.That(toolCallsArray.Count, Is.EqualTo(2));
 
@@ -224,7 +224,7 @@ namespace Azure.AI.Inference.Tests
                 }
 
                 var finishReason = choiceEvent["finish_reason"];
-                Assert.NotNull(finishReason);
+                Assert.That(finishReason, Is.Not.Null);
                 if (i == 2)
                 {
                     Assert.That(finishReason.GetValue<string>(), Is.EqualTo("content_filter"));
@@ -234,7 +234,7 @@ namespace Azure.AI.Inference.Tests
                     Assert.That(finishReason.GetValue<string>(), Is.EqualTo("tool_calls"));
                 }
 
-                Assert.NotNull(choiceEvent["index"]);
+                Assert.That(choiceEvent["index"], Is.Not.Null);
                 Assert.That(choiceEvent["index"].GetValue<int>(), Is.EqualTo(i));
             }
         }

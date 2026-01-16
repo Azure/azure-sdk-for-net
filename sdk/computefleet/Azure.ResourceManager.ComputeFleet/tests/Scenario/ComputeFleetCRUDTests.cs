@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
             Assert.That((bool)isExists, Is.True);
 
             var fleet2nd = await computeFleetCollection.GetIfExistsAsync(computeFleetName2nd);
-            Assert.NotNull(fleet2nd);
+            Assert.That(fleet2nd, Is.Not.Null);
 
             // Delete the 1st compute fleet
             await createFleetResult.Value.DeleteAsync(WaitUntil.Completed);

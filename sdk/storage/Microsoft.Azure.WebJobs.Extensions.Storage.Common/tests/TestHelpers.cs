@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             catch (FunctionIndexingException e)
             {
                 Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
-                StringAssert.StartsWith(expectedErrorMessage, e.InnerException.Message);
+                Assert.That(e.InnerException.Message, Does.StartWith(expectedErrorMessage));
                 return;
             }
             Assert.That(false, Is.True, "Invoker should have failed");

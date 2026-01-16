@@ -30,7 +30,7 @@ namespace Azure.Security.CodeTransparency.Tests
         {
             var keys = new CodeTransparencyOfflineKeys();
 
-            Assert.IsNotNull(keys.ByIssuer);
+            Assert.That(keys.ByIssuer, Is.Not.Null);
             Assert.That(keys.ByIssuer.Count, Is.EqualTo(0));
         }
 

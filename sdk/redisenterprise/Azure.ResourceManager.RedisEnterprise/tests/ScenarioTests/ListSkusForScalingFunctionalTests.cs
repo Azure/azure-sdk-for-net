@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
 
             // List Skus for scaling
             var skusResponse = await clusterResponse.GetSkusForScalingAsync();
-            Assert.IsNotNull(skusResponse);
+            Assert.That(skusResponse, Is.Not.Null);
 
             // Assert that the response contains specific SKUs
             var skus = skusResponse.Value.Skus;

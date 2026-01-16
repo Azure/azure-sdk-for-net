@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByVirtualMachine.Add(item);
             }
-            Assert.IsNotEmpty(listByVirtualMachine);
+            Assert.That(listByVirtualMachine, Is.Not.Empty);
 
             // Update
             NetworkCloudVirtualMachineConsolePatch patch = new NetworkCloudVirtualMachineConsolePatch()

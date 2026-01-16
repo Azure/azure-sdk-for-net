@@ -101,8 +101,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var response = await client.GetCustomModelAsync("00000000-0000-0000-0000-000000000000");
             var model = response.Value;
 
-            Assert.IsEmpty(model.TrainingDocuments);
-            Assert.IsEmpty(model.Errors);
+            Assert.That(model.TrainingDocuments, Is.Empty);
+            Assert.That(model.Errors, Is.Empty);
         }
 
         private static string GetString(RequestContent content)

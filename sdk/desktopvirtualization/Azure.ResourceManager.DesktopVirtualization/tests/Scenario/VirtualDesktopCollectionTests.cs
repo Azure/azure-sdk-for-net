@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
             ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
-            Assert.IsNotNull(rg);
+            Assert.That(rg, Is.Not.Null);
             HostPoolCollection hostPoolCollection = rg.GetHostPools();
             HostPoolData hostPoolData = new HostPoolData(
                 DefaultLocation,
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 applicationGroupName,
                 agData);
 
-            Assert.IsNotNull(opApplicationGroupCreate);
+            Assert.That(opApplicationGroupCreate, Is.Not.Null);
             Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
             Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             AsyncPageable<VirtualDesktopResource> desktops = desktopCollection.GetAllAsync();
 
-            Assert.IsNotNull(desktops);
+            Assert.That(desktops, Is.Not.Null);
 
             List<VirtualDesktopResource> desktopList = await desktops.ToEnumerableAsync();
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Response<VirtualDesktopResource> updatedDesktop = await desktopCollection.GetAsync(desktop.Id.Name);
 
-            Assert.IsNotNull(updatedDesktop);
+            Assert.That(updatedDesktop, Is.Not.Null);
 
             Assert.That(updatedDesktop.Value.Data.Description, Is.EqualTo("Updated"));
 
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             VirtualApplicationGroupResource applicationGroup = getOp.Value;
             ArmOperation deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteOp);
+            Assert.That(deleteOp, Is.Not.Null);
 
             Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(200));
 
             deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteOp);
+            Assert.That(deleteOp, Is.Not.Null);
 
             Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(204));
 

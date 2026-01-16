@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             UpdateAdministrativeStateContent cotnent = new UpdateAdministrativeStateContent()
             {

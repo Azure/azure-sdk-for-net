@@ -121,12 +121,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.That(policy.KeySize, Is.EqualTo(2048));
             Assert.That(policy.ContentType, Is.EqualTo(CertificateContentType.Pkcs12));
             Assert.That(policy.Subject, Is.EqualTo("CN=KeyVaultTest"));
-            Assert.NotNull(policy.KeyUsage);
-            CollectionAssert.IsEmpty(policy.KeyUsage);
-            Assert.NotNull(policy.EnhancedKeyUsage);
-            CollectionAssert.IsEmpty(policy.EnhancedKeyUsage);
+            Assert.That(policy.KeyUsage, Is.Not.Null);
+            Assert.That(policy.KeyUsage, Is.Empty);
+            Assert.That(policy.EnhancedKeyUsage, Is.Not.Null);
+            Assert.That(policy.EnhancedKeyUsage, Is.Empty);
             Assert.That(policy.ValidityInMonths, Is.EqualTo(297));
-            Assert.NotNull(policy.LifetimeActions);
+            Assert.That(policy.LifetimeActions, Is.Not.Null);
             Assert.That(policy.LifetimeActions.Count, Is.EqualTo(1));
             Assert.That(policy.LifetimeActions[0].LifetimePercentage, Is.EqualTo(80));
             Assert.That(policy.LifetimeActions[0].Action, Is.EqualTo(CertificatePolicyAction.EmailContacts));
@@ -241,13 +241,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.That(actual.ContentType, Is.EqualTo(expected.ContentType));
             Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
             Assert.That(actual.Enabled, Is.EqualTo(expected.Enabled));
-            CollectionAssert.AreEqual(expected.EnhancedKeyUsage, actual.EnhancedKeyUsage);
+            Assert.That(actual.EnhancedKeyUsage, Is.EqualTo(expected.EnhancedKeyUsage).AsCollection);
             Assert.That(actual.Exportable, Is.EqualTo(expected.Exportable));
             Assert.That(actual.KeyCurveName, Is.EqualTo(expected.KeyCurveName));
             Assert.That(actual.KeySize, Is.EqualTo(expected.KeySize));
             Assert.That(actual.KeyType, Is.EqualTo(expected.KeyType));
-            CollectionAssert.AreEqual(expected.KeyUsage, actual.KeyUsage);
-            CollectionAssert.AreEqual(expected.LifetimeActions, actual.LifetimeActions, LifetimeActionComparer.Instance);
+            Assert.That(actual.KeyUsage, Is.EqualTo(expected.KeyUsage).AsCollection);
+            Assert.That(actual.LifetimeActions, Is.EqualTo(expected.LifetimeActions).Using(LifetimeActionComparer.Instance));
             Assert.That(actual.ReuseKey, Is.EqualTo(expected.ReuseKey));
             Assert.That(actual.UpdatedOn, Is.EqualTo(expected.UpdatedOn));
             Assert.That(actual.ValidityInMonths, Is.EqualTo(expected.ValidityInMonths));
@@ -255,11 +255,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private static void AssertAreEqual(SubjectAlternativeNames expected, SubjectAlternativeNames actual)
         {
-            CollectionAssert.AreEqual(expected?.DnsNames, actual?.DnsNames, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.Emails, actual?.Emails, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.UserPrincipalNames, actual?.UserPrincipalNames, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.UniformResourceIdentifiers, actual?.UniformResourceIdentifiers, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.IpAddresses, actual?.IpAddresses, StringComparer.Ordinal);
+            Assert.That(actual?.DnsNames, Is.EqualTo(expected?.DnsNames).Using(StringComparer.Ordinal));
+            Assert.That(actual?.Emails, Is.EqualTo(expected?.Emails).Using(StringComparer.Ordinal));
+            Assert.That(actual?.UserPrincipalNames, Is.EqualTo(expected?.UserPrincipalNames).Using(StringComparer.Ordinal));
+            Assert.That(actual?.UniformResourceIdentifiers, Is.EqualTo(expected?.UniformResourceIdentifiers).Using(StringComparer.Ordinal));
+            Assert.That(actual?.IpAddresses, Is.EqualTo(expected?.IpAddresses).Using(StringComparer.Ordinal));
         }
 
         private class LifetimeActionComparer : IComparer<LifetimeAction>, IComparer

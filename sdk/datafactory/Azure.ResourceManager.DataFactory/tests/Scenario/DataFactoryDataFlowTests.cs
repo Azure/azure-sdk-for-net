@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await CreateDefaultAzureSqlDatabaseDataset(dataFactory, linkedServiceSinkName, datasetSinkName2);
 
             var result = await dataFactory.GetDataFactoryDataFlows().CreateOrUpdateAsync(WaitUntil.Completed, dataFlowName, dataflowFunc(dataFactory, datasetSourceName1, datasetSourceName2, datasetSinkName1, datasetSinkName2));
-            Assert.NotNull(result.Value.Id);
+            Assert.That(result.Value.Id, Is.Not.Null);
         }
 
         private async Task<DataFactoryDatasetResource> CreateDefaultAzureSqlDatabaseDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)

@@ -36,7 +36,7 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.That(response.Value.Count, Is.EqualTo(1));
             Assert.That(response.Value.FirstOrDefault().Translations.Count, Is.EqualTo(1));
             Assert.That(response.Value.FirstOrDefault().Translations.FirstOrDefault().Language, Is.EqualTo(targetLanguage));
-            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+            Assert.That(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -50,9 +50,9 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Count, Is.EqualTo(1));
             Assert.That(response.Value.FirstOrDefault().DetectedLanguage.Language, Is.EqualTo("en"));
-            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.That(0.5, Is.LessThanOrEqualTo(response.Value.FirstOrDefault().DetectedLanguage.Score));
             Assert.That(response.Value.FirstOrDefault().Translations.FirstOrDefault().Language, Is.EqualTo(targetLanguage));
-            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+            Assert.That(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -76,12 +76,12 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.That(response.Value[2].DetectedLanguage.Language, Is.EqualTo("de"));
 
             Assert.That(response.Value.FirstOrDefault().DetectedLanguage.Score, Is.EqualTo(1));
-            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
-            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.That(0.5, Is.LessThanOrEqualTo(response.Value.FirstOrDefault().DetectedLanguage.Score));
+            Assert.That(0.5, Is.LessThanOrEqualTo(response.Value.FirstOrDefault().DetectedLanguage.Score));
 
-            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
-            Assert.NotNull(response.Value[1].Translations.FirstOrDefault().Text);
-            Assert.NotNull(response.Value[2].Translations.FirstOrDefault().Text);
+            Assert.That(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text, Is.Not.Null);
+            Assert.That(response.Value[1].Translations.FirstOrDefault().Text, Is.Not.Null);
+            Assert.That(response.Value[2].Translations.FirstOrDefault().Text, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -94,15 +94,15 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Translations.Count, Is.EqualTo(3));
 
             Assert.That(response.Value.DetectedLanguage.Language, Is.EqualTo("en"));
-            Assert.LessOrEqual(0.5, response.Value.DetectedLanguage.Score);
+            Assert.That(0.5, Is.LessThanOrEqualTo(response.Value.DetectedLanguage.Score));
 
-            Assert.NotNull(response.Value.Translations.FirstOrDefault().Text);
-            Assert.NotNull(response.Value.Translations[1].Text);
-            Assert.NotNull(response.Value.Translations[2].Text);
+            Assert.That(response.Value.Translations.FirstOrDefault().Text, Is.Not.Null);
+            Assert.That(response.Value.Translations[1].Text, Is.Not.Null);
+            Assert.That(response.Value.Translations[2].Text, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -116,10 +116,10 @@ namespace Azure.AI.Translation.Text.Tests
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Translations.Count, Is.EqualTo(1));
             Assert.That(response.Value.Translations.FirstOrDefault().Language, Is.EqualTo(targetLanguage));
-            Assert.NotNull(response.Value.Translations.FirstOrDefault().Text);
+            Assert.That(response.Value.Translations.FirstOrDefault().Text, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -133,11 +133,11 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Translations.Count, Is.EqualTo(1));
 
             Assert.That(response.Value.DetectedLanguage.Language, Is.EqualTo("en"));
-            Assert.LessOrEqual(0.5, response.Value.DetectedLanguage.Score);
+            Assert.That(0.5, Is.LessThanOrEqualTo(response.Value.DetectedLanguage.Score));
         }
 
         [RecordedTest]
@@ -155,9 +155,9 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.DetectedLanguage.Language, Is.EqualTo("en"));
-            Assert.LessOrEqual(0.5, response.Value.DetectedLanguage.Score);
+            Assert.That(0.5, Is.LessThanOrEqualTo(response.Value.DetectedLanguage.Score));
             Assert.That(response.Value.Translations.Count, Is.EqualTo(1));
             Assert.That(response.Value.Translations.FirstOrDefault().Text.Contains("***"), Is.True);
         }
@@ -178,7 +178,7 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Translations.Count, Is.EqualTo(1));
             Assert.That(response.Value.Translations.First().Text.Contains("今天是怎么回事是"), Is.True);
         }
@@ -199,7 +199,7 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Translations.Count, Is.EqualTo(1));
             Assert.That(response.Value.Translations.FirstOrDefault().Language, Is.EqualTo("es"));
             Assert.That(response.Value.Translations.FirstOrDefault().Text.Contains("wordomatic"), Is.True);
@@ -222,10 +222,10 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
 
             Assert.That(response.Value.Translations.FirstOrDefault().Language, Is.EqualTo("zh-Hans"));
-            Assert.NotNull(response.Value.Translations.FirstOrDefault().Text);
+            Assert.That(response.Value.Translations.FirstOrDefault().Text, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -245,14 +245,14 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.That(response.Value.Count, Is.EqualTo(3));
             Assert.That(response.Value[0].Translations.Count, Is.EqualTo(2));
             Assert.That(response.Value[0].Translations[0].Language, Is.EqualTo("es"));
-            Assert.NotNull(response.Value[0].Translations[0].Text);
+            Assert.That(response.Value[0].Translations[0].Text, Is.Not.Null);
             Assert.That(response.Value[0].Translations[1].Language, Is.EqualTo("de"));
-            Assert.NotNull(response.Value[0].Translations[1].Text);
+            Assert.That(response.Value[0].Translations[1].Text, Is.Not.Null);
             Assert.That(response.Value[1].Translations.Count, Is.EqualTo(2));
             Assert.That(response.Value[1].Translations[0].Language, Is.EqualTo("en"));
-            Assert.NotNull(response.Value[1].Translations[0].Text);
+            Assert.That(response.Value[1].Translations[0].Text, Is.Not.Null);
             Assert.That(response.Value[1].Translations[1].Language, Is.EqualTo("zh-Hans"));
-            Assert.NotNull(response.Value[1].Translations[1].Text);
+            Assert.That(response.Value[1].Translations[1].Text, Is.Not.Null);
             Assert.That(response.Value[2].Translations.Count, Is.EqualTo(1));
             Assert.That(response.Value[2].Translations[0].Language, Is.EqualTo("zh-Hant"));
             Assert.That(response.Value[2].Translations[0].Text.Contains("html"), Is.True);
@@ -269,9 +269,9 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Count, Is.EqualTo(1));
             Assert.That(response.Value.FirstOrDefault().DetectedLanguage.Language, Is.EqualTo("en"));
-            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.That(0.5, Is.LessThanOrEqualTo(response.Value.FirstOrDefault().DetectedLanguage.Score));
             Assert.That(response.Value.FirstOrDefault().Translations.Count, Is.EqualTo(1));
-            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+            Assert.That(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text, Is.Not.Null);
         }
 
         [RecordedTest]

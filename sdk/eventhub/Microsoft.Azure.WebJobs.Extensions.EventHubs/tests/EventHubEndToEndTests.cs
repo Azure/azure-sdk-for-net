@@ -68,10 +68,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
 
             var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
-            CollectionAssert.Contains(logs, $"PocoValues(foo,data)");
+            Assert.That(logs, Has.Member($"PocoValues(foo,data)"));
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor");
+            Assert.That(categories, Has.Member("Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor"));
         }
 
         [Test]
@@ -86,10 +86,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
-                CollectionAssert.Contains(logs, $"Input(data)");
+                Assert.That(logs, Has.Member($"Input(data)"));
 
                 var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor");
+                Assert.That(categories, Has.Member("Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor"));
             }
         }
 
@@ -672,10 +672,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(properties["TestProp1"], Is.EqualTo("value1"));
                 Assert.That(properties["TestProp2"], Is.EqualTo("value2"));
 
-                Assert.NotNull(partitionContext.PartitionId);
+                Assert.That(partitionContext.PartitionId, Is.Not.Null);
                 Assert.That(partitionContext.ReadLastEnqueuedEventProperties(), Is.Not.EqualTo(default(LastEnqueuedEventProperties)));
 
-                Assert.NotNull(triggerPartitionContext.PartitionId);
+                Assert.That(triggerPartitionContext.PartitionId, Is.Not.Null);
                 Assert.That(triggerPartitionContext.ReadLastEnqueuedEventProperties(), Is.Not.EqualTo(default(LastEnqueuedEventProperties)));
                 Assert.That(triggerPartitionContext.IsCheckpointingAfterInvocation, Is.True);
 
@@ -852,10 +852,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.That(propertiesArray[i]["TestIndex"], Is.EqualTo(s_processedEventCount++));
                 }
 
-                Assert.NotNull(partitionContext.PartitionId);
+                Assert.That(partitionContext.PartitionId, Is.Not.Null);
                 Assert.That(partitionContext.ReadLastEnqueuedEventProperties(), Is.Not.EqualTo(default(LastEnqueuedEventProperties)));
 
-                Assert.NotNull(triggerPartitionContext.PartitionId);
+                Assert.That(triggerPartitionContext.PartitionId, Is.Not.Null);
                 Assert.That(triggerPartitionContext.ReadLastEnqueuedEventProperties(), Is.Not.EqualTo(default(LastEnqueuedEventProperties)));
                 Assert.That(triggerPartitionContext.IsCheckpointingAfterInvocation, Is.True);
 
@@ -1065,7 +1065,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         foreach (var result in _results)
                         {
-                            Assert.GreaterOrEqual(DateTimeOffset.Parse(result), earliestAllowedOffset);
+                            Assert.That(DateTimeOffset.Parse(result), Is.GreaterThanOrEqualTo(earliestAllowedOffset));
                         }
                         _eventWait1.Set();
                     }

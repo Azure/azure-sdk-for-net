@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Management
 
             var perCallPolicyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             var policies = (ReadOnlyMemory<HttpPipelinePolicy>)perCallPolicyField.GetValue(pipeline);
-            Assert.IsNotNull(policies.ToArray().FirstOrDefault(p => p.GetType() == typeof(DummyPolicy)));
+            Assert.That(policies.ToArray().FirstOrDefault(p => p.GetType() == typeof(DummyPolicy)), Is.Not.Null);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Management
 
             var perCallPolicyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             var policies = (ReadOnlyMemory<HttpPipelinePolicy>)perCallPolicyField.GetValue(pipeline);
-            Assert.IsNotNull(policies.ToArray().FirstOrDefault(p => p.GetType() == typeof(DummyPolicy)));
+            Assert.That(policies.ToArray().FirstOrDefault(p => p.GetType() == typeof(DummyPolicy)), Is.Not.Null);
         }
 
         private class DummyPolicy : HttpPipelineSynchronousPolicy

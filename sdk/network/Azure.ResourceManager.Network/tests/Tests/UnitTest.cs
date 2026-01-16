@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
             using var sr = new StreamReader(Path.Combine("TestData", "ServiceTags.json"));
             using var jsonContent = JsonDocument.Parse(sr.BaseStream);
             var data = AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(jsonContent.RootElement);
-            Assert.NotNull(data.ChangeNumber);
+            Assert.That(data.ChangeNumber, Is.Not.Null);
         }
 
         // Regression test for ManagedRuleSetRuleGroup deserialization with mixed string/number rule IDs
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Tests
             using var jsonContent = JsonDocument.Parse(sr.BaseStream);
             var data = ManagedRuleSetRuleGroup.DeserializeManagedRuleSetRuleGroup(jsonContent.RootElement);
 
-            Assert.NotNull(data.Rules);
+            Assert.That(data.Rules, Is.Not.Null);
             Assert.That(data.Rules.Count, Is.EqualTo(6));
 
             // Verify that both string and numeric rule IDs are properly converted to strings

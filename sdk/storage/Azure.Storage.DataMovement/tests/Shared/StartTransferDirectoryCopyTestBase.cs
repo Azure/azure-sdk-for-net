@@ -757,7 +757,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
         }
@@ -792,7 +792,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
@@ -830,7 +830,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
@@ -870,7 +870,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
@@ -934,7 +934,7 @@ namespace Azure.Storage.DataMovement.Tests
                 tokenSource.Token);
 
             // Verify completion
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertContainerCompletedCheck(4);

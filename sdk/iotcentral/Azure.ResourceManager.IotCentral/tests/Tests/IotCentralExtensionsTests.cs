@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var firstAppTemplate = await subscription.GetTemplatesAppsAsync(CancellationToken.None).FirstOrDefaultAsync((_) => true, CancellationToken.None);
 
-            Assert.IsNotNull(firstAppTemplate);
+            Assert.That(firstAppTemplate, Is.Not.Null);
         }
     }
 }

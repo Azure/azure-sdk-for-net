@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // there is no api-version-set initially
             var versionSetlistResponse = await versionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(versionSetlistResponse);
+            Assert.That(versionSetlistResponse, Is.Not.Null);
             Assert.That(versionSetlistResponse.Count, Is.EqualTo(0));
 
             string newversionsetid = Recording.GenerateAssetName("apiversionsetid");
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             await versionCollection.CreateOrUpdateAsync(WaitUntil.Completed, newversionsetid, createVersionSetContract);
             var versionSetContract = (await versionCollection.GetAsync(newversionsetid)).Value;
-            Assert.NotNull(versionSetContract);
+            Assert.That(versionSetContract, Is.Not.Null);
             Assert.That(versionSetContract.Data.DisplayName, Is.EqualTo(createVersionSetContract.DisplayName));
             Assert.That(versionSetContract.Data.Description, Is.EqualTo(createVersionSetContract.Description));
             Assert.That(VersioningScheme.Header, Is.EqualTo(versionSetContract.Data.VersioningScheme));
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             await versionSetContract.UpdateAsync(ETag.All, versionSetUpdateParams);
             versionSetContract = await versionSetContract.GetAsync();
-            Assert.NotNull(versionSetContract);
+            Assert.That(versionSetContract, Is.Not.Null);
             Assert.That(versionSetContract.Data.VersioningScheme, Is.EqualTo(VersioningScheme.Query));
             Assert.That(versionSetContract.Data.VersionQueryName, Is.EqualTo(paramName));
 

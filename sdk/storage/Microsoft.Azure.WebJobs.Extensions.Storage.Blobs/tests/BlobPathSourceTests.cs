@@ -48,28 +48,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         public void BlobPathSource_Throws_OnBackslash()
         {
             var exc = Assert.Throws<FormatException>(() => BlobPathSource.Create("container\\blob"));
-            StringAssert.Contains("Paths must be in the format 'container/blob'", exc.Message);
+            Assert.That(exc.Message, Does.Contain("Paths must be in the format 'container/blob'"));
         }
 
         [Test]
         public void BlobPathSource_Throws_OnEmpty()
         {
             var exc = Assert.Throws<FormatException>(() => BlobPathSource.Create("/"));
-            StringAssert.Contains("Paths must be in the format 'container/blob'", exc.Message);
+            Assert.That(exc.Message, Does.Contain("Paths must be in the format 'container/blob'"));
         }
 
         [Test]
         public void BlobPathSource_Throws_OnContainerResolves()
         {
             var exc = Assert.Throws<FormatException>(() => BlobPathSource.Create("container{resolve}/blob"));
-            StringAssert.Contains("Container paths cannot contain {resolve} tokens.", exc.Message);
+            Assert.That(exc.Message, Does.Contain("Container paths cannot contain {resolve} tokens."));
         }
 
         [Test]
         public void TestMethod1()
         {
             var d = Match("container", "container/item");
-            Assert.NotNull(d);
+            Assert.That(d, Is.Not.Null);
             Assert.That(d.Count, Is.EqualTo(0));
         }
 
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         public void TestMethod2()
         {
             var d = Match(@"container/blob", @"container/blob");
-            Assert.NotNull(d);
+            Assert.That(d, Is.Not.Null);
             Assert.That(d.Count, Is.EqualTo(0));
         }
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         public void TestMethod3()
         {
             var d = Match(@"container/{name}.csv", @"container/foo.csv");
-            Assert.NotNull(d);
+            Assert.That(d, Is.Not.Null);
             Assert.That(d.Count, Is.EqualTo(1));
             Assert.That(d["name"], Is.EqualTo("foo"));
         }
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             // Test corner case where matching at end
             var d = Match(@"container/{name}", @"container/foo.csv");
-            Assert.NotNull(d);
+            Assert.That(d, Is.Not.Null);
             Assert.That(d.Count, Is.EqualTo(1));
             Assert.That(d["name"], Is.EqualTo("foo.csv"));
         }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             // {name} is greedy when matching up to an extension.
             var d = Match(@"container/{name}.csv", @"container/foo.alpha.csv");
-            Assert.NotNull(d);
+            Assert.That(d, Is.Not.Null);
             Assert.That(d.Count, Is.EqualTo(1));
             Assert.That(d["name"], Is.EqualTo("foo.alpha"));
         }
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         public void TestGreedy()
         {
             var d = Match(@"container/{a}.{b}", @"container/foo.alpha.beta.csv");
-            Assert.NotNull(d);
+            Assert.That(d, Is.Not.Null);
             Assert.That(d.Count, Is.EqualTo(2));
             Assert.That(d["a"], Is.EqualTo("foo.alpha.beta"));
             Assert.That(d["b"], Is.EqualTo("csv"));
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             // Test corner case where matching on last
             var d = Match(@"container/{name}-{date}.csv", @"container/foo-Jan1st.csv");
-            Assert.NotNull(d);
+            Assert.That(d, Is.Not.Null);
             Assert.That(d.Count, Is.EqualTo(2));
             Assert.That(d["name"], Is.EqualTo("foo"));
             Assert.That(d["date"], Is.EqualTo("Jan1st"));

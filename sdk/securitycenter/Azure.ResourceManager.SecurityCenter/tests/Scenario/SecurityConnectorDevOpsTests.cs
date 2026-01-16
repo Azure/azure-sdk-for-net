@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorOperation = await resourceGroup.GetSecurityConnectors().CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
 
-            Assert.IsNotNull(securityConnectorOperation);
+            Assert.That(securityConnectorOperation, Is.Not.Null);
             Assert.That(securityConnectorOperation.HasCompleted, Is.EqualTo(true));
             Assert.That(securityConnectorOperation.Value.Data.EnvironmentName.Value, Is.EqualTo(data.EnvironmentName));
 
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     throw;
                 }
              });
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex.ErrorCode, Is.EqualTo("TokenExchangeFailed"));
 
             var deleteLro = await devopsConfigurationResource.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteLro);
+            Assert.That(deleteLro, Is.Not.Null);
             Assert.That(deleteLro.HasCompleted, Is.True);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             DevOpsConfigurationResource devops = await Client.GetDevOpsConfigurationResource(repositoryResourceId).GetAsync();
 
             var operation = await devops.UpdateAsync(WaitUntil.Completed, new DevOpsConfigurationData());
-            Assert.IsNotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Disabled));
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     }
                 }
             });
-            Assert.IsNotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Value.Data.Properties.ActionableRemediation.InheritFromParentState, Is.EqualTo(InheritFromParentState.Enabled));
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.That(onboardedSubGroups.Count == 2, Is.True);
 
             var testSubgroup = onboardedSubGroups.Where(s => s.Data?.Properties?.FullyQualifiedName?.Contains("testsubgroupNested") == true).FirstOrDefault();
-            Assert.IsNotNull(testSubgroup);
+            Assert.That(testSubgroup, Is.Not.Null);
             Assert.That(testSubgroup.Data.Properties.FullyQualifiedName, Is.EqualTo("dfdsdktests$testsubgroup1$testsubgroupNested"));
         }
     }

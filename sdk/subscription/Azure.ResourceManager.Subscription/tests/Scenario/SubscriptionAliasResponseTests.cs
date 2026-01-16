@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             string aliasName = Recording.GenerateAssetName("test-alias-");
             await CreateAliasResponse(aliasName);
             var list = await _aliasCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAliasResponse(list.FirstOrDefault());
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Subscription.Tests
 
         private void ValidateAliasResponse(SubscriptionAliasResource alias)
         {
-            Assert.IsNotNull(alias);
+            Assert.That(alias, Is.Not.Null);
             Assert.That(alias.Data.ResourceType.Namespace, Is.EqualTo("Microsoft.Subscription"));
         }
     }

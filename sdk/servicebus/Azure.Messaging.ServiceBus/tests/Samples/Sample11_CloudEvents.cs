@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Assert.That(receivedEmployee.Name, Is.EqualTo("Homer"));
                 Assert.That(receivedMessage.ContentType, Is.EqualTo("application/cloudevents+json"));
                 Assert.That(receivedEmployee.Age, Is.EqualTo(39));
-                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.That(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync(), Is.Null);
             }
         }
 

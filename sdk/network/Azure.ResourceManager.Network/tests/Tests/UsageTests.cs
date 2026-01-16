@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<NetworkUsage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.ToString().Replace(" ", string.Empty));
             List<NetworkUsage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
-            Assert.NotNull(usagesResponse);
+            Assert.That(usagesResponse, Is.Not.Null);
             Assert.That(usagesResponse.Any(), Is.True);
 
             foreach (NetworkUsage usage in usagesResponse)
             {
                 Assert.That(usage.Limit > 0, Is.True);
-                Assert.NotNull(usage.Name);
+                Assert.That(usage.Name, Is.Not.Null);
                 Assert.That(!string.IsNullOrEmpty(usage.Name.LocalizedValue), Is.True);
                 Assert.That(!string.IsNullOrEmpty(usage.Name.Value), Is.True);
             }

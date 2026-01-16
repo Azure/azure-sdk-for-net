@@ -60,7 +60,7 @@ namespace Azure.Security.CodeTransparency.Tests
             CodeTransparencyCertificateClient client = options.CreateCertificateClient();
             ServiceIdentityResult responseFirst = await client.GetServiceIdentityAsync("serviceName");
             Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://identity.confidential-ledger.core.azure.com/ledgerIdentity/serviceName"));
-            Assert.NotNull(responseFirst.GetCertificate(), "can parse the PEM cert");
+            Assert.That(responseFirst.GetCertificate(), Is.Not.Null, "can parse the PEM cert");
         }
     }
 }

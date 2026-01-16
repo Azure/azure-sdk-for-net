@@ -292,7 +292,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     },
                     typeof(TestPayload));
 
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.That(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty, Is.Null);
 
             List<CloudEvent> eventsList = new List<CloudEvent>()
             {
@@ -301,7 +301,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             await client.SendEventsAsync(eventsList);
 
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.That(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty, Is.Null);
         }
 
         [Test]

@@ -60,7 +60,7 @@ public class ClientResultExceptionTests
         ClientResultException exception = new ClientResultException(message);
 
         Assert.That(exception.Status, Is.EqualTo(0));
-        Assert.IsNull(exception.GetRawResponse());
+        Assert.That(exception.GetRawResponse(), Is.Null);
         Assert.That(exception.Message, Is.EqualTo(message));
     }
 

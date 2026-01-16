@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
         {
-            Assert.IsNotNull(streamingAudioMetadata);
+            Assert.That(streamingAudioMetadata, Is.Not.Null);
             Assert.That(streamingAudioMetadata.MediaSubscriptionId, Is.EqualTo("subscriptionId"));
             Assert.That(streamingAudioMetadata.Encoding, Is.EqualTo("encodingType"));
             Assert.That(streamingAudioMetadata.SampleRate, Is.EqualTo(8));
@@ -57,8 +57,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateAudioData(AudioData streamingAudio)
         {
-            Assert.IsNotNull(streamingAudio);
-            CollectionAssert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data.ToArray());
+            Assert.That(streamingAudio, Is.Not.Null);
+            Assert.That(streamingAudio.Data.ToArray(), Is.EqualTo(Convert.FromBase64String("AQIDBAU=")).AsCollection);
             Assert.That(streamingAudio.Timestamp.Year, Is.EqualTo(2022));
             Assert.That(streamingAudio.Participant is CommunicationIdentifier, Is.True);
             Assert.That(streamingAudio.Participant.RawId, Is.EqualTo("participantId"));
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
         private static void ValidateDtmfData(DtmfData streamingDtmf)
         {
-            Assert.IsNotNull(streamingDtmf);
+            Assert.That(streamingDtmf, Is.Not.Null);
             Assert.That(streamingDtmf.Data, Is.EqualTo("5"));
         }
         #endregion
@@ -162,7 +162,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateTranscriptionMetadata(TranscriptionMetadata transcriptionMetadata)
         {
-            Assert.IsNotNull(transcriptionMetadata);
+            Assert.That(transcriptionMetadata, Is.Not.Null);
             Assert.That(transcriptionMetadata.TranscriptionSubscriptionId, Is.EqualTo("subscriptionId"));
             Assert.That(transcriptionMetadata.Locale, Is.EqualTo("en-US"));
             Assert.That(transcriptionMetadata.CallConnectionId, Is.EqualTo("callConnectionId"));
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)
         {
-            Assert.IsNotNull(transcription);
+            Assert.That(transcription, Is.Not.Null);
             Assert.That(transcription.Text, Is.EqualTo("store hours"));
             Assert.That(transcription.Format, Is.EqualTo("display"));
             Assert.That(transcription.Offset.Ticks, Is.EqualTo(49876484));
@@ -186,7 +186,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateTranscriptionData(TranscriptionData transcription)
         {
-            Assert.IsNotNull(transcription);
+            Assert.That(transcription, Is.Not.Null);
             Assert.That(transcription.Text, Is.EqualTo("Hello World!"));
             Assert.That(transcription.Format, Is.EqualTo("display"));
             Assert.That(transcription.Confidence, Is.EqualTo(0.98d));

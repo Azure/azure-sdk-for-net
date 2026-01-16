@@ -72,7 +72,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.That(dataLakeUriBuilder.LastDirectoryOrFileName, Is.EqualTo("path"));
             Assert.That(dataLakeUriBuilder.DirectoryOrFilePath, Is.EqualTo("path"));
             Assert.That(dataLakeUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(dataLakeUriBuilder.Sas);
+            Assert.That(dataLakeUriBuilder.Sas, Is.Null);
             Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.That(dataLakeUriBuilder.LastDirectoryOrFileName, Is.Empty);
             Assert.That(dataLakeUriBuilder.DirectoryOrFilePath, Is.Empty);
             Assert.That(dataLakeUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(dataLakeUriBuilder.Sas);
+            Assert.That(dataLakeUriBuilder.Sas, Is.Null);
             Assert.That(dataLakeUriBuilder.Query, Is.EqualTo("resource=filesystem"));
             Assert.That(newUri, Is.EqualTo(originalUri));
         }
@@ -121,7 +121,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             var datalakeUriBuilder = new DataLakeUriBuilder(new Uri("http://notaurl"));
 
-            Assert.IsEmpty(datalakeUriBuilder.AccountName);
+            Assert.That(datalakeUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]

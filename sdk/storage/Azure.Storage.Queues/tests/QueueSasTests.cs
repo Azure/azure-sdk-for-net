@@ -149,7 +149,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -183,7 +183,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -232,7 +232,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]

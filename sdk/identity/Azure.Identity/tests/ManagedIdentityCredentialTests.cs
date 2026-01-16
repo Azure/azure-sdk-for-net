@@ -894,7 +894,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
             await Task.CompletedTask;
         }
@@ -924,7 +924,7 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             if (isChained)
             {
-                Assert.IsInstanceOf(typeof(System.Text.Json.JsonException), ex.InnerException);
+                Assert.That(ex.InnerException, Is.InstanceOf(typeof(System.Text.Json.JsonException)));
             }
             await Task.CompletedTask;
         }

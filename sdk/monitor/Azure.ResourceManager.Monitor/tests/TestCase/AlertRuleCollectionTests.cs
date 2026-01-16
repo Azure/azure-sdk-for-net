@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var collection = await GetAlertRuleCollectionAsync();
             var alertRules = collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(alertRules.Result.Count, 0);
+            Assert.That(alertRules.Result.Count, Is.GreaterThanOrEqualTo(0));
         }
     }
 }

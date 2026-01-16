@@ -30,7 +30,7 @@ namespace Azure.Communication.Pipeline
 
             var expectedAuthHeader = "HMAC-SHA256 SignedHeaders=x-ms-date;host;x-ms-content-sha256";
             Assert.That(headers.TryGetValue("Authorization", out var authValue), Is.True);
-            Assert.NotNull(authValue);
+            Assert.That(authValue, Is.Not.Null);
             Assert.That(authValue!.Contains(expectedAuthHeader), Is.True);
         }
     }

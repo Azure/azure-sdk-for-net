@@ -72,28 +72,28 @@ namespace Azure.AI.Vision.Face.Tests
 
         protected void AssertAuditEntry(LivenessSessionAuditEntry auditEntry, string sessionId)
         {
-            Assert.IsNotNull(auditEntry.Id);
-            Assert.IsNotNull(auditEntry.RequestId);
-            Assert.IsNotNull(auditEntry.ReceivedDateTime);
-            Assert.IsNotNull(auditEntry.Digest);
+            Assert.That(auditEntry.Id, Is.Not.Null);
+            Assert.That(auditEntry.RequestId, Is.Not.Null);
+            Assert.That(auditEntry.ReceivedDateTime, Is.Not.Null);
+            Assert.That(auditEntry.Digest, Is.Not.Null);
             Assert.That(sessionId, Is.EqualTo(auditEntry.SessionId));
 
-            Assert.IsNotNull(auditEntry.Request.Url);
-            Assert.IsNotNull(auditEntry.Request.Method);
-            Assert.IsNotNull(auditEntry.Request.ContentLength);
-            Assert.IsNotNull(auditEntry.Request.ContentType);
+            Assert.That(auditEntry.Request.Url, Is.Not.Null);
+            Assert.That(auditEntry.Request.Method, Is.Not.Null);
+            Assert.That(auditEntry.Request.ContentLength, Is.Not.Null);
+            Assert.That(auditEntry.Request.ContentType, Is.Not.Null);
 
-            Assert.IsNotNull(auditEntry.Response.StatusCode);
-            Assert.IsNotNull(auditEntry.Response.LatencyInMilliseconds);
+            Assert.That(auditEntry.Response.StatusCode, Is.Not.Null);
+            Assert.That(auditEntry.Response.LatencyInMilliseconds, Is.Not.Null);
 
-            Assert.IsNotNull(auditEntry.Response.Body.LivenessDecision);
-            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Top);
-            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Left);
-            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Width);
-            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Height);
-            Assert.IsNotNull(auditEntry.Response.Body.Target.FileName);
-            Assert.IsNotNull(auditEntry.Response.Body.Target.TimeOffsetWithinFile);
-            Assert.IsNotNull(auditEntry.Response.Body.Target.ImageType);
+            Assert.That(auditEntry.Response.Body.LivenessDecision, Is.Not.Null);
+            Assert.That(auditEntry.Response.Body.Target.FaceRectangle.Top, Is.Not.Null);
+            Assert.That(auditEntry.Response.Body.Target.FaceRectangle.Left, Is.Not.Null);
+            Assert.That(auditEntry.Response.Body.Target.FaceRectangle.Width, Is.Not.Null);
+            Assert.That(auditEntry.Response.Body.Target.FaceRectangle.Height, Is.Not.Null);
+            Assert.That(auditEntry.Response.Body.Target.FileName, Is.Not.Null);
+            Assert.That(auditEntry.Response.Body.Target.TimeOffsetWithinFile, Is.Not.Null);
+            Assert.That(auditEntry.Response.Body.Target.ImageType, Is.Not.Null);
         }
 
         #region LivenessSession
@@ -119,8 +119,8 @@ namespace Azure.AI.Vision.Face.Tests
 
             var createResult = await CreateLivenessSession();
 
-            Assert.IsNotNull(createResult.SessionId);
-            Assert.IsNotNull(createResult.AuthToken);
+            Assert.That(createResult.SessionId, Is.Not.Null);
+            Assert.That(createResult.AuthToken, Is.Not.Null);
 
             var getResponse = await client.GetLivenessSessionResultAsync(createResult.SessionId);
             Assert.That(getResponse.Value.DeviceCorrelationId, Is.EqualTo(DeviceCorrelationId));
@@ -139,13 +139,13 @@ namespace Azure.AI.Vision.Face.Tests
 
             var listResponse = await client.GetLivenessSessionsAsync();
             var sessionList = listResponse.Value;
-            Assert.GreaterOrEqual(sessionList.Count, 2);
-            Assert.Greater(sessionList[1].Id, sessionList[0].Id);
+            Assert.That(sessionList.Count, Is.GreaterThanOrEqualTo(2));
+            Assert.That(sessionList[1].Id, Is.GreaterThan(sessionList[0].Id));
 
             foreach (var session in sessionList)
             {
-                Assert.IsNotNull(session.CreatedDateTime);
-                Assert.IsNotNull(session.DeviceCorrelationId);
+                Assert.That(session.CreatedDateTime, Is.Not.Null);
+                Assert.That(session.DeviceCorrelationId, Is.Not.Null);
                 Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
                 Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
             }
@@ -160,12 +160,12 @@ namespace Azure.AI.Vision.Face.Tests
             var session = response.Value;
 
             Assert.That(session.Id, Is.EqualTo(sessionId));
-            Assert.IsNotNull(session.CreatedDateTime);
-            Assert.IsNotNull(session.DeviceCorrelationId);
+            Assert.That(session.CreatedDateTime, Is.Not.Null);
+            Assert.That(session.DeviceCorrelationId, Is.Not.Null);
             Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
             Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
-            Assert.IsNotNull(session.SessionStartDateTime);
-            Assert.IsNotNull(session.SessionExpired);
+            Assert.That(session.SessionStartDateTime, Is.Not.Null);
+            Assert.That(session.SessionExpired, Is.Not.Null);
             Assert.That(session.Status, Is.EqualTo(FaceSessionStatus.ResultAvailable));
 
             AssertAuditEntry(session.Result, sessionId);
@@ -224,13 +224,13 @@ namespace Azure.AI.Vision.Face.Tests
 
         protected void AssertVerifyResult(LivenessWithVerifyOutputs verifyResult)
         {
-            Assert.IsNotNull(verifyResult.IsIdentical);
-            Assert.IsNotNull(verifyResult.MatchConfidence);
-            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Top);
-            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Left);
-            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Width);
-            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Height);
-            Assert.IsNotNull(verifyResult.VerifyImage.QualityForRecognition);
+            Assert.That(verifyResult.IsIdentical, Is.Not.Null);
+            Assert.That(verifyResult.MatchConfidence, Is.Not.Null);
+            Assert.That(verifyResult.VerifyImage.FaceRectangle.Top, Is.Not.Null);
+            Assert.That(verifyResult.VerifyImage.FaceRectangle.Left, Is.Not.Null);
+            Assert.That(verifyResult.VerifyImage.FaceRectangle.Width, Is.Not.Null);
+            Assert.That(verifyResult.VerifyImage.FaceRectangle.Height, Is.Not.Null);
+            Assert.That(verifyResult.VerifyImage.QualityForRecognition, Is.Not.Null);
         }
 
         [LiveOnly] // Unable to playback multipart request.
@@ -244,17 +244,17 @@ namespace Azure.AI.Vision.Face.Tests
 
             var createResult = await CreateLivenessWithVerifySession(withVerifyImage);
 
-            Assert.IsNotNull(createResult.SessionId);
-            Assert.IsNotNull(createResult.AuthToken);
+            Assert.That(createResult.SessionId, Is.Not.Null);
+            Assert.That(createResult.AuthToken, Is.Not.Null);
 
             if (withVerifyImage)
             {
-                Assert.IsNotNull(createResult.VerifyImage);
-                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Top);
-                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Left);
-                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Width);
-                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Height);
-                Assert.IsNotNull(createResult.VerifyImage.QualityForRecognition);
+                Assert.That(createResult.VerifyImage, Is.Not.Null);
+                Assert.That(createResult.VerifyImage.FaceRectangle.Top, Is.Not.Null);
+                Assert.That(createResult.VerifyImage.FaceRectangle.Left, Is.Not.Null);
+                Assert.That(createResult.VerifyImage.FaceRectangle.Width, Is.Not.Null);
+                Assert.That(createResult.VerifyImage.FaceRectangle.Height, Is.Not.Null);
+                Assert.That(createResult.VerifyImage.QualityForRecognition, Is.Not.Null);
             }
 
             var getResponse = await client.GetLivenessWithVerifySessionResultAsync(createResult.SessionId);
@@ -274,13 +274,13 @@ namespace Azure.AI.Vision.Face.Tests
 
             var listResponse = await client.GetLivenessWithVerifySessionsAsync();
             var sessionList = listResponse.Value;
-            Assert.GreaterOrEqual(sessionList.Count, 2);
-            Assert.Greater(sessionList[1].Id, sessionList[0].Id);
+            Assert.That(sessionList.Count, Is.GreaterThanOrEqualTo(2));
+            Assert.That(sessionList[1].Id, Is.GreaterThan(sessionList[0].Id));
 
             foreach (var session in sessionList)
             {
-                Assert.IsNotNull(session.CreatedDateTime);
-                Assert.IsNotNull(session.DeviceCorrelationId);
+                Assert.That(session.CreatedDateTime, Is.Not.Null);
+                Assert.That(session.DeviceCorrelationId, Is.Not.Null);
                 Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
                 Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
             }
@@ -295,12 +295,12 @@ namespace Azure.AI.Vision.Face.Tests
             var session = response.Value;
 
             Assert.That(session.Id, Is.EqualTo(sessionId));
-            Assert.IsNotNull(session.CreatedDateTime);
-            Assert.IsNotNull(session.DeviceCorrelationId);
+            Assert.That(session.CreatedDateTime, Is.Not.Null);
+            Assert.That(session.DeviceCorrelationId, Is.Not.Null);
             Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
             Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
-            Assert.IsNotNull(session.SessionStartDateTime);
-            Assert.IsNotNull(session.SessionExpired);
+            Assert.That(session.SessionStartDateTime, Is.Not.Null);
+            Assert.That(session.SessionExpired, Is.Not.Null);
             Assert.That(session.Status, Is.EqualTo(FaceSessionStatus.ResultAvailable));
 
             AssertAuditEntry(session.Result, sessionId);

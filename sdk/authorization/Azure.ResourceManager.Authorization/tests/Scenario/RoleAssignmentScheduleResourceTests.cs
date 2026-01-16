@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var id = RoleAssignmentScheduleResource.CreateResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/managed-rg-ImportGlossaryTest", "e1cc94a4-2847-4a75-bf98-492fddd6ee6b");
             var resource = Client.GetRoleAssignmentScheduleResource(id);
             resource = await resource.GetAsync();
-            Assert.NotNull(resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.Not.Null);
         }
     }
 }

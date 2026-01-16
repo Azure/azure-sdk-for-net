@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<PreflightRequest>(result);
+            Assert.That(result, Is.InstanceOf<PreflightRequest>());
             Assert.IsTrue(((PreflightRequest)result).IsValid);
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<PreflightRequest>(result);
+            Assert.That(result, Is.InstanceOf<PreflightRequest>());
             Assert.IsFalse(((PreflightRequest)result).IsValid);
         }
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<ConnectedEventRequest>(result);
+            Assert.That(result, Is.InstanceOf<ConnectedEventRequest>());
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<ConnectedEventRequest>(result);
+            Assert.That(result, Is.InstanceOf<ConnectedEventRequest>());
         }
 
         private static IHeaderDictionary CreateCloudEventsHeaders(

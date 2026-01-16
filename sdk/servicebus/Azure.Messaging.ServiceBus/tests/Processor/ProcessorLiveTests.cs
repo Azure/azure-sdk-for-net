@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
+                Assert.That(stop - start, Is.LessThan(TimeSpan.FromSeconds(10)));
 
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.
@@ -163,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
+                Assert.That(stop - start, Is.LessThan(TimeSpan.FromSeconds(10)));
 
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.
@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         messageLockLostRaised = true;
                         // no exception expected as we have stopped renewing the lock once the max duration has passed
-                        Assert.IsNull(lockLostArgs.Exception);
+                        Assert.That(lockLostArgs.Exception, Is.Null);
                         return Task.CompletedTask;
                     };
                     var message = args.Message;
@@ -401,7 +401,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await Task.WhenAll(completionSources.Select(source => source.Task));
                 await processor.StopProcessingAsync();
                 // greater or equal because the same message may be received multiple times
-                Assert.GreaterOrEqual(messageCt, numThreads);
+                Assert.That(messageCt, Is.GreaterThanOrEqualTo(numThreads));
             }
         }
 
@@ -481,8 +481,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
             Task ProcessErrors(ProcessErrorEventArgs args)
             {
-                Assert.NotNull(args);
-                Assert.NotNull(args.Exception);
+                Assert.That(args, Is.Not.Null);
+                Assert.That(args.Exception, Is.Not.Null);
                 Assert.That(args.FullyQualifiedNamespace, Is.EqualTo(processor.FullyQualifiedNamespace));
                 Assert.That(args.ErrorSource, Is.EqualTo(ServiceBusErrorSource.Receive));
                 Assert.That(args.EntityPath, Is.EqualTo(processor.EntityPath));
@@ -605,7 +605,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StopProcessingAsync();
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var msg = await receiver.ReceiveMessageAsync();
-                Assert.IsNull(msg);
+                Assert.That(msg, Is.Null);
             }
         }
 
@@ -688,7 +688,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var receiver = client.CreateReceiver(scope.QueueName);
                 // poll for the lock duration to make sure that messages are actually gone rather than just locked
                 var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
-                Assert.IsNull(msg);
+                Assert.That(msg, Is.Null);
             }
         }
 
@@ -741,7 +741,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Task ExceptionHandler(ProcessErrorEventArgs args)
                 {
                     tcs.SetResult(true);
-                    Assert.IsNotNull(args.CancellationToken);
+                    Assert.That(args.CancellationToken, Is.Not.Null);
                     if (!(args.Exception is TestException))
                     {
                         Assert.Fail(args.Exception.ToString());
@@ -761,11 +761,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // if the message is abandoned (whether by user callback or
                     // by processor due to call back throwing), the message will
                     // be available to receive again immediately.
-                    Assert.IsNotNull(msg);
+                    Assert.That(msg, Is.Not.Null);
                 }
                 else
                 {
-                    Assert.IsNull(msg);
+                    Assert.That(msg, Is.Null);
                 }
             }
         }
@@ -1002,7 +1002,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // introduce a small delay so that the service honors the renewal request
                     await Task.Delay(500);
                     await args.RenewMessageLockAsync(args.Message);
-                    Assert.Greater(args.Message.LockedUntil, initialLockedUntil);
+                    Assert.That(args.Message.LockedUntil, Is.GreaterThan(initialLockedUntil));
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
@@ -1055,13 +1055,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // increase concurrency
                     if (count == 150)
                     {
-                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.That(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), Is.LessThanOrEqualTo(1));
                         processor.UpdateConcurrency(10);
                         Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(10));
                     }
                     if (count == 175)
                     {
-                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 5);
+                        Assert.That(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), Is.GreaterThanOrEqualTo(5));
                     }
                 }
 
@@ -1117,14 +1117,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // increase prefetch
                     if (count == 150)
                     {
-                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 20);
+                        Assert.That(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), Is.LessThanOrEqualTo(20));
                         processor.UpdatePrefetchCount(10);
                         Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(20));
                         Assert.That(processor.PrefetchCount, Is.EqualTo(10));
                     }
                     if (count == 175)
                     {
-                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 15);
+                        Assert.That(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), Is.GreaterThanOrEqualTo(15));
                     }
                 }
 
@@ -1237,14 +1237,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         ProcessorReceiveActions receiveActions = args.GetReceiveActions();
                         var received = await receiveActions.ReceiveMessagesAsync(messageCount);
-                        Assert.IsNotEmpty(received);
+                        Assert.That(received, Is.Not.Empty);
                         count = Interlocked.Add(ref receivedCount, received.Count);
 
                         var peeked = await receiveActions.PeekMessagesAsync(2);
                         Assert.That(peeked.Count, Is.EqualTo(2));
                         var lastSeq = peeked[1].SequenceNumber;
                         var nextPeek = await receiveActions.PeekMessagesAsync(1);
-                        Assert.Greater(nextPeek.Single().SequenceNumber, lastSeq);
+                        Assert.That(nextPeek.Single().SequenceNumber, Is.GreaterThan(lastSeq));
 
                         var peekWithSeq = await receiveActions.PeekMessagesAsync(1, fromSequenceNumber: lastSeq);
                         Assert.That(peekWithSeq.Single().SequenceNumber, Is.EqualTo(lastSeq));
@@ -1277,7 +1277,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var msg = await receiver.ReceiveMessageAsync();
                 // all messages should have been completed
-                Assert.IsNull(msg);
+                Assert.That(msg, Is.Null);
             }
         }
 
@@ -1361,7 +1361,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // all messages should have been completed
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var msg = await receiver.ReceiveMessageAsync();
-                Assert.IsNull(msg);
+                Assert.That(msg, Is.Null);
 
                 Assert.That(
                     async () => await receiver.ReceiveDeferredMessagesAsync(new[] {receivedDeferredMessage.SequenceNumber}),
@@ -1539,7 +1539,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         messageLockLostRaised = true;
                         Assert.That(lockLostArgs.Message.LockToken, Is.EqualTo(args.Message.LockToken));
                         var lockLostException = lockLostArgs.Exception as ServiceBusException;
-                        Assert.IsNotNull(lockLostException);
+                        Assert.That(lockLostException, Is.Not.Null);
                         Assert.That(lockLostException.Reason, Is.EqualTo(ServiceBusFailureReason.MessageLockLost));
                         return Task.CompletedTask;
                     };

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName);
-            Assert.IsNotNull(agreement);
+            Assert.That(agreement, Is.Not.Null);
             Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
             Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("AS2"));
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName, "Edifact");
-            Assert.IsNotNull(agreement);
+            Assert.That(agreement, Is.Not.Null);
             Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
             Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("Edifact"));
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName, "X12");
-            Assert.IsNotNull(agreement);
+            Assert.That(agreement, Is.Not.Null);
             Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
             Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("X12"));
         }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await CreateAgreement(agreementName);
             var agreement = await _agreementCollection.GetAsync(agreementName);
-            Assert.IsNotNull(agreement);
+            Assert.That(agreement, Is.Not.Null);
             Assert.That(agreement.Value.Data.Name, Is.EqualTo(agreementName));
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await CreateAgreement(agreementName);
             var list = await _agreementCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

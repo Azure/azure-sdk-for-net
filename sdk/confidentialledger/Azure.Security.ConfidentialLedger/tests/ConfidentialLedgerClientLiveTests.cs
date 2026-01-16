@@ -118,7 +118,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
-            Assert.NotNull(operation.Id);
+            Assert.That(operation.Id, Is.Not.Null);
             Assert.That(stringResult, Does.Contain("Committed"));
             Assert.That(stringResult, Does.Contain(operation.Id));
         }
@@ -144,7 +144,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             await foreach (var entry in Client.GetLedgerEntriesAsync())
             {
-                Assert.NotNull(entry);
+                Assert.That(entry, Is.Not.Null);
             }
         }
 

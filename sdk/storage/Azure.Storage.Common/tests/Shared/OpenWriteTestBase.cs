@@ -241,7 +241,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             // Assert
-            CollectionAssert.AreEqual(metadata, await GetMetadataAsync(client));
+            Assert.That(await GetMetadataAsync(client), Is.EqualTo(metadata).AsCollection);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -268,7 +268,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             // Assert
-            CollectionAssert.AreEqual(metadata, await GetMetadataAsync(client));
+            Assert.That(await GetMetadataAsync(client), Is.EqualTo(metadata).AsCollection);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }

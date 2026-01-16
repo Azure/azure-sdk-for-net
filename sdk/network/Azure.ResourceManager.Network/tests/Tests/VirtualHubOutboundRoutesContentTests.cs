@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Tests
             using var doc = JsonDocument.Parse(json);
             var property = doc.RootElement.GetProperty("resourceUri");
             var content = VirtualHubOutboundRoutesContent.DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, default);
-            Assert.IsNull(content.ResourceUri);
+            Assert.That(content.ResourceUri, Is.Null);
         }
     }
 }

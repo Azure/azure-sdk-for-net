@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var prefixData = prefix.Data;
             ValidateCommon(prefixData, name);
-            Assert.IsEmpty(prefixData.Tags);
+            Assert.That(prefixData.Tags, Is.Empty);
 
             prefixData.Tags.Add("tag1", "value1");
             prefixData.Tags.Add("tag2", "value2");
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That((bool)await container.ExistsAsync(name), Is.False);
 
             prefixes = await container.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(prefixes);
+            Assert.That(prefixes, Is.Empty);
         }
 
         private void ValidateCommon(PublicIPPrefixData data, string name)

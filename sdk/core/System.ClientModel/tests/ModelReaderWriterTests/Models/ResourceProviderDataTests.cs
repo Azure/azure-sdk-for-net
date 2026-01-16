@@ -32,8 +32,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void VerifyModel(ResourceProviderData model, string format)
         {
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(model.Id);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(model.Id, Is.Not.Null);
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
             var modelFromMrw = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(WirePayload));
 
-            Assert.IsNotNull(modelFromStj);
-            Assert.IsNotNull(modelFromMrw);
+            Assert.That(modelFromStj, Is.Not.Null);
+            Assert.That(modelFromMrw, Is.Not.Null);
 
             CompareModels(modelFromStj!, modelFromMrw!, "J");
             var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);

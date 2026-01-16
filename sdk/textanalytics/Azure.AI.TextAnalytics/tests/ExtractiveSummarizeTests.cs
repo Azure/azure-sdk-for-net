@@ -273,7 +273,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = actionsResult.ExtractiveSummarizeResults;
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.That(extractiveSummarizeActionResults, Is.Not.Null);
 
             ExtractiveSummarizeResultCollection resultCollection = extractiveSummarizeActionResults.FirstOrDefault().DocumentsResults;
             ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
@@ -297,7 +297,7 @@ namespace Azure.AI.TextAnalytics.Tests
             int maxSentenceCount,
             ExtractiveSummarySentencesOrder expectedOrder)
         {
-            Assert.LessOrEqual(sentences.Count, maxSentenceCount);
+            Assert.That(sentences.Count, Is.LessThanOrEqualTo(maxSentenceCount));
 
             for (int i = 0; i < sentences.Count; i++)
             {
@@ -305,9 +305,9 @@ namespace Azure.AI.TextAnalytics.Tests
                 string originalDocument = s_batchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
                 Assert.That(string.IsNullOrEmpty(originalDocument), Is.False);
-                Assert.GreaterOrEqual(sentence.Offset, 0);
-                Assert.GreaterOrEqual(sentence.RankScore, 0.0);
-                Assert.LessOrEqual(sentence.RankScore, 1.0);
+                Assert.That(sentence.Offset, Is.GreaterThanOrEqualTo(0));
+                Assert.That(sentence.RankScore, Is.GreaterThanOrEqualTo(0.0));
+                Assert.That(sentence.RankScore, Is.LessThanOrEqualTo(1.0));
                 Assert.That(sentence.Length, Is.EqualTo(sentence.Text.Length));
                 Assert.That(sentence.Text, Is.EqualTo(originalDocument.Substring(sentence.Offset, sentence.Length)));
 
@@ -317,11 +317,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
                     if (expectedOrder == ExtractiveSummarySentencesOrder.Offset)
                     {
-                        Assert.Greater(sentence.Offset, previousSentence.Offset);
+                        Assert.That(sentence.Offset, Is.GreaterThan(previousSentence.Offset));
                     }
                     else if (expectedOrder == ExtractiveSummarySentencesOrder.Rank)
                     {
-                        Assert.LessOrEqual(sentence.RankScore, previousSentence.RankScore);
+                        Assert.That(sentence.RankScore, Is.LessThanOrEqualTo(previousSentence.RankScore));
                     }
                 }
             }
@@ -337,27 +337,27 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
             }
             else
             {
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
             }
 
             foreach (ExtractiveSummarizeResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(result.HasError, Is.False);
-                Assert.IsNotNull(result.Warnings);
+                Assert.That(result.Warnings, Is.Not.Null);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
                 }
                 else
                 {

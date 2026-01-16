@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
 
             var groupContract = (await groupCollection.CreateOrUpdateAsync(WaitUntil.Completed, newGroupId, parameters)).Value;
-            Assert.NotNull(groupContract);
+            Assert.That(groupContract, Is.Not.Null);
             Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
             Assert.That(groupContract.Data.IsBuiltIn, Is.False);
-            Assert.NotNull(groupContract.Data.Description);
+            Assert.That(groupContract.Data.Description, Is.Not.Null);
             Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
 
             var userId = Recording.GenerateAssetName("sdkUserId");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list all group users
             var listResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();
-            Assert.IsEmpty(listResponse);
+            Assert.That(listResponse, Is.Empty);
 
             // create a new user and add to the group
             var createParameters = new ApiManagementUserCreateOrUpdateContent()
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Note = "dummy note"
             };
             var userContract = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, userId, createParameters)).Value;
-            Assert.NotNull(userContract);
+            Assert.That(userContract, Is.Not.Null);
 
             // add user to group
             var addUserContract = (await groupContract.CreateGroupUserAsync(userId)).Value;
-            Assert.NotNull(addUserContract);
+            Assert.That(addUserContract, Is.Not.Null);
             Assert.That(addUserContract.Email, Is.EqualTo(userContract.Data.Email));
             Assert.That(addUserContract.FirstName, Is.EqualTo(userContract.Data.FirstName));
 

@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 actual = stream.ToArray();
             }
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected).AsCollection);
         }
 
         [Test]

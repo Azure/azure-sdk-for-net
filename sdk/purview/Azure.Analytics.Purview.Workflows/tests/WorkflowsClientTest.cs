@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
             using var workflowsListJsonDocument = JsonDocument.Parse(workflowsList.Current);
             JsonElement listBodyJson = workflowsListJsonDocument.RootElement;
             await workflowsList.DisposeAsync();
-            Assert.NotNull(listBodyJson);
+            Assert.That(listBodyJson, Is.Not.Null);
         }
 
         [RecordedTest]

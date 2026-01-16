@@ -43,9 +43,9 @@ namespace Azure.Storage.Queues.Test
 
             var builder1 = new QueueUriBuilder(client1.Uri);
             var builder2 = new QueueUriBuilder(client2.Uri);
-            Assert.IsEmpty(builder1.QueueName);
+            Assert.That(builder1.QueueName, Is.Empty);
             Assert.That(builder1.AccountName, Is.EqualTo(accountName));
-            Assert.IsEmpty(builder2.QueueName);
+            Assert.That(builder2.QueueName, Is.Empty);
             Assert.That(builder2.AccountName, Is.EqualTo(accountName));
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = InstrumentClient(new QueueServiceClient(queueEndpoint, credentials));
             var builder = new QueueUriBuilder(service.Uri);
 
-            Assert.IsEmpty(builder.QueueName);
+            Assert.That(builder.QueueName, Is.Empty);
             Assert.That(builder.AccountName, Is.EqualTo(accountName));
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -151,7 +151,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -170,7 +170,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -189,7 +189,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -270,7 +270,7 @@ namespace Azure.Storage.Queues.Test
 
                 Assert.That(items.Count(), Is.Not.EqualTo(0));
                 Assert.That(items.All(c => c.Name.StartsWith(prefix)), Is.True);
-                Assert.IsNotNull(items.Single(c => c.Name == queueName));
+                Assert.That(items.Single(c => c.Name == queueName), Is.Not.Null);
             }
             finally
             {
@@ -287,7 +287,7 @@ namespace Azure.Storage.Queues.Test
             IDictionary<string, string> metadata = BuildMetadata();
             await test.Queue.SetMetadataAsync(metadata);
             QueueItem first = await service.GetQueuesAsync(QueueTraits.Metadata).FirstAsync();
-            Assert.IsNotNull(first.Metadata);
+            Assert.That(first.Metadata, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -311,7 +311,7 @@ namespace Azure.Storage.Queues.Test
             Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
 
             // Assert
-            Assert.IsNotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -400,7 +400,7 @@ namespace Azure.Storage.Queues.Test
             Response<QueueServiceProperties> response = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.Logging.RetentionPolicy);
+            Assert.That(response.Value.Logging.RetentionPolicy, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -635,7 +635,7 @@ namespace Azure.Storage.Queues.Test
                 Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
             };
             Assert.That(sasUri, Is.EqualTo(expectedUri.Uri));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -668,7 +668,7 @@ namespace Azure.Storage.Queues.Test
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
             Assert.That(sasUri, Is.EqualTo(expectedUri.Uri));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

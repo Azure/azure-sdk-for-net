@@ -126,7 +126,7 @@ namespace Azure.AI.VoiceLive.Tests
                         Assert.That(callIdEl.GetString(), Is.EqualTo(callId));
                         Assert.That(itemEl.TryGetProperty("output", out var outputEl), Is.True, "output missing");
                         // Basic structural assertion on output JSON string contents
-                        StringAssert.Contains("\"value\":42", outputEl.GetString());
+                        Assert.That(outputEl.GetString(), Does.Contain("\"value\":42"));
                     }
                     if (typeVal == "response.create" && responseIndex == -1)
                     {

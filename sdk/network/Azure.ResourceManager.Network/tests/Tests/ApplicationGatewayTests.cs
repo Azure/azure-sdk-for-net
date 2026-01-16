@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(gw2.WebApplicationFirewallConfiguration.RuleSetVersion, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.RuleSetVersion));
             if (gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups != null)
             {
-                Assert.NotNull(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups);
+                Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups, Is.Not.Null);
                 Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count));
                 for (int i = 0; i < gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count; i++)
                 {
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
             else
             {
-                Assert.IsEmpty(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups);
+                Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups, Is.Empty);
             }
 
             // ssl policy
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 if (gw1.BackendHttpSettingsCollection[i].ConnectionDraining != null)
                 {
-                    Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                    Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining, Is.Not.Null);
                     Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled));
                     Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds));
                 }
@@ -701,13 +701,13 @@ namespace Azure.ResourceManager.Network.Tests
                 break;
             }
 
-            Assert.NotNull(availableWAFRuleSet);
-            Assert.NotNull(availableWAFRuleSet.Name);
-            Assert.NotNull(availableWAFRuleSet.RuleSetType);
-            Assert.NotNull(availableWAFRuleSet.RuleSetVersion);
-            Assert.IsNotEmpty(availableWAFRuleSet.RuleGroups);
-            Assert.NotNull(availableWAFRuleSet.RuleGroups[0].RuleGroupName);
-            Assert.IsNotEmpty(availableWAFRuleSet.RuleGroups[0].Rules);
+            Assert.That(availableWAFRuleSet, Is.Not.Null);
+            Assert.That(availableWAFRuleSet.Name, Is.Not.Null);
+            Assert.That(availableWAFRuleSet.RuleSetType, Is.Not.Null);
+            Assert.That(availableWAFRuleSet.RuleSetVersion, Is.Not.Null);
+            Assert.That(availableWAFRuleSet.RuleGroups, Is.Not.Empty);
+            Assert.That(availableWAFRuleSet.RuleGroups[0].RuleGroupName, Is.Not.Null);
+            Assert.That(availableWAFRuleSet.RuleGroups[0].Rules, Is.Not.Empty);
             // Assert.NotNull(availableWAFRuleSet.RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Network.Tests
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
             PublicIPAddressResource nic1publicIp = await CreateStaticPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
-            Assert.IsNotNull(nic1publicIp.Data);
+            Assert.That(nic1publicIp.Data, Is.Not.Null);
 
             //create VMs
             string virtualMachineName1 = Recording.GenerateAssetName("azsmnet");
@@ -851,8 +851,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Add NIC to application gateway backend address pool.
             var nic1 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName1);
             var nic2 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName2);
-            Assert.NotNull(nic1);
-            Assert.NotNull(nic2);
+            Assert.That(nic1, Is.Not.Null);
+            Assert.That(nic2, Is.Not.Null);
             nic1.Result.Value.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             nic2.Result.Value.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
 
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync();
-            Assert.NotNull(sslOptionsInfo);
+            Assert.That(sslOptionsInfo, Is.Not.Null);
             Assert.That(sslOptionsInfo.Name, Is.EqualTo("default"));
             Assert.That(sslOptionsInfo.ResourceType, Is.EqualTo(sslOptionsInfo.Id.ResourceType));
             Assert.That(ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101, Is.EqualTo(sslOptionsInfo.DefaultPolicy));
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.Network.Tests
             foreach (var policy in predefinedPolicies)
             {
                 ++cnt;
-                Assert.NotNull(policy);
+                Assert.That(policy, Is.Not.Null);
                 Assert.That(policy.ResourceType, Is.EqualTo(policy.Id.ResourceType));
             }
             Assert.That(cnt, Is.EqualTo(5));

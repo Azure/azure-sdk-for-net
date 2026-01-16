@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var domain = await CreateDefaultDomain(domainName, _emailService);
-            Assert.IsNotNull(domain);
+            Assert.That(domain, Is.Not.Null);
             Assert.That(domain.Data.Name, Is.EqualTo(domainName));
             Assert.That(domain.Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
             Assert.That(domain.Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 UserEngagementTracking = UserEngagementTracking.Enabled
             };
             var domain2 = (await domain1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.IsNotNull(domain2);
+            Assert.That(domain2, Is.Not.Null);
             Assert.That(domain2.Data.Name, Is.EqualTo(domain1.Data.Name));
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _emailService.GetCommunicationDomainResources();
             await CreateDefaultDomain(domainName, _emailService);
             var domain = await collection.GetAsync(domainName);
-            Assert.IsNotNull(domain);
+            Assert.That(domain, Is.Not.Null);
             Assert.That(domain.Value.Data.Name, Is.EqualTo(domainName));
             Assert.That(domain.Value.Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
             Assert.That(domain.Value.Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             await CreateDefaultDomain(domainName, _emailService);
             var list = await _emailService.GetCommunicationDomainResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(domainName));
             Assert.That(list.FirstOrDefault().Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
             Assert.That(list.FirstOrDefault().Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));

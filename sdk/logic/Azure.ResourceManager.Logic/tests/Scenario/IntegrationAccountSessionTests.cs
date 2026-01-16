@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string sessionName = Recording.GenerateAssetName("session");
             var session = await CreateSession(sessionName);
-            Assert.IsNotNull(session);
+            Assert.That(session, Is.Not.Null);
             Assert.That(session.Data.Name, Is.EqualTo(sessionName));
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string sessionName = Recording.GenerateAssetName("session");
             await CreateSession(sessionName);
             var session = await _sessionCollection.GetAsync(sessionName);
-            Assert.IsNotNull(session);
+            Assert.That(session, Is.Not.Null);
             Assert.That(session.Value.Data.Name, Is.EqualTo(sessionName));
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string sessionName = Recording.GenerateAssetName("session");
             await CreateSession(sessionName);
             var list = await _sessionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

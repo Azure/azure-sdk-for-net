@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await eHNamespace1.GetEventHubsNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(ruleParameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //create a disaster recovery
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 PartnerNamespace = eHNamespace2.Id
             };
             EventHubsDisasterRecoveryResource armDisasterRecovery = (await eHNamespace1.GetEventHubsDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
-            Assert.NotNull(armDisasterRecovery);
+            Assert.That(armDisasterRecovery, Is.Not.Null);
             Assert.That(disasterRecoveryName, Is.EqualTo(armDisasterRecovery.Id.Name));
             Assert.That(eHNamespace2.Id.ToString(), Is.EqualTo(armDisasterRecovery.Data.PartnerNamespace));
 
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 await armDisasterRecovery.GetEventHubsDisasterRecoveryAuthorizationRules()
                                          .GetAsync(drRuleName);
 
-            Assert.NotNull(drRule);
+            Assert.That(drRule, Is.Not.Null);
 
             // get access keys for DR authorization rule
             EventHubsAccessKeys key = await drRule.GetKeysAsync();
-            Assert.NotNull(key);
+            Assert.That(key, Is.Not.Null);
 
             //break pairing and wait for completion
             await armDisasterRecovery.BreakPairingAsync();

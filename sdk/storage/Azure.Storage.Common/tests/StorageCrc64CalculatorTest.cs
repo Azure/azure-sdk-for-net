@@ -144,7 +144,7 @@ namespace Azure.Storage.Tests
                 return (blockCrcCalculator.GetCurrentHash(), (long)block.Length);
             }));
 
-            CollectionAssert.AreEqual(wholeCrc, composedCrc.ToArray());
+            Assert.That(composedCrc.ToArray(), Is.EqualTo(wholeCrc).AsCollection);
         }
     }
 }

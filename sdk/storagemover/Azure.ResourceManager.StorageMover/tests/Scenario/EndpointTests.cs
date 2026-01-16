@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             {
                 counter++;
             }
-            Assert.Greater(counter, 1);
+            Assert.That(counter, Is.GreaterThan(1));
 
             Assert.That((bool)await endpoints.ExistsAsync(cEndpointName), Is.True);
             Assert.That((bool)await endpoints.ExistsAsync(cEndpointName + "111"), Is.False);

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
             LocalRulestackRuleResource rulesResource = await collection.GetAsync(DefaultResource1.Data.Priority.ToString());
-            Assert.IsNotNull(rulesResource);
+            Assert.That(rulesResource, Is.Not.Null);
             Assert.That(DefaultResource1.Data.RuleName, Is.EqualTo(rulesResource.Data.RuleName));
         }
 

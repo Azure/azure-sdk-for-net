@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         public async Task OneTimeSetUp()
         {
             string connectionString = TestEnvironment.PrimaryStorageAccountConnectionString;
-            Assert.IsNotEmpty(connectionString);
+            Assert.That(connectionString, Is.Not.Empty);
             _fixture = new TestFixture();
             await _fixture.InitializeAsync(TestEnvironment);
         }
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         public static void ByteArrayBindingWriteToCacheAsync(
             [Blob(ContainerName + "/" + OutputBlobName, FileAccess.Write)] ICacheAwareWriteObject blob)
         {
-            Assert.NotNull(blob.BlobStream);
+            Assert.That(blob.BlobStream, Is.Not.Null);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.That(blob.IsCacheHit, Is.True);
 
             SharedMemoryMetadata cacheObj = blob.CacheObject;
-            Assert.NotNull(cacheObj);
+            Assert.That(cacheObj, Is.Not.Null);
 
             _numCacheHits = 1;
         }

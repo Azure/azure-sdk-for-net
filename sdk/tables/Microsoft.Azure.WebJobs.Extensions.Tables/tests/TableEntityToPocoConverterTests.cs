@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             IConverter<TableEntity, Poco> converter = new TableEntityToPocoConverter<Poco>();
             // Assert
-            Assert.NotNull(converter);
+            Assert.That(converter, Is.Not.Null);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithWriteOnlyPartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ReadPartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivatePartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKeyPublic, Is.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivatePartitionKeySetter actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithStaticPartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(PocoWithStaticPartitionKey.PartitionKey, Is.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithReadOnlyPartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
 
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithRowKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
 
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithWriteOnlyRowKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ReadRowKey, Is.SameAs(expectedRowKey));
         }
 
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithRowKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
 
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateRowKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKeyPublic, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateRowKeySetter actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithStaticRowKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(PocoWithStaticRowKey.RowKey, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithReadOnlyRowKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithTimestamp actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.EqualTo(expectedTimestamp));
             Assert.That(actual.Timestamp.Offset, Is.EqualTo(expectedTimestamp.Offset));
         }
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithWriteOnlyTimestamp actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ReadTimestamp, Is.EqualTo(expectedTimestamp));
             Assert.That(actual.ReadTimestamp.Offset, Is.EqualTo(expectedTimestamp.Offset));
         }
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithTimestamp actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.EqualTo(expectedTimestamp));
             Assert.That(actual.Timestamp.Offset, Is.EqualTo(expectedTimestamp.Offset));
         }
@@ -438,7 +438,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateTimestamp actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.TimestampPublic, Is.EqualTo(default(DateTimeOffset)));
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateTimestampSetter actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.EqualTo(default(DateTimeOffset)));
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -478,7 +478,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithStaticTimestamp actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(PocoWithStaticTimestamp.Timestamp, Is.EqualTo(default(DateTimeOffset)));
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -497,7 +497,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithReadOnlyTimestamp actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithETag actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.SameAs(expectedETag));
         }
 
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithWriteOnlyETag actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ReadETag, Is.SameAs(expectedETag));
         }
 
@@ -549,7 +549,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithETag actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.SameAs(expectedETag));
         }
 
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateETag actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETagPublic, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -587,7 +587,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateETagSetter actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -606,7 +606,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithStaticETag actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(PocoWithStaticETag.ETag, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -624,7 +624,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithReadOnlyETag actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -641,7 +641,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.OtherProperty, Is.EqualTo(expectedOtherProperty));
         }
 
@@ -659,7 +659,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithWriteOnlyOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ReadOtherProperty, Is.EqualTo(expectedOtherProperty));
         }
 
@@ -678,7 +678,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.OtherPropertyPublic, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -698,7 +698,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPrivateOtherPropertySetter actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.OtherProperty, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -718,7 +718,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithStaticOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(PocoWithStaticOtherProperty.OtherProperty, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -738,7 +738,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithReadOnlyOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -757,7 +757,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithIndexerOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -777,7 +777,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPartitionKeyAndOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.OtherProperty, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -796,7 +796,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPartitionKeyAndOtherProperty actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.OtherProperty, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -815,7 +815,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoWithPartitionKey actual = product.Convert(entity);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -823,7 +823,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             where TOutput : new()
         {
             TableEntityToPocoConverter<TOutput> product = new TableEntityToPocoConverter<TOutput>();
-            Assert.NotNull(product); // Guard
+            Assert.That(product, Is.Not.Null); // Guard
             return product;
         }
 

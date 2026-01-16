@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             await foreach (var report in reports)
             {
                 var reportData = report.Data;
-                Assert.IsNotNull(reportData);
-                Assert.IsNotNull(reportData.Name);
+                Assert.That(reportData, Is.Not.Null);
+                Assert.That(reportData.Name, Is.Not.Null);
                 Assert.That(reportData.ConfigurationProfile, Is.EqualTo(profileName));
-                Assert.IsNotNull(reportData.Id);
+                Assert.That(reportData.Id, Is.Not.Null);
             }
         }
     }

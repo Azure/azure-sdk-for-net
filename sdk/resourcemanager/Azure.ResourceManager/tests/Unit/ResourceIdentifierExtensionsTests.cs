@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Tests
             ResourceIdentifier subId = id.GetSubscriptionResourceIdentifier();
             if (shouldBeNull)
             {
-                Assert.IsNull(subId);
+                Assert.That(subId, Is.Null);
             }
             else
             {
-                Assert.IsNotNull(subId);
+                Assert.That(subId, Is.Not.Null);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
         public void GetSubscriptionResourceIdentifierFromRoot()
         {
             ResourceIdentifier subId = ResourceIdentifier.Root.GetSubscriptionResourceIdentifier();
-            Assert.IsNull(subId);
+            Assert.That(subId, Is.Null);
         }
     }
 }

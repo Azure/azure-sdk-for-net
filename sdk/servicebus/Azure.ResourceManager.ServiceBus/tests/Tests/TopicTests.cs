@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic = (await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
-            Assert.NotNull(topic);
+            Assert.That(topic, Is.Not.Null);
             Assert.That(topicName, Is.EqualTo(topic.Id.Name));
 
             //validate if created successfully
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic = (await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
-            Assert.NotNull(topic);
+            Assert.That(topic, Is.Not.Null);
             Assert.That(topicName, Is.EqualTo(topic.Id.Name));
 
             //update topic
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
             ServiceBusTopicAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get authorization rule
             authorizationRule = await ruleCollection.GetAsync(ruleName);
             Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get all authorization rules
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //update authorization rule
             parameter.Rights.Add(ServiceBusAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //delete authorization rule
@@ -170,13 +170,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
             ServiceBusTopicAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             ServiceBusAccessKeys keys1 = await authorizationRule.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             ServiceBusAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.PrimaryKey));
 

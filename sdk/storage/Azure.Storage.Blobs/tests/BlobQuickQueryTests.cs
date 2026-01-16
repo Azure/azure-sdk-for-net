@@ -370,7 +370,7 @@ namespace Azure.Storage.Blobs.Test
                     options);
 
                 // Assert
-                Assert.IsNotNull(response.Value.Details.ETag);
+                Assert.That(response.Value.Details.ETag, Is.Not.Null);
             }
         }
 

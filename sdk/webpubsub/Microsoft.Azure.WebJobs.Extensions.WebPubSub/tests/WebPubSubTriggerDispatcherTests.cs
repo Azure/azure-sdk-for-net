@@ -285,7 +285,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                         Assert.Fail("ConnectionContext is not MqttContext");
                     }
 
-                    Assert.IsInstanceOf<MqttDisconnectedEventRequest>(triggerEvent.Request);
+                    Assert.That(triggerEvent.Request, Is.InstanceOf<MqttDisconnectedEventRequest>());
                     var mqttDisconnectedEvent = triggerEvent.Request as MqttDisconnectedEventRequest;
                     Assert.That(mqttDisconnectedEvent.Reason, Is.EqualTo("reason"));
                     Assert.That(mqttDisconnectedEvent.Mqtt.InitiatedByClient, Is.EqualTo(false));

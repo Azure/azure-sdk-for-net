@@ -17,7 +17,7 @@ public class ClientConnectionTests
         if (credentialKind is null)
         {
             conn = new(id: "123", locator: "www.microsoft.com");
-            Assert.IsNull(conn.Credential);
+            Assert.That(conn.Credential, Is.Null);
             Assert.That(conn.CredentialKind, Is.EqualTo(CredentialKind.None));
             Assert.That(conn.Metadata.Count, Is.EqualTo(0));
         }

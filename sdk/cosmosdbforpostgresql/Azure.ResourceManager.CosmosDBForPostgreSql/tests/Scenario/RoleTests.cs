@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             await roleFromGet.DeleteAsync(WaitUntil.Completed);
 
             List<CosmosDBForPostgreSqlRoleResource> roleList = await _cluster.GetCosmosDBForPostgreSqlRoles().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(roleList);
+            Assert.That(roleList, Is.Empty);
         }
     }
 }

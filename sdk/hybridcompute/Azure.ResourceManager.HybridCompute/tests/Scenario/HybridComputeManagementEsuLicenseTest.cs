@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetEsuLicenseCollection()
         {
             HybridComputeLicenseCollection resourceCollection = await getEsuLicenseCollection();
-            Assert.IsNotNull(resourceCollection);
+            Assert.That(resourceCollection, Is.Not.Null);
         }
 
         [TestCase]

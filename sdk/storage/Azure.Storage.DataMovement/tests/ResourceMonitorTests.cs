@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Tests
             //    Assert.That(cpuMonitor.CpuUsage, Is.LessThan(1));
             //}
             Assert.That(resourceMonitor.CpuUsage, Is.LessThan(1));
-            Assert.Greater(resourceMonitor.CpuUsage, 0);
+            Assert.That(resourceMonitor.CpuUsage, Is.GreaterThan(0));
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement.Tests
             cancellationTokenSource.Cancel();
 
             // Assert
-            Assert.Greater(resourceMonitor.MemoryUsage, 0);
+            Assert.That(resourceMonitor.MemoryUsage, Is.GreaterThan(0));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Azure.Storage.DataMovement.Tests
             cancellationTokenSource.Cancel();
 
             // Assert
-            Assert.NotNull(resourceMonitor.MemoryUsage);
+            Assert.That(resourceMonitor.MemoryUsage, Is.Not.Null);
         }
 
         [Test]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             var batchConfiguration = await CreateBatchConfiguration(batchConfigurationName);
-            Assert.IsNotNull(batchConfiguration);
+            Assert.That(batchConfiguration, Is.Not.Null);
             Assert.That(batchConfiguration.Data.Name, Is.EqualTo(batchConfigurationName));
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             await CreateBatchConfiguration(batchConfigurationName);
             var batchConfiguration = await _batchConfigurationCollection.GetAsync(batchConfigurationName);
-            Assert.IsNotNull(batchConfiguration);
+            Assert.That(batchConfiguration, Is.Not.Null);
             Assert.That(batchConfiguration.Value.Data.Name, Is.EqualTo(batchConfigurationName));
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             await CreateBatchConfiguration(batchConfigurationName);
             var list = await _batchConfigurationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

@@ -498,7 +498,7 @@ namespace Azure.AI.Inference.Tests
 
         private void AssertActivityEnabled(Activity activity, ChatCompletionsOptions requestOptions)
         {
-            Assert.IsNotNull(activity);
+            Assert.That(activity, Is.Not.Null);
             Assert.That(_requestOptions.Model == null ? "chat" : $"chat {_requestOptions.Model}", Is.EqualTo(activity.DisplayName));
         }
 

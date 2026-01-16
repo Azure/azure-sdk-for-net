@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Tests
             foreach (var value in values)
             {
                 var name = value.GetManifestName();
-                Assert.NotNull(name);
+                Assert.That(name, Is.Not.Null);
             }
         }
 

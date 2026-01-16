@@ -70,7 +70,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var entries = new List<IEnumerable>();
 
             var exception = Assert.ThrowsAsync<ArgumentException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false));
-            StringAssert.StartsWith("Value cannot be an empty collection.", exception.Message);
+            Assert.That(exception.Message, Does.StartWith("Value cannot be an empty collection."));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(204));
             Assert.That(response.IsError, Is.False);
         }
@@ -131,7 +131,7 @@ namespace Azure.Monitor.Ingestion.Tests
            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(204));
             Assert.That(response.IsError, Is.False);
         }
@@ -146,7 +146,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(204));
             Assert.That(response.IsError, Is.False);
         }
@@ -161,7 +161,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(50, Recording.Now.DateTime));
 
             // Check the response
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo(204));
             Assert.That(response.IsError, Is.False);
         }

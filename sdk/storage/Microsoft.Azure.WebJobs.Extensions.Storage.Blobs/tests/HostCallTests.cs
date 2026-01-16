@@ -211,8 +211,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 (s) => BlobTriggerBindToICloudBlobProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<BlockBlobClient>(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<BlockBlobClient>());
         }
 
         [Test]
@@ -235,8 +235,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 (s) => BlobTriggerBindToICloudBlobProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<PageBlobClient>(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<PageBlobClient>());
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToICloudBlobProgram), "Call");
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Missing value for trigger parameter 'blob'."));
         }
 
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 "Call", arguments, (s) => BlobTriggerBindToCloudBlockBlobProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToCloudBlockBlobProgram), "Call");
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Missing value for trigger parameter 'blob'."));
         }
 
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 "Call", arguments, (s) => BlobTriggerBindToBlobClientProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToBlobClientProgram), "Call");
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Missing value for trigger parameter 'blob'."));
         }
 
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 arguments, (s) => BlobTriggerBindToCloudPageBlobProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToCloudPageBlobProgram), "Call");
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Missing value for trigger parameter 'blob'."));
         }
 
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 arguments, (s) => BlobTriggerBindToCloudAppendBlobProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToCloudAppendBlobProgram), "Call");
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(exception.Message, Is.EqualTo("Missing value for trigger parameter 'blob'."));
         }
 
@@ -559,7 +559,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             public static void FuncWithBlockBlob([Blob(BlobPath)] BlockBlobClient blob)
             {
-                Assert.NotNull(blob);
+                Assert.That(blob, Is.Not.Null);
                 Assert.That(blob.Name, Is.EqualTo(BlobName));
                 Assert.That(blob.BlobContainerName, Is.EqualTo(ContainerName));
             }
@@ -571,7 +571,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             public static void FuncWithStreamWrite([Blob(BlobPath, FileAccess.Write)] Stream stream)
             {
-                Assert.NotNull(stream);
+                Assert.That(stream, Is.Not.Null);
 
                 const byte ignore = 0xFF;
                 stream.WriteByte(ignore);
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             public static void FuncWithStreamWriteNoop([Blob(BlobPath, FileAccess.Write)] Stream stream)
             {
-                Assert.NotNull(stream);
+                Assert.That(stream, Is.Not.Null);
             }
 
             public static void FuncWithTextReader([Blob(BlobPath)] TextReader reader)
@@ -589,7 +589,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             public static void FuncWithTextWriter([Blob(BlobPath)] TextWriter writer)
             {
-                Assert.NotNull(writer);
+                Assert.That(writer, Is.Not.Null);
             }
 
             public static void FuncWithString([Blob(BlobPath)] string content)
@@ -635,7 +635,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             public static void FuncWithValueT([Blob(BlobPath)] CustomDataValue value)
             {
                 // default(T) is blob is missing
-                Assert.NotNull(value);
+                Assert.That(value, Is.Not.Null);
                 Assert.That(value.ValueId, Is.EqualTo(0));
             }
 
@@ -669,19 +669,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             public static void BindToCloudBlockBlob([Blob(BlobPath)] BlockBlobClient blob)
             {
-                Assert.NotNull(blob);
+                Assert.That(blob, Is.Not.Null);
                 Assert.That(blob.Name, Is.EqualTo(BlobName));
             }
 
             public static void BindToBlobClient([Blob(BlobPath)] BlobClient blob)
             {
-                Assert.NotNull(blob);
+                Assert.That(blob, Is.Not.Null);
                 Assert.That(blob.Name, Is.EqualTo(BlobName));
             }
 
             public static void BindToString([Blob(BlobPath)] string content)
             {
-                Assert.NotNull(content);
+                Assert.That(content, Is.Not.Null);
                 string[] strings = content.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 // Verify expected number of entries in CloudBlob
                 Assert.That(strings.Length, Is.EqualTo(3));

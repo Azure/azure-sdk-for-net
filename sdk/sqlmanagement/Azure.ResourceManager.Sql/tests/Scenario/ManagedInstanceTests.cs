@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName,vnetName,DefaultLocation,_resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
             Assert.That(managedInstance.Data.Name, Is.EqualTo(managedInstanceName));
             Assert.That(managedInstance.Data.Location.ToString(), Is.EqualTo("westus2"));
 
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 3.Get
             var getManagedInstance = await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName);
-            Assert.IsNotNull(getManagedInstance.Value.Data);
+            Assert.That(getManagedInstance.Value.Data, Is.Not.Null);
             Assert.That(getManagedInstance.Value.Data.Name, Is.EqualTo(managedInstanceName));
             Assert.That(getManagedInstance.Value.Data.Location.ToString(), Is.EqualTo("westus2"));
 
             // 4.GetAll
             var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(managedInstanceName));
             Assert.That(list.FirstOrDefault().Data.Location.ToString(), Is.EqualTo("westus2"));
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql.Tests
             // 5.Delte
             await managedInstance.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

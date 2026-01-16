@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.That(bindingData["EnqueuedTimeUtc"], Is.EqualTo(evt.EnqueuedTime.DateTime));
             Assert.That(bindingData["Properties"], Is.SameAs(evt.Properties));
             IDictionary<string, object> bindingDataSysProps = bindingData["SystemProperties"] as Dictionary<string, object>;
-            Assert.NotNull(bindingDataSysProps);
+            Assert.That(bindingDataSysProps, Is.Not.Null);
             Assert.That(bindingData["PartitionKey"], Is.EqualTo(bindingDataSysProps["PartitionKey"]));
             Assert.That(bindingData["Offset"], Is.EqualTo(offsetLong.ToString(CultureInfo.InvariantCulture)));
             Assert.That(bindingData["SequenceNumber"], Is.EqualTo(bindingDataSysProps["SequenceNumber"]));

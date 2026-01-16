@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
 
             var response = await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
             Assert.That(response.Value.CallConnectionProperties.MediaSubscriptionId, Is.Null);
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
 
             var response = callAutomationClient.AnswerCall(incomingCallContext, callbackUri);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
             Assert.That(response.Value.CallConnectionProperties.MediaSubscriptionId, Is.Null);
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallingServer
             };
 
             var response = await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
             Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
@@ -74,7 +74,7 @@ namespace Azure.Communication.CallingServer
             };
 
             var response = callAutomationClient.AnswerCall(options);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
             Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
@@ -88,7 +88,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
@@ -99,7 +99,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.AnswerCall(incomingCallContext, callbackUri));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
             var response = await callAutomationClient.RedirectCallAsync(incomingCallContext, target).ConfigureAwait(false);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
             var response = callAutomationClient.RedirectCall(incomingCallContext, target);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RedirectCallAsync(incomingCallContext, target).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RedirectCall(incomingCallContext, target));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
             var response = await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
@@ -165,7 +165,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
             var response = callAutomationClient.RejectCall(incomingCallContext, reason);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
@@ -176,7 +176,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -187,7 +187,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RejectCall(incomingCallContext, reason));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -199,7 +199,7 @@ namespace Azure.Communication.CallingServer
 
             var response = await callAutomationClient.CreateCallAsync(source, targets, callbackUri).ConfigureAwait(false);
             CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
             Assert.That(result.CallConnectionProperties.MediaSubscriptionId, Is.Null);
@@ -214,7 +214,7 @@ namespace Azure.Communication.CallingServer
 
             var response = callAutomationClient.CreateCall(source, targets, callbackUri);
             CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
             Assert.That(result.CallConnectionProperties.MediaSubscriptionId, Is.Null);
@@ -237,7 +237,7 @@ namespace Azure.Communication.CallingServer
 
             var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
             CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
             Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
@@ -260,7 +260,7 @@ namespace Azure.Communication.CallingServer
 
             var response = callAutomationClient.CreateCall(options);
             CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
             Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
@@ -274,7 +274,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.CreateCallAsync(source, targets, callbackUri).ConfigureAwait(false));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -285,7 +285,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.CreateCall(source, targets, callbackUri));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
@@ -295,7 +295,7 @@ namespace Azure.Communication.CallingServer
         {
             var response = new CallAutomationClient(ConnectionString).GetCallConnection(callConnectionId);
             CallConnection result = (CallConnection)response;
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.CallConnectionId, Is.EqualTo(callConnectionId));
         }
 
@@ -304,31 +304,31 @@ namespace Azure.Communication.CallingServer
         public void GetCallRecording()
         {
             var response = new CallAutomationClient(ConnectionString).GetCallRecording();
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         private static void ValidateCreateCallResult(CreateCallResult createCallResult)
         {
-            Assert.NotNull(createCallResult);
-            Assert.NotNull(createCallResult.CallConnection);
+            Assert.That(createCallResult, Is.Not.Null);
+            Assert.That(createCallResult.CallConnection, Is.Not.Null);
             Assert.That(createCallResult.CallConnection.CallConnectionId, Is.EqualTo("callConnectionId"));
             ValidateCallConnectionProperties(createCallResult.CallConnectionProperties);
         }
 
         private static void ValidateAnswerCallResult(AnswerCallResult answerCallResult)
         {
-            Assert.NotNull(answerCallResult);
-            Assert.NotNull(answerCallResult.CallConnection);
+            Assert.That(answerCallResult, Is.Not.Null);
+            Assert.That(answerCallResult.CallConnection, Is.Not.Null);
             Assert.That(answerCallResult.CallConnection.CallConnectionId, Is.EqualTo("callConnectionId"));
             ValidateCallConnectionProperties(answerCallResult.CallConnectionProperties);
         }
 
         private static void ValidateCallConnectionProperties(CallConnectionProperties properties)
         {
-            Assert.NotNull(properties);
+            Assert.That(properties, Is.Not.Null);
             Assert.That(properties.CallConnectionId, Is.EqualTo("callConnectionId"));
             Assert.That(properties.CallConnectionState, Is.EqualTo(CallConnectionState.Connecting));
-            Assert.NotNull(properties.CallSource);
+            Assert.That(properties.CallSource, Is.Not.Null);
             Assert.That(properties.CallSource.Identifier.RawId, Is.EqualTo("dummySourceUser"));
             Assert.That(properties.ServerCallId, Is.EqualTo("serverCallId"));
             Assert.That(properties.Targets.Count, Is.EqualTo(1));

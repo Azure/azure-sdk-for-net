@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var keys = await communication.GetKeysAsync();
-            Assert.NotNull(keys.Value.PrimaryKey);
-            Assert.NotNull(keys.Value.SecondaryKey);
-            Assert.NotNull(keys.Value.PrimaryConnectionString);
-            Assert.NotNull(keys.Value.SecondaryConnectionString);
+            Assert.That(keys.Value.PrimaryKey, Is.Not.Null);
+            Assert.That(keys.Value.SecondaryKey, Is.Not.Null);
+            Assert.That(keys.Value.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys.Value.SecondaryConnectionString, Is.Not.Null);
         }
 
         // [Test]
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.Communication.Tests
             var parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Primary };
             var newkeys = await communication.RegenerateKeyAsync(parameter);
             Assert.That(newkeys.Value.PrimaryKey, Is.EqualTo(primaryKey));
-            Assert.NotNull(primaryConnectionString, keys.Value.PrimaryConnectionString);
+            Assert.That(primaryConnectionString, Is.Not.Null, keys.Value.PrimaryConnectionString);
             parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Secondary };
             newkeys = await communication.RegenerateKeyAsync(parameter);
-            Assert.NotNull(secondaryKey, keys.Value.SecondaryKey);
-            Assert.NotNull(secondaryConnectionString, keys.Value.SecondaryConnectionString);
+            Assert.That(secondaryKey, Is.Not.Null, keys.Value.SecondaryKey);
+            Assert.That(secondaryConnectionString, Is.Not.Null, keys.Value.SecondaryConnectionString);
         }
 
         [Test]
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var parameter = new LinkNotificationHubContent(new ResourceIdentifier(((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsResourceId),
                 ((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsConnectionString);
             var hub = await communication.LinkNotificationHubAsync(parameter);
-            Assert.NotNull(hub.Value.ResourceId);
+            Assert.That(hub.Value.ResourceId, Is.Not.Null);
         }
 
         [Test]
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var communicationService = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            Assert.IsNotNull(communicationService);
+            Assert.That(communicationService, Is.Not.Null);
             Assert.That(communicationService.Data.Name, Is.EqualTo(communicationServiceName));
             Assert.That(communicationService.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
             Assert.That(communicationService.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 Tags = { { "newtag", "newvalue" } }
             };
             var communication2 = (await communication1.UpdateAsync(patch)).Value;
-            Assert.IsNotNull(communication2);
+            Assert.That(communication2, Is.Not.Null);
             Assert.That(communication2.Data.Tags.FirstOrDefault().Key, Is.EqualTo("newtag"));
             Assert.That(communication2.Data.Name, Is.EqualTo(communication1.Data.Name));
         }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetCommunicationServiceResources();
             await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var communicationService = await collection.GetAsync(communicationServiceName);
-            Assert.IsNotNull(communicationService);
+            Assert.That(communicationService, Is.Not.Null);
             Assert.That(communicationService.Value.Data.Name, Is.EqualTo(communicationServiceName));
             Assert.That(communicationService.Value.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
             Assert.That(communicationService.Value.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var list = await _resourceGroup.GetCommunicationServiceResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(communicationServiceName));
             Assert.That(list.FirstOrDefault().Data.Location.ToString(), Is.EqualTo(_location.ToString()));
             Assert.That(list.FirstOrDefault().Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));

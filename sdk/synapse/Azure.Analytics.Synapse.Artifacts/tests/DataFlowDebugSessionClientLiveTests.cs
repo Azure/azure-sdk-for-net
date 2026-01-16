@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             // SYNAPSE_API_ISSUE - Why do we need to pass in SessionId here?
             DataFlowDebugPackage debugPackage = new DataFlowDebugPackage () { DataFlow = new DataFlowDebugResource (flow.Resource.Properties), SessionId = debugSession.SessionId };
             AddDataFlowToDebugSessionResponse response = await debugClient.AddDataFlowAsync (debugPackage);
-            Assert.NotNull (response.JobVersion);
+            Assert.That(response.JobVersion, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableDataFlowDebugSession debugSession = await DisposableDataFlowDebugSession.Create (debugClient, this.Recording);
 
             AsyncPageable<DataFlowDebugSessionInfo> sessions = debugClient.QueryDataFlowDebugSessionsByWorkspaceAsync ();
-            Assert.GreaterOrEqual((await sessions.ToListAsync()).Count, 1);
+            Assert.That((await sessions.ToListAsync()).Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 prevents test from working")]

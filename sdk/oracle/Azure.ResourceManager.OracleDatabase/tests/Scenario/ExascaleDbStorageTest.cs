@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             // Get
             Response<ExascaleDBStorageVaultResource> getExaDbStorageResponse = await _collection.GetAsync(_exascaleDbStorageVaultName);
             ExascaleDBStorageVaultResource exaScaleStorage = getExaDbStorageResponse.Value;
-            Assert.IsNotNull(exaScaleStorage);
+            Assert.That(exaScaleStorage, Is.Not.Null);
             return exaScaleStorage;
         }
 

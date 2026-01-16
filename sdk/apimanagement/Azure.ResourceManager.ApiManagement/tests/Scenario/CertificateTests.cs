@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list certificates: there should be none
             var listResponse = await certCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listResponse);
-            Assert.IsEmpty(listResponse);
+            Assert.That(listResponse, Is.Not.Null);
+            Assert.That(listResponse, Is.Empty);
 
             // create new certificate
             string certificateId = Recording.GenerateAssetName("certificateId");
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
 
             var createResponse = (await certCollection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content)).Value;
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
             Assert.That(createResponse.Data.Name, Is.EqualTo(certificateId));
 
             // get the certificate to check is was created
             var getResponse = (await certCollection.GetAsync(certificateId)).Value;
-            Assert.NotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Data.Name, Is.EqualTo(certificateId));
             if (Mode == RecordedTestMode.Playback)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list certificates
             listResponse = await certCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listResponse);
+            Assert.That(listResponse, Is.Not.Null);
             Assert.That(listResponse.Count, Is.EqualTo(1));
 
             // remove the certificate

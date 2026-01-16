@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     gallery2 = gallery;
             }
 
-            Assert.NotNull(gallery1);
-            Assert.NotNull(gallery2);
+            Assert.That(gallery1, Is.Not.Null);
+            Assert.That(gallery2, Is.Not.Null);
         }
     }
 }

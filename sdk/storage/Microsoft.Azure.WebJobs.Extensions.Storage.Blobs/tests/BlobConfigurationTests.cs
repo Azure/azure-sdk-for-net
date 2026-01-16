@@ -49,10 +49,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("csblob"));
             Assert.That(result.BlobContainerName, Is.EqualTo("cscontainer"));
-            Assert.NotNull(result.BlobContainerName);
+            Assert.That(result.BlobContainerName, Is.Not.Null);
             Assert.That((bool)await result.ExistsAsync(), Is.False);
         }
 
@@ -83,10 +83,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("endpointblob"));
             Assert.That(result.BlobContainerName, Is.EqualTo("endpointcontainer"));
-            Assert.NotNull(result.BlobContainerName);
+            Assert.That(result.BlobContainerName, Is.Not.Null);
             Assert.That((bool)await result.ExistsAsync(), Is.False);
         }
 
@@ -117,10 +117,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("endpointblob"));
             Assert.That(result.BlobContainerName, Is.EqualTo("endpointcontainer"));
-            Assert.NotNull(result.BlobContainerName);
+            Assert.That(result.BlobContainerName, Is.Not.Null);
             Assert.That((bool)await result.ExistsAsync(), Is.False);
         }
 

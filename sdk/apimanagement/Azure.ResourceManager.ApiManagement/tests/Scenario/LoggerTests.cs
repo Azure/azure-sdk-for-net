@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // first create the event hub namespace
             var eventCollection = ResourceGroup.GetEventHubsNamespaces();
             var eventHubNamespace = (await eventCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubNameSpaceName, new EventHubsNamespaceData(AzureLocation.WestUS2))).Value;
-            Assert.NotNull(eventHubNamespace.Data.Name);
+            Assert.That(eventHubNamespace.Data.Name, Is.Not.Null);
 
             // then create eventhub
             var hubCollection = eventHubNamespace.GetEventHubs();
             var eventHub = (await hubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, new EventHubData())).Value;
-            Assert.NotNull(eventHub.Data.Name);
+            Assert.That(eventHub.Data.Name, Is.Not.Null);
 
             // create send policy auth rule
             string sendPolicy = Recording.GenerateAssetName("sendPolicy");
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var loggerContract = (await logCollection.CreateOrUpdateAsync(WaitUntil.Completed, newloggerId, loggerCreateParameters)).Value;
 
-            Assert.NotNull(loggerContract);
+            Assert.That(loggerContract, Is.Not.Null);
             Assert.That(loggerContract.Data.Name, Is.EqualTo(newloggerId));
             Assert.That(loggerContract.Data.IsBuffered, Is.True);
             Assert.That(loggerContract.Data.LoggerType, Is.EqualTo(LoggerType.AzureEventHub));
-            Assert.NotNull(loggerContract.Data.Credentials);
+            Assert.That(loggerContract.Data.Credentials, Is.Not.Null);
             Assert.That(loggerContract.Data.Credentials.Keys.Count, Is.EqualTo(2));
 
             var listLoggers = await logCollection.GetAllAsync().ToEnumerableAsync();
             // there should be one user
-            Assert.GreaterOrEqual(listLoggers.Count, 1);
+            Assert.That(listLoggers.Count, Is.GreaterThanOrEqualTo(1));
 
             // patch logger
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get to check it was patched
             loggerContract = await logCollection.GetAsync(newloggerId);
 
-            Assert.NotNull(loggerContract);
+            Assert.That(loggerContract, Is.Not.Null);
             Assert.That(loggerContract.Data.Name, Is.EqualTo(newloggerId));
             Assert.That(loggerContract.Data.Description, Is.EqualTo(patchedDescription));
-            Assert.NotNull(loggerContract.Data.Credentials);
+            Assert.That(loggerContract.Data.Credentials, Is.Not.Null);
 
             // delete the logger
             await loggerContract.DeleteAsync(WaitUntil.Completed, ETag.All);

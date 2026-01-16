@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void Call([Table(TableNameExpression)] ICollector<T> entities)
             {
-                Assert.NotNull(entities);
+                Assert.That(entities, Is.Not.Null);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             TableClient result = (await CallAsync<BindToTableClientProgram>()).Table;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo(TableName));
 
             Assert.That(await TableExistsAsync(TableName).ConfigureAwait(false), Is.True);

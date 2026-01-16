@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
         {
             var options = new TestClientOptions();
 
-            Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+            Assert.That(options.Transport, Is.InstanceOf<HttpClientTransport>());
         }
 #else
         [Test]
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests
         {
             var options = new TestClientOptions();
 
-            Assert.IsInstanceOf<HttpWebRequestTransport>(options.Transport);
+            Assert.That(options.Transport, Is.InstanceOf<HttpWebRequestTransport>());
             Assert.That(options.IsCustomTransportSet, Is.False);
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Core.Tests
 
                 var options = new TestClientOptions();
 
-                Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+                Assert.That(options.Transport, Is.InstanceOf<HttpClientTransport>());
                 Assert.That(options.IsCustomTransportSet, Is.False);
             }
             finally
@@ -140,7 +140,7 @@ namespace Azure.Core.Tests
 
                 var options = new TestClientOptions();
 
-                Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+                Assert.That(options.Transport, Is.InstanceOf<HttpClientTransport>());
                 Assert.That(options.IsCustomTransportSet, Is.False);
             }
             finally
@@ -223,13 +223,13 @@ namespace Azure.Core.Tests
 
             if (useCustomOptions)
             {
-                Assert.NotNull(target.Diagnostics);
+                Assert.That(target.Diagnostics, Is.Not.Null);
                 Assert.That(target.Diagnostics, Is.TypeOf(typeof(TestDiagnosticsOptions)));
                 Assert.That(ClientOptions.Default.Diagnostics, Is.Not.EqualTo(target.Diagnostics));
             }
             else
             {
-                Assert.IsNull(target.Diagnostics);
+                Assert.That(target.Diagnostics, Is.Null);
             }
         }
 

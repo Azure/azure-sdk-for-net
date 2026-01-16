@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             var getPolicyOperation = await vault.GetDataReplicationPolicies().GetAsync(policyName);
             var policyModelResource = getPolicyOperation.Value;
 
-            Assert.IsNotNull(policyModelResource);
+            Assert.That(policyModelResource, Is.Not.Null);
 
             // Delete
             var deletePolicyOperation = await policyModelResource.DeleteAsync(WaitUntil.Completed);

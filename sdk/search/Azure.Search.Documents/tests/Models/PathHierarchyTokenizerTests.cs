@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Tests.Models
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
             PathHierarchyTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement) as PathHierarchyTokenizer;
 
-            Assert.NotNull(sut);
+            Assert.That(sut, Is.Not.Null);
             Assert.That(sut.ODataType, Is.EqualTo(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2"));
             Assert.That(sut.Name, Is.EqualTo("test"));
             Assert.That(sut.Delimiter, Is.EqualTo('/'));

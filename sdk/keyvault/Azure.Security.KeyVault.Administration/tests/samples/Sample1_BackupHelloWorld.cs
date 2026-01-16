@@ -65,8 +65,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);
-            Assert.That(restoreResult.Value.StartTime, Is.Not.EqualTo(default));
-            Assert.That(restoreResult.Value.EndTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.Value.StartTime, Is.Not.EqualTo(default(DateTimeOffset)));
+            Assert.That(restoreResult.Value.EndTime, Is.Not.EqualTo(default(DateTimeOffset)));
 
             await WaitForOperationAsync();
         }

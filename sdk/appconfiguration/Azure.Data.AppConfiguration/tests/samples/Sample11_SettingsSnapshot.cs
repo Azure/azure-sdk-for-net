@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
                 Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
-                Assert.NotNull(retrievedSnapshot);
+                Assert.That(retrievedSnapshot, Is.Not.Null);
                 Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
@@ -76,7 +76,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
                 Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
-                Assert.NotNull(retrievedSnapshot);
+                Assert.That(retrievedSnapshot, Is.Not.Null);
                 Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
@@ -120,7 +120,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
                 Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
-                Assert.NotNull(retrievedSnapshot);
+                Assert.That(retrievedSnapshot, Is.Not.Null);
                 Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
@@ -157,7 +157,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
                 #endregion
 
-                Assert.NotNull(retrievedSnapshot);
+                Assert.That(retrievedSnapshot, Is.Not.Null);
                 Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
@@ -186,7 +186,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 var createdSnapshot = operation.Value;
                 Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
 
-                Assert.NotNull(createdSnapshot);
+                Assert.That(createdSnapshot, Is.Not.Null);
                 Assert.That(createdSnapshot.Name, Is.EqualTo(configSnapshotName));
                 Assert.That(createdSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Ready));
 
@@ -199,7 +199,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Archived configuration snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
                 #endregion
 
-                Assert.NotNull(archivedSnapshot);
+                Assert.That(archivedSnapshot, Is.Not.Null);
                 Assert.That(archivedSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Archived));
             }
             finally
@@ -228,7 +228,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 var createdSnapshot = operation.Value;
                 Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
 
-                Assert.NotNull(createdSnapshot);
+                Assert.That(createdSnapshot, Is.Not.Null);
                 Assert.That(createdSnapshot.Name, Is.EqualTo(configSnapshotName));
                 Assert.That(createdSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Ready));
 
@@ -246,7 +246,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Recovered configuration snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
                 #endregion
 
-                Assert.NotNull(recoveredSnapshot);
+                Assert.That(recoveredSnapshot, Is.Not.Null);
                 Assert.That(recoveredSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Ready));
             }
             finally
@@ -275,7 +275,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 var createdFirstSnapshot = firstOperation.Value;
                 Console.WriteLine($"Created configuration snapshot: {createdFirstSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
-                Assert.NotNull(createdFirstSnapshot);
+                Assert.That(createdFirstSnapshot, Is.Not.Null);
                 Assert.That(createdFirstSnapshot.Name, Is.EqualTo(firstSnapshotName));
 
                 var secondSnapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(secondSetting.Key) };
@@ -284,7 +284,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 var createdSecondSnapshot = secondOperation.Value;
                 Console.WriteLine($"Created configuration snapshot: {createdSecondSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
-                Assert.NotNull(createdSecondSnapshot);
+                Assert.That(createdSecondSnapshot, Is.Not.Null);
                 Assert.That(createdSecondSnapshot.Name, Is.EqualTo(secondSnapshotName));
 
                 #region Snippet:AzConfigSample11_GetSnapshots
@@ -297,7 +297,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Total number of snapshots retrieved: {count}");
                 #endregion
 
-                Assert.GreaterOrEqual(count, 2);
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
             }
             finally
             {
@@ -341,7 +341,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Total number of retrieved Configuration Settings for snapshot {snapshotName}: {count}");
                 #endregion
 
-                Assert.GreaterOrEqual(count, 2);
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
             }
             finally
             {

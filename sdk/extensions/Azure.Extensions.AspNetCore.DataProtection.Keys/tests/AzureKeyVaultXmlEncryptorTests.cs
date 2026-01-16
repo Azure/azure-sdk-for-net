@@ -37,8 +37,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var value = encryptedElement.Element("value");
 
             mock.VerifyAll();
-            Assert.NotNull(result);
-            Assert.NotNull(value);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(value, Is.Not.Null);
             Assert.That(result.DecryptorType, Is.EqualTo(typeof(AzureKeyVaultXmlDecryptor)));
             Assert.That(encryptedElement.Element("value").Value, Is.EqualTo("VfLYL2prdymawfucH3Goso0zkPbQ4/GKqUsj2TRtLzsBPz7p7cL1SQaY6I29xSlsPQf6IjxHSz4sDJ427GvlLQ=="));
             Assert.That(encryptedElement.Element("iv").Value, Is.EqualTo("AAECAwQFBgcICQoLDA0ODw=="));
@@ -73,7 +73,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
                 </encryptedKey>"));
 
             mock.VerifyAll();
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.ToString(), Is.EqualTo("<Element />"));
         }
 

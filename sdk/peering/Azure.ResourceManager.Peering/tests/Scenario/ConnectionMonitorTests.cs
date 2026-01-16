@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Tests
             string connectionMonitorTestName = Recording.GenerateAssetName("connect");
             var data = new ConnectionMonitorTestData();
             var connect = await _connectionMonitorTestCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorTestName, data);
-            Assert.IsNotNull(connect);
+            Assert.That(connect, Is.Not.Null);
             Assert.That(connect.Value.Data.Name, Is.EqualTo(connectionMonitorTestName));
 
             // Exist
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Peering.Tests
 
             // Get
             var getResponse = await _connectionMonitorTestCollection.GetAsync(connectionMonitorTestName);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Value.Data.Name, Is.EqualTo(connectionMonitorTestName));
 
             // GetAll
             var list = await _connectionMonitorTestCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
-            Assert.IsNotNull(list.First(item => item.Data.Name == connectionMonitorTestName));
+            Assert.That(list, Is.Empty);
+            Assert.That(list.First(item => item.Data.Name == connectionMonitorTestName), Is.Not.Null);
 
             // Delete
             await connect.Value.DeleteAsync(WaitUntil.Completed);

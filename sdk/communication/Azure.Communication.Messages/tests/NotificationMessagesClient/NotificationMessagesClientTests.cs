@@ -63,8 +63,8 @@ namespace Azure.Communication.Messages.Tests
             SendMessageResult sendMessageResult = await notificationMessagesClient.SendAsync(content);
 
             //assert
-            Assert.IsNotNull(sendMessageResult.Receipts[0].MessageId);
-            Assert.IsNotNull(sendMessageResult.Receipts[0].To);
+            Assert.That(sendMessageResult.Receipts[0].MessageId, Is.Not.Null);
+            Assert.That(sendMessageResult.Receipts[0].To, Is.Not.Null);
             Assert.That(sendMessageResult.Receipts[0].MessageId, Is.EqualTo("d53605de-2f6e-437d-9e40-8d83b2111cb8"));
             Assert.That(sendMessageResult.Receipts[0].To, Is.EqualTo("+1(123)456-7890"));
         }

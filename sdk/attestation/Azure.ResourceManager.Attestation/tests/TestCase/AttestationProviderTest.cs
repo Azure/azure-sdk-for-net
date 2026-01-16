@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Attestation.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
             //4.Exist
             Assert.That((bool)await providrerCollection.ExistsAsync(providerName), Is.True);
             Assert.That((bool)await providrerCollection.ExistsAsync(providerName + "1"), Is.False);

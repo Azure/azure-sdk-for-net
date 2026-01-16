@@ -330,7 +330,7 @@ namespace Azure.Storage.Blobs.Test
             AssertSasUserDelegationKey(identitySasBlob.Uri, userDelegationKey.Value);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]

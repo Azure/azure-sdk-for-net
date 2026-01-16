@@ -93,7 +93,7 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
             }
 
-            Assert.IsNotEmpty(transport.SingleRequest.ClientRequestId);
+            Assert.That(transport.SingleRequest.ClientRequestId, Is.Not.Empty);
             Assert.That(transport.SingleRequest.ClientRequestId, Is.Not.EqualTo("custom-id"));
         }
 

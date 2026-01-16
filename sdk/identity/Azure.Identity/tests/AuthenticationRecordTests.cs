@@ -24,11 +24,11 @@ namespace Azure.Identity.Tests
                 $"{Guid.NewGuid()}.{Guid.NewGuid()}", Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             IAccount account = (AuthenticationAccount)record;
-            Assert.NotNull(account.Username);
-            Assert.NotNull(account.Environment);
-            Assert.NotNull(account.HomeAccountId.Identifier);
-            Assert.NotNull(account.HomeAccountId.ObjectId);
-            Assert.NotNull(account.HomeAccountId.TenantId);
+            Assert.That(account.Username, Is.Not.Null);
+            Assert.That(account.Environment, Is.Not.Null);
+            Assert.That(account.HomeAccountId.Identifier, Is.Not.Null);
+            Assert.That(account.HomeAccountId.ObjectId, Is.Not.Null);
+            Assert.That(account.HomeAccountId.TenantId, Is.Not.Null);
         }
 
         [Test]

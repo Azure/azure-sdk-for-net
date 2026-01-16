@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             BigDataPoolsClient client = CreateClient();
             BigDataPoolResourceInfoListResult pools = await client.ListAsync ();
-            Assert.GreaterOrEqual(1, pools.Value.Count);
+            Assert.That(1, Is.GreaterThanOrEqualTo(pools.Value.Count));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot be automated due to the inability to configure infrastructure to test against.")]

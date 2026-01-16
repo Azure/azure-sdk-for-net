@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             TrafficManagerHeatMapResource heatMapModelResource = await DefaultHeatmapModelResource.GetAsync();
 
-            Assert.IsNotNull(heatMapModelResource);
+            Assert.That(heatMapModelResource, Is.Not.Null);
             Assert.That(heatMapModelResource.HasData, Is.True);
-            Assert.IsNotNull(heatMapModelResource.Data);
+            Assert.That(heatMapModelResource.Data, Is.Not.Null);
             Assert.That(heatMapModelResource.Data.TrafficFlows.Count > 0, Is.True);
         }
 
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                     topLeft: new List<double> { -18.910742, -47.858517 },
                     botRight: new List<double> { -24.341378, -37.964283 });
 
-            Assert.IsNotNull(heatMapModelResource);
+            Assert.That(heatMapModelResource, Is.Not.Null);
             Assert.That(heatMapModelResource.HasData, Is.True);
-            Assert.IsNotNull(heatMapModelResource.Data);
+            Assert.That(heatMapModelResource.Data, Is.Not.Null);
             Assert.That(heatMapModelResource.Data.TrafficFlows.Count > 0, Is.True);
 
             // Mariupol
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                     topLeft: new List<double> { 47.198208, 37.385117 },
                     botRight: new List<double> { 47.072374, 37.707283 });
 
-            Assert.IsNotNull(heatMapModelResource);
+            Assert.That(heatMapModelResource, Is.Not.Null);
             Assert.That(heatMapModelResource.HasData, Is.True);
-            Assert.IsNotNull(heatMapModelResource.Data);
+            Assert.That(heatMapModelResource.Data, Is.Not.Null);
             Assert.That(heatMapModelResource.Data.TrafficFlows.Count, Is.EqualTo(0));
         }
 
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             TrafficManagerHeatMapResource heatMapModelResource =
                 await DefaultHealmapModelCollection.GetAsync(Models.TrafficManagerHeatMapType.Default);
 
-            Assert.IsNotNull(heatMapModelResource);
+            Assert.That(heatMapModelResource, Is.Not.Null);
             Assert.That(heatMapModelResource.HasData, Is.True);
-            Assert.IsNotNull(heatMapModelResource.Data);
+            Assert.That(heatMapModelResource.Data, Is.Not.Null);
             Assert.That(heatMapModelResource.Data.TrafficFlows.Count > 0, Is.True);
         }
 

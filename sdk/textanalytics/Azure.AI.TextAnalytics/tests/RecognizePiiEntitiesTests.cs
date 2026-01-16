@@ -267,28 +267,28 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults = resultCollection.RecognizePiiEntitiesResults;
 
-            Assert.IsNotNull(RecognizePiiEntitiesActionsResults);
+            Assert.That(RecognizePiiEntitiesActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "RecognizePiiEntities", "RecognizePiiEntitiesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, RecognizePiiEntitiesActionsResults.Select(result => result.ActionName));
+            Assert.That(RecognizePiiEntitiesActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         private void ValidateInDocumenResult(PiiEntityCollection entities, List<string> minimumExpectedOutput)
         {
-            Assert.IsNotNull(entities.Warnings);
+            Assert.That(entities.Warnings, Is.Not.Null);
             Assert.That(entities.RedactedText, Is.Not.Null.And.Not.Empty);
-            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            Assert.That(entities.Count, Is.GreaterThanOrEqualTo(minimumExpectedOutput.Count));
             foreach (PiiEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsNotNull(entity.Category);
-                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
-                Assert.GreaterOrEqual(entity.Offset, 0);
-                Assert.Greater(entity.Length, 0);
+                Assert.That(entity.Category, Is.Not.Null);
+                Assert.That(entity.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+                Assert.That(entity.Offset, Is.GreaterThanOrEqualTo(0));
+                Assert.That(entity.Length, Is.GreaterThan(0));
 
                 if (entity.SubCategory != null)
                 {
-                    Assert.IsNotEmpty(entity.SubCategory);
+                    Assert.That(entity.SubCategory, Is.Not.Empty);
                 }
             }
             foreach (var text in minimumExpectedOutput)
@@ -306,14 +306,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
             foreach (RecognizePiiEntitiesResult result in results)
             {
@@ -321,12 +321,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.That(result.HasError, Is.False);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                Assert.That(result.Statistics, Is.Not.Null);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
                 }
                 else
                 {

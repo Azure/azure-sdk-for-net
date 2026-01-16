@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableNotebook notebook = await DisposableNotebook.Create (client, this.Recording);
 
             IList<NotebookResource> notebooks = await client.GetNotebooksByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(notebooks.Count, 1);
+            Assert.That(notebooks.Count, Is.GreaterThanOrEqualTo(1));
 
             foreach (var expectedNotebook in notebooks)
             {
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             await using DisposableNotebook notebook = await DisposableNotebook.Create (client, this.Recording);
             AsyncPageable<NotebookResource> summary = client.GetNotebookSummaryByWorkSpaceAsync ();
-            Assert.GreaterOrEqual((await summary.ToListAsync()).Count, 1);
+            Assert.That((await summary.ToListAsync()).Count, Is.GreaterThanOrEqualTo(1));
         }
     }
 }

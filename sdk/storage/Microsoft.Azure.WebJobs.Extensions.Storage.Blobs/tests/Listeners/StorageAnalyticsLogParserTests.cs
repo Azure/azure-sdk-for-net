@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = parser.TryParseLogEntry(line);
 
-            Assert.NotNull(entry);
+            Assert.That(entry, Is.Not.Null);
             Assert.That(entry.RequestedObjectKey, Is.EqualTo(blobPath));
         }
 
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             Version version = StorageAnalyticsLogParser.TryParseVersion(line);
 
-            Assert.NotNull(version);
+            Assert.That(version, Is.Not.Null);
             Assert.That(version, Is.EqualTo(new Version(major, minor)));
         }
 

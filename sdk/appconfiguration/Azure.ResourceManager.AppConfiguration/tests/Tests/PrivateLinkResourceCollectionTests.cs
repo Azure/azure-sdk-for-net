@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             AppConfigurationPrivateLinkResource linkResource = await ConfigStore.GetAppConfigurationPrivateLinkResources().GetAsync("configurationStores");
 
-            Assert.NotNull(linkResource);
+            Assert.That(linkResource, Is.Not.Null);
         }
 
         [Ignore("Error resource id without '/' in the beginning")]

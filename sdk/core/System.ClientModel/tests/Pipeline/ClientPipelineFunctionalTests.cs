@@ -186,7 +186,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
             Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
         }
 
-        Assert.Greater(reqNum, requestCount);
+        Assert.That(reqNum, Is.GreaterThan(requestCount));
     }
 
     [Test]

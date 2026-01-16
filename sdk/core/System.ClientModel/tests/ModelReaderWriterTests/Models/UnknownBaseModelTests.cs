@@ -38,8 +38,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.That(model2.Name, Is.EqualTo(model.Name));
             var rawData = GetRawData(model);
             var rawData2 = GetRawData(model2);
-            Assert.IsNotNull(rawData);
-            Assert.IsNotNull(rawData2);
+            Assert.That(rawData, Is.Not.Null);
+            Assert.That(rawData2, Is.Not.Null);
             if (format == "J")
             {
                 Assert.That(rawData2.Count, Is.EqualTo(rawData.Count));
@@ -63,7 +63,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.That(model.Kind, Is.EqualTo("Z"));
             Assert.That(model.Name, Is.EqualTo("zmodel"));
             var rawData = GetRawData(model);
-            Assert.IsNotNull(rawData);
+            Assert.That(rawData, Is.Not.Null);
             if (format == "J")
             {
                 Assert.That(rawData["zProperty"].ToObjectFromJson<double>(), Is.EqualTo(1.5));

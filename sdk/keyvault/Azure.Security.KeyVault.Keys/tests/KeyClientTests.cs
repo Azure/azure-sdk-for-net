@@ -144,7 +144,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                             .WithContent(@"{""error"":{""code"":""Unauthorized"",""message"":""Error validating token: IDX10223""}}");
 
                     case 2:
-                        Assert.IsNotNull(request.Content);
+                        Assert.That(request.Content, Is.Not.Null);
                         Assert.That(request.Content.TryComputeLength(out long length), Is.True);
                         Assert.That(length, Is.Not.EqualTo(0));
 
@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeySize = 2048,
             });
 
-            Assert.IsNotNull(key.Key);
+            Assert.That(key.Key, Is.Not.Null);
         }
 
         [Test]

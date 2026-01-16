@@ -251,10 +251,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
             Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.That(results.Statistics.ValidDocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.DocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.TransactionCount, Is.Not.Null);
+            Assert.That(results.Statistics.InvalidDocumentCount, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -273,10 +273,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
             Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.That(results.Statistics.ValidDocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.DocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.TransactionCount, Is.Not.Null);
+            Assert.That(results.Statistics.InvalidDocumentCount, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -295,10 +295,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
             Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.That(results.Statistics.ValidDocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.DocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.TransactionCount, Is.Not.Null);
+            Assert.That(results.Statistics.InvalidDocumentCount, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -319,10 +319,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
             Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.That(results.Statistics.ValidDocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.DocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.TransactionCount, Is.Not.Null);
+            Assert.That(results.Statistics.InvalidDocumentCount, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -386,10 +386,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
             Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.That(results.Statistics.ValidDocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.DocumentCount, Is.Not.Null);
+            Assert.That(results.Statistics.TransactionCount, Is.Not.Null);
+            Assert.That(results.Statistics.InvalidDocumentCount, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -470,10 +470,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
-            Assert.IsNotNull(AnalyzeSentimentActionsResults);
+            Assert.That(AnalyzeSentimentActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "AnalyzeSentiment", "AnalyzeSentimentWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, AnalyzeSentimentActionsResults.Select(result => result.ActionName));
+            Assert.That(AnalyzeSentimentActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -532,52 +532,52 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = default)
         {
-            Assert.IsNotNull(doc.ConfidenceScores.Positive);
-            Assert.IsNotNull(doc.ConfidenceScores.Neutral);
-            Assert.IsNotNull(doc.ConfidenceScores.Negative);
+            Assert.That(doc.ConfidenceScores.Positive, Is.Not.Null);
+            Assert.That(doc.ConfidenceScores.Neutral, Is.Not.Null);
+            Assert.That(doc.ConfidenceScores.Negative, Is.Not.Null);
             // TODO enable again. Issue tracking work: https://github.com/Azure/azure-sdk-for-net/issues/28246
             // Assert.IsTrue(CheckTotalConfidenceScoreValue(doc.ConfidenceScores));
 
             foreach (var sentence in doc.Sentences)
             {
-                Assert.IsNotNull(sentence.Text);
-                Assert.IsNotNull(sentence.ConfidenceScores.Positive);
-                Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
-                Assert.IsNotNull(sentence.ConfidenceScores.Negative);
+                Assert.That(sentence.Text, Is.Not.Null);
+                Assert.That(sentence.ConfidenceScores.Positive, Is.Not.Null);
+                Assert.That(sentence.ConfidenceScores.Neutral, Is.Not.Null);
+                Assert.That(sentence.ConfidenceScores.Negative, Is.Not.Null);
                 // TODO enable again. Issue tracking work: https://github.com/Azure/azure-sdk-for-net/issues/28246
                 // Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
 
-                Assert.IsNotNull(sentence.Opinions);
+                Assert.That(sentence.Opinions, Is.Not.Null);
                 if (opinionMining)
                 {
-                    Assert.Greater(sentence.Opinions.Count(), 0);
+                    Assert.That(sentence.Opinions.Count(), Is.GreaterThan(0));
                     foreach (var opinions in sentence.Opinions)
                     {
                         // target
-                        Assert.IsNotNull(opinions.Target);
-                        Assert.IsNotNull(opinions.Target.Text);
-                        Assert.IsNotNull(opinions.Target.ConfidenceScores.Positive);
-                        Assert.IsNotNull(opinions.Target.ConfidenceScores.Negative);
+                        Assert.That(opinions.Target, Is.Not.Null);
+                        Assert.That(opinions.Target.Text, Is.Not.Null);
+                        Assert.That(opinions.Target.ConfidenceScores.Positive, Is.Not.Null);
+                        Assert.That(opinions.Target.ConfidenceScores.Negative, Is.Not.Null);
                         // Neutral should always be 0
                         Assert.That(opinions.Target.ConfidenceScores.Neutral, Is.EqualTo(0));
                         Assert.That(CheckTotalConfidenceScoreValue(opinions.Target.ConfidenceScores), Is.True);
-                        Assert.IsNotNull(opinions.Target.Offset);
-                        Assert.IsNotNull(opinions.Target.Length);
+                        Assert.That(opinions.Target.Offset, Is.Not.Null);
+                        Assert.That(opinions.Target.Length, Is.Not.Null);
 
                         // assessment
-                        Assert.IsNotNull(opinions.Assessments);
-                        Assert.Greater(opinions.Assessments.Count(), 0);
+                        Assert.That(opinions.Assessments, Is.Not.Null);
+                        Assert.That(opinions.Assessments.Count(), Is.GreaterThan(0));
                         foreach (var opinion in opinions.Assessments)
                         {
-                            Assert.IsNotNull(opinion.Text);
-                            Assert.IsNotNull(opinion.ConfidenceScores.Positive);
-                            Assert.IsNotNull(opinion.ConfidenceScores.Negative);
+                            Assert.That(opinion.Text, Is.Not.Null);
+                            Assert.That(opinion.ConfidenceScores.Positive, Is.Not.Null);
+                            Assert.That(opinion.ConfidenceScores.Negative, Is.Not.Null);
                             // Neutral should always be 0
                             Assert.That(opinion.ConfidenceScores.Neutral, Is.EqualTo(0));
                             Assert.That(CheckTotalConfidenceScoreValue(opinion.ConfidenceScores), Is.True);
-                            Assert.IsNotNull(opinion.IsNegated);
-                            Assert.IsNotNull(opinion.Offset);
-                            Assert.IsNotNull(opinion.Length);
+                            Assert.That(opinion.IsNegated, Is.Not.Null);
+                            Assert.That(opinion.Offset, Is.Not.Null);
+                            Assert.That(opinion.Length, Is.Not.Null);
                         }
                     }
                 }

@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
                 byte[] expected = reader.ReadBytes((int)fileStream.Length);
                 byte[] actual = headerStream.ToArray();
 
-                CollectionAssert.AreEqual(expected, actual);
+                Assert.That(actual, Is.EqualTo(expected).AsCollection);
             }
         }
 
@@ -101,8 +101,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.That(deserialized.JobStatus, Is.EqualTo(DefaultJobStatus));
             Assert.That(deserialized.ParentSourcePath, Is.EqualTo(DefaultSourcePath));
             Assert.That(deserialized.ParentDestinationPath, Is.EqualTo(DefaultDestinationPath));
-            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, deserialized.SourceCheckpointDetails);
-            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, deserialized.DestinationCheckpointDetails);
+            Assert.That(deserialized.SourceCheckpointDetails, Is.EqualTo(MockResourceCheckpointDetails.DefaultInstance.Bytes).AsCollection);
+            Assert.That(deserialized.DestinationCheckpointDetails, Is.EqualTo(MockResourceCheckpointDetails.DefaultInstance.Bytes).AsCollection);
         }
     }
 }

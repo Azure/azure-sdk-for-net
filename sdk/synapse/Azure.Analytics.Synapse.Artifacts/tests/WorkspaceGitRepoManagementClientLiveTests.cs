@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string accessToken = "";
             GitHubAccessTokenRequest request = new GitHubAccessTokenRequest (clientID, accessToken, "https://github.com/login/oauth/access_token");
             GitHubAccessTokenResponse response = await client.GetGitHubAccessTokenAsync (request);
-            Assert.NotNull (response.GitHubAccessToken);
+            Assert.That(response.GitHubAccessToken, Is.Not.Null);
         }
     }
 }

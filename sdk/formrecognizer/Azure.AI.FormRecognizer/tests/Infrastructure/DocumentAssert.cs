@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 return;
             }
 
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
 
             Assert.That(actual.Type, Is.EqualTo(expected.Type));
             Assert.That(actual.Description, Is.EqualTo(expected.Description));
@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
             Assert.That(actual.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
 
-            CollectionAssert.AreEquivalent(expected.Tags, actual.Tags);
+            Assert.That(actual.Tags, Is.EquivalentTo(expected.Tags));
 
             AreEquivalent(expected.DocumentTypes, actual.DocumentTypes);
         }
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(actual.Description, Is.EqualTo(expected.Description));
             Assert.That(actual.BuildMode, Is.EqualTo(expected.BuildMode));
 
-            CollectionAssert.AreEquivalent(expected.FieldConfidence, actual.FieldConfidence);
+            Assert.That(actual.FieldConfidence, Is.EquivalentTo(expected.FieldConfidence));
 
             AreEquivalent(expected.FieldSchema, actual.FieldSchema);
         }

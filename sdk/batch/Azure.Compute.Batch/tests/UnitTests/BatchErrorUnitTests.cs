@@ -27,7 +27,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var result = (BatchError)mockResponse.Object;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Code, Is.EqualTo("ErrorCode"));
             Assert.That(result.Message.Value, Is.EqualTo("Error message"));
         }
@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var result = (BatchError)mockResponse.Object;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Code, Is.EqualTo("ErrorCode"));
             Assert.That(result.Message.Value, Is.EqualTo("Error message"));
             Assert.That(result.Values.Count, Is.EqualTo(2));
@@ -69,7 +69,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var result = (BatchError)mockResponse.Object;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Code, Is.Null);
             Assert.That(result.Message, Is.Null);
             Assert.That(result.Values.Count, Is.EqualTo(0));

@@ -80,11 +80,11 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             ChatResponse response = await chatClient.GetResponseAsync(messages);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Messages);
-            Assert.GreaterOrEqual(response.Messages.Count, 1);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Null);
+            Assert.That(response.Messages.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.IsNotNull(response.ConversationId);
+            Assert.That(response.ConversationId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -159,8 +159,8 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             await foreach (ChatResponseUpdate update in chatClient.GetStreamingResponseAsync(messages, options))
             {
-                Assert.IsNotNull(update);
-                Assert.IsNotNull(update.ConversationId);
+                Assert.That(update, Is.Not.Null);
+                Assert.That(update.ConversationId, Is.Not.Null);
                 if (update.Contents.Any(c => (optionsType == ChatOptionsTestType.WithTools && c is FunctionCallContent) || c is TextContent))
                 {
                     receivedUpdate = true;
@@ -221,10 +221,10 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
 
-            Assert.NotZero(annotations.Count);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Messages);
-            Assert.GreaterOrEqual(response.Messages.Count, 1);
+            Assert.That(annotations.Count, Is.Not.Zero);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Null);
+            Assert.That(response.Messages.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
         }
 
@@ -279,8 +279,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
 
                 ChatResponse response = await chatClient.GetResponseAsync(messages, new ChatOptions { ConversationId = thread.Id });
-                Assert.IsNotNull(response);
-                Assert.GreaterOrEqual(response.Messages.Count, 1);
+                Assert.That(response, Is.Not.Null);
+                Assert.That(response.Messages.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(response.Messages[0].Contents.Any(c => c is TextContent tc && tc.Text.Contains("bar")), Is.True);
             }
             else
@@ -330,9 +330,9 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             ChatResponse response = await chatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"), chatOptions);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Messages);
-            Assert.GreaterOrEqual(response.Messages.Count, 1);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Null);
+            Assert.That(response.Messages.Count, Is.GreaterThanOrEqualTo(1));
             Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
 
             List<string> functionNames = response.Messages[0].Contents
@@ -340,7 +340,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 .Select(c => c.Name)
                 .ToList();
 
-            Assert.Contains("GetFavouriteWord", functionNames);
+            Assert.That(functionNames, Does.Contain("GetFavouriteWord"));
         }
 
         [RecordedTest]
@@ -350,9 +350,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
 
-            Assert.IsNotNull(chatClient.GetService(typeof(ChatClientMetadata)));
-            Assert.IsNotNull(chatClient.GetService(typeof(PersistentAgentsClient)));
-            Assert.IsNotNull(chatClient.GetService(typeof(PersistentAgentsChatClient)));
+            Assert.That(chatClient.GetService(typeof(ChatClientMetadata)), Is.Not.Null);
+            Assert.That(chatClient.GetService(typeof(PersistentAgentsClient)), Is.Not.Null);
+            Assert.That(chatClient.GetService(typeof(PersistentAgentsChatClient)), Is.Not.Null);
             Assert.That(chatClient.GetService(typeof(string)), Is.Null);
             Assert.Throws<ArgumentNullException>(() => chatClient.GetService(null));
         }

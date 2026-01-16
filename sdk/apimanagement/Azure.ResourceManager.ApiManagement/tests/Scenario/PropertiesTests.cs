@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list the properties
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listResponse);
+            Assert.That(listResponse, Is.Not.Null);
 
             Assert.That(listResponse.Count, Is.EqualTo(2));
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             bool isSecret,
             List<string> tags = null)
         {
-            Assert.NotNull(contract);
+            Assert.That(contract, Is.Not.Null);
             Assert.That(contract.Data.DisplayName, Is.EqualTo(propertyDisplayName));
             if (isSecret)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(contract.Data.Name, Is.EqualTo(propertyId));
             if (tags != null)
             {
-                Assert.NotNull(contract.Data.Tags);
+                Assert.That(contract.Data.Tags, Is.Not.Null);
                 Assert.That(contract.Data.Tags.Count, Is.EqualTo(tags.Count));
             }
         }

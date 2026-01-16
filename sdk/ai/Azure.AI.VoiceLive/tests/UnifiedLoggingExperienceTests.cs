@@ -67,19 +67,19 @@ namespace Azure.AI.VoiceLive.Tests
 
             // Verify connection lifecycle
             var connectionClose = voiceLiveEvents.FirstOrDefault(e => e.EventType == "ConnectionClose");
-            Assert.IsNotNull(connectionClose, "Should capture connection close");
+            Assert.That(connectionClose, Is.Not.Null, "Should capture connection close");
 
             // Verify message operations
             var messageSent = voiceLiveEvents.FirstOrDefault(e => e.EventType == "MessageSent");
             var messageReceived = voiceLiveEvents.FirstOrDefault(e => e.EventType == "MessageReceived");
-            Assert.IsNotNull(messageSent, "Should capture message sent");
-            Assert.IsNotNull(messageReceived, "Should capture message received");
+            Assert.That(messageSent, Is.Not.Null, "Should capture message sent");
+            Assert.That(messageReceived, Is.Not.Null, "Should capture message received");
 
             // Verify content logging
             var contentSent = voiceLiveEvents.FirstOrDefault(e => e.EventType == "ContentSent");
             var contentReceived = voiceLiveEvents.FirstOrDefault(e => e.EventType == "ContentReceived");
-            Assert.IsNotNull(contentSent, "Should capture sent content");
-            Assert.IsNotNull(contentReceived, "Should capture received content");
+            Assert.That(contentSent, Is.Not.Null, "Should capture sent content");
+            Assert.That(contentReceived, Is.Not.Null, "Should capture received content");
 
             // Verify content includes expected data
             Assert.That(contentSent?.Content?.Contains("hello") == true, Is.True, "Sent content should contain expected data");

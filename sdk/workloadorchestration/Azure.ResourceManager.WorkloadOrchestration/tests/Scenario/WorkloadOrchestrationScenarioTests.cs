@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
       // Create the schema
       ArmOperation<EdgeSchemaResource> createOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, schemaName, data);
       EdgeSchemaResource createdSchema = createOperation.Value;
-      Assert.NotNull(createdSchema, "Created schema should not be null");
+            Assert.That(createdSchema, Is.Not.Null, "Created schema should not be null");
       Assert.That(createdSchema.Data.Name, Is.EqualTo(schemaName));
 
       // Get the schema and verify
       EdgeSchemaResource retrievedSchema = await collection.GetAsync(schemaName);
-      Assert.NotNull(retrievedSchema, "Retrieved schema should not be null");
+            Assert.That(retrievedSchema, Is.Not.Null, "Retrieved schema should not be null");
       Assert.That(retrievedSchema.Data.Name, Is.EqualTo(schemaName));
       Assert.That(retrievedSchema.Data.Id, Is.EqualTo(createdSchema.Data.Id));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
       // Create the schema version
       ArmOperation<EdgeSchemaVersionResource> createVersionOperation = await versionCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaVersionName, versionData);
       EdgeSchemaVersionResource createdVersion = createVersionOperation.Value;
-      Assert.NotNull(createdVersion, "Created schema version should not be null");
+            Assert.That(createdVersion, Is.Not.Null, "Created schema version should not be null");
       Assert.That(createdVersion.Data.Name, Is.EqualTo(schemaVersionName));
     }
   }

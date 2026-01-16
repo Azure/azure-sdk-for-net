@@ -83,7 +83,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var assembly = Assembly.GetExecutingAssembly();
             string mustExistFilename = "transparent_statement.cose";
             string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(mustExistFilename));
-            Assert.IsNotNull(resourceName);
+            Assert.That(resourceName, Is.Not.Null);
             _fileQualifierPrefix = resourceName.Split(new String[] { mustExistFilename }, StringSplitOptions.None)[0];
         }
 
@@ -309,7 +309,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Operation<BinaryData> result = await client.CreateEntryAsync(WaitUntil.Started, BinaryData.FromString("Hello World!"));
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             Response<BinaryData> response = await result.WaitForCompletionAsync();
             BinaryData value = response.Value;
@@ -423,7 +423,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var result = await client.GetTransparencyConfigCborAsync();
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Value.ToString(), Is.EqualTo("test-content"));
             Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://foo.bar.com/.well-known/transparency-configuration?api-version=2025-01-31-preview"));
         }
@@ -442,7 +442,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Response<JwksDocument> result = client.GetPublicKeys();
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
             Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://foo.bar.com/jwks?api-version=2025-01-31-preview"));
         }
@@ -580,7 +580,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
                 byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
                 var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-                StringAssert.Contains("Either offline keys are not configured or network fallback is disabled.", exception.Message);
+                Assert.That(exception.Message, Does.Contain("Either offline keys are not configured or network fallback is disabled."));
                 Assert.That(mockTransport.Requests.Count, Is.EqualTo(0));
             }
 #endif
@@ -667,7 +667,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
 
             var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions));
-            StringAssert.Contains("No valid receipts found for any authorized issuer domain.", exception.Message);
+            Assert.That(exception.Message, Does.Contain("No valid receipts found for any authorized issuer domain."));
 #endif
         }
 
@@ -680,7 +680,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
             var exception = Assert.Throws<InvalidOperationException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, null, options));
-            StringAssert.Contains("Receipt issuer 'foo.bar.com' is not in the authorized domain list.", exception.Message);
+            Assert.That(exception.Message, Does.Contain("Receipt issuer 'foo.bar.com' is not in the authorized domain list."));
 #endif
         }
 
@@ -702,7 +702,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
 
             var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-            StringAssert.Contains("No valid receipt found for a required domain 'wetrustsomethingelse.com'.", exception.Message);
+            Assert.That(exception.Message, Does.Contain("No valid receipt found for a required domain 'wetrustsomethingelse.com'."));
 #endif
         }
 

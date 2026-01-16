@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
         private void ValidateDevTestLabVirtualNetwork(DevTestLabVirtualNetworkData dtlVnetData, string _dtlVnetName)
         {
-            Assert.IsNotNull(dtlVnetData);
-            Assert.IsNotEmpty(dtlVnetData.Id);
+            Assert.That(dtlVnetData, Is.Not.Null);
+            Assert.That((string)dtlVnetData.Id, Is.Not.Empty);
             Assert.That(dtlVnetData.Name, Is.EqualTo(_dtlVnetName));
             Assert.That(dtlVnetData.ProvisioningState, Is.EqualTo("Succeeded"));
         }

@@ -155,9 +155,9 @@ namespace Azure.Quantum.Jobs.Tests
             Assert.That(jobDetails.OutputDataFormat, Is.EqualTo(outputDataFormat));
             Assert.That(jobDetails.ProviderId, Is.EqualTo(providerId));
             Assert.That(jobDetails.Target, Is.EqualTo(target));
-            Assert.IsNotEmpty(jobDetails.Id);
-            Assert.IsNotEmpty(jobDetails.Name);
-            Assert.IsNotEmpty(jobDetails.InputDataUri);
+            Assert.That(jobDetails.Id, Is.Not.Empty);
+            Assert.That(jobDetails.Name, Is.Not.Empty);
+            Assert.That(jobDetails.InputDataUri, Is.Not.Empty);
             if (Mode == RecordedTestMode.Playback)
             {
                 Assert.That(jobDetails.Id.StartsWith("job-"), Is.True);
@@ -188,15 +188,15 @@ namespace Azure.Quantum.Jobs.Tests
             int index = 0;
             await foreach (ProviderStatus status in client.GetProviderStatusAsync(CancellationToken.None))
             {
-                Assert.IsNotEmpty(status.Id);
-                Assert.IsNotNull(status.Targets);
-                Assert.IsNotNull(status.CurrentAvailability);
+                Assert.That(status.Id, Is.Not.Empty);
+                Assert.That(status.Targets, Is.Not.Null);
+                Assert.That(status.CurrentAvailability, Is.Not.Null);
 
                 ++index;
             }
 
             // Should have at least one in the list.
-            Assert.GreaterOrEqual(index, 1);
+            Assert.That(index, Is.GreaterThanOrEqualTo(1));
         }
 
         [RecordedTest]
@@ -207,17 +207,17 @@ namespace Azure.Quantum.Jobs.Tests
             int index = 0;
             await foreach (QuantumJobQuota quota in client.GetQuotasAsync(CancellationToken.None))
             {
-                Assert.IsNotEmpty(quota.Dimension);
-                Assert.IsNotNull(quota.Scope);
-                Assert.IsNotEmpty(quota.ProviderId);
-                Assert.IsNotNull(quota.Utilization);
-                Assert.IsNotNull(quota.Holds);
-                Assert.IsNotNull(quota.Period);
+                Assert.That(quota.Dimension, Is.Not.Empty);
+                Assert.That(quota.Scope, Is.Not.Null);
+                Assert.That(quota.ProviderId, Is.Not.Empty);
+                Assert.That(quota.Utilization, Is.Not.Null);
+                Assert.That(quota.Holds, Is.Not.Null);
+                Assert.That(quota.Period, Is.Not.Null);
                ++index;
             }
 
             // Should have at least a couple in the list.
-            Assert.GreaterOrEqual(index, 2);
+            Assert.That(index, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

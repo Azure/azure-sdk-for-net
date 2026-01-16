@@ -43,7 +43,7 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, telemetryPolicy);
 
             Assert.That(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent), Is.True);
-            StringAssert.StartsWith("application-id ", userAgent);
+            Assert.That(userAgent, Does.StartWith("application-id "));
         }
 
         [Test]

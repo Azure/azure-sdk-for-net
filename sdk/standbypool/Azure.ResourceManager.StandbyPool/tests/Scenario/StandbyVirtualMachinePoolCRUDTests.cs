@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Name, Is.EqualTo(runtimeViewName));
             Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0, Is.True);
             Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyVirtualMachineInstanceCountsByState.Count > 0, Is.True);
-            Assert.IsNotNull(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Status);
+            Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Status, Is.Not.Null);
 
             // Prediction is not available in the response. This field is only populated for StandbyPools that record scale out activity over a period of time.
             // However, this assertion verifies that the prediction field is available in the response for the StandbyVirtualMachinePoolRuntimeViewResource.
-            Assert.IsNull(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Prediction);
+            Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Prediction, Is.Null);
         }
 
         private async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachineStateAndVerify(StandbyVirtualMachinePoolTestProperties standbyVirtualMachinePoolResourceProperties)

@@ -391,8 +391,8 @@ namespace Azure.Data.Tables.Tests
             Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
             Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
             Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(default(Foo).ToString()), "The non-existing enum value should not be deserialized.");
-            Assert.IsNull(deserializedEntity.MyNullableFoo, "The non-existing nullable enum value should not be deserialized.");
-            Assert.IsNull(deserializedEntity.MyNullableFoo2, "The entities should be equivalent.");
+            Assert.That(deserializedEntity.MyNullableFoo, Is.Null, "The non-existing nullable enum value should not be deserialized.");
+            Assert.That(deserializedEntity.MyNullableFoo2, Is.Null, "The entities should be equivalent.");
             Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
         }
 
@@ -534,7 +534,7 @@ namespace Azure.Data.Tables.Tests
             var actualSas = client.GenerateSasUri(permissions, expires);
 
             Assert.That(actualSas.Query, Is.EqualTo("?" + expectedSas));
-            CollectionAssert.Contains(actualSas.Segments, TableName);
+            Assert.That(actualSas.Segments, Has.Member(TableName));
         }
 
         private static IEnumerable<object[]> TableClientsAllCtors(bool useEmulator)

@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void EmptyKeyOps()
         {
             JsonWebKey jwk = new JsonWebKey(null);
-            Assert.IsEmpty(jwk.KeyOps);
+            Assert.That(jwk.KeyOps, Is.Empty);
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using Aes aes = Aes.Create();
             JsonWebKey jwk = new JsonWebKey(aes);
 
-            CollectionAssert.AreEqual(new[] { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey }, jwk.KeyOps);
+            Assert.That(jwk.KeyOps, Is.EqualTo(new[] { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey }).AsCollection);
         }
 
         [Test]
@@ -56,11 +56,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] ciphertext = encryptor.TransformFinalBlock(plaintext, 0, plaintext.Length);
 
             JsonWebKey jwk = new JsonWebKey(aes);
-            CollectionAssert.AreEqual(aes.Key, jwk.K);
+            Assert.That(jwk.K, Is.EqualTo(aes.Key).AsCollection);
             Assert.That(HasPrivateKey(jwk), Is.True);
 
             using Aes key = jwk.ToAes();
-            CollectionAssert.AreEqual(jwk.K, key.Key);
+            Assert.That(key.Key, Is.EqualTo(jwk.K).AsCollection);
 
             using ICryptoTransform decryptor = key.CreateDecryptor(key.Key, aes.IV);
             plaintext = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
@@ -106,11 +106,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             if (includePrivateParameters)
             {
-                CollectionAssert.AreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, jwk.KeyOps);
+                Assert.That(jwk.KeyOps, Is.EqualTo(new[] { KeyOperation.Sign, KeyOperation.Verify }).AsCollection);
             }
             else
             {
-                CollectionAssert.AreEqual(new[] { KeyOperation.Sign }, jwk.KeyOps);
+                Assert.That(jwk.KeyOps, Is.EqualTo(new[] { KeyOperation.Sign }).AsCollection);
             }
 #endif
         }
@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
             catch (NotSupportedException)
             {
-                Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
+                Assert.Inconclusive($"This platform does not support OID {oid} with friendly name '{friendlyName}'");
             }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
             catch (NotSupportedException)
             {
-                Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
+                Assert.Inconclusive($"This platform does not support OID {oid} with friendly name '{friendlyName}'");
             }
 
             if (includePrivateParameters)
@@ -247,7 +247,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa(), "Expected exception not thrown for data named '{0}'", name);
             if (nullOnError)
             {
-                Assert.IsNull(jwk.ToECDsa(false, false), "Expected null result for data named '{0}'", name);
+                Assert.That(jwk.ToECDsa(false, false), Is.Null, $"Expected null result for data named '{name}'");
             }
 #endif
         }
@@ -261,11 +261,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             if (includePrivateParameters)
             {
-                CollectionAssert.AreEqual(new[] { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.Sign, KeyOperation.Verify, KeyOperation.WrapKey, KeyOperation.UnwrapKey }, jwk.KeyOps);
+                Assert.That(jwk.KeyOps, Is.EqualTo(new[] { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.Sign, KeyOperation.Verify, KeyOperation.WrapKey, KeyOperation.UnwrapKey }).AsCollection);
             }
             else
             {
-                CollectionAssert.AreEqual(new[] { KeyOperation.Encrypt, KeyOperation.Verify, KeyOperation.WrapKey }, jwk.KeyOps);
+                Assert.That(jwk.KeyOps, Is.EqualTo(new[] { KeyOperation.Encrypt, KeyOperation.Verify, KeyOperation.WrapKey }).AsCollection);
             }
         }
 
@@ -375,9 +375,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
 
             string content = Encoding.UTF8.GetString(ms.ToArray());
-            StringAssert.Contains(@"""key_ops""", content);
-            StringAssert.Contains(@"""kid"":""https://test.vault.azure.net/keys/test/abcd1234""", content);
-            StringAssert.Contains(@"""kty"":""RSA""", content);
+            Assert.That(content, Does.Contain(@"""key_ops"""));
+            Assert.That(content, Does.Contain(@"""kid"":""https://test.vault.azure.net/keys/test/abcd1234"""));
+            Assert.That(content, Does.Contain(@"""kty"":""RSA"""));
 
             // Deserialize
             JsonWebKey deserialized = JsonSerializer.Deserialize<JsonWebKey>(content);

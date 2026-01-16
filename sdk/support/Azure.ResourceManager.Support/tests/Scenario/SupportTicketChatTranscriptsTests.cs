@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task GetAll()
         {
             var list = await _supportTicketChatTranscriptCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSupportTicketChatTranscriptsData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketChatTranscriptsName).Data);
         }
 
         private void ValidateSupportTicketChatTranscriptsData(ChatTranscriptDetailData supportTicketChatTranscript)
         {
-            Assert.IsNotNull(supportTicketChatTranscript);
-            Assert.IsNotEmpty(supportTicketChatTranscript.Id);
+            Assert.That(supportTicketChatTranscript, Is.Not.Null);
+            Assert.That((string)supportTicketChatTranscript.Id, Is.Not.Empty);
             Assert.That(supportTicketChatTranscript.Name, Is.EqualTo(_existSupportTicketChatTranscriptsName));
         }
     }

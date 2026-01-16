@@ -477,7 +477,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 int count = 0;
                 executor.ExecuteLambda = (b) =>
                 {
-                    CollectionAssert.Contains(blobNameMap.Keys, b.Name);
+                    Assert.That(blobNameMap.Keys, Has.Member(b.Name));
                     blobNameMap[b.Name]++;
 
                     if (b.DownloadText() == "throw")

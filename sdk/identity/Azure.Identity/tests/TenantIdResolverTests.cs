@@ -106,7 +106,7 @@ namespace Azure.Identity.Tests
             {
                 var ex = Assert.Throws<AuthenticationFailedException>(() => TenantIdResolverBase.Default.Resolve(tenantId, tokenRequestContext, additionallyAllowedTenants));
 
-                StringAssert.Contains($"The current credential is not configured to acquire tokens for tenant {tokenRequestContext.TenantId}", ex.Message);
+                Assert.That(ex.Message, Does.Contain($"The current credential is not configured to acquire tokens for tenant {tokenRequestContext.TenantId}"));
             }
         }
 

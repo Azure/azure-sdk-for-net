@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //get a server
             Response<SpringBootServerResource> getServerResponse = await serverColletion.GetAsync(serverName);
             SpringBootServerResource serverModelResource = getServerResponse.Value;
-            Assert.IsNotNull(serverModelResource);
+            Assert.That(serverModelResource, Is.Not.Null);
 
             SpringBootServerPatch serverPatch = new SpringBootServerPatch()
             {

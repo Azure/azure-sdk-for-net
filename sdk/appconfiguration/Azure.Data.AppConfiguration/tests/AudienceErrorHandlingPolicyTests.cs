@@ -84,7 +84,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 }
             });
 
-            Assert.IsNotInstanceOf<RequestFailedException>(ex); // Should not be wrapped
+            Assert.That(ex, Is.Not.InstanceOf<RequestFailedException>()); // Should not be wrapped
             Assert.That(ex.Message, Is.EqualTo("Simulated failure WITHOUT code"));
         }
 
@@ -119,10 +119,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 }
             });
 
-            Assert.NotNull(ex);
-            StringAssert.Contains(ExpectedErrorMessage(isAudienceConfigured), ex.Message);
-            Assert.NotNull(ex.InnerException);
-            StringAssert.Contains(AadAudienceErrorCode, ex.InnerException.Message);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Message, Does.Contain(ExpectedErrorMessage(isAudienceConfigured)));
+            Assert.That(ex.InnerException, Is.Not.Null);
+            Assert.That(ex.InnerException.Message, Does.Contain(AadAudienceErrorCode));
         }
     }
 }

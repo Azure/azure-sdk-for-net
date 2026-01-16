@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         {
             var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var servicePrincipal = await subscription.GetServicePrincipalAsync();
-            Assert.IsNotNull(servicePrincipal);
+            Assert.That(servicePrincipal, Is.Not.Null);
         }
 
         [TestCase]
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             {
                 ++cnt;
             }
-            Assert.GreaterOrEqual(cnt, 0);
+            Assert.That(cnt, Is.GreaterThanOrEqualTo(0));
         }
     }
 }

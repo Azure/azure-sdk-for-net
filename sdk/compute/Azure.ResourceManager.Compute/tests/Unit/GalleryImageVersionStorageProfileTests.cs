@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
             galleryStorageProfile.Source = new GalleryArtifactVersionSource();
             var fullSource = galleryStorageProfile.GallerySource;
 
-            Assert.IsNull(fullSource);
+            Assert.That(fullSource, Is.Null);
         }
     }
 }

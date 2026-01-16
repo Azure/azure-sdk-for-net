@@ -71,13 +71,13 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonAudio.ToString());
             MediaStreamingAudio parsedPackage = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(receivedBytes);
 
-            Assert.NotNull(parsedPackage);
+            Assert.That(parsedPackage, Is.Not.Null);
             ValidateAudioData(parsedPackage);
         }
 
         private static void ValidateMetadata(MediaStreamingMetadata streamingMetadata)
         {
-            Assert.IsNotNull(streamingMetadata);
+            Assert.That(streamingMetadata, Is.Not.Null);
             Assert.That(streamingMetadata.MediaSubscriptionId, Is.EqualTo("subscriptionId"));
 
             ValidateFormat(streamingMetadata.Format);
@@ -85,7 +85,7 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
 
         private static void ValidateFormat(MediaStreamingFormat streamingFormat)
         {
-            Assert.IsNotNull(streamingFormat);
+            Assert.That(streamingFormat, Is.Not.Null);
             Assert.That(streamingFormat.Encoding, Is.EqualTo("encodingType"));
             Assert.That(streamingFormat.SampleRate, Is.EqualTo(8));
             Assert.That(streamingFormat.Channels, Is.EqualTo(2));
@@ -94,7 +94,7 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
 
         private static void ValidateAudioData(MediaStreamingAudio streamingAudio)
         {
-            Assert.IsNotNull(streamingAudio);
+            Assert.That(streamingAudio, Is.Not.Null);
             Assert.That(streamingAudio.Data.Length, Is.EqualTo(5));
             Assert.That(streamingAudio.Timestamp.Year, Is.EqualTo(2022));
             Assert.That(streamingAudio.Participant is CommunicationIdentifier, Is.True);

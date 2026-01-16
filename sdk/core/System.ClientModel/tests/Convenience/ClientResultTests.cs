@@ -61,7 +61,7 @@ public class ClientResultTests
         response = new MockPipelineResponse(500);
         result = ClientResult.FromOptionalValue<bool?>(null, response);
 
-        Assert.IsNull(result.Value);
+        Assert.That(result.Value, Is.Null);
         Assert.That(result.Value.HasValue, Is.False);
         Assert.That(result.GetRawResponse().Status, Is.EqualTo(response.Status));
     }
@@ -85,7 +85,7 @@ public class ClientResultTests
 
         result.SetValue(null);
 
-        Assert.IsNull(result.Value);
+        Assert.That(result.Value, Is.Null);
     }
 
     #endregion
@@ -139,13 +139,13 @@ public class ClientResultTests
         string? nullableString = null;
         ClientResult<string?> resultAsClientResultOfNullableString = ClientResult.FromOptionalValue(nullableString, response);
         string? resultAsNullableString = ClientResult.FromOptionalValue(nullableString, response);
-        Assert.IsNull(resultAsNullableString);
+        Assert.That(resultAsNullableString, Is.Null);
         Assert.That(resultAsNullableString, Is.EqualTo(resultAsClientResultOfNullableString.Value));
 
         int? nullableInt = null;
         ClientResult<int?> resultAsClientResultOfNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
         int? resultAsNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
-        Assert.IsNull(resultAsNullableInt);
+        Assert.That(resultAsNullableInt, Is.Null);
         Assert.That(resultAsNullableInt, Is.EqualTo(resultAsClientResultOfNullableInt.Value));
     }
 
@@ -170,13 +170,13 @@ public class ClientResultTests
         MockClient client = new MockClient();
         ClientResult<MockJsonModel?> result = client.GetOptionalModel(1, "a", hasValue: true);
 
-        Assert.IsNotNull(result.Value);
+        Assert.That(result.Value, Is.Not.Null);
         Assert.That(result.Value!.IntValue, Is.EqualTo(1));
         Assert.That(result.Value!.StringValue, Is.EqualTo("a"));
         Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
 
         result = client.GetOptionalModel(1, "a", hasValue: false);
-        Assert.IsNull(result.Value);
+        Assert.That(result.Value, Is.Null);
         Assert.That(result.GetRawResponse().Status, Is.EqualTo(404));
     }
 
@@ -196,13 +196,13 @@ public class ClientResultTests
         MockClient client = new MockClient();
         ClientResult<int?> result = client.GetOptionalCount(1, hasValue: true);
 
-        Assert.IsNotNull(result.Value);
+        Assert.That(result.Value, Is.Not.Null);
         Assert.That(result.Value.HasValue, Is.True);
         Assert.That(result.Value, Is.EqualTo(1));
         Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
 
         result = client.GetOptionalCount(1, hasValue: false);
-        Assert.IsNull(result.Value);
+        Assert.That(result.Value, Is.Null);
         Assert.That(result.Value.HasValue, Is.False);
         Assert.That(result.GetRawResponse().Status, Is.EqualTo(404));
     }
@@ -234,7 +234,7 @@ public class ClientResultTests
 
         MockJsonModel? value = (MockJsonModel?)result.Value;
 
-        Assert.IsNotNull(value);
+        Assert.That(value, Is.Not.Null);
         Assert.That(value!.IntValue, Is.EqualTo(model.IntValue));
         Assert.That(value!.StringValue, Is.EqualTo(model.StringValue));
         Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
@@ -242,7 +242,7 @@ public class ClientResultTests
         result = new(default, response);
         value = (MockJsonModel?)result.Value;
 
-        Assert.IsNull(value);
+        Assert.That(value, Is.Null);
         Assert.AreEqual(200, result.GetRawResponse().Status);
     }
 

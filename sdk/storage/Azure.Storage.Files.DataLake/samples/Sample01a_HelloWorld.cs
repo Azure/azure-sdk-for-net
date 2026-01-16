@@ -514,9 +514,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 }
                 #endregion Snippet:SampleSnippetDataLakeFileClient_List
                 Assert.That(names.Count, Is.EqualTo(3));
-                Assert.Contains("sample-directory1", names);
-                Assert.Contains("sample-directory2", names);
-                Assert.Contains("sample-directory3", names);
+                Assert.That(names, Does.Contain("sample-directory1"));
+                Assert.That(names, Does.Contain("sample-directory2"));
+                Assert.That(names, Does.Contain("sample-directory3"));
             }
             finally
             {
@@ -583,16 +583,16 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Verify we've seen everything
                 Assert.That(names.Count, Is.EqualTo(10));
-                Assert.Contains("first", names);
-                Assert.Contains("second", names);
-                Assert.Contains("third", names);
-                Assert.Contains("fourth", names);
-                Assert.Contains("first/a", names);
-                Assert.Contains("first/b", names);
-                Assert.Contains("second/c", names);
-                Assert.Contains("second/d", names);
-                Assert.Contains("fourth/e", names);
-                Assert.Contains("fourth/e/file", names);
+                Assert.That(names, Does.Contain("first"));
+                Assert.That(names, Does.Contain("second"));
+                Assert.That(names, Does.Contain("third"));
+                Assert.That(names, Does.Contain("fourth"));
+                Assert.That(names, Does.Contain("first/a"));
+                Assert.That(names, Does.Contain("first/b"));
+                Assert.That(names, Does.Contain("second/c"));
+                Assert.That(names, Does.Contain("second/d"));
+                Assert.That(names, Does.Contain("fourth/e"));
+                Assert.That(names, Does.Contain("fourth/e/file"));
             }
             finally
             {

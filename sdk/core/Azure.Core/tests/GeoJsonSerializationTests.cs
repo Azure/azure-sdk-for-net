@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
             var polygon = AssertRoundtrip<GeoPolygon>(input);
             Assert.That(polygon.Rings.Count, Is.EqualTo(1));
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Rings[0].Coordinates, Is.EqualTo(new[]
             {
                 P(0),
                 P(1),
@@ -130,7 +130,7 @@ namespace Azure.Core.Tests
                 P(3),
                 P(4),
                 P(0),
-            }, polygon.Rings[0].Coordinates);
+            }).AsCollection);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace Azure.Core.Tests
             var polygon = AssertRoundtrip<GeoPolygon>(input);
             Assert.That(polygon.Rings.Count, Is.EqualTo(2));
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Rings[0].Coordinates, Is.EqualTo(new[]
             {
                 P(0),
                 P(1),
@@ -152,9 +152,9 @@ namespace Azure.Core.Tests
                 P(3),
                 P(4),
                 P(0),
-            }, polygon.Rings[0].Coordinates);
+            }).AsCollection);
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Rings[1].Coordinates, Is.EqualTo(new[]
             {
                 P(5),
                 P(6),
@@ -162,7 +162,7 @@ namespace Azure.Core.Tests
                 P(8),
                 P(9),
                 P(5),
-            }, polygon.Rings[1].Coordinates);
+            }).AsCollection);
         }
 
         [Test]
@@ -185,17 +185,17 @@ namespace Azure.Core.Tests
             var polygon = AssertRoundtrip<GeoLineStringCollection>(input);
             Assert.That(polygon.Lines.Count, Is.EqualTo(2));
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Lines[0].Coordinates, Is.EqualTo(new[]
             {
                 P(0),
                 P(1)
-            }, polygon.Lines[0].Coordinates);
+            }).AsCollection);
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Lines[1].Coordinates, Is.EqualTo(new[]
             {
                 P(2),
                 P(3)
-            }, polygon.Lines[1].Coordinates);
+            }).AsCollection);
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace Azure.Core.Tests
 
             Assert.That(polygon.Rings.Count, Is.EqualTo(1));
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Rings[0].Coordinates, Is.EqualTo(new[]
             {
                 P(0),
                 P(1),
@@ -222,12 +222,12 @@ namespace Azure.Core.Tests
                 P(3),
                 P(4),
                 P(0),
-            }, polygon.Rings[0].Coordinates);
+            }).AsCollection);
 
             polygon = multiPolygon.Polygons[1];
             Assert.That(polygon.Rings.Count, Is.EqualTo(2));
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Rings[0].Coordinates, Is.EqualTo(new[]
             {
                 P(0),
                 P(1),
@@ -235,9 +235,9 @@ namespace Azure.Core.Tests
                 P(3),
                 P(4),
                 P(0),
-            }, polygon.Rings[0].Coordinates);
+            }).AsCollection);
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(polygon.Rings[1].Coordinates, Is.EqualTo(new[]
             {
                 P(5),
                 P(6),
@@ -245,7 +245,7 @@ namespace Azure.Core.Tests
                 P(8),
                 P(9),
                 P(5),
-            }, polygon.Rings[1].Coordinates);
+            }).AsCollection);
         }
 
         [Test]
@@ -353,7 +353,7 @@ namespace Azure.Core.Tests
 
             Assert.That(point.Coordinates.Longitude, Is.EqualTo(-122.091954).Within(1e-10));
             Assert.That(point.Coordinates.Latitude, Is.EqualTo(47.607148).Within(1e-10));
-            Assert.IsNotNull(point.BoundingBox);
+            Assert.That(point.BoundingBox, Is.Not.Null);
             Assert.That(point.BoundingBox.West, Is.EqualTo(-180));
             Assert.That(point.BoundingBox.South, Is.EqualTo(-90));
             Assert.That(point.BoundingBox.East, Is.EqualTo(180));

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task CreateOrUpdate()
         {
             var sharedPrivateLink = await CreateSharedPrivateLink(_linkName);
-            Assert.IsNotNull(sharedPrivateLink);
+            Assert.That(sharedPrivateLink, Is.Not.Null);
             Assert.That(sharedPrivateLink.Data.Status, Is.EqualTo("Approved"));
         }
 

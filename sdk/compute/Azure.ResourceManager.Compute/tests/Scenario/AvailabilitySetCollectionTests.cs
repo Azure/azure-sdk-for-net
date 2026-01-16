@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     set2 = availabilitySet;
             }
 
-            Assert.NotNull(set1);
-            Assert.NotNull(set2);
+            Assert.That(set1, Is.Not.Null);
+            Assert.That(set2, Is.Not.Null);
         }
     }
 }

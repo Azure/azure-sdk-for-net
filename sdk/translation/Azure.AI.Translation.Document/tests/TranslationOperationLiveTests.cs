@@ -440,7 +440,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             //Assert glossary has taken effect
             var translatedTextSplitBySpaces = translatedText.Split(' ');
-            CollectionAssert.Contains(translatedTextSplitBySpaces, "glossaryTest");
+            Assert.That(translatedTextSplitBySpaces, Has.Member("glossaryTest"));
         }
 
         private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
@@ -461,8 +461,8 @@ namespace Azure.AI.Translation.Document.Tests
         {
             Assert.That(document.Status, Is.EqualTo(DocumentTranslationStatus.Succeeded));
             Assert.That(string.IsNullOrEmpty(document.Id), Is.False);
-            Assert.IsNotNull(document.SourceDocumentUri);
-            Assert.IsNotNull(document.TranslatedDocumentUri);
+            Assert.That(document.SourceDocumentUri, Is.Not.Null);
+            Assert.That(document.TranslatedDocumentUri, Is.Not.Null);
             Assert.That(document.TranslationProgressPercentage, Is.EqualTo(100f));
             Assert.That(document.TranslatedToLanguageCode, Is.EqualTo(translateTo));
             Assert.That(document.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));

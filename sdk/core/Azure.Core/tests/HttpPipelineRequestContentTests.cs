@@ -66,7 +66,7 @@ namespace Azure.Core.Tests
 
             content.WriteTo(destination, default);
 
-            CollectionAssert.AreEqual(sourceArray, destination.ToArray());
+            Assert.That(destination.ToArray(), Is.EqualTo(sourceArray).AsCollection);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests
 
             content.WriteTo(destination, default);
 
-            CollectionAssert.AreEqual(expected, destination.ToArray());
+            Assert.That(destination.ToArray(), Is.EqualTo(expected).AsCollection);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.Core.Tests
 
             content.WriteTo(destination, default);
 
-            CollectionAssert.AreEqual(expected, destination.ToArray());
+            Assert.That(destination.ToArray(), Is.EqualTo(expected).AsCollection);
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests
 
             content.WriteTo(destination, default);
 
-            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+            Assert.That(destination.ToArray(), Is.EqualTo(expected.ToArray()).AsCollection);
         }
 
         [Test]
@@ -195,7 +195,7 @@ namespace Azure.Core.Tests
             using MemoryStream destination = new();
             content.WriteTo(destination, default);
 
-            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+            Assert.That(destination.ToArray(), Is.EqualTo(expected.ToArray()).AsCollection);
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace Azure.Core.Tests
             var content = RequestContent.Create(model);
 
             Assert.That(content.TryComputeLength(out long length), Is.True);
-            Assert.Greater(length, 0);
+            Assert.That(length, Is.GreaterThan(0));
         }
 
         [Test]

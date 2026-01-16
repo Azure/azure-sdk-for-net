@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
             var collection = await GetRoleDefinitionCollectionAsync();
             var roleDefinitions = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(roleDefinitions.Count, 0);
+            Assert.That(roleDefinitions.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [RecordedTest]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get NSG
             Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
             Assert.That(getNsgResponse.Value.Data.Name, Is.EqualTo(networkSecurityGroupName));
-            Assert.NotNull(getNsgResponse.Value.Data.ResourceGuid);
+            Assert.That(getNsgResponse.Value.Data.ResourceGuid, Is.Not.Null);
             Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules.Count, Is.EqualTo(6));
             Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
             Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG in a subscription
             AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
             List<NetworkSecurityGroupResource> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listNsgSubsciptionResponse);
+            Assert.That(listNsgSubsciptionResponse, Is.Not.Empty);
 
             // Delete NSG
             await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listNsgResponse);
+            Assert.That(listNsgResponse, Is.Empty);
         }
 
         [Test]
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG in a subscription
             AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
             List<NetworkSecurityGroupResource> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listNsgSubsciptionResponse);
+            Assert.That(listNsgSubsciptionResponse, Is.Not.Empty);
 
             // Add a new security rule
             var securityRule = new SecurityRuleData()
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List Default Security Groups
             AsyncPageable<DefaultSecurityRuleResource> listDefaultSecurityGroupsAP = getNsgResponse.Value.GetDefaultSecurityRules().GetAllAsync();
             List<DefaultSecurityRuleResource> listDefaultSecurityGroups = await listDefaultSecurityGroupsAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listDefaultSecurityGroups);
+            Assert.That(listDefaultSecurityGroups, Is.Not.Empty);
 
             // Get Defaul Security Group
             // TODO: ADO 5975
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listNsgResponse);
+            Assert.That(listNsgResponse, Is.Empty);
         }
     }
 }

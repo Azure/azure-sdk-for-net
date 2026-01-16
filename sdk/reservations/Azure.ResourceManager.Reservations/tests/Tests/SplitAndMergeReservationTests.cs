@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Reservations.Tests
             var response = await Collection.GetAsync(Guid.Parse(ReservationOrderId));
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.Data);
-            Assert.IsNotNull(response.Value.Data.Reservations);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data, Is.Not.Null);
+            Assert.That(response.Value.Data.Reservations, Is.Not.Null);
             Assert.That(response.Value.Data.Reservations.Count, Is.EqualTo(1));
 
             var fullyQualifiedId = response.Value.Data.Reservations[0].Id.ToString();
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Reservations.Tests
             var reservationResponse = await response.Value.GetReservationDetails().GetAsync(Guid.Parse(reservationId));
             var reservation = reservationResponse.Value;
 
-            Assert.IsNotNull(reservation.Data);
-            Assert.IsNotNull(reservation.Data.Properties);
-            Assert.IsNotNull(reservation.Data.Properties.Quantity);
-            Assert.Greater(reservation.Data.Properties.Quantity, 1);
+            Assert.That(reservation.Data, Is.Not.Null);
+            Assert.That(reservation.Data.Properties, Is.Not.Null);
+            Assert.That(reservation.Data.Properties.Quantity, Is.Not.Null);
+            Assert.That(reservation.Data.Properties.Quantity, Is.GreaterThan(1));
 
             var splitContent = new SplitContent
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Tests
 
             var splitResponse = await response.Value.SplitReservationAsync(WaitUntil.Completed, splitContent);
 
-            Assert.IsNotNull(splitResponse.Value);
+            Assert.That(splitResponse.Value, Is.Not.Null);
             Assert.That(splitResponse.Value.Count, Is.EqualTo(3));
             Assert.That(splitResponse.Value[0].Properties.Quantity, Is.EqualTo(1));
             Assert.That(splitResponse.Value[0].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Succeeded));
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Reservations.Tests
             var response = await Collection.GetAsync(Guid.Parse(ReservationOrderId));
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.Data);
-            Assert.IsNotNull(response.Value.Data.Reservations);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data, Is.Not.Null);
+            Assert.That(response.Value.Data.Reservations, Is.Not.Null);
 
             var fullyQualifiedId1 = response.Value.Data.Reservations[0].Id.ToString();
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             }
             var mergeResponse = await response.Value.MergeReservationAsync(WaitUntil.Completed, mergeContent);
 
-            Assert.IsNotNull(mergeResponse.Value);
+            Assert.That(mergeResponse.Value, Is.Not.Null);
             Assert.That(mergeResponse.Value.Count, Is.EqualTo(3));
             Assert.That(mergeResponse.Value[0].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));
             Assert.That(mergeResponse.Value[1].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));

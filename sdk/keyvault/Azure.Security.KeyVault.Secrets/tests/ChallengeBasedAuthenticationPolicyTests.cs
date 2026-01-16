@@ -208,7 +208,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             MockResponse response401 = new MockResponse(401)
                     .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net""");
-            Assert.IsNull(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401));
+            Assert.That(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401), Is.Null);
         }
 
         private class MockTransportBuilder

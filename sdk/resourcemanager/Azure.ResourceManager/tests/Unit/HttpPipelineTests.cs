@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Tests.Unit
             Assert.That(callCount, Is.EqualTo(2));
             Assert.That(subscription.Data.Id.SubscriptionId, Is.EqualTo("83aa47df-e3e9-49ff-877b-94304bf3d3ad"));
             Assert.That(subscription.Data.DisplayName, Is.EqualTo("Subscription2"));
-            Assert.IsEmpty(subscription.Data.Tags);
+            Assert.That(subscription.Data.Tags, Is.Empty);
         }
 
         [Test]

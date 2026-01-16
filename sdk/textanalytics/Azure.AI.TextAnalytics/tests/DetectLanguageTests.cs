@@ -271,9 +271,9 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
             Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
-            Assert.GreaterOrEqual(language.ConfidenceScore, 0.0);
-            Assert.LessOrEqual(language.ConfidenceScore, 1.0);
-            Assert.IsNotNull(language.Warnings);
+            Assert.That(language.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+            Assert.That(language.ConfidenceScore, Is.LessThanOrEqualTo(1.0));
+            Assert.That(language.Warnings, Is.Not.Null);
         }
 
         private void ValidateBatchDocumentsResult(DetectLanguageResultCollection results, bool includeStatistics = default)
@@ -282,28 +282,28 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
-            Assert.Greater(results.Count, 0);
+            Assert.That(results.Count, Is.GreaterThan(0));
             foreach (DetectLanguageResult languageInDocument in results)
             {
                 Assert.That(languageInDocument.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(languageInDocument.HasError, Is.False);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(languageInDocument.Statistics);
+                Assert.That(languageInDocument.Statistics, Is.Not.Null);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(languageInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(languageInDocument.Statistics.TransactionCount, 0);
+                    Assert.That(languageInDocument.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(languageInDocument.Statistics.TransactionCount, Is.GreaterThan(0));
                 }
                 else
                 {

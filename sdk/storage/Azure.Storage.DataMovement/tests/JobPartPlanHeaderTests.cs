@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Tests
                 byte[] expected = reader.ReadBytes((int)fileStream.Length);
                 byte[] actual = headerStream.ToArray();
 
-                CollectionAssert.AreEqual(expected, actual);
+                Assert.That(actual, Is.EqualTo(expected).AsCollection);
             }
         }
 

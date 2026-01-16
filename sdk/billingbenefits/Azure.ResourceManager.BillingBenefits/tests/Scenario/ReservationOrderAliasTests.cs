@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var request = TestHelpers.CreateReservationOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType.Shared);
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "testReservationOrderAliasMock", request);
 
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
             Assert.That(createResponse.HasCompleted, Is.True);
             Assert.That(createResponse.HasValue, Is.True);
-            Assert.NotNull(createResponse.Value);
+            Assert.That(createResponse.Value, Is.Not.Null);
             Assert.That(createResponse.Value.HasData, Is.True);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.Shared);
 
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var request = TestHelpers.CreateReservationOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType.Single);
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "testReservationOrderAliasMockSingle", request);
 
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
             Assert.That(createResponse.HasCompleted, Is.True);
             Assert.That(createResponse.HasValue, Is.True);
-            Assert.NotNull(createResponse.Value);
+            Assert.That(createResponse.Value, Is.Not.Null);
             Assert.That(createResponse.Value.HasData, Is.True);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.Single);
 
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             };
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "testReservationOrderAliasMockSingleRG", request);
 
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
             Assert.That(createResponse.HasCompleted, Is.True);
             Assert.That(createResponse.HasValue, Is.True);
-            Assert.NotNull(createResponse.Value);
+            Assert.That(createResponse.Value, Is.Not.Null);
             Assert.That(createResponse.Value.HasData, Is.True);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.Single, true);
 
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var request = TestHelpers.CreateReservationOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType.ManagementGroup);
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "testReservationOrderAliasMockManagementGroup", request);
 
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
             Assert.That(createResponse.HasCompleted, Is.True);
             Assert.That(createResponse.HasValue, Is.True);
-            Assert.NotNull(createResponse.Value);
+            Assert.That(createResponse.Value, Is.Not.Null);
             Assert.That(createResponse.Value.HasData, Is.True);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.ManagementGroup);
 
@@ -135,21 +135,21 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         {
             if (scope == BillingBenefitsAppliedScopeType.Single)
             {
-                Assert.NotNull(Data.AppliedScopeProperties);
+                Assert.That(Data.AppliedScopeProperties, Is.Not.Null);
                 if (isRG)
                 {
                     Assert.That(Data.AppliedScopeProperties.SubscriptionId, Is.Null);
-                    Assert.IsNotEmpty(Data.AppliedScopeProperties.ResourceGroupId);
+                    Assert.That((string)Data.AppliedScopeProperties.ResourceGroupId, Is.Not.Empty);
                 }
                 else
                 {
-                    Assert.IsNotEmpty(Data.AppliedScopeProperties.SubscriptionId);
+                    Assert.That((string)Data.AppliedScopeProperties.SubscriptionId, Is.Not.Empty);
                 }
             }
             else if (scope == BillingBenefitsAppliedScopeType.ManagementGroup)
             {
-                Assert.NotNull(Data.AppliedScopeProperties);
-                Assert.IsNotEmpty(Data.AppliedScopeProperties.ManagementGroupId);
+                Assert.That(Data.AppliedScopeProperties, Is.Not.Null);
+                Assert.That((string)Data.AppliedScopeProperties.ManagementGroupId, Is.Not.Empty);
             }
             else
             {
@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.That(Data.AppliedScopeType, Is.EqualTo(scope));
             Assert.That(Data.BillingPlan, Is.EqualTo(BillingBenefitsBillingPlan.P1M));
             Assert.That(Data.BillingScopeId.ToString(), Is.EqualTo("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"));
-            Assert.IsNotEmpty(Data.Id);
-            Assert.IsNotEmpty(Data.Name);
-            Assert.IsNotEmpty(Data.DisplayName);
-            Assert.NotNull(Data.ResourceType);
+            Assert.That((string)Data.Id, Is.Not.Empty);
+            Assert.That(Data.Name, Is.Not.Empty);
+            Assert.That(Data.DisplayName, Is.Not.Empty);
+            Assert.That(Data.ResourceType, Is.Not.Null);
             Assert.That(Data.ResourceType.Namespace, Is.EqualTo("Microsoft.BillingBenefits"));
             Assert.That(Data.ResourceType.Type, Is.EqualTo("reservationOrderAliases"));
             Assert.That(Data.ProvisioningState, Is.EqualTo(BillingBenefitsProvisioningState.Created));
-            Assert.IsNotEmpty(Data.ReservationOrderId);
-            Assert.NotNull(Data.Sku);
+            Assert.That((string)Data.ReservationOrderId, Is.Not.Empty);
+            Assert.That(Data.Sku, Is.Not.Null);
             Assert.That(Data.Sku.Name, Is.EqualTo("Standard_B1s"));
             Assert.That(Data.SkuName, Is.EqualTo("Standard_B1s"));
             Assert.That(Data.Term, Is.EqualTo(BillingBenefitsTerm.P3Y));

@@ -249,7 +249,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             for (int i = 0; i < 2; i++)
             {
                 var executionScope = testListener.AssertAndRemoveScope("EventGrid.Process", new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
-                Assert.IsEmpty(executionScope.Links);
+                Assert.That(executionScope.Links, Is.Empty);
                 Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
                 Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
             }
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var executionScope = testListener.AssertScope("EventGrid.Process",
                 new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
 
-            Assert.IsEmpty(executionScope.Links);
+            Assert.That(executionScope.Links, Is.Empty);
             Assert.That(executionScope.Exception, Is.Null);
             Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
             Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
                 else
                 {
-                    Assert.IsNull(link.Tracestate);
+                    Assert.That(link.Tracestate, Is.Null);
                     Assert.That(parentOnlyFound, Is.False);
                     parentOnlyFound = true;
                 }
@@ -421,7 +421,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                                         new ClientDiagnosticListener.ProducedLink(traceparent2, null)};
 
             Assert.That(executionScope.Links, Is.EquivalentTo(expectedLinks));
-            Assert.NotNull(executionScope.Exception);
+            Assert.That(executionScope.Exception, Is.Not.Null);
             Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
             Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
         }

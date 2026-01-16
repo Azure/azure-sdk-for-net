@@ -91,7 +91,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount", null, null, new()).ToEnumerableAsync();
 
-            Assert.Greater(listResponse.Count, 0);
+            Assert.That(listResponse.Count, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             List<BinaryData> invitations = await client.GetAllSentShareInvitationsAsync(sentShareId, null, null, new()).ToEnumerableAsync();
 
-            Assert.GreaterOrEqual(invitations.Count, 0);
+            Assert.That(invitations.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [RecordedTest]

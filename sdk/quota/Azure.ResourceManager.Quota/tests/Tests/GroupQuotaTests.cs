@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             //Performs the GroupQuota PUT operation
             var createResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupQuotaName, data);
-            Assert.IsNotNull(createResponse);
-            Assert.IsNotNull(createResponse.Value.Data.Properties);
+            Assert.That(createResponse, Is.Not.Null);
+            Assert.That(createResponse.Value.Data.Properties, Is.Not.Null);
             Assert.That(createResponse.Value.Data.Name.Equals(groupQuotaName), Is.True);
             Assert.That(createResponse.Value.Data.Properties.DisplayName.Equals(data.Properties.DisplayName), Is.True);
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             //Performs the GroupQuota PUT operation
             var createGroupQuotaResponse = await groupQuotaEntityCollection.CreateOrUpdateAsync(WaitUntil.Completed, groupQuotaName, data);
-            Assert.IsNotNull(createGroupQuotaResponse);
+            Assert.That(createGroupQuotaResponse, Is.Not.Null);
 
             // Set a subscription in the group. This is required to set a group limit.
             ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             // Add a Subscription to the Group Quota Object
             var addSubscriptionResponse = await groupQuotaSubscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, defaultSubscriptionId);
-            Assert.IsNotNull(addSubscriptionResponse);
+            Assert.That(addSubscriptionResponse, Is.Not.Null);
 
             // GroupQuotaLimit Test
             string resourceProviderName = "Microsoft.Compute";
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             // Perform the QuotaLimit Request call
             var setGroupQuotaLimitResponse = await groupQuotaLimitList.UpdateAsync(WaitUntil.Completed, requestBody);
-            Assert.IsNotNull(setGroupQuotaLimitResponse);
+            Assert.That(setGroupQuotaLimitResponse, Is.Not.Null);
 
             // Perform the QuotaLimit Get call
             GroupQuotaLimitListResource getResponse = await groupQuotaLimitList.GetAsync();
-            Assert.IsNotNull(getResponse.Data);
-            Assert.IsNotNull(getResponse.Data.Properties);
+            Assert.That(getResponse.Data, Is.Not.Null);
+            Assert.That(getResponse.Data.Properties, Is.Not.Null);
             Assert.That(getResponse.Data.Properties.Value.Count.Equals(1), Is.True);
             Assert.That(getResponse.Data.Properties.Value.First().Properties.Limit, Is.EqualTo(valList[0].Properties.Limit));
 
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Performs the GET operation on a Group Quota resource
             string groupQuotaName = "sdk-test-group-quota";
             var result = await collection.GetAsync(groupQuotaName);
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Value.Data.Properties);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Value.Data.Properties, Is.Not.Null);
             Assert.That(result.Value.Data.Name, Is.EqualTo(groupQuotaName));
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             SubscriptionQuotaAllocationsListResource result = await subscriptionQuotaAllocationsList.GetAsync();
 
-            Assert.IsNotNull(result.Data);
+            Assert.That(result.Data, Is.Not.Null);
         }
 
         [TestCase]
@@ -283,9 +283,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             SubscriptionQuotaAllocationsListResource result = await collection.GetAsync(defaultSubscriptionId, groupQuotaName, resourceProviderName, location);
 
-            Assert.IsNotNull(result.Data);
+            Assert.That(result.Data, Is.Not.Null);
             var data = result.Data;
-            Assert.IsNotNull(data);
+            Assert.That(data, Is.Not.Null);
         }
 
         [TestCase]
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // invoke the get location settings operation to retrieve a the enforcement status resource for a specified location
             GroupQuotasEnforcementStatusResource result = await collection.GetAsync(resourceProviderName, location);
 
-            Assert.IsNotNull(result.Data);
+            Assert.That(result.Data, Is.Not.Null);
             Assert.That(result.Data.Properties.ProvisioningState.Equals(Models.QuotaRequestStatus.Succeeded), Is.True);
             Assert.That(result.Data.Properties.EnforcementEnabled.Equals(EnforcementState.Enabled), Is.True);
             Assert.That(result.Data.Name.Equals(location.Name), Is.True);
@@ -414,12 +414,12 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             // Perform the QuotaLimit Request call
             var setGroupQuotaLimitResponse = await groupQuotaLimitList.UpdateAsync(WaitUntil.Completed, quotaRequestBody);
-            Assert.IsNotNull(setGroupQuotaLimitResponse);
+            Assert.That(setGroupQuotaLimitResponse, Is.Not.Null);
 
             // Perform the QuotaLimit Get call
             GroupQuotaLimitListResource getResponse = await groupQuotaLimitList.GetAsync();
-            Assert.IsNotNull(getResponse.Data);
-            Assert.IsNotNull(getResponse.Data.Properties);
+            Assert.That(getResponse.Data, Is.Not.Null);
+            Assert.That(getResponse.Data.Properties, Is.Not.Null);
             Assert.That(getResponse.Data.Properties.Value.Any(), Is.True);
             Assert.That(getResponse.Data.Properties.Value.Single(limit => limit.Properties.ResourceName == valList[0].Properties.ResourceName).Properties.Limit, Is.EqualTo(valList[0].Properties.Limit));
         }
@@ -438,8 +438,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             await foreach (GroupQuotaResourceUsages item in enforcedGroupQuotaEntity.ListAsync(resourceProviderName, location))
             {
-                Assert.IsNotNull(item);
-                Assert.IsNotNull(item.Properties);
+                Assert.That(item, Is.Not.Null);
+                Assert.That(item.Properties, Is.Not.Null);
             }
         }
     }

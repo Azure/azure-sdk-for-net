@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 count++;
                 if (tempResourceUsage.ResourceType.Equals("profile"))
                 {
-                    Assert.Greater(tempResourceUsage.CurrentValue, 0);
+                    Assert.That(tempResourceUsage.CurrentValue, Is.GreaterThan(0));
                     Assert.That(tempResourceUsage.Limit, Is.EqualTo(200));
                 }
             }

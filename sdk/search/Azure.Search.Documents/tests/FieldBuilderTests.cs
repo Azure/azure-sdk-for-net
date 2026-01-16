@@ -444,7 +444,7 @@ namespace Azure.Search.Documents.Tests
                 "[FieldBuilderIgnore] and define the field by creating a SearchField object. See https://aka.ms/azsdk/net/search/fieldbuilder for more information.";
 
             Assert.That(e.ParamName, Is.EqualTo(nameof(modelType)));
-            StringAssert.StartsWith(expectedErrorMessage, e.Message);
+            Assert.That(e.Message, Does.StartWith(expectedErrorMessage));
             Assert.That(e.HelpLink, Is.EqualTo("https://aka.ms/azsdk/net/search/fieldbuilder"));
         }
 
@@ -469,7 +469,7 @@ namespace Azure.Search.Documents.Tests
                 $"class or struct with public properties.";
 
             Assert.That(e.ParamName, Is.EqualTo(nameof(modelType)));
-            StringAssert.StartsWith(expectedErrorMessage, e.Message);
+            Assert.That(e.Message, Does.StartWith(expectedErrorMessage));
         }
 
         [Test]

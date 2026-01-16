@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<QueueProperties> createdQueueResponse = await client.CreateQueueAsync(queueOptions);
             Response rawResponse = createdQueueResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
             Assert.That(rawResponse.ContentStream.CanRead, Is.True);
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
@@ -143,18 +143,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 // standard namespaces either use 256KB or 1024KB when in Canary
-                Assert.LessOrEqual(createdQueue.MaxMessageSizeInKilobytes, 1024);
+                Assert.That(createdQueue.MaxMessageSizeInKilobytes, Is.LessThanOrEqualTo(1024));
             }
             else
             {
-                Assert.IsNull(createdQueue.MaxMessageSizeInKilobytes);
+                Assert.That(createdQueue.MaxMessageSizeInKilobytes, Is.Null);
             }
 
             AssertQueueOptions(queueOptions, createdQueue);
 
             Response<QueueProperties> getQueueResponse = await client.GetQueueAsync(queueOptions.Name);
             rawResponse = createdQueueResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
             Assert.That(rawResponse.ContentStream.CanRead, Is.True);
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
@@ -195,7 +195,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Response<bool> isExistsResponse = await client.QueueExistsAsync(queueName);
             rawResponse = createdQueueResponse.GetRawResponse();
 
-            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
             Assert.That(rawResponse.ContentStream.CanRead, Is.True);
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
             Assert.That(isExistsResponse.Value, Is.True);
@@ -255,7 +255,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<TopicProperties> createdTopicResponse = await client.CreateTopicAsync(options);
             Response rawResponse = createdTopicResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
             Assert.That(rawResponse.ContentStream.CanRead, Is.True);
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
@@ -268,11 +268,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 // standard namespaces either use 256KB or 1024KB when in Canary
-                Assert.LessOrEqual(createdTopic.MaxMessageSizeInKilobytes, 1024);
+                Assert.That(createdTopic.MaxMessageSizeInKilobytes, Is.LessThanOrEqualTo(1024));
             }
             else
             {
-                Assert.IsNull(createdTopic.MaxMessageSizeInKilobytes);
+                Assert.That(createdTopic.MaxMessageSizeInKilobytes, Is.Null);
             }
 
             AssertTopicOptions(options, createdTopic);
@@ -280,7 +280,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Response<TopicProperties> getTopicResponse = await client.GetTopicAsync(options.Name);
 
             rawResponse = getTopicResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
             Assert.That(rawResponse.ContentStream.CanRead, Is.True);
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
@@ -300,7 +300,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<TopicProperties> updatedTopicResponse = await client.UpdateTopicAsync(getTopic);
             rawResponse = updatedTopicResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
             Assert.That(rawResponse.ContentStream.CanRead, Is.True);
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
@@ -320,7 +320,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(topicName, Is.EqualTo(topicList.First().Name));
 
             Response response = await client.DeleteTopicAsync(updatedTopic.Name);
-            Assert.NotNull(response.ClientRequestId);
+            Assert.That(response.ClientRequestId, Is.Not.Null);
             Assert.That(response.ContentStream.CanRead, Is.True);
             Assert.That(response.ContentStream.Position, Is.EqualTo(0));
 
@@ -364,7 +364,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<SubscriptionProperties> createdSubscriptionResponse = await client.CreateSubscriptionAsync(options);
             Response rawResponse = createdSubscriptionResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
             Assert.That(rawResponse.ContentStream.CanRead, Is.True);
             Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             List<SubscriptionProperties> subscriptionList = new List<SubscriptionProperties>();
             await foreach (Page<SubscriptionProperties> subscriptionPage in client.GetSubscriptionsAsync(topicName).AsPages())
             {
-                Assert.NotNull(subscriptionPage.GetRawResponse().ClientRequestId);
+                Assert.That(subscriptionPage.GetRawResponse().ClientRequestId, Is.Not.Null);
                 Assert.That(subscriptionPage.GetRawResponse().ContentStream.CanRead, Is.True);
                 Assert.That(subscriptionPage.GetRawResponse().ContentStream.Position, Is.EqualTo(0));
                 subscriptionList.AddRange(subscriptionPage.Values);
@@ -532,7 +532,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             runtimeInfoList = runtimeInfoList.Where(e => e.Name.StartsWith(nameof(GetQueueRuntimeInfo).ToLower())).ToList();
             Assert.That(runtimeInfoList.Count == 1, Is.True, $"Expected 1 queue but {runtimeInfoList.Count} queues returned");
             QueueRuntimeProperties runtimeInfo = runtimeInfoList.First();
-            Assert.NotNull(runtimeInfo);
+            Assert.That(runtimeInfo, Is.Not.Null);
 
             Assert.That(runtimeInfo.Name, Is.EqualTo(queueName));
             Assert.That(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt, Is.True);
@@ -600,7 +600,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             runtimeInfoList = runtimeInfoList.Where(e => e.TopicName.StartsWith(nameof(GetSubscriptionRuntimeInfoTest).ToLower())).ToList();
             Assert.That(runtimeInfoList.Count == 1, Is.True, $"Expected 1 subscription but {runtimeInfoList.Count} subscriptions returned");
             SubscriptionRuntimeProperties runtimeInfo = runtimeInfoList.First();
-            Assert.NotNull(runtimeInfo);
+            Assert.That(runtimeInfo, Is.Not.Null);
 
             Assert.That(runtimeInfo.TopicName, Is.EqualTo(topicName));
             Assert.That(runtimeInfo.SubscriptionName, Is.EqualTo(subscriptionName));
@@ -631,7 +631,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             topicRuntimePropertiesList = topicRuntimePropertiesList.Where(e => e.Name.StartsWith(nameof(GetSubscriptionRuntimeInfoTest).ToLower())).ToList();
             Assert.That(topicRuntimePropertiesList.Count == 1, Is.True, $"Expected 1 subscription but {topicRuntimePropertiesList.Count} subscriptions returned");
             TopicRuntimeProperties topicRuntimeProperties = topicRuntimePropertiesList.First();
-            Assert.NotNull(topicRuntimeProperties);
+            Assert.That(topicRuntimeProperties, Is.Not.Null);
 
             Assert.That(topicRuntimeProperties.Name, Is.EqualTo(topicName));
             Assert.That(topicRuntimeProperties.CreatedAt < topicRuntimeProperties.UpdatedAt, Is.True);
@@ -675,7 +675,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             runtimeInfoList = runtimeInfoList.Where(e => e.Name.StartsWith(nameof(GetTopicRuntimeInfo).ToLower())).ToList();
             Assert.That(runtimeInfoList.Count == 1, Is.True, $"Expected 1 topic but {runtimeInfoList.Count} topics returned");
             TopicRuntimeProperties runtimeInfo = runtimeInfoList.First();
-            Assert.NotNull(runtimeInfo);
+            Assert.That(runtimeInfo, Is.Not.Null);
 
             Assert.That(runtimeInfo.Name, Is.EqualTo(topicName));
             Assert.That(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt, Is.True);
@@ -835,13 +835,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(destinationName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            Assert.NotNull(msg);
+            Assert.That(msg, Is.Not.Null);
             Assert.That(msg.MessageId, Is.EqualTo("mid"));
             await receiver.DeadLetterMessageAsync(msg);
 
             receiver = sbClient.CreateReceiver(dlqDestinationName);
             msg = await receiver.ReceiveMessageAsync();
-            Assert.NotNull(msg);
+            Assert.That(msg, Is.Not.Null);
             Assert.That(msg.MessageId, Is.EqualTo("mid"));
             await receiver.CompleteMessageAsync(msg);
 
@@ -918,7 +918,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var client = CreateClient();
 
             NamespaceProperties nsInfo = await client.GetNamespacePropertiesAsync();
-            Assert.NotNull(nsInfo);
+            Assert.That(nsInfo, Is.Not.Null);
             // Assert.AreEqual(MessagingSku.Standard, nsInfo.MessagingSku);    // Most CI systems generally use standard, hence this check just to ensure the API is working.
             Assert.That(nsInfo.NamespaceType, Is.EqualTo(NamespaceType.Messaging)); // Common namespace type used for testing is messaging.
         }

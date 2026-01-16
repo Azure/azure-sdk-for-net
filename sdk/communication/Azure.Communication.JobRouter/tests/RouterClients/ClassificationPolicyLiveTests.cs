@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
-            Assert.NotNull(createClassificationPolicyResponse.Value);
+            Assert.That(createClassificationPolicyResponse.Value, Is.Not.Null);
 
             var createClassificationPolicy = createClassificationPolicyResponse.Value;
             Assert.DoesNotThrow(() =>
@@ -76,7 +76,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = classificationPolicyName,
                 });
 
-            Assert.NotNull(updateClassificationPolicyResponse.Value);
+            Assert.That(updateClassificationPolicyResponse.Value, Is.Not.Null);
 
             createClassificationPolicy = updateClassificationPolicyResponse.Value;
             Assert.DoesNotThrow(() =>
@@ -134,9 +134,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.That(getClassificationPolicyResponse.Value.FallbackQueueId, Is.Null);
             Assert.That(getClassificationPolicyResponse.Value.Name, Is.Null);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
+            Assert.That(getClassificationPolicyResponse.Value.QueueSelectorAttachments, Is.Empty);
             Assert.That(getClassificationPolicyResponse.Value.PrioritizationRule, Is.Null);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectorAttachments);
+            Assert.That(getClassificationPolicyResponse.Value.WorkerSelectorAttachments, Is.Empty);
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
         }
@@ -162,9 +162,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.That(getClassificationPolicyResponse.Value.FallbackQueueId, Is.Null);
             Assert.That(getClassificationPolicyResponse.Value.Name, Is.EqualTo(classificationPolicyName));
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
+            Assert.That(getClassificationPolicyResponse.Value.QueueSelectorAttachments, Is.Empty);
             Assert.That(getClassificationPolicyResponse.Value.PrioritizationRule.GetType() == typeof(StaticRouterRule), Is.True);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectorAttachments);
+            Assert.That(getClassificationPolicyResponse.Value.WorkerSelectorAttachments, Is.Empty);
         }
 
         [Test]
@@ -194,7 +194,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.That(getClassificationPolicyResponse.Value.Name, Is.EqualTo(classificationPolicyName));
             Assert.That(getClassificationPolicyResponse.Value.QueueSelectorAttachments.Count, Is.EqualTo(1));
             var staticQSelector = (StaticQueueSelectorAttachment)getClassificationPolicyResponse.Value.QueueSelectorAttachments.First();
-            Assert.NotNull(staticQSelector);
+            Assert.That(staticQSelector, Is.Not.Null);
             Assert.That(getClassificationPolicyResponse.Value.PrioritizationRule, Is.Null);
             Assert.That(getClassificationPolicyResponse.Value.WorkerSelectorAttachments.Count, Is.EqualTo(0));
         }
@@ -221,7 +221,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.That(getClassificationPolicyResponse.Value.FallbackQueueId, Is.Null);
             Assert.That(getClassificationPolicyResponse.Value.Name, Is.EqualTo(classificationPolicyName));
             Assert.That(getClassificationPolicyResponse.Value.PrioritizationRule, Is.Null);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
+            Assert.That(getClassificationPolicyResponse.Value.QueueSelectorAttachments, Is.Empty);
             Assert.That(getClassificationPolicyResponse.Value.WorkerSelectorAttachments.Count, Is.EqualTo(1));
         }
 

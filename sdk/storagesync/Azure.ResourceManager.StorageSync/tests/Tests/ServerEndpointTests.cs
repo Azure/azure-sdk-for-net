@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = await EnsureRegisteredServerResource(_storageSyncServiceResource);
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
 
             StorageSyncServerEndpointCreateOrUpdateContent serverEndpointParameters = StorageSyncManagementTestUtilities.GetDefaultServerEndpointParameters(registeredServerResource.Id);
 
             // Create ServerEndpoints
             StorageSyncServerEndpointResource serverEndpointResource = (await _storageSyncGroupResource.GetStorageSyncServerEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _serverEndpointName, serverEndpointParameters)).Value;
-            Assert.NotNull(serverEndpointResource);
+            Assert.That(serverEndpointResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResource, true);
 
             // Get ServerEndpoint
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // List ServerEndpoints
             List<StorageSyncServerEndpointResource> serverEndpointResources = await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ToEnumerableAsync();
-            Assert.NotNull(serverEndpointResources);
+            Assert.That(serverEndpointResources, Is.Not.Null);
             Assert.That(serverEndpointResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResources.First(), false);
 
             // Recall ServerEndpoint
             RecallActionContent recallActionParameters = StorageSyncManagementTestUtilities.GetDefaultRecallActionParameters();
             ArmOperation serverEndpointsRecallOperation = await serverEndpointResource.RecallActionAsync(WaitUntil.Completed, recallActionParameters);
-            Assert.NotNull(serverEndpointsRecallOperation);
-            Assert.IsNotEmpty(serverEndpointsRecallOperation.GetRawResponse().ClientRequestId); // Request Id
+            Assert.That(serverEndpointsRecallOperation, Is.Not.Null);
+            Assert.That(serverEndpointsRecallOperation.GetRawResponse().ClientRequestId, Is.Not.Empty); // Request Id
             // Assert.IsNotEmpty(serverEndpointsRecallOperation.Id); // Getting serverEndpointsRecallOperation id throws not implemented exception
 
             // Note: Currently updating a ServerEndpoint is blocked by design. API enforces that PUT on an existing resource has to be

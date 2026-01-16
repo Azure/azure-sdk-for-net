@@ -60,9 +60,9 @@ namespace Azure.AI.FormRecognizer.Tests
             }
 
             // Sanity check to make sure we got an actual response back from the service.
-            Assert.IsNotNull(model.ModelId);
+            Assert.That(model.ModelId, Is.Not.Null);
             Assert.That(model.Status, Is.EqualTo(CustomFormModelStatus.Ready));
-            Assert.IsNotNull(model.Errors);
+            Assert.That(model.Errors, Is.Not.Null);
             Assert.That(model.Errors.Count, Is.EqualTo(0));
         }
 
@@ -97,37 +97,37 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsNotNull(model.ModelId);
-            Assert.IsNull(model.ModelName);
-            Assert.IsNotNull(model.Properties);
+            Assert.That(model.ModelId, Is.Not.Null);
+            Assert.That(model.ModelName, Is.Null);
+            Assert.That(model.Properties, Is.Not.Null);
             Assert.That(model.Properties.IsComposedModel, Is.False);
-            Assert.IsNotNull(model.TrainingStartedOn);
-            Assert.IsNotNull(model.TrainingCompletedOn);
+            Assert.That(model.TrainingStartedOn, Is.Not.Null);
+            Assert.That(model.TrainingCompletedOn, Is.Not.Null);
             Assert.That(model.Status, Is.EqualTo(CustomFormModelStatus.Ready));
-            Assert.IsNotNull(model.Errors);
+            Assert.That(model.Errors, Is.Not.Null);
             Assert.That(model.Errors.Count, Is.EqualTo(0));
 
             foreach (TrainingDocumentInfo doc in model.TrainingDocuments)
             {
-                Assert.IsNotNull(doc.Name);
-                Assert.IsNotNull(doc.ModelId);
-                Assert.IsNotNull(doc.PageCount);
+                Assert.That(doc.Name, Is.Not.Null);
+                Assert.That(doc.ModelId, Is.Not.Null);
+                Assert.That(doc.PageCount, Is.Not.Null);
                 Assert.That(doc.Status, Is.EqualTo(TrainingStatus.Succeeded));
-                Assert.IsNotNull(doc.Errors);
+                Assert.That(doc.Errors, Is.Not.Null);
                 Assert.That(doc.Errors.Count, Is.EqualTo(0));
             }
 
             foreach (var submodel in model.Submodels)
             {
-                Assert.IsNotNull(submodel.FormType);
-                Assert.IsNotNull(submodel.ModelId);
+                Assert.That(submodel.FormType, Is.Not.Null);
+                Assert.That(submodel.ModelId, Is.Not.Null);
                 foreach (var fields in submodel.Fields)
                 {
-                    Assert.IsNotNull(fields.Value.Name);
+                    Assert.That(fields.Value.Name, Is.Not.Null);
                     if (labeled)
-                        Assert.IsNotNull(fields.Value.Accuracy);
+                        Assert.That(fields.Value.Accuracy, Is.Not.Null);
                     else
-                        Assert.IsNotNull(fields.Value.Label);
+                        Assert.That(fields.Value.Label, Is.Not.Null);
                 }
             }
         }
@@ -258,7 +258,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.That(trainingOperation.HasValue, Is.True);
 
                 model = trainingOperation.Value;
-                Assert.IsNotNull(model.Submodels.FirstOrDefault().FormType);
+                Assert.That(model.Submodels.FirstOrDefault().FormType, Is.Not.Null);
 
                 var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
 
@@ -276,7 +276,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(recognizeOperation.HasValue, Is.True);
 
             RecognizedForm form = recognizeOperation.Value.Single();
-            Assert.IsNotNull(form.FormType);
+            Assert.That(form.FormType, Is.Not.Null);
             Assert.That(model.Submodels.FirstOrDefault().FormType, Is.EqualTo(form.FormType));
         }
 
@@ -328,13 +328,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsNotNull(composedModel.ModelId);
-            Assert.IsNotNull(composedModel.Properties);
+            Assert.That(composedModel.ModelId, Is.Not.Null);
+            Assert.That(composedModel.Properties, Is.Not.Null);
             Assert.That(composedModel.Properties.IsComposedModel, Is.True);
-            Assert.IsNotNull(composedModel.TrainingStartedOn);
-            Assert.IsNotNull(composedModel.TrainingCompletedOn);
+            Assert.That(composedModel.TrainingStartedOn, Is.Not.Null);
+            Assert.That(composedModel.TrainingCompletedOn, Is.Not.Null);
             Assert.That(composedModel.Status, Is.EqualTo(CustomFormModelStatus.Ready));
-            Assert.IsNotNull(composedModel.Errors);
+            Assert.That(composedModel.Errors, Is.Not.Null);
             Assert.That(composedModel.Errors.Count, Is.EqualTo(0));
 
             Dictionary<string, List<TrainingDocumentInfo>> trainingDocsPerModel = composedModel.TrainingDocuments.GroupBy(doc => doc.ModelId).ToDictionary(g => g.Key, g => g.ToList());
@@ -346,35 +346,35 @@ namespace Azure.AI.FormRecognizer.Tests
             //Check training documents in modelA
             foreach (TrainingDocumentInfo doc in trainingDocsPerModel[trainedModelA.ModelId])
             {
-                Assert.IsNotNull(doc.Name);
+                Assert.That(doc.Name, Is.Not.Null);
                 Assert.That(doc.ModelId, Is.EqualTo(trainedModelA.ModelId));
-                Assert.IsNotNull(doc.PageCount);
+                Assert.That(doc.PageCount, Is.Not.Null);
                 Assert.That(doc.Status, Is.EqualTo(TrainingStatus.Succeeded));
-                Assert.IsNotNull(doc.Errors);
+                Assert.That(doc.Errors, Is.Not.Null);
                 Assert.That(doc.Errors.Count, Is.EqualTo(0));
             }
 
             //Check training documents in modelB
             foreach (TrainingDocumentInfo doc in trainingDocsPerModel[trainedModelB.ModelId])
             {
-                Assert.IsNotNull(doc.Name);
+                Assert.That(doc.Name, Is.Not.Null);
                 Assert.That(doc.ModelId, Is.EqualTo(trainedModelB.ModelId));
-                Assert.IsNotNull(doc.PageCount);
+                Assert.That(doc.PageCount, Is.Not.Null);
                 Assert.That(doc.Status, Is.EqualTo(TrainingStatus.Succeeded));
-                Assert.IsNotNull(doc.Errors);
+                Assert.That(doc.Errors, Is.Not.Null);
                 Assert.That(doc.Errors.Count, Is.EqualTo(0));
             }
 
             Assert.That(composedModel.Submodels.Count, Is.EqualTo(2));
             foreach (var submodel in composedModel.Submodels)
             {
-                Assert.IsNotNull(submodel.FormType);
-                Assert.IsNotNull(submodel.ModelId);
+                Assert.That(submodel.FormType, Is.Not.Null);
+                Assert.That(submodel.ModelId, Is.Not.Null);
                 Assert.That(modelIds.Contains(submodel.ModelId), Is.True);
                 foreach (var fields in submodel.Fields)
                 {
-                    Assert.IsNotNull(fields.Value.Name);
-                    Assert.IsNotNull(fields.Value.Accuracy);
+                    Assert.That(fields.Value.Name, Is.Not.Null);
+                    Assert.That(fields.Value.Accuracy, Is.Not.Null);
                 }
             }
         }
@@ -456,16 +456,16 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
-                Assert.IsNotNull(modelInfo.ModelId);
-                Assert.IsNotNull(modelInfo.TrainingStartedOn);
-                Assert.IsNotNull(modelInfo.TrainingCompletedOn);
-                Assert.IsNotNull(modelInfo.Status);
-                Assert.IsNotNull(modelInfo.Properties);
+                Assert.That(modelInfo.ModelId, Is.Not.Null);
+                Assert.That(modelInfo.TrainingStartedOn, Is.Not.Null);
+                Assert.That(modelInfo.TrainingCompletedOn, Is.Not.Null);
+                Assert.That(modelInfo.Status, Is.Not.Null);
+                Assert.That(modelInfo.Properties, Is.Not.Null);
 
                 AccountProperties accountP = await client.GetAccountPropertiesAsync();
 
-                Assert.IsNotNull(accountP.CustomModelCount);
-                Assert.IsNotNull(accountP.CustomModelLimit);
+                Assert.That(accountP.CustomModelCount, Is.Not.Null);
+                Assert.That(accountP.CustomModelLimit, Is.Not.Null);
             }
             finally
             {
@@ -526,8 +526,8 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsNotNull(modelCopied.TrainingCompletedOn);
-            Assert.IsNotNull(modelCopied.TrainingStartedOn);
+            Assert.That(modelCopied.TrainingCompletedOn, Is.Not.Null);
+            Assert.That(modelCopied.TrainingStartedOn, Is.Not.Null);
             Assert.That(modelCopied.ModelId, Is.EqualTo(targetAuth.ModelId));
             Assert.That(modelCopied.ModelId, Is.Not.EqualTo(trainedModel.ModelId));
         }
@@ -731,9 +731,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
-            Assert.IsNotNull(targetAuth.ModelId);
-            Assert.IsNotNull(targetAuth.AccessToken);
-            Assert.IsNotNull(targetAuth.ExpiresOn);
+            Assert.That(targetAuth.ModelId, Is.Not.Null);
+            Assert.That(targetAuth.AccessToken, Is.Not.Null);
+            Assert.That(targetAuth.ExpiresOn, Is.Not.Null);
             Assert.That(targetAuth.ResourceId, Is.EqualTo(resourceId));
             Assert.That(targetAuth.Region, Is.EqualTo(region));
         }

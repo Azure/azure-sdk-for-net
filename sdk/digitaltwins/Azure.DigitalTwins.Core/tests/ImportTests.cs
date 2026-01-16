@@ -41,13 +41,13 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // validate CREATE job
                 var createResponse = await client.ImportGraphAsync(jobId, importJob).ConfigureAwait(false);
-                Assert.IsNotNull(createResponse);
+                Assert.That(createResponse, Is.Not.Null);
                 var rawCreateResponse = createResponse.GetRawResponse();
                 Assert.That(rawCreateResponse.Status, Is.EqualTo((int)HttpStatusCode.Created));
 
                 // Validate GET job
                 var getResponse = await client.GetImportJobAsync(jobId).ConfigureAwait(false);
-                Assert.IsNotNull(getResponse);
+                Assert.That(getResponse, Is.Not.Null);
                 var rawGetResponse = getResponse.GetRawResponse();
                 Assert.That(rawGetResponse.Status, Is.EqualTo((int)HttpStatusCode.OK));
 
@@ -66,7 +66,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // validate CANCEL job
                 var cancelResponse = await client.CancelImportJobAsync(jobId).ConfigureAwait(false);
-                Assert.IsNotNull(cancelResponse);
+                Assert.That(cancelResponse, Is.Not.Null);
                 var rawCancelResponse = cancelResponse.GetRawResponse();
                 Assert.That(rawCancelResponse.Status, Is.EqualTo((int)HttpStatusCode.OK));
 
@@ -79,7 +79,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // validate DELETE job
                 var deleteResponse = await client.DeleteImportJobAsync(jobId).ConfigureAwait(false);
-                Assert.IsNotNull(deleteResponse);
+                Assert.That(deleteResponse, Is.Not.Null);
                 Assert.That(deleteResponse.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
 
                 // validate GET job after deletion - should fail
@@ -110,7 +110,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 var createResponse = await client.ImportGraphAsync(jobId, importJob).ConfigureAwait(false);
 
                 // Validation
-                Assert.IsNotNull(createResponse);
+                Assert.That(createResponse, Is.Not.Null);
                 var rawCreateResponse = createResponse.GetRawResponse();
                 Assert.That(rawCreateResponse.Status, Is.EqualTo((int)HttpStatusCode.Created));
 

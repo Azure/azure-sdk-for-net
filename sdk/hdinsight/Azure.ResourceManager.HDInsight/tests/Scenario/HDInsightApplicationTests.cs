@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             await CreateApplication(_applicationName, _scriptActionName);
             var list = await _applicationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
         private void ValidateApplication(HDInsightApplicationResource application)
         {
-            Assert.IsNotNull(application);
-            Assert.IsNotNull(application.Data.Properties.CreatedOn);
+            Assert.That(application, Is.Not.Null);
+            Assert.That(application.Data.Properties.CreatedOn, Is.Not.Null);
             Assert.That(application.Data.Properties.ApplicationType, Is.EqualTo("CustomApplication"));
             Assert.That(application.Data.Properties.InstallScriptActions.Count, Is.EqualTo(1));
         }

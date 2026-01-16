@@ -53,27 +53,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 await sender.SendMessageAsync(msg);
                 var receivedMsg = await receiver.ReceiveMessageAsync();
 
-                Assert.IsInstanceOf(typeof(byte), receivedMsg.ApplicationProperties["byte"]);
-                Assert.IsInstanceOf(typeof(sbyte), receivedMsg.ApplicationProperties["sbyte"]);
-                Assert.IsInstanceOf(typeof(char), receivedMsg.ApplicationProperties["char"]);
-                Assert.IsInstanceOf(typeof(short), receivedMsg.ApplicationProperties["short"]);
-                Assert.IsInstanceOf(typeof(ushort), receivedMsg.ApplicationProperties["ushort"]);
-                Assert.IsInstanceOf(typeof(int), receivedMsg.ApplicationProperties["int"]);
-                Assert.IsInstanceOf(typeof(uint), receivedMsg.ApplicationProperties["uint"]);
-                Assert.IsInstanceOf(typeof(long), receivedMsg.ApplicationProperties["long"]);
-                Assert.IsInstanceOf(typeof(ulong), receivedMsg.ApplicationProperties["ulong"]);
-                Assert.IsInstanceOf(typeof(float), receivedMsg.ApplicationProperties["float"]);
-                Assert.IsInstanceOf(typeof(double), receivedMsg.ApplicationProperties["double"]);
-                Assert.IsInstanceOf(typeof(decimal), receivedMsg.ApplicationProperties["decimal"]);
-                Assert.IsInstanceOf(typeof(bool), receivedMsg.ApplicationProperties["bool"]);
-                Assert.IsInstanceOf(typeof(Guid), receivedMsg.ApplicationProperties["Guid"]);
-                Assert.IsInstanceOf(typeof(string), receivedMsg.ApplicationProperties["string"]);
-                Assert.IsInstanceOf(typeof(Uri), receivedMsg.ApplicationProperties["Uri"]);
-                Assert.IsInstanceOf(typeof(DateTime), receivedMsg.ApplicationProperties["DateTime"]);
-                Assert.IsInstanceOf(typeof(DateTimeOffset), receivedMsg.ApplicationProperties["DateTimeOffset"]);
-                Assert.IsInstanceOf(typeof(TimeSpan), receivedMsg.ApplicationProperties["TimeSpan"]);
+                Assert.That(receivedMsg.ApplicationProperties["byte"], Is.InstanceOf(typeof(byte)));
+                Assert.That(receivedMsg.ApplicationProperties["sbyte"], Is.InstanceOf(typeof(sbyte)));
+                Assert.That(receivedMsg.ApplicationProperties["char"], Is.InstanceOf(typeof(char)));
+                Assert.That(receivedMsg.ApplicationProperties["short"], Is.InstanceOf(typeof(short)));
+                Assert.That(receivedMsg.ApplicationProperties["ushort"], Is.InstanceOf(typeof(ushort)));
+                Assert.That(receivedMsg.ApplicationProperties["int"], Is.InstanceOf(typeof(int)));
+                Assert.That(receivedMsg.ApplicationProperties["uint"], Is.InstanceOf(typeof(uint)));
+                Assert.That(receivedMsg.ApplicationProperties["long"], Is.InstanceOf(typeof(long)));
+                Assert.That(receivedMsg.ApplicationProperties["ulong"], Is.InstanceOf(typeof(ulong)));
+                Assert.That(receivedMsg.ApplicationProperties["float"], Is.InstanceOf(typeof(float)));
+                Assert.That(receivedMsg.ApplicationProperties["double"], Is.InstanceOf(typeof(double)));
+                Assert.That(receivedMsg.ApplicationProperties["decimal"], Is.InstanceOf(typeof(decimal)));
+                Assert.That(receivedMsg.ApplicationProperties["bool"], Is.InstanceOf(typeof(bool)));
+                Assert.That(receivedMsg.ApplicationProperties["Guid"], Is.InstanceOf(typeof(Guid)));
+                Assert.That(receivedMsg.ApplicationProperties["string"], Is.InstanceOf(typeof(string)));
+                Assert.That(receivedMsg.ApplicationProperties["Uri"], Is.InstanceOf(typeof(Uri)));
+                Assert.That(receivedMsg.ApplicationProperties["DateTime"], Is.InstanceOf(typeof(DateTime)));
+                Assert.That(receivedMsg.ApplicationProperties["DateTimeOffset"], Is.InstanceOf(typeof(DateTimeOffset)));
+                Assert.That(receivedMsg.ApplicationProperties["TimeSpan"], Is.InstanceOf(typeof(TimeSpan)));
 
-                Assert.IsNull(receivedMsg.ApplicationProperties["null"]);
+                Assert.That(receivedMsg.ApplicationProperties["null"], Is.Null);
                 var bytes = receivedMsg.GetRawAmqpMessage().ToBytes();
 
                 var copyReceivedMessage = ServiceBusReceivedMessage.FromAmqpMessage(
@@ -81,25 +81,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     BinaryData.FromBytes(receivedMsg.LockTokenGuid.ToByteArray()));
 
                 Assert.That(copyReceivedMessage.LockToken, Is.EqualTo(receivedMsg.LockToken));
-                Assert.IsInstanceOf(typeof(byte), copyReceivedMessage.ApplicationProperties["byte"]);
-                Assert.IsInstanceOf(typeof(sbyte), copyReceivedMessage.ApplicationProperties["sbyte"]);
-                Assert.IsInstanceOf(typeof(char), copyReceivedMessage.ApplicationProperties["char"]);
-                Assert.IsInstanceOf(typeof(short), copyReceivedMessage.ApplicationProperties["short"]);
-                Assert.IsInstanceOf(typeof(ushort), copyReceivedMessage.ApplicationProperties["ushort"]);
-                Assert.IsInstanceOf(typeof(int), copyReceivedMessage.ApplicationProperties["int"]);
-                Assert.IsInstanceOf(typeof(uint), copyReceivedMessage.ApplicationProperties["uint"]);
-                Assert.IsInstanceOf(typeof(long), copyReceivedMessage.ApplicationProperties["long"]);
-                Assert.IsInstanceOf(typeof(ulong), copyReceivedMessage.ApplicationProperties["ulong"]);
-                Assert.IsInstanceOf(typeof(float), copyReceivedMessage.ApplicationProperties["float"]);
-                Assert.IsInstanceOf(typeof(double), copyReceivedMessage.ApplicationProperties["double"]);
-                Assert.IsInstanceOf(typeof(decimal), copyReceivedMessage.ApplicationProperties["decimal"]);
-                Assert.IsInstanceOf(typeof(bool), copyReceivedMessage.ApplicationProperties["bool"]);
-                Assert.IsInstanceOf(typeof(Guid), copyReceivedMessage.ApplicationProperties["Guid"]);
-                Assert.IsInstanceOf(typeof(string), copyReceivedMessage.ApplicationProperties["string"]);
-                Assert.IsInstanceOf(typeof(Uri), copyReceivedMessage.ApplicationProperties["Uri"]);
-                Assert.IsInstanceOf(typeof(DateTime), copyReceivedMessage.ApplicationProperties["DateTime"]);
-                Assert.IsInstanceOf(typeof(DateTimeOffset), copyReceivedMessage.ApplicationProperties["DateTimeOffset"]);
-                Assert.IsInstanceOf(typeof(TimeSpan), copyReceivedMessage.ApplicationProperties["TimeSpan"]);
+                Assert.That(copyReceivedMessage.ApplicationProperties["byte"], Is.InstanceOf(typeof(byte)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["sbyte"], Is.InstanceOf(typeof(sbyte)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["char"], Is.InstanceOf(typeof(char)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["short"], Is.InstanceOf(typeof(short)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["ushort"], Is.InstanceOf(typeof(ushort)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["int"], Is.InstanceOf(typeof(int)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["uint"], Is.InstanceOf(typeof(uint)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["long"], Is.InstanceOf(typeof(long)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["ulong"], Is.InstanceOf(typeof(ulong)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["float"], Is.InstanceOf(typeof(float)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["double"], Is.InstanceOf(typeof(double)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["decimal"], Is.InstanceOf(typeof(decimal)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["bool"], Is.InstanceOf(typeof(bool)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["Guid"], Is.InstanceOf(typeof(Guid)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["string"], Is.InstanceOf(typeof(string)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["Uri"], Is.InstanceOf(typeof(Uri)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["DateTime"], Is.InstanceOf(typeof(DateTime)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["DateTimeOffset"], Is.InstanceOf(typeof(DateTimeOffset)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["TimeSpan"], Is.InstanceOf(typeof(TimeSpan)));
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 await client.CreateSender(scope.QueueName).SendMessageAsync(maxSizeMessage);
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.IsNotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 await receiver.CompleteMessageAsync(receivedMessage);
             }
         }
@@ -164,7 +164,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
                 AmqpAnnotatedMessage rawReceived = received.GetRawAmqpMessage();
-                Assert.IsNotNull(rawReceived.Header.DeliveryCount);
+                Assert.That(rawReceived.Header.DeliveryCount, Is.Not.Null);
                 Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.True);
                 Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.True);
                 Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName), Is.True);
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 AmqpAnnotatedMessage rawSend = toSend.GetRawAmqpMessage();
 
                 // verify that all system set properties have been cleared out
-                Assert.IsNull(rawSend.Header.DeliveryCount);
+                Assert.That(rawSend.Header.DeliveryCount, Is.Null);
                 Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.False);
                 Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.False);
                 Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName), Is.False);
@@ -293,7 +293,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 await receiver.DeferMessageAsync(received);
                 received = await receiver.PeekMessageAsync();
                 AmqpAnnotatedMessage rawReceived = received.GetRawAmqpMessage();
-                Assert.IsNotNull(rawReceived.Header.DeliveryCount);
+                Assert.That(rawReceived.Header.DeliveryCount, Is.Not.Null);
                 Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.True);
                 Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.True);
                 Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName), Is.True);
@@ -305,7 +305,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 AmqpAnnotatedMessage rawSend = toSend.GetRawAmqpMessage();
 
                 // verify that all system set properties have been cleared out
-                Assert.IsNull(rawSend.Header.DeliveryCount);
+                Assert.That(rawSend.Header.DeliveryCount, Is.Null);
                 Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.False);
                 Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.False);
                 Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName), Is.False);
@@ -653,17 +653,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.That(received.ApplicationProperties["applicationKey2"], Is.EqualTo("applicationVal2"));
 
                 // message annotations
-                Assert.IsNull(received.MessageAnnotations["messageAnnotationKey1"]);
+                Assert.That(received.MessageAnnotations["messageAnnotationKey1"], Is.Null);
                 Assert.That(received.MessageAnnotations["messageAnnotationKey2"], Is.EqualTo("messageAnnotationVal2"));
 
                 // delivery annotations
-                Assert.IsNull(received.DeliveryAnnotations["deliveryAnnotationKey1"]);
+                Assert.That(received.DeliveryAnnotations["deliveryAnnotationKey1"], Is.Null);
                 Assert.That(received.DeliveryAnnotations["deliveryAnnotationKey2"], Is.EqualTo("deliveryAnnotationVal2"));
 
                 // footer
                 Assert.That(received.Footer["footerKey1"], Is.EqualTo("footerVal1"));
                 Assert.That(received.Footer["footerKey2"], Is.EqualTo("footerVal2"));
-                Assert.IsNull(received.Footer["footerKey3"]);
+                Assert.That(received.Footer["footerKey3"], Is.Null);
             }
         }
 

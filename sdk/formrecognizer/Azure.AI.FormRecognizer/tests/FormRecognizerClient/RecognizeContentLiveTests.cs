@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Tests
             FormPageCollection formPages = await operation.WaitForCompletionAsync();
             var formPage = formPages.Single();
 
-            Assert.Greater(formPage.Lines.Count, 0);
+            Assert.That(formPage.Lines.Count, Is.GreaterThan(0));
             Assert.That(formPage.Lines[0].Text, Is.EqualTo("Contoso"));
         }
 
@@ -95,18 +95,18 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 var line = lines[lineIndex];
 
-                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.That(line.Text, Is.Not.Null, $"Text should not be null in line {lineIndex}.");
                 Assert.That(line.BoundingBox.Points.Count(), Is.EqualTo(4), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
-                Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
+                Assert.That(line.Words.Count, Is.GreaterThan(0), $"There should be at least one word in line {lineIndex}.");
                 foreach (var item in line.Words)
                 {
-                    Assert.GreaterOrEqual(item.Confidence, 0);
+                    Assert.That(item.Confidence, Is.GreaterThanOrEqualTo(0));
                 }
 
-                Assert.IsNotNull(line.Appearance);
-                Assert.IsNotNull(line.Appearance.Style);
+                Assert.That(line.Appearance, Is.Not.Null);
+                Assert.That(line.Appearance.Style, Is.Not.Null);
                 Assert.That(line.Appearance.Style.Name, Is.EqualTo(TextStyleName.Other));
-                Assert.Greater(line.Appearance.Style.Confidence, 0f);
+                Assert.That(line.Appearance.Style.Confidence, Is.GreaterThan(0f));
             }
 
             var table = formPage.Tables.Single();
@@ -127,10 +127,10 @@ namespace Azure.AI.FormRecognizer.Tests
 
             foreach (var cell in cells)
             {
-                Assert.GreaterOrEqual(cell.RowIndex, 0, $"Cell with text {cell.Text} should have row index greater than or equal to zero.");
-                Assert.Less(cell.RowIndex, table.RowCount, $"Cell with text {cell.Text} should have row index less than {table.RowCount}.");
-                Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
-                Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with text {cell.Text} should have column index less than {table.ColumnCount}.");
+                Assert.That(cell.RowIndex, Is.GreaterThanOrEqualTo(0), $"Cell with text {cell.Text} should have row index greater than or equal to zero.");
+                Assert.That(cell.RowIndex, Is.LessThan(table.RowCount), $"Cell with text {cell.Text} should have row index less than {table.RowCount}.");
+                Assert.That(cell.ColumnIndex, Is.GreaterThanOrEqualTo(0), $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
+                Assert.That(cell.ColumnIndex, Is.LessThan(table.ColumnCount), $"Cell with text {cell.Text} should have column index less than {table.ColumnCount}.");
 
                 if (cell.RowIndex == 0)
                 {
@@ -146,11 +146,11 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.That(cell.RowSpan, Is.EqualTo(expectedRowSpan), $"Cell with text {cell.Text} should have a row span of {expectedRowSpan}.");
 
                 Assert.That(cell.IsFooter, Is.False, $"Cell with text {cell.Text} should not have been classified as footer.");
-                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
-                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with text {cell.Text} should have a row index less than or equal to two.");
+                Assert.That(cell.Confidence, Is.GreaterThanOrEqualTo(0), $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
+                Assert.That(cell.RowIndex, Is.LessThanOrEqualTo(2), $"Cell with text {cell.Text} should have a row index less than or equal to two.");
 
                 Assert.That(cell.Text, Is.EqualTo(expectedText[cell.RowIndex, cell.ColumnIndex]));
-                Assert.Greater(cell.FieldElements.Count, 0, $"Cell with text {cell.Text} should have at least one field element.");
+                Assert.That(cell.FieldElements.Count, Is.GreaterThan(0), $"Cell with text {cell.Text} should have at least one field element.");
             }
         }
 
@@ -197,17 +197,17 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 var line = lines[lineIndex];
 
-                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.That(line.Text, Is.Not.Null, $"Text should not be null in line {lineIndex}.");
                 Assert.That(line.BoundingBox.Points.Count(), Is.EqualTo(4), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
-                Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
+                Assert.That(line.Words.Count, Is.GreaterThan(0), $"There should be at least one word in line {lineIndex}.");
                 foreach (var item in line.Words)
                 {
-                    Assert.GreaterOrEqual(item.Confidence, 0);
+                    Assert.That(item.Confidence, Is.GreaterThanOrEqualTo(0));
                 }
 
-                Assert.IsNotNull(line.Appearance);
-                Assert.IsNotNull(line.Appearance.Style);
-                Assert.Greater(line.Appearance.Style.Confidence, 0f);
+                Assert.That(line.Appearance, Is.Not.Null);
+                Assert.That(line.Appearance.Style, Is.Not.Null);
+                Assert.That(line.Appearance.Style.Confidence, Is.GreaterThan(0f));
 
                 if (lineIndex == 45)
                 {
@@ -241,10 +241,10 @@ namespace Azure.AI.FormRecognizer.Tests
 
             for (int i = 0; i < cells.Count; i++)
             {
-                Assert.GreaterOrEqual(cells[i].RowIndex, 0, $"Cell with text {cells[i].Text} should have row index greater than or equal to zero.");
-                Assert.Less(cells[i].RowIndex, sampleTable.RowCount, $"Cell with text {cells[i].Text} should have row index less than {sampleTable.RowCount}.");
-                Assert.GreaterOrEqual(cells[i].ColumnIndex, 0, $"Cell with text {cells[i].Text} should have column index greater than or equal to zero.");
-                Assert.Less(cells[i].ColumnIndex, sampleTable.ColumnCount, $"Cell with text {cells[i].Text} should have column index less than {sampleTable.ColumnCount}.");
+                Assert.That(cells[i].RowIndex, Is.GreaterThanOrEqualTo(0), $"Cell with text {cells[i].Text} should have row index greater than or equal to zero.");
+                Assert.That(cells[i].RowIndex, Is.LessThan(sampleTable.RowCount), $"Cell with text {cells[i].Text} should have row index less than {sampleTable.RowCount}.");
+                Assert.That(cells[i].ColumnIndex, Is.GreaterThanOrEqualTo(0), $"Cell with text {cells[i].Text} should have column index greater than or equal to zero.");
+                Assert.That(cells[i].ColumnIndex, Is.LessThan(sampleTable.ColumnCount), $"Cell with text {cells[i].Text} should have column index less than {sampleTable.ColumnCount}.");
 
                 Assert.That(cells[i].RowSpan, Is.EqualTo(1), $"Cell with text {cells[i].Text} should have a row span of 1.");
                 Assert.That(cells[i].ColumnSpan, Is.EqualTo(1), $"Cell with text {cells[i].Text} should have a column span of 1.");
@@ -262,12 +262,12 @@ namespace Azure.AI.FormRecognizer.Tests
                     Assert.That(cells[i].IsHeader, Is.False, $"Cell with text {cells[i].Text} should not have been classified as header.");
                 }
 
-                Assert.GreaterOrEqual(cells[i].Confidence, 0, $"Cell with text {cells[i].Text} should have confidence greater or equal to zero.");
+                Assert.That(cells[i].Confidence, Is.GreaterThanOrEqualTo(0), $"Cell with text {cells[i].Text} should have confidence greater or equal to zero.");
 
                 // Empty row
                 if (cells[i].RowIndex != 2)
                 {
-                    Assert.Greater(cells[i].FieldElements.Count, 0, $"Cell with text {cells[i].Text} should have at least one field element.");
+                    Assert.That(cells[i].FieldElements.Count, Is.GreaterThan(0), $"Cell with text {cells[i].Text} should have at least one field element.");
                 }
                 else
                 {

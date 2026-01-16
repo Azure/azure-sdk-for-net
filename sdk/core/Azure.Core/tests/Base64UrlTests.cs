@@ -24,7 +24,7 @@ namespace Azure.Core.Tests
 
             var decoded = Base64Url.Decode(encoded);
 
-            CollectionAssert.AreEqual(data, decoded);
+            Assert.That(decoded, Is.EqualTo(data).AsCollection);
         }
 
         [Test]

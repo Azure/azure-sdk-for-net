@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var backupInformation = await table.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, restoreLocation);
 
             DateTime? oldTime = _restorableDatabaseAccount.Data.SystemData.CreatedOn.Value.DateTime;
-            Assert.NotNull(oldTime);
+            Assert.That(oldTime, Is.Not.Null);
 
-            Assert.NotNull(backupInformation);
-            Assert.NotNull(backupInformation.Value.ContinuousBackupInformation);
+            Assert.That(backupInformation, Is.Not.Null);
+            Assert.That(backupInformation.Value.ContinuousBackupInformation, Is.Not.Null);
             Assert.That(backupInformation.Value.ContinuousBackupInformation.LatestRestorableTimestamp.Value.DateTime > oldTime, Is.True);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // verifying restored table
             CosmosDBTableResource restoredTable = await _restoredDatabaseAccount.GetCosmosDBTableAsync(restorableTable.Resource.TableName);
-            Assert.NotNull(restoredTable);
+            Assert.That(restoredTable, Is.Not.Null);
         }
 
         [Test]
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
-            Assert.NotNull(restoredDatabaseAccount);
-            Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
+            Assert.That(restoredDatabaseAccount, Is.Not.Null);
+            Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
             Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
             Assert.That(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy, Is.True);
 

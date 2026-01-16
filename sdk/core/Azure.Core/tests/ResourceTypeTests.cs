@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
         {
             ResourceType rt = left;
             ResourceType rightRt = right;
-            Assert.Less(rt.CompareTo(rightRt), 0);
+            Assert.That(rt.CompareTo(rightRt), Is.LessThan(0));
         }
 
         [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
@@ -156,7 +156,7 @@ namespace Azure.Core.Tests
         {
             ResourceType rt = left;
             ResourceType rightRt = right;
-            Assert.Greater(rt.CompareTo(rightRt), 0);
+            Assert.That(rt.CompareTo(rightRt), Is.GreaterThan(0));
         }
 
         [TestCase]
@@ -166,8 +166,8 @@ namespace Azure.Core.Tests
             ResourceType defaultRt = default;
             ResourceType defaultRt2 = default;
             Assert.That(defaultRt.CompareTo(defaultRt2), Is.EqualTo(0));
-            Assert.Less(defaultRt.CompareTo(rt), 0); // default < non-default ResourceType
-            Assert.Greater(rt.CompareTo(defaultRt), 0); // non-default ResourceType > default
+            Assert.That(defaultRt.CompareTo(rt), Is.LessThan(0)); // default < non-default ResourceType
+            Assert.That(rt.CompareTo(defaultRt), Is.GreaterThan(0)); // non-default ResourceType > default
         }
 
         [TestCase("Microsoft.classicStorage/storageAccounts")]

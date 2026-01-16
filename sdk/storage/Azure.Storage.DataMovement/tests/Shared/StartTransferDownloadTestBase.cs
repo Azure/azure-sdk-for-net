@@ -180,7 +180,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             failureTransferHolder.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
         }
@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
@@ -253,7 +253,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
@@ -374,7 +374,7 @@ namespace Azure.Storage.DataMovement.Tests
             for (int i = 0; i < downloadedObjectInfo.Count; i++)
             {
                 // Assert
-                Assert.NotNull(downloadedObjectInfo[i].TransferOperation);
+                Assert.That(downloadedObjectInfo[i].TransferOperation, Is.Not.Null);
                 using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
                     downloadedObjectInfo[i].TransferOperation,
@@ -514,7 +514,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
@@ -565,14 +565,14 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
             await testEventsRaised.AssertSingleFailedCheck(1);
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.That(destFileInfo.Length == 0, Is.True);
-            Assert.NotNull(testEventsRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            Assert.That(testEventsRaised.FailedEvents.First().Exception, Is.Not.Null, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             Assert.That($"File path `{destFile}` already exists. Cannot overwrite file.", Is.EqualTo(testEventsRaised.FailedEvents.First().Exception.Message));
         }
 

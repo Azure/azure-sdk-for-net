@@ -47,8 +47,8 @@ namespace System.ClientModel.Tests.Options
             string[] expectedDefaultAllowedQueryParameters = ["api-version"];
 
             ClientLoggingOptions options = new();
-            CollectionAssert.AreEquivalent(expectedDefaultAllowedHeaderNames, options.AllowedHeaderNames);
-            CollectionAssert.AreEquivalent(expectedDefaultAllowedQueryParameters, options.AllowedQueryParameters);
+            Assert.That(options.AllowedHeaderNames, Is.EquivalentTo(expectedDefaultAllowedHeaderNames));
+            Assert.That(options.AllowedQueryParameters, Is.EquivalentTo(expectedDefaultAllowedQueryParameters));
         }
 
         [Test]
@@ -69,8 +69,8 @@ namespace System.ClientModel.Tests.Options
             Assert.That(options.EnableLogging, Is.EqualTo(false));
             Assert.That(options.EnableMessageLogging, Is.EqualTo(false));
             Assert.That(options.EnableMessageContentLogging, Is.EqualTo(false));
-            CollectionAssert.Contains(options.AllowedHeaderNames, "Hello");
-            CollectionAssert.Contains(options.AllowedQueryParameters, "Hello");
+            Assert.That(options.AllowedHeaderNames, Has.Member("Hello"));
+            Assert.That(options.AllowedQueryParameters, Has.Member("Hello"));
         }
 
         [Test]

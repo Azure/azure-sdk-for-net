@@ -232,7 +232,7 @@ namespace Azure.Storage.Queues.Test
 
                 // encrypt original data manually for comparison
                 EncryptionData encryptionMetadata = parsedEncryptedMessage.EncryptionData;
-                Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+                Assert.That(encryptionMetadata, Is.Not.Null, "Never encrypted data.");
 
                 var explicitlyUnwrappedContent = IsAsync
                     ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)

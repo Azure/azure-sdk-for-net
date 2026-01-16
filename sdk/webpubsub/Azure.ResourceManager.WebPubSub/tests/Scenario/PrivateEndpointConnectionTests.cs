@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             var PrivateEndpointConnection = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAsync(list[0].Data.Name);
-            Assert.NotNull(PrivateEndpointConnection.Value.Data);
+            Assert.That(PrivateEndpointConnection.Value.Data, Is.Not.Null);
             Assert.That(PrivateEndpointConnection.Value.Data.ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
         }
 

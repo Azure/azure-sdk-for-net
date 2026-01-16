@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.Greater(updateCalled, 0);
+            Assert.That(updateCalled, Is.GreaterThan(0));
             Assert.That(operation.HasCompleted, Is.True);
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.GetRawResponse(), Is.EqualTo(testResponse));

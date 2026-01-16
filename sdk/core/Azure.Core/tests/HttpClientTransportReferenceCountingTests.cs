@@ -278,7 +278,7 @@ namespace Azure.Core.Tests
             await Task.WhenAll(tasks);
 
             // Assert - Should have created multiple clients due to updates
-            Assert.GreaterOrEqual(updateCount, 4, "Should have created multiple clients due to updates");
+            Assert.That(updateCount, Is.GreaterThanOrEqualTo(4), "Should have created multiple clients due to updates");
         }
 
         #region Helper Methods

@@ -98,13 +98,13 @@ namespace Azure.Core.Experimental.Tests
             Variant stringVariant = new(s);
 
             Assert.That(stringVariant, Is.EqualTo(Variant.Null));
-            Assert.IsNull(stringVariant.As<string>());
+            Assert.That(stringVariant.As<string>(), Is.Null);
 
             List<int> list = null;
             Variant listVariant = new(list);
 
             Assert.That(listVariant, Is.EqualTo(Variant.Null));
-            Assert.IsNull(listVariant.As<string>());
+            Assert.That(listVariant.As<string>(), Is.Null);
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace Azure.Core.Experimental.Tests
             Variant intVariant = new(i);
 
             Assert.That(intVariant, Is.EqualTo(Variant.Null));
-            Assert.IsNull(intVariant.As<int?>());
+            Assert.That(intVariant.As<int?>(), Is.Null);
         }
 
         #region Helpers

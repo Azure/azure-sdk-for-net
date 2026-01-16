@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             var logicWorkflow = await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
-            Assert.IsNotNull(logicWorkflow);
+            Assert.That(logicWorkflow, Is.Not.Null);
             Assert.That(logicWorkflow.Data.Name, Is.EqualTo(logicWorkflowName));
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
             var logicWorkflow = await _logicWorkflowCollection.GetAsync(logicWorkflowName);
-            Assert.IsNotNull(logicWorkflow);
+            Assert.That(logicWorkflow, Is.Not.Null);
             Assert.That(logicWorkflow.Value.Data.Name, Is.EqualTo(logicWorkflowName));
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
             var list = await _logicWorkflowCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

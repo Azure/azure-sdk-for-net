@@ -179,7 +179,7 @@ namespace Azure.Storage.Blobs.Test
 #pragma warning disable CS0618 // obsolete
         private async Task<byte[]> ReplicateEncryptionV1_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
-            Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+            Assert.That(encryptionMetadata, Is.Not.Null, "Never encrypted data.");
             Assert.That(encryptionMetadata.EncryptionAgent.EncryptionVersion, Is.EqualTo(ClientSideEncryptionVersionInternal.V1_0));
 
             var explicitlyUnwrappedKey = IsAsync // can't instrument this
@@ -195,7 +195,7 @@ namespace Azure.Storage.Blobs.Test
 
         private async Task<byte[]> ReplicateEncryptionV2_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
-            Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+            Assert.That(encryptionMetadata, Is.Not.Null, "Never encrypted data.");
             Assert.That(encryptionMetadata.EncryptionAgent.EncryptionVersion, Is.EqualTo(ClientSideEncryptionVersionInternal.V2_0));
 
             var explicitlyUnwrappedContent = IsAsync // can't instrument this
@@ -1291,17 +1291,17 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.That((bool)await blob.ExistsAsync(), Is.True);
-            Assert.Greater((await blob.GetPropertiesAsync()).Value.ContentLength, 0);
+            Assert.That((await blob.GetPropertiesAsync()).Value.ContentLength, Is.GreaterThan(0));
             // block list will return empty when putblob was used
             BlockList blockList = await BlobsClientBuilder.ToBlockBlobClient(blob).GetBlockListAsync();
-            Assert.IsEmpty(blockList.UncommittedBlocks);
+            Assert.That(blockList.UncommittedBlocks, Is.Empty);
             if (oneshot)
             {
-                Assert.IsEmpty(blockList.CommittedBlocks);
+                Assert.That(blockList.CommittedBlocks, Is.Empty);
             }
             else
             {
-                Assert.IsNotEmpty(blockList.CommittedBlocks);
+                Assert.That(blockList.CommittedBlocks, Is.Not.Empty);
             }
         }
 
@@ -1587,7 +1587,7 @@ namespace Azure.Storage.Blobs.Test
             decryptingReadStream.CopyTo(new MemoryStream(roundtrippedPlaintext));
 
             // Assert
-            CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
+            Assert.That(roundtrippedPlaintext, Is.EqualTo(plaintext.ToArray()).AsCollection);
         }
 
         [Test]
@@ -1615,7 +1615,7 @@ namespace Azure.Storage.Blobs.Test
 
             // change casing of encryptiondata key
             string rawEncryptiondata = (await standardBlobClient.GetPropertiesAsync()).Value.Metadata[EncryptionDataKey];
-            Assert.IsNotEmpty(rawEncryptiondata); // quick check we're testing the right thing
+            Assert.That(rawEncryptiondata, Is.Not.Empty); // quick check we're testing the right thing
             await standardBlobClient.SetMetadataAsync(new Dictionary<string, string> { { newKey, rawEncryptiondata } });
 
             // Act

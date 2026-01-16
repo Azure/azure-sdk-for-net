@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
 
             Assert.That((bool)await snapshotCollection.ExistsAsync(snapshotName1), Is.True);
             Assert.That((bool)await snapshotCollection.ExistsAsync(snapshotName1 + "abcd"), Is.False);

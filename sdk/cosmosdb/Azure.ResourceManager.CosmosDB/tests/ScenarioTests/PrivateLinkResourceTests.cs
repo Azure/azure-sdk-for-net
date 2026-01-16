@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task PrivateLinkResourceListAndGet()
         {
             var privateLinkResources = await CosmosDBPrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(privateLinkResources);
+            Assert.That(privateLinkResources, Is.Not.Empty);
 
             var privateLinkResource = await CosmosDBPrivateLinkResourceCollection.GetAsync(privateLinkResources[0].Data.Name);
 

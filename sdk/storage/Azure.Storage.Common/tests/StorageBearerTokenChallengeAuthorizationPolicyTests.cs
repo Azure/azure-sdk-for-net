@@ -200,7 +200,7 @@ namespace Azure.Storage.Tests
             var response2 = await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
             if (expectedClaims != null)
             {
-                Assert.IsNull(claims);
+                Assert.That(claims, Is.Null);
             }
         }
 

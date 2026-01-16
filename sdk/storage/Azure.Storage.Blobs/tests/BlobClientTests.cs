@@ -159,7 +159,7 @@ namespace Azure.Storage.Blobs.Test
             BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(blobProperties);
+            Assert.That(blobProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPropertiesAsync());
 
             // Act
-            StringAssert.Contains("ss=bqtf", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Does.Contain("ss=bqtf"));
         }
 
         [RecordedTest]

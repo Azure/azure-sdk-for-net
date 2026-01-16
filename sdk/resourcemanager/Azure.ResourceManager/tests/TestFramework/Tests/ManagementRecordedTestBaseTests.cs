@@ -189,7 +189,7 @@ namespace Azure.Core.TestFramework.Tests.Management
             TestResource testResource = client.GetTestResource();
             Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallFalseAsync());
-            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Expected some diagnostic scopes to be created other than the Azure.Core scopes"));
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace Azure.Core.TestFramework.Tests.Management
             TestResource testResource = client.GetTestResource();
             Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallDefaultAsync());
-            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Expected some diagnostic scopes to be created other than the Azure.Core scopes"));
         }
 
         [TestCase(RecordedTestMode.Record)]
@@ -221,7 +221,7 @@ namespace Azure.Core.TestFramework.Tests.Management
                 Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
                 if (mode == RecordedTestMode.Playback)
                 {
-                    Assert.Less(sw.ElapsedMilliseconds, 1000);
+                    Assert.That(sw.ElapsedMilliseconds, Is.LessThan(1000));
                 }
                 else
                 {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             // update workspace
             createParams.Tags.Add("TestTag", "TestUpdate");
             var workspaceUpdate = (await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, createParams)).Value;
-            Assert.NotNull(workspaceUpdate.Data.Tags);
+            Assert.That(workspaceUpdate.Data.Tags, Is.Not.Null);
             Assert.That(workspaceUpdate.Data.Tags["TestTag"], Is.EqualTo("TestUpdate"));
 
             // list workspace from resource group

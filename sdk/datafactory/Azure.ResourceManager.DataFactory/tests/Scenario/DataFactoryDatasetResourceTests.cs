@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create Dataset
             string datasetName = Recording.GenerateAssetName("adf-dataset-");
             var dataset = await CreateDefaultDataset(dataFactory, datasetName, linkedServiceName);
-            Assert.IsNotNull(dataset);
+            Assert.That(dataset, Is.Not.Null);
             Assert.That(dataset.Data.Name, Is.EqualTo(datasetName));
             // Exists
             bool flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
             Assert.That(flag, Is.True);
             // Get
             var datasetGet = await dataFactory.GetDataFactoryDatasets().GetAsync(datasetName);
-            Assert.IsNotNull(dataset);
+            Assert.That(dataset, Is.Not.Null);
             Assert.That(datasetGet.Value.Data.Name, Is.EqualTo(datasetName));
             // GetAll
             var list = await dataFactory.GetDataFactoryDatasets().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
             // Delete
             await dataset.DeleteAsync(WaitUntil.Completed);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create Dataset
             string datasetName = Recording.GenerateAssetName($"adf-dataset-{name}-");
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dataFunc(linkedServiceName));
-            Assert.NotNull(result.Value.Id);
+            Assert.That(result.Value.Id, Is.Not.Null);
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateAzureBlobStorageLinkedService(DataFactoryResource dataFactory, string linkedServiceName)

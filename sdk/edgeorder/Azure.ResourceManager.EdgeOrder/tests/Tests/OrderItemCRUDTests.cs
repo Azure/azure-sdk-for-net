@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Get
             Response<EdgeOrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
             EdgeOrderItemResource orderItemResource = getOrderItemResourceResponse.Value;
-            Assert.IsNotNull(orderItemResource);
+            Assert.That(orderItemResource, Is.Not.Null);
 
             // Update
             addressProperties.ContactDetails.ContactName = "Updated contact name";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Get
             getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
             orderItemResource = getOrderItemResourceResponse.Value;
-            Assert.IsNotNull(orderItemResource);
+            Assert.That(orderItemResource, Is.Not.Null);
 
             //Cancel
             Response cancelOrderItemResponse = await orderItemResource.CancelAsync(
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Get
             getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
             orderItemResource = getOrderItemResourceResponse.Value;
-            Assert.IsNotNull(orderItemResource);
+            Assert.That(orderItemResource, Is.Not.Null);
 
             // Delete
             var deleteOrderItemByNameOperation = await orderItemResource.DeleteAsync(WaitUntil.Completed);

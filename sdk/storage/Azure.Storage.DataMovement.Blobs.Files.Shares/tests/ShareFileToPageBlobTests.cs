@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             CancellationToken cancellationToken)
         {
             // Verify completion
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             // Verify Copy - using original source File and Copying the destination
@@ -287,13 +287,13 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.IsEmpty(destinationProperties.Metadata);
-                Assert.IsNull(destinationProperties.ContentDisposition);
-                Assert.IsNull(destinationProperties.ContentLanguage);
-                Assert.IsNull(destinationProperties.CacheControl);
+                Assert.That(destinationProperties.Metadata, Is.Empty);
+                Assert.That(destinationProperties.ContentDisposition, Is.Null);
+                Assert.That(destinationProperties.ContentLanguage, Is.Null);
+                Assert.That(destinationProperties.CacheControl, Is.Null);
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
-                Assert.IsEmpty(destinationTags.Tags);
+                Assert.That(destinationTags.Tags, Is.Empty);
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
             {

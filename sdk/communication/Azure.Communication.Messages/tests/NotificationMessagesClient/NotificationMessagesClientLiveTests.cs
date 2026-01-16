@@ -657,7 +657,7 @@ namespace Azure.Communication.Messages.Tests
             Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(string.Empty));
             Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(""));
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.DownloadMediaAsync("  "));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
@@ -669,7 +669,7 @@ namespace Azure.Communication.Messages.Tests
 
             // Act & Assert
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.DownloadMediaAsync("test"));
-            Assert.NotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex?.Status, Is.EqualTo(404));
             Assert.That(ex?.ErrorCode, Is.EqualTo("MediaNotFound"));
         }
@@ -710,8 +710,8 @@ namespace Azure.Communication.Messages.Tests
         private void validateResponse(Response<SendMessageResult> response)
         {
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(202));
-            Assert.IsNotNull(response.Value.Receipts[0].MessageId);
-            Assert.IsNotNull(response.Value.Receipts[0].To);
+            Assert.That(response.Value.Receipts[0].MessageId, Is.Not.Null);
+            Assert.That(response.Value.Receipts[0].To, Is.Not.Null);
             Assert.That(response.Value.Receipts[0].To, Is.EqualTo(TestEnvironment.RecipientIdentifier));
         }
     }

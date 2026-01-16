@@ -32,9 +32,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ArtifactManifestProperties properties = await artifact.GetManifestPropertiesAsync();
 
             // Assert
-            Assert.Contains(tag, properties.Tags.ToList());
+            Assert.That(properties.Tags.ToList(), Does.Contain(tag));
             Assert.That(properties.RepositoryName, Is.EqualTo(_repositoryName));
-            Assert.GreaterOrEqual(properties.RelatedArtifacts.Count, helloWorldRelatedArtifacts);
+            Assert.That(properties.RelatedArtifacts.Count, Is.GreaterThanOrEqualTo(helloWorldRelatedArtifacts));
 
             Assert.That(properties.RelatedArtifacts.Any(
                 artifact =>
@@ -67,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.That(properties.RepositoryName, Is.EqualTo(_repositoryName));
-            Assert.IsNotNull(properties.Digest);
+            Assert.That(properties.Digest, Is.Not.Null);
             Assert.That(properties.Architecture, Is.EqualTo(ArtifactArchitecture.Arm64));
             Assert.That(properties.OperatingSystem, Is.EqualTo(ArtifactOperatingSystem.Linux));
         }
@@ -255,7 +255,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.That(firstPage, Is.Not.EqualTo(null));
             Assert.That(firstPage.Values[0].Name, Is.EqualTo("v2"));
-            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+            Assert.That(pageCount, Is.GreaterThanOrEqualTo(minExpectedPages));
         }
 
         [RecordedTest]

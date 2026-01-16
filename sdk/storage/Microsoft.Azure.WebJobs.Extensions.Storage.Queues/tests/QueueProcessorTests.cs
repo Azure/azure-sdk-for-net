@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, visibilityTimeout: TimeSpan.Zero);
 
             message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            Assert.NotNull(message);
+            Assert.That(message, Is.Not.Null);
             Assert.That(message.MessageId, Is.EqualTo(id));
         }
 
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 {
                     Assert.That(localProcessor, Is.SameAs(sender));
                     Assert.That(e.PoisonQueue, Is.SameAs(_poisonQueue));
-                    Assert.NotNull(e.Message);
+                    Assert.That(e.Message, Is.Not.Null);
                     poisonMessageHandlerCalled = true;
                     return Task.CompletedTask;
                 };
@@ -143,12 +143,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.That(message, Is.Null);
 
             QueueMessage poisonMessage = (await _poisonQueue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            Assert.NotNull(poisonMessage);
+            Assert.That(poisonMessage, Is.Not.Null);
             Assert.That(poisonMessage.MessageText, Is.EqualTo(messageContent));
             Assert.That(poisonMessageHandlerCalled, Is.True);
 
             var categories = provider.GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Host.Queues.QueueProcessor");
+            Assert.That(categories, Has.Member("Microsoft.Azure.WebJobs.Host.Queues.QueueProcessor"));
         }
 
         [Test]
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             {
                 Assert.That(localProcessor, Is.SameAs(sender));
                 Assert.That(e.PoisonQueue, Is.SameAs(_poisonQueue));
-                Assert.NotNull(e.Message);
+                Assert.That(e.Message, Is.Not.Null);
                 poisonMessageHandlerCalled = true;
                 return Task.CompletedTask;
             };
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.That(continueProcessing, Is.False);
 
             QueueMessage poisonMessage = (await _poisonQueue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            Assert.NotNull(poisonMessage);
+            Assert.That(poisonMessage, Is.Not.Null);
             Assert.That(poisonMessage.MessageText, Is.EqualTo(messageContent));
             Assert.That(poisonMessageHandlerCalled, Is.True);
         }

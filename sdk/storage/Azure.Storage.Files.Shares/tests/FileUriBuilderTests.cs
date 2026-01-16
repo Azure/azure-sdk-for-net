@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(fileUriBuilder.ShareName, Is.Empty);
             Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
             Assert.That(fileUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
             Assert.That(fileUriBuilder.Query, Is.EqualTo("comp=list"));
             Assert.That(newUri, Is.EqualTo(originalUri));
         }
@@ -76,7 +76,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(fileUriBuilder.ShareName, Is.EqualTo("share"));
             Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
             Assert.That(fileUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
             Assert.That(fileUriBuilder.Query, Is.EqualTo("restype=share"));
             Assert.That(newUri, Is.EqualTo(originalUri));
             Assert.That(fileUriBuilder.LastDirectoryOrFileName, Is.Empty);
@@ -102,7 +102,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.EqualTo("path"));
             Assert.That(fileUriBuilder.LastDirectoryOrFileName, Is.EqualTo("path"));
             Assert.That(fileUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
             Assert.That(fileUriBuilder.Query, Is.EqualTo("restype=directory&comp=list"));
             Assert.That(newUri, Is.EqualTo(originalUri));
         }
@@ -148,7 +148,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.That(fileUriBuilder.ShareName, Is.EqualTo("share"));
                 Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
                 Assert.That(fileUriBuilder.Snapshot, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
-                Assert.IsNull(fileUriBuilder.Sas);
+                Assert.That(fileUriBuilder.Sas, Is.Null);
                 Assert.That(fileUriBuilder.Query, Is.Empty);
                 Assert.That(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase), Is.True);
             }
@@ -180,8 +180,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.That(fileUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
             Assert.That(fileUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
             Assert.That(fileUriBuilder.Sas.Resource, Is.EqualTo("b"));
-            Assert.IsNull(fileUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(fileUriBuilder.Sas.Services);
+            Assert.That(fileUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(fileUriBuilder.Sas.Services, Is.Null);
             Assert.That(fileUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
             Assert.That(fileUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
             Assert.That(fileUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
@@ -211,7 +211,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var fileUriBuilder = new ShareUriBuilder(new Uri("http://notaurl"));
 
-            Assert.IsEmpty(fileUriBuilder.AccountName);
+            Assert.That(fileUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]

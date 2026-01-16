@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get Vnet
             Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
             Assert.That(getVnetResponse.Value.Data.Name, Is.EqualTo(vnetName));
-            Assert.NotNull(getVnetResponse.Value.Data.ResourceGuid);
+            Assert.That(getVnetResponse.Value.Data.ResourceGuid, Is.Not.Null);
             Assert.That(getVnetResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Assert.That(getVnetResponse.Value.Data.DhcpOptions.DnsServers[0], Is.EqualTo("10.1.1.1"));
             Assert.That(getVnetResponse.Value.Data.DhcpOptions.DnsServers[1], Is.EqualTo("10.1.2.4"));
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get all Vnets in a subscription
             AsyncPageable<VirtualNetworkResource> getAllVnetInSubscriptionAP = _subscription.GetVirtualNetworksAsync();
             List<VirtualNetworkResource> getAllVnetInSubscription = await getAllVnetInSubscriptionAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(getAllVnetInSubscription);
+            Assert.That(getAllVnetInSubscription, Is.Not.Empty);
 
             // Delete Vnet
             var deleteOperation = await getVnetResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get all Vnets
             getAllVnetsAP = virtualNetworkCollection.GetAllAsync();
             getAllVnets = await getAllVnetsAP.ToEnumerableAsync();
-            Assert.IsEmpty(getAllVnets);
+            Assert.That(getAllVnets, Is.Empty);
         }
 
         [Test]
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<IPAddressAvailabilityResult> responseAvailable = await putVnetResponse.Value.CheckIPAddressAvailabilityAsync("10.0.1.10");
 
             Assert.That(responseAvailable.Value.Available, Is.True);
-            Assert.IsEmpty(responseAvailable.Value.AvailableIPAddresses);
+            Assert.That(responseAvailable.Value.AvailableIPAddresses, Is.Empty);
 
             Response<IPAddressAvailabilityResult> responseTaken = await putVnetResponse.Value.CheckIPAddressAvailabilityAsync("10.0.1.9");
 
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get Vnet
             Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnet1Name);
             Assert.That(getVnetResponse.Value.Data.Name, Is.EqualTo(vnet1Name));
-            Assert.NotNull(getVnetResponse.Value.Data.ResourceGuid);
+            Assert.That(getVnetResponse.Value.Data.ResourceGuid, Is.Not.Null);
             Assert.That(getVnetResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // Create vnet2
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(getPeer.Data.AllowForwardedTraffic, Is.True);
             Assert.That(getPeer.Data.AllowVirtualNetworkAccess, Is.True);
             Assert.That(getPeer.Data.AllowGatewayTransit, Is.False);
-            Assert.NotNull(getPeer.Data.RemoteVirtualNetwork);
+            Assert.That(getPeer.Data.RemoteVirtualNetwork, Is.Not.Null);
             Assert.That(getPeer.Data.RemoteVirtualNetwork.Id, Is.EqualTo(putVnet2.Value.Id));
 
             // List Peering
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(listPeer[0].Data.AllowForwardedTraffic, Is.True);
             Assert.That(listPeer[0].Data.AllowVirtualNetworkAccess, Is.True);
             Assert.That(listPeer[0].Data.AllowGatewayTransit, Is.False);
-            Assert.NotNull(listPeer[0].Data.RemoteVirtualNetwork);
+            Assert.That(listPeer[0].Data.RemoteVirtualNetwork, Is.Not.Null);
             Assert.That(listPeer[0].Data.RemoteVirtualNetwork.Id, Is.EqualTo(putVnet2.Value.Id));
 
             // Get peering from GET vnet
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowForwardedTraffic, Is.True);
             Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess, Is.True);
             Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowGatewayTransit, Is.False);
-            Assert.NotNull(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork);
+            Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork, Is.Not.Null);
             Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork.Id, Is.EqualTo(putVnet2.Value.Id));
 
             // Delete Peering
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             listPeerAP = virtualNetworkPeeringCollection.GetAllAsync();
             listPeer = await listPeerAP.ToEnumerableAsync();
-            Assert.IsEmpty(listPeer);
+            Assert.That(listPeer, Is.Empty);
 
             peeringVnet = await virtualNetworkCollection.GetAsync(vnet1Name);
             Assert.That(peeringVnet.Data.Name, Is.EqualTo(vnet1Name));
-            Assert.IsEmpty(peeringVnet.Data.VirtualNetworkPeerings);
+            Assert.That(peeringVnet.Data.VirtualNetworkPeerings, Is.Empty);
 
             // Delete Vnets
             await putVnet2.Value.DeleteAsync(WaitUntil.Completed);

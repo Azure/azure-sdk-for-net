@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string vmName = Recording.GenerateAssetName("testVM-");
             VirtualMachineResource virtualMachine = await CreateVirtualMachineAsync(vmName);
-            Assert.IsNull(virtualMachine.Data.BootDiagnostics);
+            Assert.That(virtualMachine.Data.BootDiagnostics, Is.Null);
 
             VirtualMachinePatch updateOptions = new VirtualMachinePatch();
             updateOptions.BootDiagnostics = new BootDiagnostics();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             string vmName2 = Recording.GenerateAssetName("testVM-");
             VirtualMachineResource virtualMachine2 = await CreateVirtualMachineAsync(vmName2);
-            Assert.IsNull(virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics);
+            Assert.That(virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics, Is.Null);
 
             VirtualMachinePatch updateOptions2 = new VirtualMachinePatch();
             updateOptions2.DiagnosticsProfile = new DiagnosticsProfile();

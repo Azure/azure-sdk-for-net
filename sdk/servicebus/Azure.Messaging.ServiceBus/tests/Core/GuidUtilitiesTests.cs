@@ -32,7 +32,7 @@ public class GuidUtilitiesTests
         var buffer = new byte[16];
 
         GuidUtilities.WriteGuidToBuffer(input, buffer);
-        CollectionAssert.AreEqual(input.ToByteArray(), buffer);
+        Assert.That(buffer, Is.EqualTo(input.ToByteArray()).AsCollection);
     }
 
     [Test]

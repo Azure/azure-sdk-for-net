@@ -41,7 +41,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void WriteNonJFormat()
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(Instance!, ModelReaderWriterOptions.Xml));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo($"Format 'X' is not supported.  Only 'J' or 'W' format can be written as collections"));
         }
 
@@ -59,7 +59,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var collapsedPayload = format == "J" ? JsonPayload_Collapsed : WirePayload_Collapsed;
 
             BinaryData data = strategy.Write(Instance, options);
-            Assert.IsNotNull(data);
+            Assert.That(data, Is.Not.Null);
             var actualPayload = data.ToString();
             Assert.That(actualPayload.Length, Is.EqualTo(actualPayload.Length));
 
@@ -69,7 +69,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
 
             var actual = strategy.Read(data.ToString(), Instance!, options);
-            Assert.IsNotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual!.GetType(), Is.EqualTo(Instance!.GetType()));
 
             CompareCollections(Instance!, (TCollection)actual!, format);
@@ -84,8 +84,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private void CompareEnumerable(IEnumerable expected, IEnumerable actual, string format, int layer)
         {
-            Assert.IsNotNull(expected);
-            Assert.IsNotNull(actual);
+            Assert.That(expected, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
 
             var expectedEnumerator = GetEnumerable(expected!).GetEnumerator();
             var actualEnumerator = GetEnumerable(actual!).GetEnumerator();

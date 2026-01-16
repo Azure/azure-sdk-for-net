@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxConfigurationResourceIdentifier = NginxConfigurationResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxConfigurationName);
 
             Assert.That(nginxConfiguration.HasData, Is.True);
-            Assert.NotNull(nginxConfiguration.Data);
+            Assert.That(nginxConfiguration.Data, Is.Not.Null);
             Assert.That(nginxConfiguration.Data.Name.Equals(nginxConfigurationName), Is.True);
             Assert.That(nginxConfiguration.Data.Id.Equals(nginxConfigurationResourceIdentifier), Is.True);
             Assert.That(nginxConfiguration.Data.ResourceType.Equals(NginxConfigurationResource.ResourceType), Is.True);
-            Assert.IsNull(nginxConfiguration.Data.SystemData);
-            Assert.IsNotNull(nginxConfiguration.Data.Properties.ProvisioningState);
+            Assert.That(nginxConfiguration.Data.SystemData, Is.Null);
+            Assert.That(nginxConfiguration.Data.Properties.ProvisioningState, Is.Not.Null);
             Assert.That(nginxConfiguration.Data.Properties.RootFile.Equals(virtualPath), Is.True);
             Assert.That(nginxConfiguration.Data.Properties.Files.Count != 0, Is.True);
             Assert.That(nginxConfiguration.Data.Properties.Files[0].VirtualPath.Equals(virtualPath), Is.True);
             Assert.That(nginxConfiguration.Data.Properties.Files[0].Content.Equals(NginxConfigurationContent), Is.True);
             Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0, Is.True);
             Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath.Equals(protectedVirtualPath), Is.True);
-            Assert.IsNotNull(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash);
-            Assert.IsNull(nginxConfiguration.Data.Properties.Package.Data);
+            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash, Is.Not.Null);
+            Assert.That(nginxConfiguration.Data.Properties.Package.Data, Is.Null);
             Assert.That(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count == 0, Is.True);
         }
 
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxAnalysisContent nginxAnalysisContent = new NginxAnalysisContent(nginxAnalysisConfig);
             NginxAnalysisResult analysisResult = await nginxConfiguration.AnalysisAsync(nginxAnalysisContent);
 
-            Assert.IsNotNull(analysisResult);
-            Assert.IsNotNull(analysisResult.Status);
-            Assert.IsNotNull(analysisResult.Data.Errors);
-            Assert.IsNotNull(analysisResult.Data.Diagnostics);
+            Assert.That(analysisResult, Is.Not.Null);
+            Assert.That(analysisResult.Status, Is.Not.Null);
+            Assert.That(analysisResult.Data.Errors, Is.Not.Null);
+            Assert.That(analysisResult.Data.Diagnostics, Is.Not.Null);
         }
     }
 }

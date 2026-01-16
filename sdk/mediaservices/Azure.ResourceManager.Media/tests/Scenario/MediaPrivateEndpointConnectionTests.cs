@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task GetAll()
         {
             var list = await mediaPrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

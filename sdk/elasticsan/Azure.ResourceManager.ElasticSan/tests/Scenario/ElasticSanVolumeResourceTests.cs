@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 softdeletedVolume = _;
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
 
             await softdeletedVolume.RestoreVolumeAsync(WaitUntil.Completed);
             bool foundVolume = false;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 softdeletedVolume = _;
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             await softdeletedVolume.DeleteAsync(WaitUntil.Completed, deleteType: ElasticSanDeleteType.Permanent);
 
             count = 0;

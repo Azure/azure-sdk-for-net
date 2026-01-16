@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Tests
             var listLocs = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetLocationsAsync();
             await foreach (LocationExpanded loc in listLocs)
             {
-                Assert.IsNotNull(loc.Metadata);
-                Assert.IsNotNull(loc.RegionalDisplayName);
+                Assert.That(loc.Metadata, Is.Not.Null);
+                Assert.That(loc.RegionalDisplayName, Is.Not.Null);
 
                 AzureLocation locStruct = loc;
 

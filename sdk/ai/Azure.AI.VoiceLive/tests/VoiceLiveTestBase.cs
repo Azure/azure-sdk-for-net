@@ -116,7 +116,7 @@ namespace Azure.AI.VoiceLive.Tests
 
         protected void EnsureEventIdsUnique(SessionUpdate sessionUpdate)
         {
-            Assert.IsNotNull(sessionUpdate.EventId, $"Event ID was not specified on type {sessionUpdate.Type}");
+            Assert.That(sessionUpdate.EventId, Is.Not.Null, $"Event ID was not specified on type {sessionUpdate.Type}");
             Assert.That(_eventIDs.Contains(sessionUpdate.EventId), Is.False, $"EventId {sessionUpdate.EventId} was reused");
             _eventIDs.Add(sessionUpdate.EventId);
         }
@@ -160,7 +160,7 @@ namespace Azure.AI.VoiceLive.Tests
             var moved = await updateEnumerator.MoveNextAsync().ConfigureAwait(false);
             Assert.That(moved, Is.True, "Failed to move to the next update.");
             var currentUpdate = updateEnumerator.Current;
-            Assert.IsNotNull(currentUpdate);
+            Assert.That(currentUpdate, Is.Not.Null);
             if (checkEventId)
             {
                 EnsureEventIdsUnique(currentUpdate);

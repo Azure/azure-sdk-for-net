@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
 
             Response<int> operationResult = await operation.WaitForCompletionAsync();
 
-            Assert.Greater(updateCalled, 0);
+            Assert.That(updateCalled, Is.GreaterThan(0));
             Assert.That(operation.HasCompleted, Is.True);
             Assert.That(operation.HasValue, Is.True);
 
@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
                 await Task.Delay(1);
             }
 
-            Assert.Greater(updateCalled, 0);
+            Assert.That(updateCalled, Is.GreaterThan(0));
             Assert.That(operation.HasCompleted, Is.True);
             Assert.That(operation.HasValue, Is.True);
 
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
                 Thread.Sleep(1);
             }
 
-            Assert.Greater(updateCalled, 0);
+            Assert.That(updateCalled, Is.GreaterThan(0));
             Assert.That(operation.HasCompleted, Is.True);
             Assert.That(operation.HasValue, Is.True);
 
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
             }, Throws.InstanceOf<OperationCanceledException>());
 
             Assert.That(cancel.IsCancellationRequested, Is.True);
-            Assert.Greater(updateCalled, 0);
+            Assert.That(updateCalled, Is.GreaterThan(0));
             Assert.That(operation.HasValue, Is.False);
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Core.Tests
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(operationId, null, "Location", "test", "https://test", RequestMethod.Put, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = Operation.Rehydrate(pipeline, rehydrationToken);
-            Assert.NotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Id, Is.EqualTo(operationId));
             Assert.That(operation.HasCompleted, Is.False);
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
@@ -167,7 +167,7 @@ namespace Azure.Core.Tests
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(operationId, null, "Location", "test", "https://test", RequestMethod.Put, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync(pipeline, rehydrationToken);
-            Assert.NotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Id, Is.EqualTo(operationId));
             Assert.That(operation.HasCompleted, Is.False);
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
@@ -180,7 +180,7 @@ namespace Azure.Core.Tests
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(operationId, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = Operation.Rehydrate<MockJsonModel>(pipeline, rehydrationToken);
-            Assert.NotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Id, Is.EqualTo(operationId));
             Assert.That(operation.HasCompleted, Is.True);
             Assert.That(operation.HasValue, Is.True);
@@ -194,7 +194,7 @@ namespace Azure.Core.Tests
             var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out var mockJsonModel);
             var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
-            Assert.NotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.HasCompleted, Is.True);
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
@@ -207,7 +207,7 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = CreateMockHttpPipeline(HttpStatusCode.InternalServerError, out _);
             var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
-            Assert.NotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Assert.That(operation.GetRawResponse().Status, Is.EqualTo(500));
             Assert.That(operation.HasCompleted, Is.True);
         }

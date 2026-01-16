@@ -203,7 +203,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var provider = new SocketIOTriggerValueProvider(parameter, triggerEvent);
             var result = await provider.GetValueAsync();
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         public static IEnumerable<object[]> InvalidTriggerBindingsParameters

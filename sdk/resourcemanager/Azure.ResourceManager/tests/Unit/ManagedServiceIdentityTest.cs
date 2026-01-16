@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("NoneEmptyStringIds.json", out _);
             var msi = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
-            Assert.IsNull(msi.PrincipalId);
-            Assert.IsNull(msi.TenantId);
+            Assert.That(msi.PrincipalId, Is.Null);
+            Assert.That(msi.TenantId, Is.Null);
         }
 
         [TestCase]
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("UserAssigned.json", out _);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
-            Assert.IsNull(back.PrincipalId);
-            Assert.IsNull(back.TenantId);
+            Assert.That(back.PrincipalId, Is.Null);
+            Assert.That(back.TenantId, Is.Null);
             var user = back.UserAssignedIdentities;
             Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4b2e-930e-01e2ef9c123c/resourceGroups/tester-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
             Assert.That(user.Values.First().ClientId.ToString(), Is.EqualTo("9a2eaa6a-b49c-4c63-afb5-3b72e3e65422"));

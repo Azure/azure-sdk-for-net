@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 EndpointType = "Microsoft.Devices/IoTHubs"
             });
             var deviceCreateOrUpdateResponse = await devicesCollection.CreateOrUpdateAsync(WaitUntil.Completed, deviceName, deviceData, CancellationToken.None);
-            Assert.IsNotNull(deviceCreateOrUpdateResponse.Value);
+            Assert.That(deviceCreateOrUpdateResponse.Value, Is.Not.Null);
             Assert.That(Guid.TryParse(deviceCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
             Assert.That(deviceCreateOrUpdateResponse.Value.Data.Properties.Uuid, Is.EqualTo(deviceCreateOrUpdateResponse.Value.Data.Properties.ExternalDeviceId));
             Assert.That(deviceData.Properties.Manufacturer, Is.EqualTo(deviceCreateOrUpdateResponse.Value.Data.Properties.Manufacturer));
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Read DeviceRegistry Device
             var deviceReadResponse = await devicesCollection.GetAsync(deviceName, CancellationToken.None);
-            Assert.IsNotNull(deviceReadResponse.Value);
+            Assert.That(deviceReadResponse.Value, Is.Not.Null);
             Assert.That(Guid.TryParse(deviceReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
             Assert.That(deviceReadResponse.Value.Data.Properties.Uuid, Is.EqualTo(deviceReadResponse.Value.Data.Properties.ExternalDeviceId));
             Assert.That(deviceData.Properties.Manufacturer, Is.EqualTo(deviceReadResponse.Value.Data.Properties.Manufacturer));
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 deviceResourcesListByResourceGroup.AddRange(deviceEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(deviceResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(deviceResourcesListByResourceGroup.Count, 1);
+            Assert.That(deviceResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(deviceResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry Device
             var device = deviceReadResponse.Value;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var deviceUpdateResponse = await device.UpdateAsync(WaitUntil.Completed, devicePatchData, CancellationToken.None);
-            Assert.IsNotNull(deviceUpdateResponse.Value);
+            Assert.That(deviceUpdateResponse.Value, Is.Not.Null);
             Assert.That(Guid.TryParse(deviceUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
             Assert.That(deviceUpdateResponse.Value.Data.Properties.Uuid, Is.EqualTo(deviceUpdateResponse.Value.Data.Properties.ExternalDeviceId));
             Assert.That(deviceData.Properties.Manufacturer, Is.EqualTo(deviceUpdateResponse.Value.Data.Properties.Manufacturer));

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetEndpointProfileCreateOrUpdateResponse = await assetEndpointProfilesCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, assetEndpointProfileData, CancellationToken.None);
-            Assert.IsNotNull(assetEndpointProfileCreateOrUpdateResponse.Value);
+            Assert.That(assetEndpointProfileCreateOrUpdateResponse.Value, Is.Not.Null);
             Assert.That(Guid.TryParse(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
             Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.TargetAddress));
             Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.EndpointProfileType));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Read DeviceRegistry AssetEndpointProfile
             var assetEndpointProfileReadResponse = await assetEndpointProfilesCollection.GetAsync(assetEndpointProfileName, CancellationToken.None);
-            Assert.IsNotNull(assetEndpointProfileReadResponse.Value);
+            Assert.That(assetEndpointProfileReadResponse.Value, Is.Not.Null);
             Assert.That(Guid.TryParse(assetEndpointProfileReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
             Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.TargetAddress));
             Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.EndpointProfileType));
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 assetEndpointProfileResourcesListByResourceGroup.AddRange(assetEndpointProfileEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(assetEndpointProfileResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(assetEndpointProfileResourcesListByResourceGroup.Count, 1);
+            Assert.That(assetEndpointProfileResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(assetEndpointProfileResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // List DeviceRegistry AssetEndpointProfile by Subscription
             var assetEndpointProfileResourcesListBySubscription = new List<DeviceRegistryAssetEndpointProfileResource>();
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 assetEndpointProfileResourcesListBySubscription.AddRange(assetEndpointProfileEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(assetEndpointProfileResourcesListBySubscription);
-            Assert.GreaterOrEqual(assetEndpointProfileResourcesListBySubscription.Count, 1);
+            Assert.That(assetEndpointProfileResourcesListBySubscription, Is.Not.Empty);
+            Assert.That(assetEndpointProfileResourcesListBySubscription.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry AssetEndpointProfile
             var assetEndpointProfile = assetEndpointProfileReadResponse.Value;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetEndpointProfileUpdateResponse = await assetEndpointProfile.UpdateAsync(WaitUntil.Completed, assetEndpointProfilePatchData, CancellationToken.None);
-            Assert.IsNotNull(assetEndpointProfileUpdateResponse.Value);
+            Assert.That(assetEndpointProfileUpdateResponse.Value, Is.Not.Null);
             Assert.That(Guid.TryParse(assetEndpointProfileUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
             Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.TargetAddress));
             Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.EndpointProfileType));

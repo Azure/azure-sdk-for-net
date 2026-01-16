@@ -261,7 +261,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
                 await host.StopAsync();
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages();
-                Assert.IsNotEmpty(logs.Where(message => message.FormattedMessage.Contains("RenewMessageLock")));
+                Assert.That(logs.Where(message => message.FormattedMessage.Contains("RenewMessageLock")), Is.Not.Empty);
             }
         }
 
@@ -487,9 +487,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext)));
             Assert.That(scope.LinkedActivities.Count, Is.EqualTo(2));
             Assert.That(scope.IsCompleted, Is.True);
         }
@@ -502,9 +502,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext)));
             Assert.That(scope.LinkedActivities.Count, Is.EqualTo(2));
             Assert.That(scope.IsFailed, Is.True);
         }
@@ -635,7 +635,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
-                Assert.Contains("PocoValues(foo,bar)", logs);
+                Assert.That(logs, Does.Contain("PocoValues(foo,bar)"));
                 await host.StopAsync();
             }
             Assert.That(provider.ClientCache.Count, Is.EqualTo(0));
@@ -658,7 +658,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(result, Is.True);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
-                Assert.Contains("Input(foobar)", logs);
+                Assert.That(logs, Does.Contain("Input(foobar)"));
                 await host.StopAsync();
             }
         }
@@ -713,12 +713,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // ensure we've dynamically increased concurrency
                 concurrencyStatus = concurrencyManager.GetStatus(functionId);
-                Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 10);
+                Assert.That(concurrencyStatus.CurrentConcurrency, Is.GreaterThanOrEqualTo(10));
 
                 // check a few of the concurrency logs
                 var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
                 int concurrencyIncreaseLogCount = concurrencyLogs.Count(p => p.Contains("ProcessMessage Increasing concurrency"));
-                Assert.GreaterOrEqual(concurrencyIncreaseLogCount, 3);
+                Assert.That(concurrencyIncreaseLogCount, Is.GreaterThanOrEqualTo(3));
 
                 await host.StopAsync();
             }
@@ -1088,7 +1088,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.That(consoleOutputLines.Length, Is.EqualTo(expectedOutputLines.Length));
             for (int i = 0; i < expectedOutputLines.Length; i++)
             {
-                StringAssert.StartsWith(expectedOutputLines[i], consoleOutputLines[i]);
+                Assert.That(consoleOutputLines[i], Does.StartWith(expectedOutputLines[i]));
             }
 
             // Verify that trigger details are properly formatted
@@ -1166,8 +1166,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 Assert.That(body, Is.EqualTo("E2E"));
                 Assert.That(deliveryCount, Is.EqualTo(1));
-                Assert.IsNotNull(lockToken);
-                Assert.IsNull(deadLetterSource);
+                Assert.That(lockToken, Is.Not.Null);
+                Assert.That(deadLetterSource, Is.Null);
                 Assert.That(replyTo, Is.EqualTo("replyTo"));
                 Assert.That(to, Is.EqualTo("to"));
                 Assert.That(subject, Is.EqualTo("subject"));
@@ -1176,13 +1176,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.That(contentType, Is.EqualTo("application/json"));
                 Assert.That(applicationProperties["key"], Is.EqualTo("value"));
                 Assert.That(userProperties["key"], Is.EqualTo("value"));
-                Assert.Greater(expiresAtUtc, DateTime.UtcNow);
+                Assert.That(expiresAtUtc, Is.GreaterThan(DateTime.UtcNow));
                 Assert.That(expiresAtUtc, Is.EqualTo(expiresAt.DateTime));
                 // account for clock skew
-                Assert.Less(enqueuedTimeUtc, DateTime.UtcNow.AddMinutes(5));
+                Assert.That(enqueuedTimeUtc, Is.LessThan(DateTime.UtcNow.AddMinutes(5)));
                 Assert.That(enqueuedTimeUtc, Is.EqualTo(enqueuedTime.DateTime));
-                Assert.IsNull(sessionId);
-                Assert.IsNull(replyToSessionId);
+                Assert.That(sessionId, Is.Null);
+                Assert.That(replyToSessionId, Is.Null);
 
                 var message = SBQueue2SBQueue_GetOutputMessage(body);
                 await messageSender.SendMessageAsync(message);
@@ -1412,8 +1412,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 for (int i = 0; i < array.Length; i++)
                 {
                     Assert.That(deliveryCountArray[i], Is.EqualTo(1));
-                    Assert.IsNotNull(lockTokenArray[i]);
-                    Assert.IsNull(deadLetterSourceArray[i]);
+                    Assert.That(lockTokenArray[i], Is.Not.Null);
+                    Assert.That(deadLetterSourceArray[i], Is.Null);
                     Assert.That(replyToArray[i], Is.EqualTo("replyTo"));
                     Assert.That(toArray[i], Is.EqualTo("to"));
                     Assert.That(subjectArray[i], Is.EqualTo("subject"));
@@ -1424,13 +1424,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.That(transactionPartitionKeyArray[i], Is.EqualTo("partitionKey"));
                     Assert.That(applicationPropertiesArray[i]["key"], Is.EqualTo("value"));
                     Assert.That(userPropertiesArray[i]["key"], Is.EqualTo("value"));
-                    Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
+                    Assert.That(expiresAtUtcArray[i], Is.GreaterThan(DateTime.UtcNow));
                     Assert.That(expiresAtUtcArray[i], Is.EqualTo(expiresAtArray[i].DateTime));
                     // account for clock skew
-                    Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow.AddMinutes(5));
+                    Assert.That(enqueuedTimeUtcArray[i], Is.LessThan(DateTime.UtcNow.AddMinutes(5)));
                     Assert.That(enqueuedTimeUtcArray[i], Is.EqualTo(enqueuedTimeArray[i].DateTime));
-                    Assert.IsNull(sessionIdArray[i]);
-                    Assert.IsNull(replyToSessionIdArray[i]);
+                    Assert.That(sessionIdArray[i], Is.Null);
+                    Assert.That(replyToSessionIdArray[i], Is.Null);
                 }
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
@@ -1746,7 +1746,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(SecondQueueScope.QueueName);
                 var received = await receiver2.ReceiveMessageAsync();
-                Assert.IsNotNull(received);
+                Assert.That(received, Is.Not.Null);
                 _waitHandle1.Set();
             }
         }
@@ -1774,7 +1774,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(SecondQueueScope.QueueName);
                 var received = await receiver2.ReceiveMessageAsync();
-                Assert.IsNotNull(received);
+                Assert.That(received, Is.Not.Null);
                 _waitHandle1.Set();
             }
         }
@@ -1796,7 +1796,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new[] { message.SequenceNumber });
 
                 var peeked = await receiveActions.PeekMessagesAsync(1, message.SequenceNumber);
-                Assert.IsNotEmpty(peeked);
+                Assert.That(peeked, Is.Not.Empty);
                 Assert.That(peeked.Single().SequenceNumber, Is.EqualTo(message.SequenceNumber));
 
                 _waitHandle1.Set();
@@ -1842,7 +1842,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new[] { messages.First().SequenceNumber });
 
                 var remaining = MessageCount - messages.Length;
-                Assert.GreaterOrEqual(remaining, 1);
+                Assert.That(remaining, Is.GreaterThanOrEqualTo(1));
                 while (remaining > 0)
                 {
                     var received = await receiveActions.ReceiveMessagesAsync(remaining);
@@ -1869,7 +1869,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static Task ErrorHandler(ProcessErrorEventArgs e)
             {
-                Assert.IsInstanceOf<ObjectDisposedException>(e.Exception);
+                Assert.That(e.Exception, Is.InstanceOf<ObjectDisposedException>());
                 _waitHandle1.Set();
                 return Task.CompletedTask;
             }
@@ -1946,7 +1946,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     // validate that manual lock renewal works
                     var initialLockedUntil = msg.LockedUntil;
                     await messageActions.RenewMessageLockAsync(msg);
-                    Assert.Greater(msg.LockedUntil, initialLockedUntil);
+                    Assert.That(msg.LockedUntil, Is.GreaterThan(initialLockedUntil));
 
                     await messageActions.CompleteMessageAsync(msg);
                 }

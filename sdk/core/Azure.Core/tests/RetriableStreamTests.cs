@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
 
             var exception = await AsyncAssert.ThrowsAsync<Exception>(
                 async () => await ReadAsync(reliableStream, _buffer, 25, 25, new CancellationToken(true)));
-            Assert.IsInstanceOf(translated, exception);
+            Assert.That(exception, Is.InstanceOf(translated));
 
             AssertReads(_buffer, 25);
         }
@@ -284,7 +284,7 @@ namespace Azure.Core.Tests
                 }, ResponseClassifier.Shared, maxRetries: 3);
 
             AggregateException aggregateException = Assert.ThrowsAsync<AggregateException>(() => ReadAsync(reliableStream, _buffer, 0, 4));
-            StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);
+            Assert.That(aggregateException.Message, Does.StartWith("Retry failed after 4 tries"));
             Assert.That(aggregateException.InnerExceptions.Count, Is.EqualTo(4));
             Assert.That(aggregateException.InnerExceptions[0].Message, Is.EqualTo("Failed at 0"));
             Assert.That(aggregateException.InnerExceptions[1].Message, Is.EqualTo("Failed at 1"));

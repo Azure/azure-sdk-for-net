@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             };
             userAssignedIdentity = await userAssignedIdentity.SetTagsAsync(tags);
 
-            CollectionAssert.AreEquivalent(tags, userAssignedIdentity.Data.Tags);
+            Assert.That(userAssignedIdentity.Data.Tags, Is.EquivalentTo(tags));
         }
 
         [TestCase(null)]

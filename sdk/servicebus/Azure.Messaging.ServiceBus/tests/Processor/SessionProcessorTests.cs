@@ -408,7 +408,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 args.SessionLockLostAsync += (lockLostArgs) =>
                 {
                     sessionLockLostEventRaised = true;
-                    Assert.IsNull(lockLostArgs.Exception);
+                    Assert.That(lockLostArgs.Exception, Is.Null);
                     return Task.CompletedTask;
                 };
                 processMessageCalled = true;

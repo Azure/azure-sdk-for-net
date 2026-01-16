@@ -129,21 +129,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 PartitionKey = "partition"
             };
             message.SessionId = null;
-            Assert.IsNull(message.PartitionKey);
+            Assert.That(message.PartitionKey, Is.Null);
 
             message = new ServiceBusMessage
             {
                 PartitionKey = null,
                 SessionId = "session"
             };
-            Assert.IsNull(message.PartitionKey);
+            Assert.That(message.PartitionKey, Is.Null);
 
             message = new ServiceBusMessage
             {
                 SessionId = null,
                 PartitionKey = "partition"
             };
-            Assert.IsNull(message.SessionId);
+            Assert.That(message.SessionId, Is.Null);
 
             message = new ServiceBusMessage
             {
@@ -203,8 +203,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.That(receivedMessage.ContentType, Is.EqualTo(default(string)));
             Assert.That(receivedMessage.ReplyTo, Is.EqualTo(default(string)));
             Assert.That(receivedMessage.ScheduledEnqueueTime, Is.EqualTo(default(DateTimeOffset)));
-            Assert.IsNotNull(receivedMessage.ApplicationProperties);
-            Assert.IsEmpty(receivedMessage.ApplicationProperties);
+            Assert.That(receivedMessage.ApplicationProperties, Is.Not.Null);
+            Assert.That(receivedMessage.ApplicationProperties, Is.Empty);
             Assert.That(receivedMessage.LockTokenGuid, Is.EqualTo(default(Guid)));
             Assert.That(receivedMessage.DeliveryCount, Is.EqualTo(default(int)));
             Assert.That(receivedMessage.LockedUntil, Is.EqualTo(default(DateTimeOffset)));
@@ -253,8 +253,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.That(receivedMessage.ContentType, Is.EqualTo("contentType0538"));
             Assert.That(receivedMessage.ReplyTo, Is.EqualTo("replyTo2598"));
             Assert.That(receivedMessage.ScheduledEnqueueTime.UtcDateTime, Is.EqualTo(new DateTimeOffset(fixedDate, TimeSpan.FromHours(2)).UtcDateTime));
-            Assert.IsNotNull(receivedMessage.ApplicationProperties);
-            Assert.IsNotEmpty(receivedMessage.ApplicationProperties);
+            Assert.That(receivedMessage.ApplicationProperties, Is.Not.Null);
+            Assert.That(receivedMessage.ApplicationProperties, Is.Not.Empty);
             Assert.That(receivedMessage.ApplicationProperties.Keys, Is.EqualTo(new[] { "42", "properties0864" }));
             Assert.That(receivedMessage.ApplicationProperties.Values, Is.EqualTo(new object[] { 6420, "testValue" }));
             Assert.That(receivedMessage.LockTokenGuid.ToString(), Is.EqualTo("f5ae57c7-963b-4864-ae19-32b12451e5d8"));

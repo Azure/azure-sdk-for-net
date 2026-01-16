@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

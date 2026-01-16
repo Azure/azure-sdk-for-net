@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Read DeviceRegistry BillingContainer
             var billingContainerReadResponse = await subscription.GetDeviceRegistryBillingContainerAsync(_billingContainerName, CancellationToken.None);
-            Assert.IsNotNull(billingContainerReadResponse.Value);
+            Assert.That(billingContainerReadResponse.Value, Is.Not.Null);
             Assert.That(DeviceRegistryProvisioningState.Succeeded, Is.EqualTo(billingContainerReadResponse.Value.Data.Properties.ProvisioningState));
 
             // List DeviceRegistry BillingContainer by Subscription
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 billingContainerResourcesListBySubscription.Add(billingContainerEntry);
             }
-            Assert.IsNotEmpty(billingContainerResourcesListBySubscription);
+            Assert.That(billingContainerResourcesListBySubscription, Is.Not.Empty);
             Assert.That(billingContainerResourcesListBySubscription.Count, Is.EqualTo(1));
             Assert.That(DeviceRegistryProvisioningState.Succeeded, Is.EqualTo(billingContainerResourcesListBySubscription[0].Data.Properties.ProvisioningState));
         }

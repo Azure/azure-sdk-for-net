@@ -27,7 +27,7 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.NotNull(client);
+            Assert.That(client, Is.Not.Null);
             Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.That(client.Options.Property, Is.EqualTo("Value1"));
             Assert.That(otherClient.Options.Property, Is.EqualTo("Value2"));
 
-            Assert.AreNotSame(client, otherClient);
+            Assert.That(otherClient, Is.Not.SameAs(client));
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.NotNull(client);
+            Assert.That(client, Is.Not.Null);
             Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
         }
 
@@ -279,7 +279,7 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            Assert.That(client.Credential, Is.InstanceOf<ClientSecretCredential>());
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
             Assert.That(clientSecretCredential.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -303,7 +303,7 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            Assert.That(client.Credential, Is.InstanceOf<ClientSecretCredential>());
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
             Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
@@ -342,7 +342,7 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientMultipleOptionsParameters client = provider.GetService<TestClientMultipleOptionsParameters>();
 
-            Assert.NotNull(client.Options);
+            Assert.That(client.Options, Is.Not.Null);
             Assert.That(client.Options.Version, Is.EqualTo(TestClientOptionsMultipleParameters.ServiceVersion.D));
             Assert.That(client.Options.OtherParameter, Is.EqualTo("some default value"));
         }
@@ -355,7 +355,7 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientMultipleOptionsParameters client = provider.GetService<TestClientMultipleOptionsParameters>();
 
-            Assert.NotNull(client.Options);
+            Assert.That(client.Options, Is.Not.Null);
             Assert.That(client.Options.Version, Is.EqualTo(TestClientOptionsMultipleParameters.ServiceVersion.B));
             Assert.That(client.Options.OtherParameter, Is.EqualTo("some default value"));
         }
@@ -371,7 +371,7 @@ namespace Azure.Core.Extensions.Tests
             TestClient client = provider.GetService<TestClient>();
 
             Assert.That(client.ConnectionString, Is.EqualTo("conn str"));
-            Assert.NotNull(client.Options);
+            Assert.That(client.Options, Is.Not.Null);
         }
 
         [Test]
@@ -415,8 +415,8 @@ namespace Azure.Core.Extensions.Tests
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
             Assert.That(client.Uri.AbsoluteUri, Is.EqualTo("http://localhost/"));
-            Assert.NotNull(client.Options);
-            Assert.NotNull(client.Credential);
+            Assert.That(client.Options, Is.Not.Null);
+            Assert.That(client.Credential, Is.Not.Null);
         }
 
         [Test]
@@ -431,7 +431,7 @@ namespace Azure.Core.Extensions.Tests
             TestClient client = provider.GetService<TestClient>();
 
             Assert.That(client.ConnectionString, Is.EqualTo("conn str"));
-            Assert.NotNull(client.Options);
+            Assert.That(client.Options, Is.Not.Null);
         }
 
         [Test]
@@ -446,8 +446,8 @@ namespace Azure.Core.Extensions.Tests
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
             Assert.That(client.Uri.AbsoluteUri, Is.EqualTo("http://localhost/"));
-            Assert.NotNull(client.Options);
-            Assert.NotNull(client.Credential);
+            Assert.That(client.Options, Is.Not.Null);
+            Assert.That(client.Credential, Is.Not.Null);
         }
 
         [Test]

@@ -104,7 +104,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Assert
-            Assert.IsNotEmpty(resultPaths);
+            Assert.That(resultPaths, Is.Not.Empty);
             Assert.That(resultPaths.Count, Is.EqualTo(paths.Count));
             Assert.That(paths.All(path => resultPaths.Contains(path)), Is.True);
         }

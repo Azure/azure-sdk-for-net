@@ -158,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             // Because the first invocation will allow a partial batch due to the old checkpoint,
             // the last 5 events will remain in the cache after disposing and stopping the background task.
-            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.That(eventProcessor.CachedEventsManager, Is.Not.Null);
             Assert.That(eventProcessor.CachedEventsManager.CachedEvents.Count, Is.EqualTo(5));
 
             processor.Verify(
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 // Expected; ignore.
             }
 
-            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.That(eventProcessor.CachedEventsManager, Is.Not.Null);
             Assert.That(eventProcessor.CachedEventsManager.CachedEvents.Count, Is.EqualTo(0));
 
             processor.Verify(
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             // Because the first invocation will allow a partial batch due to the old checkpoint,
             // the last 5 events will remain in the cache after disposing and stopping the background task.
-            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.That(eventProcessor.CachedEventsManager, Is.Not.Null);
             Assert.That(eventProcessor.CachedEventsManager.CachedEvents.Count, Is.EqualTo(5));
 
             processor.Verify(
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 // Expected; ignore.
             }
 
-            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.That(eventProcessor.CachedEventsManager, Is.Not.Null);
             Assert.That(0, Is.EqualTo(eventProcessor.CachedEventsManager.CachedEvents.Count));
         }
 
@@ -715,8 +715,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.ProcessErrorAsync(partitionContext, ex);
             var msg = testLogger.GetLogMessages().Single();
-            StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\).", msg.FormattedMessage);
-            Assert.IsInstanceOf<InvalidOperationException>(msg.Exception);
+            Assert.That(msg.FormattedMessage, Does.Match("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\)."));
+            Assert.That(msg.Exception, Is.InstanceOf<InvalidOperationException>());
             Assert.That(msg.Level, Is.EqualTo(LogLevel.Error));
         }
 
@@ -733,8 +733,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.ProcessErrorAsync(partitionContext, disconnectedEx);
             var msg = testLogger.GetLogMessages().Single();
-            StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
-            Assert.NotNull(msg.Exception);
+            Assert.That(msg.FormattedMessage, Does.Match("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored."));
+            Assert.That(msg.Exception, Is.Not.Null);
             Assert.That(msg.Level, Is.EqualTo(LogLevel.Information));
 
             testLogger.ClearLogMessages();
@@ -743,8 +743,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.ProcessErrorAsync(partitionContext, leaseLostEx);
             msg = testLogger.GetLogMessages().Single();
-            StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
-            Assert.NotNull(msg.Exception);
+            Assert.That(msg.FormattedMessage, Does.Match("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored."));
+            Assert.That(msg.Exception, Is.Not.Null);
             Assert.That(msg.Level, Is.EqualTo(LogLevel.Information));
         }
 

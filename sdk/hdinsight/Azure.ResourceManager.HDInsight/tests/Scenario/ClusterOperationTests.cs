@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MinInstanceCount, Is.EqualTo(4));
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MaxInstanceCount, Is.EqualTo(5));
         }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.TimeZone, Is.EqualTo("China Standard Time"));
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.Time, Is.EqualTo("16:00"));
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.MaxInstanceCount, Is.EqualTo(4));
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Zones.Add("1");
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.ClusterDefinition.Kind, Is.EqualTo("Spark"));
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.FirstOrDefault().HardwareVmSize, Is.EqualTo("standard_ds12_v2"));
         }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.ClusterDefinition.Kind, Is.EqualTo("Spark"));
             Assert.That(cluster.Value.Data.Properties.IsEncryptionInTransitEnabled, Is.EqualTo(true));
         }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.ClusterDefinition.Kind, Is.EqualTo("Hadoop"));
             Assert.That(cluster.Value.Data.Properties.MinSupportedTlsVersion, Is.EqualTo("1.2"));
         }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.ClusterDefinition.Kind, Is.EqualTo("Hadoop"));
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("headnode")).HardwareProfile.VmSize, Is.EqualTo("standard_a8_v2"));
             Assert.That(cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("zookeepernode")).HardwareProfile.VmSize, Is.EqualTo("standard_a2_v2"));
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Name, Is.EqualTo(clusterName));
             Assert.That(cluster.Value.Data.Properties.ClusterDefinition.Kind, Is.EqualTo("Spark"));
             Assert.That(cluster.Value.Data.Properties.IsEncryptionInTransitEnabled, Is.EqualTo(false));
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Name, Is.EqualTo(clusterName));
             Assert.That(cluster.Value.Data.Properties.StorageAccounts.Count, Is.EqualTo(2));
             Assert.That(cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name, Is.EqualTo($"{_storageAccountName}.blob.core.windows.net"));
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
 
             var gatewaySetting = await cluster.Value.GetGatewaySettingsAsync();
             Assert.That(gatewaySetting.Value.UserName, Is.EqualTo("admin"));
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.StorageAccounts.FirstOrDefault().EnableSecureChannel, Is.True);
         }
 
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Location = DefaultLocation,
             };
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Identity = clusterIdentity
             };
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name, Is.EqualTo($"{_storageAccountName}.blob.core.windows.net"));
         }
 
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Identity = clusterIdentity
             };
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name, Is.EqualTo($"{_storageAccountName}.dfs.core.windows.net"));
         }
 

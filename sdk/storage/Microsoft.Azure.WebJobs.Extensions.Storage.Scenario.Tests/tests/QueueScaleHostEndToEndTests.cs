@@ -184,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                         if (scaledOut)
                         {
                             var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
-                            Assert.Contains("2 scale monitors to sample", logMessages);
+                            Assert.That(logMessages, Does.Contain("2 scale monitors to sample"));
                         }
                     }
                     else
@@ -196,14 +196,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                         if (scaledOut)
                         {
                             var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
-                            Assert.Contains("2 target scalers to sample", logMessages);
+                            Assert.That(logMessages, Does.Contain("2 target scalers to sample"));
                         }
                     }
 
                     if (scaledOut)
                     {
                         var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
-                        Assert.IsNotEmpty(logMessages.Where(x => x.StartsWith("Runtime scale monitoring is enabled.")));
+                        Assert.That(logMessages.Where(x => x.StartsWith("Runtime scale monitoring is enabled.")), Is.Not.Empty);
                         if (!tbsEnabled)
                         {
                             Assert.Contains("Scaling out based on votes", logMessages);

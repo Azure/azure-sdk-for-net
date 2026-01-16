@@ -16,9 +16,9 @@ namespace Azure.Generator.Tests
         {
             var generator = MockHelpers.LoadMockGenerator();
             var visitors = generator.Object.Visitors;
-            Assert.IsNotNull(visitors);
+            Assert.That(visitors, Is.Not.Null);
 
-            Assert.IsInstanceOf<ModelFactoryRenamerVisitor>(visitors[0]);
+            Assert.That(visitors[0], Is.InstanceOf<ModelFactoryRenamerVisitor>());
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Azure.Generator.Tests
 
             var generator = MockHelpers.LoadMockGenerator(inputModels: () => [model]);
 
-            Assert.IsTrue(generator.Object.HasDataFactoryElement);
+            Assert.That(generator.Object.HasDataFactoryElement, Is.True);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Azure.Generator.Tests
 
             var generator = MockHelpers.LoadMockGenerator(inputModels: () => [model]);
 
-            Assert.IsFalse(generator.Object.HasDataFactoryElement);
+            Assert.That(generator.Object.HasDataFactoryElement, Is.False);
         }
     }
 }

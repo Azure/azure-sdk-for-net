@@ -40,10 +40,10 @@ namespace Azure.Data.AppConfiguration.Tests
             IEnumerable<string> splitFields = fields.Split();
 
             Assert.That(splitFields.Count(), Is.EqualTo(4));
-            CollectionAssert.Contains(splitFields, "key");
-            CollectionAssert.Contains(splitFields, "content_type");
-            CollectionAssert.Contains(splitFields, "last_modified");
-            CollectionAssert.Contains(splitFields, "locked");
+            Assert.That(splitFields, Has.Member("key"));
+            Assert.That(splitFields, Has.Member("content_type"));
+            Assert.That(splitFields, Has.Member("last_modified"));
+            Assert.That(splitFields, Has.Member("locked"));
         }
 
         [Test]

@@ -131,7 +131,7 @@ namespace Azure.Core.Tests
         private void AssertExponentialDelay(TimeSpan expected, TimeSpan actual)
         {
             // Expect maximum 25% variance
-            Assert.LessOrEqual(Math.Abs(expected.TotalMilliseconds / actual.TotalMilliseconds - 1), 0.25, "Expected {0} to be around {1}", actual, expected);
+            Assert.That(Math.Abs(expected.TotalMilliseconds / actual.TotalMilliseconds - 1), Is.LessThanOrEqualTo(0.25), $"Expected {actual} to be around {expected}");
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
             // The first request should only try once
             var response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
             Assert.That(tryCount, Is.EqualTo(1));
-            Assert.Greater(options.Retry.MaxRetries, 1);
+            Assert.That(options.Retry.MaxRetries, Is.GreaterThan(1));
             Assert.That(response.Status, Is.EqualTo(400));
 
             tryCount = 0;

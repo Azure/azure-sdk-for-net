@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var namespaceCreateOrUpdateResponse = await namespacesCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData, CancellationToken.None);
-            Assert.IsNotNull(namespaceCreateOrUpdateResponse.Value);
+            Assert.That(namespaceCreateOrUpdateResponse.Value, Is.Not.Null);
             Assert.That(namespaceData.Properties.MessagingEndpoints["endpoint1"].EndpointType, Is.EqualTo(namespaceCreateOrUpdateResponse.Value.Data.Properties.MessagingEndpoints["endpoint1"].EndpointType));
             Assert.That(namespaceData.Properties.MessagingEndpoints["endpoint1"].Address, Is.EqualTo(namespaceCreateOrUpdateResponse.Value.Data.Properties.MessagingEndpoints["endpoint1"].Address));
             Assert.That(namespaceData.Properties.MessagingEndpoints["endpoint1"].ResourceId, Is.EqualTo(namespaceCreateOrUpdateResponse.Value.Data.Properties.MessagingEndpoints["endpoint1"].ResourceId));
 
             // Read DeviceRegistry Namespace
             var namespaceReadResponse = await namespacesCollection.GetAsync(namespaceName, CancellationToken.None);
-            Assert.IsNotNull(namespaceReadResponse.Value);
+            Assert.That(namespaceReadResponse.Value, Is.Not.Null);
             Assert.That(namespaceData.Properties.MessagingEndpoints["endpoint1"].EndpointType, Is.EqualTo(namespaceReadResponse.Value.Data.Properties.MessagingEndpoints["endpoint1"].EndpointType));
             Assert.That(namespaceData.Properties.MessagingEndpoints["endpoint1"].Address, Is.EqualTo(namespaceReadResponse.Value.Data.Properties.MessagingEndpoints["endpoint1"].Address));
             Assert.That(namespaceData.Properties.MessagingEndpoints["endpoint1"].ResourceId, Is.EqualTo(namespaceReadResponse.Value.Data.Properties.MessagingEndpoints["endpoint1"].ResourceId));
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 namespaceListByResourceGroup.AddRange(namespaceEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(namespaceListByResourceGroup);
-            Assert.GreaterOrEqual(namespaceListByResourceGroup.Count, 1);
+            Assert.That(namespaceListByResourceGroup, Is.Not.Empty);
+            Assert.That(namespaceListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry Namespace
             var namespaceResource = namespaceReadResponse.Value;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var namespaceUpdateResponse = await namespaceResource.UpdateAsync(WaitUntil.Completed, namespacePatchData, CancellationToken.None);
-            Assert.IsNotNull(namespaceUpdateResponse.Value);
+            Assert.That(namespaceUpdateResponse.Value, Is.Not.Null);
             Assert.That(namespacePatchData.Properties.MessagingEndpoints["endpoint2"].EndpointType, Is.EqualTo(namespaceUpdateResponse.Value.Data.Properties.MessagingEndpoints["endpoint2"].EndpointType));
             Assert.That(namespacePatchData.Properties.MessagingEndpoints["endpoint2"].Address, Is.EqualTo(namespaceUpdateResponse.Value.Data.Properties.MessagingEndpoints["endpoint2"].Address));
             Assert.That(namespacePatchData.Properties.MessagingEndpoints["endpoint2"].ResourceId, Is.EqualTo(namespaceUpdateResponse.Value.Data.Properties.MessagingEndpoints["endpoint2"].ResourceId));
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetEndpointProfileCreateOrUpdateResponse = await assetEndpointProfilesCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, assetEndpointProfileData, CancellationToken.None);
-            Assert.IsNotNull(assetEndpointProfileCreateOrUpdateResponse.Value);
+            Assert.That(assetEndpointProfileCreateOrUpdateResponse.Value, Is.Not.Null);
 
             // Create Root Asset for Migration Test
             var assetsCollection = rg.GetDeviceRegistryAssets();
@@ -127,21 +127,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetCreateOrUpdateResponse = await assetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, assetData, CancellationToken.None);
-            Assert.IsNotNull(assetCreateOrUpdateResponse.Value);
+            Assert.That(assetCreateOrUpdateResponse.Value, Is.Not.Null);
 
             // Migrate DeviceRegistry Namespace
             var migrateData = new NamespaceMigrateContent();
             migrateData.ResourceIds.Add(assetCreateOrUpdateResponse.Value.Id.ToString());
             var namespaceMigrationResponse = await namespaceResource.MigrateAsync(WaitUntil.Completed, migrateData, CancellationToken.None);
-            Assert.IsNotNull(namespaceMigrationResponse);
+            Assert.That(namespaceMigrationResponse, Is.Not.Null);
             // Check that the migration operation succeeded by looking for the migrated asset and device in the namespace
             var namespaceAssetGetResponse = await namespaceResource.GetDeviceRegistryNamespaceAssetAsync(assetName, CancellationToken.None);
             var namespaceAssetResource = namespaceAssetGetResponse.Value;
-            Assert.IsNotNull(namespaceAssetResource);
+            Assert.That(namespaceAssetResource, Is.Not.Null);
             Assert.That(assetData.Properties.Description, Is.EqualTo(namespaceAssetResource.Data.Properties.Description));
             var namespaceDeviceGetResponse = await namespaceResource.GetDeviceRegistryNamespaceDeviceAsync(assetEndpointProfileName, CancellationToken.None);
             var namespaceDeviceResource = namespaceDeviceGetResponse.Value;
-            Assert.IsNotNull(namespaceDeviceResource);
+            Assert.That(namespaceDeviceResource, Is.Not.Null);
             var primaryEndpoint = namespaceDeviceResource.Data.Properties.Endpoints.Inbound["primaryEndpoint"];
             Assert.That(assetEndpointProfileData.Properties.TargetAddress.ToString(), Is.EqualTo(primaryEndpoint.Address));
             Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(primaryEndpoint.EndpointType));

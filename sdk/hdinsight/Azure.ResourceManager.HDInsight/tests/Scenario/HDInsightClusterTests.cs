@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
 
             var extension = await cluster.GetExtensionAsync("azuremonitor");
-            Assert.IsNotNull(extension);
+            Assert.That(extension, Is.Not.Null);
             Assert.That(extension.Value.IsClusterMonitoringEnabled, Is.False);
-            Assert.IsNull(extension.Value.WorkspaceId);
+            Assert.That(extension.Value.WorkspaceId, Is.Null);
         }
 
         [RecordedTest]
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
         private void ValidateCluster(HDInsightClusterResource cluster)
         {
-            Assert.IsNotNull(cluster);
+            Assert.That(cluster, Is.Not.Null);
             Assert.That(cluster.Data.Tags.Count, Is.EqualTo(1));
             Assert.That(cluster.Data.Properties.OSType.ToString(), Is.EqualTo("Linux"));
             Assert.That(cluster.Data.Properties.StorageAccounts.Count, Is.EqualTo(1));

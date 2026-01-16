@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Elastic.Tests
             var deserialized = ModelReaderWriter.Read<ElasticCloudDeployment>(wire);
 
             // Assert
-            Assert.NotNull(deserialized);
+            Assert.That(deserialized, Is.Not.Null);
             Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
             Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
             Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Elastic.Tests
             var deserialized = ModelReaderWriter.Read<ElasticCloudDeployment>(wire);
 
             // Assert
-            Assert.NotNull(deserialized);
+            Assert.That(deserialized, Is.Not.Null);
             Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
             Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
             Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));

@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests
             var indexName = "my-index-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
             var client = new SearchClient(endpoint, indexName, new AzureKeyCredential("fake"));
-            Assert.NotNull(client);
+            Assert.That(client, Is.Not.Null);
             Assert.That(client.Endpoint, Is.EqualTo(endpoint));
             Assert.That(client.ServiceName, Is.EqualTo(serviceName));
             Assert.That(client.IndexName, Is.EqualTo(indexName));
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Tests
                         AuthorityHost = AzureAuthorityHosts.AzureChina
                     }),
                 options);
-            Assert.NotNull(client);
+            Assert.That(client, Is.Not.Null);
             Assert.That(client.Endpoint, Is.EqualTo(endpoint));
             Assert.That(client.ServiceName, Is.EqualTo(serviceName));
             Assert.That(client.IndexName, Is.EqualTo(indexName));

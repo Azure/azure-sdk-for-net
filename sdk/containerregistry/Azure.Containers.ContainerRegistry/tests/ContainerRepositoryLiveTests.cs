@@ -148,7 +148,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.IsNotNull(latest);
+            Assert.That(latest, Is.Not.Null);
             Assert.That(latest.RepositoryName, Is.EqualTo(_repositoryName));
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             int pageCount = await pages.CountAsync();
-            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+            Assert.That(pageCount, Is.GreaterThanOrEqualTo(minExpectedPages));
         }
 
         [RecordedTest]
@@ -216,14 +216,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     firstPage = page;
                 }
 
-                Assert.LessOrEqual(page.Values.Count, pageSize);
+                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageSize));
                 pageCount++;
             }
 
             // Assert
             Assert.That(firstPage, Is.Not.EqualTo(null));
             Assert.That(firstPage.Values[0].Digest, Is.EqualTo(secondDigest));
-            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+            Assert.That(pageCount, Is.GreaterThanOrEqualTo(minExpectedPages));
         }
 
         [RecordedTest]

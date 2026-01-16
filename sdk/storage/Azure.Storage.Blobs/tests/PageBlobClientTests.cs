@@ -130,7 +130,7 @@ namespace Azure.Storage.Blobs.Test
             BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(blobProperties);
+            Assert.That(blobProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -275,7 +275,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -424,7 +424,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
 
             // Assert
-            Assert.IsNotNull(response.Value.VersionId);
+            Assert.That(response.Value.VersionId, Is.Not.Null);
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -805,7 +805,7 @@ namespace Azure.Storage.Blobs.Test
                         });
 
                     // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                    Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
                 }
             }
         }
@@ -968,7 +968,7 @@ namespace Azure.Storage.Blobs.Test
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.That(progressBag.Count > 1, Is.True, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
+                Assert.That(data.LongLength, Is.GreaterThanOrEqualTo(progressBag.Max()), "Final progress has unexpected value");
             }
 
             // Assert
@@ -1119,7 +1119,7 @@ namespace Azure.Storage.Blobs.Test
                 range: new HttpRange(Constants.KB, Constants.KB));
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1185,7 +1185,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1232,7 +1232,7 @@ namespace Azure.Storage.Blobs.Test
                     range: new HttpRange(0, Constants.KB),
                     conditions: accessConditions);
 
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -1436,7 +1436,7 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None);
 
                 // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
+                Assert.That(response.Value.PageRanges, Is.Not.Null);
             }
         }
 
@@ -2001,7 +2001,7 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken: CancellationToken.None);
 
                 // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
+                Assert.That(response.Value.PageRanges, Is.Not.Null);
             }
         }
 
@@ -2590,7 +2590,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2609,7 +2609,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2657,7 +2657,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -2714,7 +2714,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2826,7 +2826,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -2886,7 +2886,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -3086,7 +3086,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -4079,7 +4079,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync(Constants.KB);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4095,7 +4095,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync(Constants.KB);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4137,7 +4137,7 @@ namespace Azure.Storage.Blobs.Test
             }
             // Verify the file name exists in the filesystem
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(blobName, names);
+            Assert.That(names, Does.Contain(blobName));
         }
 
         [RecordedTest]
@@ -4159,7 +4159,7 @@ namespace Azure.Storage.Blobs.Test
             }
             // Verify the file name exists in the filesystem
             Assert.That(names.Count, Is.EqualTo(1));
-            Assert.Contains(blobName, names);
+            Assert.That(names, Does.Contain(blobName));
         }
 
         [RecordedTest]

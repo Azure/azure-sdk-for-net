@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork.Tests.Scenario
             // Get Mobile Network
             Response<MobileNetworkResource> getMobileNetworkResponse = await mobileNetwork.GetAsync();
             MobileNetworkResource mobileNetworkResourceRetrived = getMobileNetworkResponse.Value;
-            Assert.IsNotNull(mobileNetworkResourceRetrived);
+            Assert.That(mobileNetworkResourceRetrived, Is.Not.Null);
             Assert.That(mobileNetworkResourceRetrived.Data.Location, Is.EqualTo(mobileNetwork.Data.Location));
             Assert.That(mobileNetworkResourceRetrived.Data.PublicLandMobileNetworkIdentifier.Mcc, Is.EqualTo("001"));
 

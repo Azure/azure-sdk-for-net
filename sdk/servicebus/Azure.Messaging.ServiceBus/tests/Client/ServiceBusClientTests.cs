@@ -490,7 +490,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityName }";
             ServiceBusClient client = new ServiceBusClient(fakeConnection);
             Assert.That(client.FullyQualifiedNamespace, Is.EqualTo("not-real.servicebus.windows.net"));
-            Assert.IsNotNull(client.Identifier);
+            Assert.That(client.Identifier, Is.Not.Null);
             Assert.That(client.IsClosed, Is.False);
         }
 

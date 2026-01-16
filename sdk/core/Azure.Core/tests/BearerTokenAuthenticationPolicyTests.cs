@@ -285,7 +285,7 @@ namespace Azure.Core.Tests
             Assert.That(auth2Value, Is.EqualTo(auth1Value));
             Assert.That(auth3Value, Is.EqualTo(auth2Value));
             Assert.That(auth4Value, Is.Not.EqualTo(auth3Value));
-            Assert.GreaterOrEqual(callCount, 2);
+            Assert.That(callCount, Is.GreaterThanOrEqualTo(2));
         }
 
         [Test]
@@ -331,7 +331,7 @@ namespace Azure.Core.Tests
             Assert.That(auth2Value, Is.EqualTo(auth1Value));
             Assert.That(auth3Value, Is.EqualTo(auth2Value));
             Assert.That(auth4Value, Is.Not.EqualTo(auth3Value));
-            Assert.GreaterOrEqual(callCount, 2);
+            Assert.That(callCount, Is.GreaterThanOrEqualTo(2));
         }
 
         [Test]
@@ -1009,7 +1009,7 @@ namespace Azure.Core.Tests
             var response2 = await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
             if (expectedClaims != null)
             {
-                Assert.IsNull(claims);
+                Assert.That(claims, Is.Null);
             }
         }
 

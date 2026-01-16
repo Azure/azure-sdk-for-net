@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             PocoToTableEntityConverter<Poco> converter = new PocoToTableEntityConverter<Poco>();
             // Assert
-            Assert.NotNull(converter);
+            Assert.That(converter, Is.Not.Null);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
 
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
             Assert.That(actual.ContainsKey("PartitionKey"), Is.False);
         }
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.PartitionKey, Is.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
 
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
         }
 
@@ -287,9 +287,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.SameAs(expectedRowKey));
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("RowKey"), Is.False);
         }
 
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.RowKey, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.EqualTo(expectedTimestamp));
             Assert.That(actual.Timestamp.Value.Offset, Is.EqualTo(expectedTimestamp.Offset));
         }
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.EqualTo(expectedTimestamp));
             Assert.That(actual.Timestamp.Value.Offset, Is.EqualTo(expectedTimestamp.Offset));
         }
@@ -422,10 +422,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.EqualTo(expectedTimestamp));
             Assert.That(actual.Timestamp.Value.Offset, Is.EqualTo(expectedTimestamp.Offset));
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("Timestamp"), Is.False);
         }
 
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -464,7 +464,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -504,7 +504,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.Timestamp, Is.Null);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -522,7 +522,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.EqualTo(new ETag(expectedETag)));
         }
 
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.EqualTo(new ETag(expectedETag)));
         }
 
@@ -556,9 +556,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.EqualTo(new ETag(expectedETag)));
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("ETag"), Is.False);
         }
 
@@ -576,7 +576,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.EqualTo(default(ETag)));
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -596,7 +596,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.EqualTo(default(ETag)));
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -615,7 +615,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.EqualTo(default(ETag)));
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -634,7 +634,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ETag, Is.EqualTo(default(ETag)));
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -652,11 +652,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("OtherProperty"), Is.True);
             var otherProperty = actual["OtherProperty"];
-            Assert.NotNull(otherProperty);
+            Assert.That(otherProperty, Is.Not.Null);
             Assert.That(otherProperty, Is.EqualTo(expectedOtherProperty));
         }
 
@@ -674,11 +674,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("OtherProperty"), Is.True);
             var otherProperty = actual["OtherProperty"];
-            Assert.NotNull(otherProperty);
+            Assert.That(otherProperty, Is.Not.Null);
             Assert.That(otherProperty, Is.EqualTo(expectedOtherProperty));
         }
 
@@ -697,8 +697,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("OtherProperty"), Is.False);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -718,8 +718,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("OtherProperty"), Is.False);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -739,8 +739,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("OtherProperty"), Is.False);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -760,8 +760,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("OtherProperty"), Is.False);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -780,8 +780,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             TableEntity actual = product.Convert(input);
             // Assert
-            Assert.NotNull(actual);
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.ContainsKey("OtherProperty"), Is.False);
             Assert.That(actual.PartitionKey, Is.SameAs(expectedPartitionKey));
         }
@@ -789,7 +789,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         private static PocoToTableEntityConverter<TInput> CreateProductUnderTest<TInput>()
         {
             var product = new PocoToTableEntityConverter<TInput>();
-            Assert.NotNull(product); // Guard
+            Assert.That(product, Is.Not.Null); // Guard
             return product;
         }
 

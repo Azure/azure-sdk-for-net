@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>()).CreateReceiver(queueName, options);
             Assert.That(receiver.EntityPath, Is.EqualTo(queueName));
             Assert.That(receiver.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace));
-            Assert.IsNotNull(receiver.Identifier);
+            Assert.That(receiver.Identifier, Is.Not.Null);
             Assert.That(receiver.IsSessionReceiver, Is.False);
             Assert.That(receiver.ReceiveMode, Is.EqualTo(ServiceBusReceiveMode.ReceiveAndDelete));
             Assert.That(receiver.PrefetchCount, Is.EqualTo(5));

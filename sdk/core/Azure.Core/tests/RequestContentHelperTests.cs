@@ -86,7 +86,7 @@ namespace Azure.Core.Tests
             {
                 if (property.ValueKind == JsonValueKind.Null)
                 {
-                    Assert.IsNull(expectedList[count++]);
+                    Assert.That(expectedList[count++], Is.Null);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Azure.Core.Tests
             {
                 if (property.Value.ValueKind == JsonValueKind.Null)
                 {
-                    Assert.IsNull(expectedDictionary["k" + count++]);
+                    Assert.That(expectedDictionary["k" + count++], Is.Null);
                 }
                 else
                 {

@@ -69,11 +69,11 @@ namespace Azure.AI.ContentSafety.Tests
             request.Categories.Add(TextCategory.SelfHarm);
             var response = await client.AnalyzeTextAsync(request);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate));
-            Assert.Greater(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate).Severity, 0);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm));
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis, Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate), Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate).Severity, Is.GreaterThan(0));
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm), Is.Not.Null);
             Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual), Is.Null);
             Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence), Is.Null);
         }
@@ -87,12 +87,12 @@ namespace Azure.AI.ContentSafety.Tests
             var request = new AnalyzeImageOptions(image);
             var response = await client.AnalyzeImageAsync(request);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence));
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Hate));
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Sexual));
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.SelfHarm));
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis, Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence), Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Hate), Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Sexual), Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.SelfHarm), Is.Not.Null);
         }
 
         [RecordedTest]
@@ -105,23 +105,23 @@ namespace Azure.AI.ContentSafety.Tests
             var blocklistName = "TestAnalyzeTextWithBlocklist";
             var blocklistDescription = "Test blocklist management";
             Response createBlocklistResponse = await blocklistClient.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
-            Assert.IsNotNull(createBlocklistResponse);
-            Assert.GreaterOrEqual(createBlocklistResponse.Status, 200);
+            Assert.That(createBlocklistResponse, Is.Not.Null);
+            Assert.That(createBlocklistResponse.Status, Is.GreaterThanOrEqualTo(200));
 
             // Add Blocklist items
             var blocklistItemText1 = new TextBlocklistItem("k*ll");
             var blocklistItemText2 = new TextBlocklistItem("h*te");
             var addBlocklistItemResponse = await blocklistClient.AddOrUpdateBlocklistItemsAsync(blocklistName, new AddOrUpdateTextBlocklistItemsOptions(new List<TextBlocklistItem> { blocklistItemText1, blocklistItemText2 }));
-            Assert.IsNotNull(addBlocklistItemResponse);
-            Assert.GreaterOrEqual(addBlocklistItemResponse.GetRawResponse().Status, 200);
+            Assert.That(addBlocklistItemResponse, Is.Not.Null);
+            Assert.That(addBlocklistItemResponse.GetRawResponse().Status, Is.GreaterThanOrEqualTo(200));
 
             var request = new AnalyzeTextOptions("I h*te you and I want to k*ll you.");
             request.BlocklistNames.Add(blocklistName);
             var response = await client.AnalyzeTextAsync(request);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotEmpty(response.Value.BlocklistsMatch);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.BlocklistsMatch, Is.Not.Empty);
             Assert.That(response.Value.BlocklistsMatch.ToList().Any(item => item.BlocklistItemText == blocklistItemText1.Text), Is.True);
             Assert.That(response.Value.BlocklistsMatch.ToList().Any(item => item.BlocklistItemText == blocklistItemText2.Text), Is.True);
         }
@@ -136,11 +136,11 @@ namespace Azure.AI.ContentSafety.Tests
             request.Categories.Add(TextCategory.SelfHarm);
             var response = await client.AnalyzeTextAsync(request);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate));
-            Assert.Greater(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate).Severity, 0);
-            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm));
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis, Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate), Is.Not.Null);
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate).Severity, Is.GreaterThan(0));
+            Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm), Is.Not.Null);
             Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual), Is.Null);
             Assert.That(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence), Is.Null);
         }

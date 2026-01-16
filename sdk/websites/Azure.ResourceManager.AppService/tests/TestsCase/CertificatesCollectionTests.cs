@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var certificate = lro.Value;
             Assert.That(certificate.Data.Name, Is.EqualTo(name));
-            Assert.IsNull(certificate.Data.KeyVaultId);
+            Assert.That(certificate.Data.KeyVaultId, Is.Null);
         }
 
         [TestCase]
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]

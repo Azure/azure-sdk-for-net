@@ -104,7 +104,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 }
             }
 
-            CollectionAssert.IsNotEmpty(EventIdsPart1);
+            Assert.That(EventIdsPart1, Is.Not.Empty);
 
             await Task.Delay(pollInterval);
 
@@ -120,7 +120,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 }
             }
 
-            CollectionAssert.IsNotEmpty(EventIdsPart2);
+            Assert.That(EventIdsPart2, Is.Not.Empty);
 
             await Task.Delay(pollInterval);
 
@@ -136,12 +136,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 }
             }
 
-            CollectionAssert.IsNotEmpty(EventIdsPart3);
+            Assert.That(EventIdsPart3, Is.Not.Empty);
 
             // Assert events are not duplicated
-            CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart2));
-            CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart3));
-            CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
+            Assert.That(EventIdsPart1.Intersect(EventIdsPart2), Is.Empty);
+            Assert.That(EventIdsPart1.Intersect(EventIdsPart3), Is.Empty);
+            Assert.That(EventIdsPart2.Intersect(EventIdsPart3), Is.Empty);
         }
 
         [RecordedTest]
@@ -211,7 +211,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 = blobChangeFeedClient.GetChangesAsync(startTime);
             IList<BlobChangeFeedEvent> list = await blobChangeFeedAsyncPagable.ToListAsync();
 
-            CollectionAssert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -261,7 +261,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             string continuation = lastPage.ContinuationToken;
 
             long blockOffset = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor.ShardCursors.First().BlockOffset;
-            Assert.Greater(blockOffset, 0, "Making sure we actually finish in the middle of chunk, if this fails play with test data to make it pass");
+            Assert.That(blockOffset, Is.GreaterThan(0), "Making sure we actually finish in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over next two pages
             ISet<string> EventIdsPart2 = new HashSet<string>();
@@ -285,7 +285,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             continuation = lastPage.ContinuationToken;
             blockOffset = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor.ShardCursors.First().BlockOffset;
-            Assert.Greater(blockOffset, 0, "Making sure we actually finish in the middle of chunk, if this fails play with test data to make it pass");
+            Assert.That(blockOffset, Is.GreaterThan(0), "Making sure we actually finish in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over remaining
             ISet<string> EventIdsTail = new HashSet<string>();
@@ -303,12 +303,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             AllEventIdsFromResumingIteration.UnionWith(EventIdsPart2);
             AllEventIdsFromResumingIteration.UnionWith(EventIdsTail);
 
-            Assert.Greater(AllEventIds.Count, 0);
-            Assert.Greater(EventIdsPart1.Count, 0);
-            Assert.Greater(EventIdsPart2.Count, 0);
-            Assert.Greater(EventIdsTail.Count, 0);
+            Assert.That(AllEventIds.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsPart1.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsPart2.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsTail.Count, Is.GreaterThan(0));
             Assert.That(EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count, Is.EqualTo(AllEventIds.Count));
-            CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
+            Assert.That(AllEventIdsFromResumingIteration, Is.EqualTo(AllEventIds).AsCollection);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             var currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
             Assert.That(currentSegmentCursor.ShardCursors.Count, Is.EqualTo(expectedNonEmptyShards));
-            Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
+            Assert.That(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), Is.Not.Null, "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over next two pages
             ISet<string> EventIdsPart2 = new HashSet<string>();
@@ -391,7 +391,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             continuation = lastPage.ContinuationToken;
             currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
             Assert.That(currentSegmentCursor.ShardCursors.Count, Is.EqualTo(expectedNonEmptyShards));
-            Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
+            Assert.That(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), Is.Not.Null, "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over remaining
             ISet<string> EventIdsTail = new HashSet<string>();
@@ -409,12 +409,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             AllEventIdsFromResumingIteration.UnionWith(EventIdsPart2);
             AllEventIdsFromResumingIteration.UnionWith(EventIdsTail);
 
-            Assert.Greater(AllEventIds.Count, 0);
-            Assert.Greater(EventIdsPart1.Count, 0);
-            Assert.Greater(EventIdsPart2.Count, 0);
-            Assert.Greater(EventIdsTail.Count, 0);
+            Assert.That(AllEventIds.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsPart1.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsPart2.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsTail.Count, Is.GreaterThan(0));
             Assert.That(EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count, Is.EqualTo(AllEventIds.Count));
-            CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
+            Assert.That(AllEventIdsFromResumingIteration, Is.EqualTo(AllEventIds).AsCollection);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             var currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
             Assert.That(expectedShardCount, Is.EqualTo(currentSegmentCursor.ShardCursors.Count));
-            Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
+            Assert.That(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), Is.Not.Null, "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over next two pages
             ISet<string> EventIdsPart2 = new HashSet<string>();
@@ -496,7 +496,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             continuation = lastPage.ContinuationToken;
             currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
             Assert.That(expectedShardCount, Is.EqualTo(currentSegmentCursor.ShardCursors.Count));
-            Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
+            Assert.That(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), Is.Not.Null, "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over remaining
             ISet<string> EventIdsTail = new HashSet<string>();
@@ -514,12 +514,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             AllEventIdsFromResumingIteration.UnionWith(EventIdsPart2);
             AllEventIdsFromResumingIteration.UnionWith(EventIdsTail);
 
-            Assert.Greater(AllEventIds.Count, 0);
-            Assert.Greater(EventIdsPart1.Count, 0);
-            Assert.Greater(EventIdsPart2.Count, 0);
-            Assert.Greater(EventIdsTail.Count, 0);
+            Assert.That(AllEventIds.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsPart1.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsPart2.Count, Is.GreaterThan(0));
+            Assert.That(EventIdsTail.Count, Is.GreaterThan(0));
             Assert.That(EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count, Is.EqualTo(AllEventIds.Count));
-            CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
+            Assert.That(AllEventIdsFromResumingIteration, Is.EqualTo(AllEventIds).AsCollection);
         }
 
         [RecordedTest]
@@ -558,7 +558,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Assert
             Assert.That(tail.Count, Is.EqualTo(0));
-            Assert.Greater(AllEventIds.Count, 0);
+            Assert.That(AllEventIds.Count, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -598,7 +598,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Assert
             Assert.That(tail.Count, Is.EqualTo(0));
-            Assert.Greater(AllEventIds.Count, 0);
+            Assert.That(AllEventIds.Count, Is.GreaterThan(0));
         }
 
         /// <summary>
@@ -625,11 +625,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             var eventList = new List<BlobChangeFeedEvent>(await blobChangeFeedAsyncPagable.ToListAsync());
 
             // Assert
-            Assert.Greater(eventList.Count, 1);
-            Assert.IsNull(eventList.Find(e => e.EventTime < startTime.AddMinutes(-15)), "No event 15 minutes before start is present");
-            Assert.IsNull(eventList.Find(e => e.EventTime > endTime.AddMinutes(15)), "No event 15 minutes after end is present");
-            Assert.IsNotNull(eventList.Find(e => e.EventTime < startTime.AddMinutes(15)), "There is some event 15 minutes after start");
-            Assert.IsNotNull(eventList.Find(e => e.EventTime > endTime.AddMinutes(-15)), "There is some event 15 minutes before end");
+            Assert.That(eventList.Count, Is.GreaterThan(1));
+            Assert.That(eventList.Find(e => e.EventTime < startTime.AddMinutes(-15)), Is.Null, "No event 15 minutes before start is present");
+            Assert.That(eventList.Find(e => e.EventTime > endTime.AddMinutes(15)), Is.Null, "No event 15 minutes after end is present");
+            Assert.That(eventList.Find(e => e.EventTime < startTime.AddMinutes(15)), Is.Not.Null, "There is some event 15 minutes after start");
+            Assert.That(eventList.Find(e => e.EventTime > endTime.AddMinutes(-15)), Is.Not.Null, "There is some event 15 minutes before end");
         }
 
         /// <summary>
@@ -657,11 +657,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             var eventList = new List<BlobChangeFeedEvent>(await blobChangeFeedAsyncPagable.ToListAsync());
 
             // Assert
-            Assert.Greater(eventList.Count, 1);
-            Assert.IsNull(eventList.Find(e => e.EventTime < roundedStartTime.AddMinutes(-15)), "No event 15 minutes before start is present");
-            Assert.IsNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(15)), "No event 15 minutes after end is present");
-            Assert.IsNotNull(eventList.Find(e => e.EventTime < roundedStartTime.AddMinutes(15)), "There is some event 15 minutes after start");
-            Assert.IsNotNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(-15)), "There is some event 15 minutes before end");
+            Assert.That(eventList.Count, Is.GreaterThan(1));
+            Assert.That(eventList.Find(e => e.EventTime < roundedStartTime.AddMinutes(-15)), Is.Null, "No event 15 minutes before start is present");
+            Assert.That(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(15)), Is.Null, "No event 15 minutes after end is present");
+            Assert.That(eventList.Find(e => e.EventTime < roundedStartTime.AddMinutes(15)), Is.Not.Null, "There is some event 15 minutes after start");
+            Assert.That(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(-15)), Is.Not.Null, "There is some event 15 minutes before end");
         }
 
         [RecordedTest]

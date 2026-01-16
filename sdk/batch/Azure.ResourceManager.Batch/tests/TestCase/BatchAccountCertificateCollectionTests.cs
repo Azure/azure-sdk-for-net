@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             //4.Exists
             Assert.That((bool)await collection.ExistsAsync(name), Is.True);
             Assert.That((bool)await collection.ExistsAsync("sha1-cff2ab63c8c955aaf71989efa641b906558d9fb8"), Is.False);

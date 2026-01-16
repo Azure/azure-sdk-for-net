@@ -167,9 +167,9 @@ namespace Azure.Core.Tests
             Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(true));
             Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("c"));
 
-            Assert.IsNull((string)value.pascal);
-            Assert.IsNull((bool?)value.parentCamel.nestedPascal);
-            Assert.IsNull((string)value.ParentPascal.nestedPascal);
+            Assert.That((string)value.pascal, Is.Null);
+            Assert.That((bool?)value.parentCamel.nestedPascal, Is.Null);
+            Assert.That((string)value.ParentPascal.nestedPascal, Is.Null);
         }
 
         [Test]

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             updated = connectionContext.UpdateStates(response.ConnectionStates);
 
             // After clear is null.
-            Assert.IsNull(updated);
+            Assert.That(updated, Is.Null);
         }
 
         [Test]
@@ -70,9 +70,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var decoded = encoded.DecodeConnectionStates();
 
-            CollectionAssert.AreEquivalent(
-                state.Values.Select(d => d.ToObjectFromJson<string>()),
-                decoded.Values.Select(d => d.ToObjectFromJson<string>()));
+            Assert.That(
+                decoded.Values.Select(d => d.ToObjectFromJson<string>()),
+                Is.EquivalentTo(state.Values.Select(d => d.ToObjectFromJson<string>())));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.That(converted.Subprotocols.Count, Is.EqualTo(2));
             Assert.That(converted.Headers.Count, Is.EqualTo(2));
             Assert.That(converted.Subprotocols, Is.EqualTo(new string[] { "protocol1", "protocol2" }));
-            Assert.NotNull(converted.ClientCertificates);
+            Assert.That(converted.ClientCertificates, Is.Not.Null);
             Assert.That(converted.ClientCertificates.Count, Is.EqualTo(0));
         }
 
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.That(converted.Query.Count, Is.EqualTo(2));
             Assert.That(converted.Subprotocols.Count, Is.EqualTo(2));
             Assert.That(converted.Subprotocols, Is.EqualTo(new string[] { "protocol1", "protocol2" }));
-            Assert.NotNull(converted.ClientCertificates);
+            Assert.That(converted.ClientCertificates, Is.Not.Null);
             Assert.That(converted.ClientCertificates.Count, Is.EqualTo(2));
         }
 
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var connectRequest = request as ConnectEventRequest;
 
-            Assert.NotNull(connectRequest.ConnectionContext);
-            Assert.NotNull(connectRequest.Headers);
+            Assert.That(connectRequest.ConnectionContext, Is.Not.Null);
+            Assert.That(connectRequest.Headers, Is.Not.Null);
             Assert.That(connectRequest.Headers.Count, Is.EqualTo(2));
             Assert.That(connectRequest.ConnectionContext.Origin, Is.EqualTo(TestUri.Host));
         }
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 },
                 body: body);
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
-            Assert.IsInstanceOf<MqttConnectEventRequest>(request);
+            Assert.That(request, Is.InstanceOf<MqttConnectEventRequest>());
             var mqttRequest = request as MqttConnectEventRequest;
             var mqttResponse = mqttRequest.CreateMqttResponse("userId", new string[] { "group1", "group2" }, new string[] { "role1", "role2" });
             mqttResponse.Mqtt = new()
@@ -227,10 +227,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 },
                 body: body);
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
-            Assert.IsInstanceOf<ConnectedEventRequest>(request);
+            Assert.That(request, Is.InstanceOf<ConnectedEventRequest>());
 
             var mqttContext = request.ConnectionContext as MqttConnectionContext;
-            Assert.NotNull(mqttContext);
+            Assert.That(mqttContext, Is.Not.Null);
             Assert.That(mqttContext.Hub, Is.EqualTo(hubName));
             Assert.That(mqttContext.PhysicalConnectionId, Is.EqualTo("physicalConnectionId"));
             Assert.That(mqttContext.SessionId, Is.EqualTo("sessionId"));
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 },
                 body: body);
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
-            Assert.IsInstanceOf<MqttDisconnectedEventRequest>(request);
+            Assert.That(request, Is.InstanceOf<MqttDisconnectedEventRequest>());
             var mqttRequest = (MqttDisconnectedEventRequest)request;
 
             Assert.That(mqttRequest.Mqtt.InitiatedByClient, Is.False);
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.That(mqttRequest.Mqtt.DisconnectPacket.UserProperties.Single().Value, Is.EqualTo("b"));
 
             var mqttContext = mqttRequest.ConnectionContext as MqttConnectionContext;
-            Assert.NotNull(mqttContext);
+            Assert.That(mqttContext, Is.Not.Null);
             Assert.That(mqttContext.Hub, Is.EqualTo(hubName));
             Assert.That(mqttContext.PhysicalConnectionId, Is.EqualTo("physicalConnectionId"));
             Assert.That(mqttContext.SessionId, Is.EqualTo("sessionId"));
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var connectedRequest = request as ConnectedEventRequest;
 
-            Assert.NotNull(connectedRequest.ConnectionContext);
+            Assert.That(connectedRequest.ConnectionContext, Is.Not.Null);
             Assert.That(connectedRequest.ConnectionContext.Origin, Is.EqualTo(TestUri.Host));
         }
 
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var userRequest = request as UserEventRequest;
 
-            Assert.NotNull(userRequest.ConnectionContext);
+            Assert.That(userRequest.ConnectionContext, Is.Not.Null);
             Assert.That(userRequest.ConnectionContext.Origin, Is.EqualTo(TestUri.Host));
             Assert.That(userRequest.Data.ToString(), Is.EqualTo(text));
         }
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             if (valid)
             {
-                Assert.NotNull(requestHosts);
+                Assert.That(requestHosts, Is.Not.Null);
                 Assert.That(requestHosts[0], Is.EqualTo(TestUri.Host));
                 if (multiDomains)
                 {

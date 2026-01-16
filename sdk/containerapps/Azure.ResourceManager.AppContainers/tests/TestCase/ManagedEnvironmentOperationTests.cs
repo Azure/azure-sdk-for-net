@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             };
             var containerAppManagedEnvironment = (await containerAppManagedEnvironmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, managedEnvironmentName, data)).Value;
             var managedEnvironment = Client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironment.Id);
-            Assert.IsNotNull(managedEnvironment);
+            Assert.That(managedEnvironment, Is.Not.Null);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string consumerGroupName = Recording.GenerateAssetName("consumerGroup-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var consumerGroupInfos = await CreateConsumerGroup(iothub,consumerGroupName);
-            Assert.IsNotNull(consumerGroupInfos);
+            Assert.That(consumerGroupInfos, Is.Not.Null);
             Assert.That(consumerGroupInfos.Data.Name, Is.EqualTo(consumerGroupName));
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
             var groupInfo = await iothub.GetEventHubConsumerGroupInfos("events").GetAsync("$Default");
-            Assert.IsNotNull(groupInfo);
+            Assert.That(groupInfo, Is.Not.Null);
             Assert.That(groupInfo.Value.Data.Name, Is.EqualTo("$Default"));
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
             var list = await iothub.GetEventHubConsumerGroupInfos("events").GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo("$Default"));
         }
 

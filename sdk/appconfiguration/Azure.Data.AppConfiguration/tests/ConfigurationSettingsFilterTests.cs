@@ -22,7 +22,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.That(filter.Label, Is.EqualTo("testLabel"));
             if (hasTags)
             {
-                Assert.IsNotNull(filter.Tags);
+                Assert.That(filter.Tags, Is.Not.Null);
                 Assert.That(filter.Tags, Is.EqualTo(new List<string> { "tag1=value1", "tag2=value2" }));
             }
             else

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             };
             discoveredDeviceData.Properties.Endpoints.Inbound.Add("myendpoint1", new DiscoveredInboundEndpoints("Microsoft.Devices/IoTHubs", "https://myendpoint1.westeurope-1.iothub.azure.net", "1", [AuthenticationMethod.Certificate], "", null, null));
             var discoveredDeviceCreateOrUpdateResponse = await discoveredDevicesCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredDeviceName, discoveredDeviceData, CancellationToken.None);
-            Assert.IsNotNull(discoveredDeviceCreateOrUpdateResponse.Value);
+            Assert.That(discoveredDeviceCreateOrUpdateResponse.Value, Is.Not.Null);
             Assert.That(discoveredDeviceData.Properties.Manufacturer, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Manufacturer));
             Assert.That(discoveredDeviceData.Properties.Model, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Model));
             Assert.That(discoveredDeviceData.Properties.OperatingSystem, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.OperatingSystem));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Read DeviceRegistry DiscoveredDevice
             var discoveredDeviceReadResponse = await discoveredDevicesCollection.GetAsync(discoveredDeviceName, CancellationToken.None);
-            Assert.IsNotNull(discoveredDeviceReadResponse.Value);
+            Assert.That(discoveredDeviceReadResponse.Value, Is.Not.Null);
             Assert.That(discoveredDeviceData.Properties.Manufacturer, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.Manufacturer));
             Assert.That(discoveredDeviceData.Properties.Model, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.Model));
             Assert.That(discoveredDeviceData.Properties.OperatingSystem, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.OperatingSystem));
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 discoveredDeviceResourcesListByResourceGroup.AddRange(discoveredDeviceEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(discoveredDeviceResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(discoveredDeviceResourcesListByResourceGroup.Count, 1);
+            Assert.That(discoveredDeviceResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(discoveredDeviceResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry Device
             var discoveredDevice = discoveredDeviceReadResponse.Value;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var discoveredDeviceUpdateResponse = await discoveredDevice.UpdateAsync(WaitUntil.Completed, discoveredDevicePatchData, CancellationToken.None);
-            Assert.IsNotNull(discoveredDeviceUpdateResponse.Value);
+            Assert.That(discoveredDeviceUpdateResponse.Value, Is.Not.Null);
             Assert.That(discoveredDeviceData.Properties.Manufacturer, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.Manufacturer));
             Assert.That(discoveredDeviceData.Properties.Model, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.Model));
             Assert.That(discoveredDeviceData.Properties.OperatingSystem, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.OperatingSystem));

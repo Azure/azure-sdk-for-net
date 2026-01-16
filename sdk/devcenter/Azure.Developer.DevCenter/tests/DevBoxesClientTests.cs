@@ -262,12 +262,12 @@ namespace Azure.Developer.DevCenter.Tests
                 DevBoxName,
                 "schedule-default");
 
-            Assert.NotNull(action);
+            Assert.That(action, Is.Not.Null);
             Assert.That(action.Name, Is.EqualTo("schedule-default"));
             Assert.That(action.ActionType, Is.EqualTo(DevBoxActionType.Stop));
 
             DateTimeOffset currentScheduledTime = action.NextAction.ScheduledTime;
-            Assert.NotNull(currentScheduledTime);
+            Assert.That(currentScheduledTime, Is.Not.Null);
 
             DateTimeOffset delayUntil = currentScheduledTime.AddMinutes(10);
 
@@ -286,7 +286,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             DateTimeOffset delayedTime = delayedAction.NextAction.ScheduledTime;
 
-            Assert.NotNull(delayedTime);
+            Assert.That(delayedTime, Is.Not.Null);
             Assert.That(delayedTime, Is.EqualTo(delayUntil));
         }
 
@@ -383,7 +383,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             devBox = devBoxCreateOperation.Value;
 
-            Assert.NotNull(devBox);
+            Assert.That(devBox, Is.Not.Null);
             Assert.That(devBox.Name, Is.EqualTo(DevBoxName));
 
             DevBoxProvisioningState? devBoxProvisioningState = devBox.ProvisioningState;

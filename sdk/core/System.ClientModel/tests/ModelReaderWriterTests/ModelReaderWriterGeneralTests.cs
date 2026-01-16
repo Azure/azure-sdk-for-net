@@ -152,7 +152,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             List<SubType> list = [];
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("X"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Format 'X' is not supported.  Only 'J' or 'W' format can be written as collections"));
         }
 
@@ -161,7 +161,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<SubType>), new ModelReaderWriterOptions("X"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Format 'X' is not supported.  Only 'J' or 'W' format can be read as collections"));
         }
 
@@ -170,7 +170,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var data = BinaryData.FromString(File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataList.json")).TrimEnd());
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(data, ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Expected start of dictionary."));
         }
 
@@ -180,7 +180,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             //make sure SortedDictionary is not in s_readerWriterContext
             var data = BinaryData.FromString(File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataList.json")).TrimEnd());
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(data, ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for SortedDictionary<String, AvailabilitySetData>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 
@@ -189,7 +189,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var data = BinaryData.FromString(File.ReadAllText(TestData.GetLocation("AvailabilitySetData/Dictionary/JsonFormat.json")).TrimEnd());
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<AvailabilitySetData>>(data, ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message.Equals("Expected start of array."), Is.True);
         }
 
@@ -217,7 +217,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void WriteEmptyCollection(object collection)
         {
             BinaryData data = ModelReaderWriter.Write(collection, ModelReaderWriterOptions.Json, s_readerWriterContext);
-            Assert.IsNotNull(data);
+            Assert.That(data, Is.Not.Null);
             Assert.That(data.ToString(), Is.EqualTo("[]"));
         }
 
@@ -229,7 +229,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 { "key", new SubType() },
             };
             BinaryData data = ModelReaderWriter.Write(dict, ModelReaderWriterOptions.Json, s_readerWriterContext);
-            Assert.IsNotNull(data);
+            Assert.That(data, Is.Not.Null);
             Assert.That(data.ToString(), Is.EqualTo("{\"key\":{}}"));
         }
 
@@ -237,7 +237,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void NullOptionsWritesJson()
         {
             BinaryData data = ModelReaderWriter.Write(new SubType(), null);
-            Assert.IsNotNull(data);
+            Assert.That(data, Is.Not.Null);
             Assert.That(data.ToString(), Is.EqualTo("{}"));
         }
 
@@ -246,7 +246,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[{\"x\":{}},{\"y\":{}}]";
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<List<SubType>>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Unexpected JsonTokenType.StartObject found."));
         }
 
@@ -255,7 +255,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[[{}],[{}]]";
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<Dictionary<string, SubType>>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Unexpected JsonTokenType.StartArray found."));
         }
 
@@ -264,7 +264,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[true,{}]";
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<SubType>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Unexpected token True."));
         }
 
@@ -291,7 +291,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var list = new List<NonJWire>() { new NonJWire() };
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("W"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("NonJWire has a wire format of 'X'.  It must be 'J' to be written as a collection"));
         }
 
@@ -300,7 +300,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var list = new List<List<NonJWire>>() { new List<NonJWire>() { new NonJWire() } };
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("W"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("NonJWire has a wire format of 'X'.  It must be 'J' to be written as a collection"));
         }
 
@@ -310,7 +310,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var list = new List<PersistableModel>() { new PersistableModel() };
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions(format), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             var expectedMessage = format == "J"
                 ? "PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>"
                 : "PersistableModel has a wire format of 'X'.  It must be 'J' to be written as a collection";
@@ -323,7 +323,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var list = new List<List<PersistableModel>>() { new List<PersistableModel>() { new PersistableModel() } };
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions(format), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             var expectedMessage = format == "J"
                 ? "PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>"
                 : "PersistableModel has a wire format of 'X'.  It must be 'J' to be written as a collection";
@@ -336,7 +336,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[{},{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<PersistableModel>>(BinaryData.FromString(json), new ModelReaderWriterOptions(format), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             var expectedMessage = format == "J"
                 ? "Item type 'PersistableModel' must implement IJsonModel"
                 : "PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
@@ -349,7 +349,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[[{},{}]]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<PersistableModel>>>(BinaryData.FromString(json), new ModelReaderWriterOptions(format), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             var expectedMessage = format == "J"
                 ? "Item type 'PersistableModel' must implement IJsonModel"
                 : "PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
@@ -361,7 +361,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[{},{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<NonJWire>>(BinaryData.FromString(json), new ModelReaderWriterOptions("W"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("NonJWire has a wire format of 'X' it must be 'J' to be read as a collection"));
         }
 
@@ -370,7 +370,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[[{},{}]]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<NonJWire>>>(BinaryData.FromString(json), new ModelReaderWriterOptions("W"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("NonJWire has a wire format of 'X' it must be 'J' to be read as a collection"));
         }
 
@@ -379,7 +379,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<NoActivator>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for NoActivator.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 
@@ -388,7 +388,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<NoActivator>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for List<NoActivator>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 
@@ -397,7 +397,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[[{}]]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<NoActivator>>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for List<List<NoActivator>>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 
@@ -406,7 +406,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "{}";
             var result = ModelReaderWriter.Read<ReadReturnsNull>(BinaryData.FromString(json));
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -414,7 +414,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "{}";
             var result = ModelReaderWriter.Read(BinaryData.FromString(json), typeof(ReadReturnsNull));
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -422,7 +422,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "{}";
             var result = ModelReaderWriter.Read<ReadReturnsNull>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext);
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -430,7 +430,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "{}";
             var result = ModelReaderWriter.Read(BinaryData.FromString(json), typeof(ReadReturnsNull), ModelReaderWriterOptions.Json, s_readerWriterContext);
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -438,7 +438,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(Stream)));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message.Contains("must be decorated with PersistableModelProxyAttribute"), Is.True);
         }
 
@@ -447,7 +447,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(int)));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message.Contains("does not implement IPersistableModel"), Is.True);
         }
 
@@ -457,10 +457,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "{}";
 #if NET5_0_OR_GREATER
             var ex = Assert.Throws<MissingMethodException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(FileStream)));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
 #else
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(FileStream)));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
 #endif
         }
 
@@ -469,7 +469,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var list = new List<DoesNotImplementInterface>() { new DoesNotImplementInterface() };
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("W"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Unable to write List<DoesNotImplementInterface>.  Only collections of 'IPersistableModel' can be written."));
         }
 
@@ -478,7 +478,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var dict = new Dictionary<string, SubType>();
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(dict, new ModelReaderWriterOptions("W"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Can't use format 'W' format on an empty collection.  Please specify a concrete format"));
         }
 
@@ -487,7 +487,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var list = new List<SubType>();
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("W"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("Can't use format 'W' format on an empty collection.  Please specify a concrete format"));
         }
 
@@ -511,7 +511,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 new PersistableModel()
             ];
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("J"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>"));
         }
 
@@ -553,7 +553,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var json = "[{},{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<object>), new ModelReaderWriterOptions("J"), s_readerWriterContext));
-            Assert.IsNotNull(ex);
+            Assert.That(ex, Is.Not.Null);
             Assert.That(ex!.Message, Is.EqualTo("No ModelReaderWriterTypeBuilder found for List<Object>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info."));
         }
 

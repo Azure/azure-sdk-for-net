@@ -55,13 +55,13 @@ namespace Azure.Identity.Tests
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             networkTimeouts.Clear();
 
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             expectedTimeouts = new TimeSpan?[] { null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -107,13 +107,13 @@ namespace Azure.Identity.Tests
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
                 networkTimeouts.Clear();
 
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 expectedTimeouts = new TimeSpan?[] { null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             }
         }
 
@@ -160,13 +160,13 @@ namespace Azure.Identity.Tests
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
                 networkTimeouts.Clear();
 
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 expectedTimeouts = new TimeSpan?[] { null };
-                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             }
         }
 
@@ -208,14 +208,14 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1) };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
             networkTimeouts.Clear();
 
             // Second request gets the expected probe response and should use the probe timeout on first request and default timeout on the retry
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -252,7 +252,7 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null, null, null, null, null, null, null, null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -278,7 +278,7 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -308,7 +308,7 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
             var expectedTimeouts = new TimeSpan?[] { null, null };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            Assert.That(networkTimeouts, Is.EqualTo(expectedTimeouts).AsCollection);
         }
 
         [Test]
@@ -336,7 +336,7 @@ namespace Azure.Identity.Tests
 
             // Default number of retries is 5, so we should just ensure we have less than that.
             // Timing on some platforms makes this test somewhat non-deterministic, so we just ensure we have less than 2 calls.
-            Assert.Less(callCount, 2);
+            Assert.That(callCount, Is.LessThan(2));
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.IotOperations.Tests
             IotOperationsDataflowProfileResource dataflowProfileResource =
                 await dataflowProfileResourceCollection.GetAsync(DataflowEndpointsName);
 
-            Assert.IsNotNull(dataflowProfileResource);
-            Assert.IsNotNull(dataflowProfileResource.Data);
+            Assert.That(dataflowProfileResource, Is.Not.Null);
+            Assert.That(dataflowProfileResource.Data, Is.Not.Null);
             Assert.That(DataflowEndpointsName, Is.EqualTo(dataflowProfileResource.Data.Name));
 
             // Create new DataflowProfile
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 );
             IotOperationsDataflowProfileResource createdDataflowProfile = resp.Value;
 
-            Assert.IsNotNull(createdDataflowProfile);
-            Assert.IsNotNull(createdDataflowProfile.Data);
-            Assert.IsNotNull(createdDataflowProfile.Data.Properties);
+            Assert.That(createdDataflowProfile, Is.Not.Null);
+            Assert.That(createdDataflowProfile.Data, Is.Not.Null);
+            Assert.That(createdDataflowProfile.Data.Properties, Is.Not.Null);
 
             // delete dataflow profile
             await createdDataflowProfile.DeleteAsync(WaitUntil.Completed);

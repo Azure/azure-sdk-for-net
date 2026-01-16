@@ -626,7 +626,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 Assert.That(provider.Get("Secret" + i), Is.EqualTo(i.ToString()));
             }
 
-            Assert.LessOrEqual(maxParallel, 32);
+            Assert.That(maxParallel, Is.LessThanOrEqualTo(32));
         }
 
         [Test]

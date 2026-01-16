@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (client, this.Recording);
 
             IList<PipelineResource> pipelines = await client.GetPipelinesByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(pipelines.Count, 1);
+            Assert.That(pipelines.Count, Is.GreaterThanOrEqualTo(1));
 
             foreach (var expectedPipeline in pipelines)
             {
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (client, this.Recording);
 
             CreateRunResponse runResponse = await client.CreatePipelineRunAsync (pipeline.Name);
-            Assert.NotNull(runResponse.RunId);
+            Assert.That(runResponse.RunId, Is.Not.Null);
         }
     }
 }

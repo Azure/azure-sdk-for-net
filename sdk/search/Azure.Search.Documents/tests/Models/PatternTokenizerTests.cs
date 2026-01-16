@@ -24,12 +24,12 @@ namespace Azure.Search.Documents.Tests.Models
             using JsonDocument doc = JsonDocument.Parse(stream.ToArray());
             PatternTokenizer actual = LexicalTokenizer.DeserializeLexicalTokenizer(doc.RootElement) as PatternTokenizer;
 
-            CollectionAssert.AreEqual(expected.Flags, actual.Flags);
+            Assert.That(actual.Flags, Is.EqualTo(expected.Flags).AsCollection);
 
             if (expected.Flags.Count == 0)
             {
-                Assert.IsNull(actual.FlagsInternal);
-                Assert.IsNull(expected.FlagsInternal);
+                Assert.That(actual.FlagsInternal, Is.Null);
+                Assert.That(expected.FlagsInternal, Is.Null);
             }
         }
 

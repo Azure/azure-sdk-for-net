@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,7 +16,6 @@ using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             _consumerClientMock.Setup(c => c.FullyQualifiedNamespace).Returns(_namespace);
             _consumerClientMock.Setup(client => client.GetPartitionsAsync())
                 .Returns(() => Task.FromResult(_partitions.Select(p => p.Id).ToArray()));
-            _consumerClientMock.Setup(client => client.GetPartitionPropertiesAsync(IsAny<string>()))
+            _consumerClientMock.Setup(client => client.GetPartitionPropertiesAsync(It.IsAny<string>()))
                 .Returns((string id) => Task.FromResult(_partitions.SingleOrDefault(p => p.Id == id)));
 
             this._mockCheckpointStore = new Mock<BlobCheckpointStoreInternal>(MockBehavior.Strict);

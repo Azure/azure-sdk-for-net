@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Tests
                 .CreateOrUpdateAsync(WaitUntil.Completed, ipRuleName, ipRuleReqData)
             ).Value;
             Assert.That(ipRuleName, Is.EqualTo(ipRuleResData.Data.Name));
-            CollectionAssert.AreEqual(ipRuleResData.Data.AddressPrefixes, ipRuleReqData.AddressPrefixes);
+            Assert.That(ipRuleReqData.AddressPrefixes, Is.EqualTo(ipRuleResData.Data.AddressPrefixes).AsCollection);
 
             // Create FQDN Access Rule
             var fqdnRuleName = Recording.GenerateAssetName(_accessRuleNamePrefix);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Tests
                 .CreateOrUpdateAsync(WaitUntil.Completed, fqdnRuleName, fqdnRuleReqData)
             ).Value;
             Assert.That(fqdnRuleName, Is.EqualTo(fqdnRuleResData.Data.Name));
-            CollectionAssert.AreEqual(fqdnRuleResData.Data.FullyQualifiedDomainNames, fqdnRuleReqData.FullyQualifiedDomainNames);
+            Assert.That(fqdnRuleReqData.FullyQualifiedDomainNames, Is.EqualTo(fqdnRuleResData.Data.FullyQualifiedDomainNames).AsCollection);
 
             // Get AccessRules List
             var rulesList = await profile.GetNetworkSecurityPerimeterAccessRules().GetAllAsync().ToEnumerableAsync();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get IP Address AccessRule
             NetworkSecurityPerimeterAccessRuleResource ipRule = await profile.GetNetworkSecurityPerimeterAccessRuleAsync(ipRuleName);
-            Assert.IsNotNull(ipRule);
+            Assert.That(ipRule, Is.Not.Null);
             Assert.That(ipRuleName, Is.EqualTo(ipRule.Data.Name));
 
             // Update IP Address Access Rule
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Tests
                 AddressPrefixes = { "198.168.1.1/32" },
             };
             var ipRulePatchResData = (await ipRule.UpdateAsync(WaitUntil.Completed, ipRulePatchReqData)).Value;
-            CollectionAssert.AreEqual(ipRulePatchResData.Data.AddressPrefixes, ipRulePatchReqData.AddressPrefixes);
+            Assert.That(ipRulePatchReqData.AddressPrefixes, Is.EqualTo(ipRulePatchResData.Data.AddressPrefixes).AsCollection);
 
             // Delete AccessRule
             await ipRule.DeleteAsync(WaitUntil.Completed);
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.Network.Tests
             };
             var createLogConfigResData = (await nsp.GetNetworkSecurityPerimeterLoggingConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, logConfigName, createLogConfigReqData)).Value;
             Assert.That(logConfigName, Is.EqualTo(createLogConfigResData.Data.Name));
-            CollectionAssert.AreEqual(createLogConfigResData.Data.EnabledLogCategories, createLogConfigReqData.EnabledLogCategories);
+            Assert.That(createLogConfigReqData.EnabledLogCategories, Is.EqualTo(createLogConfigResData.Data.EnabledLogCategories).AsCollection);
 
             // Ge Logging configuration
             NetworkSecurityPerimeterLoggingConfigurationResource logConfig = await nsp.GetNetworkSecurityPerimeterLoggingConfigurationAsync(logConfigName);
-            CollectionAssert.AreEqual(logConfig.Data.EnabledLogCategories, createLogConfigReqData.EnabledLogCategories);
+            Assert.That(createLogConfigReqData.EnabledLogCategories, Is.EqualTo(logConfig.Data.EnabledLogCategories).AsCollection);
 
             await logConfig.DeleteAsync(WaitUntil.Completed);
 

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _vaults = await _netAppAccount.GetVaultsAsync().ToEnumerableAsync();
             _vault = _vaults.FirstOrDefault();
             _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
+            Assert.That(_vault, Is.Not.Null);
         }
     }
 }

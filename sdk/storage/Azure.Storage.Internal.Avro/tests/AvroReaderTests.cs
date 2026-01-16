@@ -19,7 +19,7 @@ namespace Azure.Storage.Internal.Avro.Tests
         {
             List<TestCase> testCases = new List<TestCase>
             {
-                new TestCase("test_null_0.avro", 57, o => Assert.IsNull(o)), // null
+                new TestCase("test_null_0.avro", 57, o => Assert.That(o,Is.Null)), // null
                 new TestCase("test_null_1.avro", 60, o => Assert.That((bool)o, Is.EqualTo(true))), // bool
                 new TestCase("test_null_2.avro", 59, o => Assert.That((string)o, Is.EqualTo("adsfasdf09809dsf-=adsf"))), // string
                 new TestCase("test_null_3.avro", 58, o => Assert.That((byte[])o, Is.EqualTo(Encoding.UTF8.GetBytes("12345abcd")))), // byte[]
@@ -34,7 +34,7 @@ namespace Azure.Storage.Internal.Avro.Tests
                 // new TestCase("test_null_10.avro", o => Assert.AreEqual(new List<long>() { 1, 2, 3 }, (List<long>)o)), // array
                 new TestCase("test_null_11.avro", 84, o => Assert.That(
                     (Dictionary<string, object>)o, Is.EqualTo(new Dictionary<string, int>() { { "a", 1 }, { "b", 3 }, { "c", 2 } }))), // dictionary
-                new TestCase("test_null_12.avro", 77, o => Assert.IsNull(o)), // union
+                new TestCase("test_null_12.avro", 77, o => Assert.That(o,Is.Null)), // union
                 new TestCase("test_null_13.avro", 129, o => // record
                 {
                     Dictionary<string, object> expected = new Dictionary<string, object>() { { "$schema", "Test" }, { "f", 5 } };

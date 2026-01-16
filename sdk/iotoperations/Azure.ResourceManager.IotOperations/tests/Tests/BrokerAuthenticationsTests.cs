@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.IotOperations.Tests
             IotOperationsBrokerAuthenticationResource brokerAuthenticationResource =
                 await brokerAuthenticationResourceCollection.GetAsync(BrokersAuthenticationsName);
 
-            Assert.IsNotNull(brokerAuthenticationResource);
-            Assert.IsNotNull(brokerAuthenticationResource.Data);
+            Assert.That(brokerAuthenticationResource, Is.Not.Null);
+            Assert.That(brokerAuthenticationResource.Data, Is.Not.Null);
             Assert.That(BrokersAuthenticationsName, Is.EqualTo(brokerAuthenticationResource.Data.Name));
 
             // Create BrokerAuthentication
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 );
             IotOperationsBrokerAuthenticationResource createdBrokerAuthentication = resp.Value;
 
-            Assert.IsNotNull(createdBrokerAuthentication);
-            Assert.IsNotNull(createdBrokerAuthentication.Data);
-            Assert.IsNotNull(createdBrokerAuthentication.Data.Properties);
+            Assert.That(createdBrokerAuthentication, Is.Not.Null);
+            Assert.That(createdBrokerAuthentication.Data, Is.Not.Null);
+            Assert.That(createdBrokerAuthentication.Data.Properties, Is.Not.Null);
 
             // Delete BrokerAuthentication
             await createdBrokerAuthentication.DeleteAsync(WaitUntil.Completed);

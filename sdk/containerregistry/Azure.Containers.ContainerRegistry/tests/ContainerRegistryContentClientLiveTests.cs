@@ -313,14 +313,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private static void ValidateManifest(OciImageManifest manifest)
         {
             // These are from the values in the Data\oci-artifact\manifest.json file.
-            Assert.IsNotNull(manifest);
+            Assert.That(manifest, Is.Not.Null);
 
-            Assert.IsNotNull(manifest.Configuration);
+            Assert.That(manifest.Configuration, Is.Not.Null);
             Assert.That(manifest.Configuration.MediaType, Is.EqualTo("application/vnd.acme.rocket.config"));
             Assert.That(manifest.Configuration.Digest, Is.EqualTo("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8"));
             Assert.That(manifest.Configuration.SizeInBytes, Is.EqualTo(171));
 
-            Assert.IsNotNull(manifest.Layers);
+            Assert.That(manifest.Layers, Is.Not.Null);
             Assert.That(manifest.Layers.Count, Is.EqualTo(1));
             Assert.That(manifest.Layers[0].MediaType, Is.EqualTo("application/vnd.oci.image.layer.v1.tar"));
             Assert.That(manifest.Layers[0].Digest, Is.EqualTo("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed"));
@@ -974,11 +974,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var properties = await registryClient.GetArtifact("oci-artifact", "v1").GetManifestPropertiesAsync();
             Assert.That(properties.Value.Digest, Is.EqualTo(manifestResult.Value.Digest));
             var files = Directory.GetFiles(path).Select(f => Path.GetFileName(f)).ToArray();
-            Assert.Contains("manifest.json", files);
-            Assert.Contains("config.json", files);
+            Assert.That(files, Does.Contain("manifest.json"));
+            Assert.That(files, Does.Contain("config.json"));
             foreach (var file in manifest.Layers)
             {
-                Assert.Contains(TrimSha(file.Digest), files);
+                Assert.That(files, Does.Contain(TrimSha(file.Digest)));
             }
 
             // Clean up

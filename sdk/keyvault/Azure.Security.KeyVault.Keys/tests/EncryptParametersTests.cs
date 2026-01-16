@@ -78,8 +78,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 byte[] iv = parameters.Iv;
 
-                Assert.IsNotNull(parameters.Iv);
-                CollectionAssert.IsNotEmpty(parameters.Iv);
+                Assert.That(parameters.Iv, Is.Not.Null);
+                Assert.That(parameters.Iv, Is.Not.Empty);
 
                 // Calling it again should not overwrite.
                 parameters.Initialize();
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
             else
             {
-                Assert.IsNull(parameters.Iv);
+                Assert.That(parameters.Iv, Is.Null);
             }
         }
     }

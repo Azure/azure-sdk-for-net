@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.Tests
             var locations = await subOps.GetLocationsAsync().ToEnumerableAsync();
             Assert.That(locations.Count != 0, Is.True);
             var location = locations.First();
-            Assert.IsNotNull(location.Metadata, "Metadata was null");
-            Assert.IsNotNull(location.Id, "Id was null");
+            Assert.That(location.Metadata, Is.Not.Null, "Metadata was null");
+            Assert.That(location.Id, Is.Not.Null, "Id was null");
         }
 
         [RecordedTest]
         public async Task TestGetSubscription()
         {
             var subscription = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetAsync();
-            Assert.NotNull(subscription.Value.Data.Id);
+            Assert.That(subscription.Value.Data.Id, Is.Not.Null);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{new Guid()}")).GetAsync());
             Assert.That(ex.Status, Is.EqualTo(404));
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Tests
                 testFeature = feature;
                 break;
             }
-            Assert.IsNotNull(testFeature);
+            Assert.That(testFeature, Is.Not.Null);
             // TODO: Update when we can return FeatureResource instead of FeatureData in subscription.GetFeaturesAsync.
             //Assert.IsNotNull(testFeature.Data.Id);
             //Assert.IsNotNull(testFeature.Data.Name);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Tests
                 {
                     await foreach (var restApi in subscription.GetArmRestApis(provider.Data.Namespace))
                     {
-                        Assert.IsNotNull(restApi);
+                        Assert.That(restApi, Is.Not.Null);
                     }
                 }, $"Error getting rest apis for {provider.Data.Namespace}");
             }

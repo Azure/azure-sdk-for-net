@@ -96,7 +96,7 @@ namespace Azure.Storage.Queues.Samples
                 Sample01a_HelloWorld.PeekMesssages(ConnectionString, queueName);
 
                 // Verify we haven't emptied the queue
-                Assert.Less(0, queue.PeekMessages().Value.Length);
+                Assert.That(0, Is.LessThan(queue.PeekMessages().Value.Length));
             }
             finally
             {
@@ -115,7 +115,7 @@ namespace Azure.Storage.Queues.Samples
                 await Sample01b_HelloWorldAsync.PeekMesssagesAsync(ConnectionString, queueName);
 
                 // Verify we haven't emptied the queue
-                Assert.Less(0, (await queue.PeekMessagesAsync()).Value.Length);
+                Assert.That(0, Is.LessThan((await queue.PeekMessagesAsync()).Value.Length));
             }
             finally
             {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             string catalogName = Recording.GenerateAssetName("catalog-");
             SphereCatalogData data = new SphereCatalogData("global");
             var catalog = await _resourceGroup.GetSphereCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
-            Assert.IsNotNull(catalog);
+            Assert.That(catalog, Is.Not.Null);
             Assert.That(catalog.Value.Data.Name, Is.EqualTo(catalogName));
 
             await catalog.Value.DeleteAsync(WaitUntil.Completed);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             string catalogName = Recording.GenerateAssetName("catalog-");
             await CreateCatalog(_resourceGroup, catalogName);
             var catalog = await _resourceGroup.GetSphereCatalogs().GetAsync(catalogName);
-            Assert.IsNotNull(catalog);
+            Assert.That(catalog, Is.Not.Null);
             Assert.That(catalog.Value.Data.Name, Is.EqualTo(catalogName));
 
             await catalog.Value.DeleteAsync(WaitUntil.Completed);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             string catalogName = Recording.GenerateAssetName("catalog-");
             var catalog = await CreateCatalog(_resourceGroup, catalogName);
             var list = await _resourceGroup.GetSphereCatalogs().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             await catalog.DeleteAsync(WaitUntil.Completed);
         }

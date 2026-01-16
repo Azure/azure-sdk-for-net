@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
             await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
             var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAlertsSuppressionRule(list.First(item => item.Data.Name == alertsSuppressionRuleName), alertsSuppressionRuleName);
         }
 
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateAlertsSuppressionRule(SecurityAlertsSuppressionRuleResource alertSuppressionRule, string alertsSuppressionRuleName)
         {
-            Assert.IsNotNull(alertSuppressionRule);
-            Assert.IsNotNull(alertSuppressionRule.Data.Id);
+            Assert.That(alertSuppressionRule, Is.Not.Null);
+            Assert.That(alertSuppressionRule.Data.Id, Is.Not.Null);
             Assert.That(alertSuppressionRule.Data.Name, Is.EqualTo(alertsSuppressionRuleName));
         }
     }

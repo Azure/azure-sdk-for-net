@@ -258,7 +258,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             if (exp is null && act is null)
                 return;
 
-            CollectionAssert.AreEquivalent(exp, act);
+            Assert.That(act, Is.EquivalentTo(exp));
         }
 
         protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)
@@ -267,12 +267,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return;
 
             if (exp?.Count != act?.Count)
-                Assert.Fail("Actual count {0} does not match expected count {1}", act?.Count, exp?.Count);
+                Assert.Fail($"Actual count {act?.Count} does not match expected count {exp?.Count}");
 
             foreach (KeyValuePair<TKey, TValue> pair in exp)
             {
                 if (!act.TryGetValue(pair.Key, out TValue value))
-                    Assert.Fail("Actual dictionary does not contain expected key '{0}'", pair.Key);
+                    Assert.Fail($"Actual dictionary does not contain expected key '{pair.Key}'");
 
                 Assert.That(value, Is.EqualTo(pair.Value));
             }

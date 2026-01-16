@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
             Assert.That(fetchBodyJson.GetProperty("name").GetString(), Is.EqualTo("policy_dotnetLLCPurviewAccount"));
-            Assert.GreaterOrEqual(fetchBodyJson.GetProperty("properties").GetProperty("attributeRules").GetArrayLength(),1);
+            Assert.That(fetchBodyJson.GetProperty("properties").GetProperty("attributeRules").GetArrayLength(), Is.GreaterThanOrEqualTo(1));
         }
 
         private static BinaryData GetContentFromResponse(Response r)

@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.That(count, Is.GreaterThanOrEqualTo(3));
             //.ListBotsBySubscription
             await foreach (var num in DefaultSubscription.GetHealthBotsAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 6);
+            Assert.That(count, Is.GreaterThanOrEqualTo(6));
             //4Exists
             Assert.That((bool)await collection.ExistsAsync(name), Is.True);
             Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);

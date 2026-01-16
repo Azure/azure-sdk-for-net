@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
               Console.WriteLine(alertProcessingRule.Data.Name);
             }
 
-            Assert.NotNull(alertProcessingRules);
+            Assert.That(alertProcessingRules, Is.Not.Null);
         }
 
         [TestCase]
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 Console.WriteLine(alertProcessingRule.Data.Name);
             }
 
-            Assert.NotNull(alertProcessingRules);
+            Assert.That(alertProcessingRules, Is.Not.Null);
         }
     }
 }

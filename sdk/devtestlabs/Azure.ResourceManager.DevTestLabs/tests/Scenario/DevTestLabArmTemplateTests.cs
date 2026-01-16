@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
         private void ValidateDevTestLabArmTemplate(DevTestLabArmTemplateData template, string templateName)
         {
-            Assert.IsNotNull(template);
-            Assert.IsNotEmpty(template.Id);
-            Assert.IsNotEmpty(template.Publisher);
+            Assert.That(template, Is.Not.Null);
+            Assert.That((string)template.Id, Is.Not.Empty);
+            Assert.That(template.Publisher, Is.Not.Empty);
             Assert.That(template.Name, Is.EqualTo(templateName));
             Assert.That(template.IsEnabled, Is.EqualTo(true));
         }

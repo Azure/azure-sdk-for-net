@@ -139,6 +139,6 @@ public class OperationResultTests : SyncAsyncTestBase
         Assert.That(completeAfterCount, Is.EqualTo(updateCount));
         Assert.That(operation.HasCompleted, Is.True);
 
-        Assert.Greater(stopwatch.Elapsed, TimeSpan.FromSeconds(completeAfterCount * defaultWaitSeconds));
+        Assert.That(stopwatch.Elapsed, Is.GreaterThan(TimeSpan.FromSeconds(completeAfterCount * defaultWaitSeconds)));
     }
 }

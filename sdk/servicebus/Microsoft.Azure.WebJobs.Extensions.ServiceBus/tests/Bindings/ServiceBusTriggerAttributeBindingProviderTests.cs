@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             ITriggerBinding binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             ITriggerBinding binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
             var autoCompleteMessagesFlagSentToListener = (bool)listener.GetType().GetField("_autoCompleteMessages", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
 
-            Assert.NotNull(listenerOptions);
+            Assert.That(listenerOptions, Is.Not.Null);
             Assert.That(listenerOptions.AutoCompleteMessages, Is.True);
             Assert.That(autoCompleteMessagesFlagSentToListener, Is.False);
         }
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
             var maxMessageBatchSizeSentToListener = (int)listener.GetType().GetField("_maxMessageBatchSize", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
 
-            Assert.NotNull(listenerOptions);
+            Assert.That(listenerOptions, Is.Not.Null);
             Assert.That(1000, Is.EqualTo(listenerOptions.MaxMessageBatchSize));
             Assert.That(2, Is.EqualTo(maxMessageBatchSizeSentToListener));
         }
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
             var maxMessageBatchSizeSentToListener = (int)listener.GetType().GetField("_maxMessageBatchSize", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
 
-            Assert.NotNull(listenerOptions);
+            Assert.That(listenerOptions, Is.Not.Null);
             Assert.That(1000, Is.EqualTo(listenerOptions.MaxMessageBatchSize));
             Assert.That(1000, Is.EqualTo(maxMessageBatchSizeSentToListener));
         }

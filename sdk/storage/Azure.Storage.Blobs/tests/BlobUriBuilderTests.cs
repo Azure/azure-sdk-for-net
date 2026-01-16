@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.EqualTo("comp=list"));
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -140,7 +140,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
             }
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             if (trimsSlash)
@@ -181,7 +181,7 @@ namespace Azure.Storage.Blobs.Test
             // blob name was NOT trimmed when set via property
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             if (trimsSlash)
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo(blobName));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -319,7 +319,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
             Assert.That(newUri, Is.EqualTo(originalUri));
@@ -352,7 +352,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
                 Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
                 Assert.That(blobUriBuilder.Snapshot, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
-                Assert.IsNull(blobUriBuilder.Sas);
+                Assert.That(blobUriBuilder.Sas, Is.Null);
                 Assert.That(blobUriBuilder.Query, Is.Empty);
                 Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
                 Assert.That(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase), Is.True);
@@ -387,7 +387,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
                 Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
                 Assert.That(blobUriBuilder.VersionId, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
-                Assert.IsNull(blobUriBuilder.Sas);
+                Assert.That(blobUriBuilder.Sas, Is.Null);
                 Assert.That(blobUriBuilder.Query, Is.Empty);
                 Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
                 Assert.That(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase), Is.True);
@@ -419,8 +419,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
             Assert.That(blobUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
             Assert.That(blobUriBuilder.Sas.Resource, Is.EqualTo("b"));
-            Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(blobUriBuilder.Sas.Services);
+            Assert.That(blobUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(blobUriBuilder.Sas.Services, Is.Null);
             Assert.That(blobUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
             Assert.That(blobUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
             Assert.That(blobUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
@@ -450,7 +450,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("http://notaurl"));
 
-            Assert.IsEmpty(blobUriBuilder.AccountName);
+            Assert.That(blobUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -488,7 +488,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.EqualTo("comp=list"));
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
@@ -513,7 +513,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
@@ -538,7 +538,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
 
@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
 
@@ -613,7 +613,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(8080));
 
@@ -637,7 +637,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("斑點"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -661,7 +661,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("斑點"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -687,7 +687,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -713,7 +713,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("containername"));
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -739,7 +739,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("containername"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blobname"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -764,7 +764,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.Empty);
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -789,7 +789,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.Empty);
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -814,7 +814,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(10000));
 
@@ -839,7 +839,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("containername"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blobname"));
             Assert.That(blobUriBuilder.Snapshot, Is.Empty);
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
@@ -864,7 +864,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
             Assert.That(blobUriBuilder.Snapshot, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
@@ -889,7 +889,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.BlobContainerName, Is.EqualTo("container"));
             Assert.That(blobUriBuilder.BlobName, Is.EqualTo("blob"));
             Assert.That(blobUriBuilder.VersionId, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
-            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.That(blobUriBuilder.Sas, Is.Null);
             Assert.That(blobUriBuilder.Query, Is.Empty);
             Assert.That(blobUriBuilder.Port, Is.EqualTo(443));
 
@@ -921,8 +921,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.That(blobUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
             Assert.That(blobUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
             Assert.That(blobUriBuilder.Sas.Resource, Is.EqualTo("b"));
-            Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(blobUriBuilder.Sas.Services);
+            Assert.That(blobUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(blobUriBuilder.Sas.Services, Is.Null);
             Assert.That(blobUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
             Assert.That(blobUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
             Assert.That(blobUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));

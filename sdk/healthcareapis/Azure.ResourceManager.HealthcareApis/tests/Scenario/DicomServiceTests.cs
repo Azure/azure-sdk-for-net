@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _dicomServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateDicomService(list.FirstOrDefault().Data, dicomServiceName);
 
             // Delete
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
         private void ValidateDicomService(DicomServiceData dicomService, string dicomServiceName)
         {
-            Assert.IsNotNull(dicomService);
+            Assert.That(dicomService, Is.Not.Null);
             Assert.That(dicomService.Id.Name, Is.EqualTo(dicomServiceName));
             Assert.That(dicomService.Location, Is.EqualTo(DefaultLocation));
             Assert.That(dicomService.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));

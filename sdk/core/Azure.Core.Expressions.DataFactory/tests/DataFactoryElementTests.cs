@@ -822,7 +822,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var dfe = DataFactoryElement<IList<TestModel>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
             dfe = Deserialize<IList<TestModel>>(actual);
-            Assert.IsEmpty(dfe!.Literal!);
+            Assert.That(dfe!.Literal!, Is.Empty);
         }
 
         [Test]
@@ -1002,7 +1002,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private static void AssertBinaryDataDfe(DataFactoryElement<BinaryData> dfe)
         {
             TestModel? model = dfe.Literal!.ToObjectFromJson<TestModel>();
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             Assert.That(model?.A, Is.EqualTo(1));
             Assert.That(model?.B, Is.True);
         }

@@ -76,21 +76,21 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             string groupBy = "severity,alertState";
             var summary = await subscription.GetServiceAlertSummaryAsync(groupBy);
             //summary.GetRawResponse().Content
-            Assert.NotNull(summary.Value.Properties.Total);
+            Assert.That(summary.Value.Properties.Total, Is.Not.Null);
             Assert.That(summary.Value.Properties.GroupedBy, Is.EqualTo("severity"));
             IEnumerator<ServiceAlertSummaryGroupItemInfo> enumerator = summary.Value.Properties.Values.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 ServiceAlertSummaryGroupItemInfo current = enumerator.Current;
                 IsValidSeverity(current.Name);
-                Assert.NotNull(current.Count);
+                Assert.That(current.Count, Is.Not.Null);
                 Assert.That(current.GroupedBy, Is.EqualTo("alertState"));
                 IEnumerator<ServiceAlertSummaryGroupItemInfo> stateEnumerator = current.Values.GetEnumerator();
                 while (stateEnumerator.MoveNext())
                 {
                     ServiceAlertSummaryGroupItemInfo currentstate = stateEnumerator.Current;
                     IsValidAlertState(currentstate.Name);
-                    Assert.NotNull(currentstate.Count);
+                    Assert.That(currentstate.Count, Is.Not.Null);
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 ServiceAlertState.Closed.ToString()
             };
 
-            Assert.Contains(name, validStates);
+            Assert.That(validStates, Does.Contain(name));
         }
 
         private void IsValidSeverity(string name)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 ServiceAlertSeverity.Sev4.ToString()
             };
 
-            Assert.Contains(name, validSeverity);
+            Assert.That(validSeverity, Does.Contain(name));
         }
     }
 }

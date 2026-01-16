@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Create StorageSyncService
             _storageSyncServiceResource = (await _resourceGroup.GetStorageSyncServices().CreateOrUpdateAsync(WaitUntil.Completed, _storageSyncServiceName, _storageSyncServiceCreateOrUpdateContent)).Value;
-            Assert.NotNull(_storageSyncServiceResource);
+            Assert.That(_storageSyncServiceResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(_storageSyncServiceResource, true);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = (await _storageSyncServiceResource.GetStorageSyncRegisteredServers().CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
         }
 
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = (await _storageSyncServiceResource.GetStorageSyncRegisteredServers().CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
 
             // Get a RegisteredServer
             registeredServerResource = (await _storageSyncServiceResource.GetStorageSyncRegisteredServerAsync(_guid)).Value;
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = (await _storageSyncServiceResource.GetStorageSyncRegisteredServers().CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
 
             // Trigger Rollover
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = (await _storageSyncServiceResource.GetStorageSyncRegisteredServers().CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
 
             // Get a list of existing RegisteredServers
             List<StorageSyncRegisteredServerResource> registeredServerResources = await _storageSyncServiceResource.GetStorageSyncRegisteredServers().ToEnumerableAsync();
-            Assert.NotNull(registeredServerResources);
+            Assert.That(registeredServerResources, Is.Not.Null);
             Assert.That(registeredServerResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResources.First());
         }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Get RegisteredServerCollection
             StorageSyncRegisteredServerCollection registeredServersCollection = _storageSyncServiceResource.GetStorageSyncRegisteredServers();
-            Assert.NotNull(registeredServersCollection);
+            Assert.That(registeredServersCollection, Is.Not.Null);
 
             // Delete RegisteredServer before it's created
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncServiceResource.GetStorageSyncRegisteredServerAsync(_guid)).Value?.Delete(WaitUntil.Completed));
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = (await registeredServersCollection.CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;
-            Assert.NotNull(registeredServerResource);
+            Assert.That(registeredServerResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
 
             // Delete RegisteredServer

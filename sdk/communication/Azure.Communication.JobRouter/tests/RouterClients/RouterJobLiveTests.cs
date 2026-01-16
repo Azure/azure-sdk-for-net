@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
             }
 
-            Assert.IsNotEmpty(updatedJob1Response.Notes);
+            Assert.That(updatedJob1Response.Notes, Is.Not.Empty);
             Assert.That(updatedJob1Response.Notes.Count == 1, Is.True);
 
             // in-test cleanup

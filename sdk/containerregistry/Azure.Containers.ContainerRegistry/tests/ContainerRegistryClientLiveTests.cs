@@ -61,7 +61,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+            Assert.That(pageCount, Is.GreaterThanOrEqualTo(minExpectedPages));
         }
 
         [RecordedTest]
@@ -92,7 +92,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.NotNull(firstPage);
+            Assert.That(firstPage, Is.Not.Null);
             Assert.That(firstPage.Values[0], Is.EqualTo("library/busybox"));
             Assert.That(pageCount >= minExpectedPages, Is.True);
         }

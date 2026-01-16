@@ -68,7 +68,7 @@ namespace Azure.Monitor.Query.Logs.Tests
         public void ParseThrowsFormatExceptionForInvalidInput(string range)
         {
             var ex = Assert.Throws<FormatException>(() => LogsQueryTimeRange.Parse(range));
-            StringAssert.StartsWith("Unable to parse the DateTimeRange value.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith("Unable to parse the DateTimeRange value."));
         }
     }
 }

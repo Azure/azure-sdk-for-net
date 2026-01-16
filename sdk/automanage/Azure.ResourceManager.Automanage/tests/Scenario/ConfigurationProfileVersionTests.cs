@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // assert
             Assert.That(assignment.HasData, Is.True);
-            Assert.NotNull(assignment.Data.Name);
-            Assert.NotNull(assignment.Data.Id);
+            Assert.That(assignment.Data.Name, Is.Not.Null);
+            Assert.That(assignment.Data.Id, Is.Not.Null);
             Assert.That(assignment.Data.Properties.TargetId, Is.EqualTo(vmId));
         }
 

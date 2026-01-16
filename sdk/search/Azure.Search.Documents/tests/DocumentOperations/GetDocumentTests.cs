@@ -543,7 +543,7 @@ namespace Azure.Search.Documents.Tests
                     "3",
                     new GetDocumentOptions() { SelectedFields = new[] { "ThisFieldDoesNotExist" } }));
             Assert.That(ex.Status, Is.EqualTo(400));
-            StringAssert.StartsWith("Invalid expression: Could not find a property named 'ThisFieldDoesNotExist' on type 'search.document'.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith("Invalid expression: Could not find a property named 'ThisFieldDoesNotExist' on type 'search.document'."));
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

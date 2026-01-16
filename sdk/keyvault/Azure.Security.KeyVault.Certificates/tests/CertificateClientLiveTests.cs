@@ -99,7 +99,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation getOperation = await Client.GetCertificateOperationAsync(certName);
             getOperation = InstrumentOperation(getOperation);
 
-            Assert.IsNotNull(getOperation);
+            Assert.That(getOperation, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -276,7 +276,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 }
 
                 InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => { KeyVaultCertificateWithPolicy cert = operation.Value; });
-                StringAssert.StartsWith("The certificate operation failed: ", ex.Message);
+                Assert.That(ex.Message, Does.StartWith("The certificate operation failed: "));
 
                 Assert.That(operation.HasCompleted, Is.True);
                 Assert.That(operation.HasValue, Is.False);
@@ -285,7 +285,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
             catch (TaskCanceledException) when (operation != null)
             {
-                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
+                Assert.Inconclusive($"Timed out while waiting for operation {operation.Id}");
             }
             finally
             {
@@ -307,15 +307,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
-            Assert.NotNull(certificateWithPolicy);
+            Assert.That(certificateWithPolicy, Is.Not.Null);
 
             Assert.That(certName, Is.EqualTo(certificateWithPolicy.Name));
 
-            Assert.NotNull(certificateWithPolicy.Properties.Version);
+            Assert.That(certificateWithPolicy.Properties.Version, Is.Not.Null);
 
             KeyVaultCertificate certificate = await Client.GetCertificateVersionAsync(certName, certificateWithPolicy.Properties.Version);
 
-            Assert.NotNull(certificate);
+            Assert.That(certificate, Is.Not.Null);
 
             Assert.That(certName, Is.EqualTo(certificate.Name));
         }
@@ -333,15 +333,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
-            Assert.NotNull(certificateWithPolicy);
+            Assert.That(certificateWithPolicy, Is.Not.Null);
 
             Assert.That(certName, Is.EqualTo(certificateWithPolicy.Name));
 
-            Assert.NotNull(certificateWithPolicy.Properties.Version);
+            Assert.That(certificateWithPolicy.Properties.Version, Is.Not.Null);
 
             KeyVaultCertificate certificate = await Client.GetCertificateVersionAsync(certName, certificateWithPolicy.Properties.Version);
 
-            Assert.NotNull(certificate);
+            Assert.That(certificate, Is.Not.Null);
 
             Assert.That(certName, Is.EqualTo(certificate.Name));
         }
@@ -368,9 +368,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificateWithPolicy certificateWithPolicy = operation.Value;
 
-            Assert.NotNull(certificateWithPolicy);
+            Assert.That(certificateWithPolicy, Is.Not.Null);
             Assert.That(certificateWithPolicy.Name, Is.EqualTo(certName));
-            Assert.NotNull(certificateWithPolicy.Properties.Version);
+            Assert.That(certificateWithPolicy.Properties.Version, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -385,20 +385,20 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
             CertificateProperties originalProperties = original.Properties;
             Assert.That(originalProperties.Enabled, Is.True);
-            Assert.IsEmpty(originalProperties.Tags);
+            Assert.That(originalProperties.Tags, Is.Empty);
 
             IDictionary<string, string> expTags = new Dictionary<string, string>() { { "key1", "value1" } };
             originalProperties.Tags.Add("key1", "value1");
 
             KeyVaultCertificate updated = await Client.UpdateCertificatePropertiesAsync(originalProperties);
             Assert.That(updated.Properties.Enabled, Is.True);
-            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
+            Assert.That(updated.Properties.Tags, Is.EqualTo(expTags).AsCollection);
 
             originalProperties.Enabled = false;
             originalProperties.Tags.Clear();
             updated = await Client.UpdateCertificatePropertiesAsync(originalProperties);
             Assert.That(updated.Properties.Enabled, Is.False);
-            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
+            Assert.That(updated.Properties.Tags, Is.EqualTo(expTags).AsCollection);
         }
 
         [RecordedTest]
@@ -410,29 +410,29 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
-            Assert.NotNull(original);
+            Assert.That(original, Is.Not.Null);
 
             DeleteCertificateOperation deleteOperation = await Client.StartDeleteCertificateAsync(certName);
             DeletedCertificate deletedCert = deleteOperation.Value;
 
-            Assert.IsNotNull(deletedCert);
+            Assert.That(deletedCert, Is.Not.Null);
 
-            Assert.IsNotNull(deletedCert.RecoveryId);
+            Assert.That(deletedCert.RecoveryId, Is.Not.Null);
 
             await WaitForDeletedCertificate(certName);
 
             _ = await Client.StartRecoverDeletedCertificateAsync(certName);
 
-            Assert.NotNull(original);
+            Assert.That(original, Is.Not.Null);
 
             await PollForCertificate(certName);
 
             deleteOperation = await Client.StartDeleteCertificateAsync(certName);
             deletedCert = deleteOperation.Value;
 
-            Assert.IsNotNull(deletedCert);
+            Assert.That(deletedCert, Is.Not.Null);
 
-            Assert.IsNotNull(deletedCert.RecoveryId);
+            Assert.That(deletedCert.RecoveryId, Is.Not.Null);
 
             await WaitForDeletedCertificate(certName);
 
@@ -459,7 +459,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RegisterForCleanup(certificateName);
 
             certificateBytes = Convert.FromBase64String(CertificateWithV3ExtensionsBase64);
-            CollectionAssert.AreEqual(certificateBytes, cert.Cer);
+            Assert.That(cert.Cer, Is.EqualTo(certificateBytes).AsCollection);
             Assert.That(cert.Policy.Subject, Is.EqualTo("CN=Azure SDK"));
             Assert.That(cert.Policy.SubjectAlternativeNames?.Emails?[0], Is.EqualTo("azuresdk@microsoft.com"));
         }
@@ -489,7 +489,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RegisterForCleanup(certificateName);
 
             certificateBytes = Convert.FromBase64String(CertificateWithV3ExtensionsBase64);
-            CollectionAssert.AreEqual(certificateBytes, cert.Cer);
+            Assert.That(cert.Cer, Is.EqualTo(certificateBytes).AsCollection);
             Assert.That(cert.Policy.Subject, Is.EqualTo("CN=Azure SDK"));
             Assert.That(cert.Policy.SubjectAlternativeNames?.Emails?[0], Is.EqualTo("azuresdk@microsoft.com"));
         }
@@ -512,7 +512,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RegisterForCleanup(caCertificateName);
 
             byte[] pubBytes = Convert.FromBase64String(CaPublicKeyBase64);
-            CollectionAssert.AreEqual(pubBytes, cert.Cer);
+            Assert.That(cert.Cer, Is.EqualTo(pubBytes).AsCollection);
         }
 
         [RecordedTest]
@@ -588,7 +588,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificateWithPolicy completedServerCertificate = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.That(completedServerCertificate.Name, Is.EqualTo(mergedServerCertificate.Name));
-            CollectionAssert.AreEqual(mergedServerCertificate.Cer, completedServerCertificate.Cer);
+            Assert.That(completedServerCertificate.Cer, Is.EqualTo(mergedServerCertificate.Cer).AsCollection);
         }
 
         [RecordedTest]
@@ -618,8 +618,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateIssuer getIssuer = await Client.GetIssuerAsync(issuerName);
 
-            Assert.NotNull(getIssuer);
-            Assert.NotNull(getIssuer.Id);
+            Assert.That(getIssuer, Is.Not.Null);
+            Assert.That(getIssuer.Id, Is.Not.Null);
             Assert.That(getIssuer.Provider, Is.EqualTo(issuer.Provider));
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
             // https://github.com/Azure/azure-sdk-for-net/issues/10905
@@ -641,12 +641,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             string updateProvider = "onecert";
             issuer = new CertificateIssuer(issuerName, updateProvider);
-            Assert.NotNull(issuer);
+            Assert.That(issuer, Is.Not.Null);
 
             CertificateIssuer updateIssuer = await Client.UpdateIssuerAsync(issuer);
 
-            Assert.NotNull(updateIssuer);
-            Assert.NotNull(updateIssuer.UpdatedOn);
+            Assert.That(updateIssuer, Is.Not.Null);
+            Assert.That(updateIssuer.UpdatedOn, Is.Not.Null);
             Assert.That(updateIssuer.Provider, Is.EqualTo(updateProvider));
         }
 
@@ -672,7 +672,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             foreach (IssuerProperties issuerPropertie in issuerProperties)
             {
-                Assert.NotNull(issuerPropertie);
+                Assert.That(issuerPropertie, Is.Not.Null);
                 IssuerProperties returnPropertie = issuerProperties.Single(s => s.Id == issuerPropertie.Id);
                 Assert.That(returnPropertie.Provider, Is.EqualTo(issuerPropertie.Provider));
                 // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
@@ -706,13 +706,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             IList<CertificateContact> getContacts = getContactsResponse.Value;
 
-            Assert.NotNull(getContacts);
+            Assert.That(getContacts, Is.Not.Null);
             Assert.That(getContacts.Count, Is.EqualTo(2));
 
             foreach (CertificateContact contact in contacts)
             {
                 CertificateContact returnContact = getContacts.Single(s => s.Name == contact.Name);
-                Assert.NotNull(returnContact);
+                Assert.That(returnContact, Is.Not.Null);
                 Assert.That(returnContact.Phone, Is.EqualTo(contact.Phone));
                 Assert.That(returnContact.Email, Is.EqualTo(contact.Email));
             }
@@ -729,13 +729,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
-            Assert.NotNull(original);
+            Assert.That(original, Is.Not.Null);
 
             RegisterForCleanup(certName);
 
             CertificatePolicy policy = await Client.GetCertificatePolicyAsync(certName);
 
-            Assert.NotNull(policy);
+            Assert.That(policy, Is.Not.Null);
             Assert.That(policy.KeyType, Is.EqualTo(DefaultPolicy.KeyType));
             Assert.That(policy.IssuerName, Is.EqualTo(DefaultPolicy.IssuerName));
             Assert.That(policy.ReuseKey, Is.EqualTo(DefaultPolicy.ReuseKey));
@@ -752,7 +752,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
-            Assert.NotNull(original);
+            Assert.That(original, Is.Not.Null);
 
             RegisterForCleanup(certName);
 
@@ -767,8 +767,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificatePolicy updatePolicy = await Client.UpdateCertificatePolicyAsync(certName, certificatePolicy);
 
-            Assert.NotNull(updatePolicy);
-            Assert.NotNull(updatePolicy.UpdatedOn);
+            Assert.That(updatePolicy, Is.Not.Null);
+            Assert.That(updatePolicy.UpdatedOn, Is.Not.Null);
             Assert.That(updatePolicy.Subject, Is.EqualTo(certificatePolicy.Subject));
             Assert.That(updatePolicy.ReuseKey, Is.EqualTo(certificatePolicy.ReuseKey));
             Assert.That(updatePolicy.Exportable, Is.EqualTo(certificatePolicy.Exportable));
@@ -825,7 +825,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using RSA rsa = (RSA)x509certificate.GetRSAPrivateKey();
             byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
-            CollectionAssert.AreEqual(plaintext, decrypted);
+            Assert.That(decrypted, Is.EqualTo(plaintext).AsCollection);
         }
 
         [RecordedTest]
@@ -887,7 +887,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using RSA rsa = (RSA)x509certificate.GetRSAPrivateKey();
             byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
-            CollectionAssert.AreEqual(plaintext, decrypted);
+            Assert.That(decrypted, Is.EqualTo(plaintext).AsCollection);
         }
 
         [RecordedTest]
@@ -1174,7 +1174,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
 
-            Assert.NotNull(cert.Cer, "Certificate should have a cer");
+            Assert.That(cert.Cer, Is.Not.Null, "Certificate should have a cer");
             Assert.That(cert.Name, Is.EqualTo(certName), "Certificate name should match the expected name");
             Assert.That(cert.Properties.Enabled, Is.True, "Certificate should be enabled");
             Assert.That(preserveOrder, Is.EqualTo(cert.PreserveCertificateOrder), "Certificate should preserve the certificate order");

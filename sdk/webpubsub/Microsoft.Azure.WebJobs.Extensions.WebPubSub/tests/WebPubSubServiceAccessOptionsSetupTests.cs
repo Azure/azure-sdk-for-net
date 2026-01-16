@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.IsNotNull(options.WebPubSubAccess);
+            Assert.That(options.WebPubSubAccess, Is.Not.Null);
             Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
         }
 
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.IsNotNull(options.WebPubSubAccess);
+            Assert.That(options.WebPubSubAccess, Is.Not.Null);
             Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
         }
 
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.IsNotNull(options.WebPubSubAccess);
+            Assert.That(options.WebPubSubAccess, Is.Not.Null);
             Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
-            Assert.IsInstanceOf<IdentityCredential>(options.WebPubSubAccess.Credential);
+            Assert.That(options.WebPubSubAccess.Credential, Is.InstanceOf<IdentityCredential>());
             Assert.That(((IdentityCredential)options.WebPubSubAccess.Credential).TokenCredential, Is.EqualTo(mockCredential));
         }
 
@@ -128,9 +128,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.IsNotNull(options.WebPubSubAccess);
+            Assert.That(options.WebPubSubAccess, Is.Not.Null);
             Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
-            Assert.IsInstanceOf<KeyCredential>(options.WebPubSubAccess.Credential);
+            Assert.That(options.WebPubSubAccess.Credential, Is.InstanceOf<KeyCredential>());
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.IsNull(options.WebPubSubAccess);
+            Assert.That(options.WebPubSubAccess, Is.Null);
         }
 
         [Test]

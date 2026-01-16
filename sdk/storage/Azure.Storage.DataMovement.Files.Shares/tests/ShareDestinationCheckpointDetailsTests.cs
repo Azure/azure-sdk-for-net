@@ -368,28 +368,28 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.That(data.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion));
             Assert.That(data.IsFileAttributesSet, Is.False);
-            Assert.IsNull(data.FileAttributes);
+            Assert.That(data.FileAttributes, Is.Null);
             Assert.That(data.FilePermission, Is.False);
             Assert.That(data.IsFileCreatedOnSet, Is.False);
-            Assert.IsNull(data.FileCreatedOn);
+            Assert.That(data.FileCreatedOn, Is.Null);
             Assert.That(data.IsFileLastWrittenOnSet, Is.False);
-            Assert.IsNull(data.FileLastWrittenOn);
+            Assert.That(data.FileLastWrittenOn, Is.Null);
             Assert.That(data.IsFileChangedOnSet, Is.False);
-            Assert.IsNull(data.FileChangedOn);
+            Assert.That(data.FileChangedOn, Is.Null);
             Assert.That(data.IsContentTypeSet, Is.False);
-            Assert.IsEmpty(data.ContentTypeBytes);
+            Assert.That(data.ContentTypeBytes, Is.Empty);
             Assert.That(data.IsContentEncodingSet, Is.False);
-            Assert.IsEmpty(data.ContentEncodingBytes);
+            Assert.That(data.ContentEncodingBytes, Is.Empty);
             Assert.That(data.IsContentLanguageSet, Is.False);
-            Assert.IsEmpty(data.ContentLanguageBytes);
+            Assert.That(data.ContentLanguageBytes, Is.Empty);
             Assert.That(data.IsContentDispositionSet, Is.False);
-            Assert.IsEmpty(data.ContentDispositionBytes);
+            Assert.That(data.ContentDispositionBytes, Is.Empty);
             Assert.That(data.IsCacheControlSet, Is.False);
-            Assert.IsEmpty(data.CacheControlBytes);
+            Assert.That(data.CacheControlBytes, Is.Empty);
             Assert.That(data.IsFileMetadataSet, Is.False);
-            Assert.IsNull(data.FileMetadata);
+            Assert.That(data.FileMetadata, Is.Null);
             Assert.That(data.IsDirectoryMetadataSet, Is.False);
-            Assert.IsNull(data.DirectoryMetadata);
+            Assert.That(data.DirectoryMetadata, Is.Null);
             Assert.That(data.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
         }
 
@@ -432,28 +432,28 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.That(data.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion));
             Assert.That(data.IsFileAttributesSet, Is.False);
-            Assert.IsNull(data.FileAttributes);
+            Assert.That(data.FileAttributes, Is.Null);
             Assert.That(data.FilePermission, Is.True);
             Assert.That(data.IsFileCreatedOnSet, Is.False);
-            Assert.IsNull(data.FileCreatedOn);
+            Assert.That(data.FileCreatedOn, Is.Null);
             Assert.That(data.IsFileLastWrittenOnSet, Is.False);
-            Assert.IsNull(data.FileLastWrittenOn);
+            Assert.That(data.FileLastWrittenOn, Is.Null);
             Assert.That(data.IsFileChangedOnSet, Is.False);
-            Assert.IsNull(data.FileChangedOn);
+            Assert.That(data.FileChangedOn, Is.Null);
             Assert.That(data.IsContentTypeSet, Is.False);
-            Assert.IsNull(data.ContentType);
+            Assert.That(data.ContentType, Is.Null);
             Assert.That(data.IsContentEncodingSet, Is.False);
-            Assert.IsNull(data.ContentEncoding);
+            Assert.That(data.ContentEncoding, Is.Null);
             Assert.That(data.IsContentLanguageSet, Is.False);
-            Assert.IsNull(data.ContentLanguage);
+            Assert.That(data.ContentLanguage, Is.Null);
             Assert.That(data.IsContentDispositionSet, Is.False);
-            Assert.IsNull(data.ContentDisposition);
+            Assert.That(data.ContentDisposition, Is.Null);
             Assert.That(data.IsCacheControlSet, Is.False);
-            Assert.IsNull(data.CacheControl);
+            Assert.That(data.CacheControl, Is.Null);
             Assert.That(data.IsFileMetadataSet, Is.False);
-            Assert.IsNull(data.FileMetadata);
+            Assert.That(data.FileMetadata, Is.Null);
             Assert.That(data.IsDirectoryMetadataSet, Is.False);
-            Assert.IsNull(data.DirectoryMetadata);
+            Assert.That(data.DirectoryMetadata, Is.Null);
             Assert.That(data.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
         }
 

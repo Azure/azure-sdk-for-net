@@ -202,30 +202,30 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public static void AssertValidStorageFileInfo(ShareFileInfo storageFileInfo)
         {
-            Assert.IsNotNull(storageFileInfo.ETag);
-            Assert.IsNotNull(storageFileInfo.LastModified);
-            Assert.IsNotNull(storageFileInfo.IsServerEncrypted);
-            Assert.IsNotNull(storageFileInfo.SmbProperties);
+            Assert.That(storageFileInfo.ETag, Is.Not.Null);
+            Assert.That(storageFileInfo.LastModified, Is.Not.Null);
+            Assert.That(storageFileInfo.IsServerEncrypted, Is.Not.Null);
+            Assert.That(storageFileInfo.SmbProperties, Is.Not.Null);
             AssertValidFileSmbProperties(storageFileInfo.SmbProperties);
         }
 
         public static void AssertValidStorageDirectoryInfo(ShareDirectoryInfo storageDirectoryInfo)
         {
-            Assert.IsNotNull(storageDirectoryInfo.ETag);
-            Assert.IsNotNull(storageDirectoryInfo.LastModified);
-            Assert.IsNotNull(storageDirectoryInfo.SmbProperties);
+            Assert.That(storageDirectoryInfo.ETag, Is.Not.Null);
+            Assert.That(storageDirectoryInfo.LastModified, Is.Not.Null);
+            Assert.That(storageDirectoryInfo.SmbProperties, Is.Not.Null);
             AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties);
         }
 
         public static void AssertValidFileSmbProperties(FileSmbProperties fileSmbProperties)
         {
-            Assert.IsNotNull(fileSmbProperties.FileAttributes);
-            Assert.IsNotNull(fileSmbProperties.FilePermissionKey);
-            Assert.IsNotNull(fileSmbProperties.FileCreatedOn);
-            Assert.IsNotNull(fileSmbProperties.FileLastWrittenOn);
-            Assert.IsNotNull(fileSmbProperties.FileChangedOn);
-            Assert.IsNotNull(fileSmbProperties.FileId);
-            Assert.IsNotNull(fileSmbProperties.ParentId);
+            Assert.That(fileSmbProperties.FileAttributes, Is.Not.Null);
+            Assert.That(fileSmbProperties.FilePermissionKey, Is.Not.Null);
+            Assert.That(fileSmbProperties.FileCreatedOn, Is.Not.Null);
+            Assert.That(fileSmbProperties.FileLastWrittenOn, Is.Not.Null);
+            Assert.That(fileSmbProperties.FileChangedOn, Is.Not.Null);
+            Assert.That(fileSmbProperties.FileId, Is.Not.Null);
+            Assert.That(fileSmbProperties.ParentId, Is.Not.Null);
         }
 
         internal static void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)

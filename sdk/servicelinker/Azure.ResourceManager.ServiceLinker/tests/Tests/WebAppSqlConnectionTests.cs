@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             SourceConfigurationResult configurations = await linker.GetConfigurationsAsync();
             foreach (var configuration in configurations.Configurations)
             {
-                Assert.IsNotNull(configuration.Name);
-                Assert.IsNotNull(configuration.Value);
+                Assert.That(configuration.Name, Is.Not.Null);
+                Assert.That(configuration.Value, Is.Not.Null);
             }
 
             // delete service linker

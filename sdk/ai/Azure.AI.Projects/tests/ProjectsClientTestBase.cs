@@ -82,8 +82,8 @@ namespace Azure.AI.Projects.Tests
         /// </summary>
         protected static void ValidateNotNullOrEmpty(string value, string propertyName)
         {
-            Assert.IsNotNull(value, $"{propertyName} should not be null");
-            Assert.IsNotEmpty(value, $"{propertyName} should not be empty");
+            Assert.That(value, Is.Not.Null, $"{propertyName} should not be null");
+            Assert.That(value, Is.Not.Empty, $"{propertyName} should not be empty");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Tests
         /// </summary>
         protected static void ValidateResponse<T>(T response, string responseName = null) where T : class
         {
-            Assert.IsNotNull(response, $"{responseName ?? typeof(T).Name} response should not be null");
+            Assert.That(response, Is.Not.Null, $"{responseName ?? typeof(T).Name} response should not be null");
         }
 
         // Regular expression describing the pattern of an Application Insights connection string

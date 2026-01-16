@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Tests.Models
             IndexingParametersConfiguration configuration = new IndexingParametersConfiguration();
             foreach (PropertyInfo property in DeclaredProperties)
             {
-                Assert.IsNull(property.GetValue(configuration), $"Property '{property.Name}' is not null by default");
+                Assert.That(property.GetValue(configuration), Is.Null, $"Property '{property.Name}' is not null by default");
             }
         }
 

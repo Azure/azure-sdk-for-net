@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)

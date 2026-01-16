@@ -44,7 +44,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var assembly = Assembly.GetExecutingAssembly();
             string mustExistFilename = "transparent_statement.cose";
             string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(mustExistFilename));
-            Assert.IsNotNull(resourceName);
+            Assert.That(resourceName, Is.Not.Null);
             _fileQualifierPrefix = resourceName.Split(new String[] { mustExistFilename }, StringSplitOptions.None)[0];
         }
 

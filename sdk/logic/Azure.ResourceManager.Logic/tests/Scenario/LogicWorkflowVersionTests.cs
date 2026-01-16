@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Tests
             var list = await _versionCollection.GetAllAsync().ToEnumerableAsync();
             string versionName = list.FirstOrDefault().Data.Name;
             var version = await _versionCollection.GetAsync(versionName);
-            Assert.IsNotNull(version);
+            Assert.That(version, Is.Not.Null);
             Assert.That(version.Value.Data.Name, Is.EqualTo(versionName));
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task GetAll()
         {
             var list = await _versionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
         }
     }

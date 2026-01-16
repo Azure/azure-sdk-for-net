@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Tests
                 PeeringServicePrefixKey = "6bfe26da-8159-41c9-aa2a-243b39952148",
             };
             var prefix = await _peeringServicePrefixCollection.CreateOrUpdateAsync(WaitUntil.Completed, prefixName, data);
-            Assert.IsNotNull(prefix);
+            Assert.That(prefix, Is.Not.Null);
             Assert.That(prefix.Value.Data.Name, Is.EqualTo(prefixName));
 
             // Exist
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Peering.Tests
 
             // Get
             var getResponse = await _peeringServicePrefixCollection.GetAsync(prefixName);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Value.Data.Name, Is.EqualTo(prefixName));
 
             // GetAll
             var list = await _peeringServicePrefixCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsNotNull(list.First(item => item.Data.Name == prefixName));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.First(item => item.Data.Name == prefixName), Is.Not.Null);
 
             // Delete
             await prefix.Value.DeleteAsync(WaitUntil.Completed);

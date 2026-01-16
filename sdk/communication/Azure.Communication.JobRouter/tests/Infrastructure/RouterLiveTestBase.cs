@@ -163,7 +163,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
             Assert.That(createDistributionPolicyResponse.Value.Id, Is.EqualTo(distributionId));
             Assert.That(createDistributionPolicyResponse.Value.Name, Is.EqualTo(distributionPolicyName));
-            Assert.IsNotNull(createDistributionPolicyResponse.Value.Mode);
+            Assert.That(createDistributionPolicyResponse.Value.Mode, Is.Not.Null);
             Assert.That(createDistributionPolicyResponse.Value.Mode.GetType() == typeof(LongestIdleMode), Is.True);
             AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(createDistributionPolicyResponse.Value.Id)));
             return createDistributionPolicyResponse;

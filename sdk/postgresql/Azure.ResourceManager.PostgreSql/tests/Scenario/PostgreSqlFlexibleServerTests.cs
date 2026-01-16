@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPublicServer, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
+            Assert.That(targetPublicServer, Is.Not.Null, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
 
             Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
             Assert.That(targetPublicServer.Data.Location, Is.EqualTo(targetLocation));
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPrivateServer, $"GeoBackups not available for server {sourcePrivateServerName} after 2 hours.");
+            Assert.That(targetPrivateServer, Is.Not.Null, $"GeoBackups not available for server {sourcePrivateServerName} after 2 hours.");
 
             Assert.That(targetPrivateServer.Data.Name, Is.EqualTo(targetPrivateServerName));
             Assert.That(targetPrivateServer.Data.Location, Is.EqualTo(targetLocation));
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 
             Assert.That(replica0Server.Data.Name, Is.EqualTo(replicaServerName[0]));
             Assert.That(replica0Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.Primary));
-            Assert.IsNull(replica0Server.Data.SourceServerResourceId);
+            Assert.That(replica0Server.Data.SourceServerResourceId, Is.Null);
 
             // Create replica 2
             var replica2ServerData = new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 
             Assert.That(replica2Server.Data.Name, Is.EqualTo(replicaServerName[2]));
             Assert.That(replica2Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.Primary));
-            Assert.IsNull(replica2Server.Data.SourceServerResourceId);
+            Assert.That(replica2Server.Data.SourceServerResourceId, Is.Null);
 
             // Delete Section
             await virtualEndpointResource.DeleteAsync(WaitUntil.Completed);
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             {
                 deleteException = ex;
             }
-            Assert.NotNull(deleteException);
+            Assert.That(deleteException, Is.Not.Null);
 
             // Delete replica 1
             await replica1Server.DeleteAsync(WaitUntil.Completed);
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var secondReplica = replicaOperation.Value;
 
             // Since CMK is not explicitly enabled, identity will be null for this replica server.
-            Assert.IsNull(secondReplica.Data.Identity);
+            Assert.That(secondReplica.Data.Identity, Is.Null);
             Assert.That(AzureLocation.WestUS.Name, Is.EqualTo(secondReplica.Data.Location.Name));
             #endregion
 
@@ -1232,7 +1232,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPublicServer, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
+            Assert.That(targetPublicServer, Is.Not.Null, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
 
             Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
             Assert.That(targetPublicServer.Data.Location, Is.EqualTo(targetLocation));
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPublicServer, $"Revive Dropped server {sourcePublicServerName} not available after 30 min.");
+            Assert.That(targetPublicServer, Is.Not.Null, $"Revive Dropped server {sourcePublicServerName} not available after 30 min.");
 
             Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
             Assert.That(targetPublicServer.Data.Location.Name, Is.EqualTo(AzureLocation.EastUS.Name));
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPrivateServer, $"Revive-dropped not available for server {sourcePrivateServerName} after 30 min. Failed to create server {targetPrivateServerName}");
+            Assert.That(targetPrivateServer, Is.Not.Null, $"Revive-dropped not available for server {sourcePrivateServerName} after 30 min. Failed to create server {targetPrivateServerName}");
 
             Assert.That(targetPrivateServer.Data.Name, Is.EqualTo(targetPrivateServerName));
             Assert.That(targetPrivateServer.Data.Location.Name, Is.EqualTo(AzureLocation.EastUS.Name));

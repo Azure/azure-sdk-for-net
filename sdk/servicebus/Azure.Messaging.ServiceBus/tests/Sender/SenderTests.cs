@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             IReadOnlyList<long> sequenceNums = await mock.Object.ScheduleMessagesAsync(
                 new List<ServiceBusMessage>(),
                 default);
-            Assert.IsEmpty(sequenceNums);
+            Assert.That(sequenceNums, Is.Empty);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var sender = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>()).CreateSender(queueName);
             Assert.That(sender.EntityPath, Is.EqualTo(queueName));
             Assert.That(sender.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace));
-            Assert.IsNotNull(sender.Identifier);
+            Assert.That(sender.Identifier, Is.Not.Null);
         }
 
         [Test]

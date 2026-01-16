@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             Assert.That(resolvedAttr.Hub, Is.EqualTo(TestHub));
             Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
             Assert.That(resolvedAttr.Namespace, Is.EqualTo("/ns"));
-            Assert.IsEmpty(resolvedAttr.ParameterNames);
+            Assert.That(resolvedAttr.ParameterNames, Is.Empty);
         }
 
         [TestCase]
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             Assert.That(resolvedAttr.Hub, Is.EqualTo("defaulthub"));
             Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
             Assert.That(resolvedAttr.Namespace, Is.EqualTo("/"));
-            Assert.IsEmpty(resolvedAttr.ParameterNames);
+            Assert.That(resolvedAttr.ParameterNames, Is.Empty);
         }
 
         [TestCase]
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
             var binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         public static void TestFunc(

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task CreateOrUpdate()
         {
             AzureFirewallResource firewall = await CreateFirewallAsync();
-            Assert.IsNotNull(firewall.Data);
+            Assert.That(firewall.Data, Is.Not.Null);
             Assert.That(firewall.Data.Name, Is.EqualTo(_firewallName));
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             await CreateFirewallAsync();
             var firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
-            Assert.IsNotNull(firewall.Value.Data);
+            Assert.That(firewall.Value.Data, Is.Not.Null);
             Assert.That(firewall.Value.Data.Name, Is.EqualTo(_firewallName));
         }
 

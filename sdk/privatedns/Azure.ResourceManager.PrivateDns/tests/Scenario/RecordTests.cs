@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == aaaaRecordName).Data, aaaaRecordName);
 
             // Delete
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == aRecordName).Data, aRecordName);
 
             // Delete
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == cnameRecordName).Data, cnameRecordName);
 
             // Delete
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == mxRecordName).Data, mxRecordName);
 
             // Delete
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == ptrRecordName).Data, ptrRecordName);
 
             // Delete
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var soaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, soaRecordName, data);
             ValidateRecordBaseInfo(soaRecord.Value.Data, soaRecordName);
-            Assert.IsNotNull(soaRecord.Value.Data.PrivateDnsSoaRecord.Email);
+            Assert.That(soaRecord.Value.Data.PrivateDnsSoaRecord.Email, Is.Not.Null);
             Assert.That(soaRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/SOA"));
             Assert.That(soaRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
             Assert.That(soaRecord.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds > 0, Is.True);
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             // Get
             var getResponse = await collection.GetAsync(soaRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, soaRecordName);
-            Assert.IsNotNull(getResponse.Value.Data.PrivateDnsSoaRecord.Email);
+            Assert.That(getResponse.Value.Data.PrivateDnsSoaRecord.Email, Is.Not.Null);
             Assert.That(getResponse.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/SOA"));
             Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
             Assert.That(getResponse.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds > 0, Is.True);
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == soaRecordName).Data, soaRecordName);
         }
 
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == srvRecordName).Data, srvRecordName);
 
             // Delete
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == txtRecordName).Data, txtRecordName);
 
             // Delete
@@ -477,8 +477,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
         private void ValidateRecordBaseInfo(PrivateDnsBaseRecordData recordData, string recordDataName)
         {
-            Assert.IsNotNull(recordData);
-            Assert.IsNotNull(recordData.ETag);
+            Assert.That(recordData, Is.Not.Null);
+            Assert.That(recordData.ETag, Is.Not.Null);
             Assert.That(recordData.Name, Is.EqualTo(recordDataName));
         }
     }

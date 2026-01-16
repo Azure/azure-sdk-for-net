@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             ArmOperation<VMwareVmInstanceResource> lro = await vMwareVmInstance.CreateOrUpdateAsync(WaitUntil.Completed, data);
             VMwareVmInstanceResource vmInstance = lro.Value;
-            Assert.IsNotNull(vmInstance);
+            Assert.That(vmInstance, Is.Not.Null);
 
             // Update
             VMwareVmInstancePatch patch = new VMwareVmInstancePatch()
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             lro = await vMwareVmInstance.UpdateAsync(WaitUntil.Completed, patch);
             VMwareVmInstanceResource result = lro.Value;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             VMwareVmInstanceData resourceData = result.Data;
             Assert.That(patch.HardwareProfile.MemorySizeMB, Is.EqualTo(resourceData.HardwareProfile.MemorySizeMB));
             Assert.That(patch.HardwareProfile.NumCpus, Is.EqualTo(resourceData.HardwareProfile.NumCpus));

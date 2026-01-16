@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Tests
         {
             var providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             var result = await providerCollection.GetAsync(resourceNamespace);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await providerCollection.GetAsync("DoesNotExist"));
             Assert.That(ex.Status, Is.EqualTo(404));
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Tests
         {
             var providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             var x = providerCollection.GetAllAsync();
-            Assert.IsNotNull(x);
+            Assert.That(x, Is.Not.Null);
             await foreach (var p in x)
             {
-                Assert.IsNotNull(p.Data.Id);
+                Assert.That(p.Data.Id, Is.Not.Null);
             }
         }
 

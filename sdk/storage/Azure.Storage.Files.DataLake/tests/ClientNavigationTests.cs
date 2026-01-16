@@ -35,7 +35,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.That(filesystemClient.Name, Is.EqualTo(fileClient.FileSystemName));
             Assert.That(filesystemClient.AccountName, Is.EqualTo(fileClient.AccountName));
-            Assert.IsNotNull(containerProperties);
+            Assert.That(containerProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -59,7 +59,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.That(fileSystemClient.Name, Is.EqualTo(fileClient.FileSystemName));
             Assert.That(fileSystemClient.AccountName, Is.EqualTo(fileClient.AccountName));
-            Assert.IsNotNull(fileSystemProperties);
+            Assert.That(fileSystemProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -82,7 +82,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.That(fileSystemClient.Name, Is.EqualTo(fileClient.FileSystemName));
             Assert.That(fileSystemClient.AccountName, Is.EqualTo(fileClient.AccountName));
-            Assert.IsNotNull(pathItems);
+            Assert.That(pathItems, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var fileSystemClient = fileClientMock.Object.GetParentFileSystemClientCore();
 
             // Assert
-            Assert.IsNotNull(fileSystemClient);
+            Assert.That(fileSystemClient, Is.Not.Null);
             Assert.That(fileSystemClient, Is.SameAs(fileSystemClientMock.Object));
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.That(parentDirClient.Path, Is.EqualTo(fileClient.Path.GetParentPath()));
             Assert.That(parentDirClient.AccountName, Is.EqualTo(fileClient.AccountName));
-            Assert.IsNotNull(dirProperties);
+            Assert.That(dirProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -148,7 +148,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.That(parentDirClient.Path, Is.EqualTo(fileClient.Path.GetParentPath()));
             Assert.That(parentDirClient.AccountName, Is.EqualTo(fileClient.AccountName));
-            Assert.IsNotNull(dirProperties);
+            Assert.That(dirProperties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -174,7 +174,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.That(parentDirClient.Path, Is.EqualTo(fileClient.Path.GetParentPath()));
             Assert.That(parentDirClient.AccountName, Is.EqualTo(fileClient.AccountName));
-            Assert.IsNotNull(pathItems);
+            Assert.That(pathItems, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -189,7 +189,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var fileSystemClient = fileClientMock.Object.GetParentFileSystemClientCore();
 
             // Assert
-            Assert.IsNotNull(fileSystemClient);
+            Assert.That(fileSystemClient, Is.Not.Null);
             Assert.That(fileSystemClient, Is.SameAs(fileSystemClientMock.Object));
         }
 

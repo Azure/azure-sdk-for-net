@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
         public async Task ReturnsExpectedException()
         {
             var exception = await AsyncAssert.ThrowsAsync<ExpectedException>(() => throw new ExpectedException());
-            Assert.NotNull(exception);
+            Assert.That(exception, Is.Not.Null);
         }
 
         [Test]

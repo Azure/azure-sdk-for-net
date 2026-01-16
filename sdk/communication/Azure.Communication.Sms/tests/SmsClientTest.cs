@@ -73,7 +73,7 @@ namespace Azure.Communication.Sms.Tests
         {
             var smsClient = new SmsClient(TestConnectionString);
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Azure.Communication.Sms.Tests
         {
             var smsClient = new SmsClient(TestConnectionString, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Azure.Communication.Sms.Tests
             Uri endpoint = new Uri("http://localhost");
             var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace Azure.Communication.Sms.Tests
             Uri endpoint = new Uri("http://localhost");
             var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [TestCaseSource(nameof(TestDataForSingleSms))]

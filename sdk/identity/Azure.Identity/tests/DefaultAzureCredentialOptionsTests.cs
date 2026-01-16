@@ -85,7 +85,7 @@ namespace Azure.Identity.Tests
             {
                 var options = new DefaultAzureCredentialOptions();
 
-                CollectionAssert.AreEqual(expValue, options.AdditionallyAllowedTenants);
+                Assert.That(options.AdditionallyAllowedTenants, Is.EqualTo(expValue).AsCollection);
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.Identity.Tests
             {
                 if (propInfo.PropertyType == typeof(IList<string>))
                 {
-                    CollectionAssert.AreEqual((IList<string>)propInfo.GetValue(orig), (IList<string>)propInfo.GetValue(clone), $"Cloned {propInfo.Name} does not match original");
+                    Assert.That((IList<string>)propInfo.GetValue(clone), Is.EqualTo((IList<string>)propInfo.GetValue(orig)).AsCollection, $"Cloned {propInfo.Name} does not match original");
                 }
                 else
                 {

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var setName = Recording.GenerateAssetName("testAS-");
             var set = await CreateAvailabilitySetAsync(setName);
             var locations = await set.GetAvailableLocationsAsync();
-            Assert.IsNotEmpty(locations.Value);
+            Assert.That(locations.Value, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             updateOptions2.ProximityPlacementGroup.Id = proxGrp.Id;
             aset2 = await aset2.UpdateAsync(updateOptions2);
-            Assert.NotNull(aset2.Data.ProximityPlacementGroup.Id);
+            Assert.That(aset2.Data.ProximityPlacementGroup.Id, Is.Not.Null);
 
             updateOptions2.ProximityPlacementGroup = null;
             aset2 = await aset2.UpdateAsync(updateOptions2);

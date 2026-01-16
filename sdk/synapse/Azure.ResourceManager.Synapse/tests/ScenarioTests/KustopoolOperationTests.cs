@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Synapse.Tests
         private void VerifyReadWriteDatabase(SynapseReadWriteDatabase database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string workspaceName, string kustoPoolName)
         {
             var databaseFullName = GetFullKustoDatabaseName(workspaceName, kustoPoolName, databaseName);
-            Assert.NotNull(database);
+            Assert.That(database, Is.Not.Null);
             Assert.That(databaseFullName, Is.EqualTo(database.Name));
             Assert.That(softDeletePeriod, Is.EqualTo(database.SoftDeletePeriod));
             Assert.That(hotCachePeriod, Is.EqualTo(database.HotCachePeriod));

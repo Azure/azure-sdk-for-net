@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationData application, string appTypeName)
         {
-            Assert.IsNotNull(application);
-            Assert.IsNotEmpty(application.Id);
+            Assert.That(application, Is.Not.Null);
+            Assert.That((string)application.Id, Is.Not.Empty);
             Assert.That(application.Name, Is.EqualTo(appTypeName));
             Assert.That(application.Location, Is.EqualTo(DefaultLocation));
             Assert.That(application.ResourceType.ToString(), Is.EqualTo("Microsoft.ServiceFabric/managedclusters/applications"));

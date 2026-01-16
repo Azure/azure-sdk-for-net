@@ -56,9 +56,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo(BlobName));
-            Assert.NotNull(result.BlobContainerName);
+            Assert.That(result.BlobContainerName, Is.Not.Null);
             Assert.That(result.BlobContainerName, Is.EqualTo(ContainerName));
             var container = GetContainerReference(blobServiceClient, ContainerName);
             Assert.That((bool)await container.ExistsAsync(), Is.True);
@@ -85,9 +85,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo(BlobName));
-            Assert.NotNull(result.BlobContainerName);
+            Assert.That(result.BlobContainerName, Is.Not.Null);
             Assert.That(result.BlobContainerName, Is.EqualTo(ContainerName));
             var container = GetContainerReference(blobServiceClient, ContainerName);
             Assert.That((bool)await container.ExistsAsync(), Is.True);
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             await jobHost.CallAsync(nameof(BindToParameterBindingData.Run));
             ParameterBindingData result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var blobData = result?.Content.ToObjectFromJson<Dictionary<string,string>>();
 
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             await jobHost.CallAsync(nameof(BindToParameterBindingDataBlobContainer.Run));
             ParameterBindingData result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var blobData = result?.Content.ToObjectFromJson<Dictionary<string, string>>();
 
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             Assert.That(resultConnection, Is.EqualTo(ConnectionName));
             Assert.That(resultContainerName, Is.EqualTo(ContainerName));
-            Assert.IsEmpty(resultBlobName);
+            Assert.That(resultBlobName, Is.Empty);
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             await jobHost.CallAsync(nameof(BindToParameterBindingDataEnumerable.Run));
             IEnumerable<ParameterBindingData> result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Assert
             foreach (var blob in result)
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             await jobHost.CallAsync(nameof(BindToStringArray.Run));
             string[] result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Assert
             foreach (var blob in result)
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             await jobHost.CallAsync(nameof(BindToParameterBindingDataArray.Run));
             ParameterBindingData[] result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             foreach (var blob in result)
             {

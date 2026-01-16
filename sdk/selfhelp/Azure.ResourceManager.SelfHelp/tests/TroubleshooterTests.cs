@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             SelfHelpTroubleshooterData resourceData = CreateSelfHelpTroubleshooterData(scope);
 
             var createTroubleshooterData = await Client.GetSelfHelpTroubleshooters(scope).CreateOrUpdateAsync(WaitUntil.Started, troubleshooterResourceName, resourceData);
-            Assert.NotNull(createTroubleshooterData);
+            Assert.That(createTroubleshooterData, Is.Not.Null);
 
             var readTroubleshooterData = await Client.GetSelfHelpTroubleshooterAsync(scope, troubleshooterResourceName);
-            Assert.NotNull(readTroubleshooterData);
+            Assert.That(readTroubleshooterData, Is.Not.Null);
         }
 
         private SelfHelpTroubleshooterData CreateSelfHelpTroubleshooterData(ResourceIdentifier scope)

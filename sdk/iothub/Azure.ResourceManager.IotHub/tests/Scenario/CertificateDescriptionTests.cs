@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string certName = Recording.GenerateAssetName("cert-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var certification = await CreateDefaultCertification(iothub, certName);
-            Assert.IsNotNull(certification);
+            Assert.That(certification, Is.Not.Null);
             Assert.That(certification.Data.Name, Is.EqualTo(certName));
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string certName = Recording.GenerateAssetName("cert-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var getCertification = await CreateDefaultCertification(iothub, certName);
-            Assert.IsNotNull(getCertification);
+            Assert.That(getCertification, Is.Not.Null);
             Assert.That(getCertification.Data.Name, Is.EqualTo(certName));
         }
 
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
             var list = await iothub.GetIotHubCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
 
             await CreateDefaultCertification(iothub, certName);
             list = await iothub.GetIotHubCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(certName));
         }

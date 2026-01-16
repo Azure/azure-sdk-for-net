@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             {
                 counter++;
             }
-            Assert.GreaterOrEqual(counter, 1);
+            Assert.That(counter, Is.GreaterThanOrEqualTo(1));
 
             Assert.That((await jobDefinitions.ExistsAsync(JobDefinitionName)).Value, Is.True);
 

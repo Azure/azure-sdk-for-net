@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetPrivateEndpointConnection()
         {
             HybridComputePrivateEndpointConnectionData endpointData = await getPrivateEndpointConnection();
-            Assert.NotNull(endpointData.Name);
+            Assert.That(endpointData.Name, Is.Not.Null);
         }
 
         [TestCase]

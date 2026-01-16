@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             string workspaceName = "testWorkspaceCrudWS";
             string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
             ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
-            Assert.IsNotNull(rg);
+            Assert.That(rg, Is.Not.Null);
             VirtualWorkspaceCollection workspaceCollection = rg.GetVirtualWorkspaces();
             VirtualWorkspaceData workspaceData = new VirtualWorkspaceData(
                 DefaultLocation);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 workspaceName,
                 workspaceData);
 
-            Assert.IsNotNull(opWorkspaceCreate);
+            Assert.That(opWorkspaceCreate, Is.Not.Null);
             Assert.That(opWorkspaceCreate.HasCompleted, Is.True);
             Assert.That(workspaceName, Is.EqualTo(opWorkspaceCreate.Value.Data.Name));
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 workspaceName,
                 workspaceData);
 
-            Assert.IsNotNull(opWorkspaceCreate);
+            Assert.That(opWorkspaceCreate, Is.Not.Null);
             Assert.That(opWorkspaceCreate.HasCompleted, Is.True);
             Assert.That(workspaceName, Is.EqualTo(opWorkspaceCreate.Value.Data.Name));
             Assert.That(opWorkspaceCreate.Value.Data.FriendlyName, Is.EqualTo("Friendly Name"));
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             VirtualWorkspaceResource workspace = getOp.Value;
             ArmOperation deleteOp = await workspace.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteOp);
+            Assert.That(deleteOp, Is.Not.Null);
 
             Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(200));
 
             deleteOp = await workspace.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteOp);
+            Assert.That(deleteOp, Is.Not.Null);
 
             Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(204));
 

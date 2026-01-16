@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // Get one of the image versions
             ImageVersionResource imageVersion = await images.First().GetImageVersionAsync(imageVersions.First().Data.Name);
-            Assert.IsNotNull(imageVersion);
+            Assert.That(imageVersion, Is.Not.Null);
         }
     }
 }

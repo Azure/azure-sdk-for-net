@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 }
             };
             TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, data)).Value;
-            Assert.IsNotNull(table1);
+            Assert.That(table1, Is.Not.Null);
             Assert.That(tableName, Is.EqualTo(table1.Id.Name));
             Assert.That(table1.Data.SignedIdentifiers.Count, Is.EqualTo(2));
 
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 }
             }
             Assert.That(count, Is.EqualTo(2));
-            Assert.IsNotNull(table3);
-            Assert.IsNotNull(table4);
+            Assert.That(table3, Is.Not.Null);
+            Assert.That(table4, Is.Not.Null);
         }
 
         [Test]

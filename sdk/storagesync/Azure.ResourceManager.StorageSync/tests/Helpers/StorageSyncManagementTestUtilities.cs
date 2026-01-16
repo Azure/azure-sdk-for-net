@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
         public static void VerifyStorageSyncServiceProperties(StorageSyncServiceResource resource, bool useDefaults)
         {
-            Assert.NotNull(resource);
-            Assert.NotNull(resource.Id);
-            Assert.NotNull(resource.Data.Location);
-            Assert.NotNull(resource.Id.Name);
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource.Id, Is.Not.Null);
+            Assert.That(resource.Data.Location, Is.Not.Null);
+            Assert.That(resource.Id.Name, Is.Not.Null);
 
             VerifySystemDataProperties(resource.Data);
 
             if (useDefaults)
             {
                 Assert.That(resource.Data.Location.ToString(), Is.EqualTo(DefaultLocation));
-                Assert.NotNull(resource.Data.Tags);
+                Assert.That(resource.Data.Tags, Is.Not.Null);
                 Assert.That(resource.Data.Tags.Count, Is.EqualTo(2));
                 Assert.That(resource.Data.Tags["key1"], Is.EqualTo("value1"));
                 Assert.That(resource.Data.Tags["key2"], Is.EqualTo("value2"));
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
         public static void VerifySyncGroupProperties(StorageSyncGroupResource resource, bool useDefaults)
         {
-            Assert.NotNull(resource);
-            Assert.NotNull(resource.Id);
-            Assert.NotNull(resource.Id.Name);
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource.Id, Is.Not.Null);
+            Assert.That(resource.Id.Name, Is.Not.Null);
 
             VerifySystemDataProperties(resource.Data);
 
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
         public static void VerifyCloudEndpointProperties(CloudEndpointResource resource, bool useDefaults)
         {
-            Assert.NotNull(resource);
-            Assert.NotNull(resource.Id);
-            Assert.NotNull(resource.Id.Name);
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource.Id, Is.Not.Null);
+            Assert.That(resource.Id.Name, Is.Not.Null);
 
             VerifySystemDataProperties(resource.Data);
         }
 
         public static void VerifyServerEndpointProperties(StorageSyncServerEndpointResource resource, bool useDefaults)
         {
-            Assert.NotNull(resource);
-            Assert.NotNull(resource.Id);
-            Assert.NotNull(resource.Id.Name);
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource.Id, Is.Not.Null);
+            Assert.That(resource.Id.Name, Is.Not.Null);
 
             VerifySystemDataProperties(resource.Data);
 
@@ -106,26 +106,26 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
         public static void VerifyRegisteredServerProperties(StorageSyncRegisteredServerResource resource)
         {
-            Assert.NotNull(resource);
-            Assert.NotNull(resource.Id);
-            Assert.NotNull(resource.Id.Name);
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource.Id, Is.Not.Null);
+            Assert.That(resource.Id.Name, Is.Not.Null);
 
             VerifySystemDataProperties(resource.Data);
         }
 
         public static void VerifySystemDataProperties(ResourceData resource)
         {
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
 
-            Assert.NotNull(resource.SystemData);
-            Assert.NotNull(resource.SystemData.CreatedOn);
+            Assert.That(resource.SystemData, Is.Not.Null);
+            Assert.That(resource.SystemData.CreatedOn, Is.Not.Null);
             Assert.That(resource.SystemData.CreatedOn.Value, Is.Not.EqualTo(default(DateTime)));
-            Assert.NotNull(resource.SystemData.CreatedBy);
-            Assert.NotNull(resource.SystemData.CreatedByType);
-            Assert.NotNull(resource.SystemData.LastModifiedOn);
+            Assert.That(resource.SystemData.CreatedBy, Is.Not.Null);
+            Assert.That(resource.SystemData.CreatedByType, Is.Not.Null);
+            Assert.That(resource.SystemData.LastModifiedOn, Is.Not.Null);
             Assert.That(resource.SystemData.LastModifiedOn.Value, Is.Not.EqualTo(default(DateTime)));
-            Assert.NotNull(resource.SystemData.LastModifiedBy);
-            Assert.NotNull(resource.SystemData.LastModifiedByType);
+            Assert.That(resource.SystemData.LastModifiedBy, Is.Not.Null);
+            Assert.That(resource.SystemData.LastModifiedByType, Is.Not.Null);
         }
 
         public static StorageSyncServiceCreateOrUpdateContent GetDefaultStorageSyncServiceParameters()

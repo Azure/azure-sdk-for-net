@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(default);
 
-            Assert.NotNull(transferCheckpointer);
+            Assert.That(transferCheckpointer, Is.Not.Null);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
-            Assert.NotNull(transferCheckpointer);
+            Assert.That(transferCheckpointer, Is.Not.Null);
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
-            CollectionAssert.AreEquivalent(expectedTransferIds, transferIds);
+            Assert.That(transferIds, Is.EquivalentTo(expectedTransferIds));
         }
 
         [Test]
@@ -386,7 +386,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            Assert.IsEmpty(transfers);
+            Assert.That(transfers, Is.Empty);
         }
 
         [Test]
@@ -433,7 +433,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            CollectionAssert.AreEquivalent(expectedTransferIds, transfers);
+            Assert.That(transfers, Is.EquivalentTo(expectedTransferIds));
         }
 
         [Test]
@@ -614,7 +614,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Assert
-            Assert.IsNotNull(header);
+            Assert.That(header, Is.Not.Null);
             Assert.That(header.Version, Is.EqualTo(DataMovementConstants.JobPlanFile.SchemaVersion));
             Assert.That(header.TransferId, Is.EqualTo(transferId));
             Assert.That(header.ParentSourcePath, Is.EqualTo(CheckpointerTesting.DefaultWebSourcePath));

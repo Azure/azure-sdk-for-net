@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
         {
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             var authorizationRule = await CreateAuthorizationRule(authorizationRuleName);
-            Assert.IsNotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(authorizationRule.Data.Name, Is.EqualTo(authorizationRuleName));
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             await CreateAuthorizationRule(authorizationRuleName);
             var authorizationRule = await _authorizationRuleCollection.GetAsync(authorizationRuleName);
-            Assert.IsNotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(authorizationRule.Value.Data.Name, Is.EqualTo(authorizationRuleName));
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
         public async Task GetAll()
         {
             var list = await _authorizationRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             var authoriaztionRule = await CreateAuthorizationRule(authorizationRuleName);
             var key = await authoriaztionRule.GetKeysAsync();
-            Assert.IsNotNull(key);
-            Assert.IsNotNull(key.Value.PrimaryKey);
-            Assert.IsNotNull(key.Value.SecondaryKey);
-            Assert.IsNotNull(key.Value.SecondaryConnectionString);
+            Assert.That(key, Is.Not.Null);
+            Assert.That(key.Value.PrimaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
             Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
         }
 
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
                 PolicyKey = "PrimaryKey"
             };
             var key = await authoriaztionRule.RegenerateKeysAsync(notificationHubPolicyKey);
-            Assert.IsNotNull(key);
-            Assert.IsNotNull(key.Value.PrimaryKey);
-            Assert.IsNotNull(key.Value.SecondaryKey);
-            Assert.IsNotNull(key.Value.SecondaryConnectionString);
+            Assert.That(key, Is.Not.Null);
+            Assert.That(key.Value.PrimaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
             Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
         }
     }

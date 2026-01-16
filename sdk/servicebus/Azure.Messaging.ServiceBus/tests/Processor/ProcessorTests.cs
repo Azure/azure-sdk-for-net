@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 args.MessageLockLostAsync += (lockLostArgs) =>
                 {
                     lockLostEventRaised = true;
-                    Assert.IsNull(lockLostArgs.Exception);
+                    Assert.That(lockLostArgs.Exception, Is.Null);
                     return Task.CompletedTask;
                 };
                 processMessageCalled = true;

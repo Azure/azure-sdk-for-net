@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName);
             var registryData = registry.Data;
             ValidateResourceDefaultTags(registryData);
-            Assert.NotNull(registryData.Sku);
+            Assert.That(registryData.Sku, Is.Not.Null);
             Assert.That(registryData.Sku.Name, Is.EqualTo(ContainerRegistrySkuName.Premium));
             Assert.That(registryData.Sku.Tier, Is.EqualTo(ContainerRegistrySkuTier.Premium));
 
-            Assert.NotNull(registryData.LoginServer);
-            Assert.NotNull(registryData.CreatedOn);
+            Assert.That(registryData.LoginServer, Is.Not.Null);
+            Assert.That(registryData.CreatedOn, Is.Not.Null);
             Assert.That(registryData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
             Assert.That(registryData.IsAdminUserEnabled, Is.False);
 
@@ -103,25 +103,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Validate the updated registry
             ValidateResourceDefaultNewTags(registryFromUpdate.Data);
             registryData = registryFromUpdate.Data;
-            Assert.NotNull(registryData.Sku);
+            Assert.That(registryData.Sku, Is.Not.Null);
             Assert.That(registryData.Sku.Name, Is.EqualTo(ContainerRegistrySkuName.Basic));
             Assert.That(registryData.Sku.Tier, Is.EqualTo(ContainerRegistrySkuTier.Basic));
 
-            Assert.NotNull(registryData.LoginServer);
-            Assert.NotNull(registryData.CreatedOn);
+            Assert.That(registryData.LoginServer, Is.Not.Null);
+            Assert.That(registryData.CreatedOn, Is.Not.Null);
             Assert.That(registryData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
             Assert.That(registryData.IsAdminUserEnabled, Is.True);
 
             // List credentials
             ContainerRegistryListCredentialsResult credentials = await registryFromUpdate.GetCredentialsAsync();
             // Validate username and password
-            Assert.NotNull(credentials);
-            Assert.NotNull(credentials.Username);
+            Assert.That(credentials, Is.Not.Null);
+            Assert.That(credentials.Username, Is.Not.Null);
             Assert.That(credentials.Passwords.Count, Is.EqualTo(2));
             var password1 = credentials.Passwords[0].Value;
             var password2 = credentials.Passwords[1].Value;
-            Assert.NotNull(password1);
-            Assert.NotNull(password2);
+            Assert.That(password1, Is.Not.Null);
+            Assert.That(password2, Is.Not.Null);
 
             // Regenerate credential
             ContainerRegistryCredentialRegenerateContent credentialContent = new ContainerRegistryCredentialRegenerateContent(ContainerRegistryPasswordName.Password);
@@ -202,20 +202,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
 
             // Get the webhook call back config
             ContainerRegistryWebhookCallbackConfig webhookConfig = await webhookFromUpdate.GetCallbackConfigAsync();
-            Assert.NotNull(webhookConfig);
+            Assert.That(webhookConfig, Is.Not.Null);
             Assert.That(webhookConfig.ServiceUri, Is.EqualTo(DefaultWebhookServiceUri));
             Assert.That(webhookConfig.CustomHeaders.Count, Is.EqualTo(1));
             Assert.That(webhookConfig.CustomHeaders["key"], Is.EqualTo("value"));
 
             // Ping the webhook
             ContainerRegistryWebhookEventInfo eventInfo = await webhookFromUpdate.PingAsync();
-            Assert.NotNull(eventInfo);
-            Assert.NotNull(eventInfo.Id);
+            Assert.That(eventInfo, Is.Not.Null);
+            Assert.That(eventInfo.Id, Is.Not.Null);
 
             //List webhook events
             var eventPages = webhookFromUpdate.GetEventsAsync();
             ContainerRegistryWebhookEvent eventFromList = await eventPages.FirstOrDefaultAsync(_ => true);
-            Assert.NotNull(eventFromList);
+            Assert.That(eventFromList, Is.Not.Null);
 
             //Delete the webhook
             await webhookFromUpdate.DeleteAsync(WaitUntil.Completed);
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             var replicationData = replication.Data;
             ValidateResourceDefaultTags(replicationData);
             Assert.That(replicationData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.NotNull(replicationData.Status);
-            Assert.NotNull(replicationData.Status.DisplayStatus);
+            Assert.That(replicationData.Status, Is.Not.Null);
+            Assert.That(replicationData.Status.DisplayStatus, Is.Not.Null);
             // List replications by container registry
             var replicationPages = replicationCollection.GetAllAsync();
             var replicationCount = 0;
@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                 {
                     ValidateResourceDefaultTags(replicationFromList.Data);
                     Assert.That(replicationFromList.Data.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-                    Assert.NotNull(replicationFromList.Data.Status);
-                    Assert.NotNull(replicationFromList.Data.Status.DisplayStatus);
+                    Assert.That(replicationFromList.Data.Status, Is.Not.Null);
+                    Assert.That(replicationFromList.Data.Status.DisplayStatus, Is.Not.Null);
                 }
                 replicationCount++;
             }
@@ -286,8 +286,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             var replicationDataFromUpdate = replicationFromUpdate.Data;
             ValidateResourceDefaultNewTags(replicationDataFromUpdate);
             Assert.That(replicationDataFromUpdate.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.NotNull(replicationDataFromUpdate.Status);
-            Assert.NotNull(replicationDataFromUpdate.Status.DisplayStatus);
+            Assert.That(replicationDataFromUpdate.Status, Is.Not.Null);
+            Assert.That(replicationDataFromUpdate.Status.DisplayStatus, Is.Not.Null);
             // Delete the replication
             await replicationFromUpdate.DeleteAsync(WaitUntil.Completed);
             // Delete the replication again
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             };
             var lro = await taskCollection.CreateOrUpdateAsync(WaitUntil.Completed, taskName, data);
             ContainerRegistryTaskResource task = lro.Value;
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Data.Name, Is.EqualTo(taskName));
             Assert.That(task.Data.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
             Assert.That(task.Data.Status, Is.EqualTo(ContainerRegistryTaskStatus.Enabled));
@@ -571,7 +571,7 @@ steps:
                 privateLinkName = privateLinkFromList.Data.Name;
                 privateLinkCount++;
             }
-            Assert.Greater(privateLinkCount, 0);
+            Assert.That(privateLinkCount, Is.GreaterThan(0));
             // Validate get private link resource operation
             ContainerRegistryPrivateLinkResource privateLink = await privateLinkCollection.GetAsync(privateLinkName);
             Assert.That(privateLink.Data.Name, Is.EqualTo(privateLinkName));
@@ -744,8 +744,8 @@ steps:
             var lro = await scopeMapCollection.CreateOrUpdateAsync(WaitUntil.Completed, scopeMapName, data);
             ScopeMapResource scopeMap = lro.Value;
             var scopeMapData = scopeMap.Data;
-            Assert.NotNull(scopeMap);
-            Assert.IsNotEmpty(scopeMap.Id);
+            Assert.That(scopeMap, Is.Not.Null);
+            Assert.That((string)scopeMap.Id, Is.Not.Empty);
             Assert.That(scopeMapData.Actions.Count, Is.EqualTo(5));
             Assert.That(scopeMapData.Description, Is.Null);
             Assert.That(scopeMapData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
@@ -777,7 +777,7 @@ steps:
                 Actions = { $"repositories/{defaultScopeMapRepository}/content/read" }
             });
             ScopeMapResource scopeMapFromUpdate = lro.Value;
-            Assert.IsNotEmpty(scopeMapFromUpdate.Data.Description);
+            Assert.That(scopeMapFromUpdate.Data.Description, Is.Not.Empty);
             Assert.That(scopeMapFromUpdate.Data.Actions.Count, Is.EqualTo(1));
             // Delete the scope map
             await scopeMapFromUpdate.DeleteAsync(WaitUntil.Completed);
@@ -804,10 +804,10 @@ steps:
                 ScopeMapId = scopeMapId,
             });
             ContainerRegistryTokenResource token = lro.Value;
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             var tokenData = token.Data;
-            Assert.IsNotEmpty(token.Id);
-            Assert.IsNotEmpty(tokenData.ScopeMapId);
+            Assert.That((string)token.Id, Is.Not.Empty);
+            Assert.That((string)tokenData.ScopeMapId, Is.Not.Empty);
             Assert.That(tokenData.Status, Is.EqualTo(ContainerRegistryTokenStatus.Enabled));
             Assert.That(tokenData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
             // List tokens
@@ -832,8 +832,8 @@ steps:
                 TokenId = tokenFromUpdate.Id
             });
             ContainerRegistryGenerateCredentialsResult credential = credentialLro.Value;
-            Assert.IsNotEmpty(credential.Passwords);
-            Assert.IsNotEmpty(credential.Username);
+            Assert.That(credential.Passwords, Is.Not.Empty);
+            Assert.That(credential.Username, Is.Not.Empty);
             // Delete the token
             await tokenFromUpdate.DeleteAsync(WaitUntil.Completed);
             // Delete the container registry
@@ -940,19 +940,19 @@ steps:
 
         private static void ValidateSystemData(SystemData systemData)
         {
-            Assert.NotNull(systemData);
-            Assert.NotNull(systemData.CreatedOn);
-            Assert.NotNull(systemData.CreatedBy);
-            Assert.NotNull(systemData.CreatedByType);
-            Assert.NotNull(systemData.LastModifiedOn);
-            Assert.NotNull(systemData.LastModifiedBy);
-            Assert.NotNull(systemData.LastModifiedByType);
+            Assert.That(systemData, Is.Not.Null);
+            Assert.That(systemData.CreatedOn, Is.Not.Null);
+            Assert.That(systemData.CreatedBy, Is.Not.Null);
+            Assert.That(systemData.CreatedByType, Is.Not.Null);
+            Assert.That(systemData.LastModifiedOn, Is.Not.Null);
+            Assert.That(systemData.LastModifiedBy, Is.Not.Null);
+            Assert.That(systemData.LastModifiedByType, Is.Not.Null);
         }
 
         private static void ValidateResourceDefaultTags(TrackedResourceData resourceData)
         {
             ValidateResourceData(resourceData);
-            Assert.NotNull(resourceData.Tags);
+            Assert.That(resourceData.Tags, Is.Not.Null);
             Assert.That(resourceData.Tags.Count, Is.EqualTo(2));
             Assert.That(resourceData.Tags["key1"], Is.EqualTo("value1"));
             Assert.That(resourceData.Tags["key2"], Is.EqualTo("value2"));
@@ -961,7 +961,7 @@ steps:
         private static void ValidateResourceDefaultNewTags(TrackedResourceData resourceData)
         {
             ValidateResourceData(resourceData);
-            Assert.NotNull(resourceData.Tags);
+            Assert.That(resourceData.Tags, Is.Not.Null);
             Assert.That(resourceData.Tags.Count, Is.EqualTo(3));
             Assert.That(resourceData.Tags["key2"], Is.EqualTo("value2"));
             Assert.That(resourceData.Tags["key3"], Is.EqualTo("value3"));
@@ -970,11 +970,11 @@ steps:
 
         private static void ValidateResourceData(TrackedResourceData resourceData)
         {
-            Assert.NotNull(resourceData);
-            Assert.NotNull(resourceData.Id);
-            Assert.NotNull(resourceData.Name);
-            Assert.NotNull(resourceData.ResourceType);
-            Assert.NotNull(resourceData.Location);
+            Assert.That(resourceData, Is.Not.Null);
+            Assert.That(resourceData.Id, Is.Not.Null);
+            Assert.That(resourceData.Name, Is.Not.Null);
+            Assert.That(resourceData.ResourceType, Is.Not.Null);
+            Assert.That(resourceData.Location, Is.Not.Null);
         }
     }
 }

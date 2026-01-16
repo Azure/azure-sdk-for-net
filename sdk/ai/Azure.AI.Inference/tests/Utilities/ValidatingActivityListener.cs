@@ -50,7 +50,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         public void ValidateStartActivity(ChatCompletionsOptions requestOptions, Uri endpoint, bool traceContent)
         {
             Activity activity = m_listeners.Single();
-            Assert.NotNull(activity);
+            Assert.That(activity, Is.Not.Null);
             // Validate all tags
             ValidateTag(activity, GenAiSystemKey, GenAiSystemValue);
             ValidateTag(activity, GenAiRequestModelKey, requestOptions.Model);
@@ -83,7 +83,7 @@ namespace Azure.AI.Inference.Tests.Utilities
 
             if (response == null)
             {
-                Assert.IsEmpty(actualChoices);
+                Assert.That(actualChoices, Is.Empty);
                 return;
             }
 
@@ -126,13 +126,13 @@ namespace Azure.AI.Inference.Tests.Utilities
                 }
             }
             Assert.That(default, Is.Not.EqualTo(actual));
-            Assert.Greater(actual.Timestamp, new DateTimeOffset(new DateTime(2024, 6, 1)));
+            Assert.That(actual.Timestamp, Is.GreaterThan(new DateTimeOffset(new DateTime(2024, 6, 1))));
             ValidateEventTags(actual.Tags, expected);
         }
 
         private static void ValidateChatMessageEvents(Activity activity, IList<ChatRequestMessage> messages, bool traceContent)
         {
-            Assert.NotNull(activity);
+            Assert.That(activity, Is.Not.Null);
             foreach (ChatRequestMessage message in messages)
             {
                 ValidateEvent(
@@ -159,7 +159,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
             else
             {
-                Assert.NotNull(activity.GetTagItem(key));
+                Assert.That(activity.GetTagItem(key), Is.Not.Null);
                 Assert.That(int.TryParse(activity.GetTagItem(key).ToString(), out int intActual));
                 Assert.That(intActual, Is.EqualTo(value));
             }

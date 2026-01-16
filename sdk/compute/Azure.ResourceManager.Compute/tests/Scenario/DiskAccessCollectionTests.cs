@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     access2 = access;
             }
 
-            Assert.NotNull(access1);
-            Assert.NotNull(access2);
+            Assert.That(access1, Is.Not.Null);
+            Assert.That(access2, Is.Not.Null);
         }
     }
 }

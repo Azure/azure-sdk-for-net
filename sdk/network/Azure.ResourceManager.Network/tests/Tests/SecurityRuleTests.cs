@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG
             AsyncPageable<NetworkSecurityGroupResource> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             List<NetworkSecurityGroupResource> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listNsgResponse);
+            Assert.That(listNsgResponse, Is.Empty);
         }
 
         private void CompareSecurityRule(SecurityRuleData rule1, SecurityRuleData rule2)

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetNspCollection()
         {
             NetworkSecurityPerimeterConfigurationCollection resourceCollection = await getNspCollection();
-            Assert.IsNotNull(resourceCollection);
+            Assert.That(resourceCollection, Is.Not.Null);
         }
 
         [TestCase]

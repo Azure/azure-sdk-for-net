@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _subscriptionSecurityTaskCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAscLocationLocationTaskResource(list.First(item=>item.Data.Name == _existTaskName));
         }
 
         private void ValidateAscLocationLocationTaskResource(SubscriptionSecurityTaskResource task)
         {
-            Assert.IsNotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Data.Name, Is.EqualTo(_existTaskName));
             Assert.That(task.Data.State, Is.EqualTo("Active"));
             Assert.That(task.Data.SubState, Is.EqualTo("NA"));

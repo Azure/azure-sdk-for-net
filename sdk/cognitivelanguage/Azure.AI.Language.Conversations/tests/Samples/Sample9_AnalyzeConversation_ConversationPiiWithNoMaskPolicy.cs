@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
             // Ensure PII was detected
-            Assert.NotZero(detectedEntities.Count);
+            Assert.That(detectedEntities.Count, Is.Not.Zero);
 
             // Verify the HTTP response is successful
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
@@ -169,7 +169,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
 
-            Assert.NotZero(detectedEntities.Count);
+            Assert.That(detectedEntities.Count, Is.Not.Zero);
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }

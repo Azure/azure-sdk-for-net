@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Tests
             {
                 count++;
             }
-            Assert.Greater(count, 0);
+            Assert.That(count, Is.GreaterThan(0));
         }
 
         [TestCase]
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Tests
             Assert.That(getResult.Data.Metadata.ToArray(), Is.EqualTo(model.Data.Metadata.ToArray()));
             if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
-                Assert.NotNull(model.Data.Parameters);
-                Assert.NotNull(getResult.Data.Parameters);
+                Assert.That(model.Data.Parameters, Is.Not.Null);
+                Assert.That(getResult.Data.Parameters, Is.Not.Null);
                 Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
                 foreach (KeyValuePair<string, ArmPolicyParameter> kvp in model.Data.Parameters)
                 {
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.Tests
                     Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {
-                        Assert.NotNull(kvp.Value.AllowedValues);
-                        Assert.NotNull(getParameterDefinitionsValue.AllowedValues);
+                        Assert.That(kvp.Value.AllowedValues, Is.Not.Null);
+                        Assert.That(getParameterDefinitionsValue.AllowedValues, Is.Not.Null);
                         Assert.AreEqual(kvp.Value.AllowedValues.Count, getParameterDefinitionsValue.AllowedValues.Count);
                         for (int i = 0; i < kvp.Value.AllowedValues.Count; ++i)
                         {
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Tests
                     Assert.AreEqual(kvp.Value.DefaultValue, getParameterDefinitionsValue.DefaultValue);
                     if (kvp.Value.Metadata != null || getParameterDefinitionsValue.Metadata != null)
                     {
-                        Assert.NotNull(kvp.Value.Metadata);
-                        Assert.NotNull(getParameterDefinitionsValue.Metadata);
+                        Assert.That(kvp.Value.Metadata, Is.Not.Null);
+                        Assert.That(getParameterDefinitionsValue.Metadata, Is.Not.Null);
                         Assert.AreEqual(kvp.Value.Metadata.DisplayName, getParameterDefinitionsValue.Metadata.DisplayName);
                         Assert.AreEqual(kvp.Value.Metadata.Description, getParameterDefinitionsValue.Metadata.Description);
                         Assert.AreEqual(kvp.Value.Metadata.StrongType, getParameterDefinitionsValue.Metadata.StrongType);

@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, NoTimeoutPolicy);
 
-            Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
+            Assert.That(response.ContentStream, Is.InstanceOf<MemoryStream>());
             var ms = (MemoryStream)response.ContentStream;
 
             Assert.That(ms.Length, Is.EqualTo(128));
@@ -93,7 +93,7 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, NoTimeoutPolicy, bufferResponse: false);
 
-            Assert.IsNotInstanceOf<MemoryStream>(response.ContentStream);
+            Assert.That(response.ContentStream, Is.Not.InstanceOf<MemoryStream>());
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = new MockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, new ResponseBodyPolicy(TimeSpan.FromMilliseconds(1234567)), bufferResponse: false);
 
-            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            Assert.That(response.ContentStream, Is.InstanceOf<ReadTimeoutStream>());
             Assert.That(hangingStream.ReadTimeout, Is.EqualTo(1234567));
         }
 
@@ -208,7 +208,7 @@ namespace Azure.Core.Tests
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false);
 
-            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            Assert.That(response.ContentStream, Is.InstanceOf<ReadTimeoutStream>());
             Assert.That(hangingStream.ReadTimeout, Is.EqualTo(30));
         }
 

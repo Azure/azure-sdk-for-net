@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
 
             // LIST BY SUBSCRIPTION
             var listResult = await DefaultSubscription.GetCustomLocationsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listResult.Count, 1);
+            Assert.That(listResult.Count, Is.GreaterThanOrEqualTo(1));
 
             // LIST BY RESOURCE GROUP
             listResult = await LocationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listResult.Count, 1);
+            Assert.That(listResult.Count, Is.GreaterThanOrEqualTo(1));
 
             // DELETE CREATED CL
             await customLocation.DeleteAsync(WaitUntil.Completed);

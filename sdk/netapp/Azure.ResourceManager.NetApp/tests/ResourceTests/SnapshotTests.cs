@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             //Validate
             NetAppVolumeSnapshotResource snapshotResource2 = await _snapshotCollection.GetAsync(snapshotName);
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             //Create another
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             // get and check the snapshot
             NetAppVolumeSnapshotResource snapshotResource2 = await _snapshotCollection.GetAsync(snapshotName);
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             //create new volume from snapshot, we do this by calling create volume with a snapshotId
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await LiveDelay(20000);
             //Validate
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
-            Assert.IsNotNull(newVolumeResource2);
+            Assert.That(newVolumeResource2, Is.Not.Null);
             Assert.That(newVolumeResource2.Id.Name.Split('/').Last(), Is.EqualTo(newVolumeName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             // get and check the snapshot
             NetAppVolumeSnapshotResource snapshotResource2 = await _snapshotCollection.GetAsync(snapshotName);
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             //create new clone volume from snapshot, we do this by calling create volume with a snapshotId
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await LiveDelay(8000);
             //Validate
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
-            Assert.IsNotNull(newVolumeResource2);
+            Assert.That(newVolumeResource2, Is.Not.Null);
             Assert.That(newVolumeResource2.Id.Name.Split('/').Last(), Is.EqualTo(newVolumeName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             // get and check the snapshot
             NetAppVolumeSnapshotResource snapshotResource2 = await _snapshotCollection.GetAsync(snapshotName);
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             await LiveDelay(20000);
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             // get and check the snapshot
             NetAppVolumeSnapshotResource snapshotResource2 = await _snapshotCollection.GetAsync(snapshotName);
-            Assert.IsNotNull(snapshotResource1);
+            Assert.That(snapshotResource1, Is.Not.Null);
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
 
             await LiveDelay(20000);

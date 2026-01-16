@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             Assert.That(getResult.OperationId, Is.EqualTo(model.OperationId));
             if (model.Properties != null || getResult.Properties != null)
             {
-                Assert.NotNull(model.Properties);
-                Assert.NotNull(getResult.Properties);
+                Assert.That(model.Properties, Is.Not.Null);
+                Assert.That(getResult.Properties, Is.Not.Null);
                 Assert.That(getResult.Properties.ProvisioningState, Is.EqualTo(model.Properties.ProvisioningState));
                 Assert.That(getResult.Properties.ProvisioningOperation, Is.EqualTo(model.Properties.ProvisioningOperation));
                 Assert.That(getResult.Properties.Timestamp, Is.EqualTo(model.Properties.Timestamp));
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
                 //Assert.AreEqual(model.Data.Properties.StatusMessage, getResult.Data.Properties.StatusMessage);
                 if (model.Properties.TargetResource != null || getResult.Properties.TargetResource != null)
                 {
-                    Assert.NotNull(model.Properties.TargetResource);
-                    Assert.NotNull(getResult.Properties.TargetResource);
+                    Assert.That(model.Properties.TargetResource, Is.Not.Null);
+                    Assert.That(getResult.Properties.TargetResource, Is.Not.Null);
                     Assert.That(getResult.Properties.TargetResource.Id, Is.EqualTo(model.Properties.TargetResource.Id));
                     Assert.That(getResult.Properties.TargetResource.ResourceName, Is.EqualTo(model.Properties.TargetResource.ResourceName));
                     Assert.That(getResult.Properties.TargetResource.ResourceType, Is.EqualTo(model.Properties.TargetResource.ResourceType));
                 }
                 if (model.Properties.Request != null || getResult.Properties.Request != null)
                 {
-                    Assert.NotNull(model.Properties.Request);
-                    Assert.NotNull(getResult.Properties.Request);
+                    Assert.That(model.Properties.Request, Is.Not.Null);
+                    Assert.That(getResult.Properties.Request, Is.Not.Null);
                     Assert.That(getResult.Properties.Request.Content, Is.EqualTo(model.Properties.Request.Content));
                 }
                 if (model.Properties.Response != null || getResult.Properties.Response != null)
                 {
-                    Assert.NotNull(model.Properties.Response);
-                    Assert.NotNull(getResult.Properties.Response);
+                    Assert.That(model.Properties.Response, Is.Not.Null);
+                    Assert.That(getResult.Properties.Response, Is.Not.Null);
                     Assert.That(getResult.Properties.Response.Content, Is.EqualTo(model.Properties.Response.Content));
                 }
             }

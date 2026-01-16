@@ -106,7 +106,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.That(mcpRes.RequireApproval, Is.Null);
             mcpRes.RequireApproval = new("never");
             MCPApproval returned = mcpRes.RequireApproval;
-            Assert.IsNotNull(returned);
+            Assert.That(returned, Is.Not.Null);
             Assert.That(returned.AlwaysRequireApproval, Is.EqualTo(false));
             Assert.That(returned.NeverRequireApproval, Is.EqualTo(true));
             Assert.That(returned.PerToolApproval, Is.Null);

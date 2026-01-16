@@ -681,7 +681,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             leftHeaders.Remove("x-ms-client-request-id");
             rightHeaders.Remove("x-ms-client-request-id");
 
-            CollectionAssert.AreEquivalent(leftHeaders, rightHeaders);
+            Assert.That(rightHeaders, Is.EquivalentTo(leftHeaders));
         }
     }
 }

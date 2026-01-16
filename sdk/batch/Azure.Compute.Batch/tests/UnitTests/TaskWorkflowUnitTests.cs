@@ -83,7 +83,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.PassCount, Is.EqualTo(2));
             Assert.That(result.FailCount, Is.EqualTo(0));
         }
@@ -160,7 +160,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(2));
             Assert.That(result.PassCount, Is.EqualTo(1));
             Assert.That(result.FailCount, Is.EqualTo(1));
@@ -207,7 +207,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.PassCount, Is.EqualTo(2));
             Assert.That(result.FailCount, Is.EqualTo(0));
         }
@@ -258,7 +258,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.PassCount, Is.EqualTo(tasksCount));
             Assert.That(result.FailCount, Is.EqualTo(0));
         }
@@ -308,7 +308,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
             Assert.That(result.PassCount, Is.EqualTo(tasksCount));
             Assert.That(result.FailCount, Is.EqualTo(0));
@@ -425,7 +425,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             }
             catch (ParallelOperationsException e)
             {
-                Assert.NotNull(e.InnerExceptions);
+                Assert.That(e.InnerExceptions, Is.Not.Null);
                 // Assert
                 Assert.Pass();
             }
@@ -476,7 +476,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
             Assert.That(result.PassCount, Is.EqualTo(tasksCount));
             Assert.That(result.FailCount, Is.EqualTo(0));
@@ -525,7 +525,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
             Assert.That(result.PassCount, Is.EqualTo(tasksCount));
             Assert.That(result.FailCount, Is.EqualTo(0));
@@ -585,7 +585,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
             Assert.That(result.PassCount, Is.EqualTo(tasksCount));
             Assert.That(result.FailCount, Is.EqualTo(0));
@@ -635,7 +635,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(0));
             Assert.That(result.PassCount, Is.EqualTo(tasksCount));
             Assert.That(result.FailCount, Is.EqualTo(0));
@@ -686,7 +686,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
             Assert.That(result.PassCount, Is.EqualTo(tasksCount));
             Assert.That(result.FailCount, Is.EqualTo(0));

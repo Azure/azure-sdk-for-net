@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsNull(continuationToken.ShowStats);
+            Assert.That(continuationToken.ShowStats, Is.Null);
             Assert.That(continuationToken.JobId, Is.EqualTo("2a96a91f-7edf-4931-a880-3fdee1d56f15"));
             Assert.That(continuationToken.InputDocumentOrder.Count, Is.EqualTo(3));
             Assert.That(continuationToken.InputDocumentOrder["0"], Is.EqualTo(0));
@@ -97,7 +97,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsNull(continuationToken.ShowStats);
+            Assert.That(continuationToken.ShowStats, Is.Null);
             Assert.That(continuationToken.JobId, Is.EqualTo("2a96a91f-7edf-4931-a880-3fdee1d56f15"));
             Assert.That(continuationToken.InputDocumentOrder.Count, Is.EqualTo(2));
             Assert.That(continuationToken.InputDocumentOrder["134234"], Is.EqualTo(0));
@@ -127,7 +127,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var client = CreateTestClient(new MockTransport());
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
-            Assert.IsInstanceOf<FormatException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<FormatException>());
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string operationId = OperationContinuationToken.Serialize(null, order, null);
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -331,7 +331,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var client = CreateTestClient(new MockTransport());
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
-            Assert.IsInstanceOf<FormatException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<FormatException>());
         }
 
         [Test]
@@ -346,7 +346,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -358,7 +358,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string operationId = OperationContinuationToken.Serialize(null, order, null);
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]

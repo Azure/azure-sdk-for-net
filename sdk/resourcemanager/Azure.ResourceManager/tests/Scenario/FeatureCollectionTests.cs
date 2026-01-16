@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Tests
                 testFeature = feature;
                 break;
             }
-            Assert.IsNotNull(testFeature);
-            Assert.IsNotNull(testFeature.Data.Id);
-            Assert.IsNotNull(testFeature.Data.Name);
-            Assert.IsNotNull(testFeature.Data.Properties);
-            Assert.IsNotNull(testFeature.Data.ResourceType);
+            Assert.That(testFeature, Is.Not.Null);
+            Assert.That(testFeature.Data.Id, Is.Not.Null);
+            Assert.That(testFeature.Data.Name, Is.Not.Null);
+            Assert.That(testFeature.Data.Properties, Is.Not.Null);
+            Assert.That(testFeature.Data.ResourceType, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource feature = await provider.GetFeatures().GetAsync("AHUB");
-            Assert.IsNotNull(feature);
-            Assert.IsNotNull(feature.Data.Id);
+            Assert.That(feature, Is.Not.Null);
+            Assert.That(feature.Data.Id, Is.Not.Null);
             Assert.That(feature.Data.Name, Is.EqualTo("Microsoft.Compute/AHUB"));
-            Assert.IsNotNull(feature.Data.Properties);
-            Assert.IsNotNull(feature.Data.ResourceType);
+            Assert.That(feature.Data.Properties, Is.Not.Null);
+            Assert.That(feature.Data.ResourceType, Is.Not.Null);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await provider.GetFeatures().GetAsync("DoesNotExist"));
             Assert.That(ex.Status, Is.EqualTo(404));

@@ -76,7 +76,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var serialized = JsonSerializer.Serialize(dict);
             var deserialized = JsonSerializer.Deserialize<IDictionary<string, ConfigurationSetting>>(serialized);
-            CollectionAssert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
 
             Assert.That(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]), Is.True);
             Assert.That(deserialized["null_key"], Is.Null);

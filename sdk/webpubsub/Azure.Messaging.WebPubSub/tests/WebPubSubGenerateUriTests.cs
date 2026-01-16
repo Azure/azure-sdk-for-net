@@ -32,7 +32,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             // Synchronize
             Uri sUri = serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default);
             var token = HttpUtility.ParseQueryString(sUri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             JwtSecurityToken jwt = s_jwtTokenHandler.ReadJwtToken(token);
             var aud = jwt.Claims.FirstOrDefault(s => s.Type == "aud")?.Value;
             Assert.That(aud, Is.EqualTo($"http://localhost:8080{clientUriPrefix}/hubs/hub"));
@@ -41,7 +41,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             // Asynchronize
             Uri asyncUri = await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default);
             var asyncToken = HttpUtility.ParseQueryString(asyncUri.Query).Get("access_token");
-            Assert.NotNull(asyncToken);
+            Assert.That(asyncToken, Is.Not.Null);
             JwtSecurityToken asyncJwt = s_jwtTokenHandler.ReadJwtToken(asyncToken);
             var asyncAud = asyncJwt.Claims.FirstOrDefault(s => s.Type == "aud")?.Value;
             Assert.That(asyncAud, Is.EqualTo($"http://localhost:8080{clientUriPrefix}/hubs/hub"));
@@ -103,7 +103,7 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             Uri uri = serviceClient.GetClientAccessUri(expiresAfter, "foo", null);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             var jwt = s_jwtTokenHandler.ReadJwtToken(token);
 
             var expireTime = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
@@ -122,7 +122,7 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             Uri uri = serviceClient.GetClientAccessUri(expireAt, "foo", null);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             var jwt = s_jwtTokenHandler.ReadJwtToken(token);
 
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;

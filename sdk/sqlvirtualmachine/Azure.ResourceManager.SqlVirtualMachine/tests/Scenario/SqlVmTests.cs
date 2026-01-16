@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             // Create SQL VM
             var sqlVmCollections = _resourceGroup.GetSqlVms();
             SqlVmResource sqlVm = await CreateSqlVmAsync(_resourceGroup, _vmIdentifier);
-            Assert.NotNull(sqlVm.Data);
+            Assert.That(sqlVm.Data, Is.Not.Null);
 
             // Get SQL VM
             SqlVmResource sqlVmFromGet = await sqlVmCollections.GetAsync(_vmIdentifier.Name);
@@ -80,18 +80,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             var count = 0;
             await foreach (var sqlVmFromList in sqlVmCollections)
             {
-                Assert.NotNull(sqlVmFromList.Data);
+                Assert.That(sqlVmFromList.Data, Is.Not.Null);
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             // List by subscription
             count = 0;
             await foreach (var sqlVmFromList in Subscription.GetSqlVmsAsync())
             {
-                Assert.NotNull(sqlVmFromList.Data);
+                Assert.That(sqlVmFromList.Data, Is.Not.Null);
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             // Delete
             await sqlVmFromUpdate.DeleteAsync(WaitUntil.Completed);
         }

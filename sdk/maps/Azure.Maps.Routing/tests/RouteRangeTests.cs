@@ -26,7 +26,7 @@ namespace Azure.Maps.Routing.Tests
             var result = await client.GetRouteRangeAsync(options);
 
             Assert.That(result.Value.FormatVersion, Is.EqualTo("0.0.1"));
-            Assert.IsNotNull(result.Value.ReachableRange.Center);
+            Assert.That(result.Value.ReachableRange.Center, Is.Not.Null);
             Assert.That(result.Value.ReachableRange.Boundary.Count, Is.EqualTo(50));
         }
 

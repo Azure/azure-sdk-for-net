@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 var stream = new MemoryStream();
                 blob.DownloadTo(stream);
-                Assert.Greater(stream.Length, 0);
+                Assert.That(stream.Length, Is.GreaterThan(0));
             }
             finally
             {
@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 var stream = new MemoryStream();
                 blob.DownloadTo(stream);
-                Assert.Greater(stream.Length, 0);
+                Assert.That(stream.Length, Is.GreaterThan(0));
             }
             finally
             {

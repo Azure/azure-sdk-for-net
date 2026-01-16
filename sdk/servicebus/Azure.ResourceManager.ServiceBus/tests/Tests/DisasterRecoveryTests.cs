@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
             ServiceBusNamespaceAuthorizationRuleResource authorizationRule = (await serviceBusNamespace1.GetServiceBusNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
-            Assert.NotNull(authorizationRule);
+            Assert.That(authorizationRule, Is.Not.Null);
             Assert.That(ruleParameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //create a disaster recovery
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 PartnerNamespace = serviceBusNamespace2.Id
             };
             ServiceBusDisasterRecoveryResource disasterRecovery = (await serviceBusNamespace1.GetServiceBusDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
-            Assert.NotNull(disasterRecovery);
+            Assert.That(disasterRecovery, Is.Not.Null);
             Assert.That(disasterRecoveryName, Is.EqualTo(disasterRecovery.Id.Name));
             Assert.That(serviceBusNamespace2.Id.ToString(), Is.EqualTo(disasterRecovery.Data.PartnerNamespace));
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //get access keys of the authorization rule
             ServiceBusDisasterRecoveryAuthorizationRuleResource rule = rules.First();
             ServiceBusAccessKeys keys = await rule.GetKeysAsync();
-            Assert.NotNull(keys);
+            Assert.That(keys, Is.Not.Null);
 
             //break pairing and wait for competion
             await disasterRecovery.BreakPairingAsync();

@@ -116,8 +116,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
         {
-            Assert.IsNotNull(pathInfo.ETag);
-            Assert.IsNotNull(pathInfo.LastModified);
+            Assert.That(pathInfo.ETag, Is.Not.Null);
+            Assert.That(pathInfo.LastModified, Is.Not.Null);
         }
 
         public void AssertMetadataEquality(
@@ -125,8 +125,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> actual,
             bool isDirectory)
         {
-            Assert.IsNotNull(expected, "Expected metadata is null");
-            Assert.IsNotNull(actual, "Actual metadata is null");
+            Assert.That(expected, Is.Not.Null, "Expected metadata is null");
+            Assert.That(actual, Is.Not.Null, "Actual metadata is null");
 
             if (isDirectory)
             {

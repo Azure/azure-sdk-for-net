@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EcCryptographyProvider client = new EcCryptographyProvider(jwk, null, false);
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
-            Assert.IsNull(client.Sign(algorithm, new byte[] { 0xff }, default));
+            Assert.That(client.Sign(algorithm, new byte[] { 0xff }, default), Is.Null);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EcCryptographyProvider client = new EcCryptographyProvider(jwk, null, false);
             SignResult result = client.Sign(default, new byte[] { 0xff }, default);
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] signature = new byte[] { 0xff, 0xff };
             VerifyResult result = client.Verify(default, digest, signature, default);
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]

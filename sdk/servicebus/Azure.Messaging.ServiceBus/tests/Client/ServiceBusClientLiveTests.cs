@@ -319,14 +319,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Assert.ThrowsAsync<TaskCanceledException>(async () => await client.AcceptNextSessionAsync(scope.QueueName, cancellationToken: cancellationTokenSource.Token));
                 var stop = DateTime.UtcNow;
 
-                Assert.Less(stop - start, duration.Add(duration));
+                Assert.That(stop - start, Is.LessThan(duration.Add(duration)));
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
 
                 start = DateTime.UtcNow;
                 var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 stop = DateTime.UtcNow;
-                Assert.Less(stop - start, duration.Add(duration));
+                Assert.That(stop - start, Is.LessThan(duration.Add(duration)));
             }
         }
 

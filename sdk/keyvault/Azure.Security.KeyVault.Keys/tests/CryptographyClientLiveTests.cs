@@ -45,15 +45,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.That(encResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(encResult.KeyId, Is.EqualTo(key.Id));
-            Assert.IsNotNull(encResult.Ciphertext);
+            Assert.That(encResult.Ciphertext, Is.Not.Null);
 
             DecryptResult decResult = await cryptoClient.DecryptAsync(algorithm, encResult.Ciphertext);
 
             Assert.That(decResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(decResult.KeyId, Is.EqualTo(key.Id));
-            Assert.IsNotNull(decResult.Plaintext);
+            Assert.That(decResult.Plaintext, Is.Not.Null);
 
-            CollectionAssert.AreEqual(data, decResult.Plaintext);
+            Assert.That(decResult.Plaintext, Is.EqualTo(data).AsCollection);
         }
 
         [RecordedTest]
@@ -71,15 +71,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.That(encResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(encResult.KeyId, Is.EqualTo(key.Id));
-            Assert.IsNotNull(encResult.EncryptedKey);
+            Assert.That(encResult.EncryptedKey, Is.Not.Null);
 
             UnwrapResult decResult = await cryptoClient.UnwrapKeyAsync(algorithm, encResult.EncryptedKey);
 
             Assert.That(decResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(decResult.KeyId, Is.EqualTo(key.Id));
-            Assert.IsNotNull(decResult.Key);
+            Assert.That(decResult.Key, Is.Not.Null);
 
-            CollectionAssert.AreEqual(data, decResult.Key);
+            Assert.That(decResult.Key, Is.EqualTo(data).AsCollection);
         }
 
         [RecordedTest]
@@ -112,8 +112,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.That(signResult.KeyId, Is.EqualTo(key.Id));
             Assert.That(signDataResult.KeyId, Is.EqualTo(key.Id));
 
-            Assert.NotNull(signResult.Signature);
-            Assert.NotNull(signDataResult.Signature);
+            Assert.That(signResult.Signature, Is.Not.Null);
+            Assert.That(signDataResult.Signature, Is.Not.Null);
 
             VerifyResult verifyResult = await cryptoClient.VerifyAsync(algorithm, digest, signDataResult.Signature);
 
@@ -163,8 +163,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.That(signResult.KeyId, Is.EqualTo(key.Id));
             Assert.That(signDataResult.KeyId, Is.EqualTo(key.Id));
 
-            Assert.NotNull(signResult.Signature);
-            Assert.NotNull(signDataResult.Signature);
+            Assert.That(signResult.Signature, Is.Not.Null);
+            Assert.That(signDataResult.Signature, Is.Not.Null);
 
             dataStream.Seek(0, SeekOrigin.Begin);
 
@@ -222,7 +222,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
-            Assert.NotNull(signResult.Signature);
+            Assert.That(signResult.Signature, Is.Not.Null);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
@@ -256,7 +256,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
-            Assert.NotNull(signResult.Signature);
+            Assert.That(signResult.Signature, Is.Not.Null);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
@@ -311,7 +311,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
-            Assert.NotNull(signResult.Signature);
+            Assert.That(signResult.Signature, Is.Not.Null);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
@@ -345,7 +345,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
             Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
-            Assert.NotNull(signResult.Signature);
+            Assert.That(signResult.Signature, Is.Not.Null);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
@@ -371,15 +371,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.That(encrypted.Algorithm, Is.EqualTo(algorithm));
             Assert.That(encrypted.KeyId, Is.EqualTo(key.Id));
-            Assert.IsNotNull(encrypted.Ciphertext);
+            Assert.That(encrypted.Ciphertext, Is.Not.Null);
 
             DecryptResult decrypted = await remoteClient.DecryptAsync(algorithm, encrypted.Ciphertext);
 
             Assert.That(decrypted.Algorithm, Is.EqualTo(algorithm));
             Assert.That(decrypted.KeyId, Is.EqualTo(key.Id));
-            Assert.IsNotNull(decrypted.Plaintext);
+            Assert.That(decrypted.Plaintext, Is.Not.Null);
 
-            CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
+            Assert.That(decrypted.Plaintext, Is.EqualTo(plaintext).AsCollection);
         }
 
         [RecordedTest]

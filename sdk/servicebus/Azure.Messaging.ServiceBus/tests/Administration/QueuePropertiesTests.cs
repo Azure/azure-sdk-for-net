@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
             Assert.That(ex.ParamName, Is.EqualTo($"ForwardTo"));
         }
 
@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var sub = new QueueProperties("Fake Name");
             ArgumentOutOfRangeException ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.AutoDeleteOnIdle = TimeSpan.FromMinutes(2));
 
-            StringAssert.StartsWith($"The value supplied must be greater than or equal to {AdministrationClientConstants.MinimumAllowedAutoDeleteOnIdle}.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith($"The value supplied must be greater than or equal to {AdministrationClientConstants.MinimumAllowedAutoDeleteOnIdle}."));
             Assert.That(ex.ParamName, Is.EqualTo($"AutoDeleteOnIdle"));
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
             Assert.That(ex.ParamName, Is.EqualTo($"ForwardDeadLetteredMessagesTo"));
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.Name = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
             Assert.That(ex.ParamName, Is.EqualTo($"Name"));
         }
 
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             MockResponse response = new MockResponse(200);
             response.SetContent(queueDescriptionXml);
             QueueProperties queueDesc = await QueuePropertiesExtensions.ParseResponseAsync(response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
-            Assert.NotNull(queueDesc.UnknownProperties);
+            Assert.That(queueDesc.UnknownProperties, Is.Not.Null);
             XDocument doc = QueuePropertiesExtensions.Serialize(queueDesc);
 
             XName queueDescriptionElementName = XName.Get("QueueDescription", AdministrationClientConstants.ServiceBusNamespace);
@@ -246,7 +246,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             XNode actualChildNode = serializedQueueDescritionElement.FirstNode;
             while (expectedChildNode != null)
             {
-                Assert.NotNull(actualChildNode);
+                Assert.That(actualChildNode, Is.Not.Null);
                 Assert.That(XNode.DeepEquals(expectedChildNode, actualChildNode), Is.True, $"QueueDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
                 expectedChildNode = expectedChildNode.NextNode;
                 actualChildNode = actualChildNode.NextNode;

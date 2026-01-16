@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroupResult.Add(volumeResource);
             }
-            Assert.IsNotEmpty(listByResourceGroupResult);
+            Assert.That(listByResourceGroupResult, Is.Not.Empty);
 
             // List Volumes by Subscription
             var listBySubscriptionResult = new List<NetworkCloudVolumeResource>();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscriptionResult.Add(volumeResource);
             }
-            Assert.IsNotEmpty(listBySubscriptionResult);
+            Assert.That(listBySubscriptionResult, Is.Not.Empty);
 
             // Delete Volume
             var deleteResult = await volume.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

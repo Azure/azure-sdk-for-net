@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.LabServices.Tests
             // GetAll test
             var vmImageCollection = labPlan.GetLabVirtualMachineImages();
             var list = await vmImageCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
 
             // Get test - 1
             var labImageName = list[0].Data.Name;

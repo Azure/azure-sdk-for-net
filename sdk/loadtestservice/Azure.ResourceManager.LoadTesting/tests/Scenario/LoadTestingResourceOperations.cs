@@ -62,51 +62,51 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             Assert.That(loadTestCreateResponse.Value.Data.Location.Name, Is.EqualTo(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION));
             Assert.That(loadTestCreateResponse.Value.Data.ResourceType.ToString().ToLower(), Is.EqualTo(ProviderConstants.DefaultProviderNamespace.ToLower() + LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower()));
             Assert.That(loadTestCreateResponse.Value.Data.ProvisioningState, Is.EqualTo(LoadTestingProvisioningState.Succeeded));
-            Assert.NotNull(loadTestCreateResponse.Value.Data.DataPlaneUri);
-            Assert.IsNull(loadTestCreateResponse.Value.Data.Encryption);
+            Assert.That(loadTestCreateResponse.Value.Data.DataPlaneUri, Is.Not.Null);
+            Assert.That(loadTestCreateResponse.Value.Data.Encryption, Is.Null);
 
             //// Get
             Response<LoadTestingResource> loadTestGetResponse = await loadTestCreateResponse.Value.GetAsync();
             LoadTestingResource loadTestGetResponseValue = loadTestGetResponse.Value;
 
-            Assert.IsNotNull(loadTestGetResponseValue);
+            Assert.That(loadTestGetResponseValue, Is.Not.Null);
             Assert.That(loadTestGetResponseValue.HasData, Is.True);
             Assert.That(loadTestGetResponseValue.Data.Name, Is.EqualTo(loadTestResourceName));
             Assert.That(loadTestGetResponseValue.Data.Location.Name, Is.EqualTo(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION));
             Assert.That(loadTestGetResponseValue.Data.ResourceType.ToString().ToLower(), Is.EqualTo(ProviderConstants.DefaultProviderNamespace.ToLower() + LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower()));
             Assert.That(loadTestGetResponseValue.Data.ProvisioningState, Is.EqualTo(LoadTestingProvisioningState.Succeeded));
-            Assert.NotNull(loadTestGetResponseValue.Data.DataPlaneUri);
-            Assert.IsNull(loadTestGetResponseValue.Data.Encryption);
+            Assert.That(loadTestGetResponseValue.Data.DataPlaneUri, Is.Not.Null);
+            Assert.That(loadTestGetResponseValue.Data.Encryption, Is.Null);
 
             loadTestGetResponse = await _loadTestResourceCollection.GetAsync(loadTestResourceName);
             loadTestGetResponseValue = loadTestGetResponse.Value;
 
-            Assert.IsNotNull(loadTestGetResponseValue);
+            Assert.That(loadTestGetResponseValue, Is.Not.Null);
             Assert.That(loadTestGetResponseValue.HasData, Is.True);
             Assert.That(loadTestGetResponseValue.Data.Name, Is.EqualTo(loadTestResourceName));
             Assert.That(loadTestGetResponseValue.Data.Location.Name, Is.EqualTo(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION));
             Assert.That(loadTestGetResponseValue.Data.ResourceType.ToString().ToLower(), Is.EqualTo(ProviderConstants.DefaultProviderNamespace.ToLower() + LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower()));
             Assert.That(loadTestGetResponseValue.Data.ProvisioningState, Is.EqualTo(LoadTestingProvisioningState.Succeeded));
-            Assert.NotNull(loadTestGetResponseValue.Data.DataPlaneUri);
-            Assert.IsNull(loadTestGetResponseValue.Data.Encryption);
+            Assert.That(loadTestGetResponseValue.Data.DataPlaneUri, Is.Not.Null);
+            Assert.That(loadTestGetResponseValue.Data.Encryption, Is.Null);
 
             List<LoadTestingResource> loadTestResources = await _loadTestResourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(loadTestResources);
+            Assert.That(loadTestResources, Is.Not.Empty);
             foreach (LoadTestingResource resource in loadTestResources)
             {
-                Assert.IsNotNull(resource);
+                Assert.That(resource, Is.Not.Null);
                 Assert.That(resource.HasData, Is.True);
-                Assert.IsNotNull(resource.Data.Id);
-                Assert.IsNotNull(resource.Data.Name);
+                Assert.That(resource.Data.Id, Is.Not.Null);
+                Assert.That(resource.Data.Name, Is.Not.Null);
                 Assert.That(resource.Data.ResourceType.ToString().ToLower(), Is.EqualTo(ProviderConstants.DefaultProviderNamespace.ToLower() + LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower()));
                 Assert.That(resource.Data.ProvisioningState, Is.EqualTo(LoadTestingProvisioningState.Succeeded));
-                Assert.NotNull(resource.Data.DataPlaneUri);
-                Assert.IsNull(resource.Data.Encryption);
+                Assert.That(resource.Data.DataPlaneUri, Is.Not.Null);
+                Assert.That(resource.Data.Encryption, Is.Null);
             }
 
             //// List outbound network dependencies
             List<LoadTestingOutboundEnvironmentEndpoint> outboundNetworkDependencyResponse = await loadTestGetResponseValue.GetOutboundNetworkDependenciesEndpointsAsync().ToEnumerableAsync();
-            Assert.IsNotNull(outboundNetworkDependencyResponse);
+            Assert.That(outboundNetworkDependencyResponse, Is.Not.Null);
 
             //// Patch
             LoadTestingResourcePatch resourcePatchPayload = new LoadTestingResourcePatch
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             ArmOperation<LoadTestingResource> loadTestPatchResponse = await loadTestGetResponseValue.UpdateAsync(WaitUntil.Completed, resourcePatchPayload);
             LoadTestingResource loadTestPatchResponseValue = loadTestPatchResponse.Value;
 
-            Assert.IsNotNull(loadTestPatchResponseValue);
+            Assert.That(loadTestPatchResponseValue, Is.Not.Null);
             Assert.That(loadTestPatchResponseValue.HasData, Is.True);
             Assert.That(loadTestPatchResponseValue.Data.Name, Is.EqualTo(loadTestResourceName));
             Assert.That(loadTestPatchResponseValue.Data.Location.Name, Is.EqualTo(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION));
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             Assert.That(loadTestPatchResponseValue.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
             Assert.That(loadTestPatchResponseValue.Data.ProvisioningState, Is.EqualTo(LoadTestingProvisioningState.Succeeded));
             Assert.That(loadTestPatchResponseValue.Data.Description, Is.EqualTo(LoadTestResourceHelper.LOAD_TEST_DESCRIPTION));
-            Assert.NotNull(loadTestPatchResponseValue.Data.DataPlaneUri);
-            Assert.IsNull(loadTestPatchResponseValue.Data.Encryption);
+            Assert.That(loadTestPatchResponseValue.Data.DataPlaneUri, Is.Not.Null);
+            Assert.That(loadTestPatchResponseValue.Data.Encryption, Is.Null);
 
             //// Delete
             ArmOperation loadTestDeleteResponse = await loadTestPatchResponseValue.DeleteAsync(WaitUntil.Completed);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests
         {
             AsyncPageable<LoadTestingResource> loadtestResources = Subscription.GetLoadTestingResourcesAsync();
             List<LoadTestingResource> resourceList = await loadtestResources.ToEnumerableAsync();
-            Assert.IsNotNull(resourceList);
+            Assert.That(resourceList, Is.Not.Null);
         }
     }
 }

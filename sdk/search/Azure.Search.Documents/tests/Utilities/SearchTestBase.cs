@@ -170,7 +170,7 @@ namespace Azure.Search.Documents.Tests
         public static async Task<T> CatchAsync<T>(Func<Task> action)
             where T : Exception
         {
-            Assert.IsNotNull(action);
+            Assert.That(action, Is.Not.Null);
             try
             {
                 await action().ConfigureAwait(false);

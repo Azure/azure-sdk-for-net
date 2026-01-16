@@ -100,7 +100,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         MockClient client = WrapClient(new MockClient());
         AsyncCollectionResult<int> coll = client.ResultCollectionAsync(num, increment);
 
-        Assert.IsNotNull(coll);
+        Assert.That(coll, Is.Not.Null);
 
         int numResults = 0;
         await foreach (int i in coll)

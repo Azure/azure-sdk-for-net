@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             string filePath = Path.Combine(test.DirectoryPath, $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}");
 
-            Assert.NotNull(file);
+            Assert.That(file, Is.Not.Null);
             Assert.That(file.Id, Is.EqualTo(transferId));
             Assert.That(file.FilePath, Is.EqualTo(filePath));
         }
@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(filePath);
 
-            Assert.NotNull(jobPlanFile);
+            Assert.That(jobPlanFile, Is.Not.Null);
             Assert.That(jobPlanFile.Id, Is.EqualTo(transferId));
             Assert.That(jobPlanFile.FilePath, Is.EqualTo(filePath));
         }

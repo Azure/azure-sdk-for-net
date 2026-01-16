@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             await response.WaitForCompletionAsync();
             assessmentProjectResource = response.Value;
             Assert.That(response.HasCompleted, Is.True);
-            Assert.IsNotNull(assessmentProjectResource);
+            Assert.That(assessmentProjectResource, Is.Not.Null);
 
             agentProperties = new CollectorAgentPropertiesBase()
             {
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await hyperVCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, hyperVCollectorName, hyperVCollectorData);
             var hyperVCollectorResource = hyperVCollectorResponse.Value;
             Assert.That(hyperVCollectorResponse.HasCompleted, Is.True);
-            Assert.IsNotNull(hyperVCollectorResource);
+            Assert.That(hyperVCollectorResource, Is.Not.Null);
 
             // Get Hyper-V Collector
             hyperVCollectorResource = await hyperVCollectorCollection.GetAsync(hyperVCollectorName);
-            Assert.IsNotNull(hyperVCollectorResource);
+            Assert.That(hyperVCollectorResource, Is.Not.Null);
             Assert.That(hyperVCollectorName, Is.EqualTo(hyperVCollectorResource.Data.Name));
 
             // Get All Hyper-V Collectors
             var allHyperVCollectors = hyperVCollectorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(allHyperVCollectors);
-            Assert.GreaterOrEqual(allHyperVCollectors.Result.Count, 1);
+            Assert.That(allHyperVCollectors, Is.Not.Null);
+            Assert.That(allHyperVCollectors.Result.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete Hyper-V Collector
             await hyperVCollectorResource.DeleteAsync(WaitUntil.Completed);
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await vmwareCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmwareCollectorName, vmwareCollectorData);
             var vmwareCollectorResource = vmwareCollectorResponse.Value;
             Assert.That(vmwareCollectorResponse.HasCompleted, Is.True);
-            Assert.IsNotNull(vmwareCollectorResource);
+            Assert.That(vmwareCollectorResource, Is.Not.Null);
 
             // Get VMware Collector
             vmwareCollectorResource = await vmwareCollectorCollection.GetAsync(vmwareCollectorName);
-            Assert.IsNotNull(vmwareCollectorResource);
+            Assert.That(vmwareCollectorResource, Is.Not.Null);
             Assert.That(vmwareCollectorName, Is.EqualTo(vmwareCollectorResource.Data.Name));
 
             // Get All VMware Collectors
             var allVMwareCollectors = vmwareCollectorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(allVMwareCollectors);
-            Assert.GreaterOrEqual(allVMwareCollectors.Result.Count, 1);
+            Assert.That(allVMwareCollectors, Is.Not.Null);
+            Assert.That(allVMwareCollectors.Result.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete VMware Collector
             await vmwareCollectorResource.DeleteAsync(WaitUntil.Completed);
@@ -153,17 +153,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await serverCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverCollectorName, serverCollectorData);
             var serverCollectorResource = serverCollectorResponse.Value;
             Assert.That(serverCollectorResponse.HasCompleted, Is.True);
-            Assert.IsNotNull(serverCollectorResource);
+            Assert.That(serverCollectorResource, Is.Not.Null);
 
             // Get Server Collector
             serverCollectorResource = await serverCollectorCollection.GetAsync(serverCollectorName);
-            Assert.IsNotNull(serverCollectorResource);
+            Assert.That(serverCollectorResource, Is.Not.Null);
             Assert.That(serverCollectorName, Is.EqualTo(serverCollectorResource.Data.Name));
 
             // Get All Server Collectors
             var allServerCollectors = serverCollectorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(allServerCollectors);
-            Assert.GreaterOrEqual(allServerCollectors.Result.Count, 1);
+            Assert.That(allServerCollectors, Is.Not.Null);
+            Assert.That(allServerCollectors.Result.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete Server Collector
             await serverCollectorResource.DeleteAsync(WaitUntil.Completed);
@@ -189,17 +189,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await importCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, importCollectorName, importCollectorData);
             var importCollectorResource = importCollectorResponse.Value;
             Assert.That(importCollectorResponse.HasCompleted, Is.True);
-            Assert.IsNotNull(importCollectorResource);
+            Assert.That(importCollectorResource, Is.Not.Null);
 
             // Get Import Collector
             importCollectorResource = await importCollectorCollection.GetAsync(importCollectorName);
-            Assert.IsNotNull(importCollectorResource);
+            Assert.That(importCollectorResource, Is.Not.Null);
             Assert.That(importCollectorName, Is.EqualTo(importCollectorResource.Data.Name));
 
             // Get All Import Collectors
             var allImportCollectors = importCollectorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(allImportCollectors);
-            Assert.GreaterOrEqual(allImportCollectors.Result.Count, 1);
+            Assert.That(allImportCollectors, Is.Not.Null);
+            Assert.That(allImportCollectors.Result.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete Import Collector
             await importCollectorResource.DeleteAsync(WaitUntil.Completed);
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await vmwareCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmwareCollectorName, vmwareCollectorData);
             var vmwareCollectorResource = vmwareCollectorResponse.Value;
             Assert.That(vmwareCollectorResponse.HasCompleted, Is.True);
-            Assert.IsNotNull(vmwareCollectorResource);
+            Assert.That(vmwareCollectorResource, Is.Not.Null);
 
             var sqlAgentProperties = new CollectorAgentPropertiesBase()
             {
@@ -257,17 +257,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await sqlCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, sqlCollectorName, sqlCollectorData);
             var sqlCollectorResource = sqlCollectorResponse.Value;
             Assert.That(sqlCollectorResponse.HasCompleted, Is.True);
-            Assert.IsNotNull(sqlCollectorResource);
+            Assert.That(sqlCollectorResource, Is.Not.Null);
 
             // Get SQL Collector
             sqlCollectorResource = await sqlCollectorCollection.GetAsync(sqlCollectorName);
-            Assert.IsNotNull(sqlCollectorResource);
+            Assert.That(sqlCollectorResource, Is.Not.Null);
             Assert.That(sqlCollectorName, Is.EqualTo(sqlCollectorResource.Data.Name));
 
             // Get All SQL Collectors
             var allSqlCollectors = sqlCollectorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(allSqlCollectors);
-            Assert.GreaterOrEqual(allSqlCollectors.Result.Count, 1);
+            Assert.That(allSqlCollectors, Is.Not.Null);
+            Assert.That(allSqlCollectors.Result.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete SQL Collector
             await sqlCollectorResource.DeleteAsync(WaitUntil.Completed);

@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
             var errorFromModel = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
 
             // MRW does not allow null to be returned from read
-            Assert.NotNull(errorFromModel);
+            Assert.That(errorFromModel, Is.Not.Null);
             Assert.That(errorFromModel.Code, Is.Null);
             Assert.That(errorFromModel.Message, Is.Null);
         }
@@ -253,7 +253,7 @@ namespace Azure.Core.Tests
 
             // Write to JSON using the ModelReaderWriter
             var binaryData = ModelReaderWriter.Write(originalError, ModelReaderWriterOptions.Json);
-            Assert.NotNull(binaryData);
+            Assert.That(binaryData, Is.Not.Null);
 
             // Verify the serialized content
             string jsonString = binaryData.ToString();
@@ -292,7 +292,7 @@ namespace Azure.Core.Tests
 
             // Now test the serialization
             var serializedData = ModelReaderWriter.Write(originalError, ModelReaderWriterOptions.Json);
-            Assert.NotNull(serializedData);
+            Assert.That(serializedData, Is.Not.Null);
 
             // Verify key elements are in the serialized JSON
             string jsonString = serializedData.ToString();
@@ -341,7 +341,7 @@ namespace Azure.Core.Tests
 
             // Serialize using JsonSerializer.Serialize
             var jsonString = JsonSerializer.Serialize(originalError);
-            Assert.NotNull(jsonString);
+            Assert.That(jsonString, Is.Not.Null);
             Assert.That(jsonString.Contains("\"code\":\"BadError\""), Is.True);
             Assert.That(jsonString.Contains("\"message\":\"Something was not awesome\""), Is.True);
 
@@ -376,7 +376,7 @@ namespace Azure.Core.Tests
 
             // Serialize using JsonSerializer.Serialize
             var jsonString = JsonSerializer.Serialize(originalError);
-            Assert.NotNull(jsonString);
+            Assert.That(jsonString, Is.Not.Null);
 
             // Verify key elements are in the serialized JSON
             Assert.That(jsonString.Contains("\"code\":\"BadError\""), Is.True);

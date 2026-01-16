@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(key.Name);
 
             // Attestation details shouldn't be included unless requested
-            Assert.IsNull(key.Properties.Attestation);
+            Assert.That(key.Properties.Attestation, Is.Null);
 
             KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName);
             AssertKeyVaultKeysEqual(key, keyWithAttestation);

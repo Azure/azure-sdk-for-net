@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
             //4.Exist
             Assert.That((bool)await collection.ExistsAsync(taskName), Is.True);
             Assert.That((bool)await collection.ExistsAsync(taskName + "1"), Is.False);

@@ -47,12 +47,12 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(service1.Uri);
             var builder2 = new BlobUriBuilder(service2.Uri);
 
-            Assert.IsEmpty(builder1.BlobContainerName);
-            Assert.IsEmpty(builder1.BlobName);
+            Assert.That(builder1.BlobContainerName, Is.Empty);
+            Assert.That(builder1.BlobName, Is.Empty);
             Assert.That(builder1.AccountName, Is.EqualTo(accountName));
 
-            Assert.IsEmpty(builder2.BlobContainerName);
-            Assert.IsEmpty(builder2.BlobName);
+            Assert.That(builder2.BlobContainerName, Is.Empty);
+            Assert.That(builder2.BlobName, Is.Empty);
             Assert.That(builder2.AccountName, Is.EqualTo(accountName));
         }
 
@@ -87,11 +87,11 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(service1.Uri);
             var builder2 = new BlobUriBuilder(service2.Uri);
 
-            Assert.IsEmpty(builder1.BlobContainerName);
+            Assert.That(builder1.BlobContainerName, Is.Empty);
             Assert.That(builder1.BlobName, Is.Empty);
             Assert.That(builder1.AccountName, Is.EqualTo(accountName));
 
-            Assert.IsEmpty(builder2.BlobContainerName);
+            Assert.That(builder2.BlobContainerName, Is.Empty);
             Assert.That(builder2.BlobName, Is.Empty);
             Assert.That(builder2.AccountName, Is.EqualTo(accountName));
         }
@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -203,7 +203,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPropertiesAsync());
 
             // Act
-            StringAssert.Contains("ss=bqtf", transport.SingleRequest.Uri.ToString());
+            Assert.That(transport.SingleRequest.Uri.ToString(), Does.Contain("ss=bqtf"));
         }
 
         [RecordedTest]
@@ -219,7 +219,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -238,7 +238,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -257,7 +257,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -294,19 +294,19 @@ namespace Azure.Storage.Blobs.Test
             var accountName = new BlobUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
 
-            Assert.IsNotNull(containers[0].Name);
-            Assert.IsNotNull(containers[0].Properties);
-            Assert.IsNotNull(containers[0].Properties.ETag);
-            Assert.IsNotNull(containers[0].Properties.HasImmutabilityPolicy);
-            Assert.IsNotNull(containers[0].Properties.HasLegalHold);
-            Assert.IsNotNull(containers[0].Properties.LastModified);
-            Assert.IsNotNull(containers[0].Properties.LeaseState);
-            Assert.IsNotNull(containers[0].Properties.LeaseStatus);
+            Assert.That(containers[0].Name, Is.Not.Null);
+            Assert.That(containers[0].Properties, Is.Not.Null);
+            Assert.That(containers[0].Properties.ETag, Is.Not.Null);
+            Assert.That(containers[0].Properties.HasImmutabilityPolicy, Is.Not.Null);
+            Assert.That(containers[0].Properties.HasLegalHold, Is.Not.Null);
+            Assert.That(containers[0].Properties.LastModified, Is.Not.Null);
+            Assert.That(containers[0].Properties.LeaseState, Is.Not.Null);
+            Assert.That(containers[0].Properties.LeaseStatus, Is.Not.Null);
 
             if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
             {
-                Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
-                Assert.IsNotNull(containers[0].Properties.PreventEncryptionScopeOverride);
+                Assert.That(containers[0].Properties.DefaultEncryptionScope, Is.Not.Null);
+                Assert.That(containers[0].Properties.PreventEncryptionScopeOverride, Is.Not.Null);
             }
         }
 
@@ -406,7 +406,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.That(items.Count(), Is.Not.EqualTo(0));
             Assert.That(items.All(c => c.Name.StartsWith(prefix)), Is.True);
-            Assert.IsNotNull(items.Single(c => c.Name == containerName));
+            Assert.That(items.Single(c => c.Name == containerName), Is.Not.Null);
             Assert.That(items.All(c => c.Properties.Metadata == null), Is.True);
         }
 
@@ -447,9 +447,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.That(containerItem.IsDeleted, Is.True);
-            Assert.IsNotNull(containerItem.VersionId);
-            Assert.IsNotNull(containerItem.Properties.DeletedOn);
-            Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
+            Assert.That(containerItem.VersionId, Is.Not.Null);
+            Assert.That(containerItem.Properties.DeletedOn, Is.Not.Null);
+            Assert.That(containerItem.Properties.RemainingRetentionDays, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -481,7 +481,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.That(containers.Count > 0, Is.True);
-            Assert.IsNotNull(logsBlobContainerItem);
+            Assert.That(logsBlobContainerItem, Is.Not.Null);
 
             // Cleanup
             properties.StaticWebsite = originalBlobStaticWebsite;
@@ -511,7 +511,7 @@ namespace Azure.Storage.Blobs.Test
             Response<AccountInfo> response = await service.GetAccountInfoAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -567,7 +567,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobServiceProperties> response = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.DeleteRetentionPolicy);
+            Assert.That(response.Value.DeleteRetentionPolicy, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -690,7 +690,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobServiceStatistics> response = await service.GetStatisticsAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -703,7 +703,7 @@ namespace Azure.Storage.Blobs.Test
             Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
 
             // Assert
-            Assert.IsNotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -746,7 +746,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
                 Response<BlobContainerProperties> properties = await container.GetPropertiesAsync();
-                Assert.IsNotNull(properties.Value);
+                Assert.That(properties.Value, Is.Not.Null);
             }
             finally
             {
@@ -810,7 +810,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                Assert.IsNotNull(filterBlob);
+                Assert.That(filterBlob, Is.Not.Null);
             }
         }
 
@@ -853,7 +853,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
-            Assert.IsNotNull(filterBlob);
+            Assert.That(filterBlob, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1229,7 +1229,7 @@ namespace Azure.Storage.Blobs.Test
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
             Assert.That(sasUri, Is.EqualTo(expectedUri.Uri));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1261,7 +1261,7 @@ namespace Azure.Storage.Blobs.Test
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
             Assert.That(sasUri, Is.EqualTo(expectedUri.Uri));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

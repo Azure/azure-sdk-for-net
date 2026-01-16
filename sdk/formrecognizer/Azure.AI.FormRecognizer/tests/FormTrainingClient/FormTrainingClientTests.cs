@@ -164,9 +164,9 @@ namespace Azure.AI.FormRecognizer.Tests
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri("http://localhost"), new AzureKeyCredential("key"));
             FormRecognizerClient formRecognizerClient = trainingClient.GetFormRecognizerClient();
 
-            Assert.IsNotNull(formRecognizerClient);
-            Assert.IsNotNull(formRecognizerClient.Diagnostics);
-            Assert.IsNotNull(formRecognizerClient.ServiceClient);
+            Assert.That(formRecognizerClient, Is.Not.Null);
+            Assert.That(formRecognizerClient.Diagnostics, Is.Not.Null);
+            Assert.That(formRecognizerClient.ServiceClient, Is.Not.Null);
         }
 
         [Test]

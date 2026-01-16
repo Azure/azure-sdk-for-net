@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             ArmOperation<VMwareHostResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, data);
             VMwareHostResource host = lro.Value;
-            Assert.IsNotNull(host);
+            Assert.That(host, Is.Not.Null);
             VMwareHostData resourceData = host.Data;
             Assert.That(hostName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareHostResource result = await collection.GetAsync(hostName);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Check exists
             bool isExist = await collection.ExistsAsync(hostName);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             // Get if exists
             NullableResponse<VMwareHostResource> response = await collection.GetIfExistsAsync(hostName);
             result = response.HasValue ? response.Value : null;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // List
             isExist = false;

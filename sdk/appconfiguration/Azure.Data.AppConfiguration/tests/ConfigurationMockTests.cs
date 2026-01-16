@@ -594,7 +594,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await service.AddConfigurationSettingAsync(s_testSetting);
             MockRequest request = mockTransport.SingleRequest;
 
-            StringAssert.Contains("api-version", request.Uri.ToUri().ToString());
+            Assert.That(request.Uri.ToUri().ToString(), Does.Contain("api-version"));
         }
 
         [Test]
@@ -613,7 +613,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await client.AddConfigurationSettingAsync(s_testSetting);
             MockRequest request = mockTransport.SingleRequest;
 
-            StringAssert.Contains("api-version=1.0", request.Uri.ToUri().ToString());
+            Assert.That(request.Uri.ToUri().ToString(), Does.Contain("api-version=1.0"));
         }
 
         [Test]
@@ -634,8 +634,8 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest retriedRequest = mockTransport.Requests[1];
 
             const string expectedApiString = "api-version=1.0";
-            StringAssert.Contains(expectedApiString, request.Uri.Query);
-            StringAssert.Contains(expectedApiString, retriedRequest.Uri.Query);
+            Assert.That(request.Uri.Query, Does.Contain(expectedApiString));
+            Assert.That(retriedRequest.Uri.Query, Does.Contain(expectedApiString));
 
             var apiStringFirstIndex = retriedRequest.Uri.Query.IndexOf(expectedApiString, StringComparison.Ordinal);
             var apiStringLastIndex = retriedRequest.Uri.Query.LastIndexOf(expectedApiString, StringComparison.Ordinal);
@@ -978,8 +978,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.That(request.Headers.TryGetValues("Sync-Token", out var syncTokens), Is.True);
-            CollectionAssert.Contains(syncTokens, "syncToken2=val3");
-            CollectionAssert.Contains(syncTokens, "syncToken1=val2");
+            Assert.That(syncTokens, Has.Member("syncToken2=val3"));
+            Assert.That(syncTokens, Has.Member("syncToken1=val2"));
         }
 
         [Test]
@@ -993,7 +993,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var setting = await service.GetConfigurationSettingAsync(".appconfig.featureflag/flagtest");
             var feature = (FeatureFlagConfigurationSetting)setting.Value;
-            Assert.IsEmpty(feature.ClientFilters);
+            Assert.That(feature.ClientFilters, Is.Empty);
         }
 
         [Test]
@@ -1094,7 +1094,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 }
                 else
                 {
-                    CollectionAssert.AreEqual(expected, stream.ToArray());
+                    Assert.That(stream.ToArray(), Is.EqualTo(expected).AsCollection);
                 }
             }
         }
@@ -1103,7 +1103,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             Assert.That(request.Headers.TryGetValue("User-Agent", out var value), Is.True);
             Version version = typeof(ConfigurationClient).Assembly.GetName().Version;
-            StringAssert.Contains($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}", value);
+            Assert.That(value, Does.Contain($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}"));
         }
 
         private static ConfigurationSetting CreateSetting(int i, IDictionary<string, string> tags = null)

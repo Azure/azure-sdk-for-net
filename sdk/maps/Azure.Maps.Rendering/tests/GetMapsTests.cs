@@ -23,7 +23,7 @@ namespace Azure.Maps.Rendering.Tests
             var copyrights = await client.GetMapCopyrightAttributionAsync(
                 MapTileSetId.MicrosoftBase, new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629));
 
-            Assert.IsNotNull(copyrights);
+            Assert.That(copyrights, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -37,7 +37,7 @@ namespace Azure.Maps.Rendering.Tests
             using var imageStream = new MemoryStream();
             var image = await client.GetMapStaticImageAsync(options);
 
-            Assert.IsNotNull(image);
+            Assert.That(image, Is.Not.Null);
             image.Value.CopyTo(imageStream);
             Assert.That(imageStream.Length > 0, Is.True);
         }
@@ -62,7 +62,7 @@ namespace Azure.Maps.Rendering.Tests
             using var imageryStream = new MemoryStream();
             var tile = await client.GetMapTileAsync(options);
 
-            Assert.IsNotNull(tile);
+            Assert.That(tile, Is.Not.Null);
             tile.Value.CopyTo(imageryStream);
             Assert.That(imageryStream.Length > 0, Is.True);
         }
@@ -73,7 +73,7 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var tileSet = await client.GetMapTileSetAsync(MapTileSetId.MicrosoftImagery);
 
-            Assert.IsNotNull(tileSet);
+            Assert.That(tileSet, Is.Not.Null);
             Assert.That(tileSet.Value.TileJsonVersion, Is.EqualTo("2.2.0"));
             Assert.That(tileSet.Value.TileSetVersion, Is.EqualTo("1.0.0"));
             Assert.That(tileSet.Value.TileSetName, Is.EqualTo("microsoft.imagery"));

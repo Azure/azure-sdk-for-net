@@ -33,7 +33,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.That(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[][]", out var arrayArrayModel), Is.True);
             Assert.That(arrayArrayModel!.Type.Name, Is.EqualTo($"{expectation.TypeName}[][]"));
             Assert.That(arrayArrayModel.Type.Namespace, Is.EqualTo(lookupName));
-            Assert.IsNotNull(arrayArrayModel.Type.ItemType);
+            Assert.That(arrayArrayModel.Type.ItemType, Is.Not.Null);
             Assert.That(arrayArrayModel.Kind, Is.EqualTo(TypeBuilderKind.Array));
             Assert.That(arrayArrayModel.Type.ArrayRank, Is.EqualTo(1));
             Assert.That(arrayArrayModel.Type.TypeCaseName, Is.EqualTo($"{expectation.TypeName}_Array_Array_"));
@@ -43,7 +43,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             var genericArgument = arrayArrayModel.Type.ItemType!;
             Assert.That(genericArgument.Name, Is.EqualTo($"{expectation.TypeName}[]"));
             Assert.That(genericArgument.Namespace, Is.EqualTo(lookupName));
-            Assert.IsNotNull(genericArgument.ItemType);
+            Assert.That(genericArgument.ItemType, Is.Not.Null);
             Assert.That(genericArgument.ArrayRank, Is.EqualTo(1));
             Assert.That(genericArgument.TypeCaseName, Is.EqualTo($"{expectation.TypeName}_Array_"));
             Assert.That(genericArgument.CamelCaseName, Is.EqualTo($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_"));
@@ -51,7 +51,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.That(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[]", out innerArray), Is.True);
             Assert.That(innerArray!.Type.Name, Is.EqualTo($"{expectation.TypeName}[]"));
             Assert.That(innerArray.Type.Namespace, Is.EqualTo(lookupName));
-            Assert.IsNotNull(innerArray.Type.ItemType);
+            Assert.That(innerArray.Type.ItemType, Is.Not.Null);
             Assert.That(innerArray.Kind, Is.EqualTo(TypeBuilderKind.Array));
             Assert.That(innerArray.Type.ArrayRank, Is.EqualTo(1));
             Assert.That(innerArray.Type.TypeCaseName, Is.EqualTo($"{expectation.TypeName}_Array_"));

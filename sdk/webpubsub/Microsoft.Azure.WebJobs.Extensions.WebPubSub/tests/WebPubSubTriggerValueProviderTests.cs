@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var provider = new WebPubSubTriggerValueProvider(parameter, triggerEvent);
             var result = await provider.GetValueAsync();
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         public static IEnumerable<object[]> ValidTriggerBindingsParameters

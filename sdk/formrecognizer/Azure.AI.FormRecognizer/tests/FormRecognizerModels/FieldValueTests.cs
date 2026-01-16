@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public void AsStringReturnsNullWhenFieldValueIsDefault()
         {
             FieldValue value = default;
-            Assert.IsNull(value.AsString());
+            Assert.That(value.AsString(), Is.Null);
         }
 
         [Test]

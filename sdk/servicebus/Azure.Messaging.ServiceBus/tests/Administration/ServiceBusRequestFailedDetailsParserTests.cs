@@ -68,8 +68,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             var parser = new ServiceBusRequestFailedDetailsParser();
             parser.TryParse(response, out var error, out var data);
 
-            Assert.NotNull(error);
-            Assert.AreNotSame(default(ResponseError), error);
+            Assert.That(error, Is.Not.Null);
+            Assert.That(error, Is.Not.SameAs(default(ResponseError)));
             Assert.That(error.Code, Is.EqualTo(subcCode));
             Assert.That(error.Message, Is.EqualTo(message));
         }

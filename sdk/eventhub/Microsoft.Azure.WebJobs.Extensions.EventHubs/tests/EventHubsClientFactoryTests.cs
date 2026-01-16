@@ -95,8 +95,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
             var errorMessage = Assert.Throws<InvalidOperationException>(() => factory.GetEventHubProducerClient("k1", ConnectionString)).Message;
-            StringAssert.DoesNotContain(ConnectionString, errorMessage);
-            StringAssert.Contains("REDACTED", errorMessage);
+            Assert.That(errorMessage, Does.Not.Contain(ConnectionString));
+            Assert.That(errorMessage, Does.Contain("REDACTED"));
         }
 
         [Test]
@@ -138,10 +138,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var consumer4 = factory.GetEventHubConsumerClient("k1", "connection4", "csg");
 
             // Create different consumers for different eventhub namespaces.
-            Assert.AreNotSame(consumer1, consumer2);
-            Assert.AreNotSame(consumer3, consumer4);
+            Assert.That(consumer2, Is.Not.SameAs(consumer1));
+            Assert.That(consumer4, Is.Not.SameAs(consumer3));
             // Create different consumers for different consumer groups.
-            Assert.AreNotSame(consumer1, consumer3);
+            Assert.That(consumer3, Is.Not.SameAs(consumer1));
             // Use the same consumer client for the same namespace/eventhub/consumergroup
             Assert.That(consumer4, Is.SameAs(consumer2));
         }
@@ -170,11 +170,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.That(producer1.EventHubName, Is.EqualTo("k1"));
             Assert.That(producer2.EventHubName, Is.EqualTo("k1"));
-            Assert.AreNotSame(producer1, producer2);
+            Assert.That(producer2, Is.Not.SameAs(producer1));
 
             Assert.That(producer3.EventHubName, Is.EqualTo("k1"));
             Assert.That(producer4.EventHubName, Is.EqualTo("k1"));
-            Assert.AreNotSame(producer3, producer4);
+            Assert.That(producer4, Is.Not.SameAs(producer3));
 
             Assert.That(producer3, Is.SameAs(producer1));
             Assert.That(producer4, Is.SameAs(producer2));

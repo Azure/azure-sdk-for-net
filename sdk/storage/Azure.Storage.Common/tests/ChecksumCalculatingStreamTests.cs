@@ -36,7 +36,7 @@ namespace Azure.Storage.Tests
             Stream stream = null;
             Assert.DoesNotThrow(() => stream = ChecksumCalculatingStream.GetReadStream(
                 innerStream.Object, buf => { }));
-            Assert.IsNotNull(stream);
+            Assert.That(stream, Is.Not.Null);
 
             // Assert read-only
             Assert.That(stream.CanRead, Is.True);
@@ -86,7 +86,7 @@ namespace Azure.Storage.Tests
             Stream stream = null;
             Assert.DoesNotThrow(() => stream = ChecksumCalculatingStream.GetWriteStream(
                 innerStream.Object, buf => { }));
-            Assert.IsNotNull(stream);
+            Assert.That(stream, Is.Not.Null);
 
             // Assert write-only
             Assert.That(stream.CanRead, Is.False);
@@ -151,8 +151,8 @@ namespace Azure.Storage.Tests
             var streamChecksum = streamChecksumCalculator.GetCurrentHash();
 
             // Assert output data and checksum are expected
-            CollectionAssert.AreEqual(data, destStream.ToArray());
-            CollectionAssert.AreEqual(dataChecksum, streamChecksum);
+            Assert.That(destStream.ToArray(), Is.EqualTo(data).AsCollection);
+            Assert.That(streamChecksum, Is.EqualTo(dataChecksum).AsCollection);
         }
 
         [TestCase(Constants.KB, 16)]
@@ -174,8 +174,8 @@ namespace Azure.Storage.Tests
             var streamChecksum = streamChecksumCalculator.GetCurrentHash();
 
             // Assert output data and checksum are expected
-            CollectionAssert.AreEqual(data, destStream.ToArray());
-            CollectionAssert.AreEqual(dataChecksum, streamChecksum);
+            Assert.That(destStream.ToArray(), Is.EqualTo(data).AsCollection);
+            Assert.That(streamChecksum, Is.EqualTo(dataChecksum).AsCollection);
         }
 
         [Test]
@@ -215,7 +215,7 @@ namespace Azure.Storage.Tests
                 Assert.That(stream.Position, Is.EqualTo(l));
 
                 await stream.ReadInternal(b, 0, b.Length, IsAsync, default);
-                CollectionAssert.AreEqual(new Span<byte>(data, l, b.Length).ToArray(), b);
+                Assert.That(b, Is.EqualTo(new Span<byte>(data, l, b.Length).ToArray()).AsCollection);
             }
         }
 
@@ -272,8 +272,8 @@ namespace Azure.Storage.Tests
             await stream.CopyToInternalExactBufferSize(destStream, bufferSize: 1000, IsAsync, cancellationToken: default);
 
             // Assert output data and checksum are expected
-            CollectionAssert.AreEqual(data, destStream.ToArray());
-            CollectionAssert.AreEqual(dataChecksum, streamChecksumCalculator.GetCurrentHash());
+            Assert.That(destStream.ToArray(), Is.EqualTo(data).AsCollection);
+            Assert.That(streamChecksumCalculator.GetCurrentHash(), Is.EqualTo(dataChecksum).AsCollection);
 
             // Rewind and reread the checksumming stream
             stream.Position = 0;
@@ -281,8 +281,8 @@ namespace Azure.Storage.Tests
             await stream.CopyToInternalExactBufferSize(destStream, bufferSize: 900, IsAsync, cancellationToken: default);
 
             // Assert output data as expected and checksum unaltered
-            CollectionAssert.AreEqual(data, destStream.ToArray());
-            CollectionAssert.AreEqual(dataChecksum, streamChecksumCalculator.GetCurrentHash());
+            Assert.That(destStream.ToArray(), Is.EqualTo(data).AsCollection);
+            Assert.That(streamChecksumCalculator.GetCurrentHash(), Is.EqualTo(dataChecksum).AsCollection);
         }
 
         [Test]
@@ -311,7 +311,7 @@ namespace Azure.Storage.Tests
 
             // Assert expected checksum call on the whole read
             Assert.That(callbacks.Count, Is.EqualTo(1));
-            CollectionAssert.AreEqual(new Span<byte>(data, 0, firstReadLength).ToArray(), callbacks[0]);
+            Assert.That(callbacks[0], Is.EqualTo(new Span<byte>(data, 0, firstReadLength).ToArray()).AsCollection);
 
             // Rewind to 1 KB and read another 2 KB, reading half checksummed contents and half unchecksummed
             int secondReadStartOffset = Constants.KB;
@@ -321,13 +321,13 @@ namespace Azure.Storage.Tests
 
             // Assert expected checksum call on latter half of the read
             Assert.That(callbacks.Count, Is.EqualTo(2));
-            CollectionAssert.AreEqual(
-                new Span<byte>(
+            Assert.That(
+                callbacks[1],
+                Is.EqualTo(new Span<byte>(
                     data,
                     firstReadLength, // where the first checksum ended
                     secondReadStartOffset + secondReadLength - firstReadLength // amount of new data checksummed
-                    ).ToArray(),
-                callbacks[1]);
+                    ).ToArray()).AsCollection);
 
             // Finish consuming stream
             await stream.CopyToInternalExactBufferSize(Stream.Null, 1000, IsAsync, cancellationToken: default);
@@ -336,7 +336,7 @@ namespace Azure.Storage.Tests
             Assert.That(callbacks.Count, Is.EqualTo(4));
             Assert.That(callbacks[2].Length, Is.EqualTo(1000));
             Assert.That(callbacks[3].Length, Is.EqualTo(24));
-            CollectionAssert.AreEqual(dataChecksum, streamChecksumCalculator.GetCurrentHash());
+            Assert.That(streamChecksumCalculator.GetCurrentHash(), Is.EqualTo(dataChecksum).AsCollection);
         }
 
         private static byte[] ChecksumInlineStorageCrc64(Span<byte> data, NonCryptographicHashAlgorithm algorithm)

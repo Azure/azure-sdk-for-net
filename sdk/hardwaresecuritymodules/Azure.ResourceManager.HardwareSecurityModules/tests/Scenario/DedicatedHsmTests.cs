@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
             var operation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, dedicatedHsmData);
             DedicatedHsmResource dedicatedHsmResource = operation.Value;
 
-            Assert.IsNotNull(dedicatedHsmResource);
+            Assert.That(dedicatedHsmResource, Is.Not.Null);
             ValidateDedicatedHsmResource(
                 dedicatedHsmResource.Data,
                 DefaultSubscription.Data.SubscriptionId,
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
                 new Dictionary<string, string>(dedicatedHsmData.Tags));
 
             var getOperation = await collection.GetAsync(resourceName);
-            Assert.IsNotNull(getOperation.Value);
+            Assert.That(getOperation.Value, Is.Not.Null);
             ValidateDedicatedHsmResource(
                 getOperation.Value.Data,
                 DefaultSubscription.Data.SubscriptionId,
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
             string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expecrtedSubId, expecrtedRgName, expectedResourceName);
 
-            Assert.NotNull(dedicatedHsmData);
+            Assert.That(dedicatedHsmData, Is.Not.Null);
             Assert.That(dedicatedHsmData.Id.ToString(), Is.EqualTo(expectedResourceId));
             Assert.That(dedicatedHsmData.Location.Name, Is.EqualTo(expectedResourceLocation));
             Assert.That(dedicatedHsmData.Name, Is.EqualTo(expectedResourceName));
-            Assert.NotNull(dedicatedHsmData.Sku);
+            Assert.That(dedicatedHsmData.Sku, Is.Not.Null);
             Assert.That(dedicatedHsmData.Sku.Name.ToString(), Is.EqualTo(expectedSkuName));
-            Assert.NotNull(dedicatedHsmData.Tags);
+            Assert.That(dedicatedHsmData.Tags, Is.Not.Null);
             Assert.That(expectedTags.Count == dedicatedHsmData.Tags.Count && !expectedTags.Except(dedicatedHsmData.Tags).Any(), Is.True);
         }
     }

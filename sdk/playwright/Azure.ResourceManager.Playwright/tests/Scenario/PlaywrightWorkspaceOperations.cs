@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             // Test Create API
             ArmOperation<PlaywrightWorkspaceResource> createResponse = await _workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ResourceHelper.WORKSPACE_NAME, _workspaceData);
 
-            Assert.NotNull(createResponse);
+            Assert.That(createResponse, Is.Not.Null);
             Assert.That(createResponse.HasCompleted, Is.True);
             Assert.That(createResponse.HasValue, Is.True);
             Assert.That(createResponse.Value.HasData, Is.True);
             Assert.That(createResponse.Value.Data.Name, Is.EqualTo(ResourceHelper.WORKSPACE_NAME));
             Assert.That(createResponse.Value.Data.Location.Name, Is.EqualTo(ResourceHelper.RESOURCE_LOCATION));
             Assert.That(createResponse.Value.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
-            Assert.IsNotNull(createResponse.Value.Data.Properties.LocalAuth);
+            Assert.That(createResponse.Value.Data.Properties.LocalAuth, Is.Not.Null);
             Assert.That(createResponse.Value.Data.Properties.LocalAuth, Is.EqualTo(PlaywrightEnablementStatus.Disabled));
-            Assert.IsNotNull(createResponse.Value.Data.Properties.DataplaneUri);
+            Assert.That(createResponse.Value.Data.Properties.DataplaneUri, Is.Not.Null);
 
             _workspaceResource = createResponse.Value;
         }
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             Response<PlaywrightWorkspaceResource> getResponse = await _workspaceCollection.GetAsync(ResourceHelper.WORKSPACE_NAME);
             PlaywrightWorkspaceResource workspaceResource = getResponse.Value;
 
-            Assert.IsNotNull(workspaceResource);
+            Assert.That(workspaceResource, Is.Not.Null);
             Assert.That(workspaceResource.HasData, Is.True);
             Assert.That(workspaceResource.Data.Name, Is.EqualTo(ResourceHelper.WORKSPACE_NAME));
             Assert.That(workspaceResource.Data.Location.Name, Is.EqualTo(ResourceHelper.RESOURCE_LOCATION));
             Assert.That(workspaceResource.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
-            Assert.IsNotNull(workspaceResource.Data.Properties.LocalAuth);
+            Assert.That(workspaceResource.Data.Properties.LocalAuth, Is.Not.Null);
             Assert.That(workspaceResource.Data.Properties.LocalAuth, Is.EqualTo(PlaywrightEnablementStatus.Disabled));
         }
 
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             Response<PlaywrightWorkspaceResource> getResourceResponse = await _workspaceResource.GetAsync();
             PlaywrightWorkspaceResource workspaceResource = getResourceResponse.Value;
 
-            Assert.IsNotNull(workspaceResource);
+            Assert.That(workspaceResource, Is.Not.Null);
             Assert.That(workspaceResource.HasData, Is.True);
             Assert.That(workspaceResource.Data.Name, Is.EqualTo(ResourceHelper.WORKSPACE_NAME));
             Assert.That(workspaceResource.Data.Location.Name, Is.EqualTo(ResourceHelper.RESOURCE_LOCATION));
             Assert.That(workspaceResource.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
-            Assert.IsNotNull(workspaceResource.Data.Properties.LocalAuth);
-            Assert.IsNotNull(workspaceResource.Data.Properties.DataplaneUri);
+            Assert.That(workspaceResource.Data.Properties.LocalAuth, Is.Not.Null);
+            Assert.That(workspaceResource.Data.Properties.DataplaneUri, Is.Not.Null);
         }
 
         [TestCase]
@@ -112,18 +112,18 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
 
             // Test GETALL API
             List<PlaywrightWorkspaceResource> getAllResponse = await _workspaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(getAllResponse);
-            Assert.IsNotNull(getAllResponse);
+            Assert.That(getAllResponse, Is.Not.Empty);
+            Assert.That(getAllResponse, Is.Not.Null);
 
             bool foundWorkspace = false;
             foreach (PlaywrightWorkspaceResource resource in getAllResponse)
             {
-                Assert.IsNotNull(resource);
+                Assert.That(resource, Is.Not.Null);
                 Assert.That(resource.HasData, Is.True);
-                Assert.IsNotNull(resource.Data.Id);
-                Assert.IsNotNull(resource.Data.Name);
+                Assert.That(resource.Data.Id, Is.Not.Null);
+                Assert.That(resource.Data.Name, Is.Not.Null);
                 Assert.That(resource.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
-                Assert.IsNotNull(resource.Data.Properties.LocalAuth);
+                Assert.That(resource.Data.Properties.LocalAuth, Is.Not.Null);
                 
                 if (resource.Data.Name == ResourceHelper.WORKSPACE_NAME)
                 {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             Response<PlaywrightWorkspaceResource> updateResponse = await _workspaceResource.UpdateAsync(patchPayload);
             PlaywrightWorkspaceResource updatedResource = updateResponse.Value;
 
-            Assert.IsNotNull(updatedResource);
+            Assert.That(updatedResource, Is.Not.Null);
             Assert.That(updatedResource.HasData, Is.True);
             Assert.That(updatedResource.Data.Name, Is.EqualTo(ResourceHelper.WORKSPACE_NAME));
             Assert.That(updatedResource.Data.Location.Name, Is.EqualTo(ResourceHelper.RESOURCE_LOCATION));
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             // Test TryGet when workspace exists
             tryGetResponse = await _workspaceCollection.GetIfExistsAsync(ResourceHelper.WORKSPACE_NAME);
             Assert.That(tryGetResponse.HasValue, Is.True, "TryGet should return workspace when it exists");
-            Assert.IsNotNull(tryGetResponse.Value);
+            Assert.That(tryGetResponse.Value, Is.Not.Null);
             Assert.That(tryGetResponse.Value.Data.Name, Is.EqualTo(ResourceHelper.WORKSPACE_NAME));
         }
     }

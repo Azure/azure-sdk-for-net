@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
             var collection = await GetRoleAssignmentScheduleRequestCollectionAsync();
             var roleAssignmentScheduleRequests = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(roleAssignmentScheduleRequests.Count, 0);
+            Assert.That(roleAssignmentScheduleRequests.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [RecordedTest]

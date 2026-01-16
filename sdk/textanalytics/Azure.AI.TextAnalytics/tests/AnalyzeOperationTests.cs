@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
             Assert.That(keyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count, Is.EqualTo(2));
         }
 
@@ -87,16 +87,16 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+            Assert.That(entitiesActionsResults, Is.Not.Null);
+            Assert.That(piiActionsResults, Is.Not.Null);
+            Assert.That(entityLinkingActionsResults, Is.Not.Null);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+            Assert.That(singleLabelClassifyResults, Is.Not.Null);
+            Assert.That(multiLabelClassifyResults, Is.Not.Null);
+            Assert.That(recognizeCustomEntitiesActionResults, Is.Not.Null);
+            Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
+            Assert.That(extractiveSummarizeActionResults, Is.Not.Null);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -146,7 +146,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
 
             ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
             Assert.That(keyPhrasesDocumentsResults.Count, Is.EqualTo(2));
@@ -220,11 +220,11 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+            Assert.That(entitiesActionsResults, Is.Not.Null);
+            Assert.That(piiActionsResults, Is.Not.Null);
+            Assert.That(entityLinkingActionsResults, Is.Not.Null);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
             Assert.That(operation.DisplayName, Is.EqualTo("AnalyzeOperationWithMultipleTasks"));
 
             // Keyphrases
@@ -254,9 +254,9 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in entitiesDocumentsResults[0].Entities)
             {
                 Assert.That(entitiesList.Contains(entity.Text), Is.True);
-                Assert.IsNotNull(entity.Category);
-                Assert.IsNotNull(entity.Offset);
-                Assert.IsNotNull(entity.ConfidenceScore);
+                Assert.That(entity.Category, Is.Not.Null);
+                Assert.That(entity.Offset, Is.Not.Null);
+                Assert.That(entity.ConfidenceScore, Is.Not.Null);
             }
 
             // PII
@@ -264,9 +264,9 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(piiDocumentsResults.Count, Is.EqualTo(2));
 
             Assert.That(piiDocumentsResults[0].Entities.Count, Is.EqualTo(3));
-            Assert.IsNotNull(piiDocumentsResults[0].Id);
-            Assert.IsNotNull(piiDocumentsResults[0].Entities);
-            Assert.IsNotNull(piiDocumentsResults[0].Error);
+            Assert.That(piiDocumentsResults[0].Id, Is.Not.Null);
+            Assert.That(piiDocumentsResults[0].Entities, Is.Not.Null);
+            Assert.That(piiDocumentsResults[0].Error, Is.Not.Null);
 
             // Entity Linking
             RecognizeLinkedEntitiesResultCollection entityLinkingDocumentsResults = entityLinkingActionsResults.FirstOrDefault().DocumentsResults;
@@ -274,9 +274,9 @@ namespace Azure.AI.TextAnalytics.Tests
             //Assert.AreEqual(2, entityLinkingDocumentsResults.Count);
 
             Assert.That(entityLinkingDocumentsResults[0].Entities.Count, Is.EqualTo(3));
-            Assert.IsNotNull(entityLinkingDocumentsResults[0].Id);
-            Assert.IsNotNull(entityLinkingDocumentsResults[0].Entities);
-            Assert.IsNotNull(entityLinkingDocumentsResults[0].Error);
+            Assert.That(entityLinkingDocumentsResults[0].Id, Is.Not.Null);
+            Assert.That(entityLinkingDocumentsResults[0].Entities, Is.Not.Null);
+            Assert.That(entityLinkingDocumentsResults[0].Error, Is.Not.Null);
 
             foreach (LinkedEntity entity in entityLinkingDocumentsResults[0].Entities)
             {
@@ -412,15 +412,15 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(recognizeCustomEntitiesResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+            Assert.That(entitiesActionsResults, Is.Not.Null);
+            Assert.That(piiActionsResults, Is.Not.Null);
+            Assert.That(entityLinkingActionsResults, Is.Not.Null);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+            Assert.That(recognizeCustomEntitiesResults, Is.Not.Null);
+            Assert.That(singleLabelClassifyResults, Is.Not.Null);
+            Assert.That(multiLabelClassifyResults, Is.Not.Null);
+            Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
             Assert.That(operation.DisplayName, Is.EqualTo("AnalyzeOperationWithMultipleTasks"));
         }
 
@@ -561,12 +561,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
 
-            Assert.IsNotNull(piiActionsResults);
+            Assert.That(piiActionsResults, Is.Not.Null);
 
             RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
             Assert.That(piiDocumentsResults.Count, Is.EqualTo(1));
 
-            Assert.IsNotEmpty(piiDocumentsResults[0].Entities.RedactedText);
+            Assert.That(piiDocumentsResults[0].Entities.RedactedText, Is.Not.Empty);
 
             Assert.That(piiDocumentsResults[0].HasError, Is.False);
             Assert.That(piiDocumentsResults[0].Entities.Count, Is.EqualTo(2));
@@ -595,12 +595,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
 
-            Assert.IsNotNull(piiActionsResults);
+            Assert.That(piiActionsResults, Is.Not.Null);
 
             RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
             Assert.That(piiDocumentsResults.Count, Is.EqualTo(1));
 
-            Assert.IsNotEmpty(piiDocumentsResults[0].Entities.RedactedText);
+            Assert.That(piiDocumentsResults[0].Entities.RedactedText, Is.Not.Empty);
 
             Assert.That(piiDocumentsResults[0].HasError, Is.False);
             Assert.That(piiDocumentsResults[0].Entities.Count, Is.EqualTo(1));
@@ -647,7 +647,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection documentsResults = resultCollection.ExtractKeyPhrasesResults.ElementAt(0).DocumentsResults;
 
-            Assert.IsNotNull(documentsResults);
+            Assert.That(documentsResults, Is.Not.Null);
 
             Assert.That(documentsResults.Count, Is.EqualTo(3));
 
@@ -686,19 +686,19 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
             Assert.That(keyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count, Is.EqualTo(2));
 
-            Assert.IsNotNull(entitiesActionsResults);
+            Assert.That(entitiesActionsResults, Is.Not.Null);
             Assert.That(entitiesActionsResults.FirstOrDefault().DocumentsResults.Count, Is.EqualTo(2));
 
-            Assert.IsNotNull(piiActionsResults);
+            Assert.That(piiActionsResults, Is.Not.Null);
             Assert.That(piiActionsResults.FirstOrDefault().DocumentsResults.Count, Is.EqualTo(2));
 
-            Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.That(entityLinkingActionsResults, Is.Not.Null);
             Assert.That(entityLinkingActionsResults.FirstOrDefault().DocumentsResults.Count, Is.EqualTo(2));
 
-            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
             Assert.That(analyzeSentimentActionsResults.FirstOrDefault().DocumentsResults.Count, Is.EqualTo(2));
         }
 
@@ -726,7 +726,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
-            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
 
             AnalyzeSentimentResultCollection analyzeSentimentDocumentsResults = analyzeSentimentActionsResults.FirstOrDefault().DocumentsResults;
             Assert.That(analyzeSentimentDocumentsResults.Count, Is.EqualTo(1));
@@ -816,16 +816,16 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+            Assert.That(entitiesActionsResults, Is.Not.Null);
+            Assert.That(piiActionsResults, Is.Not.Null);
+            Assert.That(entityLinkingActionsResults, Is.Not.Null);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+            Assert.That(singleLabelClassifyResults, Is.Not.Null);
+            Assert.That(multiLabelClassifyResults, Is.Not.Null);
+            Assert.That(recognizeCustomEntitiesActionResults, Is.Not.Null);
+            Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
+            Assert.That(extractiveSummarizeActionResults, Is.Not.Null);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -880,16 +880,16 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+            Assert.That(entitiesActionsResults, Is.Not.Null);
+            Assert.That(piiActionsResults, Is.Not.Null);
+            Assert.That(entityLinkingActionsResults, Is.Not.Null);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+            Assert.That(singleLabelClassifyResults, Is.Not.Null);
+            Assert.That(multiLabelClassifyResults, Is.Not.Null);
+            Assert.That(recognizeCustomEntitiesActionResults, Is.Not.Null);
+            Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
+            Assert.That(extractiveSummarizeActionResults, Is.Not.Null);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreatePrivateZone(_resourceGroup, privateZoneName);
             var list = await _privateZoneResource.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePrivateZone(list.First(item => item.Data.Name == privateZoneName), privateZoneName);
         }
 
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             }
 
             var recordSets = await privateZone.GetRecordsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(recordSets);
-            Assert.IsNotNull(recordSets[0].PrivateDnsSoaRecordInfo);
+            Assert.That(recordSets, Is.Not.Empty);
+            Assert.That(recordSets[0].PrivateDnsSoaRecordInfo, Is.Not.Null);
 
             Assert.That(recordSets[1].AaaaRecords.Count, Is.EqualTo(2));
             Assert.That(recordSets[1].AaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55"));
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
         private void ValidatePrivateZone(PrivateDnsZoneResource privateZone, string privateZoneName)
         {
-            Assert.IsNotNull(privateZone);
-            Assert.IsNotNull(privateZone.Data.Id);
+            Assert.That(privateZone, Is.Not.Null);
+            Assert.That(privateZone.Data.Id, Is.Not.Null);
             Assert.That(privateZone.Data.Name, Is.EqualTo(privateZoneName));
         }
     }

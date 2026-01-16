@@ -508,7 +508,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.That(barcode.Kind, Is.EqualTo(DocumentBarcodeKind.QrCode));
             Assert.That(barcode.Value, Is.EqualTo("barcodeValue"));
-            CollectionAssert.AreEqual(expectedPolygon, barcode.BoundingPolygon);
+            Assert.That(barcode.BoundingPolygon, Is.EqualTo(expectedPolygon).AsCollection);
             Assert.That(barcode.Span.Index, Is.EqualTo(10));
             Assert.That(barcode.Span.Length, Is.EqualTo(12));
             Assert.That(barcode.Confidence, Is.EqualTo(0.75f));
@@ -555,7 +555,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.That(formula.Kind, Is.EqualTo(DocumentFormulaKind.Display));
             Assert.That(formula.Value, Is.EqualTo("formulaValue"));
-            CollectionAssert.AreEqual(expectedPolygon, formula.BoundingPolygon);
+            Assert.That(formula.BoundingPolygon, Is.EqualTo(expectedPolygon).AsCollection);
             Assert.That(formula.Span.Index, Is.EqualTo(10));
             Assert.That(formula.Span.Length, Is.EqualTo(12));
             Assert.That(formula.Confidence, Is.EqualTo(0.75f));

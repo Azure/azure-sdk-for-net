@@ -30,7 +30,7 @@ namespace Azure.Maps.Routing.Tests
             Assert.That(result.Value.Routes[0].Summary.TravelTimeInSeconds, Is.EqualTo(1404));
             Assert.That(result.Value.Routes[0].Sections.Count, Is.EqualTo(1));
             Assert.That(result.Value.OptimizedWaypoints.Count, Is.EqualTo(0));
-            Assert.IsNull(result.Value.Report);
+            Assert.That(result.Value.Report, Is.Null);
         }
 
         [RecordedTest]

@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.Tests
             using var jsonDocument = JsonDocument.Parse(json);
             JsonElement element = jsonDocument.RootElement;
             ArmSku sku = ArmSku.DeserializeArmSku(element);
-            Assert.IsNull(sku.Tier);
-            Assert.IsNull(sku.Capacity);
+            Assert.That(sku.Tier, Is.Null);
+            Assert.That(sku.Capacity, Is.Null);
         }
     }
 }

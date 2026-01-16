@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var form = operation.Value.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
@@ -89,7 +89,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
             Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
-            Assert.NotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
 
             Assert.That(form.Fields.ContainsKey("AmountDue"), Is.True);
             Assert.That(form.Fields.ContainsKey("BillingAddress"), Is.True);
@@ -199,7 +199,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 float? unitPrice = unitPricefield.Value.AsFloat();
                 string unit = unitfield?.Value.AsString();
 
-                Assert.IsNotNull(dateField);
+                Assert.That(dateField, Is.Not.Null);
                 DateTime date = dateField.Value.AsDate();
 
                 var expectedItem = expectedItems[itemIndex];
@@ -296,7 +296,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var form = recognizedForms.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
@@ -305,7 +305,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
             Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(2));
 
-            Assert.NotNull(form.Fields);
+            Assert.That(form.Fields, Is.Not.Null);
 
             Assert.That(form.Fields.ContainsKey("VendorName"), Is.True);
             Assert.That(form.Fields.ContainsKey("RemittanceAddressRecipient"), Is.True);

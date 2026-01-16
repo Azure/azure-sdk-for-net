@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedDnsResolverPolicyLink = await createdDnsResolverPolicyLink.Value.UpdateAsync(WaitUntil.Completed, patchableDnsResolverPolicyLinkData);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedDnsResolverPolicyLink.Value.Data.Tags, patchableDnsResolverPolicyLinkData.Tags);
+            Assert.That(patchableDnsResolverPolicyLinkData.Tags, Is.EquivalentTo(patchedDnsResolverPolicyLink.Value.Data.Tags));
         }
 
         [Test]

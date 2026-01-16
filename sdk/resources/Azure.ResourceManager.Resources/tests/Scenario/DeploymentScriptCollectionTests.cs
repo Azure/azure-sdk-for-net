@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.ResourceType, Is.EqualTo(model.ResourceType));
             if (model.ContainerSettings != null || getResult.ContainerSettings != null)
             {
-                Assert.NotNull(model.ContainerSettings);
-                Assert.NotNull(getResult.ContainerSettings);
+                Assert.That(model.ContainerSettings, Is.Not.Null);
+                Assert.That(getResult.ContainerSettings, Is.Not.Null);
                 Assert.That(getResult.ContainerSettings.ContainerGroupName, Is.EqualTo(model.ContainerSettings.ContainerGroupName));
             }
             if (model.StorageAccountSettings != null || getResult.StorageAccountSettings != null)
             {
-                Assert.NotNull(model.StorageAccountSettings);
-                Assert.NotNull(getResult.StorageAccountSettings);
+                Assert.That(model.StorageAccountSettings, Is.Not.Null);
+                Assert.That(getResult.StorageAccountSettings, Is.Not.Null);
                 Assert.That(getResult.StorageAccountSettings.StorageAccountName, Is.EqualTo(model.StorageAccountSettings.StorageAccountName));
                 Assert.That(getResult.StorageAccountSettings.StorageAccountKey, Is.EqualTo(model.StorageAccountSettings.StorageAccountKey));
             }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.ProvisioningState, Is.EqualTo(model.ProvisioningState));
             if (model.Status != null || getResult.Status != null)
             {
-                Assert.NotNull(model.Status);
-                Assert.NotNull(getResult.Status);
+                Assert.That(model.Status, Is.Not.Null);
+                Assert.That(getResult.Status, Is.Not.Null);
                 Assert.That(getResult.Status.ContainerInstanceId, Is.EqualTo(model.Status.ContainerInstanceId));
                 Assert.That(getResult.Status.StorageAccountId, Is.EqualTo(model.Status.StorageAccountId));
                 Assert.That(getResult.Status.StartOn, Is.EqualTo(model.Status.StartOn));
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.That(getResult.Arguments, Is.EqualTo(model.Arguments));
             if (model.EnvironmentVariables != null || getResult.EnvironmentVariables != null)
             {
-                Assert.NotNull(model.EnvironmentVariables);
-                Assert.NotNull(getResult.EnvironmentVariables);
+                Assert.That(model.EnvironmentVariables, Is.Not.Null);
+                Assert.That(getResult.EnvironmentVariables, Is.Not.Null);
                 Assert.That(getResult.EnvironmentVariables.Count, Is.EqualTo(model.EnvironmentVariables.Count));
                 for (int i = 0; i < model.EnvironmentVariables.Count; ++i)
                 {

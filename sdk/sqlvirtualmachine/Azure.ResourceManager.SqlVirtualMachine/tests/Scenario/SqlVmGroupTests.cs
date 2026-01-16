@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             // Delete SQL VM group
             await sqlVmGroupFromGet.DeleteAsync(WaitUntil.Completed);
             // List SQL VM group

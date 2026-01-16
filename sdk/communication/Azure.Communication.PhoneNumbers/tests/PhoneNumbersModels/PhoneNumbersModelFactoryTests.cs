@@ -13,7 +13,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void PhoneNumberAreaCode_ShouldReturnInstanceOfPhoneNumberAreaCode()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberAreaCode("123");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.AreaCode, Is.EqualTo("123"));
         }
 
@@ -21,7 +21,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void PhoneNumberCountry_WhenLocalizedAndCountryCodeNotNull_ShouldReturnInstanceOfPhoneNumberCountry()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberCountry("USA", "US");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.LocalizedName, Is.EqualTo("USA"));
             Assert.That(result.CountryCode, Is.EqualTo("US"));
         }
@@ -31,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var administrativeDivision = PhoneNumbersModelFactory.PhoneNumberAdministrativeDivision("Washington", "WA");
             var result = PhoneNumbersModelFactory.PhoneNumberLocality("Seattle", administrativeDivision);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.LocalizedName, Is.EqualTo("Seattle"));
             Assert.That(result.AdministrativeDivision, Is.EqualTo(administrativeDivision));
         }
@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void PhoneNumberAdministrativeDivision_WhenLocalizedAndAbbreviatedNameNotNull_ShouldReturnInstanceOfPhoneNumberAdministrativeDivision()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberAdministrativeDivision("Washington", "WA");
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.LocalizedName, Is.EqualTo("Washington"));
             Assert.That(result.AbbreviatedName, Is.EqualTo("WA"));
         }
@@ -51,7 +51,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityType.Inbound, PhoneNumberCapabilityType.Inbound);
             var cost = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
             var result = PhoneNumbersModelFactory.PhoneNumberOffering(PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.PhoneNumberType, Is.EqualTo(PhoneNumberType.Geographic));
             Assert.That(result.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
             Assert.That(result.AvailableCapabilities, Is.EqualTo(capabilities));
@@ -62,7 +62,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void PhoneNumberCost_WhenIsoCurrencySymbolNotNull_ShouldReturnInstanceOfPhoneNumberCost()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Amount, Is.EqualTo(10));
             Assert.That(result.IsoCurrencySymbol, Is.EqualTo("USD"));
             Assert.That(result.BillingFrequency, Is.EqualTo(BillingFrequency.Monthly));
@@ -77,7 +77,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error = PhoneNumberSearchResultError.NoError;
 
             var result = PhoneNumbersModelFactory.PhoneNumberSearchResult("search1", phoneNumbers, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost, DateTimeOffset.Now, 0, error);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.SearchId, Is.EqualTo("search1"));
             Assert.That(result.PhoneNumbers, Is.EqualTo(phoneNumbers));
             Assert.That(result.PhoneNumberType, Is.EqualTo(PhoneNumberType.Geographic));

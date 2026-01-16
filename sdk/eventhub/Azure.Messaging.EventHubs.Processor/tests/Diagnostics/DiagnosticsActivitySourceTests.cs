@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, "998", default);
             await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, "1:0:556", default);
 
-            Assert.IsEmpty(listener.Activities);
+            Assert.That(listener.Activities, Is.Empty);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, "host"));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, "hub"));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, "host")));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, "hub")));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext)));
             cancellationSource.Cancel();
         }
 
@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
                 Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
                 Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
-                Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == DiagnosticProperty.EnqueuedTimeAttribute));
+                Assert.That(activity.TagObjects.Where(t => t.Key == DiagnosticProperty.EnqueuedTimeAttribute), Is.Empty);
             }
             cancellationSource.Cancel();
         }
@@ -282,7 +282,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var activity in activities)
             {
                 Assert.That(activity.OperationName, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-                Assert.IsEmpty(activity.Links);
+                Assert.That(activity.Links, Is.Empty);
                 Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
                 Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
             }

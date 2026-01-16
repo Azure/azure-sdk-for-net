@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task CreateOrUpdate()
         {
             var ipGroup = await CreateIpGroup(_iPGroupName);
-            Assert.IsNotNull(ipGroup.Value.Data);
+            Assert.That(ipGroup.Value.Data, Is.Not.Null);
             Assert.That(ipGroup.Value.Data.Name, Is.EqualTo(_iPGroupName));
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             await CreateIpGroup(_iPGroupName);
             var ipGroup = await _resourceGroup.GetIPGroups().GetAsync(_iPGroupName);
-            Assert.IsNotNull(ipGroup.Value.Data);
+            Assert.That(ipGroup.Value.Data, Is.Not.Null);
             Assert.That(ipGroup.Value.Data.Name, Is.EqualTo(_iPGroupName));
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Tests
             var ipGroup  = await CreateIpGroup(_iPGroupName);
             await ipGroup.Value.DeleteAsync(WaitUntil.Completed);
             var ipGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(ipGroupList);
+            Assert.That(ipGroupList, Is.Empty);
         }
     }
 }

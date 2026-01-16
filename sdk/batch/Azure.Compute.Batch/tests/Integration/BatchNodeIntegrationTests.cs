@@ -78,7 +78,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // create new user
                 BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions(userName)
@@ -123,7 +123,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // reboot node
                 RebootNodeOperation rebootNodeOperation = await client.RebootNodeAsync(poolID, batchNodeID);
@@ -157,7 +157,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // reboot node
                 ReimageNodeOperation reImageNodeOperation = await client.ReimageNodeAsync(poolID, batchNodeID);
@@ -192,7 +192,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // Deallocate node
                 DeallocateNodeOperation deallocateNodeOperation = await client.DeallocateNodeAsync(poolID, batchNodeID);
@@ -244,18 +244,18 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 BatchNodeVMExtension batchNodeVMExtension1 = await client.GetNodeExtensionAsync(poolID, batchNodeID, "CustomExtension");
 
                 // reboot node
                 await foreach (BatchNodeVMExtension item in client.GetNodeExtensionsAsync(poolID, batchNodeID))
                 {
-                    Assert.NotNull(item);
-                    Assert.IsNotEmpty(item.VmExtension.Name);
+                    Assert.That(item, Is.Not.Null);
+                    Assert.That(item.VmExtension.Name, Is.Not.Empty);
 
                     BatchNodeVMExtension batchNodeVMExtension = await client.GetNodeExtensionAsync(poolID, batchNodeID, item.VmExtension.Name);
-                    Assert.NotNull(batchNodeVMExtension);
+                    Assert.That(batchNodeVMExtension, Is.Not.Null);
                 }
             }
             finally
@@ -297,13 +297,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = await client.GetNodeRemoteLoginSettingsAsync(poolID, batchNodeID);
-                Assert.NotNull(batchNodeRemoteLoginSettings);
-                Assert.NotNull(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
-                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginPort);
-                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginIpAddress);
+                Assert.That(batchNodeRemoteLoginSettings, Is.Not.Null);
+                Assert.That(batchNodeRemoteLoginSettings.RemoteLoginIpAddress, Is.Not.Null);
+                Assert.That(batchNodeRemoteLoginSettings.Ipv6RemoteLoginPort, Is.Not.Null);
+                Assert.That(batchNodeRemoteLoginSettings.Ipv6RemoteLoginIpAddress, Is.Not.Null);
             }
             finally
             {
@@ -328,7 +328,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
                 BatchNodeDisableSchedulingOptions batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingOptions()
                 {
                     NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.Terminate,
@@ -342,8 +342,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 UploadBatchServiceLogsOptions uploadBatchServiceLogsContent = new UploadBatchServiceLogsOptions(new Uri("http://contoso.com"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
                 UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
-                Assert.NotNull(uploadBatchServiceLogsResult);
-                Assert.IsNotEmpty(uploadBatchServiceLogsResult.VirtualDirectoryName);
+                Assert.That(uploadBatchServiceLogsResult, Is.Not.Null);
+                Assert.That(uploadBatchServiceLogsResult.VirtualDirectoryName, Is.Not.Empty);
             }
             finally
             {

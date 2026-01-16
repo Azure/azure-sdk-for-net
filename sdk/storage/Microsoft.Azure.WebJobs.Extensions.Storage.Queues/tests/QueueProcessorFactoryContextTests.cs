@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             Assert.That(context.Queue, Is.SameAs(queue));
             Assert.That(context.PoisonQueue, Is.SameAs(poisonQueue));
-            Assert.NotNull(context.Logger);
+            Assert.That(context.Logger, Is.Not.Null);
 
             Assert.That(context.Options.BatchSize, Is.EqualTo(queuesOptions.BatchSize));
             Assert.That(context.Options.NewBatchThreshold, Is.EqualTo(queuesOptions.NewBatchThreshold));

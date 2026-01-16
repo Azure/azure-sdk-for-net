@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
                 TestContext.WriteLine($"[Subscription List] GeoCatalog: {item.Data.Name}");
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
         [Test]
         [RecordedTest]

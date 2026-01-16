@@ -281,7 +281,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.ToUri().ToString()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -321,7 +321,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
             Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.ToUri().ToString()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -466,7 +466,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, pathClient.AccountName)
             };
             Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.ToUri().ToString()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -509,7 +509,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, pathClient.AccountName);
             Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.ToUri().ToString()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -604,7 +604,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, pathClient.AccountName);
             Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.ToUri().ToString()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -679,7 +679,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, pathClient.AccountName);
             Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.ToUri().ToString()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -756,7 +756,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, pathClient.AccountName);
             Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.ToUri().ToString()));
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

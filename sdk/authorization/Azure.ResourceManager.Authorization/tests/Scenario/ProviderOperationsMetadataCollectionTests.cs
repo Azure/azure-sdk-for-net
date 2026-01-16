@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
             var collection = await GetProviderOperationsCollectionAsync();
             var providerOperations = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(providerOperations.Count, 0);
+            Assert.That(providerOperations.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [RecordedTest]

@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableSqlScript singleScript = await DisposableSqlScript.Create (client, Recording);
 
             IList<SqlScriptResource> scripts = await client.GetSqlScriptsByWorkspaceAsync ().ToListAsync();
-            Assert.GreaterOrEqual (scripts.Count, 1);
+            Assert.That(scripts.Count, Is.GreaterThanOrEqualTo(1));
 
             foreach (SqlScriptResource script in scripts)
             {

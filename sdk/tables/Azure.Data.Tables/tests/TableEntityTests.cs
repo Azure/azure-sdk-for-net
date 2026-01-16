@@ -288,7 +288,7 @@ namespace Azure.Data.Tables.Tests
             byte[] array = new byte[] { 1, 2, 3, 4, 5 };
             te.Add("binarydata", array);
             byte[] roundTrip = te.GetBinaryData("binarydata").ToArray();
-            CollectionAssert.AreEqual(array, roundTrip);
+            Assert.That(roundTrip, Is.EqualTo(array).AsCollection);
         }
     }
 }

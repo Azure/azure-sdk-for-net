@@ -94,16 +94,16 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.That(client.ConnectionId, Is.EqualTo("conn"));
 
             var serArg = await serverMessageTcs.Task.OrTimeout();
-            Assert.NotNull(serArg.Message);
+            Assert.That(serArg.Message, Is.Not.Null);
 
             var groupArg = await groupMessageTcs.Task.OrTimeout();
-            Assert.NotNull(groupArg.Message);
+            Assert.That(groupArg.Message, Is.Not.Null);
 
             var disconArg = await disconnectedTcs.Task.OrTimeout();
             Assert.That(disconArg.DisconnectedMessage.Reason, Is.EqualTo("reason"));
 
             var stopArg = await stoppedTcs.Task.OrTimeout();
-            Assert.NotNull(stopArg);
+            Assert.That(stopArg, Is.Not.Null);
 
             IEnumerable<WebSocketReadResult> GetTestData()
             {

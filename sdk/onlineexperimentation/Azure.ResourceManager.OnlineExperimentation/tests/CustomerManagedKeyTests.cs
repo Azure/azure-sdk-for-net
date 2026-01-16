@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Tests
 
             var workspaceResourceData = experimentWorkspaceRead.Value.Data;
 
-            Assert.IsNotNull(workspaceResourceData.Properties.Endpoint);
+            Assert.That(workspaceResourceData.Properties.Endpoint, Is.Not.Null);
             Assert.That(workspaceResourceData.Properties.Endpoint.Scheme, Is.EqualTo(Uri.UriSchemeHttps));
         }
 

@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Tests
             params string[] expectedKeys)
         {
             List<SearchResult<T>> docs = await response.GetResultsAsync().ToListAsync();
-            CollectionAssert.AreEquivalent(expectedKeys, docs.Select(keyAccessor));
+            Assert.That(docs.Select(keyAccessor), Is.EquivalentTo(expectedKeys));
         }
 
         [Test]
@@ -131,21 +131,21 @@ namespace Azure.Search.Documents.Tests
                         QueryLanguage = QueryLanguage.EnUs
                     });
 
-            Assert.NotNull(response.SemanticSearch.Answers);
+            Assert.That(response.SemanticSearch.Answers, Is.Not.Null);
             Assert.That(response.SemanticSearch.Answers.Count, Is.EqualTo(1));
             Assert.That(response.SemanticSearch.Answers[0].Key, Is.EqualTo("9"));
-            Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
-            Assert.NotNull(response.SemanticSearch.Answers[0].Text);
+            Assert.That(response.SemanticSearch.Answers[0].Highlights, Is.Not.Null);
+            Assert.That(response.SemanticSearch.Answers[0].Text, Is.Not.Null);
 
             await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
                 Hotel doc = result.Document;
 
-                Assert.NotNull(result.SemanticSearch.Captions);
+                Assert.That(result.SemanticSearch.Captions, Is.Not.Null);
 
                 var caption = result.SemanticSearch.Captions.FirstOrDefault();
-                Assert.NotNull(caption.Highlights, "Caption highlight is null");
-                Assert.NotNull(caption.Text, "Caption text is null");
+                Assert.That(caption.Highlights, Is.Not.Null, "Caption highlight is null");
+                Assert.That(caption.Text, Is.Not.Null, "Caption text is null");
             }
 
             await AssertKeysEqual(
@@ -232,7 +232,7 @@ namespace Azure.Search.Documents.Tests
             response = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
             Assert.That(response.Value["id"], Is.EqualTo(document["id"]));
             Assert.That(response.Value["name"], Is.EqualTo(document["name"]));
-            Assert.IsNotNull(response.Value["descriptionVector"]);
+            Assert.That(response.Value["descriptionVector"], Is.Not.Null);
 
             Assert.That(createdIndex.Name, Is.EqualTo(updatedIndex.Name));
         }
@@ -306,11 +306,11 @@ namespace Azure.Search.Documents.Tests
                     docsPerPageCount++;
                     totalDocsCount++;
                 }
-                Assert.LessOrEqual(docsPerPageCount, 50);
+                Assert.That(docsPerPageCount, Is.LessThanOrEqualTo(50));
             }
 
-            Assert.LessOrEqual(totalDocsCount, 100);
-            Assert.GreaterOrEqual(pageCount, 2);
+            Assert.That(totalDocsCount, Is.LessThanOrEqualTo(100));
+            Assert.That(pageCount, Is.GreaterThanOrEqualTo(2));
         }
 
         [Test]

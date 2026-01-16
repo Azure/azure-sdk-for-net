@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             // Get
             Response<GraphServicesAccountResource> getAccountResponse = await collection.GetAsync(resourceName);
             GraphServicesAccountResource accountResource = getAccountResponse.Value;
-            Assert.IsNotNull(accountResource);
+            Assert.That(accountResource, Is.Not.Null);
 
             // Update
             var updatedAccountResponse = await accountResource.AddTagAsync("Test", "Value");
-            Assert.IsNotNull(updatedAccountResponse);
+            Assert.That(updatedAccountResponse, Is.Not.Null);
             Assert.That(updatedAccountResponse.Value.Data.Tags["Test"], Is.EqualTo("Value"));
 
             // Delete

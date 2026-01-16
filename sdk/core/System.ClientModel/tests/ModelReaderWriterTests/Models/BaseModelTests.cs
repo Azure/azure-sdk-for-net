@@ -38,8 +38,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             {
                 var rawData = GetRawData(model);
                 var rawData2 = GetRawData(model2);
-                Assert.IsNotNull(rawData);
-                Assert.IsNotNull(rawData2);
+                Assert.That(rawData, Is.Not.Null);
+                Assert.That(rawData2, Is.Not.Null);
                 Assert.That(rawData2.Count, Is.EqualTo(rawData.Count));
                 Assert.That(rawData2["extra"].ToObjectFromJson<string>(), Is.EqualTo(rawData["extra"].ToObjectFromJson<string>()));
             }
@@ -61,7 +61,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.That(model.Kind, Is.EqualTo("X"));
             Assert.That(model.Name, Is.EqualTo("xmodel"));
             var rawData = GetRawData(model);
-            Assert.IsNotNull(rawData);
+            Assert.That(rawData, Is.Not.Null);
             if (format == "J")
             {
                 Assert.That(rawData["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));

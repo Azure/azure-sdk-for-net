@@ -67,13 +67,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             // The response should be a 201 Created.
             Assert.That(reservationResponse.GetRawResponse().Status, Is.EqualTo(201));
-            Assert.IsNotNull(reservationResponse.Value);
+            Assert.That(reservationResponse.Value, Is.Not.Null);
             Assert.That(reservationResponse.Value.Id, Is.EqualTo(reservationId));
             Assert.That(reservationResponse.Value.Status, Is.EqualTo(ReservationStatus.Active));
-            Assert.IsEmpty(reservationResponse.Value.PhoneNumbers);
+            Assert.That(reservationResponse.Value.PhoneNumbers, Is.Empty);
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
+                Assert.That(reservationResponse.Value.ExpiresAt, Is.GreaterThan(DateTimeOffset.UtcNow));
             }
 
             _initialReservationState = reservationResponse.Value;
@@ -92,13 +92,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             // The response should be a 201 Created.
             Assert.That(reservationResponse.GetRawResponse().Status, Is.EqualTo(201));
-            Assert.IsNotNull(reservationResponse.Value);
+            Assert.That(reservationResponse.Value, Is.Not.Null);
             Assert.That(reservationResponse.Value.Id, Is.EqualTo(reservationId));
             Assert.That(reservationResponse.Value.Status, Is.EqualTo(ReservationStatus.Active));
-            Assert.IsEmpty(reservationResponse.Value.PhoneNumbers);
+            Assert.That(reservationResponse.Value.PhoneNumbers, Is.Empty);
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
+                Assert.That(reservationResponse.Value.ExpiresAt, Is.GreaterThan(DateTimeOffset.UtcNow));
             }
 
             _initialReservationState = reservationResponse.Value;
@@ -115,15 +115,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
 
-            Assert.IsNotNull(response.Value);
-            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.PhoneNumbers.Count, Is.GreaterThan(0));
 
             browseRequest = new PhoneNumbersBrowseOptions("IE", PhoneNumberType.Mobile);
 
             response = await client.BrowseAvailableNumbersAsync(browseRequest);
 
-            Assert.IsNotNull(response.Value);
-            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.PhoneNumbers.Count, Is.GreaterThan(0));
             Assert.That(response.Value.PhoneNumbers[0].PhoneNumberType == PhoneNumberType.Mobile, Is.True);
         }
 
@@ -138,16 +138,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var response = client.BrowseAvailableNumbers(browseRequest);
 
-            Assert.IsNotNull(response.Value);
-            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.PhoneNumbers.Count, Is.GreaterThan(0));
             Assert.That(response.Value.PhoneNumbers[0].PhoneNumberType == PhoneNumberType.TollFree, Is.True);
 
             browseRequest = new PhoneNumbersBrowseOptions("IE", PhoneNumberType.Mobile);
 
             response = client.BrowseAvailableNumbers(browseRequest);
 
-            Assert.IsNotNull(response.Value);
-            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.PhoneNumbers.Count, Is.GreaterThan(0));
             Assert.That(response.Value.PhoneNumbers[0].PhoneNumberType == PhoneNumberType.Mobile, Is.True);
         }
 
@@ -163,8 +163,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var reservationsPageable = client.GetReservationsAsync();
             var reservations = await reservationsPageable.ToEnumerableAsync();
 
-            Assert.IsNotNull(reservations);
-            Assert.Greater(reservations.Count, 0);
+            Assert.That(reservations, Is.Not.Null);
+            Assert.That(reservations.Count, Is.GreaterThan(0));
             Assert.That(reservations.Any(reservations => reservations.Id == _initialReservationState?.Id), Is.True);
         }
 
@@ -179,8 +179,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var reservations = client.GetReservations();
 
-            Assert.IsNotNull(reservations);
-            Assert.Greater(reservations.Count(), 0);
+            Assert.That(reservations, Is.Not.Null);
+            Assert.That(reservations.Count(), Is.GreaterThan(0));
             Assert.That(reservations.Any(reservations => reservations.Id == _initialReservationState?.Id), Is.True);
         }
 
@@ -196,7 +196,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var reservationResponse = await client.GetReservationAsync((Guid)(_initialReservationState!.Id)!);
             var reservation = reservationResponse.Value;
 
-            Assert.IsNotNull(reservation);
+            Assert.That(reservation, Is.Not.Null);
             Assert.That(reservation.Id, Is.EqualTo(_initialReservationState!.Id));
             Assert.That(reservation.ExpiresAt, Is.EqualTo(_initialReservationState!.ExpiresAt));
             Assert.That(reservation.Status, Is.EqualTo(_initialReservationState!.Status));
@@ -214,7 +214,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var reservationResponse = client.GetReservation((Guid)(_initialReservationState!.Id)!);
             var reservation = reservationResponse.Value;
 
-            Assert.IsNotNull(reservation);
+            Assert.That(reservation, Is.Not.Null);
             Assert.That(reservation.Id, Is.EqualTo(_initialReservationState!.Id));
             Assert.That(reservation.ExpiresAt, Is.EqualTo(_initialReservationState!.ExpiresAt));
             Assert.That(reservation.Status, Is.EqualTo(_initialReservationState!.Status));
@@ -249,10 +249,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var reservationResponse = await client.CreateOrUpdateReservationAsync(updateRequest).ConfigureAwait(false);
             var reservationAfterAdd = reservationResponse.Value;
 
-            Assert.IsNotNull(reservationAfterAdd);
+            Assert.That(reservationAfterAdd, Is.Not.Null);
             Assert.That(reservationAfterAdd.Id, Is.EqualTo(_initialReservationState!.Id));
             Assert.That(reservationAfterAdd.Status, Is.EqualTo(ReservationStatus.Active));
-            Assert.Greater(reservationAfterAdd.ExpiresAt, _initialReservationState.ExpiresAt);
+            Assert.That(reservationAfterAdd.ExpiresAt, Is.GreaterThan(_initialReservationState.ExpiresAt));
             Assert.That(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error), Is.True);
             Assert.That(reservationAfterAdd.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id), Is.True);
 
@@ -266,10 +266,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             reservationResponse = await client.CreateOrUpdateReservationAsync(removeRequest).ConfigureAwait(false);
             var reservationAfterRemove = reservationResponse.Value;
-            Assert.IsNotNull(reservationAfterRemove);
+            Assert.That(reservationAfterRemove, Is.Not.Null);
             Assert.That(reservationAfterRemove.Id, Is.EqualTo(_initialReservationState!.Id));
             Assert.That(reservationAfterRemove.Status, Is.EqualTo(ReservationStatus.Active));
-            Assert.Greater(reservationAfterRemove.ExpiresAt, reservationAfterAdd.ExpiresAt);
+            Assert.That(reservationAfterRemove.ExpiresAt, Is.GreaterThan(reservationAfterAdd.ExpiresAt));
             Assert.That(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error), Is.True);
             Assert.That(reservationAfterRemove.PhoneNumbers.ContainsKey(phoneNumberIdToRemove), Is.False);
         }
@@ -303,10 +303,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var reservationResponse = client.CreateOrUpdateReservation(updateRequest);
             var reservationAfterAdd = reservationResponse.Value;
 
-            Assert.IsNotNull(reservationAfterAdd);
+            Assert.That(reservationAfterAdd, Is.Not.Null);
             Assert.That(reservationAfterAdd.Id, Is.EqualTo(reservationBeforeAdd.Id));
             Assert.That(reservationAfterAdd.Status, Is.EqualTo(ReservationStatus.Active));
-            Assert.Greater(reservationAfterAdd.ExpiresAt, reservationBeforeAdd.ExpiresAt);
+            Assert.That(reservationAfterAdd.ExpiresAt, Is.GreaterThan(reservationBeforeAdd.ExpiresAt));
             Assert.That(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error), Is.True);
             Assert.That(reservationAfterAdd.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id), Is.True);
 
@@ -321,10 +321,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
             reservationResponse = client.CreateOrUpdateReservation(removeRequest);
             var reservationAfterRemove = reservationResponse.Value;
 
-            Assert.IsNotNull(reservationAfterRemove);
+            Assert.That(reservationAfterRemove, Is.Not.Null);
             Assert.That(reservationAfterRemove.Id, Is.EqualTo(reservationBeforeRemove.Id));
             Assert.That(reservationAfterRemove.Status, Is.EqualTo(ReservationStatus.Active));
-            Assert.Greater(reservationAfterRemove.ExpiresAt, reservationBeforeRemove.ExpiresAt);
+            Assert.That(reservationAfterRemove.ExpiresAt, Is.GreaterThan(reservationBeforeRemove.ExpiresAt));
             Assert.That(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error), Is.True);
             Assert.That(reservationAfterRemove.PhoneNumbers.ContainsKey(phoneNumberIdToRemove), Is.False);
         }

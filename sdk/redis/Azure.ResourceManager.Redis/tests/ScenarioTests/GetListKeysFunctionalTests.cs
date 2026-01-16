@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Redis.Tests
             await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter);
 
             var listResponse = await Collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listResponse.Count, 1);
+            Assert.That(listResponse.Count, Is.GreaterThanOrEqualTo(1));
 
             var redis = listResponse.FirstOrDefault();
             Assert.That(redis.Data.Name, Is.EqualTo(redisCacheName));
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.That(redis.Data.SslPort, Is.EqualTo(6380));
 
             listResponse = await DefaultSubscription.GetAllRedisAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listResponse.Count, 1);
+            Assert.That(listResponse.Count, Is.GreaterThanOrEqualTo(1));
 
             redis = listResponse.FirstOrDefault(x => x.Data.Name.Equals(redisCacheName));
             if (redis != null)
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Redis.Tests
             }
 
             var response = (await redis.GetKeysAsync()).Value;
-            Assert.NotNull(response.PrimaryKey);
-            Assert.NotNull(response.SecondaryKey);
+            Assert.That(response.PrimaryKey, Is.Not.Null);
+            Assert.That(response.SecondaryKey, Is.Not.Null);
         }
     }
 }

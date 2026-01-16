@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
             var collection = await GetRoleManagementPolicyCollectionAsync();
             var roleManagementPolicies = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(roleManagementPolicies.Count, 0);
+            Assert.That(roleManagementPolicies.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [RecordedTest]

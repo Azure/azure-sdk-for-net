@@ -54,7 +54,7 @@ namespace Azure.Identity.Tests
 
             if (logPii)
             {
-                Assert.Contains(client1Message, messages);
+                Assert.That(messages, Does.Contain(client1Message));
             }
             Assert.That(messages, Does.Not.Contain(client2Message));
             messages.Clear();

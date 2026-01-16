@@ -163,7 +163,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ClientCertificateCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ClientCertificateCredential>());
             var clientCertificateCredential = (ClientCertificateCredential)credential;
 
             Assert.That(clientCertificateCredential.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -174,7 +174,7 @@ namespace Azure.Core.Extensions.Tests
             var additionalTenants = (string[])typeof(ClientCertificateCredential)
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientCertificateCredential);
-            Assert.IsEmpty(additionalTenants);
+            Assert.That(additionalTenants, Is.Empty);
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ClientCertificateCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ClientCertificateCredential>());
             var clientCertificateCredential = (ClientCertificateCredential)credential;
 
             Assert.That(clientCertificateCredential.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -232,7 +232,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ClientSecretCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ClientSecretCredential>());
             var clientSecretCredential = (ClientSecretCredential)credential;
 
             Assert.That(clientSecretCredential.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -242,7 +242,7 @@ namespace Azure.Core.Extensions.Tests
             var additionalTenants = (string[])typeof(ClientSecretCredential)
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientSecretCredential);
-            Assert.IsEmpty(additionalTenants);
+            Assert.That(additionalTenants, Is.Empty);
         }
 
         [Test]
@@ -262,7 +262,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ClientSecretCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ClientSecretCredential>());
             var clientSecretCredential = (ClientSecretCredential)credential;
 
             Assert.That(clientSecretCredential.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -292,7 +292,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<AzurePipelinesCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<AzurePipelinesCredential>());
             var pipelinesCredential = (AzurePipelinesCredential)credential;
 
             Assert.That(pipelinesCredential.Client.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -304,7 +304,7 @@ namespace Azure.Core.Extensions.Tests
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(pipelinesCredential);
 
-            Assert.IsEmpty(additionalTenants);
+            Assert.That(additionalTenants, Is.Empty);
         }
 
         [Test]
@@ -326,7 +326,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<AzurePipelinesCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<AzurePipelinesCredential>());
             var pipelinesCredential = (AzurePipelinesCredential)credential;
 
             Assert.That(pipelinesCredential.Client.ClientId, Is.EqualTo("ConfigurationClientId"));
@@ -415,11 +415,11 @@ namespace Azure.Core.Extensions.Tests
             // if all parameters were false we expect null
             if (!additionalTenants && !clientId && !managedIdentityClientId && !tenantId && !resourceId)
             {
-                Assert.IsNull(credential);
+                Assert.That(credential, Is.Null);
                 return;
             }
 
-            Assert.IsInstanceOf<DefaultAzureCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<DefaultAzureCredential>());
             var defaultAzureCredential = (DefaultAzureCredential)credential;
 
             TokenCredential[] credentialChain = (TokenCredential[])typeof(DefaultAzureCredential)
@@ -478,7 +478,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ManagedIdentityCredential>());
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
             string clientId;
@@ -498,7 +498,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ManagedIdentityCredential>());
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
             string clientId;
@@ -519,7 +519,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ManagedIdentityCredential>());
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
             string resourceId;
@@ -540,7 +540,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<ManagedIdentityCredential>());
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
             string objectId;
@@ -605,7 +605,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<WorkloadIdentityCredential>());
             var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
 
             var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
@@ -633,7 +633,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<WorkloadIdentityCredential>());
             var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
 
             var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
@@ -690,7 +690,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<WorkloadIdentityCredential>());
             var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
 
             var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
@@ -719,14 +719,14 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>());
             var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
 
             // Validate via reflection that the fields are set as expected
             var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
                 .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(mfCredential);
-            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+            Assert.That(mic, Is.InstanceOf<ManagedIdentityCredential>());
 
             var managedIdentityCredential = (ManagedIdentityCredential)mic;
             string clientId;
@@ -750,14 +750,14 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>());
             var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
 
             // Validate via reflection that the fields are set as expected
             var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
                 .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(mfCredential);
-            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+            Assert.That(mic, Is.InstanceOf<ManagedIdentityCredential>());
 
             var managedIdentityCredential = (ManagedIdentityCredential)mic;
             string resourceId;
@@ -781,14 +781,14 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>());
             var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
 
             // Validate via reflection that the fields are set as expected
             var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
                 .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(mfCredential);
-            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+            Assert.That(mic, Is.InstanceOf<ManagedIdentityCredential>());
 
             var managedIdentityCredential = (ManagedIdentityCredential)mic;
             string objectId;
@@ -815,14 +815,14 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>());
             var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
 
             // Validate via reflection that the fields are set as expected
             var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
                 .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(mfCredential);
-            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+            Assert.That(mic, Is.InstanceOf<ManagedIdentityCredential>());
         }
 
         [Test]
@@ -922,7 +922,7 @@ namespace Azure.Core.Extensions.Tests
 
             var credential = ClientFactory.CreateCredential(configuration);
 
-            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            Assert.That(credential, Is.InstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>());
             var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
 
             var expectedTenants = additionalTenants.Split(';')
@@ -959,7 +959,7 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
             Assert.That(client.Options, Is.SameAs(clientOptions));
-            Assert.NotNull(client.Credential);
+            Assert.That(client.Credential, Is.Not.Null);
         }
 
         [Test]

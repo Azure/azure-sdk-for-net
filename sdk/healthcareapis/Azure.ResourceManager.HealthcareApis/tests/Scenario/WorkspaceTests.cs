@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var list = await _workspaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateHealthcareApisWorkspace(list.FirstOrDefault().Data, workspaceName);
         }
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
         private void ValidateHealthcareApisWorkspace(HealthcareApisWorkspaceData workspace, string workspaceName)
         {
-            Assert.IsNotNull(workspace);
-            Assert.IsNotNull(workspace.Id);
-            Assert.IsNotNull(workspace.ETag);
+            Assert.That(workspace, Is.Not.Null);
+            Assert.That(workspace.Id, Is.Not.Null);
+            Assert.That(workspace.ETag, Is.Not.Null);
             Assert.That(workspace.Name, Is.EqualTo(workspaceName));
             Assert.That(workspace.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces"));
             Assert.That(workspace.Location, Is.EqualTo(DefaultLocation));

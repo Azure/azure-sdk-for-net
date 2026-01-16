@@ -327,7 +327,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
                 var errors = logs.Where(IsError);
-                Assert.IsEmpty(errors, string.Join(
+                Assert.That(errors, Is.Empty, string.Join(
                     ",",
                     errors.Select(e => e.Exception != null ? e.Exception.StackTrace : e.FormattedMessage)));
 

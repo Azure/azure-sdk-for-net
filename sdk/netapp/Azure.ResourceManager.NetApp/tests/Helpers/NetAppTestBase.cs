@@ -186,18 +186,18 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             {
                 location = DefaultLocationString;
             }
-            Assert.NotNull(account);
-            Assert.NotNull(account.Id);
-            Assert.NotNull(account.Id.Name);
-            Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.Location);
-            Assert.NotNull(account.Data.SystemData);
+            Assert.That(account, Is.Not.Null);
+            Assert.That(account.Id, Is.Not.Null);
+            Assert.That(account.Id.Name, Is.Not.Null);
+            Assert.That(account.Data, Is.Not.Null);
+            Assert.That(account.Data.Location, Is.Not.Null);
+            Assert.That(account.Data.SystemData, Is.Not.Null);
 
             if (useDefaults)
             {
                 Assert.That(account.Data.Location.ToString(), Is.EqualTo(location));
 
-                Assert.NotNull(account.Data.Tags);
+                Assert.That(account.Data.Tags, Is.Not.Null);
                 foreach (var tag in DefaultTags)
                 {
                     Assert.That(tag.Value, Is.EqualTo(account.Data.Tags[tag.Key]));
@@ -207,17 +207,17 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
 
         public static void VerifyVolumeProperties(NetAppVolumeResource volume, bool useDefaults)
         {
-            Assert.NotNull(volume);
-            Assert.NotNull(volume.Id);
-            Assert.NotNull(volume.Id.Name);
-            Assert.NotNull(volume.Data);
-            Assert.NotNull(volume.Data.Location);
+            Assert.That(volume, Is.Not.Null);
+            Assert.That(volume.Id, Is.Not.Null);
+            Assert.That(volume.Id.Name, Is.Not.Null);
+            Assert.That(volume.Data, Is.Not.Null);
+            Assert.That(volume.Data.Location, Is.Not.Null);
 
             if (useDefaults)
             {
                 Assert.That(volume.Data.Location, Is.EqualTo(DefaultLocation));
 
-                Assert.NotNull(volume.Data.Tags);
+                Assert.That(volume.Data.Tags, Is.Not.Null);
                 //we cannot assert on count as a policy might add addional tags
                 //Assert.AreEqual(DefaultTags.Count, volume.Data.Tags.Count);
                 foreach (KeyValuePair<string, string> tag in DefaultTags)
@@ -237,18 +237,18 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
 
         public static void VerifyCapacityPoolProperties(CapacityPoolResource pool, bool useDefaults)
         {
-            Assert.NotNull(pool);
-            Assert.NotNull(pool.Id);
-            Assert.NotNull(pool.Id.Name);
-            Assert.NotNull(pool.Data);
-            Assert.NotNull(pool.Data.Location);
+            Assert.That(pool, Is.Not.Null);
+            Assert.That(pool.Id, Is.Not.Null);
+            Assert.That(pool.Id.Name, Is.Not.Null);
+            Assert.That(pool.Data, Is.Not.Null);
+            Assert.That(pool.Data.Location, Is.Not.Null);
             //Assert.NotNull(pool.Data.SystemData);
 
             if (useDefaults)
             {
                 Assert.That(pool.Data.Location, Is.EqualTo(DefaultLocation));
 
-                Assert.NotNull(pool.Data.Tags);
+                Assert.That(pool.Data.Tags, Is.Not.Null);
                 foreach (var tag in DefaultTags)
                 {
                     Assert.That(tag.Value, Is.EqualTo(pool.Data.Tags[tag.Key]));

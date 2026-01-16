@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             };
             IotHubDescriptionData data = new IotHubDescriptionData(AzureLocation.WestUS2, sku) { };
             var iotHub = await _resourceGroup.GetIotHubDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, iotHubName, data);
-            Assert.IsNotNull(iotHub);
+            Assert.That(iotHub, Is.Not.Null);
             Assert.That(iotHub.Value.Data.Name, Is.EqualTo(iotHubName));
             Assert.That(iotHub.Value.Data.Location.Name, Is.EqualTo("westus2"));
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             await CreateIotHub(_resourceGroup, iotHubName);
             var getIotHub = await _resourceGroup.GetIotHubDescriptions().GetAsync(iotHubName);
-            Assert.IsNotNull(getIotHub);
+            Assert.That(getIotHub, Is.Not.Null);
             Assert.That(getIotHub.Value.Data.Name, Is.EqualTo(iotHubName));
             Assert.That(getIotHub.Value.Data.Location.Name, Is.EqualTo("westus2"));
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             await CreateIotHub(_resourceGroup, iotHubName);
             var list = await _resourceGroup.GetIotHubDescriptions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             //Assert.AreEqual(iotHubName, list.FirstOrDefault().Data.Name);
             //Assert.AreEqual("westus2", list.FirstOrDefault().Data.Location.Name);
         }

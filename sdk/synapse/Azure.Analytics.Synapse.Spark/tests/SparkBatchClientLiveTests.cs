@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Get the list of Spark batch jobs and check that the submitted job exists
             List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
-            Assert.NotNull(listJobResponse);
+            Assert.That(listJobResponse, Is.Not.Null);
             Assert.That(listJobResponse.Any(job => job.Id == jobCreateResponse.Id), Is.True);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Get the list of Spark batch jobs and check that the submitted job exists
             List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
-            Assert.NotNull(listJobResponse);
+            Assert.That(listJobResponse, Is.Not.Null);
             Assert.That(listJobResponse.Any(job => job.Id == jobCreateResponse.Id), Is.True);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Get the list of Spark batch jobs and check that the submitted job exists
             List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
-            Assert.NotNull(listJobResponse);
+            Assert.That(listJobResponse, Is.Not.Null);
             Assert.That(listJobResponse.Any(job => job.Id == jobCreateResponse.Id), Is.True);
         }
 

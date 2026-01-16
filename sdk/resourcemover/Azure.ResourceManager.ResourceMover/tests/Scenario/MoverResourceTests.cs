@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
 
         [TestCase]
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
-                Assert.NotNull(model.Data.Properties);
-                Assert.NotNull(getResult.Data.Properties);
+                Assert.That(model.Data.Properties, Is.Not.Null);
+                Assert.That(getResult.Data.Properties, Is.Not.Null);
                 Assert.That(getResult.Data.Properties.ProvisioningState, Is.EqualTo(model.Data.Properties.ProvisioningState));
                 Assert.That(getResult.Data.Properties.SourceId, Is.EqualTo(model.Data.Properties.SourceId));
                 Assert.That(getResult.Data.Properties.TargetId, Is.EqualTo(model.Data.Properties.TargetId));

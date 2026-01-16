@@ -464,7 +464,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             // For illustrative purposes, make sure all deferred messages were received.
 
-            Assert.IsEmpty(deferredMessages);
+            Assert.That(deferredMessages, Is.Empty);
 
             #endregion
         }

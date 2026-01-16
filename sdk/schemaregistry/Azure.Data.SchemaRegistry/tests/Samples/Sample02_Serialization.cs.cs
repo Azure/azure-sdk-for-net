@@ -126,7 +126,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string[] contentType = eventData.ContentType.Split('+');
             Assert.That(contentType.Length, Is.EqualTo(2));
             Assert.That(contentType[0], Is.EqualTo("application/json"));
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType[1], Is.Not.Empty);
 
             #region Snippet:SchemaRegistryJsonDeserializeEventDataGenerics
             Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void Data()
         {
             Assert.That(LocalRulestackFqdnListResource.HasData, Is.True);
-            Assert.NotNull(LocalRulestackFqdnListResource.Data);
+            Assert.That(LocalRulestackFqdnListResource.Data, Is.Not.Null);
         }
 
         [TestCase]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackFqdnResource resource = await LocalRulestackResource.GetLocalRulestackFqdnAsync("dotnetSdkTest-fqdnList");
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             Assert.That(LocalRulestackFqdnListResource.Data.Name, Is.EqualTo(resource.Data.Name));
         }
     }

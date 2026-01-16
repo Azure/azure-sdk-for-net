@@ -61,22 +61,22 @@ namespace Azure.AI.Inference.Tests
 
             RecordedResponse response = resp.ToResponse();
 
-            CollectionAssert.AreEqual(new[] { "stop" }, response.FinishReasons);
+            Assert.That(response.FinishReasons, Is.EqualTo(new[] { "stop" }).AsCollection);
             Assert.That("gpt-100o", Is.EqualTo(response.Model));
             Assert.That(withUsage ? "4" : "3", Is.EqualTo(response.Id));
 
-            Assert.That(withUsage ? 7 : null, Is.EqualTo(response.CompletionTokens));
-            Assert.That(withUsage ? 3 : null, Is.EqualTo(response.PromptTokens));
+            Assert.That(response.CompletionTokens, Is.EqualTo(withUsage ? 7 : null));
+            Assert.That(response.PromptTokens, Is.EqualTo(withUsage ? 3 : null));
 
             Assert.That(response.Choices.Length, Is.EqualTo(1));
 
             var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[0]);
             var message = choiceEvent["message"];
-            Assert.NotNull(message);
+            Assert.That(message, Is.Not.Null);
 
             if (traceContent)
             {
-                Assert.NotNull(message["content"]);
+                Assert.That(message["content"], Is.Not.Null);
                 Assert.That(message["content"].GetValue<string>(), Is.EqualTo("First second third"));
                 Assert.That(message["tool_calls"], Is.Null);
             }
@@ -86,10 +86,10 @@ namespace Azure.AI.Inference.Tests
             }
 
             var finishReason = choiceEvent["finish_reason"];
-            Assert.NotNull(finishReason);
+            Assert.That(finishReason, Is.Not.Null);
             Assert.That(finishReason.GetValue<string>(), Is.EqualTo("stop"));
 
-            Assert.NotNull(choiceEvent["index"]);
+            Assert.That(choiceEvent["index"], Is.Not.Null);
             Assert.That(choiceEvent["index"].GetValue<int>(), Is.EqualTo(0));
         }
 
@@ -103,23 +103,23 @@ namespace Azure.AI.Inference.Tests
 
             RecordedResponse response = resp.ToResponse();
             Assert.That("1", Is.EqualTo(response.Id));
-            CollectionAssert.AreEqual(new[] { "tool_calls" }, response.FinishReasons);
+            Assert.That(response.FinishReasons, Is.EqualTo(new[] { "tool_calls" }).AsCollection);
             Assert.That("gpt-100o", Is.EqualTo(response.Model));
 
             Assert.That(response.Choices.Length, Is.EqualTo(1));
 
             var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[0]);
             var message = choiceEvent["message"];
-            Assert.NotNull(message);
+            Assert.That(message, Is.Not.Null);
 
             if (traceContent)
             {
                 Assert.That(message["content"].GetValue<string>(), Is.EqualTo("first second third"));
             }
 
-            Assert.NotNull(message["tool_calls"]);
+            Assert.That(message["tool_calls"], Is.Not.Null);
 
-            Assert.IsInstanceOf(typeof(JsonArray), message["tool_calls"]);
+            Assert.That(message["tool_calls"], Is.InstanceOf(typeof(JsonArray)));
             JsonArray toolCallsArray = message["tool_calls"].AsArray();
             Assert.That(toolCallsArray.Count, Is.EqualTo(2));
 
@@ -141,10 +141,10 @@ namespace Azure.AI.Inference.Tests
             }
 
             var finishReason = choiceEvent["finish_reason"];
-            Assert.NotNull(finishReason);
+            Assert.That(finishReason, Is.Not.Null);
             Assert.That(finishReason.GetValue<string>(), Is.EqualTo("tool_calls"));
 
-            Assert.NotNull(choiceEvent["index"]);
+            Assert.That(choiceEvent["index"], Is.Not.Null);
             Assert.That(choiceEvent["index"].GetValue<int>(), Is.EqualTo(0));
         }
 

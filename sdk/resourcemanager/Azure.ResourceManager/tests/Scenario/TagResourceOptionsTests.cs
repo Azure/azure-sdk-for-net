@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
 
             // fetch the new data on the availability set
             availabilitySetResource = await availabilitySetResource.GetAsync();
-            CollectionAssert.AreEquivalent(OriTags, availabilitySetResource.Data.Tags);
+            Assert.That(availabilitySetResource.Data.Tags, Is.EquivalentTo(OriTags));
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Blueprint.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
             //4.Exist
             Assert.That((bool)await collection.ExistsAsync(printName), Is.True);
             Assert.That((bool)await collection.ExistsAsync(printName + "1"), Is.False);

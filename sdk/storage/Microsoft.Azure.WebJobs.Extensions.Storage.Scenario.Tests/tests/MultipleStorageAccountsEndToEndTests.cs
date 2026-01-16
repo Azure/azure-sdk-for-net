@@ -34,8 +34,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
-            Assert.IsNotEmpty(TestEnvironment.PrimaryStorageAccountConnectionString);
-            Assert.IsNotEmpty(TestEnvironment.SecondaryStorageAccountConnectionString);
+            Assert.That(TestEnvironment.PrimaryStorageAccountConnectionString, Is.Not.Empty);
+            Assert.That(TestEnvironment.SecondaryStorageAccountConnectionString, Is.Not.Empty);
             _fixture = new TestFixture();
             await _fixture.InitializeAsync(TestEnvironment);
         }

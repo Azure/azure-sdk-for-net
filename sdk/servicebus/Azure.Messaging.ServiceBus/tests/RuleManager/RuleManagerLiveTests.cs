@@ -57,20 +57,20 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 Assert.That(rules.Count, Is.EqualTo(3));
 
                 var sqlRule = rules.FirstOrDefault(rule => rule.Name.Equals(sqlRuleName));
-                Assert.NotNull(sqlRule);
+                Assert.That(sqlRule, Is.Not.Null);
                 Assert.That(sqlRule.Action, Is.Null);
-                Assert.IsInstanceOf<SqlRuleFilter>(sqlRule.Filter);
+                Assert.That(sqlRule.Filter, Is.InstanceOf<SqlRuleFilter>());
                 Assert.That(((SqlRuleFilter)sqlRule.Filter).SqlExpression, Is.EqualTo("price > 10"));
 
                 var correlationRule = rules.FirstOrDefault(rule => rule.Name.Equals(correlationRuleName));
-                Assert.NotNull(correlationRule);
-                Assert.IsInstanceOf<SqlRuleAction>(correlationRule.Action);
+                Assert.That(correlationRule, Is.Not.Null);
+                Assert.That(correlationRule.Action, Is.InstanceOf<SqlRuleAction>());
                 var sqlRuleAction = correlationRule.Action as SqlRuleAction;
-                Assert.NotNull(sqlRuleAction);
+                Assert.That(sqlRuleAction, Is.Not.Null);
                 Assert.That(sqlRuleAction.SqlExpression, Is.EqualTo("Set CorrelationId = 'newValue'"));
-                Assert.IsInstanceOf<CorrelationRuleFilter>(correlationRule.Filter);
+                Assert.That(correlationRule.Filter, Is.InstanceOf<CorrelationRuleFilter>());
                 var correlationRuleFilter = correlationRule.Filter as CorrelationRuleFilter;
-                Assert.NotNull(correlationRuleFilter);
+                Assert.That(correlationRuleFilter, Is.Not.Null);
                 Assert.That(correlationRuleFilter.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(correlationRuleFilter.Subject, Is.EqualTo("label"));
                 Assert.That(correlationRuleFilter.MessageId, Is.EqualTo("messageId"));
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 Assert.That(correlationRuleFilter.ReplyToSessionId, Is.EqualTo("replyToSessionId"));
                 Assert.That(correlationRuleFilter.SessionId, Is.EqualTo("sessionId"));
                 Assert.That(correlationRuleFilter.To, Is.EqualTo("to"));
-                Assert.NotNull(correlationRuleFilter.ApplicationProperties);
+                Assert.That(correlationRuleFilter.ApplicationProperties, Is.Not.Null);
                 Assert.That(correlationRuleFilter.ApplicationProperties["key1"], Is.EqualTo("value1"));
 
                 await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);

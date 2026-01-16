@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationResource maintenanceConfigurationResource = await CreateMaintenanceConfiguration();
 
             var deleted = await maintenanceConfigurationResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsNotEmpty(deleted.Value.Data.Id);
+            Assert.That((string)deleted.Value.Data.Id, Is.Not.Empty);
 
             MaintenanceConfigurationCollection collection = _resourceGroup.GetMaintenanceConfigurations();
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task Create()
         {
             MaintenanceConfigurationResource maintenanceConfigurationResource = await CreateMaintenanceConfiguration();
-            Assert.IsNotEmpty(maintenanceConfigurationResource.Data.Id);
+            Assert.That((string)maintenanceConfigurationResource.Data.Id, Is.Not.Empty);
             Assert.That(new DateTimeOffset(2024, 12, 31, 14, 0, 0, TimeSpan.Zero), Is.EqualTo(maintenanceConfigurationResource.Data.StartOn));
             Assert.That(new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero), Is.EqualTo(maintenanceConfigurationResource.Data.ExpireOn));
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
 
             var list = await _configCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(list.Count >= 2, Is.True);
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Exists(item => item.Data.Name == config1.Data.Name), Is.True);
             Assert.That(list.Exists(item => item.Data.Name == config2.Data.Name), Is.True);
         }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationResource config = await CreateMaintenanceConfiguration();
 
             var retrieveConfig = await _configCollection.GetAsync(config.Data.Name);
-            Assert.IsNotEmpty(retrieveConfig.Value.Data.Id);
+            Assert.That((string)retrieveConfig.Value.Data.Id, Is.Not.Empty);
         }
 
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()

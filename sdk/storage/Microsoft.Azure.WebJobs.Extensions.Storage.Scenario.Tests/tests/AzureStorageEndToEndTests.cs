@@ -238,12 +238,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             // ensure we've dynamically increased concurrency
             concurrencyStatus = concurrencyManager.GetStatus(functionId);
-            Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 5);
+            Assert.That(concurrencyStatus.CurrentConcurrency, Is.GreaterThanOrEqualTo(5));
 
             // check a few of the concurrency logs
             var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
             int concurrencyIncreaseLogCount = concurrencyLogs.Count(p => p.Contains("ProcessMessage Increasing concurrency"));
-            Assert.GreaterOrEqual(concurrencyIncreaseLogCount, 3);
+            Assert.That(concurrencyIncreaseLogCount, Is.GreaterThanOrEqualTo(3));
         }
 
         [Test]
@@ -302,12 +302,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             // ensure we've dynamically increased concurrency
             concurrencyStatus = concurrencyManager.GetStatus("SharedBlobQueueListener");
-            Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 2);
+            Assert.That(concurrencyStatus.CurrentConcurrency, Is.GreaterThanOrEqualTo(2));
 
             // check a few of the concurrency logs
             var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
             int concurrencyIncreaseLogCount = concurrencyLogs.Count(p => p.Contains($"{sharedListenerId} Increasing concurrency"));
-            Assert.GreaterOrEqual(concurrencyIncreaseLogCount, 1);
+            Assert.That(concurrencyIncreaseLogCount, Is.GreaterThanOrEqualTo(1));
         }
 
         private async Task EndToEndTest(bool uploadBlobBeforeHostStart, Action<IWebJobsBuilder> additionalSetup = null)
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             await host.StopAsync();
 
             // find the raw string to compare it to the original
-            Assert.NotNull(poisonMessage);
+            Assert.That(poisonMessage, Is.Not.Null);
             Assert.That(poisonMessage.MessageText, Is.EqualTo(messageContent));
 
             // Make sure the functions were called correctly

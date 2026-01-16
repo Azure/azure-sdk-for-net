@@ -280,8 +280,8 @@ namespace Azure.Core.Tests
 
             await pipeline.SendAsync(message, context.CancellationToken);
 
-            CollectionAssert.DoesNotContain(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "UNSET"));
+            Assert.That(activity.Tags, Has.No.Member(new KeyValuePair<string, string>("otel.status_code", "ERROR")));
+            Assert.That(activity.Tags, Has.Member(new KeyValuePair<string, string>("otel.status_code", "UNSET")));
         }
 
         #region Helpers

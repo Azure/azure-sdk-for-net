@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             AsyncPageable<StandbyContainerGroupPoolResource> standbyContainerGroupPools = StandbyPoolExtensions.GetStandbyContainerGroupPoolsAsync(subscription);
             List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolResults = await standbyContainerGroupPools.ToEnumerableAsync();
 
-            Assert.NotNull(standbyContainerGroupPoolResults);
+            Assert.That(standbyContainerGroupPoolResults, Is.Not.Null);
             Assert.That(standbyContainerGroupPoolResults.Count > 0, Is.True);
         }
 

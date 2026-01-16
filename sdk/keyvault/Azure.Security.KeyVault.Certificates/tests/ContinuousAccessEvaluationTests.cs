@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 if (callCount == 0)
                 {
                     // The first challenge should not have any claims.
-                    Assert.IsNull(r.Claims);
+                    Assert.That(r.Claims, Is.Null);
                 }
                 else if (callCount == 1)
                 {

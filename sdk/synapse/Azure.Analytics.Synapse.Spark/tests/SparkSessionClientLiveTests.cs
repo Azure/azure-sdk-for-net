@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             };
             SparkStatementOperation statementOperation = await client.StartCreateSparkStatementAsync(sessionCreateResponse.Id, sparkStatementOptions);
             SparkStatement createStatementResponse = await statementOperation.WaitForCompletionAsync();
-            Assert.NotNull(createStatementResponse);
+            Assert.That(createStatementResponse, Is.Not.Null);
 
             // Verify the Spark statement completes successfully
             Assert.That(LivyStatementStates.Available == createStatementResponse.State,
@@ -90,13 +90,13 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             // Get the list of Spark statements and check that the executed statement exists
             Response<SparkStatementCollection> listStatementResponse = await client.GetSparkStatementsAsync(sessionCreateResponse.Id);
 
-            Assert.NotNull(listStatementResponse.Value);
+            Assert.That(listStatementResponse.Value, Is.Not.Null);
             Assert.That(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id), Is.True);
 
             // Get the list of Spark session and check that the created session exists
             List<SparkSession> listSessionResponse = await SparkTestUtilities.ListSparkSessionsAsync(client);
 
-            Assert.NotNull(listSessionResponse);
+            Assert.That(listSessionResponse, Is.Not.Null);
             Assert.That(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id), Is.True);
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkStatementOperation statementOperation = await client.StartCreateSparkStatementAsync(sessionCreateResponse.Id, sparkStatementOptions);
             SparkStatementOperation anotherStatementOperation = InstrumentOperation(new SparkStatementOperation(int.Parse(sessionOperation.Id), int.Parse(statementOperation.Id), client));
             SparkStatement createStatementResponse = await anotherStatementOperation.WaitForCompletionAsync();
-            Assert.NotNull(createStatementResponse);
+            Assert.That(createStatementResponse, Is.Not.Null);
 
             // Verify the Spark statement completes successfully
             Assert.That(LivyStatementStates.Available == createStatementResponse.State,
@@ -155,13 +155,13 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             // Get the list of Spark statements and check that the executed statement exists
             Response<SparkStatementCollection> listStatementResponse = await client.GetSparkStatementsAsync(sessionCreateResponse.Id);
 
-            Assert.NotNull(listStatementResponse.Value);
+            Assert.That(listStatementResponse.Value, Is.Not.Null);
             Assert.That(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id), Is.True);
 
             // Get the list of Spark session and check that the created session exists
             List<SparkSession> listSessionResponse = await SparkTestUtilities.ListSparkSessionsAsync(client);
 
-            Assert.NotNull(listSessionResponse);
+            Assert.That(listSessionResponse, Is.Not.Null);
             Assert.That(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id), Is.True);
         }
 

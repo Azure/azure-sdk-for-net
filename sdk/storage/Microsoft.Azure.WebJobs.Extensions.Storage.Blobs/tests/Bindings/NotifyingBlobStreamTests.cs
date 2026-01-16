@@ -926,7 +926,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task<int> task = product.ReadAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.IsCompleted, Is.False);
         }
 
@@ -954,7 +954,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task<int> task = product.ReadAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
             Assert.That(task.Result, Is.EqualTo(expectedBytesRead));
         }
@@ -982,7 +982,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task<int> task = product.ReadAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Status, Is.EqualTo(TaskStatus.Canceled));
         }
 
@@ -1010,9 +1010,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task<int> task = product.ReadAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Status, Is.EqualTo(TaskStatus.Faulted));
-            Assert.NotNull(task.Exception);
+            Assert.That(task.Exception, Is.Not.Null);
             Assert.That(task.Exception.InnerException, Is.SameAs(expectedException));
         }
 
@@ -1166,7 +1166,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task task = product.WriteAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.IsCompleted, Is.False);
         }
 
@@ -1193,7 +1193,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task task = product.WriteAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
         }
 
@@ -1220,7 +1220,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task task = product.WriteAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Status, Is.EqualTo(TaskStatus.Canceled));
         }
 
@@ -1248,9 +1248,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             Task task = product.WriteAsync(buffer, offset, count, cancellationToken);
 
             // Assert
-            Assert.NotNull(task);
+            Assert.That(task, Is.Not.Null);
             Assert.That(task.Status, Is.EqualTo(TaskStatus.Faulted));
-            Assert.NotNull(task.Exception);
+            Assert.That(task.Exception, Is.Not.Null);
             Assert.That(task.Exception.InnerException, Is.SameAs(expectedException));
         }
 
@@ -1353,7 +1353,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         private static void AssertEqual(ExpectedAsyncResult expected, IAsyncResult actual,
             bool disposeActual = false)
         {
-            Assert.NotNull(actual);
+            Assert.That(actual, Is.Not.Null);
             Assert.That(actual.AsyncState, Is.SameAs(expected.AsyncState));
             Assert.That(actual.CompletedSynchronously, Is.EqualTo(expected.CompletedSynchronously));
             Assert.That(actual.IsCompleted, Is.EqualTo(expected.IsCompleted));

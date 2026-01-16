@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             // Get
             Response<ExadbVmClusterResource> getExadbVmClusterResponse = await _exadbVmClusterCollection.GetAsync(_exadbVmClusterName);
             ExadbVmClusterResource exadbVmClusterResource = getExadbVmClusterResponse.Value;
-            Assert.IsNotNull(exadbVmClusterResource);
+            Assert.That(exadbVmClusterResource, Is.Not.Null);
             return exadbVmClusterResource;
         }
 

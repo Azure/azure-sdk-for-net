@@ -65,10 +65,10 @@ namespace Azure.Search.Documents.Tests
             Assert.That(field.IsSearchable, Is.True);
             Assert.That(field.IsSortable, Is.True);
             Assert.That(field.AnalyzerName?.ToString(), Is.EqualTo(LexicalAnalyzerName.EnLucene.ToString()));
-            Assert.IsNull(field.IndexAnalyzerName);
-            Assert.IsNull(field.SearchAnalyzerName);
+            Assert.That(field.IndexAnalyzerName, Is.Null);
+            Assert.That(field.SearchAnalyzerName, Is.Null);
             Assert.That(field.NormalizerName?.ToString(), Is.EqualTo(LexicalNormalizerName.Lowercase.ToString()));
-            Assert.IsEmpty(field.SynonymMapNames);
+            Assert.That(field.SynonymMapNames, Is.Empty);
 
             // Make sure that if a SimpleFieldAttribute were also specified, it does not overwrite IsSearchable
             // but does overwrite every other SimpleField property not set otherwise.
@@ -88,10 +88,10 @@ namespace Azure.Search.Documents.Tests
             Assert.That(field.IsSearchable, Is.True);
             Assert.That(field.IsSortable, Is.False);
             Assert.That(field.AnalyzerName?.ToString(), Is.EqualTo(LexicalAnalyzerName.EnLucene.ToString()));
-            Assert.IsNull(field.IndexAnalyzerName);
-            Assert.IsNull(field.SearchAnalyzerName);
+            Assert.That(field.IndexAnalyzerName, Is.Null);
+            Assert.That(field.SearchAnalyzerName, Is.Null);
             Assert.That(field.NormalizerName?.ToString(), Is.EqualTo(LexicalNormalizerName.Lowercase.ToString()));
-            Assert.IsEmpty(field.SynonymMapNames);
+            Assert.That(field.SynonymMapNames, Is.Empty);
         }
     }
 }

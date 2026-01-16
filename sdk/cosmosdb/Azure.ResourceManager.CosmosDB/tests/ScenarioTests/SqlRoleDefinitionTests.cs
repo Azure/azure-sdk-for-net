@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.That(definition.Data.AssignableScopes[0], Is.EqualTo(SqlDatabaseActionScope));
             Assert.That(definition.Data.Permissions, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Permissions[0].DataActions, Has.Count.EqualTo(1));
-            Assert.IsEmpty(definition.Data.Permissions[0].NotDataActions);
+            Assert.That(definition.Data.Permissions[0].NotDataActions, Is.Empty);
             Assert.That(definition.Data.Permissions[0].DataActions[0], Is.EqualTo(PermissionDataActionCreate));
 
             bool ifExists = await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.That(definition.Data.AssignableScopes[0], Is.EqualTo(SqlDatabaseActionScope));
             Assert.That(definition.Data.Permissions, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Permissions[0].DataActions, Has.Count.EqualTo(1));
-            Assert.IsEmpty(definition.Data.Permissions[0].NotDataActions);
+            Assert.That(definition.Data.Permissions[0].NotDataActions, Is.Empty);
             Assert.That(definition.Data.Permissions[0].DataActions[0], Is.EqualTo(PermissionDataActionRead));
 
             definition2 = await SqlRoleDefinitionCollection.GetAsync(RoleDefinitionId);

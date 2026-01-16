@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Support.Tests
             var communicationName = $"dotnet_sdk_test_check_communication_name";
             var content = new SupportNameAvailabilityContent(communicationName, SupportResourceType.MicrosoftSupportCommunications);
             var result = await _subscriptionSupportTicketResource.CheckCommunicationNameAvailabilityAsync(content);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Value.IsNameAvailable, Is.EqualTo(true));
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task GetAll()
         {
             var list = await _supportTicketCommunicationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSupportTicketCommunicationData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketCommunicationName).Data, _existSupportTicketCommunicationName);
         }
 
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Support.Tests
 
         private void ValidateSupportTicketCommunicationData(SupportTicketCommunicationData supportTicketCommunication, string comunicationName)
         {
-            Assert.IsNotNull(supportTicketCommunication);
-            Assert.IsNotEmpty(supportTicketCommunication.Id);
+            Assert.That(supportTicketCommunication, Is.Not.Null);
+            Assert.That((string)supportTicketCommunication.Id, Is.Not.Empty);
             Assert.That(comunicationName, Is.EqualTo(supportTicketCommunication.Name));
         }
     }

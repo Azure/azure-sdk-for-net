@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     vmss2 = vmss;
             }
 
-            Assert.NotNull(vmss1);
-            Assert.NotNull(vmss2);
+            Assert.That(vmss1, Is.Not.Null);
+            Assert.That(vmss2, Is.Not.Null);
         }
     }
 }

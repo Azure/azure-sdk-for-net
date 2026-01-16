@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
             Assert.That(id.SubscriptionId, Is.EqualTo("db1ab6f0-4769-4b27-930e-01e2ef9c123c"));
             Assert.That(id.ResourceType.ToString(), Is.EqualTo("Microsoft.Compute/locations/publishers"));
             Assert.That(id.Name, Is.EqualTo("128technology"));
-            Assert.IsNull(id.Provider);
+            Assert.That(id.Provider, Is.Null);
             Assert.That(id.IsProviderResource, Is.EqualTo(false));
             ValidateLocationBaseResource(id.Parent, LocationInDifferentNamespace, true, "Microsoft.Compute/locations", "db1ab6f0-4769-4b27-930e-01e2ef9c123c");
         }
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
             Assert.That(id.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(id.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/subscriptions/locations/myResourceType"));
             Assert.That(id.Name, Is.EqualTo("myResourceName"));
-            Assert.IsNull(id.Provider);
+            Assert.That(id.Provider, Is.Null);
             Assert.That(id.IsProviderResource, Is.EqualTo(false));
             ValidateLocationBaseResource(id.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
         }
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests
             Assert.That(id.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(id.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/subscriptions/locations/myResourceType/mySingletonResource"));
             Assert.That(id.Name, Is.Empty);
-            Assert.IsNull(id.Provider);
+            Assert.That(id.Provider, Is.Null);
             Assert.That(id.IsProviderResource, Is.EqualTo(false));
 
             var parentId = id.Parent;
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests
             Assert.That(parentId.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(parentId.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/subscriptions/locations/myResourceType"));
             Assert.That(parentId.Name, Is.EqualTo("myResourceName"));
-            Assert.IsNull(parentId.Provider);
+            Assert.That(parentId.Provider, Is.Null);
             Assert.That(parentId.IsProviderResource, Is.EqualTo(false));
 
             ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests
             Assert.That(id.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(id.ResourceType.ToString(), Is.EqualTo("myProvider/myResourceType"));
             Assert.That(id.Name, Is.EqualTo("myResourceName"));
-            Assert.IsNull(id.Provider);
+            Assert.That(id.Provider, Is.Null);
             Assert.That(id.IsProviderResource, Is.EqualTo(true));
 
             ValidateLocationBaseResource(id.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
@@ -112,7 +112,7 @@ namespace Azure.Core.Tests
             Assert.That(id.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(id.ResourceType.ToString(), Is.EqualTo("myProvider/myResourceType/myChildResource"));
             Assert.That(id.Name, Is.EqualTo("myChildResourceName"));
-            Assert.IsNull(id.Provider);
+            Assert.That(id.Provider, Is.Null);
             Assert.That(id.IsProviderResource, Is.EqualTo(false));
 
             var parentId = id.Parent;
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests
             Assert.That(parentId.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(parentId.ResourceType.ToString(), Is.EqualTo("myProvider/myResourceType"));
             Assert.That(parentId.Name, Is.EqualTo("myResourceName"));
-            Assert.IsNull(parentId.Provider);
+            Assert.That(parentId.Provider, Is.Null);
             Assert.That(parentId.IsProviderResource, Is.EqualTo(true));
 
             ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
             Assert.That(id.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(id.ResourceType.ToString(), Is.EqualTo("mySecondNamespace/myChildResource"));
             Assert.That(id.Name, Is.EqualTo("myChildResourceName"));
-            Assert.IsNull(id.Provider);
+            Assert.That(id.Provider, Is.Null);
             Assert.That(id.IsProviderResource, Is.EqualTo(true));
 
             var parentId = id.Parent;
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
             Assert.That(parentId.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(parentId.ResourceType.ToString(), Is.EqualTo("myProvider/myResourceType"));
             Assert.That(parentId.Name, Is.EqualTo("myResourceName"));
-            Assert.IsNull(parentId.Provider);
+            Assert.That(parentId.Provider, Is.Null);
             Assert.That(parentId.IsProviderResource, Is.EqualTo(true));
 
             ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
@@ -156,13 +156,13 @@ namespace Azure.Core.Tests
         public void TryGetPropertiesForLocationResource()
         {
             ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget");
-            Assert.NotNull(id1.SubscriptionId);
+            Assert.That(id1.SubscriptionId, Is.Not.Null);
             Assert.That(id1.SubscriptionId, Is.EqualTo("6b085460-5f21-477e-ba44-1035046e9101"));
             Assert.That(id1.Location.HasValue, Is.True);
             Assert.That(id1.Location, Is.EqualTo(AzureLocation.WestUS2));
             Assert.That(id1.ResourceGroupName, Is.Null);
             ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
-            Assert.NotNull(id1.Parent);
+            Assert.That(id1.Parent, Is.Not.Null);
             Assert.That(expectedId.Equals(id1.Parent), Is.True);
         }
 
@@ -304,13 +304,13 @@ namespace Azure.Core.Tests
         public void TryGetPropertiesForResourceGroupResource()
         {
             ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget");
-            Assert.NotNull(id1.SubscriptionId);
+            Assert.That(id1.SubscriptionId, Is.Not.Null);
             Assert.That(id1.SubscriptionId, Is.EqualTo("6b085460-5f21-477e-ba44-1035046e9101"));
             Assert.That(id1.Location.HasValue, Is.False);
-            Assert.NotNull(id1.ResourceGroupName);
+            Assert.That(id1.ResourceGroupName, Is.Not.Null);
             Assert.That(id1.ResourceGroupName, Is.EqualTo("myRg"));
             ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
-            Assert.NotNull(id1.Parent);
+            Assert.That(id1.Parent, Is.Not.Null);
             Assert.That(expectedId.Equals(id1.Parent), Is.True);
         }
 
@@ -383,9 +383,9 @@ namespace Azure.Core.Tests
             Assert.That(id1.SubscriptionId, Is.Null);
             Assert.That(id1.Location, Is.Null);
             Assert.That(id1.ResourceGroupName, Is.Null);
-            Assert.NotNull(id1.Parent);
+            Assert.That(id1.Parent, Is.Not.Null);
             ResourceIdentifier id2 = GetResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget/flages/myFlange");
-            Assert.NotNull(id2.Parent);
+            Assert.That(id2.Parent, Is.Not.Null);
             Assert.That(id1.Equals(id2.Parent), Is.EqualTo(true));
         }
 
@@ -450,15 +450,15 @@ namespace Azure.Core.Tests
             ResourceIdentifier z = GetResourceIdentifier(x);
             y = z;
 
-            Assert.IsNotNull(z.Parent);
+            Assert.That(z.Parent, Is.Not.Null);
             Assert.That(z.Provider, Is.EqualTo("Microsoft.Insights"));
             Assert.That(z.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/providers"));
             Assert.That(z.Parent.Name, Is.Empty);
 
             if (resourceProviderID is null)
             {
-                Assert.IsNull(z);
-                Assert.IsNull(y);
+                Assert.That(z, Is.Null);
+                Assert.That(y, Is.Null);
             }
             else
             {
@@ -483,8 +483,8 @@ namespace Azure.Core.Tests
 
             if (resourceProviderID is null)
             {
-                Assert.IsNull(z);
-                Assert.IsNull(y);
+                Assert.That(z, Is.Null);
+                Assert.That(y, Is.Null);
             }
             else
             {
@@ -513,8 +513,8 @@ namespace Azure.Core.Tests
 
             if (resourceProviderID is null)
             {
-                Assert.IsNull(z);
-                Assert.IsNull(y);
+                Assert.That(z, Is.Null);
+                Assert.That(y, Is.Null);
             }
             else
             {
@@ -564,26 +564,26 @@ namespace Azure.Core.Tests
 
             resourceId = resourceId.Parent;
             Assert.That(resourceId.ResourceType.ToString(), Is.EqualTo("Microsoft.CognitiveServices/locations"));
-            Assert.IsNull(resourceId.ResourceGroupName);
+            Assert.That(resourceId.ResourceGroupName, Is.Null);
             Assert.That(resourceId.Location, Is.EqualTo(AzureLocation.WestUS));
             Assert.That(resourceId.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
             Assert.That(resourceId.Name, Is.EqualTo("westus"));
 
             resourceId = resourceId.Parent;
             Assert.That(resourceId.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/subscriptions"));
-            Assert.IsNull(resourceId.ResourceGroupName);
-            Assert.IsNull(resourceId.Location);
+            Assert.That(resourceId.ResourceGroupName, Is.Null);
+            Assert.That(resourceId.Location, Is.Null);
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.SubscriptionId);
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.Name);
 
             resourceId = resourceId.Parent;
             Assert.AreEqual("Microsoft.Resources/tenants", resourceId.ResourceType.ToString());
-            Assert.IsNull(resourceId.ResourceGroupName);
-            Assert.IsNull(resourceId.Location);
-            Assert.IsNull(resourceId.SubscriptionId);
+            Assert.That(resourceId.ResourceGroupName, Is.Null);
+            Assert.That(resourceId.Location, Is.Null);
+            Assert.That(resourceId.SubscriptionId, Is.Null);
             Assert.That(resourceId.Name, Is.Empty);
 
-            Assert.IsNull(resourceId.Parent);
+            Assert.That(resourceId.Parent, Is.Null);
         }
 
         [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack", Description = "No provider tagname")]
@@ -597,12 +597,12 @@ namespace Azure.Core.Tests
         public void TryGetPropertiesForSubscriptionResource()
         {
             ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/providers/Contoso.Widgets/widgets/myWidget");
-            Assert.NotNull(id1.SubscriptionId);
+            Assert.That(id1.SubscriptionId, Is.Not.Null);
             Assert.That(id1.SubscriptionId, Is.EqualTo("6b085460-5f21-477e-ba44-1035046e9101"));
             Assert.That(id1.Location, Is.Null);
             Assert.That(id1.ResourceGroupName, Is.Null);
             ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
-            Assert.NotNull(id1.Parent);
+            Assert.That(id1.Parent, Is.Not.Null);
             Assert.That(expectedId.Equals(id1.Parent), Is.True);
         }
 
@@ -610,12 +610,12 @@ namespace Azure.Core.Tests
         public void TryGetPropertiesForSubscriptionProvider()
         {
             ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute");
-            Assert.NotNull(id1.SubscriptionId);
+            Assert.That(id1.SubscriptionId, Is.Not.Null);
             Assert.That(id1.SubscriptionId, Is.EqualTo("db1ab6f0-4769-4b27-930e-01e2ef9c123c"));
             Assert.That(id1.Location, Is.Null);
             Assert.That(id1.ResourceGroupName, Is.Null);
             ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c");
-            Assert.NotNull(id1.Parent);
+            Assert.That(id1.Parent, Is.Not.Null);
             Assert.That(expectedId.Equals(id1.Parent), Is.True);
         }
 
@@ -686,8 +686,8 @@ namespace Azure.Core.Tests
 
             if (resourceProviderID is null)
             {
-                Assert.IsNull(z);
-                Assert.IsNull(y);
+                Assert.That(z, Is.Null);
+                Assert.That(y, Is.Null);
             }
             else
             {
@@ -717,8 +717,8 @@ namespace Azure.Core.Tests
 
             if (resourceProviderID is null)
             {
-                Assert.IsNull(z);
-                Assert.IsNull(y);
+                Assert.That(z, Is.Null);
+                Assert.That(y, Is.Null);
             }
             else
             {
@@ -748,8 +748,8 @@ namespace Azure.Core.Tests
 
             if (resourceProviderID is null)
             {
-                Assert.IsNull(z);
-                Assert.IsNull(y);
+                Assert.That(z, Is.Null);
+                Assert.That(y, Is.Null);
             }
             else
             {
@@ -768,7 +768,7 @@ namespace Azure.Core.Tests
             Assert.DoesNotThrow(() => tenant = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
 
             ResourceIdentifier subscription = GetResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
-            Assert.IsNotNull(subscription);
+            Assert.That(subscription, Is.Not.Null);
             Assert.DoesNotThrow(() => subscription = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
             Assert.DoesNotThrow(() => subscription = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
         }
@@ -777,7 +777,7 @@ namespace Azure.Core.Tests
         public void VerifyRootResource()
         {
             var root = ResourceIdentifier.Root;
-            Assert.IsNull(root.Parent);
+            Assert.That(root.Parent, Is.Null);
             Assert.That(root.ResourceType, Is.EqualTo("Microsoft.Resources/tenants"));
             Assert.That(root.ToString(), Is.EqualTo("/"));
         }
@@ -862,8 +862,8 @@ namespace Azure.Core.Tests
 
             if (resourceProviderID is null)
             {
-                Assert.IsNull(z);
-                Assert.IsNull(y);
+                Assert.That(z, Is.Null);
+                Assert.That(y, Is.Null);
             }
             else
             {
@@ -900,7 +900,7 @@ namespace Azure.Core.Tests
             ResourceType expectedType = $"{extensionNamespace}/{extensionType}";
             Assert.That(subject.ResourceType, Is.Not.EqualTo(targetResourceId.ResourceType));
             Assert.That(subject.ResourceType, Is.EqualTo(expectedType));
-            Assert.NotNull(subject.Parent);
+            Assert.That(subject.Parent, Is.Not.Null);
             Assert.That(subject.Parent, Is.EqualTo(targetResourceId));
         }
 
@@ -940,7 +940,7 @@ namespace Azure.Core.Tests
             Assert.That(locationResource.IsProviderResource, Is.EqualTo(expectedChild));
             Assert.That(locationResource.Location.ToString(), Is.EqualTo("westus2"));
             Assert.That(locationResource.Name, Is.EqualTo("westus2"));
-            Assert.IsNull(locationResource.Provider);
+            Assert.That(locationResource.Provider, Is.Null);
             Assert.That(locationResource.ResourceType.ToString(), Is.EqualTo(expectedResourcetype));
             Assert.That(locationResource.SubscriptionId, Is.EqualTo(expectedSubGuid));
             ValidateSubscriptionResource(locationResource.Parent, locationResource.SubscriptionId);
@@ -950,8 +950,8 @@ namespace Azure.Core.Tests
         {
             Assert.That(subscriptionResource.ToString(), Is.EqualTo($"/subscriptions/{subscriptionId}"));
             Assert.That(subscriptionResource.IsProviderResource, Is.EqualTo(false));
-            Assert.IsNull(subscriptionResource.Location);
-            Assert.IsNull(subscriptionResource.Provider);
+            Assert.That(subscriptionResource.Location, Is.Null);
+            Assert.That(subscriptionResource.Provider, Is.Null);
             Assert.That(subscriptionResource.Name, Is.EqualTo(subscriptionId));
             Assert.That(subscriptionResource.SubscriptionId, Is.EqualTo(subscriptionId));
             Assert.That(subscriptionResource.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/subscriptions"));
@@ -962,10 +962,10 @@ namespace Azure.Core.Tests
         {
             Assert.That(tenantResource.ToString(), Is.EqualTo("/"));
             Assert.That(tenantResource.IsProviderResource, Is.EqualTo(false));
-            Assert.IsNull(tenantResource.Location);
-            Assert.IsNull(tenantResource.Provider);
+            Assert.That(tenantResource.Location, Is.Null);
+            Assert.That(tenantResource.Provider, Is.Null);
             Assert.That(tenantResource.Name, Is.Empty);
-            Assert.IsNull(tenantResource.SubscriptionId);
+            Assert.That(tenantResource.SubscriptionId, Is.Null);
             Assert.That(tenantResource.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/tenants"));
         }
 

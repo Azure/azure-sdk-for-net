@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs.Test
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
             Assert.That(stream.Length, Is.EqualTo(0));
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Test
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
             AssertContent(10, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.That(9, Is.EqualTo(dataSource.Requests.Count));
             AssertContent(100, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.That(4, Is.EqualTo(dataSource.Requests.Count));
             AssertContent(100, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.That(10, Is.EqualTo(dataSource.Requests.Count));
             AssertContent(100, stream);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             bool first = true;
             foreach ((HttpRange Range, BlobRequestConditions Conditions) request in dataSource.Requests)

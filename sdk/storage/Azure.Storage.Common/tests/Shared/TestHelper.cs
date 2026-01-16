@@ -64,8 +64,8 @@ namespace Azure.Storage.Test
         public static void AssertExpectedException<T>(Action action, Func<T, bool> predicate)
             where T : Exception
         {
-            Assert.IsNotNull(action);
-            Assert.IsNotNull(predicate);
+            Assert.That(action, Is.Not.Null);
+            Assert.That(predicate, Is.Not.Null);
 
             try
             {
@@ -85,8 +85,8 @@ namespace Azure.Storage.Test
         public static void AssertExpectedException<T>(Action action, T expectedException, Action<T, T> assertion)
             where T : Exception
         {
-            Assert.IsNotNull(expectedException);
-            Assert.IsNotNull(assertion);
+            Assert.That(expectedException, Is.Not.Null);
+            Assert.That(assertion, Is.Not.Null);
 
             try
             {
@@ -111,7 +111,7 @@ namespace Azure.Storage.Test
         public static async Task AssertExpectedExceptionAsync<T>(Task task, T expectedException, Action<T, T> assertion)
             where T : Exception
         {
-            Assert.IsNotNull(assertion);
+            Assert.That(assertion, Is.Not.Null);
 
             try
             {

@@ -157,9 +157,9 @@ namespace Azure.Storage.Queues.Test
             bool tryResult = EncryptedMessageSerializer.TryDeserialize(new BinaryData(input), out var parsedEncryptedMessage);
 
             Assert.That(tryResult, Is.EqualTo(false));
-            Assert.IsNull(parsedEncryptedMessage?.EncryptedMessageText);
-            Assert.IsNull(parsedEncryptedMessage?.EncryptionData);
-            Assert.IsNull(parsedEncryptedMessage);
+            Assert.That(parsedEncryptedMessage?.EncryptedMessageText, Is.Null);
+            Assert.That(parsedEncryptedMessage?.EncryptionData, Is.Null);
+            Assert.That(parsedEncryptedMessage, Is.Null);
         }
 
         #region ModelComparison

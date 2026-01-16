@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Redis.Tests
             for (int i = 0; i < response.Data.Instances.Count; i++)
             {
                 Assert.That(response.Data.Instances[i].SslPort, Is.EqualTo(15000 + i));
-                Assert.IsNull(response.Data.Instances[i].NonSslPort);
+                Assert.That(response.Data.Instances[i].NonSslPort, Is.Null);
                 Assert.That(response.Data.Instances[i].ShardId, Is.EqualTo(0));
-                Assert.IsNull(response.Data.Instances[i].Zone);
+                Assert.That(response.Data.Instances[i].Zone, Is.Null);
             }
 
             await response.DeleteAsync(WaitUntil.Completed);

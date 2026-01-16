@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             // Get
             Response<CloudExadataInfrastructureResource> getExaInfraResponse = await _exaInfraCollection.GetAsync(_exadataInfraName);
             CloudExadataInfrastructureResource exaInfraResource = getExaInfraResponse.Value;
-            Assert.IsNotNull(exaInfraResource);
+            Assert.That(exaInfraResource, Is.Not.Null);
             return exaInfraResource;
         }
 

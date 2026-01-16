@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableDataFlow flow = await DisposableDataFlow.Create (client, this.Recording);
 
             AsyncPageable<DataFlowResource> dataFlows = client.GetDataFlowsByWorkspaceAsync ();
-            Assert.GreaterOrEqual((await dataFlows.ToListAsync()).Count, 1);
+            Assert.That((await dataFlows.ToListAsync()).Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [RecordedTest]

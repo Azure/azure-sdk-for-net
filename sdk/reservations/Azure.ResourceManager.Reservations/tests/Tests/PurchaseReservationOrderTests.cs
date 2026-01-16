@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = TestHelpers.CreatePurchaseRequestContent("Shared", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            Assert.That(response.Value.Properties.ReservationOrderId, Is.Not.Null);
             var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = TestHelpers.CreatePurchaseRequestContent("Shared", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            Assert.That(response.Value.Properties.ReservationOrderId, Is.Not.Null);
             var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = TestHelpers.CreatePurchaseRequestContent("Single", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            Assert.That(response.Value.Properties.ReservationOrderId, Is.Not.Null);
             var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = TestHelpers.CreatePurchaseRequestContent("Single", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            Assert.That(response.Value.Properties.ReservationOrderId, Is.Not.Null);
             var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.That(purchaseResponse.Value.Data.Name, Is.EqualTo(reservationOrderId));
             Assert.That(purchaseResponse.Value.Data.OriginalQuantity, Is.EqualTo(3));
             Assert.That(purchaseResponse.Value.Data.Term.ToString(), Is.EqualTo(purchaseRequest.Term.ToString()));
-            Assert.IsNotNull(purchaseResponse.Value.Data.Reservations);
+            Assert.That(purchaseResponse.Value.Data.Reservations, Is.Not.Null);
             Assert.That(purchaseResponse.Value.Data.Reservations.Count, Is.EqualTo(1));
         }
     }

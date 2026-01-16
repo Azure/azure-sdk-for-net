@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             // Get webhook: send request
             AppComplianceReportWebhookResource getResult = await appComplianceReportWebhook.GetAsync();
             // Get webhook: verify result
-            Assert.IsNotNull(getResult.Data.Id);
+            Assert.That(getResult.Data.Id, Is.Not.Null);
 
             // Delete webhook
             // Delete webhook: send request

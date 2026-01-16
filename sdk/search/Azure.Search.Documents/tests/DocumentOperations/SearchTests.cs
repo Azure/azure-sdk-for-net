@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Tests
             params string[] expectedKeys)
         {
             List<SearchResult<T>> docs = await response.Value.GetResultsAsync().ToListAsync();
-            CollectionAssert.IsSubsetOf(expectedKeys, docs.Select(keyAccessor));
+            Assert.That(expectedKeys, Is.SubsetOf(docs.Select(keyAccessor)));
         }
 
         private async Task AssertKeysEqual<T>(
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Tests
             params string[] expectedKeys)
         {
             List<SearchResult<T>> docs = await response.Value.GetResultsAsync().ToListAsync();
-            CollectionAssert.AreEquivalent(expectedKeys, docs.Select(keyAccessor));
+            Assert.That(docs.Select(keyAccessor), Is.EquivalentTo(expectedKeys));
         }
 
         private ICollection<FacetResult> GetFacetsForField(
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Tests
             {
                 FacetResult expectedFacet = expectedFacets[i++];
                 Assert.That(actualFacet.Count, Is.EqualTo(expectedFacet.Count));
-                CollectionAssert.IsSubsetOf(actualFacet.Keys, expectedFacet.Keys);
+                Assert.That(actualFacet.Keys, Is.SubsetOf(expectedFacet.Keys));
                 foreach (string key in expectedFacet.Keys)
                 {
                     Assert.That(
@@ -95,9 +95,9 @@ namespace Azure.Search.Documents.Tests
 
             SearchClient client = resources.GetQueryClient();
             SearchResults<SearchDocument> response = await client.SearchAsync<SearchDocument>("*");
-            Assert.IsNull(response.TotalCount);
-            Assert.IsNull(response.Coverage);
-            Assert.IsNull(response.Facets);
+            Assert.That(response.TotalCount, Is.Null);
+            Assert.That(response.Coverage, Is.Null);
+            Assert.That(response.Facets, Is.Null);
 
             List<SearchResult<SearchDocument>> docs = await response.GetResultsAsync().ToListAsync();
             Assert.That(docs.Count, Is.EqualTo(SearchResources.TestDocuments.Length));
@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Tests
             for (int i = 0; i < actual.Length; i++)
             {
                 Assert.That(actual[i].Score, Is.EqualTo(1));
-                Assert.IsNull(actual[i].Highlights);
+                Assert.That(actual[i].Highlights, Is.Null);
                 SearchTestBase.AssertApproximate(
                     expected[i].AsDocument(),
                     actual[i].Document);
@@ -120,9 +120,9 @@ namespace Azure.Search.Documents.Tests
 
             SearchClient client = resources.GetQueryClient();
             SearchResults<Hotel> response = await client.SearchAsync<Hotel>("*");
-            Assert.IsNull(response.TotalCount);
-            Assert.IsNull(response.Coverage);
-            Assert.IsNull(response.Facets);
+            Assert.That(response.TotalCount, Is.Null);
+            Assert.That(response.Coverage, Is.Null);
+            Assert.That(response.Facets, Is.Null);
 
             List<SearchResult<Hotel>> docs = await response.GetResultsAsync().ToListAsync();
             Assert.That(docs.Count, Is.EqualTo(SearchResources.TestDocuments.Length));
@@ -131,7 +131,7 @@ namespace Azure.Search.Documents.Tests
             for (int i = 0; i < actual.Length; i++)
             {
                 Assert.That(actual[i].Score, Is.EqualTo(1));
-                Assert.IsNull(actual[i].Highlights);
+                Assert.That(actual[i].Highlights, Is.Null);
                 Assert.That(actual[i].Document, Is.EqualTo(expected[i]));
             }
         }
@@ -151,9 +151,9 @@ namespace Azure.Search.Documents.Tests
                         })
                 });
             SearchResults<UncasedHotel> response = await client.SearchAsync<UncasedHotel>("*");
-            Assert.IsNull(response.TotalCount);
-            Assert.IsNull(response.Coverage);
-            Assert.IsNull(response.Facets);
+            Assert.That(response.TotalCount, Is.Null);
+            Assert.That(response.Coverage, Is.Null);
+            Assert.That(response.Facets, Is.Null);
 
             List<SearchResult<UncasedHotel>> docs = await response.GetResultsAsync().ToListAsync();
             Assert.That(docs.Count, Is.EqualTo(SearchResources.TestDocuments.Length));
@@ -162,7 +162,7 @@ namespace Azure.Search.Documents.Tests
             for (int i = 0; i < actual.Length; i++)
             {
                 Assert.That(actual[i].Score, Is.EqualTo(1));
-                Assert.IsNull(actual[i].Highlights);
+                Assert.That(actual[i].Highlights, Is.Null);
                 // Flip expected/actual order because we implemented Equals in UncasedHotel
                 Assert.That(expected[i], Is.EqualTo(actual[i].Document));
             }
@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Tests
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await client.SearchAsync<SearchDocument>("*", invalidOptions));
             Assert.That(ex.Status, Is.EqualTo(400));
-            StringAssert.StartsWith("Invalid expression: Syntax error at position 7 in 'This is not a valid filter.'", ex.Message);
+            Assert.That(ex.Message, Does.StartWith("Invalid expression: Syntax error at position 7 in 'This is not a valid filter.'"));
         }
 
         [Test]
@@ -278,21 +278,21 @@ namespace Azure.Search.Documents.Tests
                 h => h.Document.HotelId,
                 "1");
             SearchResult<Hotel> doc = await response.Value.GetResultsAsync().FirstAsync();
-            Assert.IsNotNull(doc.Highlights);
+            Assert.That(doc.Highlights, Is.Not.Null);
             Assert.That(doc.Highlights.Count, Is.EqualTo(2));
-            CollectionAssert.Contains(doc.Highlights.Keys, Description);
-            CollectionAssert.Contains(doc.Highlights.Keys, Category);
+            Assert.That(doc.Highlights.Keys, Has.Member(Description));
+            Assert.That(doc.Highlights.Keys, Has.Member(Category));
 
             Assert.That(
                 doc.Highlights[Category].Single(),
                 Is.EqualTo("<b>Luxury</b>"));
-            CollectionAssert.AreEqual(
-                new[]
+            Assert.That(
+                doc.Highlights[Description],
+                Is.EqualTo(new[]
                 {
                     "Best <b>hotel</b> in town if you like <b>luxury</b> <b>hotels</b>.",
                     "We highly recommend this <b>hotel</b>."
-                },
-                doc.Highlights[Description]);
+                }).AsCollection);
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace Azure.Search.Documents.Tests
                 h => h.Document.HotelId,
                 "2", "10");
             List<SearchResult<Hotel>> docs = await response.Value.GetResultsAsync().ToListAsync();
-            Assert.Greater(docs[0].Score, docs[1].Score);
+            Assert.That(docs[0].Score, Is.GreaterThan(docs[1].Score));
         }
 
         [Test]
@@ -365,9 +365,9 @@ namespace Azure.Search.Documents.Tests
             List<SearchResult<Hotel>> actualDocs =
                 await response.Value.GetResultsAsync().ToListAsync();
 
-            CollectionAssert.AreEqual(
-                expectedDocs.OrderBy(h => h.HotelName),
-                actualDocs.Select(d => d.Document).OrderBy(h => h.HotelName));
+            Assert.That(
+                actualDocs.Select(d => d.Document).OrderBy(h => h.HotelName),
+                Is.EqualTo(expectedDocs.OrderBy(h => h.HotelName)).AsCollection);
         }
 
         [Test]
@@ -476,7 +476,7 @@ namespace Azure.Search.Documents.Tests
                     @"/.*/.*/",
                     new SearchOptions { QueryType = SearchQueryType.Full }));
             Assert.That(ex.Status, Is.EqualTo(400));
-            StringAssert.StartsWith("Failed to parse query string at line 1, column 8.", ex.Message);
+            Assert.That(ex.Message, Does.StartWith("Failed to parse query string at line 1, column 8."));
         }
 
         [Test]
@@ -546,7 +546,7 @@ namespace Azure.Search.Documents.Tests
                 h => h.Document.HotelId,
                 SearchResources.TestDocuments.Select(h => h.HotelId).ToArray());
 
-            Assert.IsNotNull(response.Value.Facets);
+            Assert.That(response.Value.Facets, Is.Not.Null);
             AssertFacetsEqual(
                 GetFacetsForField(response.Value.Facets, "rooms/baseRate", 4),
                 MakeRangeFacet(count: 1, from: null, to: 5.0),
@@ -596,7 +596,7 @@ namespace Azure.Search.Documents.Tests
                 h => h.Document.HotelId,
                 SearchResources.TestDocuments.Select(h => h.HotelId).ToArray());
 
-            Assert.IsNotNull(response.Value.Facets);
+            Assert.That(response.Value.Facets, Is.Not.Null);
             AssertFacetsEqual(
                 GetFacetsForField(response.Value.Facets, "rating", 2),
                 MakeValueFacet(1, 5),
@@ -722,7 +722,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions { Facets = new[] { "Value" } });
 
-            Assert.IsNotNull(response.Value.Facets);
+            Assert.That(response.Value.Facets, Is.Not.Null);
             AssertFacetsEqual(
                 GetFacetsForField(response.Value.Facets, "Value", 5),
                 MakeValueFacet(1, "9'6\""),
@@ -788,9 +788,9 @@ namespace Azure.Search.Documents.Tests
                     new SearchOptions { Facets = new[] { "Value,count:" + data.Length } });
             foreach (FacetResult facet in response.Value.Facets["Value"])
             {
-                Assert.IsInstanceOf(
-                    typeof(DateTimeOffset),
+                Assert.That(
                     facet.Value,
+                    Is.InstanceOf(typeof(DateTimeOffset)),
                     $"Expected a DateTimeOffset, not {facet.Value} of type {facet.Value?.GetType().FullName}");
             }
         }
@@ -819,9 +819,9 @@ namespace Azure.Search.Documents.Tests
                     new SearchOptions { Facets = new[] { "Value,count:" + data.Length } });
             foreach (FacetResult facet in response.Value.Facets["Value"])
             {
-                Assert.IsInstanceOf(
-                    typeof(string),
+                Assert.That(
                     facet.Value,
+                    Is.InstanceOf(typeof(string)),
                     $"Expected a string, not {facet.Value} of type {facet.Value?.GetType().FullName}");
             }
         }
@@ -845,28 +845,28 @@ namespace Azure.Search.Documents.Tests
 
             // Get the first page
             Page<SearchResult<Hotel>> page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 1000);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
             ids.AddRange(page.Values.Select(h => h.Document.HotelId));
-            Assert.NotNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Not.Null);
 
             // Get the second page
             response = await client.SearchAsync<Hotel>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 1000);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
             ids.AddRange(page.Values.Select(h => h.Document.HotelId));
-            Assert.NotNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Not.Null);
 
             // Get the third page
             response = await client.SearchAsync<Hotel>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 1000);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
             ids.AddRange(page.Values.Select(h => h.Document.HotelId));
-            Assert.IsNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Null);
 
             // Verify we saw everything
-            CollectionAssert.AreEquivalent(
-                Enumerable.Range(1, size).Select(i => i.ToString()),
-                ids);
+            Assert.That(
+                ids,
+                Is.EquivalentTo(Enumerable.Range(1, size).Select(i => i.ToString())));
         }
 
         [Test]
@@ -888,28 +888,28 @@ namespace Azure.Search.Documents.Tests
 
             // Get the first page
             Page<SearchResult<SearchDocument>> page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 1000);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
-            Assert.NotNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Not.Null);
 
             // Get the second page
             response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 1000);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
-            Assert.NotNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Not.Null);
 
             // Get the third page
             response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 1000);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
-            Assert.IsNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Null);
 
             // Verify we saw everything
-            CollectionAssert.AreEquivalent(
-                Enumerable.Range(1, size).Select(i => i.ToString()),
-                ids);
+            Assert.That(
+                ids,
+                Is.EquivalentTo(Enumerable.Range(1, size).Select(i => i.ToString())));
         }
 
         [Test]
@@ -930,35 +930,35 @@ namespace Azure.Search.Documents.Tests
 
             // Get the first page
             Page<SearchResult<SearchDocument>> page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 50);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(50));
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
-            Assert.NotNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Not.Null);
 
             // Get the second page
             response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 50);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(50));
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
-            Assert.NotNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Not.Null);
 
             // Get the third page
             response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 50);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(50));
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
-            Assert.NotNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Not.Null);
 
             // Get the final page
             response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
-            Assert.LessOrEqual(page.Values.Count, 50);
+            Assert.That(page.Values.Count, Is.LessThanOrEqualTo(50));
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
-            Assert.IsNull(page.ContinuationToken);
+            Assert.That(page.ContinuationToken, Is.Null);
 
             // Verify we saw everything
-            CollectionAssert.AreEquivalent(
-                Enumerable.Range(1, size).Select(i => i.ToString()),
-                ids);
+            Assert.That(
+                ids,
+                Is.EquivalentTo(Enumerable.Range(1, size).Select(i => i.ToString())));
         }
 
         [Test]
@@ -989,12 +989,12 @@ namespace Azure.Search.Documents.Tests
             List<string> ids = new List<string>();
             await foreach (Page<SearchResult<SearchDocument>> page in response.Value.GetResultsAsync().AsPages())
             {
-                Assert.LessOrEqual(page.Values.Count, 1000);
+                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
                 ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
             }
-            CollectionAssert.AreEquivalent(
-                Enumerable.Range(1, size).Select(i => i.ToString()),
-                ids);
+            Assert.That(
+                ids,
+                Is.EquivalentTo(Enumerable.Range(1, size).Select(i => i.ToString())));
         }
 
         [Test]
@@ -1014,12 +1014,12 @@ namespace Azure.Search.Documents.Tests
             List<string> ids = new List<string>();
             await foreach (Page<SearchResult<Hotel>> page in response.Value.GetResultsAsync().AsPages())
             {
-                Assert.LessOrEqual(page.Values.Count, 1000);
+                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(1000));
                 ids.AddRange(page.Values.Select(d => d.Document.HotelId));
             }
-            CollectionAssert.AreEquivalent(
-                Enumerable.Range(1, size).Select(i => i.ToString()),
-                ids);
+            Assert.That(
+                ids,
+                Is.EquivalentTo(Enumerable.Range(1, size).Select(i => i.ToString())));
         }
 
         [Test]
@@ -1038,12 +1038,12 @@ namespace Azure.Search.Documents.Tests
             List<string> ids = new List<string>();
             await foreach (Page<SearchResult<Hotel>> page in response.Value.GetResultsAsync().AsPages())
             {
-                Assert.LessOrEqual(page.Values.Count, 50);
+                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(50));
                 ids.AddRange(page.Values.Select(d => d.Document.HotelId));
             }
-            CollectionAssert.AreEquivalent(
-                Enumerable.Range(1, size).Select(i => i.ToString()),
-                ids);
+            Assert.That(
+                ids,
+                Is.EquivalentTo(Enumerable.Range(1, size).Select(i => i.ToString())));
         }
 
         [Test]
@@ -1081,14 +1081,14 @@ namespace Azure.Search.Documents.Tests
             };
             SearchOptions clonedSearchOptions = source.Clone();
 
-            CollectionAssert.AreEquivalent(source.Facets, clonedSearchOptions.Facets); // A non-null collection with multiple items
+            Assert.That(clonedSearchOptions.Facets, Is.EquivalentTo(source.Facets)); // A non-null collection with multiple items
             Assert.That(clonedSearchOptions.Filter, Is.EqualTo(source.Filter)); // A string value
-            Assert.IsNull(clonedSearchOptions.IncludeTotalCount); // An unset bool? value
-            Assert.IsNull(source.QueryType); // An unset enum? value
-            Assert.IsNull(clonedSearchOptions.Select); // A `null` collection
+            Assert.That(clonedSearchOptions.IncludeTotalCount, Is.Null); // An unset bool? value
+            Assert.That(source.QueryType, Is.Null); // An unset enum? value
+            Assert.That(clonedSearchOptions.Select, Is.Null); // A `null` collection
             Assert.That(clonedSearchOptions.SessionId, Is.EqualTo(source.SessionId)); // A string value
             Assert.That(clonedSearchOptions.Size, Is.EqualTo(source.Size)); // An int? value
-            Assert.IsNull(clonedSearchOptions.Skip); // An int? value set as `null`
+            Assert.That(clonedSearchOptions.Skip, Is.Null); // An int? value set as `null`
             Assert.That(clonedSearchOptions.Debug, Is.EqualTo(source.Debug));
             Assert.That(clonedSearchOptions.SemanticSearch.SemanticConfigurationName, Is.EqualTo(source.SemanticSearch.SemanticConfigurationName));
             Assert.That(clonedSearchOptions.SemanticSearch.QueryAnswer.AnswerType, Is.EqualTo(source.SemanticSearch.QueryAnswer.AnswerType));
@@ -1116,7 +1116,7 @@ namespace Azure.Search.Documents.Tests
             SearchClient client = resource.GetSearchClient();
             SearchResults<Hotel> results = await client.SearchAsync<Hotel>("*", querySourceAuthorization: null ,enableElevatedRead: true);
 
-            Assert.IsNotNull(results);
+            Assert.That(results, Is.Not.Null);
             Assert.That(results.Values.Count, Is.EqualTo(10));
 
             // Using a simulated GUID should fail since it is malformed.

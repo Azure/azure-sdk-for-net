@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create a Pipeline
             string pipelineName = Recording.GenerateAssetName("adf-pipeline-");
             var pipeline = await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
-            Assert.IsNotNull(pipeline);
+            Assert.That(pipeline, Is.Not.Null);
             Assert.That(pipeline.Data.Name, Is.EqualTo(pipelineName));
             // Exist
             bool flag = await dataFactory.GetDataFactoryPipelines().ExistsAsync(pipelineName);
             Assert.That(flag, Is.True);
             // Get
             var pipelineGet = await dataFactory.GetDataFactoryPipelines().GetAsync(pipelineName);
-            Assert.IsNotNull(pipeline);
+            Assert.That(pipeline, Is.Not.Null);
             Assert.That(pipelineGet.Value.Data.Name, Is.EqualTo(pipelineName));
             // Get All
             var list = await dataFactory.GetDataFactoryPipelines().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Count, Is.EqualTo(1));
             //Delete
             await pipeline.DeleteAsync(WaitUntil.Completed);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create a Pipeline
             string pipelineName = Recording.GenerateAssetName($"adf-pipeline-{name}-");
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, pipelineFunc(dataFactory, datasetSourceName, datasetSinkName, linkedServiceSourceName, linkedServiceSinkName));
-            Assert.NotNull(result.Value.Id);
+            Assert.That(result.Value.Id, Is.Not.Null);
         }
 
         public async Task PowerQueryCreate(Func<DataFactoryResource, string, string, string, DataFactoryPipelineData> pipelineFunc)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string pipelineName = Recording.GenerateAssetName($"adf-pipeline-executewarnglingdataflow-");
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, pipelineFunc(dataFactory, linkedServiceSourceName, linkedServiceSinkName, integrationRuntimeName));
-            Assert.NotNull(result.Value.Id);
+            Assert.That(result.Value.Id, Is.Not.Null);
         }
 
         private async Task<DataFactoryDatasetResource> CreateDefaultAzureDatabricksDeltaLakeDatasets(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)

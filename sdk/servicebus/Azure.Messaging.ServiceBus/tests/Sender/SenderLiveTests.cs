@@ -210,7 +210,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 await sender.CancelScheduledMessageAsync(seq);
                 msg = await receiver.PeekMessageAsync(seq);
-                Assert.IsNull(msg);
+                Assert.That(msg, Is.Null);
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 foreach (long seq in sequenceNums)
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
-                    Assert.IsNull(msg);
+                    Assert.That(msg, Is.Null);
                 }
 
                 // can cancel empty array
@@ -269,7 +269,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 foreach (long seq in sequenceNums)
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
-                    Assert.IsNull(msg);
+                    Assert.That(msg, Is.Null);
                 }
 
                 // can cancel empty list
@@ -313,7 +313,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 foreach (long seq in sequenceNums)
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
-                    Assert.IsNull(msg);
+                    Assert.That(msg, Is.Null);
                 }
 
                 // can cancel empty enumerable
@@ -550,7 +550,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var start = DateTime.UtcNow;
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 var end = DateTime.UtcNow;
-                Assert.Less(end - start, TimeSpan.FromSeconds(5));
+                Assert.That(end - start, Is.LessThan(TimeSpan.FromSeconds(5)));
             }
         }
 

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.BasicOrStandard));
             Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(0));
             Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.Automatic));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.That(responseCreate.Data.Zones, Is.Empty);
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
             Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
             Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.Automatic));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.That(responseCreate.Data.Zones, Is.Empty);
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
             Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
             Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.NoZones));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.That(responseCreate.Data.Zones, Is.Empty);
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
             Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
             Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.NoZones));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.That(responseCreate.Data.Zones, Is.Empty);
 
             var patch = new RedisPatch()
             {

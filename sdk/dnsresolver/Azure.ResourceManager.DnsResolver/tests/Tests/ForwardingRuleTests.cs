@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedForwardingRule = await createdForwardingRule.Value.UpdateAsync(patchableForwardingRuleData);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedForwardingRule.Value.Data.Metadata, patchableForwardingRuleData.Metadata);
+            Assert.That(patchableForwardingRuleData.Metadata, Is.EquivalentTo(patchedForwardingRule.Value.Data.Metadata));
         }
 
         [Test]

@@ -120,7 +120,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             batch.AddWorkspaceQuery("wid", "query", LogsQueryTimeRange.All);
 
             LogsBatchQueryResultCollection batchResults = await client.QueryBatchAsync(batch);
-            Assert.NotNull(batchResults.GetResult("0"));
+            Assert.That(batchResults.GetResult("0"), Is.Not.Null);
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             });
 
             await client.QueryWorkspaceAsync("", "", LogsQueryTimeRange.All);
-            StringAssert.StartsWith("https://api.loganalytics.io", mockTransport.SingleRequest.Uri.ToString());
+            Assert.That(mockTransport.SingleRequest.Uri.ToString(), Does.StartWith("https://api.loganalytics.io"));
         }
 
         /// <summary>

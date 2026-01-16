@@ -44,7 +44,7 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, Startup_BinaryServiceQueueTextClientQueue.DlqQueueName, QueueMessageEncoding.None);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             var response = await queueClient.ReceiveMessageAsync(default, cts.Token);
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.MessageText, Is.EqualTo(inputMessage));
         }
     }

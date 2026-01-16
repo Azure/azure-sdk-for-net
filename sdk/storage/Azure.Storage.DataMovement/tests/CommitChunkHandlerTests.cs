@@ -59,13 +59,13 @@ namespace Azure.Storage.DataMovement.Tests
                     Thread.Sleep(TimeSpan.FromSeconds(_maxDelayInSec));
 
                     currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
-                    Assert.LessOrEqual(currentFailedEventCount, expectedFailureCount, _failedEventMsg);
+                    Assert.That(currentFailedEventCount, Is.LessThanOrEqualTo(expectedFailureCount), _failedEventMsg);
                     currentPutBlockCount = behaviors.PutBlockTask.Invocations.Count;
-                    Assert.LessOrEqual(currentPutBlockCount, expectedPutBlockCount, _putBlockMsg);
+                    Assert.That(currentPutBlockCount, Is.LessThanOrEqualTo(expectedPutBlockCount), _putBlockMsg);
                     currentProgressReportedCount = behaviors.ReportProgressInBytesTask.Invocations.Count;
-                    Assert.LessOrEqual(currentProgressReportedCount, expectedReportProgressCount, _reportProgressInBytesMsg);
+                    Assert.That(currentProgressReportedCount, Is.LessThanOrEqualTo(expectedReportProgressCount), _reportProgressInBytesMsg);
                     currentCompleteDownloadCount = behaviors.QueueCommitBlockTask.Invocations.Count;
-                    Assert.LessOrEqual(currentCompleteDownloadCount, expectedCompleteFileCount, _commitBlockMsg);
+                    Assert.That(currentCompleteDownloadCount, Is.LessThanOrEqualTo(expectedCompleteFileCount), _commitBlockMsg);
                 }
             }
             catch (TaskCanceledException)

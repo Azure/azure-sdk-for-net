@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         protected KeyResolver GetResolver(MockTransport transport)
         {
-            Assert.NotNull(transport);
+            Assert.That(transport, Is.Not.Null);
 
             CryptographyClientOptions options = new CryptographyClientOptions
             {

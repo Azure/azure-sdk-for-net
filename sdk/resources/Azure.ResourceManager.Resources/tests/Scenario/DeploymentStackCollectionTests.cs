@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources.Tests
             await getStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
 
             // There are more stacks in the sub than just the one created for the test:
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
 
         /* MG Scoped Deployment Stack Tests */

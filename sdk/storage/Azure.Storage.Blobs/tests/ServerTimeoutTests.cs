@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Tests
             }
 
             // Assert
-            StringAssert.Contains($"timeout={ServerTimeoutSeconds}", _transport.SingleRequest.Uri.ToString());
+            Assert.That(_transport.SingleRequest.Uri.ToString(), Does.Contain($"timeout={ServerTimeoutSeconds}"));
         }
     }
 }

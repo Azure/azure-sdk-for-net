@@ -187,7 +187,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             await testEventsRaised.AssertSingleCompletedCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
         }
@@ -222,12 +222,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             await testEventsRaised.AssertSingleFailedCheck(1);
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
             var testException = testEventsRaised.FailedEvents.First().Exception;
-            Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            Assert.That(testException, Is.Not.Null, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             if (testException is RequestFailedException rfe)
             {
                 Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
@@ -269,7 +269,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
@@ -378,7 +378,7 @@ namespace Azure.Storage.DataMovement.Tests
             for (int i = 0; i < objectCount; i++)
             {
                 // Assert
-                Assert.NotNull(uploadedObjectInfo[i].TransferOperation);
+                Assert.That(uploadedObjectInfo[i].TransferOperation, Is.Not.Null);
                 using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
                     uploadedObjectInfo[i].TransferOperation,
@@ -567,7 +567,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
@@ -623,14 +623,14 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
             Assert.That(await ExistsAsync(objectClient), Is.True);
             await testEventRaised.AssertSingleFailedCheck(1);
             var testException = testEventRaised.FailedEvents.First().Exception;
-            Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            Assert.That(testException, Is.Not.Null, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             if (testException is RequestFailedException rfe)
             {
                 Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));

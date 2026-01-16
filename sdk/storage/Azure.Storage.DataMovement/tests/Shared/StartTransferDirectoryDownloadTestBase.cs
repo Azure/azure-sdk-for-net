@@ -261,7 +261,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> localItemsAfterDownload = Directory.GetFiles(destinationFolder, "*", SearchOption.AllDirectories).ToList();
 
             // Assert
-            Assert.IsEmpty(localItemsAfterDownload);
+            Assert.That(localItemsAfterDownload, Is.Empty);
             testEventRaised.AssertUnexpectedFailureCheck();
         }
 
@@ -513,7 +513,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertContainerCompletedCheck(4);
@@ -553,7 +553,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
@@ -595,7 +595,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
@@ -639,7 +639,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));

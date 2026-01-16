@@ -108,7 +108,7 @@ namespace CoreWCF
             Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.False);
             QueueClient queueClient = TestHelper.GetQueueClient(azuriteFixture.GetTransport(), connectionString, Startup_EndToEnd.DlqQueueName, QueueMessageEncoding.Base64);
             QueueMessage message = await queueClient.ReceiveMessageAsync();
-            Assert.IsNotNull(message.MessageText);
+            Assert.That(message.MessageText, Is.Not.Null);
         }
     }
 }

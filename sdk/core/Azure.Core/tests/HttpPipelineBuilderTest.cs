@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
             }
 
             Assert.That(request.Headers.TryGetValue("User-Agent", out string value), Is.True);
-            StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);
+            Assert.That(value, Does.StartWith($"azsdk-net-Core.Tests/{informationalVersion} "));
         }
 
         [Test]
@@ -154,9 +154,9 @@ namespace Azure.Core.Tests
 
             Assert.That(request.Headers.TryGetValue("User-Agent", out string value), Is.True);
 #if NETFRAMEWORK
-            StringAssert.StartsWith($"azsdk-net-mscorlib/{informationalVersion} ", value);
+            Assert.That(value, Does.StartWith($"azsdk-net-mscorlib/{informationalVersion} "));
 #else
-            StringAssert.StartsWith($"azsdk-net-System.Private.CoreLib/{informationalVersion} ", value);
+            Assert.That(value, Does.StartWith($"azsdk-net-System.Private.CoreLib/{informationalVersion} "));
 #endif
         }
 
@@ -169,9 +169,9 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, telemetryPolicy);
 
             Assert.That(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent), Is.True);
-            StringAssert.IsMatch(Regex.Escape("azsdk-net-Core.Tests/") +
+            Assert.That(userAgent, Does.Match(Regex.Escape("azsdk-net-Core.Tests/") +
                                  "[.\\-0-9a-z]+" +
-                                 Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})"), userAgent);
+                                 Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})")));
         }
 
         [Test]

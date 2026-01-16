@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Tests
             string peerAsnName = Recording.GenerateAssetName("peerAsn");
             await CreatePeerAsn(peerAsnName);
             var list = await _peerAsnCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePeeringService(list.First(item => item.Data.Name == peerAsnName), peerAsnName);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Peering.Tests
 
         private void ValidatePeeringService(PeerAsnResource peerAsn, string peerAsnName)
         {
-            Assert.IsNotNull(peerAsn);
+            Assert.That(peerAsn, Is.Not.Null);
             Assert.That(peerAsn.Data.Name, Is.EqualTo(peerAsnName));
             Assert.That(peerAsn.Data.PeerName, Is.EqualTo(peerAsnName));
             Assert.That(peerAsn.Data.PeerAsn >= 1, Is.True);

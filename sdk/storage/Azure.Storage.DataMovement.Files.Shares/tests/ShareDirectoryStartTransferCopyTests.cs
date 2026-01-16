@@ -144,7 +144,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationContainer.GetRootDirectoryClient() :
                 destinationContainer.GetDirectoryClient(destinationPrefix);
             IList<ShareFileItem> items = await destinationDirectory.GetFilesAndDirectoriesAsync(cancellationToken: cancellationToken).ToListAsync();
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         protected override async Task VerifyResultsAsync(
@@ -461,10 +461,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.IsEmpty(destinationProperties.Metadata);
-                Assert.IsNull(destinationProperties.ContentDisposition);
-                Assert.IsNull(destinationProperties.ContentLanguage);
-                Assert.IsNull(destinationProperties.CacheControl);
+                Assert.That(destinationProperties.Metadata, Is.Empty);
+                Assert.That(destinationProperties.ContentDisposition, Is.Null);
+                Assert.That(destinationProperties.ContentLanguage, Is.Null);
+                Assert.That(destinationProperties.CacheControl, Is.Null);
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
             {
@@ -603,7 +603,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.IsEmpty(destinationProperties.Metadata);
+                Assert.That(destinationProperties.Metadata, Is.Empty);
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
             {
@@ -809,7 +809,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -903,7 +903,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1061,7 +1061,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1143,7 +1143,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1243,7 +1243,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1415,7 +1415,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1499,7 +1499,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1592,7 +1592,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1692,7 +1692,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
-                Assert.NotNull(transfer);
+                Assert.That(transfer, Is.Not.Null);
                 Assert.That(transfer.HasCompleted, Is.True);
                 Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1780,7 +1780,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
-                Assert.NotNull(transfer);
+                Assert.That(transfer, Is.Not.Null);
                 Assert.That(transfer.HasCompleted, Is.True);
                 Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1865,7 +1865,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1934,7 +1934,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -1964,7 +1964,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Ensure the Symlink file was skipped and not copied
             Assert.That(sourceFileNames.Count, Is.EqualTo(2));
             Assert.That(destinationFileNames.Count, Is.EqualTo(1));
-            Assert.Contains("item1-symlink", sourceFileNames);
+            Assert.That(sourceFileNames, Does.Contain("item1-symlink"));
             Assert.That(destinationFileNames.Contains("item1-symlink"), Is.False);
             Assert.That(destinationFileNames[0], Is.EqualTo("item1"));
         }
@@ -2041,7 +2041,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
-                Assert.NotNull(transfer);
+                Assert.That(transfer, Is.Not.Null);
                 Assert.That(transfer.HasCompleted, Is.True);
                 Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -2123,7 +2123,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
-                Assert.NotNull(transfer);
+                Assert.That(transfer, Is.Not.Null);
                 Assert.That(transfer.HasCompleted, Is.True);
                 Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
@@ -2203,7 +2203,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
+            Assert.That(transfer, Is.Not.Null);
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 

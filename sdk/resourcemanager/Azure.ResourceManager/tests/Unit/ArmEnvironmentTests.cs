@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Tests
         public void DefaultValueIsNull()
         {
             var defaultValue = default(ArmEnvironment);
-            Assert.IsNull(defaultValue.Endpoint);
-            Assert.IsNull(defaultValue.Audience);
-            Assert.IsNull(defaultValue.DefaultScope);
+            Assert.That(defaultValue.Endpoint, Is.Null);
+            Assert.That(defaultValue.Audience, Is.Null);
+            Assert.That(defaultValue.DefaultScope, Is.Null);
         }
 
         [TestCase]

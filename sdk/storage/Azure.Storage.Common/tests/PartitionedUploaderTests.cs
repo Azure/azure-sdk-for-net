@@ -102,7 +102,7 @@ namespace Azure.Storage.Tests
                 .Returns<Stream, long, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((stream, offset, obj, progress, validationOptions, async, cancellation) =>
                 {
                     Assert.That(stream.CanSeek, Is.True, "PartitionedUploader sent non-seekable stream to the REST client");
-                    Assert.GreaterOrEqual(maxSize, stream.Read(new byte[maxSize], 0, maxSize));
+                    Assert.That(maxSize, Is.GreaterThanOrEqualTo(stream.Read(new byte[maxSize], 0, maxSize)));
                     validationOptionsAssertion?.Invoke(validationOptions);
                     return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
                 });
@@ -118,7 +118,7 @@ namespace Azure.Storage.Tests
             mock.Setup(del => del(It.IsNotNull<BinaryData>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
                 .Returns<BinaryData, long, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((content, offset, obj, progress, validationOptions, async, cancellation) =>
                 {
-                    Assert.GreaterOrEqual(maxSize, content.ToMemory().Length);
+                    Assert.That(maxSize, Is.GreaterThanOrEqualTo(content.ToMemory().Length));
                     validationOptionsAssertion?.Invoke(validationOptions);
                     return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
                 });
@@ -208,7 +208,7 @@ namespace Azure.Storage.Tests
             Response<object> result = await partitionedUploader.UploadInternal(stream.Object, default, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);
 
             // assert streams were actually sent to delegates; the delegates themselves threw if conditions weren't met
-            Assert.Greater(mocks.SingleUploadStream.Invocations.Count + mocks.PartitionUploadStream.Invocations.Count, 0);
+            Assert.That(mocks.SingleUploadStream.Invocations.Count + mocks.PartitionUploadStream.Invocations.Count, Is.GreaterThan(0));
         }
 
         [Test]
@@ -254,12 +254,12 @@ namespace Azure.Storage.Tests
             if (oneshot)
             {
                 Assert.That(mocks.SingleUploadStream.Invocations.Count, Is.EqualTo(1));
-                Assert.IsEmpty(mocks.PartitionUploadStream.Invocations);
-                Assert.IsEmpty(mocks.Commit.Invocations);
+                Assert.That(mocks.PartitionUploadStream.Invocations, Is.Empty);
+                Assert.That(mocks.Commit.Invocations, Is.Empty);
             }
             else
             {
-                Assert.IsEmpty(mocks.SingleUploadStream.Invocations);
+                Assert.That(mocks.SingleUploadStream.Invocations, Is.Empty);
                 Assert.That(mocks.PartitionUploadStream.Invocations.Count, Is.EqualTo(numPartitions));
                 Assert.That(mocks.Commit.Invocations.Count, Is.EqualTo(1));
             }
@@ -376,7 +376,7 @@ namespace Azure.Storage.Tests
             // assert every pool rental was returned
             int rents = arraypool.Invocations.Where(i => i.Method.Name == "Rent").Count();
             int returns = arraypool.Invocations.Where(i => i.Method.Name == "Return").Count();
-            Assert.Greater(rents, 0);
+            Assert.That(rents, Is.GreaterThan(0));
             Assert.That(returns, Is.EqualTo(rents));
         }
 

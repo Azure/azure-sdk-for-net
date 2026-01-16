@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Tests
             Assert.That(aset2.Data.Plan, Is.EqualTo(aset.Data.Plan));
             if (aset.Data.Sku != null && aset2.Data.Sku != null)
             {
-                Assert.NotNull(aset.Data.Sku);
-                Assert.NotNull(aset2.Data.Sku);
+                Assert.That(aset.Data.Sku, Is.Not.Null);
+                Assert.That(aset2.Data.Sku, Is.Not.Null);
                 Assert.That(aset2.Data.Sku.Name, Is.EqualTo(aset.Data.Sku.Name));
                 Assert.That(aset2.Data.Sku.Tier, Is.EqualTo(aset.Data.Sku.Tier));
                 Assert.That(aset2.Data.Sku.Size, Is.EqualTo(aset.Data.Sku.Size));
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Tests
             Assert.That(actual.Data.Name, Is.EqualTo(expected.Data.Name));
             Assert.That(actual.Data.TenantId, Is.EqualTo(expected.Data.TenantId));
             Assert.That(actual.Data.ResourceType, Is.EqualTo(expected.Data.ResourceType));
-            Assert.IsNotNull(actual.Data.Details, "Details were null");
-            Assert.IsNotNull(actual.Data.Children, "Children were null");
+            Assert.That(actual.Data.Details, Is.Not.Null, "Details were null");
+            Assert.That(actual.Data.Children, Is.Not.Null, "Children were null");
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName)
