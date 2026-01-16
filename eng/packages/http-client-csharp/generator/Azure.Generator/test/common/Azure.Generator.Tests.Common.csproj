@@ -13,7 +13,6 @@
 		<PackageReference Include="Azure.Core" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
 	</ItemGroup>
 

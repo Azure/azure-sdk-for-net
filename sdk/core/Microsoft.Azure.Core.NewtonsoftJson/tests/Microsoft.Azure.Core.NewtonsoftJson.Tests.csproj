@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Azure.Core.Tests</RootNamespace>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -8,7 +8,7 @@
     <PackageReference Include="Azure.Search.Documents" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
-        <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,7 +10,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
 
