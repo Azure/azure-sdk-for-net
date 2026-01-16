@@ -41,7 +41,7 @@ internal static class StructuredMessage
             out Flags flags,
             out int totalSegments)
         {
-            Errors.AssertBufferExactSize(buffer, 13, nameof(buffer));
+            Errors.AssertBufferExactSize(buffer, StreamHeaderLength, nameof(buffer));
             if (buffer[StreamHeaderVersionOffset] != 1)
             {
                 throw new InvalidDataException("Unrecognized version of structured message.");

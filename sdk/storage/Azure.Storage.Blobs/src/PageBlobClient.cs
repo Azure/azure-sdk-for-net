@@ -1426,7 +1426,6 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         // report progress in terms of caller bytes, not encoded bytes
                         structuredContentLength = contentLength;
-                        contentLength = (content?.Length - content?.Position) ?? 0;
                         range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
                         structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
                         content = content?.WithNoDispose().WithProgress(progressHandler);
