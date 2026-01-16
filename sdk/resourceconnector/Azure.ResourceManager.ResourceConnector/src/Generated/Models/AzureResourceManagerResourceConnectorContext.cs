@@ -17,10 +17,12 @@ namespace Azure.ResourceManager.ResourceConnector
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApplianceArtifactProfile))]
-    [ModelReaderWriterBuildable(typeof(ApplianceClusterUserCredentialResult))]
-    [ModelReaderWriterBuildable(typeof(ApplianceClusterUserKeysResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceCredentialKubeconfig))]
+    [ModelReaderWriterBuildable(typeof(ApplianceEvent))]
+    [ModelReaderWriterBuildable(typeof(ApplianceListCredentialResult))]
+    [ModelReaderWriterBuildable(typeof(ApplianceListKeysResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceListResult))]
+    [ModelReaderWriterBuildable(typeof(ApplianceNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(ApplianceProperties))]
     [ModelReaderWriterBuildable(typeof(AppliancePropertiesInfrastructureConfig))]
     [ModelReaderWriterBuildable(typeof(ApplianceSshKey))]
@@ -39,8 +41,6 @@ namespace Azure.ResourceManager.ResourceConnector
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceData))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorAppliancePatch))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceResource))]
-    [ModelReaderWriterBuildable(typeof(ResourceConnectorEvent))]
-    [ModelReaderWriterBuildable(typeof(ResourceConnectorNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

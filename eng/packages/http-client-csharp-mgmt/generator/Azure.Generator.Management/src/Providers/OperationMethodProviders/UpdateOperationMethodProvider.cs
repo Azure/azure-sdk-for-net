@@ -12,13 +12,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     {
         public UpdateOperationMethodProvider(
             ResourceClientProvider resource,
-            RequestPathPattern contextualPath,
+            OperationContext operationContext,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
             ResourceOperationKind methodKind,
             bool forceLro = false)
-            : base(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind), forceLro: forceLro)
+            : base(resource, operationContext, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind), forceLro: forceLro)
         {
         }
 
