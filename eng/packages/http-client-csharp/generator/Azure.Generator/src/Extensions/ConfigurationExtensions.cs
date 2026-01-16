@@ -12,6 +12,9 @@ namespace Azure.Generator.Extensions
         public static bool UseModelNamespace(this Configuration config) =>
             UseModelNamespace(config.AdditionalConfigurationOptions);
 
+        public static string? GetNamespace(this Configuration config) =>
+            config.AdditionalConfigurationOptions.TryGetValue("namespace", out var value) ? value.ToString() : null;
+
         internal static bool UseModelNamespace(IReadOnlyDictionary<string, BinaryData> options)
         {
             return options.TryGetValue("model-namespace", out var value) &&
