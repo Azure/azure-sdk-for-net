@@ -16,12 +16,12 @@
 - Total libraries: 401
 - Management Plane (MPG): 227
   - Autorest/Swagger: 153
-  - New Emitter (TypeSpec): 56
-  - Old TypeSpec: 18
+  - New Emitter (TypeSpec): 59
+  - Old TypeSpec: 15
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 24
-  - Old TypeSpec: 14
+  - New Emitter (TypeSpec): 25
+  - Old TypeSpec: 13
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 47
@@ -145,13 +145,13 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 56 / 74 (75.7%)
+**Migration Status**: 59 / 74 (79.7%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
-| avs | Azure.ResourceManager.Avs |  |
+| avs | Azure.ResourceManager.Avs | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | chaos | Azure.ResourceManager.Chaos |  |
@@ -174,7 +174,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
-| elastic | Azure.ResourceManager.Elastic |  |
+| elastic | Azure.ResourceManager.Elastic | ✅ |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
@@ -206,7 +206,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
-| resources | Azure.ResourceManager.Resources.Bicep |  |
+| resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters |  |
