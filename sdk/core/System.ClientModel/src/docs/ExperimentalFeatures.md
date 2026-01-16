@@ -12,6 +12,10 @@ The `JsonPatch` type and related APIs are experimental features for applying JSO
 
 - `System.ClientModel.Primitives.JsonPatch`
 
+### Example Usage
+
+See [JsonPatch.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/JsonPatch.md) for detailed examples.
+
 ### Suppression
 
 If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
@@ -44,6 +48,10 @@ The Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInject
 - `System.ClientModel.Primitives.AuthenticationPolicy.Create` method
 - `System.ClientModel.Primitives.ClientPipelineOptions` constructor that accepts `IConfigurationSection`
 
+### Example Usage
+
+See [ConfigurationAndDependencyInjection.md](https://github.com/Azure/azure-sdk-for-net/blob/system-clientmodel-config/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) for detailed examples.
+
 ### Suppression
 
 If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
@@ -58,22 +66,4 @@ Or in your project file:
 <PropertyGroup>
   <NoWarn>$(NoWarn);SCME0002</NoWarn>
 </PropertyGroup>
-```
-
-### Example Usage
-
-```csharp
-#pragma warning disable SCME0002
-using System.ClientModel.Primitives;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-
-var builder = Host.CreateApplicationBuilder();
-
-// Add a client using configuration
-builder.AddClient<MyClient, MyClientSettings>("MyClient");
-
-var host = builder.Build();
-var client = host.Services.GetRequiredService<MyClient>();
-#pragma warning restore SCME0002
 ```
