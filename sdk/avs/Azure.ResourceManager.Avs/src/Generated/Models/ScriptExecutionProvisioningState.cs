@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct ScriptExecutionProvisioningState : IEquatable<ScriptExecutionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> is pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> is running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> is cancelling. </summary>
+        private const string CancellingValue = "Cancelling";
+        /// <summary> is cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> is deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="ScriptExecutionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScriptExecutionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string PendingValue = "Pending";
-        private const string RunningValue = "Running";
-        private const string CancellingValue = "Cancelling";
-        private const string CancelledValue = "Cancelled";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static ScriptExecutionProvisioningState Succeeded { get; } = new ScriptExecutionProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static ScriptExecutionProvisioningState Failed { get; } = new ScriptExecutionProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static ScriptExecutionProvisioningState Canceled { get; } = new ScriptExecutionProvisioningState(CanceledValue);
+
         /// <summary> is pending. </summary>
         public static ScriptExecutionProvisioningState Pending { get; } = new ScriptExecutionProvisioningState(PendingValue);
+
         /// <summary> is running. </summary>
         public static ScriptExecutionProvisioningState Running { get; } = new ScriptExecutionProvisioningState(RunningValue);
+
         /// <summary> is cancelling. </summary>
         public static ScriptExecutionProvisioningState Cancelling { get; } = new ScriptExecutionProvisioningState(CancellingValue);
+
         /// <summary> is cancelled. </summary>
         public static ScriptExecutionProvisioningState Cancelled { get; } = new ScriptExecutionProvisioningState(CancelledValue);
+
         /// <summary> is deleting. </summary>
         public static ScriptExecutionProvisioningState Deleting { get; } = new ScriptExecutionProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScriptExecutionProvisioningState left, ScriptExecutionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScriptExecutionProvisioningState left, ScriptExecutionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptExecutionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScriptExecutionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScriptExecutionProvisioningState(string value) => new ScriptExecutionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScriptExecutionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScriptExecutionProvisioningState?(string value) => value == null ? null : new ScriptExecutionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScriptExecutionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScriptExecutionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

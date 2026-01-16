@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            ApplianceTelemetryConfigResult result = await subscriptionResource.GetTelemetryConfigApplianceAsync();
+            ApplianceTelemetryConfigResult result = await subscriptionResource.GetApplianceTelemetryConfigAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
