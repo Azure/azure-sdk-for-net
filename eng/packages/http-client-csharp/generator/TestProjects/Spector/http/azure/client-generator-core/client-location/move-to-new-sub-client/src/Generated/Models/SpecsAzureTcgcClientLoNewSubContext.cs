@@ -7,9 +7,9 @@
 
 using System.ClientModel.Primitives;
 
-namespace Specs.Azure.Tcgc.ClientLoc.NewSub
+namespace Specs.Azure.Tcgc.ClientLo.NewSub
 {
-    public partial class SpecsAzureTcgcClientLocNewSubContext : ModelReaderWriterContext
+    public partial class SpecsAzureTcgcClientLoNewSubContext : ModelReaderWriterContext
     {
     }
 }

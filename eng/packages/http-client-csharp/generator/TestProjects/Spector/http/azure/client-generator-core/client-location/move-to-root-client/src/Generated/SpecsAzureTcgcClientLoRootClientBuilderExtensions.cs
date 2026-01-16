@@ -12,7 +12,7 @@ using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class SpecsAzureTcgcClientLocRootClientBuilderExtensions
+    public static partial class SpecsAzureTcgcClientLoRootClientBuilderExtensions
     {
         public static IAzureClientBuilder<MoveToRootClient, MoveToRootClientOptions> AddMoveToRootClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;

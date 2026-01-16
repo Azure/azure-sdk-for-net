@@ -12,7 +12,7 @@ using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class SpecsAzureTcgcClientLocNewSubClientBuilderExtensions
+    public static partial class SpecsAzureTcgcClientLoNewSubClientBuilderExtensions
     {
         public static IAzureClientBuilder<MoveToNewSubClient, MoveToNewSubClientOptions> AddMoveToNewSubClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
