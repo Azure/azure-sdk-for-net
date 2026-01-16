@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("ok-total-unready-count"u8);
                 writer.WriteStringValue(OkTotalUnreadyCount);
             }
-            if (Optional.IsDefined(ScanIntervalInSeconds))
+            if (Optional.IsDefined(ScanInterval))
             {
                 writer.WritePropertyName("scan-interval"u8);
-                writer.WriteStringValue(ScanIntervalInSeconds);
+                writer.WriteStringValue(ScanInterval);
             }
             if (Optional.IsDefined(ScaleDownDelayAfterAdd))
             {
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScanIntervalInSeconds), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScanInterval), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  scan-interval: ");
@@ -585,17 +585,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             else
             {
-                if (Optional.IsDefined(ScanIntervalInSeconds))
+                if (Optional.IsDefined(ScanInterval))
                 {
                     builder.Append("  scan-interval: ");
-                    if (ScanIntervalInSeconds.Contains(Environment.NewLine))
+                    if (ScanInterval.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{ScanIntervalInSeconds}'''");
+                        builder.AppendLine($"{ScanInterval}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{ScanIntervalInSeconds}'");
+                        builder.AppendLine($"'{ScanInterval}'");
                     }
                 }
             }

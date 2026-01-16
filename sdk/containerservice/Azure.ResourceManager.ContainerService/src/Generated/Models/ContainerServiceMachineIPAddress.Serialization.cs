@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ContainerServiceIPFamily? family = default;
+            IPFamily? family = default;
             string ip = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    family = new ContainerServiceIPFamily(property.Value.GetString());
+                    family = new IPFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ip"u8))

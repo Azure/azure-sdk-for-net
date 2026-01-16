@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedClusterUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MeshRevisionProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MeshRevisionProfileResource.CreateResourceIdentifier" /> to create a <see cref="MeshRevisionProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetMeshRevisionProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
-        public static ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
+        public static MeshRevisionProfileResource GetMeshRevisionProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceArmClient(client).GetManagedClusterUpgradeProfileResource(id);
+            return GetMockableContainerServiceArmClient(client).GetMeshRevisionProfileResource(id);
         }
 
         /// <summary>
@@ -72,25 +72,6 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MeshRevisionProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MeshRevisionProfileResource.CreateResourceIdentifier" /> to create a <see cref="MeshRevisionProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetMeshRevisionProfileResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
-        public static MeshRevisionProfileResource GetMeshRevisionProfileResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceArmClient(client).GetMeshRevisionProfileResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="MeshUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MeshUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="MeshUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -110,41 +91,41 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceMaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedClusterUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource"/> object. </returns>
-        public static ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
+        public static ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceArmClient(client).GetContainerServiceMaintenanceConfigurationResource(id);
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterUpgradeProfileResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedClusterNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedClusterNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AgentPoolSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgentPoolSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetAgentPoolSnapshotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedClusterNamespaceResource"/> object. </returns>
-        public static ManagedClusterNamespaceResource GetManagedClusterNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgentPoolSnapshotResource"/> object. </returns>
+        public static AgentPoolSnapshotResource GetAgentPoolSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceArmClient(client).GetManagedClusterNamespaceResource(id);
+            return GetMockableContainerServiceArmClient(client).GetAgentPoolSnapshotResource(id);
         }
 
         /// <summary>
@@ -186,6 +167,63 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceMachineResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceMachineResource"/> object. </returns>
+        public static ContainerServiceMachineResource GetContainerServiceMachineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceMachineResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceMaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource"/> object. </returns>
+        public static ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceMaintenanceConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedClusterNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedClusterNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedClusterNamespaceResource"/> object. </returns>
+        public static ManagedClusterNamespaceResource GetManagedClusterNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterNamespaceResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerServicePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -205,25 +243,6 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AgentPoolSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentPoolSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetAgentPoolSnapshotResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AgentPoolSnapshotResource"/> object. </returns>
-        public static AgentPoolSnapshotResource GetAgentPoolSnapshotResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceArmClient(client).GetAgentPoolSnapshotResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerServiceTrustedAccessRoleBindingResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -240,25 +259,6 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServiceTrustedAccessRoleBindingResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceMachineResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceMachineResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerServiceMachineResource"/> object. </returns>
-        public static ContainerServiceMachineResource GetContainerServiceMachineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceArmClient(client).GetContainerServiceMachineResource(id);
         }
 
         /// <summary>
@@ -680,6 +680,72 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// List supported trusted access roles.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List supported trusted access roles.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of snapshots in the specified subscription.
         /// <list type="bullet">
         /// <item>
@@ -749,72 +815,6 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
-        }
-
-        /// <summary>
-        /// List supported trusted access roles.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrustedAccessRoles_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List supported trusted access roles.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrustedAccessRoles_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
         }
     }
 }

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         private ManagedClustersRestOperations _managedClustersRestClient;
         private ClientDiagnostics _containerServiceManagedClusterManagedClustersClientDiagnostics;
         private ManagedClustersRestOperations _containerServiceManagedClusterManagedClustersRestClient;
-        private ClientDiagnostics _agentPoolSnapshotSnapshotsClientDiagnostics;
-        private SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
         private ClientDiagnostics _trustedAccessRolesClientDiagnostics;
         private TrustedAccessRolesRestOperations _trustedAccessRolesRestClient;
+        private ClientDiagnostics _agentPoolSnapshotSnapshotsClientDiagnostics;
+        private SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableContainerServiceSubscriptionResource"/> class for mocking. </summary>
         protected MockableContainerServiceSubscriptionResource()
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         private ManagedClustersRestOperations ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ContainerServiceManagedClusterManagedClustersClientDiagnostics => _containerServiceManagedClusterManagedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceManagedClusterResource.ResourceType.Namespace, Diagnostics);
         private ManagedClustersRestOperations ContainerServiceManagedClusterManagedClustersRestClient => _containerServiceManagedClusterManagedClustersRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerServiceManagedClusterResource.ResourceType));
-        private ClientDiagnostics AgentPoolSnapshotSnapshotsClientDiagnostics => _agentPoolSnapshotSnapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
-        private SnapshotsRestOperations AgentPoolSnapshotSnapshotsRestClient => _agentPoolSnapshotSnapshotsRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AgentPoolSnapshotResource.ResourceType));
         private ClientDiagnostics TrustedAccessRolesClientDiagnostics => _trustedAccessRolesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private TrustedAccessRolesRestOperations TrustedAccessRolesRestClient => _trustedAccessRolesRestClient ??= new TrustedAccessRolesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AgentPoolSnapshotSnapshotsClientDiagnostics => _agentPoolSnapshotSnapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
+        private SnapshotsRestOperations AgentPoolSnapshotSnapshotsRestClient => _agentPoolSnapshotSnapshotsRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AgentPoolSnapshotResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -257,6 +257,60 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         }
 
         /// <summary>
+        /// List supported trusted access roles.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrustedAccessRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(e), TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List supported trusted access roles.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrustedAccessRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(e), TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of snapshots in the specified subscription.
         /// <list type="bullet">
         /// <item>
@@ -314,60 +368,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgentPoolSnapshotSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List supported trusted access roles.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrustedAccessRoles_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrustedAccessRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(e), TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List supported trusted access roles.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/trustedAccessRoles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrustedAccessRoles_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrustedAccessRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(e), TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
         }
     }
 }

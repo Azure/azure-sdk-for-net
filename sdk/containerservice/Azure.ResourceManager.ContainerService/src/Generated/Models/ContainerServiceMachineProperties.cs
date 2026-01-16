@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineProperties"/>. </summary>
-        internal ContainerServiceMachineProperties()
+        public ContainerServiceMachineProperties()
         {
         }
 

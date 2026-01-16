@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="NamespaceNetworkPolicies"/>. </summary>
         /// <param name="ingress">
-        /// Ingress policy for the network.
+        /// Enum representing different network policy rules.
         /// Serialized Name: NetworkPolicies.ingress
         /// </param>
         /// <param name="egress">
-        /// Egress policy for the network.
+        /// Enum representing different network policy rules.
         /// Serialized Name: NetworkPolicies.egress
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary>
-        /// Ingress policy for the network.
+        /// Enum representing different network policy rules.
         /// Serialized Name: NetworkPolicies.ingress
         /// </summary>
         [WirePath("ingress")]
         public NamespaceNetworkPolicyRule? Ingress { get; set; }
         /// <summary>
-        /// Egress policy for the network.
+        /// Enum representing different network policy rules.
         /// Serialized Name: NetworkPolicies.egress
         /// </summary>
         [WirePath("egress")]

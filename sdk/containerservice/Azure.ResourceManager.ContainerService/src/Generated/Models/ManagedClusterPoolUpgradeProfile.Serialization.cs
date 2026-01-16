@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string kubernetesVersion = default;
             string name = default;
             ContainerServiceOSType osType = default;
-            IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
+            IList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

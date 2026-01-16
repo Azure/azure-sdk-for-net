@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedNamespace.eTag
-        /// </param>
         /// <param name="properties">
         /// Properties of a namespace.
         /// Serialized Name: ManagedNamespace.properties
         /// </param>
+        /// <param name="etag">
+        /// If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
+        /// Serialized Name: ManagedNamespace.eTag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedClusterNamespaceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedClusterNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterNamespaceProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
             Properties = properties;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,16 +87,16 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedNamespace.eTag
-        /// </summary>
-        [WirePath("eTag")]
-        public ETag? ETag { get; }
-        /// <summary>
         /// Properties of a namespace.
         /// Serialized Name: ManagedNamespace.properties
         /// </summary>
         [WirePath("properties")]
         public ManagedClusterNamespaceProperties Properties { get; set; }
+        /// <summary>
+        /// If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
+        /// Serialized Name: ManagedNamespace.eTag
+        /// </summary>
+        [WirePath("eTag")]
+        public ETag? ETag { get; }
     }
 }

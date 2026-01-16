@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodePublicIPPrefixID
         /// </param>
         /// <param name="scaleSetPriority">
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
+        /// The Virtual Machine Scale Set priority.
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetPriority
         /// </param>
         /// <param name="scaleSetEvictionPolicy">
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
+        /// The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetEvictionPolicy
         /// </param>
         /// <param name="spotMaxPrice">
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.creationData
         /// </param>
         /// <param name="capacityReservationGroupId">
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
+        /// The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID
         /// </param>
         /// <param name="hostGroupId">
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.localDNSProfile
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAgentPoolProfileProperties(ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterAgentPoolProfileProperties(ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, Ossku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = etag;
             Count = count;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osSKU
         /// </summary>
         [WirePath("osSKU")]
-        public ContainerServiceOSSku? OSSku { get; set; }
+        public Ossku? OSSku { get; set; }
         /// <summary>
         /// The maximum number of nodes for auto-scaling
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.maxCount
@@ -526,13 +526,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("nodePublicIPPrefixID")]
         public ResourceIdentifier NodePublicIPPrefixId { get; set; }
         /// <summary>
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
+        /// The Virtual Machine Scale Set priority.
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetPriority
         /// </summary>
         [WirePath("scaleSetPriority")]
         public ScaleSetPriority? ScaleSetPriority { get; set; }
         /// <summary>
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
+        /// The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetEvictionPolicy
         /// </summary>
         [WirePath("scaleSetEvictionPolicy")]
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary>
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
+        /// The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
         /// Serialized Name: ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID
         /// </summary>
         [WirePath("capacityReservationGroupID")]

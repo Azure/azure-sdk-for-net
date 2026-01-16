@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/>. </summary>
-        internal TrustedAccessRoleListResult()
+        /// <param name="value">
+        /// The TrustedAccessRole items on this page
+        /// Serialized Name: TrustedAccessRoleListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal TrustedAccessRoleListResult(IEnumerable<ContainerServiceTrustedAccessRole> value)
         {
-            Value = new ChangeTrackingList<ContainerServiceTrustedAccessRole>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/>. </summary>
         /// <param name="value">
-        /// Role list
+        /// The TrustedAccessRole items on this page
         /// Serialized Name: TrustedAccessRoleListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// Link to next page of resources.
+        /// The link to the next page of items
         /// Serialized Name: TrustedAccessRoleListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedAccessRoleListResult(IReadOnlyList<ContainerServiceTrustedAccessRole> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrustedAccessRoleListResult(IReadOnlyList<ContainerServiceTrustedAccessRole> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/> for deserialization. </summary>
+        internal TrustedAccessRoleListResult()
+        {
+        }
+
         /// <summary>
-        /// Role list
+        /// The TrustedAccessRole items on this page
         /// Serialized Name: TrustedAccessRoleListResult.value
         /// </summary>
         public IReadOnlyList<ContainerServiceTrustedAccessRole> Value { get; }
         /// <summary>
-        /// Link to next page of resources.
+        /// The link to the next page of items
         /// Serialized Name: TrustedAccessRoleListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

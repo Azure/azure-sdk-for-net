@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             PodIPAllocationMode? podIPAllocationMode = default;
             int? maxPods = default;
             ContainerServiceOSType? osType = default;
-            ContainerServiceOSSku? osSku = default;
+            Ossku? osSku = default;
             int? maxCount = default;
             int? minCount = default;
             bool? enableAutoScaling = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    osSku = new ContainerServiceOSSku(property.Value.GetString());
+                    osSku = new Ossku(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxCount"u8))

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceType type = default;
             SystemData systemData = default;
             ManagedClusterPoolUpgradeProfile controlPlaneProfile = default;
-            IReadOnlyList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles = default;
+            IList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

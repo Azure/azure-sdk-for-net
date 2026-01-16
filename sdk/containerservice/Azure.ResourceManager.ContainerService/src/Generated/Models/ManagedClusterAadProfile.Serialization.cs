@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             bool? managed = default;
             bool? enableAzureRBAC = default;
-            IList<Guid> adminGroupObjectIds = default;
+            IList<string> adminGroupObjectIds = default;
             Guid? clientAppId = default;
             Guid? serverAppId = default;
             string serverAppSecret = default;
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<Guid> array = new List<Guid>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetGuid());
+                        array.Add(item.GetString());
                     }
                     adminGroupObjectIds = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterAadProfile(
                 managed,
                 enableAzureRBAC,
-                adminGroupObjectIds ?? new ChangeTrackingList<Guid>(),
+                adminGroupObjectIds ?? new ChangeTrackingList<string>(),
                 clientAppId,
                 serverAppId,
                 serverAppSecret,
@@ -264,7 +264,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                         builder.AppendLine("[");
                         foreach (var item in AdminGroupObjectIds)
                         {
-                            builder.AppendLine($"    '{item.ToString()}'");
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
                         }
                         builder.AppendLine("  ]");
                     }

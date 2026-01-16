@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> host name of the machine. </param>
+        /// <param name="machineName"> Host name of the machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> host name of the machine. </param>
+        /// <param name="machineName"> Host name of the machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> host name of the machine. </param>
+        /// <param name="machineName"> Host name of the machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> host name of the machine. </param>
+        /// <param name="machineName"> Host name of the machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> host name of the machine. </param>
+        /// <param name="machineName"> Host name of the machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> host name of the machine. </param>
+        /// <param name="machineName"> Host name of the machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>

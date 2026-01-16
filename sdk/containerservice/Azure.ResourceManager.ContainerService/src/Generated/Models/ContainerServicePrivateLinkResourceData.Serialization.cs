@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
             ResourceType? type = default;
             string groupId = default;
@@ -120,11 +120,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -230,7 +226,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

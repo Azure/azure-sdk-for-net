@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _managedClusterNamespaceManagedNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(new ManagedClusterNamespaceOperationSource(Client), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, _managedClusterNamespaceManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(new ManagedClusterNamespaceOperationSource(Client), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, _managedClusterNamespaceManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _managedClusterNamespaceManagedNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(new ManagedClusterNamespaceOperationSource(Client), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, _managedClusterNamespaceManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(new ManagedClusterNamespaceOperationSource(Client), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, _managedClusterNamespaceManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

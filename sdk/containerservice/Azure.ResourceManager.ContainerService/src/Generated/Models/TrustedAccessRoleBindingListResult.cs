@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// List of trusted access role bindings
+    /// The response of a TrustedAccessRoleBinding list operation.
     /// Serialized Name: TrustedAccessRoleBindingListResult
     /// </summary>
     internal partial class TrustedAccessRoleBindingListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleBindingListResult"/>. </summary>
-        internal TrustedAccessRoleBindingListResult()
+        /// <param name="value">
+        /// The TrustedAccessRoleBinding items on this page
+        /// Serialized Name: TrustedAccessRoleBindingListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal TrustedAccessRoleBindingListResult(IEnumerable<ContainerServiceTrustedAccessRoleBindingData> value)
         {
-            Value = new ChangeTrackingList<ContainerServiceTrustedAccessRoleBindingData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleBindingListResult"/>. </summary>
         /// <param name="value">
-        /// Role binding list
+        /// The TrustedAccessRoleBinding items on this page
         /// Serialized Name: TrustedAccessRoleBindingListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// Link to next page of resources.
+        /// The link to the next page of items
         /// Serialized Name: TrustedAccessRoleBindingListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedAccessRoleBindingListResult(IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrustedAccessRoleBindingListResult(IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleBindingListResult"/> for deserialization. </summary>
+        internal TrustedAccessRoleBindingListResult()
+        {
+        }
+
         /// <summary>
-        /// Role binding list
+        /// The TrustedAccessRoleBinding items on this page
         /// Serialized Name: TrustedAccessRoleBindingListResult.value
         /// </summary>
         public IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData> Value { get; }
         /// <summary>
-        /// Link to next page of resources.
+        /// The link to the next page of items
         /// Serialized Name: TrustedAccessRoleBindingListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }
