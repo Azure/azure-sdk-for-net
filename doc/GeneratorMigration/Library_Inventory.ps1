@@ -185,22 +185,24 @@ function New-MarkdownReport {
     $dataLibraries = $Libraries | Where-Object { $_.type -eq "Data Plane" }
     $provisioningLibraries = $Libraries | Where-Object { $_.generator -eq "Provisioning" }
     $noGenerator = $Libraries | Where-Object { $_.generator -eq "No Generator" }
+    
+    # Calculate the count of Data Plane libraries excluding provisioning
+    $dataPlaneNonProvisioning = $dataLibraries | Where-Object { $_.generator -ne "Provisioning" }
 
     # Count libraries by generator type (excluding provisioning from data plane)
     $mgmtSwagger = $mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }
     $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin $excludedGenerators }
     $mgmtTspOld = $mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }
 
-    $dataSwagger = $dataLibraries | Where-Object { $_.generator -eq "Swagger" }
-    $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin $excludedGenerators }
-    $dataTspOld = $dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }
-    
-    # Calculate the count of Data Plane libraries excluding provisioning
-    $dataPlaneNonProvisioning = $dataLibraries | Where-Object { $_.generator -ne "Provisioning" }
+    # For Data Plane, explicitly exclude provisioning libraries from all counts
+    $dataSwagger = $dataPlaneNonProvisioning | Where-Object { $_.generator -eq "Swagger" }
+    $dataNewEmitter = $dataPlaneNonProvisioning | Where-Object { $_.generator -notin $excludedGenerators }
+    $dataTspOld = $dataPlaneNonProvisioning | Where-Object { $_.generator -eq "TSP-Old" }
 
     # Calculate TypeSpec library counts (only those with tsp-location.yaml or Azure.AI.OpenAI with special handling)
+    # Exclude provisioning libraries from data plane TypeSpec counts
     $mgmtTypeSpecLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true }
-    $dataTypeSpecLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" }
+    $dataTypeSpecLibs = $dataPlaneNonProvisioning | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" }
 
     # Calculate migration percentages (migrated / total TypeSpec libraries)
     $mgmtMigrated = $mgmtNewEmitter.Count
@@ -246,10 +248,10 @@ function New-MarkdownReport {
     $report += "**Migration Status**: $dataMigrated / $dataTypeSpecTotal ($dataPercentage%)`n"
     $report += "| Service | Library | New Emitter |"
     $report += "| ------- | ------- | ----------- |"
-    # Only include libraries that have tsp-location.yaml or are Azure.AI.OpenAI (special case with hardcoded handling)
-    $sortedDataLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" } | Sort-Object service, library
+    # Only include non-provisioning libraries that have tsp-location.yaml or are Azure.AI.OpenAI (special case with hardcoded handling)
+    $sortedDataLibs = $dataPlaneNonProvisioning | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" } | Sort-Object service, library
     foreach ($lib in $sortedDataLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✅" } else { "" }
+        $newEmitter = if ($lib.generator -notin $excludedGenerators) { "✅" } else { "" }
         $report += "| $($lib.service) | $($lib.library) | $newEmitter |"
     }
     $report += "`n"
