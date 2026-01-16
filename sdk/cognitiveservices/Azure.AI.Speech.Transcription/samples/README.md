@@ -16,4 +16,5 @@ description: Samples for the Azure.AI.Speech.Transcription client library
 - [Transcribe with Options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/samples/Sample_3_TranscribeWithOptions.md)
 - [Advanced Remote File Transcription](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/samples/Sample_4_AdvancedRemoteTranscription.md)
 - [Mock a Client for Testing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/samples/Sample_5_MockClient.md)
+- [Enhanced Mode for Transcription and Translation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/samples/Sample_6_EnhancedMode.md)
 

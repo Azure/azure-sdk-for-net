@@ -145,4 +145,3 @@ Enhanced Mode supports: English, Chinese, German, French, Italian, Japanese, Spa
 ## See Also
 
 - [LLM Speech Documentation](https://learn.microsoft.com/azure/ai-services/speech-service/llm-speech)
-- [Sample 3: Transcribe with Options](Sample_3_TranscribeWithOptions.md)
