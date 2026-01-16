@@ -28,11 +28,24 @@ function Test-MgmtLibrary {
     return ($Path -match "Azure\.ResourceManager" -or $Path -match "\.Management\.")
 }
 
+function Test-ProvisioningLibrary {
+    param([string]$Path)
+
+    # Check if a library is a provisioning library
+    $libraryName = Split-Path $Path -Leaf
+    return ($libraryName -match "^Azure\.Provisioning")
+}
+
 function Get-GeneratorType {
     param([string]$Path)
 
     # Identify if a library is generated using swagger or tsp.
-    # Returns: "Swagger", a specific TypeSpec generator name, "TSP-Old", or "No Generator"
+    # Returns: "Swagger", a specific TypeSpec generator name, "TSP-Old", "Provisioning", or "No Generator"
+
+    # Special case for Provisioning libraries which use a custom reflection-based generator
+    if (Test-ProvisioningLibrary $Path) {
+        return "Provisioning"
+    }
 
     # Special case for Azure.AI.OpenAI which uses TypeSpec with new generator via special handling
     if ((Split-Path $Path -Leaf) -eq "Azure.AI.OpenAI" -and $Path -match "openai") {
@@ -167,15 +180,16 @@ function New-MarkdownReport {
     # Group by type and generator
     $mgmtLibraries = $Libraries | Where-Object { $_.type -eq "Management" }
     $dataLibraries = $Libraries | Where-Object { $_.type -eq "Data Plane" }
+    $provisioningLibraries = $Libraries | Where-Object { $_.generator -eq "Provisioning" }
     $noGenerator = $Libraries | Where-Object { $_.generator -eq "No Generator" }
 
-    # Count libraries by generator type
+    # Count libraries by generator type (excluding provisioning from data plane)
     $mgmtSwagger = $mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }
-    $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
+    $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator", "Provisioning") }
     $mgmtTspOld = $mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }
 
     $dataSwagger = $dataLibraries | Where-Object { $_.generator -eq "Swagger" }
-    $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
+    $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator", "Provisioning") }
     $dataTspOld = $dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }
 
     # Calculate TypeSpec library counts (only those with tsp-location.yaml or Azure.AI.OpenAI with special handling)
@@ -201,6 +215,7 @@ function New-MarkdownReport {
     $report += "- [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)"
     $report += "- [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)"
     $report += "- [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)"
+    $report += "- [Provisioning Libraries](#provisioning-libraries)"
     $report += "- [Libraries with No Generator](#libraries-with-no-generator)"
     $report += "`n"
 
@@ -210,10 +225,12 @@ function New-MarkdownReport {
     $report += "  - Autorest/Swagger: $($mgmtSwagger.Count)"
     $report += "  - New Emitter (TypeSpec): $($mgmtNewEmitter.Count)"
     $report += "  - Old TypeSpec: $($mgmtTspOld.Count)"
-    $report += "- Data Plane (DPG): $($dataLibraries.Count)"
+    $report += "- Data Plane (DPG): $($dataLibraries.Count - $provisioningLibraries.Count)"
     $report += "  - Autorest/Swagger: $($dataSwagger.Count)"
     $report += "  - New Emitter (TypeSpec): $($dataNewEmitter.Count)"
     $report += "  - Old TypeSpec: $($dataTspOld.Count)"
+    $report += "- Provisioning: $($provisioningLibraries.Count)"
+    $report += "  - Custom reflection-based generator: $($provisioningLibraries.Count)"
     $report += "- No generator: $($noGenerator.Count)"
     $report += "`n"
 
@@ -266,6 +283,21 @@ function New-MarkdownReport {
         $report += "| ------- | ------- |"
         $sortedMgmtSwagger = $mgmtSwagger | Sort-Object service, library
         foreach ($lib in $sortedMgmtSwagger) {
+            $report += "| $($lib.service) | $($lib.library) |"
+        }
+        $report += "`n"
+    }
+
+    # Provisioning Libraries
+    if ($provisioningLibraries.Count -gt 0) {
+        $report += "## Provisioning Libraries`n"
+        $report += "Libraries that provide infrastructure-as-code capabilities for Azure services using a custom reflection-based generator. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.`n"
+        $report += "**Note**: Unlike other Azure SDK libraries, Provisioning libraries use a custom reflection-based generator that analyzes Azure Resource Manager SDK types to produce strongly-typed infrastructure definition APIs.`n"
+        $report += "Total: $($provisioningLibraries.Count)`n"
+        $report += "| Service | Library |"
+        $report += "| ------- | ------- |"
+        $sortedProvisioning = $provisioningLibraries | Sort-Object service, library
+        foreach ($lib in $sortedProvisioning) {
             $report += "| $($lib.service) | $($lib.library) |"
         }
         $report += "`n"
