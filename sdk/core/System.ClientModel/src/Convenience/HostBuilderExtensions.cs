@@ -3,12 +3,13 @@
 
 #pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace System.ClientModel.Primitives;
+namespace System.ClientModel;
 
 /// <summary>
 /// Provides extension methods for the <see cref="IHostApplicationBuilder"/> interface.

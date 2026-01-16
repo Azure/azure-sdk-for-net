@@ -64,12 +64,25 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ConfigurationExtensions
+    {
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+    }
     public partial class ContinuationToken
     {
         protected ContinuationToken() { }
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class HostBuilderExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -226,11 +239,6 @@ namespace System.ClientModel.Primitives
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-    public static partial class ConfigurationExtensions
-    {
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-    }
     public enum CredentialKind
     {
         None = 0,
@@ -252,14 +260,6 @@ namespace System.ClientModel.Primitives
         public const string TokenUrlPropertyName = "tokenUrl";
         public GetTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-    public static partial class HostBuilderExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
