@@ -19,7 +19,9 @@ public sealed class CredentialSettings
     public CredentialSettings(IConfigurationSection section)
     {
         if (section is null)
+        {
             throw new ArgumentNullException(nameof(section));
+        }
 
         CredentialSource = section["CredentialSource"];
         Key = section["Key"];
@@ -28,6 +30,9 @@ public sealed class CredentialSettings
     /// <summary>
     /// Gets or sets the source of the credential.
     /// </summary>
+    /// <remarks>
+    /// This value determines the type of authentication policy to use. For example, "ApiKey" creates an <see cref="ApiKeyAuthenticationPolicy"/>.
+    /// </remarks>
     public string? CredentialSource { get; set; }
 
     /// <summary>

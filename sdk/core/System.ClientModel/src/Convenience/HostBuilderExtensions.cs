@@ -27,6 +27,7 @@ public static class HostBuilderExtensions
     /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
     /// <param name="key">The unique key to register as.</param>
     /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
+    /// <seealso href="https://learn.microsoft.com/dotnet/core/extensions/dependency-injection">Dependency injection in .NET</seealso>
     public static IClientBuilder AddKeyedClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
         this IHostApplicationBuilder host,
         string key,

@@ -21,13 +21,19 @@ public abstract class AuthenticationPolicy : PipelinePolicy
     public static AuthenticationPolicy Create(ClientSettings settings, string scope)
     {
         if (settings is null)
+        {
             throw new ArgumentNullException(nameof(settings));
+        }
 
         if (settings.Credential is null)
+        {
             throw new ArgumentNullException("settings.Credential");
+        }
 
         if (settings.Credential.CredentialSource is null)
+        {
             throw new ArgumentNullException("settings.Credential.CredentialSource");
+        }
 
         return settings.Credential.CredentialSource switch
         {

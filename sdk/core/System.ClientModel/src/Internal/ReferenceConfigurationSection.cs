@@ -13,6 +13,16 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
 
     public ReferenceConfigurationSection(IConfiguration config, string sectionName)
     {
+        if (config is null)
+        {
+            throw new ArgumentNullException(nameof(config));
+        }
+
+        if (sectionName is null)
+        {
+            throw new ArgumentNullException(nameof(sectionName));
+        }
+
         _config = config;
         _section = config.GetSection(sectionName);
     }
@@ -44,7 +54,9 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
         foreach (var child in _section.GetChildren())
         {
             if (child is not null)
+            {
                 yield return new ReferenceConfigurationSection(_config, child);
+            }
         }
     }
 
@@ -55,14 +67,20 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
     private IConfigurationSection DereferenceSection(IConfigurationSection section)
     {
         if (!section.Exists())
+        {
             return section;
+        }
 
         string? value = section.Value;
         if (string.IsNullOrEmpty(value))
+        {
             return section;
+        }
 
         if (value![0] != '$' || value.Length < 2)
+        {
             return section;
+        }
 
         IConfigurationSection dereferencedSection = _config.GetSection(value.Substring(1));
 
@@ -72,10 +90,14 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
     private string? DereferenceValue(string? value)
     {
         if (string.IsNullOrEmpty(value))
+        {
             return null;
+        }
 
         if (value![0] != '$' || value.Length < 2)
+        {
             return value;
+        }
 
         IConfigurationSection section = _config.GetSection(value.Substring(1));
 
