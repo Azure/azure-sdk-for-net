@@ -42,7 +42,7 @@ import {
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
-import { isVariableSegment } from "./utils.js";
+import { isVariableSegment, isPrefix } from "./utils.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -291,7 +291,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Read,
             operationPath: readOp.path,
             operationScope: resourceScope,
-            resourceScope: resolvedResource.resourceInstancePath
+            resourceScope: calculateResourceScope(readOp.path, resolvedResource)
           });
           // Use the first read operation's path as the resource ID pattern
           if (!resourceIdPattern) {
@@ -313,7 +313,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: resolvedResource.resourceInstancePath
+            resourceScope: calculateResourceScope(createOp.path, resolvedResource)
           });
         }
       }
@@ -331,7 +331,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: resolvedResource.resourceInstancePath
+            resourceScope: calculateResourceScope(updateOp.path, resolvedResource)
           });
         }
       }
@@ -349,7 +349,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: resolvedResource.resourceInstancePath
+            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource)
           });
         }
       }
@@ -384,7 +384,7 @@ function convertResolvedResourceToMetadata(
           kind: ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
-          resourceScope: resolvedResource.resourceInstancePath
+          resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
         });
       }
     }
@@ -538,4 +538,23 @@ function canBeListResourceScope(
   }
   // here it means every segment in listPath matches the corresponding segment in resourceInstancePath
   return true;
+}
+
+function calculateResourceScope(
+  operationPath: string,
+  resolvedResource: ResolvedResource
+): string | undefined {
+  if (isPrefix(resolvedResource.resourceInstancePath, operationPath)) {
+    return resolvedResource.resourceInstancePath;
+  }
+
+  let parent = resolvedResource.parent;
+  while (parent) {
+    if (isPrefix(parent.resourceInstancePath, operationPath)) {
+      return parent.resourceInstancePath;
+    }
+    parent = parent.parent;
+  }
+
+  return undefined;
 }

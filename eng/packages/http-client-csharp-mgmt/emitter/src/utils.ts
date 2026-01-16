@@ -21,7 +21,7 @@ export function isPrefix(left: string, right: string): boolean {
   const rightSegments = right.split("/").filter((s) => s.length > 0);
   const sharedCount = getSharedSegmentCount(left, right);
   return (
-    sharedCount === leftSegments.length && sharedCount < rightSegments.length
+    sharedCount === leftSegments.length && sharedCount <= rightSegments.length
   );
 }
 
