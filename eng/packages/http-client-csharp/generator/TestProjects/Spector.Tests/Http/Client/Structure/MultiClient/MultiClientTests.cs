@@ -17,61 +17,61 @@ namespace TestProjects.Spector.Tests.Http.Client.Structure.MultiClient
         {
             /*cheeck methods in ClientAClient. */
             var methodsOfClientA = typeof(ClientAClient).GetMethods();
-            Assert.IsNotNull(methodsOfClientA);
-            Assert.AreEqual(6, methodsOfClientA.Where(method => method.Name.EndsWith("Async")).Count());
-            Assert.IsNotNull(typeof(ClientAClient).GetMethods().Where(m => m.Name == "RenamedOneAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(ClientAClient).GetMethods().Where(m => m.Name == "RenamedThreeAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(ClientAClient).GetMethods().Where(m => m.Name == "RenamedFiveAsync").FirstOrDefault());
+            Assert.That(methodsOfClientA, Is.Not.Null);
+            Assert.That(methodsOfClientA.Where(method => method.Name.EndsWith("Async")).Count(), Is.EqualTo(6));
+            Assert.That(typeof(ClientAClient).GetMethods().Where(m => m.Name == "RenamedOneAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(ClientAClient).GetMethods().Where(m => m.Name == "RenamedThreeAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(ClientAClient).GetMethods().Where(m => m.Name == "RenamedFiveAsync").FirstOrDefault(), Is.Not.Null);
 
             /*cheeck methods in ClientBClient. */
             var methodsOfClientB = typeof(ClientBClient).GetMethods();
-            Assert.IsNotNull(methodsOfClientB);
-            Assert.AreEqual(6, methodsOfClientB.Where(method => method.Name.EndsWith("Async")).Count());
-            Assert.IsNotNull(typeof(ClientBClient).GetMethods().Where(m => m.Name == "RenamedTwoAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(ClientBClient).GetMethods().Where(m => m.Name == "RenamedFourAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(ClientBClient).GetMethods().Where(m => m.Name == "RenamedSixAsync").FirstOrDefault());
+            Assert.That(methodsOfClientB, Is.Not.Null);
+            Assert.That(methodsOfClientB.Where(method => method.Name.EndsWith("Async")).Count(), Is.EqualTo(6));
+            Assert.That(typeof(ClientBClient).GetMethods().Where(m => m.Name == "RenamedTwoAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(ClientBClient).GetMethods().Where(m => m.Name == "RenamedFourAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(ClientBClient).GetMethods().Where(m => m.Name == "RenamedSixAsync").FirstOrDefault(), Is.Not.Null);
         }
 
         [SpectorTest]
         public Task RenamedOne() => Test(async (host) =>
         {
             var response = await new ClientAClient(host, ClientType.MultiClient, null).RenamedOneAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedTwo() => Test(async (host) =>
         {
             var response = await new ClientBClient(host, ClientType.MultiClient, null).RenamedTwoAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedThree() => Test(async (host) =>
         {
             var response = await new ClientAClient(host, ClientType.MultiClient, null).RenamedThreeAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedFour() => Test(async (host) =>
         {
             var response = await new ClientBClient(host, ClientType.MultiClient, null).RenamedFourAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedFive() => Test(async (host) =>
         {
             var response = await new ClientAClient(host, ClientType.MultiClient, null).RenamedFiveAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedSix() => Test(async (host) =>
         {
             var response = await new ClientBClient(host, ClientType.MultiClient, null).RenamedSixAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

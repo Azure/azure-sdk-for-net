@@ -37,32 +37,32 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             foreach (var method in clientProvider!.Methods)
             {
                 var updatedMethod = visitor.InvokeVisitMethod(method);
-                Assert.IsNotNull(updatedMethod);
+                Assert.That(updatedMethod, Is.Not.Null);
                 var scmMethod = method as ScmMethodProvider;
-                Assert.IsNotNull(scmMethod);
+                Assert.That(scmMethod, Is.Not.Null);
                 var waitUntilParameter = scmMethod!.Signature.Parameters[0];
-                Assert.IsTrue(waitUntilParameter.Type.Equals(typeof(WaitUntil)));
-                Assert.AreEqual("waitUntil", waitUntilParameter.Name);
+                Assert.That(waitUntilParameter.Type.Equals(typeof(WaitUntil)), Is.True);
+                Assert.That(waitUntilParameter.Name, Is.EqualTo("waitUntil"));
 
-                Assert.IsTrue(scmMethod.Signature.ReturnType!.Equals(typeof(Operation)) ||
-                              scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Task<>), typeof(Operation))));
+                Assert.That(scmMethod.Signature.ReturnType!.Equals(typeof(Operation)) ||
+                              scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Task<>), typeof(Operation))), Is.True);
 
                 if (scmMethod.Kind == ScmMethodKind.Protocol)
                 {
                     var requestContextParameter = scmMethod.Signature.Parameters[^1];
-                    Assert.IsTrue(requestContextParameter.Type.Equals(typeof(RequestContext)));
-                    Assert.AreEqual("context", requestContextParameter.Name);
+                    Assert.That(requestContextParameter.Type.Equals(typeof(RequestContext)), Is.True);
+                    Assert.That(requestContextParameter.Name, Is.EqualTo("context"));
                 }
                 else
                 {
                     var cancellationTokenParameter = scmMethod.Signature.Parameters[^1];
-                    Assert.IsTrue(cancellationTokenParameter.Type.Equals(typeof(CancellationToken)));
-                    Assert.AreEqual("cancellationToken", cancellationTokenParameter.Name);
+                    Assert.That(cancellationTokenParameter.Type.Equals(typeof(CancellationToken)), Is.True);
+                    Assert.That(cancellationTokenParameter.Name, Is.EqualTo("cancellationToken"));
                 }
             }
         }
@@ -87,34 +87,34 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
-            Assert.IsNotNull(responseModelProvider);
+            Assert.That(responseModelProvider, Is.Not.Null);
 
             foreach (var method in clientProvider!.Methods)
             {
                 var updatedMethod = visitor.InvokeVisitMethod(method);
-                Assert.IsNotNull(updatedMethod);
+                Assert.That(updatedMethod, Is.Not.Null);
                 var scmMethod = method as ScmMethodProvider;
-                Assert.IsNotNull(scmMethod);
+                Assert.That(scmMethod, Is.Not.Null);
                 var waitUntilParameter = scmMethod!.Signature.Parameters[0];
-                Assert.IsTrue(waitUntilParameter.Type.Equals(typeof(WaitUntil)));
-                Assert.AreEqual("waitUntil", waitUntilParameter.Name);
+                Assert.That(waitUntilParameter.Type.Equals(typeof(WaitUntil)), Is.True);
+                Assert.That(waitUntilParameter.Name, Is.EqualTo("waitUntil"));
 
                 if (scmMethod.Kind == ScmMethodKind.Protocol)
                 {
                     var requestContextParameter = scmMethod.Signature.Parameters[^1];
-                    Assert.IsTrue(requestContextParameter.Type.Equals(typeof(RequestContext)));
-                    Assert.AreEqual("context", requestContextParameter.Name);
+                    Assert.That(requestContextParameter.Type.Equals(typeof(RequestContext)), Is.True);
+                    Assert.That(requestContextParameter.Name, Is.EqualTo("context"));
                 }
                 else
                 {
                     var cancellationTokenParameter = scmMethod.Signature.Parameters[^1];
-                    Assert.IsTrue(cancellationTokenParameter.Type.Equals(typeof(CancellationToken)));
-                    Assert.AreEqual("cancellationToken", cancellationTokenParameter.Name);
-                    Assert.IsTrue(scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Operation<>), responseModelProvider!.Type)) ||
-                                  scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Task<>), new CSharpType(typeof(Operation<>), responseModelProvider.Type))));
+                    Assert.That(cancellationTokenParameter.Type.Equals(typeof(CancellationToken)), Is.True);
+                    Assert.That(cancellationTokenParameter.Name, Is.EqualTo("cancellationToken"));
+                    Assert.That(scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Operation<>), responseModelProvider!.Type)) ||
+                                  scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Task<>), new CSharpType(typeof(Operation<>), responseModelProvider.Type))), Is.True);
                 }
             }
         }
@@ -145,10 +145,10 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
-            Assert.IsNotNull(responseModelProvider);
+            Assert.That(responseModelProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(lroServiceMethod, clientProvider!);
             visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
@@ -159,16 +159,16 @@ namespace Azure.Generator.Tests.Visitors
             var fromLroResponseMethod = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
 
-            Assert.IsNotNull(fromLroResponseMethod);
-            Assert.IsNotNull(fromLroResponseMethod!.BodyStatements);
+            Assert.That(fromLroResponseMethod, Is.Not.Null);
+            Assert.That(fromLroResponseMethod!.BodyStatements, Is.Not.Null);
             var result = fromLroResponseMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
+            Assert.That(result, Is.EqualTo(Helpers.GetExpectedFromFile()));
 
             // Check that explicit operator was removed since model is only used in LRO
             var explicitOperator = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
                                      m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
-            Assert.IsNull(explicitOperator);
+            Assert.That(explicitOperator, Is.Null);
 
             // does not add the method again on subsequent calls
             visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
@@ -176,7 +176,7 @@ namespace Azure.Generator.Tests.Visitors
             fromLroResponseMethod = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
             result = fromLroResponseMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
+            Assert.That(result, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -219,10 +219,10 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
-            Assert.IsNotNull(responseModelProvider);
+            Assert.That(responseModelProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(lroServiceMethod, clientProvider!);
             visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
@@ -232,13 +232,13 @@ namespace Azure.Generator.Tests.Visitors
             // Check that FromLroResponse method was added
             var fromLroResponseMethod = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
-            Assert.IsNotNull(fromLroResponseMethod);
+            Assert.That(fromLroResponseMethod, Is.Not.Null);
 
             // Check that explicit operator was RETAINED since model is also used in non-LRO context
             var explicitOperator = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
                                      m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
-            Assert.IsNotNull(explicitOperator);
+            Assert.That(explicitOperator, Is.Not.Null);
         }
 
         [Test]
@@ -268,10 +268,10 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
-            Assert.IsNotNull(responseModelProvider);
+            Assert.That(responseModelProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(lroServiceMethod, clientProvider!);
             visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
@@ -281,13 +281,13 @@ namespace Azure.Generator.Tests.Visitors
             // Check that FromLroResponse method was NOT added
             var fromLroResponseMethod = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
-            Assert.IsNull(fromLroResponseMethod);
+            Assert.That(fromLroResponseMethod, Is.Null);
 
             // Explicit operator should still be present
             var explicitOperator = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
                                      m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
-            Assert.IsNotNull(explicitOperator);
+            Assert.That(explicitOperator, Is.Not.Null);
         }
 
         [Test]
@@ -312,13 +312,13 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitLibrary(outputLibrary);
 
             var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
             var convenienceMethod = clientProvider!.Methods
                 .FirstOrDefault(m => m.Signature.Parameters.All(p => p.Name != "context"));
 
-            Assert.IsNotNull(convenienceMethod);
+            Assert.That(convenienceMethod, Is.Not.Null);
             var actual = convenienceMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
+            Assert.That(actual, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -347,13 +347,13 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitLibrary(outputLibrary);
 
             var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
             var protocolMethod = clientProvider!.Methods
                 .FirstOrDefault(m => m.Signature.Parameters.Any(p => p.Name == "context"));
 
-            Assert.IsNotNull(protocolMethod);
+            Assert.That(protocolMethod, Is.Not.Null);
             var actual = protocolMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
+            Assert.That(actual, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         private class TestLroVisitor : LroVisitor

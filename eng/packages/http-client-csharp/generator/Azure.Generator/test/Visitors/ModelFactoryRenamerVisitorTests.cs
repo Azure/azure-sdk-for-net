@@ -24,8 +24,8 @@ namespace Azure.Generator.Tests.Visitors
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
-            Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("SomeServiceModelFactory", modelFactory!.Type.Name);
+            Assert.That(modelFactory, Is.Not.Null);
+            Assert.That(modelFactory!.Type.Name, Is.EqualTo("SomeServiceModelFactory"));
         }
 
         [Test]
@@ -39,8 +39,8 @@ namespace Azure.Generator.Tests.Visitors
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
-            Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("ArmSomeServiceModelFactory", modelFactory!.Type.Name);
+            Assert.That(modelFactory, Is.Not.Null);
+            Assert.That(modelFactory!.Type.Name, Is.EqualTo("ArmSomeServiceModelFactory"));
         }
 
         [Test]
@@ -54,8 +54,8 @@ namespace Azure.Generator.Tests.Visitors
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
-            Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("SamplesModelFactory", modelFactory!.Type.Name);
+            Assert.That(modelFactory, Is.Not.Null);
+            Assert.That(modelFactory!.Type.Name, Is.EqualTo("SamplesModelFactory"));
         }
 
         [Test]
@@ -70,9 +70,9 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
-            Assert.IsNotNull(modelFactory);
-            Assert.AreEqual(1, modelFactory!.Methods.Count);
-            Assert.AreEqual("RenamedModel", modelFactory.Methods[0].Signature.Name);
+            Assert.That(modelFactory, Is.Not.Null);
+            Assert.That(modelFactory!.Methods.Count, Is.EqualTo(1));
+            Assert.That(modelFactory.Methods[0].Signature.Name, Is.EqualTo("RenamedModel"));
         }
 
         private class TestModelRenamerVisitor : ModelFactoryRenamerVisitor

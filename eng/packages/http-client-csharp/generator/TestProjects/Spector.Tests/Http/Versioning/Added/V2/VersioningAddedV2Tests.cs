@@ -18,45 +18,45 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Added.V2
         {
             /* verify ModelV1. */
             var properties = typeof(ModelV1).GetProperties();
-            Assert.IsNotNull(properties);
-            Assert.AreEqual(3, properties.Length);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.Length, Is.EqualTo(3));
             /* verify added property UnionProp in V2.*/
-            Assert.IsNotNull(typeof(ModelV1).GetProperty("UnionProp"));
+            Assert.That(typeof(ModelV1).GetProperty("UnionProp"), Is.Not.Null);
 
             /* verify EnumV1. */
-            Assert.True(typeof(EnumV1).IsEnum);
+            Assert.That(typeof(EnumV1).IsEnum, Is.True);
             var enumValues = typeof(EnumV1).GetEnumNames();
-            Assert.IsNotNull(enumValues);
-            Assert.AreEqual(2, enumValues.Length);
+            Assert.That(enumValues, Is.Not.Null);
+            Assert.That(enumValues.Length, Is.EqualTo(2));
             /* verify added enum value EnumMemberV2. */
-            Assert.IsTrue(enumValues.Contains("EnumMemberV2"));
+            Assert.That(enumValues.Contains("EnumMemberV2"), Is.True);
 
             /* check existence of the added model ModelV2. */
             var modelV2Type = typeof(ModelV1).Assembly.GetType("Versioning.Added.ModelV2");
-            Assert.IsNotNull(modelV2Type);
+            Assert.That(modelV2Type, Is.Not.Null);
 
             /* check existence of the added enum EnumV2. */
             var enumV2Type = typeof(ModelV1).Assembly.GetType("Versioning.Added.EnumV2");
-            Assert.IsNotNull(enumV2Type);
+            Assert.That(enumV2Type, Is.Not.Null);
 
             /* check the added parameter. */
             var methods = typeof(AddedClient).GetMethods().Where(m => m.Name == "V1" || m.Name == "V1Async");
-            Assert.IsNotNull(methods);
-            Assert.AreEqual(4, methods.Count());
+            Assert.That(methods, Is.Not.Null);
+            Assert.That(methods.Count(), Is.EqualTo(4));
             var methodsArray = methods.ToArray();
             foreach (var method in methodsArray)
             {
-                Assert.IsTrue(method.GetParameters().Any(p => p.Name == "headerV2"));
+                Assert.That(method.GetParameters().Any(p => p.Name == "headerV2"), Is.True);
             }
 
             /* check the existence of added method in V2. */
             var addedMethods = typeof(AddedClient).GetMethods().Where(m => m.Name == "V2" || m.Name == "V2Async");
-            Assert.IsNotNull(addedMethods);
-            Assert.AreEqual(4, addedMethods.Count());
+            Assert.That(addedMethods, Is.Not.Null);
+            Assert.That(addedMethods.Count(), Is.EqualTo(4));
 
             /* check the existence of added interface in V2. */
             var interfaceV2Type = typeof(ModelV1).Assembly.GetType("Versioning.Added.InterfaceV2");
-            Assert.IsNotNull(interfaceV2Type);
+            Assert.That(interfaceV2Type, Is.Not.Null);
         }
 
         [SpectorTest]
@@ -64,10 +64,10 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Added.V2
         {
             ModelV1 modelV1 = new ModelV1("foo", EnumV1.EnumMemberV2, BinaryData.FromObjectAsJson(10));
             var response = await new AddedClient(host).V1Async("bar", modelV1);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.Prop);
-            Assert.AreEqual(EnumV1.EnumMemberV2, response.Value.EnumProp);
-            Assert.AreEqual(10, response.Value.UnionProp.ToObjectFromJson<int>());
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Prop, Is.EqualTo("foo"));
+            Assert.That(response.Value.EnumProp, Is.EqualTo(EnumV1.EnumMemberV2));
+            Assert.That(response.Value.UnionProp.ToObjectFromJson<int>(), Is.EqualTo(10));
         });
 
         [SpectorTest]
@@ -75,10 +75,10 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Added.V2
         {
             ModelV2 modelV2 = new ModelV2("foo", EnumV2.EnumMember, BinaryData.FromObjectAsJson("bar"));
             var response = await new AddedClient(host).V2Async(modelV2);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.Prop);
-            Assert.AreEqual(EnumV2.EnumMember, response.Value.EnumProp);
-            Assert.AreEqual("bar", response.Value.UnionProp.ToObjectFromJson<string>());
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Prop, Is.EqualTo("foo"));
+            Assert.That(response.Value.EnumProp, Is.EqualTo(EnumV2.EnumMember));
+            Assert.That(response.Value.UnionProp.ToObjectFromJson<string>(), Is.EqualTo("bar"));
         });
 
         [SpectorTest]
@@ -86,10 +86,10 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Added.V2
         {
             ModelV2 modelV2 = new ModelV2("foo", EnumV2.EnumMember, BinaryData.FromObjectAsJson("bar"));
             var response = await new AddedClient(host).GetInterfaceV2Client().V2InInterfaceAsync(modelV2);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.Prop);
-            Assert.AreEqual(EnumV2.EnumMember, response.Value.EnumProp);
-            Assert.AreEqual("bar", response.Value.UnionProp.ToObjectFromJson<string>());
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Prop, Is.EqualTo("foo"));
+            Assert.That(response.Value.EnumProp, Is.EqualTo(EnumV2.EnumMember));
+            Assert.That(response.Value.UnionProp.ToObjectFromJson<string>(), Is.EqualTo("bar"));
         });
     }
 }

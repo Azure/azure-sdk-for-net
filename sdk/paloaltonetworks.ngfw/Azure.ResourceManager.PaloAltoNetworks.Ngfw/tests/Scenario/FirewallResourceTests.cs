@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();
             Assert.That(updatedlogProfile, Is.Not.Null);
-            Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
+            Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id.ToString(), Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
         }
 
         [TestCase]
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();
             Assert.That(updatedlogProfile, Is.Not.Null);
-            Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
+            Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id.ToString(), Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
         }
 
         [TestCase]

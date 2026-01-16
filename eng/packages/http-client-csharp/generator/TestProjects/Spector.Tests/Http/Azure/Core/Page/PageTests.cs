@@ -16,12 +16,12 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Page
             var sum = 0;
             await foreach (var response in responses)
             {
-                Assert.AreEqual(1, response.Id);
-                Assert.AreEqual("Madge", response.Name);
-                Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", response.Etag.ToString());
+                Assert.That(response.Id, Is.EqualTo(1));
+                Assert.That(response.Name, Is.EqualTo("Madge"));
+                Assert.That(response.Etag.ToString(), Is.EqualTo("11bdc430-65e8-45ad-81d9-8ffa60d55b59"));
                 sum++;
             };
-            Assert.AreEqual(1, sum);
+            Assert.That(sum, Is.EqualTo(1));
         });
 
         [SpectorTest]
@@ -32,12 +32,12 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Page
             var sum = 0;
             await foreach (var response in responses)
             {
-                Assert.AreEqual(1, response.Id);
-                Assert.AreEqual("Madge", response.Name);
-                Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", response.Etag.ToString());
+                Assert.That(response.Id, Is.EqualTo(1));
+                Assert.That(response.Name, Is.EqualTo("Madge"));
+                Assert.That(response.Etag.ToString(), Is.EqualTo("11bdc430-65e8-45ad-81d9-8ffa60d55b59"));
                 sum++;
             };
-            Assert.AreEqual(1, sum);
+            Assert.That(sum, Is.EqualTo(1));
         });
 
         [SpectorTest]
@@ -49,17 +49,17 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Page
             var sum = 0;
             await foreach (var response in responses_firstItem)
             {
-                Assert.AreEqual(1, response.Id);
+                Assert.That(response.Id, Is.EqualTo(1));
                 sum++;
             };
-            Assert.AreEqual(1, sum);
+            Assert.That(sum, Is.EqualTo(1));
             sum = 0;
             await foreach (var response in responses_secondItem)
             {
-                Assert.AreEqual("Madge", response.Name);
+                Assert.That(response.Name, Is.EqualTo("Madge"));
                 sum++;
             };
-            Assert.AreEqual(1, sum);
+            Assert.That(sum, Is.EqualTo(1));
         });
 
         [SpectorTest]
@@ -69,12 +69,12 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Page
             var sum = 0;
             await foreach (var response in responses)
             {
-                Assert.AreEqual(1, response.Id);
-                Assert.AreEqual("Madge", response.Name);
-                Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", response.Etag.ToString());
+                Assert.That(response.Id, Is.EqualTo(1));
+                Assert.That(response.Name, Is.EqualTo("Madge"));
+                Assert.That(response.Etag.ToString(), Is.EqualTo("11bdc430-65e8-45ad-81d9-8ffa60d55b59"));
                 sum++;
             };
-            Assert.AreEqual(1, sum);
+            Assert.That(sum, Is.EqualTo(1));
         });
 
         [SpectorTest]
@@ -86,18 +86,18 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Page
             {
                 if (sum == 0)
                 {
-                    Assert.AreEqual(1, response.Id);
-                    Assert.AreEqual("User1", response.Name);
+                    Assert.That(response.Id, Is.EqualTo(1));
+                    Assert.That(response.Name, Is.EqualTo("User1"));
                 }
                 else
                 {
-                    Assert.AreEqual(2, response.Id);
-                    Assert.AreEqual("User2", response.Name);
+                    Assert.That(response.Id, Is.EqualTo(2));
+                    Assert.That(response.Name, Is.EqualTo("User2"));
                 }
 
                 sum++;
             }
-            Assert.AreEqual(2, sum);
+            Assert.That(sum, Is.EqualTo(2));
         });
     }
 }

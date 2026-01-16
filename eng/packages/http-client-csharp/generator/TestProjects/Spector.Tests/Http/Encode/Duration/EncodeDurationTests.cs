@@ -19,7 +19,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = new TimeSpan(40, 0, 0, 0);
             var response = await new DurationClient(host, null).GetHeaderClient().DefaultAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -27,7 +27,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = TimeSpan.FromSeconds(35.625);
             var response = await new DurationClient(host, null).GetHeaderClient().Float64SecondsAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -35,7 +35,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = TimeSpan.FromSeconds(35.625);
             var response = await new DurationClient(host, null).GetHeaderClient().FloatSecondsAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -43,7 +43,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = TimeSpan.FromSeconds(36);
             var response = await new DurationClient(host, null).GetHeaderClient().Int32SecondsAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -51,7 +51,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = new TimeSpan(40, 0, 0, 0);
             var response = await new DurationClient(host, null).GetHeaderClient().Iso8601Async(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -60,7 +60,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             var data1 = new TimeSpan(40, 0, 0, 0);
             var data2 = new TimeSpan(50, 0, 0, 0);
             var response = await new DurationClient(host, null).GetHeaderClient().Iso8601ArrayAsync(new[] { data1, data2 });
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -73,7 +73,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             BinaryData binaryData = new BinaryData(data);
             var response = await new DurationClient(host, null).GetPropertyClient().DefaultAsync(RequestContent.Create(binaryData), null);
             JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("P40D", jsonResult.GetProperty("value").ToString());
+            Assert.That(jsonResult.GetProperty("value").ToString(), Is.EqualTo("P40D"));
         });
 
         [SpectorTest]
@@ -81,7 +81,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var body = new DefaultDurationProperty(new TimeSpan(40, 0, 0, 0));
             var result = await new DurationClient(host, null).GetPropertyClient().DefaultAsync(body);
-            Assert.AreEqual(body.Value, result.Value.Value);
+            Assert.That(result.Value.Value, Is.EqualTo(body.Value));
         });
 
         [SpectorTest]
@@ -94,7 +94,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             BinaryData binaryData = new BinaryData(data);
             var response = await new DurationClient(host, null).GetPropertyClient().Iso8601Async(RequestContent.Create(binaryData), null);
             JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("P40D", jsonResult.GetProperty("value").ToString());
+            Assert.That(jsonResult.GetProperty("value").ToString(), Is.EqualTo("P40D"));
         });
 
         [SpectorTest]
@@ -102,7 +102,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var body = new ISO8601DurationProperty(new TimeSpan(40, 0, 0, 0));
             var response = await new DurationClient(host, null).GetPropertyClient().Iso8601Async(body);
-            Assert.AreEqual(body.Value, response.Value.Value);
+            Assert.That(response.Value.Value, Is.EqualTo(body.Value));
         });
 
         [SpectorTest]
@@ -115,7 +115,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             BinaryData binaryData = new BinaryData(data);
             var response = await new DurationClient(host, null).GetPropertyClient().Int32SecondsAsync(RequestContent.Create(binaryData), null);
             JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("36", jsonResult.GetProperty("value").ToString());
+            Assert.That(jsonResult.GetProperty("value").ToString(), Is.EqualTo("36"));
         });
 
         [SpectorTest]
@@ -123,7 +123,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var body = new Int32SecondsDurationProperty(TimeSpan.FromSeconds(36));
             var response = await new DurationClient(host, null).GetPropertyClient().Int32SecondsAsync(body);
-            Assert.AreEqual(body.Value, response.Value.Value);
+            Assert.That(response.Value.Value, Is.EqualTo(body.Value));
         });
 
         [SpectorTest]
@@ -136,7 +136,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             BinaryData binaryData = new BinaryData(data);
             var response = await new DurationClient(host, null).GetPropertyClient().FloatSecondsAsync(RequestContent.Create(binaryData), null);
             JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("35.625", jsonResult.GetProperty("value").ToString());
+            Assert.That(jsonResult.GetProperty("value").ToString(), Is.EqualTo("35.625"));
         });
 
         [SpectorTest]
@@ -144,7 +144,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var body = new FloatSecondsDurationProperty(TimeSpan.FromSeconds(35.625));
             var response = await new DurationClient(host, null).GetPropertyClient().FloatSecondsAsync(body);
-            Assert.AreEqual(body.Value, response.Value.Value);
+            Assert.That(response.Value.Value, Is.EqualTo(body.Value));
         });
 
         [SpectorTest]
@@ -157,7 +157,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             BinaryData binaryData = new BinaryData(data);
             var response = await new DurationClient(host, null).GetPropertyClient().FloatSecondsAsync(RequestContent.Create(binaryData), null);
             JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("35.625", jsonResult.GetProperty("value").ToString());
+            Assert.That(jsonResult.GetProperty("value").ToString(), Is.EqualTo("35.625"));
         });
 
         [SpectorTest]
@@ -165,7 +165,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var body = new Float64SecondsDurationProperty(TimeSpan.FromSeconds(35.625));
             var response = await new DurationClient(host, null).GetPropertyClient().Float64SecondsAsync(body);
-            Assert.AreEqual(body.Value, response.Value.Value);
+            Assert.That(response.Value.Value, Is.EqualTo(body.Value));
         });
 
         [SpectorTest]
@@ -178,8 +178,8 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             BinaryData binaryData = new BinaryData(data);
             var response = await new DurationClient(host, null).GetPropertyClient().FloatSecondsArrayAsync(RequestContent.Create(binaryData), null);
             JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("35.625", jsonResult.GetProperty("value")[0].ToString());
-            Assert.AreEqual("46.75", jsonResult.GetProperty("value")[1].ToString());
+            Assert.That(jsonResult.GetProperty("value")[0].ToString(), Is.EqualTo("35.625"));
+            Assert.That(jsonResult.GetProperty("value")[1].ToString(), Is.EqualTo("46.75"));
         });
 
         [SpectorTest]
@@ -189,7 +189,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             var data2 = TimeSpan.FromSeconds(46.75);
             var body = new FloatSecondsDurationArrayProperty(new[] { data1, data2});
             var response = await new DurationClient(host, null).GetPropertyClient().FloatSecondsArrayAsync(body);
-            Assert.AreEqual(body.Value, response.Value.Value);
+            Assert.That(response.Value.Value, Is.EqualTo(body.Value));
         });
 
         [SpectorTest]
@@ -197,7 +197,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = new TimeSpan(40, 0, 0, 0);
             var response = await new DurationClient(host, null).GetQueryClient().DefaultAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -205,7 +205,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = new TimeSpan(40, 0, 0, 0);
             var response = await new DurationClient(host, null).GetQueryClient().Iso8601Async(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -213,7 +213,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = TimeSpan.FromSeconds(36);
             var response = await new DurationClient(host, null).GetQueryClient().Int32SecondsAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -221,7 +221,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = TimeSpan.FromSeconds(35.625);
             var response = await new DurationClient(host, null).GetQueryClient().FloatSecondsAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -229,7 +229,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         {
             var input = TimeSpan.FromSeconds(35.625);
             var response = await new DurationClient(host, null).GetQueryClient().Float64SecondsAsync(input);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -238,7 +238,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             var data1 = TimeSpan.FromSeconds(36);
             var data2 = TimeSpan.FromSeconds(47);
             var response = await new DurationClient(host, null).GetQueryClient().Int32SecondsArrayAsync(new[] { data1, data2 });
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

@@ -18,41 +18,41 @@ namespace TestProjects.Spector.Tests.Http.Versioning.RenamedFrom.V2
             var assembly = typeof(RenamedFromClient).Assembly;
             /* check the renamed model from `OldModel` to `NewModel` */
             var oldModel = assembly.GetType("Versioning.RenamedFrom.OldModel");
-            Assert.IsNull(oldModel);
+            Assert.That(oldModel, Is.Null);
             var newModel = assembly.GetType("Versioning.RenamedFrom.NewModel");
-            Assert.IsNotNull(newModel);
+            Assert.That(newModel, Is.Not.Null);
 
             /* check the renamed property of model */
             var properties = typeof(NewModel).GetProperties();
-            Assert.IsNotNull(properties);
-            Assert.AreEqual(3, properties.Length);
-            Assert.IsNull(typeof(NewModel).GetProperty("OldProp"));
-            Assert.IsNotNull(typeof(NewModel).GetProperty("NewProp"));
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.Length, Is.EqualTo(3));
+            Assert.That(typeof(NewModel).GetProperty("OldProp"), Is.Null);
+            Assert.That(typeof(NewModel).GetProperty("NewProp"), Is.Not.Null);
 
             /* check the renamed enum from `OldEnum` to `NewEnum` */
             var oldEnum = assembly.GetType("Versioning.RenamedFrom.OldEnum");
-            Assert.IsNull(oldEnum);
+            Assert.That(oldEnum, Is.Null);
             var newEnum = assembly.GetType("Versioning.RenamedFrom.NewEnum");
-            Assert.IsNotNull(newEnum);
+            Assert.That(newEnum, Is.Not.Null);
 
             /* check the renamed enum value */
             var enumValues = typeof(NewEnum).GetEnumNames();
-            Assert.IsNotNull(enumValues);
-            Assert.AreEqual(1, enumValues.Length);
-            Assert.IsFalse(enumValues.Contains("OldEnumMember"));
-            Assert.IsTrue(enumValues.Contains("NewEnumMember"));
+            Assert.That(enumValues, Is.Not.Null);
+            Assert.That(enumValues.Length, Is.EqualTo(1));
+            Assert.That(enumValues.Contains("OldEnumMember"), Is.False);
+            Assert.That(enumValues.Contains("NewEnumMember"), Is.True);
 
             /* check the renamed operation */
             var oldMethods = typeof(RenamedFromClient).GetMethods().Where(m => m.Name == "OldOp" || m.Name == "OldOpAsync");
-            Assert.AreEqual(0, oldMethods.Count());
+            Assert.That(oldMethods.Count(), Is.EqualTo(0));
             var newMethods = typeof(RenamedFromClient).GetMethods().Where(m => m.Name == "NewOp" || m.Name == "NewOpAsync");
-            Assert.AreEqual(4, newMethods.Count());
+            Assert.That(newMethods.Count(), Is.EqualTo(4));
 
             /* check the renamed interface */
             var oldInterface = assembly.GetType("Versioning.RenamedFrom.OldInterface");
-            Assert.IsNull(oldInterface);
+            Assert.That(oldInterface, Is.Null);
             var newInterface = assembly.GetType("Versioning.RenamedFrom.NewInterface");
-            Assert.IsNotNull(newInterface);
+            Assert.That(newInterface, Is.Not.Null);
         }
 
         [SpectorTest]
@@ -60,10 +60,10 @@ namespace TestProjects.Spector.Tests.Http.Versioning.RenamedFrom.V2
         {
             NewModel body = new NewModel("foo", NewEnum.NewEnumMember, BinaryData.FromObjectAsJson(10));
             var response = await new RenamedFromClient(host).NewOpAsync("bar", body);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.NewProp);
-            Assert.AreEqual(NewEnum.NewEnumMember, response.Value.EnumProp);
-            Assert.AreEqual(10, response.Value.UnionProp.ToObjectFromJson<int>());
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.NewProp, Is.EqualTo("foo"));
+            Assert.That(response.Value.EnumProp, Is.EqualTo(NewEnum.NewEnumMember));
+            Assert.That(response.Value.UnionProp.ToObjectFromJson<int>(), Is.EqualTo(10));
         });
 
         [SpectorTest]
@@ -71,10 +71,10 @@ namespace TestProjects.Spector.Tests.Http.Versioning.RenamedFrom.V2
         {
             NewModel body = new NewModel("foo", NewEnum.NewEnumMember, BinaryData.FromObjectAsJson(10));
             var response = await new RenamedFromClient(host).GetNewInterfaceClient().NewOpInNewInterfaceAsync(body);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.NewProp);
-            Assert.AreEqual(NewEnum.NewEnumMember, response.Value.EnumProp);
-            Assert.AreEqual(10, response.Value.UnionProp.ToObjectFromJson<int>());
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.NewProp, Is.EqualTo("foo"));
+            Assert.That(response.Value.EnumProp, Is.EqualTo(NewEnum.NewEnumMember));
+            Assert.That(response.Value.UnionProp.ToObjectFromJson<int>(), Is.EqualTo(10));
         });
     }
 }

@@ -15,9 +15,9 @@ namespace TestProjects.Spector.Tests.Http.Versioning.TypeChangedFrom.V2
         {
             TestModel body = new TestModel("foo", "bar");
             var response = await new TypeChangedFromClient(host).TestAsync("baz", body);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.Prop);
-            Assert.AreEqual("bar", response.Value.ChangedProp);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Prop, Is.EqualTo("foo"));
+            Assert.That(response.Value.ChangedProp, Is.EqualTo("bar"));
         });
     }
 }

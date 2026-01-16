@@ -51,11 +51,11 @@ namespace Azure.Generator.Tests.Visitors
             var updatedClient = visitor.InvokeVisit(inputClient, clientProvider);
 
             // Assert
-            Assert.IsNotNull(updatedClient);
-            Assert.IsTrue(updatedClient!.Properties.Any(p => p.Name == ClientDiagnosticsPropertyName));
+            Assert.That(updatedClient, Is.Not.Null);
+            Assert.That(updatedClient!.Properties.Any(p => p.Name == ClientDiagnosticsPropertyName), Is.True);
             var property = updatedClient.Properties.First(p => p.Name == ClientDiagnosticsPropertyName);
-            Assert.AreEqual(new CSharpType(typeof(ClientDiagnostics)), property.Type);
-            Assert.AreEqual(MethodSignatureModifiers.Internal, property.Modifiers);
+            Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(ClientDiagnostics))));
+            Assert.That(property.Modifiers, Is.EqualTo(MethodSignatureModifiers.Internal));
         }
 
         // This test validates the primary constructors of the client are updated to initialize the ClientDiagnostics property.
@@ -67,7 +67,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             bool isSubClient = inputClient.Parent != null;
             var constructor = clientProvider!.Constructors
@@ -76,18 +76,19 @@ namespace Azure.Generator.Tests.Visitors
                     ((isSubClient && c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
                       c.Signature.Parameters.Any(p => p.Name == "endpoint")) ||
                      (!isSubClient && c.Signature.Parameters.Any(p => p.Name == "options"))));
-            Assert.IsNotNull(constructor);
+            Assert.That(constructor, Is.Not.Null);
 
             var updatedConstructor = visitor.InvokeVisitConstructor(constructor!);
-            Assert.IsNotNull(updatedConstructor?.BodyStatements);
-            Assert.IsTrue(updatedConstructor!.BodyStatements!.Any());
+            Assert.That(updatedConstructor?.BodyStatements, Is.Not.Null);
+            Assert.That(updatedConstructor!.BodyStatements!.Any(), Is.True);
 
             var bodyText = updatedConstructor.BodyStatements!.ToDisplayString();
             var expectedText = isSubClient
                 ? "ClientDiagnostics = clientDiagnostics"
                 : "ClientDiagnostics = new global::Azure.Core.Pipeline.ClientDiagnostics(options, true)";
 
-            Assert.IsTrue(bodyText.Contains(expectedText),
+            Assert.That(bodyText.Contains(expectedText),
+                Is.True,
                 $"Constructor should contain appropriate ClientDiagnostics initialization for {(isSubClient ? "subclient" : "client")}");
         }
 
@@ -110,18 +111,18 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient, childInputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             // find the subclient factory method
             var factoryMethod = clientProvider!.Methods
                 .FirstOrDefault(m =>m.Signature.Name == "GetSubClient");
-            Assert.IsNotNull(factoryMethod);
+            Assert.That(factoryMethod, Is.Not.Null);
 
             var updatedFactoryMethod = visitor.InvokeVisitMethod(factoryMethod!);
-            Assert.IsNotNull(updatedFactoryMethod?.BodyStatements);
+            Assert.That(updatedFactoryMethod?.BodyStatements, Is.Not.Null);
 
             var bodyText = updatedFactoryMethod!.BodyStatements!.ToDisplayString();
-            Assert.IsTrue(bodyText.Contains("new global::Samples.SubClient(ClientDiagnostics, Pipeline, _endpoint)"));
+            Assert.That(bodyText.Contains("new global::Samples.SubClient(ClientDiagnostics, Pipeline, _endpoint)"), Is.True);
         }
 
         [TestCase(true)]
@@ -145,7 +146,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
             // create the client provider
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             // create a method to test the visitor
             var methodSignature = new MethodSignature(
@@ -160,10 +161,10 @@ namespace Azure.Generator.Tests.Visitors
             var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, methodKind);
 
             var updatedMethod = visitor.InvokeVisitMethod(method!);
-            Assert.IsNotNull(updatedMethod?.BodyStatements);
+            Assert.That(updatedMethod?.BodyStatements, Is.Not.Null);
 
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
+            Assert.That(result, Is.EqualTo(Helpers.GetExpectedFromFile(isProtocolMethod.ToString())));
         }
 
         [TestCase(true, ScmMethodKind.Protocol)]
@@ -189,7 +190,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
             // create the client provider
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             // create a paging method to test the visitor
             var pagingReturnType = isAsync
@@ -207,15 +208,18 @@ namespace Azure.Generator.Tests.Visitors
             var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, methodKind);
 
             var updatedMethod = visitor.InvokeVisitMethod(method!);
-            Assert.IsNotNull(updatedMethod?.BodyStatements);
+            Assert.That(updatedMethod?.BodyStatements, Is.Not.Null);
 
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
             // Verify that the method body does NOT contain DiagnosticScope instrumentation
-            Assert.IsFalse(result.Contains("DiagnosticScope"),
+            Assert.That(result.Contains("DiagnosticScope"),
+                Is.False,
                 $"Paging method should not have DiagnosticScope instrumentation. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
-            Assert.IsFalse(result.Contains("scope.Start()"),
+            Assert.That(result.Contains("scope.Start()"),
+                Is.False,
                 $"Paging method should not have scope.Start() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
-            Assert.IsFalse(result.Contains("scope.Failed"),
+            Assert.That(result.Contains("scope.Failed"),
+                Is.False,
                 $"Paging method should not have scope.Failed() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
         }
 

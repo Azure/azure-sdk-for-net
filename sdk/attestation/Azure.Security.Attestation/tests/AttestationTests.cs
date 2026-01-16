@@ -151,7 +151,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
+                Assert.That(attestationResult.Value.EnclaveHeldData.ToArray(), Is.EqualTo(binaryRuntimeData));
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -167,7 +167,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-                Assert.IsNull(attestationResult.Value.EnclaveHeldData);
+                Assert.That(attestationResult.Value.EnclaveHeldData, Is.Null);
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -193,11 +193,11 @@ namespace Azure.Security.Attestation.Tests
             tokenValidationOptions.TokenValidated += (AttestationTokenValidationEventArgs args) =>
             {
                 // Verify that the callback can access the enclave held data field.
-                CollectionAssert.AreEqual(binaryRuntimeData, args.Token.GetBody<AttestationResult>().EnclaveHeldData.ToArray());
+                Assert.That(args.Token.GetBody<AttestationResult>().EnclaveHeldData.ToArray(), Is.EqualTo(binaryRuntimeData));
 
                 // The MAA service always sends a Key ID for the signer.
-                Assert.IsNotNull(args.Signer.CertificateKeyId);
-                Assert.AreEqual(TestEnvironment.SharedAttestationUrl, args.Token.Issuer);
+                Assert.That(args.Signer.CertificateKeyId, Is.Not.Null);
+                Assert.That(args.Token.Issuer, Is.EqualTo(TestEnvironment.SharedAttestationUrl));
                 callbackInvoked = true;
                 return Task.CompletedTask;
             };
@@ -216,11 +216,11 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
+                Assert.That(attestationResult.Value.EnclaveHeldData.ToArray(), Is.EqualTo(binaryRuntimeData));
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
-                Assert.IsTrue(callbackInvoked);
+                Assert.That(callbackInvoked, Is.True);
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
+                Assert.That(attestationResult.Value.EnclaveHeldData.ToArray(), Is.EqualTo(binaryRuntimeData));
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -266,7 +266,7 @@ namespace Azure.Security.Attestation.Tests
             tokenValidationOptions.TokenValidated += (args) =>
             {
                 // Verify that the callback can access the enclave held data field.
-                CollectionAssert.AreEqual(binaryRuntimeData, args.Token.GetBody<AttestationResult>().EnclaveHeldData.ToArray());
+                Assert.That(args.Token.GetBody<AttestationResult>().EnclaveHeldData.ToArray(), Is.EqualTo(binaryRuntimeData));
 
                 // The MAA service always sends a Key ID for the signer.
                 args.IsValid =
@@ -291,18 +291,18 @@ namespace Azure.Security.Attestation.Tests
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
                     });
                 // Confirm that the attestation token contains the enclave held data we specified.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
+                Assert.That(attestationResult.Value.EnclaveHeldData.ToArray(), Is.EqualTo(binaryRuntimeData));
 
 #pragma warning disable CS0618 // Type or member is obsolete
-                Assert.IsNotNull(attestationResult.Value.DeprecatedEnclaveHeldData);
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData.ToArray());
-                Assert.IsNotNull(attestationResult.Value.DeprecatedEnclaveHeldData2);
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData2.ToArray());
+                Assert.That(attestationResult.Value.DeprecatedEnclaveHeldData, Is.Not.Null);
+                Assert.That(attestationResult.Value.DeprecatedEnclaveHeldData.ToArray(), Is.EqualTo(binaryRuntimeData));
+                Assert.That(attestationResult.Value.DeprecatedEnclaveHeldData2, Is.Not.Null);
+                Assert.That(attestationResult.Value.DeprecatedEnclaveHeldData2.ToArray(), Is.EqualTo(binaryRuntimeData));
 #pragma warning restore CS0618 // Type or member is obsolete
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
-                Assert.IsTrue(callbackInvoked);
+                Assert.That(callbackInvoked, Is.True);
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.Security.Attestation.Tests
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
                     }));
 
-                Assert.IsTrue(callbackInvoked);
+                Assert.That(callbackInvoked, Is.True);
             }
         }
 
@@ -378,10 +378,10 @@ namespace Azure.Security.Attestation.Tests
 
             // Make sure that the response from the service looks like it's supposed to look.
             var parsedValue = JsonDocument.Parse(tpmResponse.Value.Data);
-            Assert.IsNotNull(parsedValue.RootElement.GetProperty("payload"));
+            Assert.That(parsedValue.RootElement.GetProperty("payload"), Is.Not.Null);
             var payload = parsedValue.RootElement.GetProperty("payload");
-            Assert.IsNotNull(payload.GetProperty("challenge"));
-            Assert.IsNotNull(payload.GetProperty("service_context"));
+            Assert.That(payload.GetProperty("challenge"), Is.Not.Null);
+            Assert.That(payload.GetProperty("service_context"), Is.Not.Null);
         }
     }
 }

@@ -15,13 +15,13 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Usage
         public Task Azure_ClientGenerator_Core_Usage_ModelInOperation() => Test(async (host) =>
         {
             var response1 = await new UsageClient(host, null).GetModelInOperationClient().InputToInputOutputAsync(new InputModel("Madge"));
-            Assert.AreEqual(204, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(204));
 
             var response2 = await new UsageClient(host, null).GetModelInOperationClient().OutputToInputOutputAsync();
-            Assert.AreEqual("Madge", response2.Value.Name);
+            Assert.That(response2.Value.Name, Is.EqualTo("Madge"));
 
             var response3 = await new UsageClient(host, null).GetModelInOperationClient().ModelInReadOnlyPropertyAsync(new RoundTripModel());
-            Assert.AreEqual("Madge", response3.Value.Result.Name);
+            Assert.That(response3.Value.Result.Name, Is.EqualTo("Madge"));
 
             var response4 = await new UsageClient(host, null).GetModelInOperationClient().OrphanModelSerializableAsync(
                 BinaryData.FromObjectAsJson(
@@ -30,7 +30,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Usage
                         name = "name",
                         desc = "desc"
                     }));
-            Assert.AreEqual(204, response4.Status);
+            Assert.That(response4.Status, Is.EqualTo(204));
         });
     }
 }

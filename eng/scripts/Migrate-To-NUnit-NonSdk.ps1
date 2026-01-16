@@ -1,15 +1,13 @@
 <#
 .SYNOPSIS
-    Migrates azure-sdk-for-net test projects from NUnit 3 to NUnit 4.
+    Migrates azure-sdk-for-net test projects from NUnit 3 to NUnit 4 for NON-SDK directories.
 
 .DESCRIPTION
-    This script automates the migration process from NUnit 3 to NUnit 4 by:
-    - Adding NUnit.Analyzers package reference to appropriate test projects
+    This script automates the migration process from NUnit 3 to NUnit 4 for test projects
+    outside the /sdk directory (common/, eng/packages/, etc.) by:
+    - Adding NUnit.Analyzers package reference to test projects
     - Applying NUnit analyzer code fixes to convert classic asserts to constraint model
-    
-    The script handles two types of packages differently:
-    - Data plane (non-Azure.ResourceManager.*): Adds NUnit.Analyzers reference
-    - Management plane (Azure.ResourceManager.*): Skips analyzer reference (handled centrally)
+    - Removing NUnit.Analyzers references after fixes are applied
     
     NO GIT OPERATIONS are performed - user commits changes manually.
 
@@ -17,27 +15,27 @@
     The root directory of the azure-sdk-for-net repository. Defaults to current directory.
 
 .PARAMETER DiagnosticIds
-    Array of NUnit diagnostic IDs to apply. Defaults to NUNIT 2001-2007, 2015-2019, 2027-2039, 2048-2050.
+    Array of NUnit diagnostic IDs to apply. Defaults to NUNIT 2017-2019, 2027-2039, 2048-2050.
 
 .PARAMETER DryRun
     If specified, shows what would be done without making any changes.
 
 .EXAMPLE
-    .\Migrate-To-NUnit4.ps1
+    .\Migrate-To-NUnit-NonSdk.ps1
     Runs the migration from the current directory.
 
 .EXAMPLE
-    .\Migrate-To-NUnit4.ps1 -RepoRoot "C:\repos\azure-sdk-for-net"
+    .\Migrate-To-NUnit-NonSdk.ps1 -RepoRoot "C:\repos\azure-sdk-for-net"
     Runs the migration from the specified repository root.
 
 .EXAMPLE
-    .\Migrate-To-NUnit4.ps1 -DryRun
+    .\Migrate-To-NUnit-NonSdk.ps1 -DryRun
     Shows what would be done without making changes.
 
 .NOTES
     Based on NUnit 4.0 Migration Guide: https://docs.nunit.org/articles/nunit/release-notes/Nunit4.0-MigrationGuide.html
     
-    IMPORTANT: The analyzers only work when code compiles. Apply analyzer fixes BEFORE upgrading NUnit to version 4.0.0.
+    This version targets directories OUTSIDE /sdk: common/, eng/packages/, etc.
 #>
 
 [CmdletBinding()]
@@ -47,16 +45,11 @@ param(
     
     [Parameter()]
     [string[]]$DiagnosticIds = @(
-        # Classic assert conversions
-        #"NUnit2001", "NUnit2002", "NUnit2003", "NUnit2004", "NUnit2005", "NUnit2006", "NUnit2007",
-        # String and collection asserts
-        #"NUnit2015", "NUnit2016", "NUnit2017", "NUnit2018", "NUnit2019",
-        "NUnit2017", "NUnit2018", "NUnit2019",
-        # Additional classic assert conversions
-        "NUnit2027", "NUnit2028", "NUnit2029", "NUnit2030", "NUnit2031", "NUnit2032", "NUnit2033",
-        "NUnit2034", "NUnit2035", "NUnit2036", "NUnit2037", "NUnit2038", "NUnit2039",
-        # Constraint-related fixes
-        "NUnit2048", "NUnit2049", "NUnit2050"
+        "NUnit2001", "NUnit2002", "NUnit2003", "NUnit2004", "NUnit2005", "NUnit2006", "NUnit2007",
+        "NUnit2015", "NUnit2016" #"NUnit2017", "NUnit2018", "NUnit2019",
+        #"NUnit2027", "NUnit2028", "NUnit2029", "NUnit2030", "NUnit2031", "NUnit2032", "NUnit2033",
+        #"NUnit2034", "NUnit2035", "NUnit2036", "NUnit2037", "NUnit2038", "NUnit2039",
+        #"NUnit2048", "NUnit2049", "NUnit2050"
     ),
     
     [Parameter()]
@@ -72,7 +65,7 @@ $ErrorActionPreference = "Stop"
 $RepoRoot = Resolve-Path $RepoRoot -ErrorAction Stop
 
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "NUnit 3 to NUnit 4 Migration Script" -ForegroundColor Cyan
+Write-Host "NUnit 3 to NUnit 4 Migration Script (Non-SDK)" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Repository: $RepoRoot" -ForegroundColor Yellow
 Write-Host "Dry Run: $DryRun" -ForegroundColor Yellow
@@ -84,12 +77,21 @@ if (-not (Test-Path (Join-Path $RepoRoot "sdk"))) {
     exit 1
 }
 
-# Find the SDK directory
-$sdkDir = Join-Path $RepoRoot "sdk"
-Write-Host "Scanning SDK directory: $sdkDir" -ForegroundColor Cyan
+# Define directories to scan (everything EXCEPT sdk)
+$dirsToScan = @(
+    (Join-Path $RepoRoot "common"),
+    (Join-Path $RepoRoot "eng\packages")
+)
 
-# Step 1: Add NUnit.Analyzers to appropriate test projects
+Write-Host "Scanning directories:" -ForegroundColor Cyan
+foreach ($dir in $dirsToScan) {
+    if (Test-Path $dir) {
+        Write-Host "  - $($dir.Substring($RepoRoot.Length + 1))" -ForegroundColor Yellow
+    }
+}
 Write-Host ""
+
+# Step 1: Add NUnit.Analyzers to test projects
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Step 1: Adding NUnit.Analyzers References" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
@@ -97,15 +99,19 @@ Write-Host "========================================" -ForegroundColor Cyan
 $packageName = "NUnit.Analyzers"
 $insertSnippet = "    <PackageReference Include=`"$packageName`" />"
 
-# Find all test .csproj files
-$testProjects = Get-ChildItem -Path $sdkDir -Filter "*.csproj" -Recurse | Where-Object {
-    $_.Name -match "\.Tests?\.csproj$" -or $_.Directory.Name -match "^tests?$"
+# Find all test .csproj files in the specified directories
+$testProjects = @()
+foreach ($dir in $dirsToScan) {
+    if (Test-Path $dir) {
+        $testProjects += Get-ChildItem -Path $dir -Filter "*.csproj" -Recurse | Where-Object {
+            $_.Name -match "\.Tests?\.csproj$" -or $_.Directory.Name -match "^tests?$"
+        }
+    }
 }
 
 Write-Host "Found $($testProjects.Count) potential test projects" -ForegroundColor Yellow
 
 $projectsModified = 0
-$projectsSkipped = 0
 $projectsAlreadyHaveAnalyzer = 0
 
 foreach ($csproj in $testProjects) {
@@ -122,16 +128,7 @@ foreach ($csproj in $testProjects) {
         continue
     }
     
-    # Determine if this is a management plane package
-    $isManagementPlane = $relativePath -match "\\Azure\.ResourceManager\."
-    
-    if ($isManagementPlane) {
-        Write-Host "  [SKIP] Management plane (handled centrally): $relativePath" -ForegroundColor DarkYellow
-        $projectsSkipped++
-        continue
-    }
-    
-    # This is a data plane package - add the analyzer
+    # Add the analyzer
     Write-Host "  [ADD]  Adding $packageName : $relativePath" -ForegroundColor Green
     
     if (-not $DryRun) {
@@ -155,7 +152,6 @@ foreach ($csproj in $testProjects) {
 Write-Host ""
 Write-Host "Summary:" -ForegroundColor Cyan
 Write-Host "  Projects modified: $projectsModified" -ForegroundColor Green
-Write-Host "  Projects skipped (mgmt plane): $projectsSkipped" -ForegroundColor Yellow
 Write-Host "  Projects already had analyzer: $projectsAlreadyHaveAnalyzer" -ForegroundColor Yellow
 
 if ($DryRun) {
@@ -170,29 +166,34 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Step 2: Restoring NuGet Packages" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 
-# Find all solution files
-$solutions = Get-ChildItem -Path $sdkDir -Filter "*.sln" -Recurse
+# # Find all solution files in the directories
+# $solutions = @()
+# foreach ($dir in $dirsToScan) {
+#     if (Test-Path $dir) {
+#         $solutions += Get-ChildItem -Path $dir -Filter "*.sln" -Recurse
+#     }
+# }
 
-Write-Host "Found $($solutions.Count) solution files. Restoring packages..." -ForegroundColor Yellow
+# Write-Host "Found $($solutions.Count) solution files. Restoring packages..." -ForegroundColor Yellow
 
-foreach ($sln in $solutions) {
-    $slnPath = $sln.FullName
-    $relativePath = $slnPath.Substring($RepoRoot.Length + 1)
+# foreach ($sln in $solutions) {
+#     $slnPath = $sln.FullName
+#     $relativePath = $slnPath.Substring($RepoRoot.Length + 1)
     
-    Write-Host "  Restoring: $relativePath" -ForegroundColor Gray
+#     Write-Host "  Restoring: $relativePath" -ForegroundColor Gray
     
-    try {
-        & dotnet restore "$slnPath" --verbosity quiet
-        if ($LASTEXITCODE -ne 0) {
-            Write-Warning "Failed to restore $relativePath"
-        }
-    }
-    catch {
-        Write-Warning "Error restoring $relativePath : $_"
-    }
-}
+#     try {
+#         & dotnet restore "$slnPath" --verbosity quiet
+#         if ($LASTEXITCODE -ne 0) {
+#             Write-Warning "Failed to restore $relativePath"
+#         }
+#     }
+#     catch {
+#         Write-Warning "Error restoring $relativePath : $_"
+#     }
+# }
 
-Write-Host "Package restoration complete" -ForegroundColor Green
+# Write-Host "Package restoration complete" -ForegroundColor Green
 
 # Step 3: Apply analyzer fixes
 Write-Host ""
@@ -200,12 +201,7 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Step 3: Applying Analyzer Code Fixes" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 
-# Get all test projects (both data plane and management plane)
-$projectsToFormat = Get-ChildItem -Path $sdkDir -Filter "*.csproj" -Recurse | Where-Object {
-    $_.Name -match "\.Tests?\.csproj$" -or $_.Directory.Name -match "^tests?$"
-}
-
-Write-Host "Found $($projectsToFormat.Count) test projects to format" -ForegroundColor Yellow
+Write-Host "Found $($testProjects.Count) test projects to format" -ForegroundColor Yellow
 Write-Host "Applying $($DiagnosticIds.Count) diagnostic fixes..." -ForegroundColor Yellow
 Write-Host "Mode: Processing each diagnostic individually" -ForegroundColor Yellow
 Write-Host ""
@@ -214,12 +210,11 @@ $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
 # Process each diagnostic separately
 $diagnosticCounter = 0
-$allResults = @()
 foreach ($diagnostic in $DiagnosticIds) {
-    $diagnosticCounter++
-    Write-Host "[$diagnosticCounter/$($DiagnosticIds.Count)] Processing diagnostic: $diagnostic" -ForegroundColor Cyan
-    
-    $results = $projectsToFormat | ForEach-Object -ThrottleLimit 8 -Parallel {
+        $diagnosticCounter++
+        Write-Host "[$diagnosticCounter/$($DiagnosticIds.Count)] Processing diagnostic: $diagnostic" -ForegroundColor Cyan
+        
+        $results = $testProjects | ForEach-Object -ThrottleLimit 8 -Parallel {
             $csproj = $_
             $csprojPath = $csproj.FullName
             $csprojDir = $csproj.Directory.FullName
@@ -283,18 +278,17 @@ foreach ($diagnostic in $DiagnosticIds) {
             }
             
             return @{ Success = $success; ChangesApplied = $changesApplied }
-    }
-    
-    $allResults += $results
-    $successCount = ($results | Where-Object { $_.Success -eq $true }).Count
-    $changesCount = ($results | Where-Object { $_.ChangesApplied -eq $true }).Count
-    Write-Host "  Processed: $successCount projects, Changes applied: $changesCount" -ForegroundColor Green
+        }
+        
+        $successCount = ($results | Where-Object { $_.Success -eq $true }).Count
+        $changesCount = ($results | Where-Object { $_.ChangesApplied -eq $true }).Count
+        Write-Host "  Processed: $successCount projects, Changes applied: $changesCount" -ForegroundColor Green
 }
 
 $stopwatch.Stop()
-$projectsProcessed = ($allResults | Where-Object { $_.Success -eq $true }).Count
-$projectsFailed = ($allResults | Where-Object { $_.Success -ne $true }).Count
-$projectsWithChanges = ($allResults | Where-Object { $_.ChangesApplied -eq $true }).Count
+$projectsProcessed = ($results | Where-Object { $_.Success -eq $true }).Count
+$projectsFailed = ($results | Where-Object { $_.Success -ne $true }).Count
+$projectsWithChanges = ($results | Where-Object { $_.ChangesApplied -eq $true }).Count
 
 Write-Host ""
 Write-Host "Processing Summary:" -ForegroundColor Cyan
@@ -311,14 +305,10 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Step 4: Removing NUnit.Analyzers References" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 
-$projectsWithAnalyzer = Get-ChildItem -Path $sdkDir -Filter "*.csproj" -Recurse | Where-Object {
-    $_.Name -match "\.Tests?\.csproj$" -or $_.Directory.Name -match "^tests?$"
-}
-
 $projectsAnalyzerRemoved = 0
 $projectsAnalyzerNotFound = 0
 
-foreach ($csproj in $projectsWithAnalyzer) {
+foreach ($csproj in $testProjects) {
     $csprojPath = $csproj.FullName
     $relativePath = $csprojPath.Substring($RepoRoot.Length + 1)
     

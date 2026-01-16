@@ -15,73 +15,73 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.EnumDiscrimina
         public Task PutExtensibleEnum() => Test(async (host) =>
         {
             var result = await new EnumDiscriminatorClient(host, null).PutExtensibleModelAsync(new Golden(10));
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetExtensibleEnum() => Test(async (host) =>
         {
             var result = await new EnumDiscriminatorClient(host, null).GetExtensibleModelAsync();
-            Assert.AreEqual(200, result.GetRawResponse().Status);
-            Assert.AreEqual(10, result.Value.Weight);
-            Assert.IsInstanceOf<Golden>(result.Value);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(result.Value.Weight, Is.EqualTo(10));
+            Assert.That(result.Value, Is.InstanceOf<Golden>());
         });
 
         [SpectorTest]
         public Task GetExtensibleModelMissingDiscriminator() => Test(async (host) =>
         {
             var result = await new EnumDiscriminatorClient(host, null).GetExtensibleModelMissingDiscriminatorAsync();
-            Assert.AreEqual(200, result.GetRawResponse().Status);
-            Assert.IsNotInstanceOf<Golden>(result.Value);
-            Assert.AreEqual(10, result.Value.Weight);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(result.Value, Is.Not.InstanceOf<Golden>());
+            Assert.That(result.Value.Weight, Is.EqualTo(10));
         });
 
         [SpectorTest]
         public Task GetExtensibleModelWrongDiscriminator() => Test(async (host) =>
         {
             var result = await new EnumDiscriminatorClient(host, null).GetExtensibleModelWrongDiscriminatorAsync();
-            Assert.AreEqual(200, result.GetRawResponse().Status);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
 
             var unknownDogType = typeof(Dog).Assembly.DefinedTypes.FirstOrDefault(t => t.Name == "UnknownDog");
-            Assert.IsNotNull(unknownDogType);
-            Assert.AreEqual(unknownDogType, result.Value.GetType());
-            Assert.AreEqual(8, result.Value.Weight);
+            Assert.That(unknownDogType, Is.Not.Null);
+            Assert.That(result.Value.GetType(), Is.EqualTo(unknownDogType));
+            Assert.That(result.Value.Weight, Is.EqualTo(8));
         });
 
         [SpectorTest]
         public Task PutFixedEnum() => Test(async (host) =>
         {
             var result = await new EnumDiscriminatorClient(host, null).PutFixedModelAsync(new Cobra(10));
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetFixedEnum() => Test(async (host) =>
         {
             var result = await new EnumDiscriminatorClient(host, null).GetFixedModelAsync();
-            Assert.AreEqual(200, result.GetRawResponse().Status);
-            Assert.AreEqual(10, result.Value.Length);
-            Assert.IsInstanceOf<Cobra>(result.Value);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(result.Value.Length, Is.EqualTo(10));
+            Assert.That(result.Value, Is.InstanceOf<Cobra>());
         });
 
         [SpectorTest]
         public Task GetFixedModelMissingDiscriminator() => Test(async (host) =>
         {
             var response = await new EnumDiscriminatorClient(host, null).GetFixedModelMissingDiscriminatorAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
 
             var unknownSnakeType = typeof(Snake).Assembly.GetTypes().FirstOrDefault(t => t.Name == "UnknownSnake");
-            Assert.IsNotNull(unknownSnakeType);
-            Assert.AreEqual(unknownSnakeType, response.Value.GetType());
-            Assert.AreEqual(10, response.Value.Length);
+            Assert.That(unknownSnakeType, Is.Not.Null);
+            Assert.That(response.Value.GetType(), Is.EqualTo(unknownSnakeType));
+            Assert.That(response.Value.Length, Is.EqualTo(10));
         });
 
         [SpectorTest]
         public Task GetFixedModelWrongDiscriminator() => Test((host) =>
         {
             var exception = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await new EnumDiscriminatorClient(host, null).GetFixedModelWrongDiscriminatorAsync());
-            Assert.IsNotNull(exception);
-            Assert.IsTrue(exception!.Message.Contains("wrongKind"));
+            Assert.That(exception, Is.Not.Null);
+            Assert.That(exception!.Message.Contains("wrongKind"), Is.True);
             return Task.CompletedTask;
         });
 

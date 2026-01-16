@@ -15,10 +15,10 @@ namespace TestProjects.Spector.Tests.Http.Versioning.MadeOptional.V1
         public void CheckMadeOptionalMembers()
         {
             var constructors = typeof(TestModel).GetConstructors();
-            Assert.IsNotNull(constructors);
-            Assert.AreEqual(1, constructors.Length);
+            Assert.That(constructors, Is.Not.Null);
+            Assert.That(constructors.Length, Is.EqualTo(1));
             /* property will not in public constructor signature. */
-            Assert.IsTrue(constructors[0].GetParameters().Any(p => p.Name == "changedProp"));
+            Assert.That(constructors[0].GetParameters().Any(p => p.Name == "changedProp"), Is.True);
         }
     }
 }

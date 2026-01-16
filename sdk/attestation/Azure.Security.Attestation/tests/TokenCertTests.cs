@@ -23,7 +23,7 @@ namespace Azure.Security.Attestation.Tests
 
             IReadOnlyList<AttestationSigner> certs = (await attestationClient.GetSigningCertificatesAsync()).Value;
 
-            Assert.AreNotEqual(0, certs.Count);
+            Assert.That(certs.Count, Is.Not.EqualTo(0));
 
             return;
         }

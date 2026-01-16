@@ -18,9 +18,9 @@ namespace Azure.Generator.Tests.Providers.Abstractions
             ClientProvider clientProvider = CreateMockClientProvider();
 
             var method = clientProvider.Methods.FirstOrDefault(x => !x.Signature.Name.EndsWith("Async"));
-            Assert.NotNull(method);
-            Assert.NotNull(method!.Signature.ReturnType);
-            Assert.IsTrue(method!.Signature.ReturnType!.Equals(typeof(Response)));
+            Assert.That(method, Is.Not.Null);
+            Assert.That(method!.Signature.ReturnType, Is.Not.Null);
+            Assert.That(method!.Signature.ReturnType!.Equals(typeof(Response)), Is.True);
         }
 
         [Test]
@@ -29,9 +29,9 @@ namespace Azure.Generator.Tests.Providers.Abstractions
             var clientProvider = CreateMockClientProvider();
 
             var method = clientProvider.Methods.FirstOrDefault(x => x.Signature.Parameters.Any(p => p.Type.Equals(typeof(RequestContext))) && !x.Signature.Name.EndsWith("Async"));
-            Assert.NotNull(method);
-            Assert.NotNull(method!.BodyStatements);
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), method.BodyStatements!.ToDisplayString());
+            Assert.That(method, Is.Not.Null);
+            Assert.That(method!.BodyStatements, Is.Not.Null);
+            Assert.That(method.BodyStatements!.ToDisplayString(), Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -40,11 +40,11 @@ namespace Azure.Generator.Tests.Providers.Abstractions
             MockHelpers.LoadMockGenerator();
             var pipelineExtensions =
                 AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(t => t.Name == "ClientPipelineExtensions");
-            Assert.NotNull(pipelineExtensions);
+            Assert.That(pipelineExtensions, Is.Not.Null);
             var method = pipelineExtensions!.Methods.FirstOrDefault(x => x.Signature.Name == "ProcessMessage");
-            Assert.NotNull(method);
-            Assert.NotNull(method!.BodyStatements);
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), method.BodyStatements!.ToDisplayString());
+            Assert.That(method, Is.Not.Null);
+            Assert.That(method!.BodyStatements, Is.Not.Null);
+            Assert.That(method.BodyStatements!.ToDisplayString(), Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         private static ClientProvider CreateMockClientProvider()

@@ -60,7 +60,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             var client = InputFactory.Client(TestClientName, parameters: [.. inputParameters]);
             var clientProvider = new ClientProvider(client);
 
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             if (_hasKeyAuth)
             {
@@ -109,7 +109,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         {
             var clientProvider = new ClientProvider(client);
 
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             // fields here should not have anything related with auth
             bool authFieldFound = false;
@@ -121,7 +121,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
                 }
             }
 
-            Assert.IsFalse(authFieldFound);
+            Assert.That(authFieldFound, Is.False);
         }
 
         [TestCaseSource(nameof(BuildConstructorsTestCases))]
@@ -133,7 +133,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             var client = InputFactory.Client(TestClientName, parameters: [.. inputParameters]);
             var clientProvider = new ClientProvider(client);
 
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var constructors = clientProvider.Constructors;
 

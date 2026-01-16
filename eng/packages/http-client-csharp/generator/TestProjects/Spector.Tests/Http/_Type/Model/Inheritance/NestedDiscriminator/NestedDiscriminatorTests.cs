@@ -15,42 +15,42 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.NestedDiscrimi
         public Task GetMissingDiscriminator() => Test(async (host) =>
         {
             var result = await new NestedDiscriminatorClient(host, null).GetMissingDiscriminatorAsync();
-            Assert.IsNotNull(result.Value);
-            Assert.AreEqual(1, result.Value.Age);
+            Assert.That(result.Value, Is.Not.Null);
+            Assert.That(result.Value.Age, Is.EqualTo(1));
         });
 
         [SpectorTest]
         public Task GetModel() => Test(async (host) =>
         {
             var result = await new NestedDiscriminatorClient(host, null).GetModelAsync();
-            Assert.IsInstanceOf<GoblinShark>(result.Value);
-            Assert.AreEqual(1, result.Value.Age);
+            Assert.That(result.Value, Is.InstanceOf<GoblinShark>());
+            Assert.That(result.Value.Age, Is.EqualTo(1));
         });
 
         [SpectorTest]
         public Task GetRecursiveModel() => Test(async (host) =>
         {
             var result = await new NestedDiscriminatorClient(host, null).GetRecursiveModelAsync();
-            Assert.IsInstanceOf<Salmon>(result.Value);
+            Assert.That(result.Value, Is.InstanceOf<Salmon>());
 
             var salmon = (Salmon)result.Value;
-            Assert.AreEqual(1, salmon.Age);
-            Assert.IsTrue(salmon.Partner is Shark);
+            Assert.That(salmon.Age, Is.EqualTo(1));
+            Assert.That(salmon.Partner is Shark, Is.True);
 
             var shark = (Shark)salmon.Partner;
             var sharkTypeProperty = shark.GetType().GetProperty("Sharktype", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.AreEqual("saw", sharkTypeProperty?.GetValue(shark));
-            Assert.IsInstanceOf<SawShark>(shark);
-            Assert.AreEqual(2, salmon.Friends.Count);
-            Assert.IsInstanceOf<Salmon>(salmon.Friends[0]);
+            Assert.That(sharkTypeProperty?.GetValue(shark), Is.EqualTo("saw"));
+            Assert.That(shark, Is.InstanceOf<SawShark>());
+            Assert.That(salmon.Friends.Count, Is.EqualTo(2));
+            Assert.That(salmon.Friends[0], Is.InstanceOf<Salmon>());
 
             var salmonFriend = (Salmon)salmon.Friends[0];
-            Assert.AreEqual(2, salmonFriend.Age);
-            Assert.AreEqual(2, salmonFriend.Hate.Count);
-            Assert.IsTrue(salmon.Hate.ContainsKey("key3"));
-            Assert.IsInstanceOf<SawShark>(salmon.Hate["key3"]);
-            Assert.IsTrue(salmon.Hate.ContainsKey("key4"));
-            Assert.IsInstanceOf<Salmon>(salmon.Hate["key4"]);
+            Assert.That(salmonFriend.Age, Is.EqualTo(2));
+            Assert.That(salmonFriend.Hate.Count, Is.EqualTo(2));
+            Assert.That(salmon.Hate.ContainsKey("key3"), Is.True);
+            Assert.That(salmon.Hate["key3"], Is.InstanceOf<SawShark>());
+            Assert.That(salmon.Hate.ContainsKey("key4"), Is.True);
+            Assert.That(salmon.Hate["key4"], Is.InstanceOf<Salmon>());
         });
 
         [SpectorTest]
@@ -59,11 +59,11 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.NestedDiscrimi
             var result = await new NestedDiscriminatorClient(host, null).GetWrongDiscriminatorAsync();
 
             var unknownFishType = typeof(Fish).Assembly.GetTypes().FirstOrDefault(t => t.Name == "UnknownFish");
-            Assert.IsNotNull(unknownFishType);
-            Assert.AreEqual(unknownFishType, result.Value.GetType());
-            Assert.AreEqual(1, result.Value.Age);
+            Assert.That(unknownFishType, Is.Not.Null);
+            Assert.That(result.Value.GetType(), Is.EqualTo(unknownFishType));
+            Assert.That(result.Value.Age, Is.EqualTo(1));
             var kindProperty = result.Value.GetType().GetProperty("Kind", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.AreEqual("wrongKind", kindProperty?.GetValue(result.Value));
+            Assert.That(kindProperty?.GetValue(result.Value), Is.EqualTo("wrongKind"));
         });
 
         [SpectorTest]
@@ -71,7 +71,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.NestedDiscrimi
         {
             var body = new GoblinShark(1);
             var response = await new NestedDiscriminatorClient(host, null).PutModelAsync(body);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -96,7 +96,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.NestedDiscrimi
                 }
             };
             var response = await new NestedDiscriminatorClient(host, null).PutRecursiveModelAsync(body);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

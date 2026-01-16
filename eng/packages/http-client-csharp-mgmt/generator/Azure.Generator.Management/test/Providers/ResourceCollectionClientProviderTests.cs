@@ -17,7 +17,7 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             ResourceCollectionClientProvider resourceProvider = GetResourceCollectionClientProvider();
             var method = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == methodName);
-            Assert.NotNull(method);
+            Assert.That(method, Is.Not.Null);
             return method!;
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResource();
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
-            Assert.NotNull(resourceProvider);
+            Assert.That(resourceProvider, Is.Not.Null);
             return resourceProvider!;
         }
 
@@ -37,17 +37,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
-            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -57,17 +57,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
-            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -77,17 +77,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
-            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -97,17 +97,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
-            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -117,17 +117,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
-            Assert.AreEqual(typeof(NullableResponse<>), signature.ReturnType?.FrameworkType);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(NullableResponse<>)));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -137,17 +137,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
-            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -159,20 +159,20 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = createOrUpdateMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
             // the createOrUpdate method is a fake LRO, therefore it has 4 parameters
-            Assert.AreEqual(4, signature.Parameters.Count);
-            Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
-            Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
-            Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.FrameworkType);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(4));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[2].Type.Name.EndsWith("Data"), Is.True);
+            Assert.That(signature.Parameters[3].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
 
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -182,21 +182,21 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = createOrUpdateMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
             // the createOrUpdate method is a fake LRO, therefore it has 4 parameters
-            Assert.AreEqual(4, signature.Parameters.Count);
-            Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
-            Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
-            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
-            Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.Arguments[0].FrameworkType);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(4));
+            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(signature.Parameters[2].Type.Name.EndsWith("Data"), Is.True);
+            Assert.That(signature.Parameters[3].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
 
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
     }
 }

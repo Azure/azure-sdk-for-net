@@ -18,69 +18,69 @@ namespace TestProjects.Spector.Tests.Http.Client.Structure.TwoOperationGroup
         {
             /* check the methods in service client. */
             var methodsOfServiceClient = typeof(TwoOperationGroupClient).GetMethods();
-            Assert.IsNotNull(methodsOfServiceClient);
-            Assert.AreEqual(0, methodsOfServiceClient.Where(method => method.Name.EndsWith("Async")).ToArray().Length);
+            Assert.That(methodsOfServiceClient, Is.Not.Null);
+            Assert.That(methodsOfServiceClient.Where(method => method.Name.EndsWith("Async")).ToArray().Length, Is.EqualTo(0));
             //check existence of method to get the operation group client
-            Assert.AreNotEqual(null, typeof(TwoOperationGroupClient).GetMethod("GetGroup1Client"));
-            Assert.AreNotEqual(null, typeof(TwoOperationGroupClient).GetMethod("GetGroup2Client"));
+            Assert.That(typeof(TwoOperationGroupClient).GetMethod("GetGroup1Client"), Is.Not.EqualTo(null));
+            Assert.That(typeof(TwoOperationGroupClient).GetMethod("GetGroup2Client"), Is.Not.EqualTo(null));
 
             /*check methods in operation group1 client. */
             var methodsOfGroup1 = typeof(Group1).GetMethods();
-            Assert.IsNotNull(methodsOfGroup1);
-            Assert.AreEqual(6, methodsOfGroup1.Where(method => method.Name.EndsWith("Async")).ToArray().Length);
-            Assert.IsNotNull(typeof(Group1).GetMethods().Where(m => m.Name == "OneAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(Group1).GetMethods().Where(m => m.Name == "ThreeAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(Group1).GetMethods().Where(m => m.Name == "FourAsync").FirstOrDefault());
+            Assert.That(methodsOfGroup1, Is.Not.Null);
+            Assert.That(methodsOfGroup1.Where(method => method.Name.EndsWith("Async")).ToArray().Length, Is.EqualTo(6));
+            Assert.That(typeof(Group1).GetMethods().Where(m => m.Name == "OneAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(Group1).GetMethods().Where(m => m.Name == "ThreeAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(Group1).GetMethods().Where(m => m.Name == "FourAsync").FirstOrDefault(), Is.Not.Null);
 
             /*check methods in operation group2 client. */
             var methodsOfGroup2 = typeof(Group2).GetMethods();
-            Assert.IsNotNull(methodsOfGroup2);
-            Assert.AreEqual(6, methodsOfGroup2.Where(method => method.Name.EndsWith("Async")).ToArray().Length);
-            Assert.IsNotNull(typeof(Group2).GetMethods().Where(m => m.Name == "TwoAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(Group2).GetMethods().Where(m => m.Name == "FiveAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(Group2).GetMethods().Where(m => m.Name == "SixAsync").FirstOrDefault());
+            Assert.That(methodsOfGroup2, Is.Not.Null);
+            Assert.That(methodsOfGroup2.Where(method => method.Name.EndsWith("Async")).ToArray().Length, Is.EqualTo(6));
+            Assert.That(typeof(Group2).GetMethods().Where(m => m.Name == "TwoAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(Group2).GetMethods().Where(m => m.Name == "FiveAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(Group2).GetMethods().Where(m => m.Name == "SixAsync").FirstOrDefault(), Is.Not.Null);
         }
 
         [SpectorTest]
         public Task One() => Test(async (host) =>
         {
             var result = await new TwoOperationGroupClient(host, ClientType.TwoOperationGroup).GetGroup1Client().OneAsync();
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Three() => Test(async (host) =>
         {
             var result = await new TwoOperationGroupClient(host, ClientType.TwoOperationGroup).GetGroup1Client().ThreeAsync();
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Four() => Test(async (host) =>
         {
             var result = await new TwoOperationGroupClient(host, ClientType.TwoOperationGroup).GetGroup1Client().FourAsync();
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Two() => Test(async (host) =>
         {
             var result = await new TwoOperationGroupClient(host, ClientType.TwoOperationGroup).GetGroup2Client().TwoAsync();
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Five() => Test(async (host) =>
         {
             var result = await new TwoOperationGroupClient(host, ClientType.TwoOperationGroup).GetGroup2Client().FiveAsync();
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Six() => Test(async (host) =>
         {
             var result = await new TwoOperationGroupClient(host, ClientType.TwoOperationGroup).GetGroup2Client().SixAsync();
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
     }
 }

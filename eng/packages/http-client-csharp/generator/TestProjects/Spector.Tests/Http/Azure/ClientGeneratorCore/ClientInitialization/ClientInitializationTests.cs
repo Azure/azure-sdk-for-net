@@ -58,10 +58,10 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
 
             // Test GetStandalone - blobName is elevated to client constructor
             var response = await client.GetStandaloneAsync();
-            Assert.AreEqual("sample-blob", response.Value.Name);
-            Assert.AreEqual(42, response.Value.Size);
-            Assert.AreEqual("text/plain", response.Value.ContentType);
-            Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
+            Assert.That(response.Value.Name, Is.EqualTo("sample-blob"));
+            Assert.That(response.Value.Size, Is.EqualTo(42));
+            Assert.That(response.Value.ContentType, Is.EqualTo("text/plain"));
+            Assert.That(response.Value.CreatedOn, Is.EqualTo(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero)));
 
             // Test DeleteStandalone - blobName is elevated to client constructor
             await client.DeleteStandaloneAsync();
@@ -103,10 +103,10 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
 
                 // Test GetStandalone - blobName is elevated to parent client
                 var response = await client.GetStandaloneAsync();
-                Assert.AreEqual("sample-blob", response.Value.Name);
-                Assert.AreEqual(42, response.Value.Size);
-                Assert.AreEqual("text/plain", response.Value.ContentType);
-                Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
+                Assert.That(response.Value.Name, Is.EqualTo("sample-blob"));
+                Assert.That(response.Value.Size, Is.EqualTo(42));
+                Assert.That(response.Value.ContentType, Is.EqualTo("text/plain"));
+                Assert.That(response.Value.CreatedOn, Is.EqualTo(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero)));
 
                 // Test DeleteStandalone - blobName is elevated to parent client
                 await client.DeleteStandaloneAsync();

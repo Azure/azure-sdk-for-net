@@ -16,35 +16,35 @@ namespace TestProjects.Spector.Tests.Http.Azure.Versioning.PreviewVersion.V1
         {
             /* verify Widget has all properties including color (added in preview). */
             var properties = typeof(Widget).GetProperties();
-            Assert.IsNotNull(properties);
-            Assert.AreEqual(3, properties.Length);
-            Assert.IsNotNull(typeof(Widget).GetProperty("Id"));
-            Assert.IsNotNull(typeof(Widget).GetProperty("Name"));
-            Assert.IsNotNull(typeof(Widget).GetProperty("Color"));
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.Length, Is.EqualTo(3));
+            Assert.That(typeof(Widget).GetProperty("Id"), Is.Not.Null);
+            Assert.That(typeof(Widget).GetProperty("Name"), Is.Not.Null);
+            Assert.That(typeof(Widget).GetProperty("Color"), Is.Not.Null);
 
             /* verify PreviewVersionClient has all methods. */
             var methods = typeof(PreviewVersionClient).GetMethods();
 
             /* check getWidget method exists. */
             var getWidgetMethods = methods.Where(m => m.Name == "GetWidget" || m.Name == "GetWidgetAsync");
-            Assert.AreEqual(4, getWidgetMethods.Count());
+            Assert.That(getWidgetMethods.Count(), Is.EqualTo(4));
 
             /* check updateWidgetColor method exists (preview only operation). */
             var updateColorMethods = methods.Where(m => m.Name == "UpdateWidgetColor" || m.Name == "UpdateWidgetColorAsync");
-            Assert.AreEqual(2, updateColorMethods.Count());
+            Assert.That(updateColorMethods.Count(), Is.EqualTo(2));
 
             /* check getWidgets/listWidgets method exists. */
             var getWidgetsMethods = methods.Where(m => m.Name == "GetWidgets" || m.Name == "GetWidgetsAsync");
-            Assert.AreEqual(4, getWidgetsMethods.Count());
+            Assert.That(getWidgetsMethods.Count(), Is.EqualTo(4));
 
             /* verify ServiceVersion enum has all versions. */
             var serviceVersionEnum = typeof(PreviewVersionClientOptions.ServiceVersion);
-            Assert.IsTrue(serviceVersionEnum.IsEnum);
+            Assert.That(serviceVersionEnum.IsEnum, Is.True);
             var enumNames = serviceVersionEnum.GetEnumNames();
-            Assert.AreEqual(3, enumNames.Length);
-            Assert.IsTrue(enumNames.Contains("V2024_01_01"));
-            Assert.IsTrue(enumNames.Contains("V2024_06_01"));
-            Assert.IsTrue(enumNames.Contains("V2024_12_01_Preview"));
+            Assert.That(enumNames.Length, Is.EqualTo(3));
+            Assert.That(enumNames.Contains("V2024_01_01"), Is.True);
+            Assert.That(enumNames.Contains("V2024_06_01"), Is.True);
+            Assert.That(enumNames.Contains("V2024_12_01_Preview"), Is.True);
         }
     }
 }

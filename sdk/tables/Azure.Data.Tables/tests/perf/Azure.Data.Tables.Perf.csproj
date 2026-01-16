@@ -15,6 +15,7 @@
     <Version>1.0.0</Version>
     <OutputType>Exe</OutputType>
     <IsTestSupportProject>true</IsTestSupportProject>
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
   </PropertyGroup>
 
   <ItemGroup>

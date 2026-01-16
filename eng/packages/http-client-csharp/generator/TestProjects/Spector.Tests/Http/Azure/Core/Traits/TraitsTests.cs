@@ -16,14 +16,14 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Traits
         public Task Azure_Core_Traits_smokeTest() => Test(async (host) =>
         {
             User response = await new TraitsClient(host, null).SmokeTestAsync(1, "123", new RequestConditions() { IfMatch = new ETag("valid"), IfNoneMatch = new ETag("invalid"), IfUnmodifiedSince = DateTimeOffset.Parse("Fri, 26 Aug 2022 14:38:00 GMT"), IfModifiedSince = DateTimeOffset.Parse("Thu, 26 Aug 2021 14:38:00 GMT") });
-            Assert.AreEqual("Madge", response.Name);
+            Assert.That(response.Name, Is.EqualTo("Madge"));
         });
 
         [SpectorTest]
         public Task Azure_Core_Traits_repeatableAction() => Test(async (host) =>
         {
             UserActionResponse response = await new TraitsClient(host, null).RepeatableActionAsync(1, new UserActionParam("test"), CancellationToken.None);
-            Assert.AreEqual("test", response.UserActionResult);
+            Assert.That(response.UserActionResult, Is.EqualTo("test"));
         });
     }
 }

@@ -20,8 +20,8 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Lro.Standard
                 new User("contributor"));
             var user = operation.Value;
 
-            Assert.AreEqual("madge", user.Name);
-            Assert.AreEqual("contributor", user.Role);
+            Assert.That(user.Name, Is.EqualTo("madge"));
+            Assert.That(user.Role, Is.EqualTo("contributor"));
         });
 
         [SpectorTest]
@@ -29,19 +29,19 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Lro.Standard
         {
             var operation = await new StandardClient(host, null).DeleteAsync(WaitUntil.Completed, "madge");
 
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.AreEqual(((int)HttpStatusCode.OK), operation.GetRawResponse().Status);
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(((int)HttpStatusCode.OK)));
         });
 
         [SpectorTest]
         public Task Action() => Test(async (host) =>
         {
             var operation = await new StandardClient(host, null).ExportAsync(WaitUntil.Completed, "madge", "json");
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
 
             var exportedUser = operation.Value;
-            Assert.AreEqual("madge", exportedUser.Name);
-            Assert.AreEqual("/users/madge", exportedUser.ResourceUri);
+            Assert.That(exportedUser.Name, Is.EqualTo("madge"));
+            Assert.That(exportedUser.ResourceUri, Is.EqualTo("/users/madge"));
         });
     }
 }

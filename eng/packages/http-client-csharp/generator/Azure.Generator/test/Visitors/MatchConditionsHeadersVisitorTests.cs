@@ -41,7 +41,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
@@ -49,8 +49,8 @@ namespace Azure.Generator.Tests.Visitors
             {
                 visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
-                Assert.AreEqual(2, method.Signature.Parameters.Count);
-                Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
+                Assert.That(method.Signature.Parameters.Count, Is.EqualTo(2));
+                Assert.That(method.Signature.Parameters[0].Name == "requestConditions", Is.True);
             }
         }
 
@@ -74,11 +74,11 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var restClient = clientProvider!.RestClient;
             var methods = restClient.Methods;
-            Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
+            Assert.That(methods.Count > 0, Is.True, "RestClient should have methods defined.");
 
             // visit the method
             _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
@@ -86,7 +86,7 @@ namespace Azure.Generator.Tests.Visitors
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
 
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [TestCase("ifMatch")]
@@ -118,7 +118,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
@@ -126,9 +126,9 @@ namespace Azure.Generator.Tests.Visitors
             {
                 visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
-                Assert.AreEqual(2, method.Signature.Parameters.Count);
-                Assert.IsTrue(method.Signature.Parameters[0].Name == conditionName.ToVariableName());
-                Assert.IsTrue(method.Signature.Parameters[0].Type.Equals(ETagType));
+                Assert.That(method.Signature.Parameters.Count, Is.EqualTo(2));
+                Assert.That(method.Signature.Parameters[0].Name == conditionName.ToVariableName(), Is.True);
+                Assert.That(method.Signature.Parameters[0].Type.Equals(ETagType), Is.True);
             }
         }
 
@@ -161,11 +161,11 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var restClient = clientProvider!.RestClient;
             var methods = restClient.Methods;
-            Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
+            Assert.That(methods.Count > 0, Is.True, "RestClient should have methods defined.");
 
             // visit the method
             _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
@@ -173,7 +173,7 @@ namespace Azure.Generator.Tests.Visitors
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
 
-            Assert.AreEqual(Helpers.GetExpectedFromFile(conditionName), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile(conditionName)));
         }
 
         [Test]
@@ -208,11 +208,11 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var restClient = clientProvider!.RestClient;
             var methods = restClient.Methods;
-            Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
+            Assert.That(methods.Count > 0, Is.True, "RestClient should have methods defined.");
 
             // visit the method
             _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
@@ -220,7 +220,7 @@ namespace Azure.Generator.Tests.Visitors
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
 
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -251,7 +251,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             MethodProvider? protocolMethod = null;
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
@@ -265,11 +265,11 @@ namespace Azure.Generator.Tests.Visitors
                 }
             }
 
-            Assert.IsNotNull(protocolMethod, "Protocol method should be found.");
-            Assert.IsNotNull(protocolMethod?.BodyStatements);
+            Assert.That(protocolMethod, Is.Not.Null, "Protocol method should be found.");
+            Assert.That(protocolMethod?.BodyStatements, Is.Not.Null);
 
             var result = protocolMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
+            Assert.That(result, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [TestCase(true)]
@@ -301,7 +301,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             MethodProvider? protocolMethod = null;
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
@@ -315,15 +315,15 @@ namespace Azure.Generator.Tests.Visitors
                 }
             }
 
-            Assert.IsNotNull(protocolMethod, "Protocol method should be found.");
-            Assert.AreEqual(3, protocolMethod!.Signature.Parameters.Count, "Protocol method should have two parameters.");
+            Assert.That(protocolMethod, Is.Not.Null, "Protocol method should be found.");
+            Assert.That(protocolMethod!.Signature.Parameters.Count, Is.EqualTo(3), "Protocol method should have two parameters.");
 
             var etagParameter = protocolMethod.Signature.Parameters.FirstOrDefault(p => p.Name == "ifNoneMatch");
-            Assert.IsNotNull(etagParameter, "If-None-Match parameter should be present.");
+            Assert.That(etagParameter, Is.Not.Null, "If-None-Match parameter should be present.");
             var contextParameter = protocolMethod.Signature.Parameters.FirstOrDefault(p => p.Name == "context");
-            Assert.IsNotNull(contextParameter, "Context parameter should be present.");
+            Assert.That(contextParameter, Is.Not.Null, "Context parameter should be present.");
 
-            Assert.AreEqual(isRequired, etagParameter!.DefaultValue == null);
+            Assert.That(etagParameter!.DefaultValue == null, Is.EqualTo(isRequired));
         }
 
         [Test]
@@ -346,7 +346,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
@@ -354,9 +354,9 @@ namespace Azure.Generator.Tests.Visitors
             {
                 visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
-                Assert.AreEqual(3, method.Signature.Parameters.Count);
-                Assert.IsTrue(method.Signature.Parameters[0].Type.Equals(ETagType));
-                Assert.IsFalse(method.Signature.Parameters[1].Type.Equals(ETagType));
+                Assert.That(method.Signature.Parameters.Count, Is.EqualTo(3));
+                Assert.That(method.Signature.Parameters[0].Type.Equals(ETagType), Is.True);
+                Assert.That(method.Signature.Parameters[1].Type.Equals(ETagType), Is.False);
             }
         }
 
@@ -388,7 +388,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
@@ -396,12 +396,12 @@ namespace Azure.Generator.Tests.Visitors
             {
                 visitor.VisitScmMethod(method);
                 // Verify that the parameters are unchanged
-                Assert.AreEqual(3, method.Signature.Parameters.Count);
-                Assert.IsTrue(method.Signature.Parameters.Any(p => p.Name == "authorization"));
-                Assert.IsTrue(method.Signature.Parameters.Any(p => p.Name == "contentType"));
-                Assert.IsFalse(method.Signature.Parameters.Any(p => p.Name == "requestConditions"));
-                Assert.IsFalse(method.Signature.Parameters.Any(p => p.Name == "matchConditions"));
-                Assert.IsFalse(method.Signature.Parameters.Any(p => p.Type.Equals(ETagType)));
+                Assert.That(method.Signature.Parameters.Count, Is.EqualTo(3));
+                Assert.That(method.Signature.Parameters.Any(p => p.Name == "authorization"), Is.True);
+                Assert.That(method.Signature.Parameters.Any(p => p.Name == "contentType"), Is.True);
+                Assert.That(method.Signature.Parameters.Any(p => p.Name == "requestConditions"), Is.False);
+                Assert.That(method.Signature.Parameters.Any(p => p.Name == "matchConditions"), Is.False);
+                Assert.That(method.Signature.Parameters.Any(p => p.Type.Equals(ETagType)), Is.False);
             }
         }
 
@@ -433,7 +433,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
@@ -441,9 +441,9 @@ namespace Azure.Generator.Tests.Visitors
             {
                 visitor.VisitScmMethod(method);
                 // Verify that the MatchConditions parameter is added
-                Assert.AreEqual(2, method.Signature.Parameters.Count);
-                Assert.IsTrue(method.Signature.Parameters[0].Name == "matchConditions");
-                Assert.IsTrue(method.Signature.Parameters[0].Type.Equals(MatchConditionsType));
+                Assert.That(method.Signature.Parameters.Count, Is.EqualTo(2));
+                Assert.That(method.Signature.Parameters[0].Name == "matchConditions", Is.True);
+                Assert.That(method.Signature.Parameters[0].Type.Equals(MatchConditionsType), Is.True);
             }
         }
 
@@ -475,7 +475,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
@@ -483,9 +483,9 @@ namespace Azure.Generator.Tests.Visitors
             {
                 visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added
-                Assert.AreEqual(2, method.Signature.Parameters.Count);
-                Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
-                Assert.IsTrue(method.Signature.Parameters[0].Type.Equals(RequestConditionsType));
+                Assert.That(method.Signature.Parameters.Count, Is.EqualTo(2));
+                Assert.That(method.Signature.Parameters[0].Name == "requestConditions", Is.True);
+                Assert.That(method.Signature.Parameters[0].Type.Equals(RequestConditionsType), Is.True);
             }
         }
 
@@ -519,7 +519,7 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
@@ -527,11 +527,11 @@ namespace Azure.Generator.Tests.Visitors
             {
                 visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added
-                Assert.AreEqual(3, method.Signature.Parameters.Count);
-                Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
-                Assert.IsTrue(method.Signature.Parameters[0].Type.Equals(RequestConditionsType));
-                Assert.IsTrue(method.Signature.Parameters[1].Name == "someOtherParam");
-                Assert.IsTrue(method.Signature.Parameters[2].Name == "context" || method.Signature.Parameters[2].Name == "cancellationToken");
+                Assert.That(method.Signature.Parameters.Count, Is.EqualTo(3));
+                Assert.That(method.Signature.Parameters[0].Name == "requestConditions", Is.True);
+                Assert.That(method.Signature.Parameters[0].Type.Equals(RequestConditionsType), Is.True);
+                Assert.That(method.Signature.Parameters[1].Name == "someOtherParam", Is.True);
+                Assert.That(method.Signature.Parameters[2].Name == "context" || method.Signature.Parameters[2].Name == "cancellationToken", Is.True);
             }
         }
 
@@ -559,14 +559,14 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(client);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             // visit
             var visitor = new TestMatchConditionsHeaderVisitor();
 
             var restClient = clientProvider!.RestClient;
             var methods = restClient.Methods;
-            Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
+            Assert.That(methods.Count > 0, Is.True, "RestClient should have methods defined.");
             foreach (var method in methods)
             {
                 visitor.VisitCreateRequest(inputServiceMethod, restClient, method as ScmMethodProvider);
@@ -574,14 +574,14 @@ namespace Azure.Generator.Tests.Visitors
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
             visitor.TestVisitType(collectionResultDefinition!);
 
             // validate the fields are updated with the request condition type
             var matchConditionsField = collectionResultDefinition!.Fields.FirstOrDefault(f => f.Name == "_requestConditions");
-            Assert.IsNotNull(matchConditionsField, "MatchConditions field should be present in the collection result definition.");
+            Assert.That(matchConditionsField, Is.Not.Null, "MatchConditions field should be present in the collection result definition.");
             var ifMatchField = collectionResultDefinition.Fields.FirstOrDefault(f => f.Name == "_ifMatch");
-            Assert.IsNull(ifMatchField, "If-Match field should not be present in the collection result definition.");
+            Assert.That(ifMatchField, Is.Null, "If-Match field should not be present in the collection result definition.");
         }
 
         private static List<InputMethodParameter> CreateAllMatchConditionMethodParameters()

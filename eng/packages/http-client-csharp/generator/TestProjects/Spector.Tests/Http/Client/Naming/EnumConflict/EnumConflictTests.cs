@@ -16,9 +16,9 @@ namespace TestProjects.Spector.Tests.Http.Client.Naming.EnumConflict
         {
             var firstModel = new FirstModel(Status.Active, "test");
             var response = await new EnumConflictClient(host, null).GetFirstOperationsClient().FirstAsync(firstModel);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(Status.Active, response.Value.Status);
-            Assert.AreEqual("test", response.Value.Name);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Status, Is.EqualTo(Status.Active));
+            Assert.That(response.Value.Name, Is.EqualTo("test"));
         });
 
         [SpectorTest]
@@ -26,9 +26,9 @@ namespace TestProjects.Spector.Tests.Http.Client.Naming.EnumConflict
         {
             var secondModel = new SecondModel(SecondStatus.Running, "test description");
             var response = await new EnumConflictClient(host, null).GetSecondOperationsClient().SecondAsync(secondModel);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(SecondStatus.Running, response.Value.Status);
-            Assert.AreEqual("test description", response.Value.Description);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Status, Is.EqualTo(SecondStatus.Running));
+            Assert.That(response.Value.Description, Is.EqualTo("test description"));
         });
     }
 }

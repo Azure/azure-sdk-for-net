@@ -26,10 +26,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var multiPartFormData = plugin.Object.OutputLibrary.TypeProviders.OfType<MultiPartFormDataBinaryContentDefinition>().SingleOrDefault();
 
-            Assert.IsNotNull(multiPartFormData);
+            Assert.That(multiPartFormData, Is.Not.Null);
             var writeToMethod = multiPartFormData!.Methods.SingleOrDefault(m => m.Signature.Name == "WriteTo");
-            Assert.IsNotNull(writeToMethod);
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), writeToMethod!.BodyStatements!.ToDisplayString());
+            Assert.That(writeToMethod, Is.Not.Null);
+            Assert.That(writeToMethod!.BodyStatements!.ToDisplayString(), Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         private class TestMultiPartFormDataVisitor : MultiPartFormDataVisitor

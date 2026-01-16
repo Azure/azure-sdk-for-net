@@ -64,7 +64,7 @@ An example is `https://remoterendering.eastus2.mixedreality.azure.com`.
 
 Use the `AccountKeyCredential` object to use an account identifier and account key to authenticate:
 
-```C# Snippet:CreateAClient
+```C#
 AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
 
 RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, accountKeyCredential);
@@ -74,7 +74,7 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 
 Use the `ClientSecretCredential` object to perform client secret authentication.
 
-```C# Snippet:CreateAClientWithAAD
+```C#
 TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions
 {
     AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}")
@@ -87,7 +87,7 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 
 Use the `DeviceCodeCredential` object to perform device code authentication.
 
-```C# Snippet:CreateAClientWithDeviceCode
+```C#
 Task deviceCodeCallback(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
 {
     Console.WriteLine(deviceCodeInfo.Message);
@@ -110,7 +110,7 @@ information about using device code authentication flow.
 Use the `DefaultAzureCredential` object with `includeInteractiveCredentials: true` to use default interactive authentication
 flow:
 
-```C# Snippet:CreateAClientWithAzureCredential
+```C#
 TokenCredential credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
 
 RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
@@ -122,7 +122,7 @@ You can pass a Mixed Reality access token as an `AccessToken` previously retriev
 [Mixed Reality STS service](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/mixedreality/Azure.MixedReality.Authentication)
 to be used with a Mixed Reality client library:
 
-```C# Snippet:CreateAClientWithStaticAccessToken
+```C#
 // GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
 // a Mixed Reality access token from a web service. The web service would use the
 // MixedRealityStsClient and credentials to obtain an access token to be returned
@@ -155,7 +155,7 @@ It provides methods to create and manage asset conversions and rendering session
 We assume that a RemoteRenderingClient has been constructed as described in the [Authenticate the Client](#authenticate-the-client) section.
 The following snippet describes how to request that "box.fbx", found at the root of the blob container at the given URI, gets converted.
 
-```C# Snippet:StartAnAssetConversion
+```C#
 AssetConversionInputOptions inputOptions = new AssetConversionInputOptions(storageUri, "box.fbx");
 AssetConversionOutputOptions outputOptions = new AssetConversionOutputOptions(storageUri);
 AssetConversionOptions conversionOptions = new AssetConversionOptions(inputOptions, outputOptions);
@@ -178,7 +178,7 @@ We want to convert the gltf so that it has access to the other files which share
 To keep things tidy, we also want the output files to be written to a different storage container and given a common prefix: "ConvertedBicycle".
 The code is as follows:
 
-```C# Snippet:StartAComplexAssetConversion
+```C#
 AssetConversionInputOptions inputOptions = new AssetConversionInputOptions(inputStorageUri, "bicycle.gltf")
 {
     BlobPrefix = "Bicycle"
@@ -204,7 +204,7 @@ This code uses an existing conversionOperation and polls regularly until the con
 The default polling period is 10 seconds.
 Note that a conversionOperation can be constructed from the conversionId of an existing conversion and a client.
 
-```C# Snippet:QueryConversionStatus
+```C#
 AssetConversion conversion = conversionOperation.WaitForCompletionAsync().Result;
 if (conversion.Status == AssetConversionStatus.Succeeded)
 {
@@ -222,7 +222,7 @@ You can get information about your conversions using the `getConversions` method
 This method may return conversions which have yet to start, conversions which are running and conversions which have finished.
 In this example, we just list the output URIs of successful conversions started in the last day.
 
-```C# Snippet:GetConversions
+```C#
 foreach (var conversion in client.GetConversions())
 {
     if ((conversion.Status == AssetConversionStatus.Succeeded) && (conversion.CreatedOn > DateTimeOffset.Now.AddDays(-1)))
@@ -237,7 +237,7 @@ foreach (var conversion in client.GetConversions())
 We assume that a RemoteRenderingClient has been constructed as described in the [Authenticate the Client](#authenticate-the-client) section.
 The following snippet describes how to request that a new rendering session be started.
 
-```C# Snippet:CreateASession
+```C#
 RenderingSessionOptions options = new RenderingSessionOptions(TimeSpan.FromMinutes(30), RenderingServerSize.Standard);
 
 // A randomly generated GUID is a good choice for a sessionId.
@@ -265,7 +265,7 @@ This example shows how to query the current properties and then extend the lease
 > NOTE: The runtime SDKs also offer this functionality, and in many typical scenarios, you would use them to
 > extend the session lease.
 
-```C# Snippet:UpdateSession
+```C#
 RenderingSession currentSession = client.GetSession(sessionId);
 
 if (currentSession.MaxLeaseTime - DateTimeOffset.Now.Subtract(currentSession.CreatedOn.Value) < TimeSpan.FromMinutes(2))
@@ -283,7 +283,7 @@ if (currentSession.MaxLeaseTime - DateTimeOffset.Now.Subtract(currentSession.Cre
 You can get information about your sessions using the `getSessions` method.
 This method may return sessions which have yet to start and sessions which are ready.
 
-```C# Snippet:ListSessions
+```C#
 foreach (var properties in client.GetSessions())
 {
     if (properties.Status == RenderingSessionStatus.Starting)
@@ -301,7 +301,7 @@ foreach (var properties in client.GetSessions())
 
 The following code will stop a running session with given id.
 
-```C# Snippet:StopSession
+```C#
 client.StopSession(sessionId);
 ```
 

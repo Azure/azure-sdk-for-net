@@ -14,21 +14,21 @@ namespace TestProjects.Spector.Tests.Http.Routes
         public Task QueryAnnotationOnly() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetQueryParametersClient().AnnotationOnlyAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task QueryExplicit() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetQueryParametersClient().ExplicitAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task QueryTemplateOnly() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetQueryParametersClient().TemplateOnlyAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -38,7 +38,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryExpansionClient()
                 .GetQueryParametersQueryExpansionStandardClient()
                 .PrimitiveAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -48,7 +48,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryExpansionClient()
                 .GetQueryParametersQueryExpansionStandardClient()
                 .ArrayAsync(["a", "b"]);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -58,7 +58,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryExpansionClient()
                 .GetQueryParametersQueryExpansionStandardClient()
                 .RecordAsync(new Dictionary<string, int> {{"a", 1}, {"b", 2}});
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -68,7 +68,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryExpansionClient()
                 .GetQueryParametersQueryExpansionExplodeClient()
                 .PrimitiveAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -78,7 +78,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryExpansionClient()
                 .GetQueryParametersQueryExpansionExplodeClient()
                 .ArrayAsync(["a", "b"]);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -88,7 +88,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryExpansionClient()
                 .GetQueryParametersQueryExpansionExplodeClient()
                 .RecordAsync(new Dictionary<string, int> {{"a", 1}, {"b", 2}});
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -99,7 +99,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryContinuationClient()
                 .GetQueryParametersQueryContinuationStandardClient()
                 .PrimitiveAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -110,7 +110,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryContinuationClient()
                 .GetQueryParametersQueryContinuationStandardClient()
                 .ArrayAsync(["a", "b"]);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -121,7 +121,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetQueryParametersQueryContinuationClient()
                 .GetQueryParametersQueryContinuationStandardClient()
                 .RecordAsync(new Dictionary<string, int> {{"a", 1}, {"b", 2}});
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

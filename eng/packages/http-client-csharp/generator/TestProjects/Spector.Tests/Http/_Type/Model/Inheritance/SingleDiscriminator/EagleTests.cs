@@ -20,15 +20,15 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.SingleDiscrimi
 
         protected override void CompareModels(Eagle model, Eagle model2, string format)
         {
-            Assert.AreEqual(model.Wingspan, model2.Wingspan);
-            Assert.AreEqual(model.Partner.Wingspan, model2.Partner.Wingspan);
-            Assert.AreEqual(model.Partner.GetType(), model2.Partner.GetType());
-            Assert.AreEqual(model.Friends.Count, model2.Friends.Count);
-            Assert.AreEqual(model.Friends[0].Wingspan, model2.Friends[0].Wingspan);
-            Assert.AreEqual(model.Friends[0].GetType(), model2.Friends[0].GetType());
-            Assert.AreEqual(model.Hate.Count, model2.Hate.Count);
-            Assert.AreEqual(model.Hate["key3"].Wingspan, model2.Hate["key3"].Wingspan);
-            Assert.AreEqual(model.Hate["key3"].GetType(), model2.Hate["key3"].GetType());
+            Assert.That(model2.Wingspan, Is.EqualTo(model.Wingspan));
+            Assert.That(model2.Partner.Wingspan, Is.EqualTo(model.Partner.Wingspan));
+            Assert.That(model2.Partner.GetType(), Is.EqualTo(model.Partner.GetType()));
+            Assert.That(model2.Friends.Count, Is.EqualTo(model.Friends.Count));
+            Assert.That(model2.Friends[0].Wingspan, Is.EqualTo(model.Friends[0].Wingspan));
+            Assert.That(model2.Friends[0].GetType(), Is.EqualTo(model.Friends[0].GetType()));
+            Assert.That(model2.Hate.Count, Is.EqualTo(model.Hate.Count));
+            Assert.That(model2.Hate["key3"].Wingspan, Is.EqualTo(model.Hate["key3"].Wingspan));
+            Assert.That(model2.Hate["key3"].GetType(), Is.EqualTo(model.Hate["key3"].GetType()));
         }
 
         protected override RequestContent ToRequestContent(Eagle model) => model;
@@ -37,15 +37,15 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.SingleDiscrimi
 
         protected override void VerifyModel(Eagle model, string format)
         {
-            Assert.AreEqual(5, model.Wingspan);
-            Assert.AreEqual(2, model.Partner.Wingspan);
-            Assert.IsTrue(model.Partner is Goose);
-            Assert.AreEqual(1, model.Friends.Count);
-            Assert.AreEqual(2, model.Friends[0].Wingspan);
-            Assert.IsTrue(model.Friends[0] is SeaGull);
-            Assert.AreEqual(1, model.Hate.Count);
-            Assert.AreEqual(1, model.Hate["key3"].Wingspan);
-            Assert.IsTrue(model.Hate["key3"] is Sparrow);
+            Assert.That(model.Wingspan, Is.EqualTo(5));
+            Assert.That(model.Partner.Wingspan, Is.EqualTo(2));
+            Assert.That(model.Partner is Goose, Is.True);
+            Assert.That(model.Friends.Count, Is.EqualTo(1));
+            Assert.That(model.Friends[0].Wingspan, Is.EqualTo(2));
+            Assert.That(model.Friends[0] is SeaGull, Is.True);
+            Assert.That(model.Hate.Count, Is.EqualTo(1));
+            Assert.That(model.Hate["key3"].Wingspan, Is.EqualTo(1));
+            Assert.That(model.Hate["key3"] is Sparrow, Is.True);
         }
     }
 }

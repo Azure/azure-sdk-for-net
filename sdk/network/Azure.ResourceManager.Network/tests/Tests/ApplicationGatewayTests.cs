@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(sslOptionsInfo.PredefinedPolicies.Count, Is.EqualTo(5));
             foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)
             {
-                Assert.That(predefinedPolicy.Id.ResourceType, Is.EqualTo("Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy"));
+                Assert.That(predefinedPolicy.Id.ResourceType.ToString(), Is.EqualTo("Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy"));
             }
         }
 

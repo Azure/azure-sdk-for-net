@@ -18,9 +18,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.Payload.Pageable
             int count = 0;
             await foreach (var user in users)
             {
-                Assert.AreEqual(expectedUserName[count++], user.Name);
+                Assert.That(user.Name, Is.EqualTo(expectedUserName[count++]));
             }
-            Assert.AreEqual(4, count);
+            Assert.That(count, Is.EqualTo(4));
         });
     }
 }

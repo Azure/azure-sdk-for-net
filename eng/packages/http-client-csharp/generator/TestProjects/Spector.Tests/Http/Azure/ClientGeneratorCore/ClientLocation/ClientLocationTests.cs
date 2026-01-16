@@ -13,33 +13,33 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocati
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToExistingSubClient() => Test(async (host) =>
         {
             var response1 = await new ClientLocationClient(host, "testaccount", null).GetMoveToExistingSubClient().GetMoveToExistingSubClientUserOperationsClient().GetUserAsync();
-            Assert.AreEqual(204, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(204));
 
             var response2 = await new ClientLocationClient(host, "testaccount", null).GetMoveToExistingSubClient().GetMoveToExistingSubClientAdminOperationsClient().DeleteUserAsync();
-            Assert.AreEqual(204, response2.Status);
+            Assert.That(response2.Status, Is.EqualTo(204));
 
             var response3 = await new ClientLocationClient(host, "testaccount", null).GetMoveToExistingSubClient().GetMoveToExistingSubClientAdminOperationsClient().GetAdminInfoAsync();
-            Assert.AreEqual(204, response3.Status);
+            Assert.That(response3.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToNewSubClient() => Test(async (host) =>
         {
             var response1 = await new ClientLocationClient(host, "testaccount", null).GetMoveToNewSubClient().GetMoveToNewSubClientProductOperationsClient().GetProductsAsync();
-            Assert.AreEqual(204, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(204));
 
             var response2 = await new ClientLocationClient(host, "testaccount", null).GetArchiveOperationsClient().ArchiveProductAsync();
-            Assert.AreEqual(204, response2.Status);
+            Assert.That(response2.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToRootClient() => Test(async (host) =>
         {
             var response1 = await new ClientLocationClient(host, "testaccount", null).GetMoveToRootClient().GetMoveToRootClientResourceOperationsClient().GetResourceAsync();
-            Assert.AreEqual(204, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(204));
 
             var response2 = await new ClientLocationClient(host, "testaccount", null).GetHealthStatusAsync();
-            Assert.AreEqual(204, response2.Status);
+            Assert.That(response2.Status, Is.EqualTo(204));
         });
     }
 }

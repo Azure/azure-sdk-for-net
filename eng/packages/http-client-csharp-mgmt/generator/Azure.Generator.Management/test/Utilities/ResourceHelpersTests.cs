@@ -23,7 +23,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("GetFoo", result);
+            Assert.That(result, Is.EqualTo("GetFoo"));
         }
 
         [TestCase]
@@ -40,7 +40,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("GetBar", result);
+            Assert.That(result, Is.EqualTo("GetBar"));
         }
 
         [TestCase]
@@ -57,7 +57,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("GetBaz", result);
+            Assert.That(result, Is.EqualTo("GetBaz"));
         }
 
         [TestCase]
@@ -74,7 +74,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("Foos_Get", result);
+            Assert.That(result, Is.EqualTo("Foos_Get"));
         }
 
         [TestCase]
@@ -91,7 +91,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("Bars_Get", result);
+            Assert.That(result, Is.EqualTo("Bars_Get"));
         }
 
         [TestCase]
@@ -108,7 +108,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("Foos_ListBySubscription", result);
+            Assert.That(result, Is.EqualTo("Foos_ListBySubscription"));
         }
 
         [TestCase]
@@ -125,7 +125,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("MgmtTypeSpec_PreviewActions", result);
+            Assert.That(result, Is.EqualTo("MgmtTypeSpec_PreviewActions"));
         }
 
         [TestCase]
@@ -142,7 +142,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("Resources_Delete", result);
+            Assert.That(result, Is.EqualTo("Resources_Delete"));
         }
 
         [TestCase]
@@ -159,7 +159,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = ResourceHelpers.GetOperationId(serviceMethod);
 
             // Assert
-            Assert.AreEqual("Resources_Get", result);
+            Assert.That(result, Is.EqualTo("Resources_Get"));
         }
     }
 }

@@ -19,18 +19,18 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         public Task StringGetNonNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetStringClient().GetNonNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.AreEqual("hello", response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.EqualTo("hello"));
         });
 
         [SpectorTest]
         public Task StringGetNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetStringClient().GetNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.IsNull(response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.Null);
         });
 
         [SpectorTest]
@@ -42,7 +42,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
                 nullableProperty = "hello"
             };
             var response = await new NullableClient(host, null).GetStringClient().PatchNonNullAsync(RequestContent.Create(BinaryData.FromObjectAsJson(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -50,15 +50,15 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         {
             string value = "{ \"requiredProperty\": \"foo\", \"nullableProperty\": null }";
             var response = await new NullableClient(host, null).GetStringClient().PatchNullAsync(RequestContent.Create(BinaryData.FromString(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task BytesGetNonNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetBytesClient().GetNonNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
             BinaryDataAssert.AreEqual(BinaryData.FromString("hello, world!"), response.Value.NullableProperty);
         });
 
@@ -66,9 +66,9 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         public Task BytesGetNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetBytesClient().GetNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.IsNull(response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.Null);
         });
 
         [SpectorTest]
@@ -81,7 +81,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
                 nullableProperty = "aGVsbG8sIHdvcmxkIQ=="
             };
             var response = await new NullableClient(host, null).GetBytesClient().PatchNonNullAsync(RequestContent.Create(BinaryData.FromObjectAsJson(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -89,25 +89,25 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         {
             string value = "{ \"requiredProperty\": \"foo\", \"nullableProperty\": null }";
             var response = await new NullableClient(host, null).GetBytesClient().PatchNullAsync(RequestContent.Create(BinaryData.FromString(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task DatetimeTetNonNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetDatetimeClient().GetNonNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.AreEqual(DateTimeOffset.Parse("2022-08-26T18:38:00Z"), response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.EqualTo(DateTimeOffset.Parse("2022-08-26T18:38:00Z")));
         });
 
         [SpectorTest]
         public Task DatetimeGetNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetDatetimeClient().GetNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.IsNull(response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.Null);
         });
 
         [SpectorTest]
@@ -119,7 +119,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
                 nullableProperty = DateTimeOffset.Parse("2022-08-26T18:38:00Z")
             };
             var response = await new NullableClient(host, null).GetDatetimeClient().PatchNonNullAsync(RequestContent.Create(BinaryData.FromObjectAsJson(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -127,25 +127,25 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         {
             string value = "{ \"requiredProperty\": \"foo\", \"nullableProperty\": null }";
             var response = await new NullableClient(host, null).GetDatetimeClient().PatchNullAsync(RequestContent.Create(BinaryData.FromString(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task DurationGetNonNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetDurationClient().GetNonNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.AreEqual(XmlConvert.ToTimeSpan("P123DT22H14M12.011S"), response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.EqualTo(XmlConvert.ToTimeSpan("P123DT22H14M12.011S")));
         });
 
         [SpectorTest]
         public Task Type_Property_Nullable_Duration_getNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetDurationClient().GetNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.IsNull(response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.Null);
         });
 
         [SpectorTest]
@@ -157,7 +157,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
                 nullableProperty = "P123DT22H14M12.011S"
             };
             var response = await new NullableClient(host, null).GetDurationClient().PatchNonNullAsync(RequestContent.Create(BinaryData.FromObjectAsJson(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -165,16 +165,16 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         {
             string value = "{ \"requiredProperty\": \"foo\", \"nullableProperty\": null }";
             var response = await new NullableClient(host, null).GetDurationClient().PatchNullAsync(RequestContent.Create(BinaryData.FromString(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task CollectionsByteGetNonNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetCollectionsByteClient().GetNonNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.AreEqual(2, response.Value.NullableProperty.Count);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty.Count, Is.EqualTo(2));
             BinaryDataAssert.AreEqual(BinaryData.FromString("hello, world!"), response.Value.NullableProperty.First());
             BinaryDataAssert.AreEqual(BinaryData.FromString("hello, world!"), response.Value.NullableProperty.Last());
         });
@@ -183,9 +183,9 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         public Task CollectionsByteGetNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetCollectionsByteClient().GetNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.IsNotNull(response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.Not.Null);
         });
 
         [SpectorTest]
@@ -198,7 +198,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
                 nullableProperty = new[] { "aGVsbG8sIHdvcmxkIQ==", "aGVsbG8sIHdvcmxkIQ==" }
             };
             var response = await new NullableClient(host, null).GetCollectionsByteClient().PatchNonNullAsync(RequestContent.Create(BinaryData.FromObjectAsJson(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -206,27 +206,27 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         {
             string value = "{ \"requiredProperty\": \"foo\", \"nullableProperty\": null }";
             var response = await new NullableClient(host, null).GetCollectionsByteClient().PatchNullAsync(RequestContent.Create(BinaryData.FromString(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task CollectionsModelGetNonNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetCollectionsModelClient().GetNonNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.AreEqual(2, response.Value.NullableProperty.Count);
-            Assert.AreEqual("hello", response.Value.NullableProperty.First().Property);
-            Assert.AreEqual("world", response.Value.NullableProperty.Last().Property);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty.Count, Is.EqualTo(2));
+            Assert.That(response.Value.NullableProperty.First().Property, Is.EqualTo("hello"));
+            Assert.That(response.Value.NullableProperty.Last().Property, Is.EqualTo("world"));
         });
 
         [SpectorTest]
         public Task CollectionsModelGetNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetCollectionsModelClient().GetNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
-            Assert.IsNotNull(response.Value.NullableProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
+            Assert.That(response.Value.NullableProperty, Is.Not.Null);
         });
 
         [SpectorTest]
@@ -248,7 +248,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
                 }
             };
             var response = await new NullableClient(host, null).GetCollectionsModelClient().PatchNonNullAsync(RequestContent.Create(BinaryData.FromObjectAsJson(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -256,32 +256,32 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         {
             string value = "{ \"requiredProperty\": \"foo\", \"nullableProperty\": null }";
             var response = await new NullableClient(host, null).GetCollectionsModelClient().PatchNullAsync(RequestContent.Create(BinaryData.FromString(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task CollectionsStringGetNonNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetCollectionsStringClient().GetNonNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
 
             var nullableProperty = response.Value.NullableProperty;
-            Assert.IsNotNull(nullableProperty);
-            Assert.AreEqual(2, nullableProperty.Count);
-            Assert.AreEqual("hello", response.Value.NullableProperty[0]);
-            Assert.AreEqual("world", response.Value.NullableProperty[1]);
+            Assert.That(nullableProperty, Is.Not.Null);
+            Assert.That(nullableProperty.Count, Is.EqualTo(2));
+            Assert.That(response.Value.NullableProperty[0], Is.EqualTo("hello"));
+            Assert.That(response.Value.NullableProperty[1], Is.EqualTo("world"));
         });
 
         [SpectorTest]
         public Task CollectionsStringGetNull() => Test(async (host) =>
         {
             var response = await new NullableClient(host, null).GetCollectionsStringClient().GetNullAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.RequiredProperty);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.RequiredProperty, Is.EqualTo("foo"));
 
             var nullableProperty = response.Value.NullableProperty;
-            Assert.IsTrue(nullableProperty is null or []);
+            Assert.That(nullableProperty is null or [], Is.True);
         });
 
         [SpectorTest]
@@ -297,7 +297,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
                 }
             };
             var response = await new NullableClient(host, null).GetCollectionsStringClient().PatchNonNullAsync(RequestContent.Create(BinaryData.FromObjectAsJson(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -305,7 +305,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.Nullable
         {
             string value = "{ \"requiredProperty\": \"foo\", \"nullableProperty\": null }";
             var response = await new NullableClient(host, null).GetCollectionsStringClient().PatchNullAsync(RequestContent.Create(BinaryData.FromString(value)), null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

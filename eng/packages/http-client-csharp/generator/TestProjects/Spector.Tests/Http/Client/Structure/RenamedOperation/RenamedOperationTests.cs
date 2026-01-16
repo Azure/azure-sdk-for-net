@@ -17,33 +17,33 @@ namespace TestProjects.Spector.Tests.Http.Client.Structure.RenamedOperation
         {
             /*check methods in RenamedOperationClient. */
             var methodsRenamedOperation = typeof(RenamedOperationClient).GetMethods();
-            Assert.IsNotNull(methodsRenamedOperation);
-            Assert.AreEqual(6, methodsRenamedOperation.Where(method => method.Name.EndsWith("Async")).Count());
-            Assert.IsNotNull(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "RenamedOneAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "RenamedThreeAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "RenamedFiveAsync").FirstOrDefault());
-            Assert.IsNotNull(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "GetGroupClient").FirstOrDefault());
+            Assert.That(methodsRenamedOperation, Is.Not.Null);
+            Assert.That(methodsRenamedOperation.Where(method => method.Name.EndsWith("Async")).Count(), Is.EqualTo(6));
+            Assert.That(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "RenamedOneAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "RenamedThreeAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "RenamedFiveAsync").FirstOrDefault(), Is.Not.Null);
+            Assert.That(typeof(RenamedOperationClient).GetMethods().Where(m => m.Name == "GetGroupClient").FirstOrDefault(), Is.Not.Null);
         }
 
         [SpectorTest]
         public Task RenamedOne() => Test(async (host) =>
         {
             var response = await new RenamedOperationClient(host, ClientType.RenamedOperation, null).RenamedOneAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedThree() => Test(async (host) =>
         {
             var response = await new RenamedOperationClient(host, ClientType.RenamedOperation, null).RenamedThreeAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedFive() => Test(async (host) =>
         {
             var response = await new RenamedOperationClient(host, ClientType.RenamedOperation, null).RenamedFiveAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         // Check OperationGroup
@@ -51,21 +51,21 @@ namespace TestProjects.Spector.Tests.Http.Client.Structure.RenamedOperation
         public Task RenamedTwo() => Test(async (host) =>
         {
             var response = await new RenamedOperationClient(host, ClientType.RenamedOperation, null).GetGroupClient().RenamedTwoAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedFour() => Test(async (host) =>
         {
             var response = await new RenamedOperationClient(host, ClientType.RenamedOperation, null).GetGroupClient().RenamedFourAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task RenamedSix() => Test(async (host) =>
         {
             var response = await new RenamedOperationClient(host, ClientType.RenamedOperation, null).GetGroupClient().RenamedSixAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

@@ -24,12 +24,12 @@ namespace TestProjects.Spector.Tests.Http.Client.Structure.Default
         public void Client_Structure_default_methods(Type client, string[] methodNames)
         {
             var methods = client.GetMethods();
-            Assert.IsNotNull(methods);
-            Assert.AreEqual(methodNames.Length * 2, methods.Where(method => method.Name.EndsWith("Async")).ToArray().Length); // Double the methods to account for protocol methods
+            Assert.That(methods, Is.Not.Null);
+            Assert.That(methods.Where(method => method.Name.EndsWith("Async")).ToArray().Length, Is.EqualTo(methodNames.Length * 2)); // Double the methods to account for protocol methods
             /* check the existence of the methods. */
             foreach (var methodName in methodNames)
             {
-                Assert.IsNotNull(methods.Where(m => m.Name == $"{methodName}Async").FirstOrDefault());
+                Assert.That(methods.Where(m => m.Name == $"{methodName}Async").FirstOrDefault(), Is.Not.Null);
             }
         }
 
@@ -37,63 +37,63 @@ namespace TestProjects.Spector.Tests.Http.Client.Structure.Default
         public Task Client_Structure_default_One() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).OneAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Two() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).TwoAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Three() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).GetFooClient().ThreeAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Four() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).GetFooClient().FourAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Five() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).GetBarClient().FiveAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Six() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).GetBarClient().SixAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Seven() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).GetBazClient().GetBazFooClient().SevenAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Eight() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).GetQuxClient().EightAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Client_Structure_default_Nine() => Test(async (host) =>
         {
             var response = await new ServiceClient(host, ClientType.Default).GetQuxClient().GetQuxBarClient().NineAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

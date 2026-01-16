@@ -778,7 +778,7 @@ namespace Azure.Core.Tests
         {
             var root = ResourceIdentifier.Root;
             Assert.That(root.Parent, Is.Null);
-            Assert.That(root.ResourceType, Is.EqualTo("Microsoft.Resources/tenants"));
+            Assert.That((string)root.ResourceType, Is.EqualTo("Microsoft.Resources/tenants"));
             Assert.That(root.ToString(), Is.EqualTo("/"));
         }
 

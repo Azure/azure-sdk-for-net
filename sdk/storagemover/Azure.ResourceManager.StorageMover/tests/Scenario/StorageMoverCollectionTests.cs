@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             Assert.That(storageMover1.Data.Tags["tag1"], Is.EqualTo("value1"));
             Assert.That(storageMover1.Data.Description, Is.EqualTo("This is an updated storage mover"));
 
-            Assert.That((bool)await storageMovers.ExistsAsync(storageMoverName), Is.True);
-            Assert.That((bool)await storageMovers.ExistsAsync(storageMoverName + "111"), Is.False);
+            Assert.That(await storageMovers.ExistsAsync(storageMoverName), Is.True);
+            Assert.That(await storageMovers.ExistsAsync(storageMoverName + "111"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await storageMovers.ExistsAsync(null));
         }
     }
