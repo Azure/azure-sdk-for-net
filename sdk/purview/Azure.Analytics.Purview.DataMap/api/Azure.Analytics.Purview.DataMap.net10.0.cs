@@ -2266,10 +2266,10 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.TermTemplateDef> GetTermTemplateByName(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTermTemplateByNameAsync(string name, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.TermTemplateDef>> GetTermTemplateByNameAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef> GetTypeDefinitions(bool? includeTermTemplate = default(bool?), Azure.Analytics.Purview.DataMap.TypeCategory? type = default(Azure.Analytics.Purview.DataMap.TypeCategory?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetTypeDefinitions(bool? includeTermTemplate, string type, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef>> GetTypeDefinitionsAsync(bool? includeTermTemplate = default(bool?), Azure.Analytics.Purview.DataMap.TypeCategory? type = default(Azure.Analytics.Purview.DataMap.TypeCategory?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionsAsync(bool? includeTermTemplate, string type, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef> GetTypeDefinition(bool? includeTermTemplate = default(bool?), Azure.Analytics.Purview.DataMap.TypeCategory? type = default(Azure.Analytics.Purview.DataMap.TypeCategory?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetTypeDefinition(bool? includeTermTemplate, string type, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef>> GetTypeDefinitionAsync(bool? includeTermTemplate = default(bool?), Azure.Analytics.Purview.DataMap.TypeCategory? type = default(Azure.Analytics.Purview.DataMap.TypeCategory?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionAsync(bool? includeTermTemplate, string type, Azure.RequestContext context) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
