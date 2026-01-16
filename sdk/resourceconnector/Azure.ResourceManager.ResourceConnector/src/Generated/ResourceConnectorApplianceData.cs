@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceConnector
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Represents a supported Fabric/Infra. (AKSEdge etc...). </summary>
-        public ResourceConnectorDistro? Distro
+        public ApplianceDistro? Distro
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceConnector
         }
 
         /// <summary> Appliance’s health and state of connection to on-prem. This list of values is not exhaustive. </summary>
-        public ResourceConnectorStatus? Status
+        public ApplianceStatus? Status
         {
             get
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceConnector
         }
 
         /// <summary> A list of events that occurred on the Appliance to relay information to the user. </summary>
-        public IReadOnlyList<ResourceConnectorEvent> Events
+        public IReadOnlyList<ApplianceEvent> Events
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ResourceConnector
         }
 
         /// <summary> Contains network information about the Appliance. </summary>
-        public ResourceConnectorNetworkProfile NetworkProfile
+        public ApplianceNetworkProfile NetworkProfile
         {
             get
             {

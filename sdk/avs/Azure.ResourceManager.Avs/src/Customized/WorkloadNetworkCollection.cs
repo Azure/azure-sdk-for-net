@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.Avs
     [Obsolete("This class is obsolete and will be removed in a future release.", false)]
     public partial class WorkloadNetworkCollection : ArmCollection, IEnumerable<WorkloadNetworkResource>, IAsyncEnumerable<WorkloadNetworkResource>
     {
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkCollection"/> class for mocking. </summary>
+        protected WorkloadNetworkCollection()
+        {
+        }
+
         /// <summary>
         /// Get a private cloud workload network.
         /// <list type="bullet">

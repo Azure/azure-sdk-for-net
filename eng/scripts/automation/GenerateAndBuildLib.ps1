@@ -962,6 +962,7 @@ function GetSDKProjectFolder()
     $service = $null
     $namespace = $null
     $packageDir = $null
+    $packageName = $null
     $emitterOutputDir = $null
 
     if ($yml) {
@@ -990,8 +991,13 @@ function GetSDKProjectFolder()
                 $namespace = $csharpOpts["namespace"]
             }
 
+            # TODO: This is should be removed once all package-dir usages are removed in spec repo
             if ($csharpOpts["package-dir"]) {
                 $packageDir = $csharpOpts["package-dir"]
+            }
+
+            if ($csharpOpts["package-name"]) {
+                $packageName = $csharpOpts["package-name"]
             }
 
             if ($csharpOpts["service-dir"]) {
@@ -1052,7 +1058,11 @@ function GetSDKProjectFolder()
     }
 
     if ([string]::IsNullOrWhiteSpace($packageDir)) {
-        $packageDir = $namespace
+        if (![string]::IsNullOrWhiteSpace($packageName)) {
+            $packageDir = $packageName
+        } else {
+            $packageDir = $namespace
+        }
     }
 
     if ([string]::IsNullOrWhiteSpace($service) -or [string]::IsNullOrWhiteSpace($namespace)) {

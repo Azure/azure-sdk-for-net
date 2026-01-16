@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplianceClusterUserCredentialResult>> GetClusterUserCredentialAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplianceListCredentialResult>> GetClusterUserCredentialAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetClusterUserCredential");
             scope.Start();
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 };
                 HttpMessage message = _appliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplianceClusterUserCredentialResult> response = Response.FromValue(ApplianceClusterUserCredentialResult.FromResponse(result), result);
+                Response<ApplianceListCredentialResult> response = Response.FromValue(ApplianceListCredentialResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplianceClusterUserCredentialResult> GetClusterUserCredential(CancellationToken cancellationToken = default)
+        public virtual Response<ApplianceListCredentialResult> GetClusterUserCredential(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetClusterUserCredential");
             scope.Start();
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 };
                 HttpMessage message = _appliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplianceClusterUserCredentialResult> response = Response.FromValue(ApplianceClusterUserCredentialResult.FromResponse(result), result);
+                Response<ApplianceListCredentialResult> response = Response.FromValue(ApplianceListCredentialResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="artifactType"> This sets the type of artifact being returned, when empty no artifact endpoint is returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplianceClusterUserKeysResult>> GetKeysAsync(string artifactType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplianceListKeysResult>> GetKeysAsync(string artifactType = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetKeys");
             scope.Start();
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 };
                 HttpMessage message = _appliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplianceClusterUserKeysResult> response = Response.FromValue(ApplianceClusterUserKeysResult.FromResponse(result), result);
+                Response<ApplianceListKeysResult> response = Response.FromValue(ApplianceListKeysResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="artifactType"> This sets the type of artifact being returned, when empty no artifact endpoint is returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplianceClusterUserKeysResult> GetKeys(string artifactType = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApplianceListKeysResult> GetKeys(string artifactType = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetKeys");
             scope.Start();
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 };
                 HttpMessage message = _appliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplianceClusterUserKeysResult> response = Response.FromValue(ApplianceClusterUserKeysResult.FromResponse(result), result);
+                Response<ApplianceListKeysResult> response = Response.FromValue(ApplianceListKeysResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
