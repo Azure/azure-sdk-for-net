@@ -50,7 +50,7 @@ namespace Azure.Core.Tests
         public Activity AssertAndRemoveActivity(string name)
         {
             var activity = Activities.Dequeue();
-            Assert.AreEqual(name, activity.OperationName);
+            Assert.That(activity.OperationName, Is.EqualTo(name));
             return activity;
         }
 
