@@ -12,10 +12,10 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocati
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToNewSubClient() => Test(async (host) =>
         {
             var response1 = await new MoveToNewSubClientClass(host, new MoveToNewSubClientOptions()).GetProductOperationsClient().GetProductsAsync();
-            Assert.AreEqual(204, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(204));
 
             var response2 = await new MoveToNewSubClientClass(host, new MoveToNewSubClientOptions()).GetArchiveOperationsClient().ArchiveProductAsync();
-            Assert.AreEqual(204, response2.Status);
+            Assert.That(response2.Status, Is.EqualTo(204));
         });
     }
 }

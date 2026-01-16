@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Tests
             string nonMatchingString = "TableNotFound";
 
             // Act & Assert
-            Assert.That(errorCode == matchingString, Is.True);
+            Assert.That(errorCode, Is.EqualTo(matchingString));
             Assert.That(errorCode == nonMatchingString, Is.False);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Data.Tables.Tests
             string nonMatchingString = "TableNotFound";
 
             // Act & Assert
-            Assert.That(errorCode == matchingString, Is.True);
+            Assert.That(errorCode, Is.EqualTo(matchingString));
             Assert.That(errorCode != nonMatchingString, Is.True);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Tests
             string nonMatchingString = "TableNotFound";
 
             // Act & Assert
-            Assert.That(matchingString == errorCode, Is.True);
+            Assert.That(matchingString, Is.EqualTo(errorCode));
             Assert.That(nonMatchingString == errorCode, Is.False);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Data.Tables.Tests
             string nonMatchingString = "TableNotFound";
 
             // Act & Assert
-            Assert.That(matchingString == errorCode, Is.True);
+            Assert.That(matchingString, Is.EqualTo(errorCode));
             Assert.That(nonMatchingString != errorCode, Is.True);
         }
 
@@ -108,12 +108,12 @@ namespace Azure.Data.Tables.Tests
         public void EqualityOperators_WithVariousErrorCodes_WorkCorrectly()
         {
             // Arrange & Act & Assert
-            Assert.That(TableErrorCode.TableAlreadyExists == "TableAlreadyExists", Is.True);
-            Assert.That("TableAlreadyExists" == TableErrorCode.TableAlreadyExists, Is.True);
-            Assert.That(TableErrorCode.OperationTimedOut == "OperationTimedOut", Is.True);
-            Assert.That("OperationTimedOut" == TableErrorCode.OperationTimedOut, Is.True);
-            Assert.That(TableErrorCode.Forbidden == "Forbidden", Is.True);
-            Assert.That("Forbidden" == TableErrorCode.Forbidden, Is.True);
+            Assert.That(TableErrorCode.TableAlreadyExists, Is.EqualTo("TableAlreadyExists"));
+            Assert.That("TableAlreadyExists", Is.EqualTo(TableErrorCode.TableAlreadyExists));
+            Assert.That(TableErrorCode.OperationTimedOut, Is.EqualTo("OperationTimedOut"));
+            Assert.That("OperationTimedOut", Is.EqualTo(TableErrorCode.OperationTimedOut));
+            Assert.That(TableErrorCode.Forbidden, Is.EqualTo("Forbidden"));
+            Assert.That("Forbidden", Is.EqualTo(TableErrorCode.Forbidden));
             Assert.That(TableErrorCode.TableAlreadyExists == "EntityNotFound", Is.False);
             Assert.That("EntityNotFound" == TableErrorCode.TableAlreadyExists, Is.False);
         }
@@ -122,10 +122,10 @@ namespace Azure.Data.Tables.Tests
         public void InequalityOperators_WithVariousErrorCodes_WorkCorrectly()
         {
             // Arrange & Act & Assert
-            Assert.That(TableErrorCode.TableAlreadyExists == "TableAlreadyExists", Is.True);
-            Assert.That("TableAlreadyExists" == TableErrorCode.TableAlreadyExists, Is.True);
-            Assert.That(TableErrorCode.OperationTimedOut != "OperationTimedOut", Is.False);
-            Assert.That("OperationTimedOut" != TableErrorCode.OperationTimedOut, Is.False);
+            Assert.That(TableErrorCode.TableAlreadyExists, Is.EqualTo("TableAlreadyExists"));
+            Assert.That("TableAlreadyExists", Is.EqualTo(TableErrorCode.TableAlreadyExists));
+            Assert.That(TableErrorCode.OperationTimedOut, Is.EqualTo("OperationTimedOut"));
+            Assert.That("OperationTimedOut", Is.EqualTo(TableErrorCode.OperationTimedOut));
             Assert.That(TableErrorCode.TableAlreadyExists != "EntityNotFound", Is.True);
             Assert.That("EntityNotFound" != TableErrorCode.TableAlreadyExists, Is.True);
         }

@@ -57,13 +57,13 @@ namespace Azure.Messaging.WebPubSub.Tests
             var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());
             var expectedUri = new Uri($"wss://localhost{clientUriPrefix}/hubs/hub?access_token=fakeToken");
             Assert.That(serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default), Is.EqualTo(expectedUri));
-            Assert.AreEqual(expectedUri, serviceClient.GetClientAccessUri(DateTime.UtcNow, default, default, default, clientType, default));
+            Assert.That(serviceClient.GetClientAccessUri(DateTime.UtcNow, default, default, default, clientType, default), Is.EqualTo(expectedUri));
             Assert.That(await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default), Is.EqualTo(expectedUri));
             Assert.That(await serviceClient.GetClientAccessUriAsync(DateTime.UtcNow, default, default, default, clientType, default), Is.EqualTo(expectedUri));
             for (var i = 0; i < 4; i++)
             {
                 // Validate the "clientType" parameter passed to the GenerateClientTokenImpl(Async) method
-                Assert.That(clientTypeString == serviceClient.InvocationParameters[i][4].ToString(), Is.True);
+                Assert.That(clientTypeString, Is.EqualTo(serviceClient.InvocationParameters[i][4].ToString()));
             }
         }
 

@@ -12,10 +12,10 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocati
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveMethodParameterToClient() => Test(async (host) =>
         {
             var response = await new MoveMethodParameterToClientClass(host, "testaccount", new MoveMethodParameterToClientOptions()).GetBlobOperationsClient().GetBlobAsync("testcontainer", "testblob.txt");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
 
             var blob = response.Value;
-            Assert.IsNotNull(blob);
+            Assert.That(blob, Is.Not.Null);
         });
     }
 }

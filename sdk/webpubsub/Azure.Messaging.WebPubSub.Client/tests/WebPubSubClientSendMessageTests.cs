@@ -85,14 +85,14 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.That(msg.Group, Is.EqualTo("group"));
             Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
             Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
-            Assert.AreEqual(1u, msg.AckId);
+            Assert.That(msg.AckId, Is.EqualTo(1u));
             Assert.That(msg.NoEcho, Is.False);
 
             _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245);
             msg = (SendToGroupMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
-            Assert.AreEqual("group", msg.Group);
-            Assert.AreEqual("text", msg.Data.ToString());
-            Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
+            Assert.That(msg.Group, Is.EqualTo("group"));
+            Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
+            Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
             Assert.That(msg.AckId, Is.EqualTo(214578694245u));
             Assert.That(msg.NoEcho, Is.False);
 
@@ -113,13 +113,13 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.That(msg.EventName, Is.EqualTo("event"));
             Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
             Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
-            Assert.AreEqual(1u, msg.AckId);
+            Assert.That(msg.AckId, Is.EqualTo(1u));
 
             _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245);
             msg = (SendEventMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
-            Assert.AreEqual("event", msg.EventName);
-            Assert.AreEqual("text", msg.Data.ToString());
-            Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
+            Assert.That(msg.EventName, Is.EqualTo("event"));
+            Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
+            Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
             Assert.That(msg.AckId, Is.EqualTo(214578694245u));
 
             _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245, true);

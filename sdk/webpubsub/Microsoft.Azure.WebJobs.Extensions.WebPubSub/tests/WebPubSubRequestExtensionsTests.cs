@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
             Assert.That(result, Is.InstanceOf<PreflightRequest>());
-            Assert.IsTrue(((PreflightRequest)result).IsValid);
+            Assert.That(((PreflightRequest)result).IsValid, Is.True);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
             Assert.That(result, Is.InstanceOf<PreflightRequest>());
-            Assert.IsFalse(((PreflightRequest)result).IsValid);
+            Assert.That(((PreflightRequest)result).IsValid, Is.False);
         }
 
         [Test]

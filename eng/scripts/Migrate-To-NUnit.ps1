@@ -48,10 +48,9 @@ param(
     [Parameter()]
     [string[]]$DiagnosticIds = @(
         # Classic assert conversions
-        #"NUnit2001", "NUnit2002", "NUnit2003", "NUnit2004", "NUnit2005", "NUnit2006", "NUnit2007",
+        "NUnit2001", "NUnit2002", "NUnit2003", "NUnit2004", "NUnit2005", "NUnit2006", "NUnit2007",
         # String and collection asserts
-        #"NUnit2015", "NUnit2016", "NUnit2017", "NUnit2018", "NUnit2019",
-        "NUnit2017", "NUnit2018", "NUnit2019",
+        "NUnit2015", "NUnit2016", "NUnit2017", "NUnit2018", "NUnit2019",
         # Additional classic assert conversions
         "NUnit2027", "NUnit2028", "NUnit2029", "NUnit2030", "NUnit2031", "NUnit2032", "NUnit2033",
         "NUnit2034", "NUnit2035", "NUnit2036", "NUnit2037", "NUnit2038", "NUnit2039",

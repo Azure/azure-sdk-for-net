@@ -23,8 +23,8 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = validateIdMethod.Signature;
-            Assert.That(signature.Modifiers.Equals(MethodSignatureModifiers.None), Is.True);
-            Assert.That(signature.Parameters.Count == 2, Is.True);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.None));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
             Assert.That(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)), Is.True);
             Assert.That(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)), Is.True);
             Assert.That(signature.ReturnType?.Name, Is.EqualTo("ResponseTypeResource"));
@@ -43,8 +43,8 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = validateIdMethod.Signature;
-            Assert.That(signature.Modifiers.Equals(MethodSignatureModifiers.Async), Is.True);
-            Assert.That(signature.Parameters.Count == 2, Is.True);
+            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Async));
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
             Assert.That(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)), Is.True);
             Assert.That(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)), Is.True);
             Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ValueTask<>)));

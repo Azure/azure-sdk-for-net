@@ -11,10 +11,10 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocati
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToRootClient() => Test(async (host) =>
         {
             var response1 = await new MoveToRootClientClass(host, new MoveToRootClientOptions()).GetResourceOperationsClient().GetResourceAsync();
-            Assert.AreEqual(204, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(204));
 
             var response2 = await new MoveToRootClientClass(host, new MoveToRootClientOptions()).GetHealthStatusAsync();
-            Assert.AreEqual(204, response2.Status);
+            Assert.That(response2.Status, Is.EqualTo(204));
         });
     }
 }

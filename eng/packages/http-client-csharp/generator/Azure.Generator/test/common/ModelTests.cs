@@ -74,7 +74,7 @@ namespace Azure.Generator.Tests.Common
                 return;
 
             var model = (T?)strategy.Read(serviceResponse, ModelInstance, options);
-            Assert.NotNull(model);
+            Assert.That(model, Is.Not.Null);
             VerifyModel(model!, format);
             var data = strategy.Write(model!, options);
             string roundTrip = data.ToString();
@@ -83,7 +83,7 @@ namespace Azure.Generator.Tests.Common
             AssertJsonEquivalency(expectedSerializedString, roundTrip);
 
             var model2 = (T?)strategy.Read(roundTrip, ModelInstance, options);
-            Assert.NotNull(model2);
+            Assert.That(model2, Is.Not.Null);
             CompareModels(model!, model2!, format);
         }
 

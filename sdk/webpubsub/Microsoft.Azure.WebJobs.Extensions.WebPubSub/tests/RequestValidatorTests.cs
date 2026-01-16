@@ -17,8 +17,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var validator = new RequestValidator(null);
 
-            Assert.IsTrue(validator.IsValidHost(["abc"]));
-            Assert.IsTrue(validator.IsValidSignature("abc", "sha256=anything", "connectionId"));
+            Assert.That(validator.IsValidHost(["abc"]), Is.True);
+            Assert.That(validator.IsValidSignature("abc", "sha256=anything", "connectionId"), Is.True);
         }
 
         [Test]

@@ -220,8 +220,8 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             var firstCaption = denseCaptionsResult.Values[0];
             Assert.That(firstCaption, Is.Not.Null);
             Assert.That(firstCaption.BoundingBox, Is.Not.Null);
-            Assert.That(firstCaption.BoundingBox.Width == iaResult.Metadata.Width, Is.True);
-            Assert.That(firstCaption.BoundingBox.Height == iaResult.Metadata.Height, Is.True);
+            Assert.That(firstCaption.BoundingBox.Width, Is.EqualTo(iaResult.Metadata.Width));
+            Assert.That(firstCaption.BoundingBox.Height, Is.EqualTo(iaResult.Metadata.Height));
             Assert.That(firstCaption.Text, Is.Not.Null);
             if (iaResult.Caption != null)
             {

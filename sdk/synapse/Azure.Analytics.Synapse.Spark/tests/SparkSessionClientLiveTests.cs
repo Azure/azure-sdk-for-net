@@ -53,8 +53,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkSession sessionCreateResponse = await sessionOperation.WaitForCompletionAsync();
 
             // Verify the Spark session completes successfully
-            Assert.That(LivyStates.Idle == sessionCreateResponse.State,
-                Is.True,
+            Assert.That(LivyStates.Idle,
+                Is.EqualTo(sessionCreateResponse.State),
                 string.Format(
                     "Session: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     sessionCreateResponse.Id,
@@ -74,8 +74,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             Assert.That(createStatementResponse, Is.Not.Null);
 
             // Verify the Spark statement completes successfully
-            Assert.That(LivyStatementStates.Available == createStatementResponse.State,
-                Is.True,
+            Assert.That(LivyStatementStates.Available,
+                Is.EqualTo(createStatementResponse.State),
                 string.Format(
                     "Spark statement: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     createStatementResponse.Id,
@@ -117,8 +117,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkSession sessionCreateResponse = await anotherSessionOperation.WaitForCompletionAsync();
 
             // Verify the Spark session completes successfully
-            Assert.That(LivyStates.Idle == sessionCreateResponse.State,
-                Is.True,
+            Assert.That(LivyStates.Idle,
+                Is.EqualTo(sessionCreateResponse.State),
                 string.Format(
                     "Session: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     sessionCreateResponse.Id,
@@ -139,8 +139,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             Assert.That(createStatementResponse, Is.Not.Null);
 
             // Verify the Spark statement completes successfully
-            Assert.That(LivyStatementStates.Available == createStatementResponse.State,
-                Is.True,
+            Assert.That(LivyStatementStates.Available,
+                Is.EqualTo(createStatementResponse.State),
                 string.Format(
                     "Spark statement: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     createStatementResponse.Id,

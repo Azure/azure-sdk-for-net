@@ -66,9 +66,9 @@ namespace Azure.Generator.Management.Tests
         {
             var empty = RequestPathPattern.Tenant;
             var nonEmpty = new RequestPathPattern("/subscriptions/{subscriptionId}");
-            Assert.AreEqual(0, RequestPathPattern.GetMaximumSharingSegmentsCount(empty, nonEmpty));
-            Assert.AreEqual(0, RequestPathPattern.GetMaximumSharingSegmentsCount(nonEmpty, empty));
-            Assert.AreEqual(0, RequestPathPattern.GetMaximumSharingSegmentsCount(empty, empty));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(empty, nonEmpty), Is.EqualTo(0));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(nonEmpty, empty), Is.EqualTo(0));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(empty, empty), Is.EqualTo(0));
         }
 
         [Test]
@@ -77,8 +77,8 @@ namespace Azure.Generator.Management.Tests
             var shorter = new RequestPathPattern("/subscriptions/{subscriptionId}");
             var longer = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}");
             // Should return the count of matching segments up to the shorter path's length
-            Assert.AreEqual(2, RequestPathPattern.GetMaximumSharingSegmentsCount(shorter, longer));
-            Assert.AreEqual(2, RequestPathPattern.GetMaximumSharingSegmentsCount(longer, shorter));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(shorter, longer), Is.EqualTo(2));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(longer, shorter), Is.EqualTo(2));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.Generator.Management.Tests
             var left = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var right = new RequestPathPattern("/subscriptions/{otherSub}/resourceGroups/{otherGroup}");
             // Variable segments with different names should still match
-            Assert.AreEqual(4, RequestPathPattern.GetMaximumSharingSegmentsCount(left, right));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right), Is.EqualTo(4));
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Azure.Generator.Management.Tests
             var withConstant = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup");
             var withVariable = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             // Constant segment vs variable segment should stop the count
-            Assert.AreEqual(3, RequestPathPattern.GetMaximumSharingSegmentsCount(withConstant, withVariable));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(withConstant, withVariable), Is.EqualTo(3));
         }
 
         [Test]
@@ -105,9 +105,9 @@ namespace Azure.Generator.Management.Tests
             var left = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var right = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Storage");
             // The result should be the same regardless of argument order
-            Assert.AreEqual(
-                RequestPathPattern.GetMaximumSharingSegmentsCount(left, right),
-                RequestPathPattern.GetMaximumSharingSegmentsCount(right, left));
+            Assert.That(
+                RequestPathPattern.GetMaximumSharingSegmentsCount(right, left),
+                Is.EqualTo(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right)));
         }
     }
 }

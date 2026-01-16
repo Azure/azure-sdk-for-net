@@ -363,19 +363,19 @@ namespace Azure.Generator.Mgmt.Tests
             var registry = operationContext.BuildParameterMapping(operationPath);
 
             // The "name" parameter from operation path should map to contextual parameter with key "fleets" and variableName "fleetName"
-            Assert.IsTrue(registry.TryGetValue("name", out var nameMapping));
-            Assert.IsNotNull(nameMapping!.ContextualParameter);
-            Assert.AreEqual("fleets", nameMapping.ContextualParameter!.Key);
-            Assert.AreEqual("fleetName", nameMapping.ContextualParameter.VariableName);
+            Assert.That(registry.TryGetValue("name", out var nameMapping), Is.True);
+            Assert.That(nameMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(nameMapping.ContextualParameter!.Key, Is.EqualTo("fleets"));
+            Assert.That(nameMapping.ContextualParameter.VariableName, Is.EqualTo("fleetName"));
 
             // subscriptionId and resourceGroupName should also map correctly
-            Assert.IsTrue(registry.TryGetValue("subscriptionId", out var subscriptionMapping));
-            Assert.AreEqual("subscriptions", subscriptionMapping!.ContextualParameter!.Key);
-            Assert.AreEqual("subscriptionId", subscriptionMapping.ContextualParameter.VariableName);
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter!.Key, Is.EqualTo("subscriptions"));
+            Assert.That(subscriptionMapping.ContextualParameter.VariableName, Is.EqualTo("subscriptionId"));
 
-            Assert.IsTrue(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping));
-            Assert.AreEqual("resourceGroups", resourceGroupMapping!.ContextualParameter!.Key);
-            Assert.AreEqual("resourceGroupName", resourceGroupMapping.ContextualParameter.VariableName);
+            Assert.That(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping), Is.True);
+            Assert.That(resourceGroupMapping!.ContextualParameter!.Key, Is.EqualTo("resourceGroups"));
+            Assert.That(resourceGroupMapping.ContextualParameter.VariableName, Is.EqualTo("resourceGroupName"));
         }
 
         [Test]
@@ -390,13 +390,13 @@ namespace Azure.Generator.Mgmt.Tests
             var registry = operationContext.BuildParameterMapping(operationPath);
 
             // "name" should match "exampleName" because both follow "examples" key
-            Assert.IsTrue(registry.TryGetValue("name", out var nameMapping));
-            Assert.AreEqual("examples", nameMapping!.ContextualParameter!.Key);
-            Assert.AreEqual("exampleName", nameMapping.ContextualParameter.VariableName);
+            Assert.That(registry.TryGetValue("name", out var nameMapping), Is.True);
+            Assert.That(nameMapping!.ContextualParameter!.Key, Is.EqualTo("examples"));
+            Assert.That(nameMapping.ContextualParameter.VariableName, Is.EqualTo("exampleName"));
 
             // "childName" should not match anything in contextual path (it's a pass-through parameter)
-            Assert.IsTrue(registry.TryGetValue("childName", out var childMapping));
-            Assert.IsNull(childMapping!.ContextualParameter);
+            Assert.That(registry.TryGetValue("childName", out var childMapping), Is.True);
+            Assert.That(childMapping!.ContextualParameter, Is.Null);
         }
 
         [Test]
@@ -411,16 +411,16 @@ namespace Azure.Generator.Mgmt.Tests
             var registry = operationContext.BuildParameterMapping(operationPath);
 
             // All matching parameters should be found
-            Assert.IsTrue(registry.TryGetValue("subscriptionId", out var subscriptionMapping));
-            Assert.IsNotNull(subscriptionMapping!.ContextualParameter);
-            Assert.IsTrue(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping));
-            Assert.IsNotNull(resourceGroupMapping!.ContextualParameter);
-            Assert.IsTrue(registry.TryGetValue("vmName", out var vmMapping));
-            Assert.IsNotNull(vmMapping!.ContextualParameter);
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping), Is.True);
+            Assert.That(resourceGroupMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(registry.TryGetValue("vmName", out var vmMapping), Is.True);
+            Assert.That(vmMapping!.ContextualParameter, Is.Not.Null);
 
             // "name" is a pass-through parameter (not in contextual path)
-            Assert.IsTrue(registry.TryGetValue("name", out var nameMapping));
-            Assert.IsNull(nameMapping!.ContextualParameter);
+            Assert.That(registry.TryGetValue("name", out var nameMapping), Is.True);
+            Assert.That(nameMapping!.ContextualParameter, Is.Null);
         }
 
         [Test]
@@ -434,8 +434,8 @@ namespace Azure.Generator.Mgmt.Tests
             var registry = operationContext.BuildParameterMapping(operationPath);
 
             // No contextual parameters available, so subscriptionId should not be contextual
-            Assert.IsTrue(registry.TryGetValue("subscriptionId", out var subscriptionMapping));
-            Assert.IsNull(subscriptionMapping!.ContextualParameter);
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter, Is.Null);
         }
 
         [Test]
@@ -461,14 +461,14 @@ namespace Azure.Generator.Mgmt.Tests
             var operationContext = OperationContext.Create(primaryPath, secondaryPath, fieldSelector);
 
             // Primary contextual parameters should be subscriptionId and resourceGroupName
-            Assert.AreEqual(2, operationContext.ContextualPathParameters.Count);
-            Assert.AreEqual("subscriptionId", operationContext.ContextualPathParameters[0].VariableName);
-            Assert.AreEqual("resourceGroupName", operationContext.ContextualPathParameters[1].VariableName);
+            Assert.That(operationContext.ContextualPathParameters.Count, Is.EqualTo(2));
+            Assert.That(operationContext.ContextualPathParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+            Assert.That(operationContext.ContextualPathParameters[1].VariableName, Is.EqualTo("resourceGroupName"));
 
             // Secondary contextual parameters should only contain exampleName (the extra part)
-            Assert.AreEqual(1, operationContext.SecondaryContextualPathParameters.Count);
-            Assert.AreEqual("examples", operationContext.SecondaryContextualPathParameters[0].Key);
-            Assert.AreEqual("exampleName", operationContext.SecondaryContextualPathParameters[0].VariableName);
+            Assert.That(operationContext.SecondaryContextualPathParameters.Count, Is.EqualTo(1));
+            Assert.That(operationContext.SecondaryContextualPathParameters[0].Key, Is.EqualTo("examples"));
+            Assert.That(operationContext.SecondaryContextualPathParameters[0].VariableName, Is.EqualTo("exampleName"));
         }
 
         [Test]
@@ -492,15 +492,15 @@ namespace Azure.Generator.Mgmt.Tests
             var operationContext = OperationContext.Create(primaryPath, secondaryPath, fieldSelector);
 
             // Primary should only have subscriptionId
-            Assert.AreEqual(1, operationContext.ContextualPathParameters.Count);
-            Assert.AreEqual("subscriptionId", operationContext.ContextualPathParameters[0].VariableName);
+            Assert.That(operationContext.ContextualPathParameters.Count, Is.EqualTo(1));
+            Assert.That(operationContext.ContextualPathParameters[0].VariableName, Is.EqualTo("subscriptionId"));
 
             // Secondary should have resourceGroupName and exampleName
-            Assert.AreEqual(2, operationContext.SecondaryContextualPathParameters.Count);
-            Assert.AreEqual("resourceGroups", operationContext.SecondaryContextualPathParameters[0].Key);
-            Assert.AreEqual("resourceGroupName", operationContext.SecondaryContextualPathParameters[0].VariableName);
-            Assert.AreEqual("examples", operationContext.SecondaryContextualPathParameters[1].Key);
-            Assert.AreEqual("exampleName", operationContext.SecondaryContextualPathParameters[1].VariableName);
+            Assert.That(operationContext.SecondaryContextualPathParameters.Count, Is.EqualTo(2));
+            Assert.That(operationContext.SecondaryContextualPathParameters[0].Key, Is.EqualTo("resourceGroups"));
+            Assert.That(operationContext.SecondaryContextualPathParameters[0].VariableName, Is.EqualTo("resourceGroupName"));
+            Assert.That(operationContext.SecondaryContextualPathParameters[1].Key, Is.EqualTo("examples"));
+            Assert.That(operationContext.SecondaryContextualPathParameters[1].VariableName, Is.EqualTo("exampleName"));
         }
 
         [Test]
@@ -510,8 +510,8 @@ namespace Azure.Generator.Mgmt.Tests
             var primaryPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var operationContext = OperationContext.Create(primaryPath);
 
-            Assert.AreEqual(2, operationContext.ContextualPathParameters.Count);
-            Assert.AreEqual(0, operationContext.SecondaryContextualPathParameters.Count);
+            Assert.That(operationContext.ContextualPathParameters.Count, Is.EqualTo(2));
+            Assert.That(operationContext.SecondaryContextualPathParameters.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -538,23 +538,23 @@ namespace Azure.Generator.Mgmt.Tests
             var registry = operationContext.BuildParameterMapping(operationPath);
 
             // subscriptionId and resourceGroupName should map to primary contextual parameters
-            Assert.IsTrue(registry.TryGetValue("subscriptionId", out var subscriptionMapping));
-            Assert.IsNotNull(subscriptionMapping!.ContextualParameter);
-            Assert.AreEqual("subscriptions", subscriptionMapping.ContextualParameter!.Key);
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(subscriptionMapping.ContextualParameter!.Key, Is.EqualTo("subscriptions"));
 
-            Assert.IsTrue(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping));
-            Assert.IsNotNull(resourceGroupMapping!.ContextualParameter);
-            Assert.AreEqual("resourceGroups", resourceGroupMapping.ContextualParameter!.Key);
+            Assert.That(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping), Is.True);
+            Assert.That(resourceGroupMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(resourceGroupMapping.ContextualParameter!.Key, Is.EqualTo("resourceGroups"));
 
             // "name" should map to secondary contextual parameter (exampleName)
-            Assert.IsTrue(registry.TryGetValue("name", out var nameMapping));
-            Assert.IsNotNull(nameMapping!.ContextualParameter);
-            Assert.AreEqual("examples", nameMapping.ContextualParameter!.Key);
-            Assert.AreEqual("exampleName", nameMapping.ContextualParameter.VariableName);
+            Assert.That(registry.TryGetValue("name", out var nameMapping), Is.True);
+            Assert.That(nameMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(nameMapping.ContextualParameter!.Key, Is.EqualTo("examples"));
+            Assert.That(nameMapping.ContextualParameter.VariableName, Is.EqualTo("exampleName"));
 
             // "childName" should be pass-through (beyond both contextual paths)
-            Assert.IsTrue(registry.TryGetValue("childName", out var childMapping));
-            Assert.IsNull(childMapping!.ContextualParameter);
+            Assert.That(registry.TryGetValue("childName", out var childMapping), Is.True);
+            Assert.That(childMapping!.ContextualParameter, Is.Null);
         }
 
         [Test]
@@ -579,9 +579,9 @@ namespace Azure.Generator.Mgmt.Tests
             var operationContext = OperationContext.Create(primaryPath, secondaryPath, fieldSelector);
 
             // Secondary should only have exampleName (singletons/default is constant pair, skipped)
-            Assert.AreEqual(1, operationContext.SecondaryContextualPathParameters.Count);
-            Assert.AreEqual("examples", operationContext.SecondaryContextualPathParameters[0].Key);
-            Assert.AreEqual("exampleName", operationContext.SecondaryContextualPathParameters[0].VariableName);
+            Assert.That(operationContext.SecondaryContextualPathParameters.Count, Is.EqualTo(1));
+            Assert.That(operationContext.SecondaryContextualPathParameters[0].Key, Is.EqualTo("examples"));
+            Assert.That(operationContext.SecondaryContextualPathParameters[0].VariableName, Is.EqualTo("exampleName"));
         }
     }
 }

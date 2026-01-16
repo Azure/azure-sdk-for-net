@@ -956,8 +956,8 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(retrievedEntity, Is.Not.Null, "The entity should not be null");
             Assert.That(TimeSpan.Compare(
-                retrievedEntity!.TimespanProperty.Value, interval) == 0,
-                Is.True,
+                retrievedEntity!.TimespanProperty.Value, interval),
+                Is.EqualTo(0),
                 "The property value should be equal to the original value");
         }
 
@@ -1495,7 +1495,7 @@ namespace Azure.Data.Tables.Tests
             var ex = Assert.ThrowsAsync<TableTransactionFailedException>(() => client.SubmitTransactionAsync(batch));
 
             Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
-            Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Conflict), $"Status should be {HttpStatusCode.Conflict}");
             Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
             Assert.That(entitiesToCreate.IndexOf(entitiesToCreate.Last()), Is.EqualTo(ex.FailedTransactionActionIndex));
             Assert.That(entitiesToCreate.Last().RowKey, Is.EqualTo(entitiesToCreate[ex.FailedTransactionActionIndex.Value].RowKey));
