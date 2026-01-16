@@ -21,11 +21,12 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceImageGenToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalItemResourceImageGenToolCall(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemImageGenToolCallStatus status, string result) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceImageGenToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemImageGenToolCallStatus status, string result) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Status = status;
             Result = result;

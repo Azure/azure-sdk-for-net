@@ -27,13 +27,14 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceCodeInterpreterToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </param>
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal InternalItemResourceCodeInterpreterToolCall(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceCodeInterpreterToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Status = status;
             ContainerId = containerId;

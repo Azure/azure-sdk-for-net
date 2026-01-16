@@ -21,12 +21,13 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceMcpApprovalResponseResource"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal InternalItemResourceMcpApprovalResponseResource(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceMcpApprovalResponseResource(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             ApprovalRequestId = approvalRequestId;
             Approve = approve;

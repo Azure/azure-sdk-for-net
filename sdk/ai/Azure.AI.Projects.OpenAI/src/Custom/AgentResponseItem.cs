@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.OpenAI;
 
 [CodeGenType("AgentResponseItem")]
-public partial class AgentResponseItem
+public abstract partial class AgentResponseItem
 {
     [CodeGenMember("CreatedBy")]
     public AgentItemSource ItemSource { get; }

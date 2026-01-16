@@ -23,6 +23,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceMcpToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
@@ -32,7 +33,7 @@ namespace OpenAI
         /// <param name="error"></param>
         /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
         /// <param name="approvalRequestId"></param>
-        internal InternalItemResourceMcpToolCall(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, string error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceMcpToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, string error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Name = name;

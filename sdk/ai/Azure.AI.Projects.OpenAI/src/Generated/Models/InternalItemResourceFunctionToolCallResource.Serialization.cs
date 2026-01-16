@@ -75,6 +75,7 @@ namespace OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
+            string id = default;
             AgentItemSource itemSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
@@ -86,6 +87,11 @@ namespace OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -128,6 +134,7 @@ namespace OpenAI
             }
             return new InternalItemResourceFunctionToolCallResource(
                 @type,
+                id,
                 itemSource,
                 additionalBinaryDataProperties,
                 callId,

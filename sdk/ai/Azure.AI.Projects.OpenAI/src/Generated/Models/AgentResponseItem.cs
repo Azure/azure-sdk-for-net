@@ -15,6 +15,7 @@ namespace Azure.AI.Projects.OpenAI
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected string _id;
         private protected BinaryData _createdBy;
 
         /// <summary> Initializes a new instance of <see cref="AgentResponseItem"/>. </summary>
@@ -26,11 +27,13 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="AgentResponseItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentResponseItem(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
+            Id = id;
             ItemSource = itemSource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

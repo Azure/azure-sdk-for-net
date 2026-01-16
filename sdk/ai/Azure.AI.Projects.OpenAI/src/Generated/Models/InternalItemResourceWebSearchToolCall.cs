@@ -25,6 +25,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceWebSearchToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the web search tool call. </param>
@@ -32,7 +33,7 @@ namespace OpenAI
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find).
         /// </param>
-        internal InternalItemResourceWebSearchToolCall(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceWebSearchToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Status = status;
             Action = action;

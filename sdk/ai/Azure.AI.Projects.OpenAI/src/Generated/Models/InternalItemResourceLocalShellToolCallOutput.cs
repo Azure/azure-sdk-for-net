@@ -19,11 +19,12 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceLocalShellToolCallOutput"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
         /// <param name="status"></param>
-        internal InternalItemResourceLocalShellToolCallOutput(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string output, ItemResourceLocalShellToolCallOutputStatus? status) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceLocalShellToolCallOutput(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string output, ItemResourceLocalShellToolCallOutputStatus? status) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Output = output;
             Status = status;

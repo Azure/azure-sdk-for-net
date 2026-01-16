@@ -26,6 +26,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceFileSearchToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status">
@@ -34,7 +35,7 @@ namespace OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal InternalItemResourceFileSearchToolCall(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceFileSearchToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Status = status;
             Queries = queries;

@@ -22,6 +22,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceComputerToolCallOutputResource"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
@@ -34,7 +35,7 @@ namespace OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalItemResourceComputerToolCallOutputResource(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemResourceComputerToolCallOutputResourceStatus? status) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceComputerToolCallOutputResource(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemResourceComputerToolCallOutputResourceStatus? status) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             CallId = callId;
             AcknowledgedSafetyChecks = acknowledgedSafetyChecks;

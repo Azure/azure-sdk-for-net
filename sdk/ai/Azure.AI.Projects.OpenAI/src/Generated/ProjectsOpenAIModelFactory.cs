@@ -471,12 +471,13 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The AgentStructuredOutputsResponseItem. </summary>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="output"> The structured output captured during the response. </param>
         /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(AgentItemSource itemSource = default, BinaryData output = default)
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentItemSource itemSource = default, BinaryData output = default)
         {
-            return new AgentStructuredOutputsResponseItem(AgentResponseItemKind.StructuredOutputs, itemSource, additionalBinaryDataProperties: null, output);
+            return new AgentStructuredOutputsResponseItem(AgentResponseItemKind.StructuredOutputs, id, itemSource, additionalBinaryDataProperties: null, output);
         }
 
         /// <summary>
@@ -484,14 +485,16 @@ namespace Azure.AI.Projects.OpenAI
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
         /// </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <returns> A new <see cref="OpenAI.AgentResponseItem"/> instance for mocking. </returns>
-        public static AgentResponseItem AgentResponseItem(string @type = default, AgentItemSource itemSource = default)
+        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, AgentItemSource itemSource = default)
         {
-            return new UnknownAgentResponseItem(new AgentResponseItemKind(@type), itemSource, additionalBinaryDataProperties: null);
+            return new UnknownAgentResponseItem(new AgentResponseItemKind(@type), id, itemSource, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentWorkflowActionResponseItem. </summary>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
         /// <param name="actionId"> Unique identifier for the action. </param>
@@ -499,10 +502,11 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
         /// <returns> A new <see cref="OpenAI.AgentWorkflowActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(AgentItemSource itemSource = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
+        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = default, AgentItemSource itemSource = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
         {
             return new AgentWorkflowActionResponseItem(
                 AgentResponseItemKind.WorkflowAction,
+                id,
                 itemSource,
                 additionalBinaryDataProperties: null,
                 kind,
@@ -513,16 +517,24 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> Request from the service for the user to perform OAuth consent. </summary>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(AgentItemSource itemSource = default, string consentLink = default, string serverLabel = default)
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentItemSource itemSource = default, string consentLink = default, string serverLabel = default)
         {
-            return new OAuthConsentRequestResponseItem(AgentResponseItemKind.OauthConsentRequest, itemSource, additionalBinaryDataProperties: null, consentLink, serverLabel);
+            return new OAuthConsentRequestResponseItem(
+                AgentResponseItemKind.OauthConsentRequest,
+                id,
+                itemSource,
+                additionalBinaryDataProperties: null,
+                consentLink,
+                serverLabel);
         }
 
         /// <summary> The MemorySearchToolCallResponseItem. </summary>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="status">
         /// The status of the memory search tool call. One of `in_progress`,
@@ -530,11 +542,17 @@ namespace Azure.AI.Projects.OpenAI
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
         /// <returns> A new <see cref="OpenAI.MemorySearchToolCallResponseItem"/> instance for mocking. </returns>
-        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(AgentItemSource itemSource = default, MemorySearchToolCallStatus status = default, IEnumerable<MemorySearchItem> results = default)
+        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentItemSource itemSource = default, MemorySearchToolCallStatus status = default, IEnumerable<MemorySearchItem> results = default)
         {
             results ??= new ChangeTrackingList<MemorySearchItem>();
 
-            return new MemorySearchToolCallResponseItem(AgentResponseItemKind.MemorySearchCall, itemSource, additionalBinaryDataProperties: null, status, results.ToList());
+            return new MemorySearchToolCallResponseItem(
+                AgentResponseItemKind.MemorySearchCall,
+                id,
+                itemSource,
+                additionalBinaryDataProperties: null,
+                status,
+                results.ToList());
         }
 
         /// <summary> A retrieved memory item from memory search. </summary>

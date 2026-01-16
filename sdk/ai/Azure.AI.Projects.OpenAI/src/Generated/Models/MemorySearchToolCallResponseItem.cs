@@ -23,6 +23,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCallResponseItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status">
@@ -30,7 +31,7 @@ namespace Azure.AI.Projects.OpenAI
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
-        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Status = status;
             Results = results;

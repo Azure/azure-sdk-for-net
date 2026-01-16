@@ -75,6 +75,7 @@ namespace OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
+            string id = default;
             AgentItemSource itemSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             OutputItemWebSearchToolCallStatus status = default;
@@ -84,6 +85,11 @@ namespace OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -110,7 +116,13 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalItemResourceWebSearchToolCall(@type, itemSource, additionalBinaryDataProperties, status, action);
+            return new InternalItemResourceWebSearchToolCall(
+                @type,
+                id,
+                itemSource,
+                additionalBinaryDataProperties,
+                status,
+                action);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

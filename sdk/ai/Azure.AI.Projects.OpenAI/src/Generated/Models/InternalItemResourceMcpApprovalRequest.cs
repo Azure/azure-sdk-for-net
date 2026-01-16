@@ -23,12 +23,13 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceMcpApprovalRequest"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        internal InternalItemResourceMcpApprovalRequest(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceMcpApprovalRequest(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Name = name;

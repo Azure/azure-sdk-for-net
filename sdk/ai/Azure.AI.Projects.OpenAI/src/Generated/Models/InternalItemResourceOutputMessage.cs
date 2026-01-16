@@ -25,6 +25,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceOutputMessage"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the output message. Always `assistant`. </param>
@@ -33,7 +34,7 @@ namespace OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalItemResourceOutputMessage(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<OutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceOutputMessage(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<OutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;

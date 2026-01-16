@@ -22,12 +22,13 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalItemResourceMcpListTools"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal InternalItemResourceMcpListTools(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceMcpListTools(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Tools = tools;

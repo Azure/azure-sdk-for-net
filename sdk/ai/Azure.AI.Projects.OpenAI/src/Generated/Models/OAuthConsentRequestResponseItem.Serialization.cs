@@ -68,6 +68,7 @@ namespace Azure.AI.Projects.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
+            string id = default;
             AgentItemSource itemSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string consentLink = default;
@@ -77,6 +78,11 @@ namespace Azure.AI.Projects.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -103,7 +109,13 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OAuthConsentRequestResponseItem(@type, itemSource, additionalBinaryDataProperties, consentLink, serverLabel);
+            return new OAuthConsentRequestResponseItem(
+                @type,
+                id,
+                itemSource,
+                additionalBinaryDataProperties,
+                consentLink,
+                serverLabel);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

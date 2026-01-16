@@ -78,9 +78,10 @@ namespace OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
+            string id = default;
             AgentItemSource itemSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            InputMessageResourceRole role = default;
+            MessageRole role = default;
             InputMessageResourceStatus? status = default;
             IList<InputContent> content = default;
             foreach (var prop in element.EnumerateObject())
@@ -88,6 +89,11 @@ namespace OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -101,7 +107,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = prop.Value.GetString().ToInputMessageResourceRole();
+                    role = prop.Value.GetString().ToMessageRole();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -130,6 +136,7 @@ namespace OpenAI
             }
             return new InternalInputMessageResource(
                 @type,
+                id,
                 itemSource,
                 additionalBinaryDataProperties,
                 role,

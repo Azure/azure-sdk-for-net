@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects.OpenAI;
+using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
@@ -59,4 +60,40 @@ public partial class ProjectConversationCreationOptions
 
     private static void DeserializeItemsValue(JsonProperty property, ref IList<ResponseItem> items)
         => ResponseItemHelpers.DeserializeItemsValue(property, ref items);
+
+    /// <param name="writer"> The JSON writer. </param>
+    /// <param name="options"> The client options for reading and writing models. </param>
+    protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    {
+        string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
+        if (format != "J")
+        {
+            throw new FormatException($"The model {nameof(ProjectConversationCreationOptions)} does not support writing '{format}' format.");
+        }
+        if (Optional.IsDefined(InternalMetadata) && Optional.IsCollectionDefined(InternalMetadata.AdditionalProperties))
+        {
+            writer.WritePropertyName("metadata"u8);
+            writer.WriteObjectValue(InternalMetadata, options);
+        }
+        if (Optional.IsCollectionDefined(Items))
+        {
+            writer.WritePropertyName("items"u8);
+            SerializeItemsValue(writer, options);
+        }
+        if (options.Format != "W" && _additionalBinaryDataProperties != null)
+        {
+            foreach (var item in _additionalBinaryDataProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+            }
+        }
+    }
 }

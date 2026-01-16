@@ -13,10 +13,11 @@ namespace Azure.AI.Projects.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> The structured output captured during the response. </param>
-        internal AgentStructuredOutputsResponseItem(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal AgentStructuredOutputsResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Output = output;
         }

@@ -14,7 +14,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalInputMessageResource"/>. </summary>
         /// <param name="role"> The role of the message input. One of `user`, `system`, or `developer`. </param>
         /// <param name="content"></param>
-        internal InternalInputMessageResource(InputMessageResourceRole role, IEnumerable<InputContent> content) : base(AgentResponseItemKind.Message)
+        internal InternalInputMessageResource(MessageRole role, IEnumerable<InputContent> content) : base(AgentResponseItemKind.Message)
         {
             Role = role;
             Content = content.ToList();
@@ -22,6 +22,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalInputMessageResource"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the message input. One of `user`, `system`, or `developer`. </param>
@@ -30,7 +31,7 @@ namespace OpenAI
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <param name="content"></param>
-        internal InternalInputMessageResource(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputMessageResourceRole role, InputMessageResourceStatus? status, IList<InputContent> content) : base(@type, itemSource, additionalBinaryDataProperties)
+        internal InternalInputMessageResource(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, InputMessageResourceStatus? status, IList<InputContent> content) : base(@type, id, itemSource, additionalBinaryDataProperties)
         {
             Role = role;
             Status = status;
@@ -38,7 +39,7 @@ namespace OpenAI
         }
 
         /// <summary> The role of the message input. One of `user`, `system`, or `developer`. </summary>
-        public InputMessageResourceRole Role { get; }
+        public MessageRole Role { get; }
 
         /// <summary>
         /// The status of item. One of `in_progress`, `completed`, or

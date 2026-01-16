@@ -41,6 +41,11 @@ namespace Azure.AI.Projects.OpenAI
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(ItemSource))
             {
                 writer.WritePropertyName("created_by"u8);
