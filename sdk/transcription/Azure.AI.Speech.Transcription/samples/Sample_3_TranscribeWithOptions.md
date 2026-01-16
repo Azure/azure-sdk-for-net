@@ -91,7 +91,7 @@ If not specified, multiple channels are merged and transcribed jointly. Only up 
 
 ```C# Snippet:TranscribeWithActiveChannels
 string filePath = "path/to/audio.wav";
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);

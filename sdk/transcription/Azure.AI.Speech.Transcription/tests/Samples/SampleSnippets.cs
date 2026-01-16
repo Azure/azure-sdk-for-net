@@ -220,7 +220,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             #region Snippet:TranscribeWithActiveChannels
 #if SNIPPET
             string filePath = "path/to/audio.wav";
-            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
+            TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
 #else
             string filePath = "path/to/audio.wav";
             var client = CreateTestClient();

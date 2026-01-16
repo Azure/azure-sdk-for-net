@@ -11,41 +11,63 @@ Use the client library to:
 * Use custom speech models
 * Process both local files and remote URLs
 
-[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][cognitive_docs] | [Samples][source_samples]
-
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
+### Prerequisites
+
+- [.NET 6.0 SDK](https://dotnet.microsoft.com/download) or later
+- [Azure Subscription](https://azure.microsoft.com/free/)
+- An [Azure Speech resource](https://learn.microsoft.com/azure/ai-services/speech-service/overview#try-the-speech-service-for-free) or [Cognitive Services multi-service resource](https://learn.microsoft.com/azure/ai-services/multi-service-resource)
 
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.AI.Speech.Transcription --prerelease
 ```
 
-### Prerequisites
+### Authentication
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+Azure Speech Transcription supports two authentication methods:
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+#### Option 1: Entra ID OAuth2 Authentication (Recommended for Production)
 
-### Authenticate the client
+For production scenarios, it's recommended to use Entra ID authentication with managed identities or service principals. This provides better security and easier credential management.
 
-To use the Speech Transcription service, you'll need an Azure Speech service resource. You can create one in the [Azure Portal](https://portal.azure.com/).
+```csharp
+using Azure.Identity;
+using Azure.AI.Speech.Transcription;
 
-Once you have a Speech service resource, get the **endpoint** and **API key** from the Azure Portal:
+// Use DefaultAzureCredential which works with managed identities, service principals, Azure CLI, etc.
+DefaultAzureCredential credential = new DefaultAzureCredential();
 
-1. Navigate to your Speech resource in the Azure Portal
-2. In the resource menu, select **Keys and Endpoint**
-3. Copy the **Key** and **Endpoint** values
+Uri endpoint = new Uri("https://<your-resource-name>.cognitiveservices.azure.com/");
+TranscriptionClient client = new TranscriptionClient(endpoint, credential);
+```
 
-Create a `TranscriptionClient` using your endpoint and API key:
+Note: To use Azure Identity authentication, you need to:
+
+1. Add the `Azure.Identity` package to your project
+2. Assign the appropriate role (e.g., "Cognitive Services User") to your managed identity or service principal
+3. Ensure your Cognitive Services resource has Entra ID authentication enabled
+
+For more information on Entra ID authentication, see:
+
+- [Authenticate with Azure Identity](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme)
+- [Azure AI Services authentication](https://learn.microsoft.com/azure/ai-services/authentication)
+
+#### Option 2: API Key Authentication (Subscription Key)
+
+You can find your Speech resource's API key in the [Azure Portal](https://portal.azure.com/) or by using the Azure CLI:
+
+```bash
+az cognitiveservices account keys list --name <your-resource-name> --resource-group <your-resource-group>
+```
+
+Once you have an API key, you can authenticate using `ApiKeyCredential`:
 
 ```csharp
 using System;
@@ -80,9 +102,26 @@ Always ensure that the chosen API version is fully supported and operational for
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### TranscriptionClient
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+The `TranscriptionClient` is the primary interface for interacting with the Speech Transcription service. It provides methods to transcribe audio to text.
+
+### Audio Formats
+
+The service supports various audio formats including WAV, MP3, OGG, and more. Audio must be:
+
+- Shorter than 2 hours in duration
+- Smaller than 250 MB in size
+
+### Transcription Options
+
+You can customize transcription with options like:
+
+- **Profanity filtering**: Control how profanity is handled in transcriptions
+- **Speaker diarization**: Identify different speakers in multi-speaker audio
+- **Phrase lists**: Provide domain-specific phrases to improve accuracy
+- **Language detection**: Automatically detect the spoken language
+- **Enhanced mode**: Improve transcription quality with custom prompts, translation, and task-specific configurations
 
 ### Thread safety
 
@@ -242,28 +281,46 @@ var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
-For more examples, see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/samples) directory.
+For more examples, see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/transcription/Azure.AI.Speech.Transcription/samples) directory.
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+### Enable client logging
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+You can enable logging to debug issues with the client library. For more information, see the [logging documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+### Common issues
+
+#### Authentication errors
+
+- Verify that your API key is correct
+- Ensure your endpoint URL matches your Azure resource region
+
+#### Audio format errors
+
+- Verify your audio file is in a supported format
+- Ensure the audio file size is under 250 MB and duration is under 2 hours
+
+### Getting help
+
+If you encounter issues:
+
+- Check the [troubleshooting guide](https://learn.microsoft.com/azure/ai-services/speech-service/troubleshooting)
+- Search for existing issues or create a new one on [GitHub](https://github.com/Azure/azure-sdk-for-net/issues)
+- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-dotnet-sdk) with the `azure-dotnet-sdk` tag
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+- Explore the [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/transcription/Azure.AI.Speech.Transcription/samples) for more examples
+- Learn more about [Azure Speech Service](https://learn.microsoft.com/azure/ai-services/speech-service/)
+- Review the [API reference documentation](https://azure.github.io/azure-sdk-for-net) for detailed information about classes and methods
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+For details on contributing to this repository, see the [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
 
-<!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/cognitiveservices/Azure.AI.Speech.Transcription/README.png)
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

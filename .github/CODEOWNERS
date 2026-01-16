@@ -283,6 +283,12 @@
 # ServiceLabel: %Cognitive - Speech
 # ServiceOwners:                                                   @cahann @kayousef
 
+# PRLabel: %Transcription
+/sdk/transcription/                                                @rhurey @xitzhang @amber-yujueWang @pankopon
+
+# ServiceLabel: %Transcription
+# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon
+
 # PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                                                @quentinRobinson
 

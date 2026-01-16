@@ -1,7 +1,7 @@
 extends: "{spec-dir}/tspconfig.yaml"
 parameters:
   service-dir:
-    default: cognitiveservices
+    default: transcription
 emit:
   - "@typespec/http-client-csharp"
 options:
