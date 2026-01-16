@@ -278,7 +278,7 @@ function New-MarkdownReport {
     # Only include libraries that have tsp-location.yaml
     $sortedMgmtLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true } | Sort-Object service, library
     foreach ($lib in $sortedMgmtLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✅" } else { "" }
+        $newEmitter = if ($lib.generator -notin $excludedGenerators) { "✅" } else { "" }
         $report += "| $($lib.service) | $($lib.library) | $newEmitter |"
     }
     $report += "`n"
