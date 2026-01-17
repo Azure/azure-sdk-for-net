@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
@@ -31,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
             using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await ImportAsync(waitUntil, content, projectFormat?.ToString(), context).ConfigureAwait(false);
         }
 
@@ -52,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
             using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return Import(waitUntil, content, projectFormat?.ToString(), context);
         }
 
@@ -65,8 +61,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = ToRequestContent(details);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await CreateProjectAsync(content, context).ConfigureAwait(false);
         }
 
@@ -79,9 +75,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = ToRequestContent(details);
+            RequestContext context = cancellationToken.ToRequestContext();
             return CreateProject(content, context);
+        }
+
+        private static RequestContent ToRequestContent(ConversationAuthoringCreateProjectDetails details)
+        {
+            if (details == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(details, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

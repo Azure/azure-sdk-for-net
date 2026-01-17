@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             writer.WriteStringValue(ModelTrainingConfigVersion);
             writer.WritePropertyName("assignedResources"u8);
             writer.WriteStartArray();
-            foreach (ConversationAuthoringAssignedProjectResource item in AssignedResources)
+            foreach (ConversationAuthoringAssignedDeploymentResource item in AssignedResources)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             DateTimeOffset lastDeployedOn = default;
             DateTimeOffset deploymentExpiredOn = default;
             string modelTrainingConfigVersion = default;
-            IList<ConversationAuthoringAssignedProjectResource> assignedResources = default;
+            IList<ConversationAuthoringAssignedDeploymentResource> assignedResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,10 +145,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("assignedResources"u8))
                 {
-                    List<ConversationAuthoringAssignedProjectResource> array = new List<ConversationAuthoringAssignedProjectResource>();
+                    List<ConversationAuthoringAssignedDeploymentResource> array = new List<ConversationAuthoringAssignedDeploymentResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationAuthoringAssignedProjectResource.DeserializeConversationAuthoringAssignedProjectResource(item, options));
+                        array.Add(ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(item, options));
                     }
                     assignedResources = array;
                     continue;

@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentExpiredOn"> Represents deployment expiration date in the runtime. </param>
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
-        internal ConversationAuthoringProjectDeployment(string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IEnumerable<ConversationAuthoringAssignedProjectResource> assignedResources)
+        internal ConversationAuthoringProjectDeployment(string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IEnumerable<ConversationAuthoringAssignedDeploymentResource> assignedResources)
         {
             ModelId = modelId;
             LastTrainedOn = lastTrainedOn;
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringProjectDeployment(string deploymentName, string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IList<ConversationAuthoringAssignedProjectResource> assignedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringProjectDeployment(string deploymentName, string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IList<ConversationAuthoringAssignedDeploymentResource> assignedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentName = deploymentName;
             ModelId = modelId;
@@ -74,6 +74,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public string ModelTrainingConfigVersion { get; }
 
         /// <summary> Represents the metadata of the assigned Azure resources. </summary>
-        public IList<ConversationAuthoringAssignedProjectResource> AssignedResources { get; }
+        public IList<ConversationAuthoringAssignedDeploymentResource> AssignedResources { get; }
     }
 }

@@ -40,14 +40,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             writer.WritePropertyName("expectedEntities"u8);
             writer.WriteStartArray();
-            foreach (UtteranceEntityEvaluationResult item in ExpectedEntities)
+            foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult item in ExpectedEntities)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("predictedEntities"u8);
             writer.WriteStartArray();
-            foreach (UtteranceEntityEvaluationResult item in PredictedEntities)
+            foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult item in PredictedEntities)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,27 +94,27 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            IList<UtteranceEntityEvaluationResult> expectedEntities = default;
-            IList<UtteranceEntityEvaluationResult> predictedEntities = default;
+            IList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> expectedEntities = default;
+            IList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> predictedEntities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("expectedEntities"u8))
                 {
-                    List<UtteranceEntityEvaluationResult> array = new List<UtteranceEntityEvaluationResult>();
+                    List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> array = new List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UtteranceEntityEvaluationResult.DeserializeUtteranceEntityEvaluationResult(item, options));
+                        array.Add(AnalyzeConversationAuthoringUtteranceEntityEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEntityEvaluationResult(item, options));
                     }
                     expectedEntities = array;
                     continue;
                 }
                 if (prop.NameEquals("predictedEntities"u8))
                 {
-                    List<UtteranceEntityEvaluationResult> array = new List<UtteranceEntityEvaluationResult>();
+                    List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> array = new List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UtteranceEntityEvaluationResult.DeserializeUtteranceEntityEvaluationResult(item, options));
+                        array.Add(AnalyzeConversationAuthoringUtteranceEntityEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEntityEvaluationResult(item, options));
                     }
                     predictedEntities = array;
                     continue;

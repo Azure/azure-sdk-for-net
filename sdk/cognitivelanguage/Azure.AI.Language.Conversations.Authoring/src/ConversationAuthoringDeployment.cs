@@ -20,14 +20,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
         public virtual async Task<Operation> DeployProjectAsync(
-        WaitUntil waitUntil,
-        ConversationAuthoringCreateDeploymentDetails details,
-        CancellationToken cancellationToken = default)
+            WaitUntil waitUntil,
+            ConversationAuthoringCreateDeploymentDetails details,
+            CancellationToken cancellationToken = default)
             {
                 Argument.AssertNotNull(details, nameof(details));
 
                 using RequestContent content = CreateDeployProjectContent(details);
-                RequestContext context = FromCancellationToken(cancellationToken);
+                RequestContext context = cancellationToken.ToRequestContext();
 
                 return await DeployProjectAsync(waitUntil, content, context).ConfigureAwait(false);
             }
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNull(details, nameof(details));
 
             using RequestContent content = CreateDeployProjectContent(details);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return DeployProject(waitUntil, content, context);
         }
 
@@ -76,11 +76,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
 
             // Preview 2025-11-15 (and future versions): use generated object shape
-            return details.ToRequestContent();
+            return details;
         }
-
         private static IList<string> GetResourceIdsFromObjects(
-            IList<ConversationAuthoringAssignedProjectResource> resources)
+            IList<ConversationAuthoringAssignDeploymentResourcesDetails> resources)
         {
             if (resources is null || resources.Count == 0)
             {

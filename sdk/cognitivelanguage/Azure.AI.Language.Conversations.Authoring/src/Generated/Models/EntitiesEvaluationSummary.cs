@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        internal EntitiesEvaluationSummary(IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, ConversationAuthoringEntityEvalSummary> entities, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
+        internal EntitiesEvaluationSummary(IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, AnalyzeConversationAuthoringEntityEvaluationSummary> entities, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
         {
             ConfusionMatrix = confusionMatrix;
             Entities = entities;
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitiesEvaluationSummary(IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, ConversationAuthoringEntityEvalSummary> entities, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitiesEvaluationSummary(IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, AnalyzeConversationAuthoringEntityEvaluationSummary> entities, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfusionMatrix = confusionMatrix;
             Entities = entities;
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         public IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> ConfusionMatrix { get; }
 
         /// <summary> Represents the entities evaluation summary. </summary>
-        public IDictionary<string, ConversationAuthoringEntityEvalSummary> Entities { get; }
+        public IDictionary<string, AnalyzeConversationAuthoringEntityEvaluationSummary> Entities { get; }
 
         /// <summary> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroF1 { get; }

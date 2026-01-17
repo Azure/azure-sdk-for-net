@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (UtteranceEvaluationResult item in Value)
+            foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -93,17 +93,17 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            IList<UtteranceEvaluationResult> value = default;
+            IList<AnalyzeConversationAuthoringUtteranceEvaluationResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<UtteranceEvaluationResult> array = new List<UtteranceEvaluationResult>();
+                    List<AnalyzeConversationAuthoringUtteranceEvaluationResult> array = new List<AnalyzeConversationAuthoringUtteranceEvaluationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(item, options));
+                        array.Add(AnalyzeConversationAuthoringUtteranceEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEvaluationResult(item, options));
                     }
                     value = array;
                     continue;

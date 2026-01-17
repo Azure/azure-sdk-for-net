@@ -41,11 +41,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             writer.WritePropertyName("trainedModelLabel"u8);
             writer.WriteStringValue(TrainedModelLabel);
-            if (Optional.IsCollectionDefined(AzureResourceIds))
+            if (Optional.IsCollectionDefined(AssignedResources))
             {
-                writer.WritePropertyName("azureResourceIds"u8);
+                writer.WritePropertyName("assignedResources"u8);
                 writer.WriteStartArray();
-                foreach (ConversationAuthoringAssignedProjectResource item in AzureResourceIds)
+                foreach (ConversationAuthoringDeploymentResource item in AssignedResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -94,7 +94,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 return null;
             }
             string trainedModelLabel = default;
-            IList<ConversationAuthoringAssignedProjectResource> azureResourceIds = default;
+            IList<ConversationAuthoringDeploymentResource> assignedResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -103,18 +103,18 @@ namespace Azure.AI.Language.Conversations.Authoring
                     trainedModelLabel = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("azureResourceIds"u8))
+                if (prop.NameEquals("assignedResources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ConversationAuthoringAssignedProjectResource> array = new List<ConversationAuthoringAssignedProjectResource>();
+                    List<ConversationAuthoringDeploymentResource> array = new List<ConversationAuthoringDeploymentResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationAuthoringAssignedProjectResource.DeserializeConversationAuthoringAssignedProjectResource(item, options));
+                        array.Add(ConversationAuthoringDeploymentResource.DeserializeConversationAuthoringDeploymentResource(item, options));
                     }
-                    azureResourceIds = array;
+                    assignedResources = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +122,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, azureResourceIds ?? new ChangeTrackingList<ConversationAuthoringAssignedProjectResource>(), additionalBinaryDataProperties);
+            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources ?? new ChangeTrackingList<ConversationAuthoringDeploymentResource>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

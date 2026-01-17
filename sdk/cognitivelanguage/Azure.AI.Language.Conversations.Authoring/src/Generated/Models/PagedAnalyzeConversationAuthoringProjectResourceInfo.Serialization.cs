@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ConversationAuthoringAssignedProjectResource item in Value)
+            foreach (ConversationAuthoringAssignedDeploymentResource item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -93,17 +93,17 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            IList<ConversationAuthoringAssignedProjectResource> value = default;
+            IList<ConversationAuthoringAssignedDeploymentResource> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ConversationAuthoringAssignedProjectResource> array = new List<ConversationAuthoringAssignedProjectResource>();
+                    List<ConversationAuthoringAssignedDeploymentResource> array = new List<ConversationAuthoringAssignedDeploymentResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationAuthoringAssignedProjectResource.DeserializeConversationAuthoringAssignedProjectResource(item, options));
+                        array.Add(ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(item, options));
                     }
                     value = array;
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Initializes a new instance of <see cref="PagedAnalyzeConversationAuthoringUtteranceEvaluationResult"/>. </summary>
         /// <param name="value"> The AnalyzeConversationAuthoringUtteranceEvaluationResult items on this page. </param>
-        internal PagedAnalyzeConversationAuthoringUtteranceEvaluationResult(IEnumerable<UtteranceEvaluationResult> value)
+        internal PagedAnalyzeConversationAuthoringUtteranceEvaluationResult(IEnumerable<AnalyzeConversationAuthoringUtteranceEvaluationResult> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="value"> The AnalyzeConversationAuthoringUtteranceEvaluationResult items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedAnalyzeConversationAuthoringUtteranceEvaluationResult(IList<UtteranceEvaluationResult> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedAnalyzeConversationAuthoringUtteranceEvaluationResult(IList<AnalyzeConversationAuthoringUtteranceEvaluationResult> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> The AnalyzeConversationAuthoringUtteranceEvaluationResult items on this page. </summary>
-        public IList<UtteranceEvaluationResult> Value { get; }
+        public IList<AnalyzeConversationAuthoringUtteranceEvaluationResult> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
