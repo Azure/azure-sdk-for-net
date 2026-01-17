@@ -134,7 +134,7 @@ internal class FoundryConnectedToolsOperations
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken)
     {
-        var connectedTool = tool.FoundryTool as FoundryConnectedTool;
+        var connectedTool = tool.Definition as FoundryConnectedTool;
 
         var content = new Dictionary<string, object?>
         {
@@ -338,10 +338,7 @@ internal class FoundryConnectedToolsOperations
                     name,
                     description ?? string.Empty,
                     metadata,
-                    inputSchema,
-                    foundryTool,
-                    projectConnectionId,
-                    protocol));
+                    inputSchema));
             }
         }
 
@@ -361,14 +358,21 @@ internal class FoundryConnectedToolsOperations
         {
             descriptors.Add(new ResolvedFoundryTool
             {
-                Name = tool.Name,
-                Description = tool.Description,
-                Metadata = tool.Metadata,
-                InputSchema = tool.InputSchema,
-                FoundryTool = tool.FoundryTool
+                Definition = GetDefinition(tool.Metadata),
+                Details = tool
             });
         }
 
         return descriptors;
+    }
+
+    private static FoundryTool? GetDefinition(IReadOnlyDictionary<string, object?> metadata)
+    {
+        if (metadata.TryGetValue("foundry_tool", out var definition) && definition is FoundryTool foundryTool)
+        {
+            return foundryTool;
+        }
+
+        return null;
     }
 }
