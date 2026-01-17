@@ -187,10 +187,6 @@ namespace Azure.AI.Projects
         public virtual System.ClientModel.Primitives.CollectionResult GetAgentVersions(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.OpenAI.AgentVersion> GetAgentVersionsAsync(string agentName, int? limit = default(int?), Azure.AI.Projects.AgentListOrder? order = default(Azure.AI.Projects.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAgentVersionsAsync(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult StreamAgentContainerLogs(string agentName, string agentVersion, Azure.AI.Projects.ContainerLogKind? kind = default(Azure.AI.Projects.ContainerLogKind?), string replicaName = null, int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult StreamAgentContainerLogs(string agentName, string agentVersion, string kind, string replicaName, int? tail, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StreamAgentContainerLogsAsync(string agentName, string agentVersion, Azure.AI.Projects.ContainerLogKind? kind = default(Azure.AI.Projects.ContainerLogKind?), string replicaName = null, int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StreamAgentContainerLogsAsync(string agentName, string agentVersion, string kind, string replicaName, int? tail, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.ClientModel.ClientResult UpdateAgent(string agentName, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -249,8 +245,7 @@ namespace Azure.AI.Projects
         {
             V2025_05_01 = 1,
             V1 = 2,
-            V2025_05_15_Preview = 3,
-            V2025_11_15_Preview = 4,
+            V2025_11_15_Preview = 3,
         }
     }
     public partial class AIProjectConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AIProjectConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AIProjectConnection>
@@ -634,7 +629,7 @@ namespace Azure.AI.Projects
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AttackStrategy(string value) { throw null; }
-        public static Azure.AI.Projects.AttackStrategy AnsiiAttack { get { throw null; } }
+        public static Azure.AI.Projects.AttackStrategy AnsiAttack { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy AsciiArt { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy AsciiSmuggler { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy Atbash { get { throw null; } }
@@ -937,6 +932,7 @@ namespace Azure.AI.Projects
     }
     public partial class CodeBasedEvaluatorDefinition : Azure.AI.Projects.EvaluatorDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CodeBasedEvaluatorDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CodeBasedEvaluatorDefinition>
     {
+        public CodeBasedEvaluatorDefinition(System.BinaryData initParameters, System.BinaryData dataSchema, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorMetric> metrics, string codeText) { }
         public CodeBasedEvaluatorDefinition(string codeText) { }
         public string CodeText { get { throw null; } set { } }
         protected override Azure.AI.Projects.EvaluatorDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -991,11 +987,6 @@ namespace Azure.AI.Projects
         public static implicit operator Azure.AI.Projects.ConnectionType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.ConnectionType left, Azure.AI.Projects.ConnectionType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public enum ContainerLogKind
-    {
-        Console = 0,
-        System = 1,
     }
     public enum ContainerMemoryLimit
     {

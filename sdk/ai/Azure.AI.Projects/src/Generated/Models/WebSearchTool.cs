@@ -21,11 +21,16 @@ namespace Azure.AI.Projects
         /// <param name="filters"></param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        internal WebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize) : base(@type, additionalBinaryDataProperties)
+        /// <param name="customSearchConfiguration">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        internal WebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, WebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             Filters = filters;
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
+            CustomSearchConfiguration = customSearchConfiguration;
         }
 
         /// <summary> Gets or sets the Filters. </summary>
@@ -36,5 +41,11 @@ namespace Azure.AI.Projects
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public WebSearchToolSearchContextSize? SearchContextSize { get; set; }
+
+        /// <summary>
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </summary>
+        public WebSearchConfiguration CustomSearchConfiguration { get; set; }
     }
 }
