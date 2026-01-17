@@ -9,7 +9,7 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Speech.Transcription
 {
-    public static partial class AzureAISpeechTranscriptionModelFactory
+    public static partial class SpeechTranscriptionModelFactory
     {
         public static TranscriptionContent TranscriptionContent(TranscriptionOptions options = default, BinaryData audio = default)
         {

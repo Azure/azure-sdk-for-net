@@ -44,14 +44,14 @@ using Azure.AI.Speech.Transcription;
 // Use DefaultAzureCredential which works with managed identities, service principals, Azure CLI, etc.
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
-Uri endpoint = new Uri("https://<your-region>.api.cognitive.microsoft.com/");
+Uri endpoint = new Uri("https://<your-region>.api.cognitive.microsoft.com");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 ```
 
 Note: To use Azure Identity authentication, you need to:
 
 1. Add the `Azure.Identity` package to your project
-2. Assign the appropriate role (e.g., "Cognitive Services Speech User") to your managed identity or service principal
+2. Assign the appropriate role (e.g., "Cognitive Services User") to your managed identity or service principal
 3. Ensure your Speech resource has Entra ID authentication enabled
 
 For more information on Entra ID authentication, see:
