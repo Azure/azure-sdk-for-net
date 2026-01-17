@@ -164,7 +164,23 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             return new PageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetBySubscriptionCollectionResultOfT(SolutionTypesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
         }
 
-        /// <summary> Retrieve AWS Cloud Formation template. </summary>
+        /// <summary>
+        /// Retrieve AWS Cloud Formation template
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridConnectivity/generateAwsTemplate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateAwsTemplate_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate AWS CFT Template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -196,7 +212,23 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             }
         }
 
-        /// <summary> Retrieve AWS Cloud Formation template. </summary>
+        /// <summary>
+        /// Retrieve AWS Cloud Formation template
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridConnectivity/generateAwsTemplate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateAwsTemplate_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate AWS CFT Template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
