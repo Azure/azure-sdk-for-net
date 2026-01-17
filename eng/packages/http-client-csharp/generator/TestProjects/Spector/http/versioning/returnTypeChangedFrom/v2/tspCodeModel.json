@@ -364,7 +364,8 @@
       "apiVersions": [
         "v1",
         "v2"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

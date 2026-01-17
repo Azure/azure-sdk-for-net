@@ -76,7 +76,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }
