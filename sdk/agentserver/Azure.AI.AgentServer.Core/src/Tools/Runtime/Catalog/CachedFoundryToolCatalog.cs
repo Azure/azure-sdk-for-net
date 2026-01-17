@@ -204,9 +204,10 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
     /// </summary>
     private object GetCacheKey(UserInfo? userInfo, FoundryTool tool)
     {
+        var toolKey = tool.Id;
         return tool.Source == FoundryToolSource.HOSTED_MCP
-            ? (object)tool // Global cache for hosted MCP
-            : (userInfo, tool); // Per-user cache for connected tools
+            ? toolKey // Global cache for hosted MCP
+            : (userInfo, toolKey); // Per-user cache for connected tools
     }
 
     /// <summary>
