@@ -35,6 +35,11 @@ public sealed record FoundryHostedMcpTool : FoundryTool
     public override FoundryToolSource Source => FoundryToolSource.HOSTED_MCP;
 
     /// <summary>
+    /// Gets the unique identifier for the tool.
+    /// </summary>
+    public override string Id => $"{Source.ToString().ToLowerInvariant()}:{Name}";
+
+    /// <summary>
     /// Gets or initializes the name of the hosted MCP tool.
     /// </summary>
     public string Name { get; init; }

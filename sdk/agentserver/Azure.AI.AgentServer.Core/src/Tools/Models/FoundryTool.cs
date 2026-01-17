@@ -39,6 +39,11 @@ public abstract record FoundryTool
     public abstract FoundryToolSource Source { get; }
 
     /// <summary>
+    /// Gets the unique identifier for the tool.
+    /// </summary>
+    public abstract string Id { get; }
+
+    /// <summary>
     /// Gets or initializes additional properties for the tool configuration.
     /// </summary>
     public IReadOnlyDictionary<string, object?>? AdditionalProperties { get; init; }
