@@ -82,14 +82,14 @@ public class DefaultFoundryToolCatalog : CachedFoundryToolCatalog
     private static bool ToolMatches(ResolvedFoundryTool resolved, FoundryTool requested)
     {
         // Match by comparing the tool definitions
-        if (resolved.FoundryTool == null)
+        if (resolved.Definition == null)
         {
             return false;
         }
 
         // For hosted MCP tools, match by name
         if (requested is FoundryHostedMcpTool hostedMcp &&
-            resolved.FoundryTool is FoundryHostedMcpTool resolvedHostedMcp)
+            resolved.Definition is FoundryHostedMcpTool resolvedHostedMcp)
         {
             return string.Equals(
                 hostedMcp.Name,
@@ -99,7 +99,7 @@ public class DefaultFoundryToolCatalog : CachedFoundryToolCatalog
 
         // For connected tools, match by protocol and connection ID
         if (requested is FoundryConnectedTool connected &&
-            resolved.FoundryTool is FoundryConnectedTool resolvedConnected)
+            resolved.Definition is FoundryConnectedTool resolvedConnected)
         {
             return connected.Protocol == resolvedConnected.Protocol &&
                    string.Equals(

@@ -124,11 +124,11 @@ internal partial class FoundryMcpToolsOperations
         };
 
         // Add _meta if tool definition exists and metadata schema is present
-        if (tool.FoundryTool != null)
+        if (tool.Definition != null)
         {
             var metaConfig = PrepareMetadataConfig(
                 tool.Metadata,
-                tool.FoundryTool,
+                tool.Definition,
                 GetToolPropertyOverrides(tool.Name));
 
             if (metaConfig.Count > 0)
@@ -289,8 +289,7 @@ internal partial class FoundryMcpToolsOperations
                 name,
                 description ?? string.Empty,
                 metadata,
-                inputSchema,
-                foundryTool));
+                inputSchema));
         }
 
         return parsedTools;
@@ -326,14 +325,21 @@ internal partial class FoundryMcpToolsOperations
         {
             descriptors.Add(new ResolvedFoundryTool
             {
-                Name = tool.Name,
-                Description = tool.Description,
-                Metadata = tool.Metadata,
-                InputSchema = tool.InputSchema,
-                FoundryTool = tool.FoundryTool
+                Definition = GetDefinition(tool.Metadata),
+                Details = tool
             });
         }
 
         return descriptors;
+    }
+
+    private static FoundryTool? GetDefinition(IReadOnlyDictionary<string, object?> metadata)
+    {
+        if (metadata.TryGetValue("foundry_tool", out var definition) && definition is FoundryTool foundryTool)
+        {
+            return foundryTool;
+        }
+
+        return null;
     }
 }
