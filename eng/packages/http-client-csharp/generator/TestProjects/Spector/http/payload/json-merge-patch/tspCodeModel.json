@@ -1107,7 +1107,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.JsonMergePatch",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }
