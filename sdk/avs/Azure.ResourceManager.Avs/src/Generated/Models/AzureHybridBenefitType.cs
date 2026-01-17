@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AzureHybridBenefitType : IEquatable<AzureHybridBenefitType>
     {
         private readonly string _value;
+        /// <summary> is SqlHost. </summary>
+        private const string SqlHostValue = "SqlHost";
+        /// <summary> is None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="AzureHybridBenefitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureHybridBenefitType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SqlHostValue = "SqlHost";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> is SqlHost. </summary>
         public static AzureHybridBenefitType SqlHost { get; } = new AzureHybridBenefitType(SqlHostValue);
+
         /// <summary> is None. </summary>
         public static AzureHybridBenefitType None { get; } = new AzureHybridBenefitType(NoneValue);
+
         /// <summary> Determines if two <see cref="AzureHybridBenefitType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureHybridBenefitType left, AzureHybridBenefitType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureHybridBenefitType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureHybridBenefitType left, AzureHybridBenefitType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureHybridBenefitType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureHybridBenefitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureHybridBenefitType(string value) => new AzureHybridBenefitType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureHybridBenefitType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureHybridBenefitType?(string value) => value == null ? null : new AzureHybridBenefitType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureHybridBenefitType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureHybridBenefitType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

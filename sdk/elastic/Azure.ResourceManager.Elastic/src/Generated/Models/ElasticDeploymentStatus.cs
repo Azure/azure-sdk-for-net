@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct ElasticDeploymentStatus : IEquatable<ElasticDeploymentStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticDeploymentStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticDeploymentStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HealthyValue = "Healthy";
         private const string UnhealthyValue = "Unhealthy";
 
-        /// <summary> Healthy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticDeploymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ElasticDeploymentStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Healthy. </summary>
         public static ElasticDeploymentStatus Healthy { get; } = new ElasticDeploymentStatus(HealthyValue);
-        /// <summary> Unhealthy. </summary>
+
+        /// <summary> Gets the Unhealthy. </summary>
         public static ElasticDeploymentStatus Unhealthy { get; } = new ElasticDeploymentStatus(UnhealthyValue);
+
         /// <summary> Determines if two <see cref="ElasticDeploymentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticDeploymentStatus left, ElasticDeploymentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticDeploymentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticDeploymentStatus left, ElasticDeploymentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticDeploymentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticDeploymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticDeploymentStatus(string value) => new ElasticDeploymentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticDeploymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticDeploymentStatus?(string value) => value == null ? null : new ElasticDeploymentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticDeploymentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticDeploymentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

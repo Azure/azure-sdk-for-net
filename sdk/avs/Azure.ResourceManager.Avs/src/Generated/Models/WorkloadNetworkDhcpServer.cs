@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.Avs.Models
     public partial class WorkloadNetworkDhcpServer : WorkloadNetworkDhcpEntity
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpServer"/>. </summary>
-        public WorkloadNetworkDhcpServer()
+        public WorkloadNetworkDhcpServer() : base(DhcpTypeEnum.Server)
         {
-            DhcpType = DhcpTypeEnum.Server;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpServer"/>. </summary>
@@ -25,18 +24,18 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverAddress"> DHCP Server Address. </param>
         /// <param name="leaseTime"> DHCP Server Lease Time. </param>
-        internal WorkloadNetworkDhcpServer(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverAddress, long? leaseTime) : base(dhcpType, displayName, segments, provisioningState, revision, serializedAdditionalRawData)
+        internal WorkloadNetworkDhcpServer(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverAddress, long? leaseTime) : base(dhcpType, displayName, segments, provisioningState, revision, additionalBinaryDataProperties)
         {
             ServerAddress = serverAddress;
             LeaseTime = leaseTime;
-            DhcpType = dhcpType;
         }
 
         /// <summary> DHCP Server Address. </summary>
         public string ServerAddress { get; set; }
+
         /// <summary> DHCP Server Lease Time. </summary>
         public long? LeaseTime { get; set; }
     }

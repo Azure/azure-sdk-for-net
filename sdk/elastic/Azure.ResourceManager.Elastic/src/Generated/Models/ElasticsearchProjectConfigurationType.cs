@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct ElasticsearchProjectConfigurationType : IEquatable<ElasticsearchProjectConfigurationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticsearchProjectConfigurationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticsearchProjectConfigurationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string GeneralPurposeValue = "GeneralPurpose";
         private const string VectorValue = "Vector";
         private const string TimeSeriesValue = "TimeSeries";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> GeneralPurpose. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticsearchProjectConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ElasticsearchProjectConfigurationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the GeneralPurpose. </summary>
         public static ElasticsearchProjectConfigurationType GeneralPurpose { get; } = new ElasticsearchProjectConfigurationType(GeneralPurposeValue);
-        /// <summary> Vector. </summary>
+
+        /// <summary> Gets the Vector. </summary>
         public static ElasticsearchProjectConfigurationType Vector { get; } = new ElasticsearchProjectConfigurationType(VectorValue);
-        /// <summary> TimeSeries. </summary>
+
+        /// <summary> Gets the TimeSeries. </summary>
         public static ElasticsearchProjectConfigurationType TimeSeries { get; } = new ElasticsearchProjectConfigurationType(TimeSeriesValue);
-        /// <summary> NotApplicable. </summary>
+
+        /// <summary> Gets the NotApplicable. </summary>
         public static ElasticsearchProjectConfigurationType NotApplicable { get; } = new ElasticsearchProjectConfigurationType(NotApplicableValue);
+
         /// <summary> Determines if two <see cref="ElasticsearchProjectConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticsearchProjectConfigurationType left, ElasticsearchProjectConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticsearchProjectConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticsearchProjectConfigurationType left, ElasticsearchProjectConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticsearchProjectConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticsearchProjectConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticsearchProjectConfigurationType(string value) => new ElasticsearchProjectConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticsearchProjectConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticsearchProjectConfigurationType?(string value) => value == null ? null : new ElasticsearchProjectConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticsearchProjectConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticsearchProjectConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

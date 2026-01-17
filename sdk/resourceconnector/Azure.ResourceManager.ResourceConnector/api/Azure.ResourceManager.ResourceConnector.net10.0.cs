@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ResourceConnector
     public partial class ResourceConnectorApplianceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceData>
     {
         public ResourceConnectorApplianceData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro? Distro { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent> Events { get { throw null; } }
+        public Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro? Distro { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent> Events { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider? InfrastructureConfigProvider { get { throw null; } set { } }
-        public Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile NetworkProfile { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string PublicKey { get { throw null; } set { } }
-        public Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus? Status { get { throw null; } }
         public string Version { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.ResourceConnector
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult> GetClusterUserCredential(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>> GetClusterUserCredentialAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult> GetKeys(string artifactType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>> GetKeysAsync(string artifactType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult> GetClusterUserCredential(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>> GetClusterUserCredentialAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult> GetKeys(string artifactType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>> GetKeysAsync(string artifactType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceUpgradeGraph> GetUpgradeGraph(string upgradeGraph, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceUpgradeGraph>> GetUpgradeGraphAsync(string upgradeGraph, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.ResourceConnector
     }
     public static partial class ResourceConnectorExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult> GetApplianceTelemetryConfig(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult>> GetApplianceTelemetryConfigAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliance(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceCollection GetResourceConnectorAppliances(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliances(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ResourceConnector.Mocking
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
     public partial class MockableResourceConnectorSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableResourceConnectorSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult> GetApplianceTelemetryConfig(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult>> GetApplianceTelemetryConfigAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ResourceConnector.Models
@@ -144,37 +144,6 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplianceClusterUserCredentialResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>
-    {
-        internal ApplianceClusterUserCredentialResult() { }
-        public Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig HybridConnectionConfig { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> Kubeconfigs { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ApplianceClusterUserKeysResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>
-    {
-        internal ApplianceClusterUserKeysResult() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile> ArtifactProfiles { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> Kubeconfigs { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey> SshKeys { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ApplianceCredentialKubeconfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig>
     {
         internal ApplianceCredentialKubeconfig() { }
@@ -189,6 +158,88 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApplianceDistro : System.IEquatable<Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApplianceDistro(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro AksEdge { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro left, Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro left, Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ApplianceEvent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent>
+    {
+        internal ApplianceEvent() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Severity { get { throw null; } }
+        public string Status { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApplianceListCredentialResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>
+    {
+        internal ApplianceListCredentialResult() { }
+        public Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig HybridConnectionConfig { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> Kubeconfigs { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApplianceListKeysResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>
+    {
+        internal ApplianceListKeysResult() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile> ArtifactProfiles { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> Kubeconfigs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey> SshKeys { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApplianceNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile>
+    {
+        public ApplianceNetworkProfile() { }
+        public string DnsVersion { get { throw null; } set { } }
+        public string GatewayVersion { get { throw null; } set { } }
+        public string ProxyVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplianceProvider : System.IEquatable<Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider>
@@ -225,6 +276,65 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApplianceStatus : System.IEquatable<Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApplianceStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ArcGatewayUpdateComplete { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ArcGatewayUpdateFailed { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ArcGatewayUpdatePreparing { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ArcGatewayUpdating { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus Connected { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus Connecting { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus EtcdSnapshotFailed { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ImageDeprovisioning { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ImageDownloaded { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ImageDownloading { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ImagePending { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ImageProvisioned { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ImageProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ImageUnknown { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkDnsUpdateComplete { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkDnsUpdateFailed { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkDnsUpdatePreparing { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkDnsUpdating { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkProxyUpdateComplete { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkProxyUpdateFailed { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkProxyUpdatePreparing { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus NetworkProxyUpdating { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus None { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus Offline { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus PostUpgrade { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus PreparingForUpgrade { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus PreUpgrade { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpdatingCapi { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpdatingCloudOperator { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpdatingCluster { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpgradeClusterExtensionFailedToDelete { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpgradeComplete { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpgradeFailed { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpgradePrerequisitesCompleted { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus UpgradingKvaio { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus Validating { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ValidatingEtcdHealth { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ValidatingImageDownload { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ValidatingImageUpload { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus ValidatingSFSConnectivity { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus WaitingForCloudOperator { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus WaitingForHeartbeat { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus WaitingForKvaio { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus left, Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus left, Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ApplianceSupportedVersion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersion>
     {
@@ -322,9 +432,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     public static partial class ArmResourceConnectorModelFactory
     {
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile ApplianceArtifactProfile(string endpoint = null) { throw null; }
-        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult ApplianceClusterUserCredentialResult(Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig hybridConnectionConfig = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> kubeconfigs = null) { throw null; }
-        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult ApplianceClusterUserKeysResult(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile> artifactProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> kubeconfigs = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey> sshKeys = null) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig ApplianceCredentialKubeconfig(Azure.ResourceManager.ResourceConnector.Models.AccessProfileType? name = default(Azure.ResourceManager.ResourceConnector.Models.AccessProfileType?), string value = null) { throw null; }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent ApplianceEvent(string type = null, string code = null, string status = null, string message = null, string severity = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceListCredentialResult ApplianceListCredentialResult(Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig hybridConnectionConfig = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> kubeconfigs = null) { throw null; }
+        public static Azure.ResourceManager.ResourceConnector.Models.ApplianceListKeysResult ApplianceListKeysResult(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile> artifactProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig> kubeconfigs = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey> sshKeys = null) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey ApplianceSshKey(string certificate = null, long? creationTimeStamp = default(long?), long? expirationTimeStamp = default(long?), string privateKey = null, string publicKey = null) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersion ApplianceSupportedVersion(Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersionCatalogVersion metadataCatalogVersion = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersionCatalogVersion ApplianceSupportedVersionCatalogVersion(Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersionCatalogVersionProperties data = null, string name = null, string @namespace = null) { throw null; }
@@ -333,9 +444,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceUpgradeGraph ApplianceUpgradeGraph(string id = null, string name = null, Azure.ResourceManager.ResourceConnector.Models.ApplianceUpgradeGraphProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceUpgradeGraphProperties ApplianceUpgradeGraphProperties(string applianceVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersion> supportedVersions = null) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig HybridConnectionConfig(long? expirationTime = default(long?), string hybridConnectionName = null, string relay = null, string token = null) { throw null; }
-        public static Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceData ResourceConnectorApplianceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro? distro = default(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro?), string provisioningState = null, string publicKey = null, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus? status = default(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus?), string version = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent> events = null, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile networkProfile = null, Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider? infrastructureConfigProvider = default(Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceData ResourceConnectorApplianceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro? distro = default(Azure.ResourceManager.ResourceConnector.Models.ApplianceDistro?), string provisioningState = null, string publicKey = null, Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus? status = default(Azure.ResourceManager.ResourceConnector.Models.ApplianceStatus?), string version = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.Models.ApplianceEvent> events = null, Azure.ResourceManager.ResourceConnector.Models.ApplianceNetworkProfile networkProfile = null, Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider? infrastructureConfigProvider = default(Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorAppliancePatch ResourceConnectorAppliancePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent ResourceConnectorEvent(string type = null, string code = null, string status = null, string message = null, string severity = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
     }
     public partial class HybridConnectionConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig>
     {
@@ -367,115 +477,5 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorAppliancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorAppliancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorAppliancePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorAppliancePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceConnectorDistro : System.IEquatable<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceConnectorDistro(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro AksEdge { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro left, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro left, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ResourceConnectorEvent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent>
-    {
-        internal ResourceConnectorEvent() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Severity { get { throw null; } }
-        public string Status { get { throw null; } }
-        public System.DateTimeOffset? Timestamp { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorEvent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ResourceConnectorNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile>
-    {
-        public ResourceConnectorNetworkProfile() { }
-        public string DnsVersion { get { throw null; } set { } }
-        public string GatewayVersion { get { throw null; } set { } }
-        public string ProxyVersion { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorNetworkProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceConnectorStatus : System.IEquatable<Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceConnectorStatus(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ArcGatewayUpdateComplete { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ArcGatewayUpdateFailed { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ArcGatewayUpdatePreparing { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ArcGatewayUpdating { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus Connected { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus Connecting { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus EtcdSnapshotFailed { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageDeprovisioning { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageDownloaded { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageDownloading { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImagePending { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageProvisioned { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageProvisioning { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageUnknown { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdateComplete { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdateFailed { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdatePreparing { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdating { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkProxyUpdateComplete { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkProxyUpdateFailed { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkProxyUpdatePreparing { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkProxyUpdating { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus None { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus Offline { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus PostUpgrade { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus PreparingForUpgrade { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus PreUpgrade { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus Running { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpdatingCapi { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpdatingCloudOperator { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpdatingCluster { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpgradeClusterExtensionFailedToDelete { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpgradeComplete { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpgradeFailed { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpgradePrerequisitesCompleted { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus UpgradingKvaio { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus Validating { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ValidatingEtcdHealth { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ValidatingImageDownload { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ValidatingImageUpload { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ValidatingSFSConnectivity { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus WaitingForCloudOperator { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus WaitingForHeartbeat { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus WaitingForKvaio { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus left, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus left, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
