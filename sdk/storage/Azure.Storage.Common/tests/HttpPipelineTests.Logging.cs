@@ -28,7 +28,7 @@ namespace Azure.Storage.Test
 
                 await Logging_TextWriterTestImpl(textWriter, serviceCollection, httpRequest, () =>
                 {
-                    Assert.IsFalse(textWriter.ToString().Contains("auth"));
+                    Assert.That(textWriter.ToString().Contains("auth"), Is.False);
                 });
             }
         }
@@ -58,8 +58,8 @@ namespace Azure.Storage.Test
 
                 await Logging_TextWriterTestImpl(textWriter, serviceCollection, httpRequest, () =>
                 {
-                    Assert.IsFalse(textWriter.ToString().Contains("urlSignature"));
-                    Assert.IsFalse(textWriter.ToString().Contains("copySourceSignature"));
+                    Assert.That(textWriter.ToString().Contains("urlSignature"), Is.False);
+                    Assert.That(textWriter.ToString().Contains("copySourceSignature"), Is.False);
                 });
             }
         }
@@ -128,11 +128,11 @@ namespace Azure.Storage.Test
 
         static async Task Logging_TextWriterTestImpl(StringWriter textWriter, IServiceCollection serviceCollection, HttpRequestMessage httpRequest = null, Action action = null)
         {
-            Assert.IsTrue(String.IsNullOrWhiteSpace(textWriter.ToString()));
+            Assert.That(String.IsNullOrWhiteSpace(textWriter.ToString()), Is.True);
 
             await Logging_TestImpl(serviceCollection, httpRequest);
 
-            Assert.IsFalse(String.IsNullOrWhiteSpace(textWriter.ToString()), $"{nameof(textWriter)} did not receive any Log messages");
+            Assert.That(String.IsNullOrWhiteSpace(textWriter.ToString()), Is.False, $"{nameof(textWriter)} did not receive any Log messages");
             action?.Invoke();
         }
 

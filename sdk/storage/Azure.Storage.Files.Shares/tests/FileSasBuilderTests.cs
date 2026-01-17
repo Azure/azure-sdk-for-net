@@ -304,8 +304,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.That(sasQueryParameters.Services, Is.Null);
+            Assert.That(sasQueryParameters.ResourceTypes, Is.Null);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);

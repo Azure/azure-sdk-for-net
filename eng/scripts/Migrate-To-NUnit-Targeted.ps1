@@ -9,16 +9,13 @@
     - Does NOT add Assert.Multiple calls
     - Does NOT convert Assert.True(x == y) to Assert.That(x, Is.EqualTo(y))
     
-    Targeted directories are hard-coded based on manual review.
+    Optimized version that processes all diagnostics at once per project.
 
 .PARAMETER RepoRoot
     The root directory of the azure-sdk-for-net repository. Defaults to current directory.
 
 .PARAMETER DryRun
     If specified, shows what would be done without making any changes.
-
-.PARAMETER ShowVerboseOutput
-    If specified, shows detailed output from dotnet format commands.
 
 .EXAMPLE
     .\Migrate-To-NUnit-Targeted.ps1
@@ -39,42 +36,28 @@ param(
     [string]$RepoRoot = ".",
     
     [Parameter()]
-    [switch]$DryRun,
-    
-    [Parameter()]
-    [switch]$ShowVerboseOutput
+    [switch]$DryRun
 )
 
 $ErrorActionPreference = "Stop"
 
-# Safe diagnostic IDs - classic assertion conversions
+# Safe diagnostic IDs - classic assertion conversions including Assert.AreEqual
 $DiagnosticIds = @(
-    # Classic assert conversions (Assert.True/IsTrue, Assert.False/IsFalse, Assert.Null/IsNull, etc.)
     "NUnit2001", "NUnit2002", "NUnit2003", "NUnit2004", "NUnit2005", "NUnit2006", "NUnit2007",
-    # Use EqualConstraint for better messages
     "NUnit2010",
-    # String and collection asserts
     "NUnit2015", "NUnit2016", "NUnit2017", "NUnit2018", "NUnit2019",
-    # Type checking
     "NUnit2021", "NUnit2023", "NUnit2024", "NUnit2025",
-    # Additional classic assert conversions (Assert.Greater, Assert.Less, etc.)
     "NUnit2027", "NUnit2028", "NUnit2029", "NUnit2030", "NUnit2031", "NUnit2032", "NUnit2033",
     "NUnit2034", "NUnit2035", "NUnit2036", "NUnit2037", "NUnit2038", "NUnit2039",
-    # Constraint-related fixes
     "NUnit2048", "NUnit2049", "NUnit2050"
 )
 
-# Problematic service directories identified from manual review
+# Create comma-separated list for dotnet format
+$diagnosticsList = $DiagnosticIds -join ','
+
+# Targeted directories
 $TargetedDirectories = @(
-    # Generator test projects
-    "eng/packages/http-client-csharp/generator/TestProjects",
-    "eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/test",
-    
-    # Tables - extensive old-style assertions
-    "sdk/tables/Microsoft.Azure.WebJobs.Extensions.Tables",
-    "sdk/tables/Azure.Data.Tables",
-    
-    # Storage - multiple projects with old assertions
+    "sdk/storage/Azure.Storage.Blobs",
     "sdk/storage/Azure.Storage.Queues",
     "sdk/storage/Azure.Storage.Files.DataLake",
     "sdk/storage/Azure.Storage.Files.Shares",
@@ -82,39 +65,7 @@ $TargetedDirectories = @(
     "sdk/storage/Azure.Storage.DataMovement",
     "sdk/storage/Azure.Storage.DataMovement.Blobs",
     "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs",
-    
-    # HDInsight - job SDK tests
-    "sdk/hdinsight/Microsoft.Azure.HDInsight.Job",
-    
-    # WebPubSub - multiple instances
-    "sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub",
-    "sdk/webpubsub/Azure.Messaging.WebPubSub.Client",
-    "sdk/webpubsub/Azure.Messaging.WebPubSub",
-    "sdk/webpubsub/Azure.ResourceManager.WebPubSub",
-    
-    # Text Analytics
-    "sdk/textanalytics/Azure.AI.TextAnalytics",
-    
-    # Translation
-    "sdk/translation/Azure.AI.Translation.Document",
-    
-    # Extensions
-    "sdk/extensions/Microsoft.Extensions.Azure",
-    
-    # Websites/App Service
-    "sdk/websites/Azure.ResourceManager.AppService",
-    
-    # Vision
-    "sdk/vision/Azure.AI.Vision.ImageAnalysis",
-    
-    # Template
-    "sdk/template/.content",
-    
-    # Synapse
-    "sdk/synapse",
-    
-    # Video Analyzer
-    "sdk/videoanalyzer"
+    "sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub"
 )
 
 # Convert to absolute path
@@ -206,15 +157,23 @@ foreach ($csproj in $allTestProjects) {
     
     Write-Host "  [ADD]  Adding $packageName : $relativePath" -ForegroundColor Green
     
-    # Find the NUnit PackageReference and add analyzer after it
+    # Try to find the NUnit PackageReference and add analyzer after it
+    # If not found, add to first ItemGroup (NUnit might be centrally managed)
     if ($content -match '(?s)(<PackageReference\s+Include="NUnit"[^>]*/>)') {
         $nunitReference = $Matches[1]
         $newContent = $content -replace [regex]::Escape($nunitReference), "$nunitReference`r`n$insertSnippet"
         Set-Content -Path $csprojPath -Value $newContent -NoNewline
         $projectsModified++
     }
+    elseif ($content -match '(?s)(<ItemGroup>)') {
+        # NUnit reference not found (likely central), add to first ItemGroup
+        $firstItemGroup = $Matches[1]
+        $newContent = $content -replace [regex]::Escape($firstItemGroup), "$firstItemGroup`r`n$insertSnippet"
+        Set-Content -Path $csprojPath -Value $newContent -NoNewline
+        $projectsModified++
+    }
     else {
-        Write-Warning "Could not find NUnit reference in $relativePath"
+        Write-Warning "Could not find suitable location to add $packageName in $relativePath"
     }
 }
 
@@ -270,101 +229,100 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Step 3: Applying Analyzer Code Fixes" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Processing $($DiagnosticIds.Count) diagnostics across $($allTestProjects.Count) projects" -ForegroundColor Yellow
+Write-Host "Using parallel processing for each diagnostic" -ForegroundColor Gray
 Write-Host ""
 
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-
-# Process each diagnostic separately
 $diagnosticCounter = 0
-$allResults = @()
 
+# Process each diagnostic separately, but parallelize projects within each diagnostic
 foreach ($diagnostic in $DiagnosticIds) {
     $diagnosticCounter++
     Write-Host "[$diagnosticCounter/$($DiagnosticIds.Count)] Processing diagnostic: $diagnostic" -ForegroundColor Cyan
     
-    $results = $allTestProjects | ForEach-Object -ThrottleLimit 8 -Parallel {
-        $csproj = $_
-        $csprojPath = $csproj.FullName
-        $csprojDir = $csproj.Directory.FullName
-        $diagnostic = $using:diagnostic
-        $RepoRoot = $using:RepoRoot
-        $verboseMode = $using:ShowVerboseOutput
-        $relativePath = $csprojPath.Substring($RepoRoot.Length + 1)
-        
-        # Create temporary .editorconfig
-        $editorConfigPath = Join-Path $csprojDir ".editorconfig"
-        $editorConfigExisted = Test-Path $editorConfigPath
-        $originalEditorConfig = $null
-        
-        $success = $false
-        $changesApplied = $false
-        
-        try {
-            if ($editorConfigExisted) {
-                $originalEditorConfig = Get-Content -Path $editorConfigPath -Raw
-            }
-            else {
-                "[*.cs]" | Set-Content -Path $editorConfigPath
-            }
+    $formattingJobs = @()
+    
+    # Launch formatting jobs in parallel for all projects
+    foreach ($csproj in $allTestProjects) {
+        $job = Start-Job -ScriptBlock {
+            param($csprojPath, $diagnostic, $RepoRoot)
             
-            # Add diagnostic severity
-            "`ndotnet_diagnostic.$diagnostic.severity = warning" | Add-Content -Path $editorConfigPath
+            $csprojDir = Split-Path -Parent $csprojPath
+            $relativePath = $csprojPath.Substring($RepoRoot.Length + 1)
             
-            # Run dotnet format
-            $verbosityLevel = if ($verboseMode) { "normal" } else { "quiet" }
-            $output = & dotnet format analyzers "$csprojPath" --diagnostics $diagnostic --severity info --no-restore --verbosity $verbosityLevel 2>&1 | Out-String
+            # Create temporary .editorconfig
+            $editorConfigPath = Join-Path $csprojDir ".editorconfig"
+            $editorConfigExisted = Test-Path $editorConfigPath
+            $originalEditorConfig = $null
             
-            if ($LASTEXITCODE -eq 0) {
-                $success = $true
-                # Check if any files were formatted
-                $changesApplied = $output -match "Formatted \d+ of \d+ files" -and $output -notmatch "Formatted 0 of"
+            $success = $false
+            $formatted = 0
+            
+            try {
+                # Backup existing .editorconfig if present
+                if ($editorConfigExisted) {
+                    $originalEditorConfig = Get-Content -Path $editorConfigPath -Raw
+                }
                 
-                if ($verboseMode -or $changesApplied) {
-                    Write-Host "    [OK] $relativePath" -ForegroundColor Green
-                    if ($verboseMode) {
-                        Write-Host "    Output: $output" -ForegroundColor DarkGray
+                # Create .editorconfig with diagnostic severity
+                $editorConfigContent = "[*.cs]`ndotnet_diagnostic.$diagnostic.severity = warning`n"
+                Set-Content -Path $editorConfigPath -Value $editorConfigContent -NoNewline
+                
+                # Run dotnet format
+                $output = & dotnet format analyzers $csprojPath --diagnostics $diagnostic --severity info --no-restore --verbosity quiet 2>&1 | Out-String
+                
+                if ($LASTEXITCODE -eq 0) {
+                    $success = $true
+                    # Check if any files were formatted
+                    if ($output -match "Formatted (\d+) of") {
+                        $formatted = [int]$Matches[1]
                     }
                 }
             }
-            else {
-                Write-Warning "    [FAIL] $relativePath (Exit code: $LASTEXITCODE)"
-                if ($verboseMode) {
-                    Write-Host "    Output: $output" -ForegroundColor DarkGray
+            catch {
+                # Silently handle errors in background job
+            }
+            finally {
+                # Restore or remove .editorconfig
+                if ($editorConfigExisted -and $originalEditorConfig) {
+                    Set-Content -Path $editorConfigPath -Value $originalEditorConfig -NoNewline
+                }
+                elseif (-not $editorConfigExisted -and (Test-Path $editorConfigPath)) {
+                    Remove-Item -Path $editorConfigPath -Force -ErrorAction SilentlyContinue
                 }
             }
-        }
-        catch {
-            Write-Warning "    [ERROR] $relativePath : $_"
-        }
-        finally {
-            # Restore or remove .editorconfig
-            if ($editorConfigExisted -and $originalEditorConfig) {
-                Set-Content -Path $editorConfigPath -Value $originalEditorConfig -NoNewline
+            
+            return @{
+                Success = $success
+                Formatted = $formatted
+                Project = $relativePath
             }
-            elseif (-not $editorConfigExisted -and (Test-Path $editorConfigPath)) {
-                Remove-Item -Path $editorConfigPath -Force -ErrorAction SilentlyContinue
-            }
-        }
+        } -ArgumentList $csproj.FullName, $diagnostic, $RepoRoot
         
-        return @{ 
-            Success = $success
-            ChangesApplied = $changesApplied
-            Project = $relativePath
-        }
+        $formattingJobs += $job
     }
     
-    $allResults += $results
-    $successCount = ($results | Where-Object { $_.Success -eq $true }).Count
-    $changesCount = ($results | Where-Object { $_.ChangesApplied -eq $true }).Count
-    Write-Host "  Completed: $successCount projects, Changes: $changesCount" -ForegroundColor Green
+    # Wait for all jobs to complete
+    Write-Host "  Waiting for $($formattingJobs.Count) formatting jobs to complete..." -ForegroundColor Gray
+    $results = $formattingJobs | Wait-Job | Receive-Job
+    $formattingJobs | Remove-Job
+    
+    # Summarize results
+    $successCount = ($results | Where-Object { $_.Success }).Count
+    $formattedCount = ($results | Where-Object { $_.Formatted -gt 0 }).Count
+    Write-Host "  ✓ Completed: $successCount projects, $formattedCount with changes" -ForegroundColor Green
 }
 
 $stopwatch.Stop()
 
-# Summarize results
-$projectsProcessed = ($allResults | Where-Object { $_.Success -eq $true }).Count
-$projectsFailed = ($allResults | Where-Object { $_.Success -ne $true }).Count
-$projectsWithChanges = ($allResults | Where-Object { $_.ChangesApplied -eq $true } | Select-Object -Unique -Property Project).Count
+# Count total projects with changes across all diagnostics
+$projectsWithChanges = ($allTestProjects | ForEach-Object {
+    $csproj = $_
+    # Check if any cs files in the project directory were modified
+    $csprojDir = $csproj.Directory.FullName
+    $modifiedFiles = git status --porcelain "$csprojDir/*.cs" 2>$null
+    if ($modifiedFiles) { $csproj }
+}).Count
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
@@ -372,11 +330,7 @@ Write-Host "Processing Summary" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  Projects processed: $($allTestProjects.Count)" -ForegroundColor White
 Write-Host "  Diagnostics applied: $($DiagnosticIds.Count)" -ForegroundColor White
-Write-Host "  Total operations: $projectsProcessed" -ForegroundColor Green
 Write-Host "  Projects with changes: $projectsWithChanges" -ForegroundColor Green
-if ($projectsFailed -gt 0) {
-    Write-Host "  Failed operations: $projectsFailed" -ForegroundColor Red
-}
 Write-Host "  Time elapsed: $($stopwatch.Elapsed.ToString('hh\:mm\:ss'))" -ForegroundColor Yellow
 
 # Step 4: Remove NUnit.Analyzers references
@@ -411,17 +365,6 @@ foreach ($csproj in $allTestProjects) {
 
 Write-Host ""
 Write-Host "Removed NUnit.Analyzers from $projectsAnalyzerRemoved project(s)" -ForegroundColor Green
-
-# Show which projects had changes
-if ($projectsWithChanges -gt 0) {
-    Write-Host ""
-    Write-Host "Projects with changes applied:" -ForegroundColor Cyan
-    $allResults | Where-Object { $_.ChangesApplied -eq $true } | 
-        Select-Object -Unique -Property Project |
-        ForEach-Object {
-            Write-Host "  - $($_.Project)" -ForegroundColor Green
-        }
-}
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan

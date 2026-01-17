@@ -47,7 +47,7 @@ public class StructuredMessageDecodingRetriableStreamTests
             await retriableSrc.CopyToInternal(dst, Async, default);
         }
 
-        Assert.AreEqual(data, dest);
+        Assert.That(dest, Is.EqualTo(data));
     }
 
     [Test]
@@ -108,7 +108,7 @@ public class StructuredMessageDecodingRetriableStreamTests
             await retriableSrc.CopyToInternal(dst, readLen, Async, default);
         }
 
-        Assert.AreEqual(data, dest);
+        Assert.That(dest, Is.EqualTo(data));
     }
 
     [Test]
@@ -241,6 +241,6 @@ public class StructuredMessageDecodingRetriableStreamTests
 
         await retriableSrc.CopyToInternal(dst, readLen, Async, default);
 
-        Assert.AreEqual(data, dest);
+        Assert.That(dest, Is.EqualTo(data));
     }
 }

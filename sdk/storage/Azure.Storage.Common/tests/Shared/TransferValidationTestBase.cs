@@ -201,7 +201,7 @@ namespace Azure.Storage.Test.Shared
                 string checksum = req.AssertHeaderPresent(headerName);
                 if (expectedChecksum != default)
                 {
-                    Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
+                    Assert.That(checksum, Is.EqualTo(Convert.ToBase64String(expectedChecksum)));
                 }
             };
 
@@ -1278,7 +1278,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
-            Assert.IsTrue(dest.SequenceEqual(data));
+            Assert.That(dest.SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1719,7 +1719,7 @@ namespace Azure.Storage.Test.Shared
                     break;
             }
             var result = dest.ToArray();
-            Assert.IsTrue(result.SequenceEqual(data));
+            Assert.That(result.SequenceEqual(data), Is.True);
         }
 
         [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader, false, false)]
@@ -1775,7 +1775,7 @@ namespace Azure.Storage.Test.Shared
             else
             {
                 Assert.That(operation, Throws.Nothing);
-                Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+                Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
             }
         }
 
@@ -1997,7 +1997,7 @@ namespace Azure.Storage.Test.Shared
             // no policies this time; just check response headers
             Assert.False(response.Headers.Contains("Content-MD5"));
             Assert.False(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage));
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -2044,7 +2044,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
         #endregion
 
