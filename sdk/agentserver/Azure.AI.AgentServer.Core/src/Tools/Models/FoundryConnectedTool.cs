@@ -46,6 +46,11 @@ public sealed record FoundryConnectedTool : FoundryTool
     public override FoundryToolSource Source => FoundryToolSource.CONNECTED;
 
     /// <summary>
+    /// Gets the unique identifier for the tool.
+    /// </summary>
+    public override string Id => $"{Source.ToString().ToLowerInvariant()}:{Type}:{ProjectConnectionId}";
+
+    /// <summary>
     /// Gets or initializes the tool protocol.
     /// </summary>
     public FoundryToolProtocol Protocol { get; init; }

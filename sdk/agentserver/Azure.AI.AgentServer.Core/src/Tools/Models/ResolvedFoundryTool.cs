@@ -19,6 +19,15 @@ public record ResolvedFoundryTool
     required public FoundryToolDetails Details { get; init; }
 
     /// <summary>
+    /// Gets the unique identifier for the tool.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when no tool definition is configured.</exception>
+    public string Id =>
+        Definition == null
+            ? throw new InvalidOperationException("Tool definition is missing.")
+            : $"{Definition.Id}:{Details.Name}";
+
+    /// <summary>
     /// Gets the source of the tool.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when no tool definition is configured.</exception>
