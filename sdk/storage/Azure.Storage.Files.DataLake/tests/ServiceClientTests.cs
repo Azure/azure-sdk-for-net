@@ -306,7 +306,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = GetServiceClient_OAuth();
 
             // Act
-            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(
+                options: getUserDelegationKeyOptions);
 
             // Assert
             Assert.That(response.Value, Is.Not.Null);
@@ -319,9 +321,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
 
             // Act
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
-                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
+                service.GetUserDelegationKeyAsync(options: getUserDelegationKeyOptions),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [RecordedTest]

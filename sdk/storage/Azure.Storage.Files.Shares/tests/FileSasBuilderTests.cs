@@ -303,30 +303,31 @@ namespace Azure.Storage.Files.Shares.Tests
                 out stringToSign);
 
             // Assert
-            Assert.That(sasQueryParameters.Version, Is.EqualTo(SasQueryParametersInternals.DefaultSasVersionInternal));
-            Assert.That(sasQueryParameters.Services, Is.Null);
-            Assert.That(sasQueryParameters.ResourceTypes, Is.Null);
-            Assert.That(sasQueryParameters.Protocol, Is.EqualTo(constants.Sas.Protocol));
-            Assert.That(sasQueryParameters.StartsOn, Is.EqualTo(constants.Sas.StartTime));
-            Assert.That(sasQueryParameters.ExpiresOn, Is.EqualTo(constants.Sas.ExpiryTime));
-            Assert.That(sasQueryParameters.IPRange, Is.EqualTo(constants.Sas.IPRange));
-            Assert.That(sasQueryParameters.Identifier, Is.Empty);
-            Assert.That(sasQueryParameters.KeyObjectId, Is.EqualTo(constants.Sas.KeyObjectId));
-            Assert.That(sasQueryParameters.KeyTenantId, Is.EqualTo(constants.Sas.KeyTenantId));
-            Assert.That(sasQueryParameters.KeyStartsOn, Is.EqualTo(constants.Sas.KeyStart));
-            Assert.That(sasQueryParameters.KeyExpiresOn, Is.EqualTo(constants.Sas.KeyExpiry));
-            Assert.That(sasQueryParameters.KeyService, Is.EqualTo(constants.Sas.KeyService));
-            Assert.That(sasQueryParameters.KeyVersion, Is.EqualTo(constants.Sas.KeyVersion));
-            Assert.That(sasQueryParameters.Resource, Is.EqualTo(Constants.Sas.Resource.File));
-            Assert.That(sasQueryParameters.CacheControl, Is.EqualTo(constants.Sas.CacheControl));
-            Assert.That(sasQueryParameters.ContentDisposition, Is.EqualTo(constants.Sas.ContentDisposition));
-            Assert.That(sasQueryParameters.ContentEncoding, Is.EqualTo(constants.Sas.ContentEncoding));
-            Assert.That(sasQueryParameters.ContentLanguage, Is.EqualTo(constants.Sas.ContentLanguage));
-            Assert.That(sasQueryParameters.ContentType, Is.EqualTo(constants.Sas.ContentType));
-            Assert.That(sasQueryParameters.Permissions, Is.EqualTo(Permissions));
-            Assert.That(sasQueryParameters.DelegatedUserObjectId, Is.EqualTo(constants.Sas.DelegatedObjectId));
-            Assert.That(sasQueryParameters.Signature, Is.EqualTo(signature));
-            Assert.That(stringToSign, Is.Not.Null);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
+            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(string.Empty, sasQueryParameters.Identifier);
+            Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
+            Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStartsOn);
+            Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
+            Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
+            Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
+            Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
+            Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
+            Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);
+            Assert.AreEqual(constants.Sas.ContentEncoding, sasQueryParameters.ContentEncoding);
+            Assert.AreEqual(constants.Sas.ContentLanguage, sasQueryParameters.ContentLanguage);
+            Assert.AreEqual(constants.Sas.ContentType, sasQueryParameters.ContentType);
+            Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
+            Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
+            Assert.AreEqual(signature, sasQueryParameters.Signature);
+            Assert.IsNotNull(stringToSign);
         }
 
         private ShareSasBuilder BuildFileSasBuilder(
@@ -416,7 +417,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
                 constants.Sas.KeyService,
                 constants.Sas.KeyVersion,
-                null,
+                constants.Sas.KeyDelegatedTenantId,
                 constants.Sas.DelegatedObjectId,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
@@ -445,6 +446,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SignedExpiresOn = constants.Sas.KeyExpiry,
                 SignedService = constants.Sas.KeyService,
                 SignedVersion = constants.Sas.KeyVersion,
+                SignedDelegatedUserTenantId = constants.Sas.KeyDelegatedTenantId,
                 Value = constants.Sas.KeyValue
             };
     }

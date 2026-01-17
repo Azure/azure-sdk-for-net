@@ -1369,9 +1369,9 @@ namespace Azure.Storage.Blobs.Test
         {
             long compareValue = (long)Int32.MaxValue + 1; //Increase max int32 by one
             ContentRange contentRange = ContentRange.Parse($"bytes 0 {compareValue} {compareValue}");
-            Assert.That(contentRange.Size, Is.EqualTo((long)Int32.MaxValue + 1));
-            Assert.That(contentRange.Start, Is.EqualTo(0));
-            Assert.That(contentRange.End, Is.EqualTo((long)Int32.MaxValue + 1));
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.TotalResourceLength);
+            Assert.AreEqual(0, contentRange.Start);
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
         }
 
         [RecordedTest]

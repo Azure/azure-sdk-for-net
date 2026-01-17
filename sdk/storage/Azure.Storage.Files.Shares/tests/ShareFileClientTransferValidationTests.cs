@@ -65,10 +65,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
         private void AssertSupportsHashAlgorithm(StorageChecksumAlgorithm algorithm)
         {
-            if (algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
-            {
-                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "Azure File Share does not support CRC64.");
-            }
         }
 
         protected override async Task<Response> UploadPartitionAsync(ShareFileClient client, Stream source, UploadTransferValidationOptions transferValidation)
@@ -147,9 +143,9 @@ namespace Azure.Storage.Files.Shares.Tests
         [Test]
         public override void TestAutoResolve()
         {
-            Assert.That(
-                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto),
-                Is.EqualTo(StorageChecksumAlgorithm.MD5));
+            Assert.AreEqual(
+                StorageChecksumAlgorithm.StorageCrc64,
+                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
         }
 
         //[Test]
@@ -362,5 +358,40 @@ namespace Azure.Storage.Files.Shares.Tests
         //    // Assert
         //    // Assertion was in the pipeline
         //}
+
+        public async Task StructuredMessagePopulatesCrcDownloadStreaming()
+        {
+            await using DisposingShare disposingContainer = await ClientBuilder.GetTestShareAsync();
+
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+            byte[] dataCrc = new byte[8];
+            StorageCrc64Calculator.ComputeSlicedSafe(data, 0L).WriteCrc64(dataCrc);
+
+            ShareFileClient file = disposingContainer.Container.GetRootDirectoryClient().GetFileClient(GetNewResourceName());
+            await file.CreateAsync(data.Length);
+            await file.UploadAsync(new MemoryStream(data));
+
+            Response<ShareFileDownloadInfo> response = await file.DownloadAsync(new ShareFileDownloadOptions()
+            {
+                TransferValidation = new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+                }
+            });
+
+            // crc is not present until response stream is consumed
+            Assert.That(response.Value.ContentCrc, Is.Null);
+
+            byte[] downloadedData;
+            using (MemoryStream ms = new())
+            {
+                await response.Value.Content.CopyToAsync(ms);
+                downloadedData = ms.ToArray();
+            }
+
+            Assert.That(response.Value.ContentCrc, Is.EqualTo(dataCrc));
+            Assert.That(downloadedData, Is.EqualTo(data));
+        }
     }
 }

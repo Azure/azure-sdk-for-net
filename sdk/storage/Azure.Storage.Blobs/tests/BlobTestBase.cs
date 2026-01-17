@@ -634,11 +634,12 @@ namespace Azure.Storage.Test.Shared
         public void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
         {
             BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
-            Assert.That(sas.KeyObjectId, Is.EqualTo(key.SignedObjectId));
-            Assert.That(sas.KeyExpiresOn, Is.EqualTo(key.SignedExpiresOn));
-            Assert.That(sas.KeyService, Is.EqualTo(key.SignedService));
-            Assert.That(sas.KeyStartsOn, Is.EqualTo(key.SignedStartsOn));
-            Assert.That(sas.KeyTenantId, Is.EqualTo(key.SignedTenantId));
+            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
+            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
+            Assert.AreEqual(key.SignedService, sas.KeyService);
+            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
+            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            Assert.AreEqual(key.SignedDelegatedUserTenantId, sas.KeyDelegatedUserTenantId);
             //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
     }

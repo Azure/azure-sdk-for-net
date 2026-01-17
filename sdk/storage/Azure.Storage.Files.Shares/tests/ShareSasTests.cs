@@ -856,9 +856,13 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             Uri sasUri = share.GenerateUserDelegationSasUri(
                 ShareSasPermissions.All,
@@ -885,9 +889,13 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             ShareSasBuilder builder = new ShareSasBuilder(
                 permissions: ShareSasPermissions.All,
@@ -914,9 +922,13 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(service);
             ShareFileClient file = test.File;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             Uri sasUri = file.GenerateUserDelegationSasUri(
                 ShareFileSasPermissions.All,
@@ -943,9 +955,13 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(service);
             ShareFileClient file = test.File;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             ShareSasBuilder builder = new ShareSasBuilder(
                 permissions: ShareFileSasPermissions.All,
@@ -968,6 +984,166 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedTenantId()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.All, expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName);
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            ShareClientOptions clientOptions = GetOptions();
+            clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareClient sasShare = InstrumentClient(new ShareClient(shareUriBuilder.ToUri(), TestEnvironment.Credential, clientOptions));
+
+            // Act
+            Response<ShareDirectoryClient> response = await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedTenantId_Fail()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.Read, expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                // We are deliberately not passing in DelegatedUserObjectId to cause an auth failure
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName);
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            ShareClient sasShare = InstrumentClient(new ShareClient(shareUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act & Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                sasShare.CreateDirectoryAsync(GetNewDirectoryName()),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedTenantId_Roundtrip()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.Read, expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName);
+
+            ShareUriBuilder originalShareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            ShareUriBuilder roundtripShareUriBuilder = new ShareUriBuilder(originalShareUriBuilder.ToUri());
+
+            Assert.AreEqual(originalShareUriBuilder.ToUri(), roundtripShareUriBuilder.ToUri());
+            Assert.AreEqual(originalShareUriBuilder.Sas.ToString(), roundtripShareUriBuilder.Sas.ToString());
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ShareClient_UserDelegationSas_DelegatedObjectId()
         {
@@ -976,9 +1152,13 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
@@ -1024,9 +1204,13 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
