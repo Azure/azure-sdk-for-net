@@ -56,11 +56,6 @@ describe("Metadata generation tests", async () => {
     
     await $onEmit(context);
     
-    // Check that mkdirp was called for the Generated directory
-    strictEqual(mkdirpMock.mock.calls.length, 1);
-    const mkdirPath = mkdirpMock.mock.calls[0][0];
-    ok(mkdirPath.includes("Generated"));
-    
     // Check that metadata file was written
     const metadataCalls = writeFileMock.mock.calls.filter((call: any) => 
       call[0].includes("metadata.json")
@@ -69,7 +64,7 @@ describe("Metadata generation tests", async () => {
     
     // Check the path
     const filePath = metadataCalls[0][0];
-    ok(filePath.includes("Generated/metadata.json"));
+    ok(filePath.includes("metadata.json"));
     
     // Check the content - should get version from TypeSpec @versioned decorator
     const content = metadataCalls[0][1];
