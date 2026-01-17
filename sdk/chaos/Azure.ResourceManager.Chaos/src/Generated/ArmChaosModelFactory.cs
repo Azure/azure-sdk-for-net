@@ -7,38 +7,204 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArmChaosModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosCapabilityData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosExperimentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="publisher"> String of the Publisher that this Capability extends. </param>
-        /// <param name="targetType"> String of the Target Type that this Capability extends. </param>
-        /// <param name="description"> Localized string of the description. </param>
-        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
-        /// <param name="urn"> String of the URN for this Capability Type. </param>
-        /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
-        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null)
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
+        /// <param name="steps"> List of steps. </param>
+        /// <param name="selectors">
+        /// List of selectors.
+        /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
+        /// </param>
+        /// <param name="customerDataStorage"> Optional customer-managed Storage account where Experiment schema will be stored. </param>
+        /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
+        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ChaosProvisioningState? provisioningState = null, IEnumerable<ChaosExperimentStep> steps = null, IEnumerable<ChaosTargetSelector> selectors = null, CustomerDataStorageProperties customerDataStorage = null)
         {
-            return new ChaosCapabilityData(
+            tags ??= new Dictionary<string, string>();
+            steps ??= new List<ChaosExperimentStep>();
+            selectors ??= new List<ChaosTargetSelector>();
+
+            return new ChaosExperimentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                steps?.ToList(),
+                selectors?.ToList(),
+                customerDataStorage,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosTargetTypeData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="propertiesSchema"> URL to retrieve JSON schema of the Target Type properties. </param>
+        /// <param name="resourceTypes"> List of resource types this Target Type can extend. </param>
+        /// <returns> A new <see cref="Chaos.ChaosTargetTypeData"/> instance for mocking. </returns>
+        public static ChaosTargetTypeData ChaosTargetTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, string propertiesSchema = null, IEnumerable<string> resourceTypes = null)
+        {
+            resourceTypes ??= new List<string>();
+
+            return new ChaosTargetTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                description,
+                propertiesSchema,
+                resourceTypes?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosCapabilityTypeData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
+        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <param name="kind"> String of the kind of this Capability Type. </param>
+        /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
+        /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
+        /// <param name="requiredAzureRoleDefinitionIds"> Required Azure Role Definition Ids to execute capability type. </param>
+        /// <param name="runtimeKind"> Runtime properties of this Capability Type. </param>
+        /// <returns> A new <see cref="Chaos.ChaosCapabilityTypeData"/> instance for mocking. </returns>
+        public static ChaosCapabilityTypeData ChaosCapabilityTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, IEnumerable<string> azureRbacActions = null, IEnumerable<string> azureRbacDataActions = null, IEnumerable<string> requiredAzureRoleDefinitionIds = null, string runtimeKind = null)
+        {
+            azureRbacActions ??= new List<string>();
+            azureRbacDataActions ??= new List<string>();
+            requiredAzureRoleDefinitionIds ??= new List<string>();
+
+            return new ChaosCapabilityTypeData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 publisher,
                 targetType,
+                displayName,
                 description,
                 parametersSchema,
                 urn,
+                kind,
+                azureRbacActions?.ToList(),
+                azureRbacDataActions?.ToList(),
+                requiredAzureRoleDefinitionIds?.ToList(),
+                runtimeKind != null ? new ChaosCapabilityTypeRuntimeProperties(runtimeKind, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.PrivateAccessData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given privateAccess resource. </param>
+        /// <param name="privateEndpointConnections"> A readonly collection of private endpoint connection. Currently only one endpoint connection is supported. </param>
+        /// <param name="publicNetworkAccess"> Public Network Access Control for PrivateAccess resource. </param>
+        /// <returns> A new <see cref="Chaos.PrivateAccessData"/> instance for mocking. </returns>
+        public static PrivateAccessData PrivateAccessData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ChaosProvisioningState? provisioningState = null, IEnumerable<ChaosPrivateEndpointConnectionData> privateEndpointConnections = null, PublicNetworkAccessOption? publicNetworkAccess = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<ChaosPrivateEndpointConnectionData>();
+
+            return new PrivateAccessData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The private endpoint resource. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Chaos.ChaosPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static ChaosPrivateEndpointConnectionData ChaosPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, ChaosPrivateLinkServiceConnectionState connectionState = null, ChaosProvisioningState? provisioningState = null)
+        {
+            groupIds ??= new List<string>();
+
+            return new ChaosPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupIds?.ToList(),
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosWorkspaceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given Workspace resource. </param>
+        /// <param name="scopes"> The intended workspace-level resource scope to be used by child scenarios. </param>
+        /// <returns> A new <see cref="Chaos.ChaosWorkspaceData"/> instance for mocking. </returns>
+        public static ChaosWorkspaceData ChaosWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ChaosProvisioningState? provisioningState = null, IEnumerable<string> scopes = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            scopes ??= new List<string>();
+
+            return new ChaosWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                scopes?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -64,81 +230,31 @@ namespace Azure.ResourceManager.Chaos.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosCapabilityMetadataData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosCapabilityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
-        /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
-        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="publisher"> String of the Publisher that this Capability extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability extends. </param>
         /// <param name="description"> Localized string of the description. </param>
-        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
-        /// <param name="kind"> String of the kind of this Capability Type. </param>
-        /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
-        /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
-        /// <param name="requiredAzureRoleDefinitionIds"> Required Azure Role Definition Ids to execute capability type. </param>
-        /// <param name="runtimeKind"> Runtime properties of this Capability Type. </param>
-        /// <returns> A new <see cref="Chaos.ChaosCapabilityMetadataData"/> instance for mocking. </returns>
-        public static ChaosCapabilityMetadataData ChaosCapabilityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, IEnumerable<string> azureRbacActions = null, IEnumerable<string> azureRbacDataActions = null, IEnumerable<string> requiredAzureRoleDefinitionIds = null, string runtimeKind = null)
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use because resource is created synchronously. </param>
+        /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null, ChaosProvisioningState? provisioningState = null)
         {
-            azureRbacActions ??= new List<string>();
-            azureRbacDataActions ??= new List<string>();
-            requiredAzureRoleDefinitionIds ??= new List<string>();
-
-            return new ChaosCapabilityMetadataData(
+            return new ChaosCapabilityData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 publisher,
                 targetType,
-                displayName,
                 description,
                 parametersSchema,
                 urn,
-                kind,
-                azureRbacActions?.ToList(),
-                azureRbacDataActions?.ToList(),
-                requiredAzureRoleDefinitionIds?.ToList(),
-                runtimeKind != null ? new ChaosCapabilityMetadataRuntimeProperties(runtimeKind, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosExperimentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
-        /// <param name="steps"> List of steps. </param>
-        /// <param name="selectors">
-        /// List of selectors.
-        /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
-        /// </param>
-        /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
-        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ChaosProvisioningState? provisioningState = null, IEnumerable<ChaosExperimentStep> steps = null, IEnumerable<ChaosTargetSelector> selectors = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            steps ??= new List<ChaosExperimentStep>();
-            selectors ??= new List<ChaosTargetSelector>();
-
-            return new ChaosExperimentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
                 provisioningState,
-                steps?.ToList(),
-                selectors?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -150,8 +266,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The status of the execution. </param>
         /// <param name="startedOn"> String that represents the start date time. </param>
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
-        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null)
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, ChaosProvisioningState? provisioningState = null)
         {
             return new ChaosExperimentExecutionData(
                 id,
@@ -161,6 +278,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 status,
                 startedOn,
                 stoppedOn,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -169,28 +287,40 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="startedOn"> String that represents the start date time. </param>
-        /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="failureReason"> The reason why the execution failed. </param>
-        /// <param name="lastActionOn"> String that represents the last action date time. </param>
-        /// <param name="runInformationSteps"> The information of the experiment run. </param>
+        /// <param name="properties"> The properties of the experiment execution details. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
-        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, string failureReason = null, DateTimeOffset? lastActionOn = null, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = null)
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExperimentExecutionDetailsProperties properties = null)
         {
-            runInformationSteps ??= new List<ChaosExperimentRunStepStatus>();
-
             return new ExperimentExecutionDetails(
                 id,
                 name,
                 resourceType,
                 systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetailsProperties"/>. </summary>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
+        /// <param name="failureReason"> The reason why the execution failed. </param>
+        /// <param name="lastActionOn"> String that represents the last action date time. </param>
+        /// <param name="runInformationSteps"> The information of the experiment run. </param>
+        /// <returns> A new <see cref="Models.ExperimentExecutionDetailsProperties"/> instance for mocking. </returns>
+        public static ExperimentExecutionDetailsProperties ExperimentExecutionDetailsProperties(string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, ChaosProvisioningState? provisioningState = null, string failureReason = null, DateTimeOffset? lastActionOn = null, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = null)
+        {
+            runInformationSteps ??= new List<ChaosExperimentRunStepStatus>();
+
+            return new ExperimentExecutionDetailsProperties(
                 status,
                 startedOn,
                 stoppedOn,
+                provisioningState,
                 failureReason,
                 lastActionOn,
-                runInformationSteps != null ? new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList(), serializedAdditionalRawData: null) : null,
+                runInformationSteps != null ? new ChaosExperimentRunInformation(runInformationSteps?.ToList(), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -269,30 +399,368 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ExperimentExecutionActionTargetDetailsError(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosTargetMetadataData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChaosPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Localized string of the display name. </param>
-        /// <param name="description"> Localized string of the description. </param>
-        /// <param name="propertiesSchema"> URL to retrieve JSON schema of the Target Type properties. </param>
-        /// <param name="resourceTypes"> List of resource types this Target Type can extend. </param>
-        /// <returns> A new <see cref="Chaos.ChaosTargetMetadataData"/> instance for mocking. </returns>
-        public static ChaosTargetMetadataData ChaosTargetMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, string propertiesSchema = null, IEnumerable<string> resourceTypes = null)
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use. </param>
+        /// <returns> A new <see cref="Models.ChaosPrivateLinkResource"/> instance for mocking. </returns>
+        public static ChaosPrivateLinkResource ChaosPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ChaosProvisioningState? provisioningState = null)
         {
-            resourceTypes ??= new List<string>();
+            tags ??= new Dictionary<string, string>();
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
 
-            return new ChaosTargetMetadataData(
+            return new ChaosPrivateLinkResource(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName,
-                description,
-                propertiesSchema,
-                resourceTypes?.ToList(),
+                tags,
+                location,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosDiscoveredResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties of the discovered resource. </param>
+        /// <returns> A new <see cref="Chaos.ChaosDiscoveredResourceData"/> instance for mocking. </returns>
+        public static ChaosDiscoveredResourceData ChaosDiscoveredResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DiscoveredResourceProperties properties = null)
+        {
+            return new ChaosDiscoveredResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
+        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null)
+        {
+            operations ??= new List<OperationStatusResult>();
+
+            return new OperationStatusResult(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosScenarioData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties of scenario. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioData"/> instance for mocking. </returns>
+        public static ChaosScenarioData ChaosScenarioData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScenarioProperties properties = null)
+        {
+            return new ChaosScenarioData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScenarioProperties"/>. </summary>
+        /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
+        /// <param name="createdFrom"> Resource ID of the template version this scenario was created from (optional). </param>
+        /// <param name="version"> Version of the scenario. </param>
+        /// <param name="description"> Description of what this scenario does (optional). </param>
+        /// <param name="parameters"> Parameter definitions for the scenario. </param>
+        /// <param name="actions"> Array of actions that define the scenario's orchestration. </param>
+        /// <param name="recommendation"> The recommendation information for this scenario. </param>
+        /// <returns> A new <see cref="Models.ScenarioProperties"/> instance for mocking. </returns>
+        public static ScenarioProperties ScenarioProperties(ChaosProvisioningState? provisioningState = null, string createdFrom = null, string version = null, string description = null, IEnumerable<ChaosScenarioParameterInfo> parameters = null, IEnumerable<ScenarioAction> actions = null, Recommendation recommendation = null)
+        {
+            parameters ??= new List<ChaosScenarioParameterInfo>();
+            actions ??= new List<ScenarioAction>();
+
+            return new ScenarioProperties(
+                provisioningState,
+                createdFrom,
+                version,
+                description,
+                parameters?.ToList(),
+                actions?.ToList(),
+                recommendation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Recommendation"/>. </summary>
+        /// <param name="recommendationStatus"> The recommendation status. </param>
+        /// <param name="evaluationRunOn"> The UTC time when the recommendation was evaluated. </param>
+        /// <returns> A new <see cref="Models.Recommendation"/> instance for mocking. </returns>
+        public static Recommendation Recommendation(RecommendationStatus recommendationStatus = default, DateTimeOffset? evaluationRunOn = null)
+        {
+            return new Recommendation(recommendationStatus, evaluationRunOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosScenarioConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties of scenario definition. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioConfigurationData"/> instance for mocking. </returns>
+        public static ChaosScenarioConfigurationData ChaosScenarioConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScenarioConfigurationProperties properties = null)
+        {
+            return new ChaosScenarioConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScenarioConfigurationProperties"/>. </summary>
+        /// <param name="scenarioId"> Resource ID of the scenario this configuration applies to. </param>
+        /// <param name="parameters"> Runtime parameter values for the scenario. Keys must match parameter names defined in the scenario. </param>
+        /// <param name="exclusions"> Exclusion criteria for protecting resources from fault injection. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
+        /// <returns> A new <see cref="Models.ScenarioConfigurationProperties"/> instance for mocking. </returns>
+        public static ScenarioConfigurationProperties ScenarioConfigurationProperties(string scenarioId = null, IEnumerable<ChaosKeyValuePair> parameters = null, ConfigurationExclusions exclusions = null, ChaosProvisioningState? provisioningState = null)
+        {
+            parameters ??= new List<ChaosKeyValuePair>();
+
+            return new ScenarioConfigurationProperties(scenarioId, parameters?.ToList(), exclusions, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ValidationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Chaos.ValidationData"/> instance for mocking. </returns>
+        public static ValidationData ValidationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ValidationProperties properties = null)
+        {
+            return new ValidationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ValidationProperties"/>. </summary>
+        /// <param name="state"> The scenario validation state. </param>
+        /// <param name="startedOn"> The scenario validation UTC start time. </param>
+        /// <param name="executionPlanJson"> Execution plan created from validation. This plan will be executed as-is on next scenario execution. </param>
+        /// <param name="completedOn"> The scenario validation UTC end time. </param>
+        /// <param name="errors"> The scenario validation errors, if present. </param>
+        /// <returns> A new <see cref="Models.ValidationProperties"/> instance for mocking. </returns>
+        public static ValidationProperties ValidationProperties(ScenarioValidationState state = default, DateTimeOffset startedOn = default, string executionPlanJson = null, DateTimeOffset completedOn = default, ScenarioErrors errors = null)
+        {
+            return new ValidationProperties(
+                state,
+                startedOn,
+                executionPlanJson,
+                completedOn,
+                errors,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PermissionError"/>. </summary>
+        /// <param name="resourceId"> The resource id for the affected resource. </param>
+        /// <param name="missingPermissions"> The missing permissions. </param>
+        /// <param name="requiredPermissions"> The required permissions. </param>
+        /// <param name="recommendedRoles"> The recommended roles. </param>
+        /// <param name="identity"> The identity. </param>
+        /// <returns> A new <see cref="Models.PermissionError"/> instance for mocking. </returns>
+        public static PermissionError PermissionError(string resourceId = null, IEnumerable<string> missingPermissions = null, IEnumerable<string> requiredPermissions = null, IEnumerable<string> recommendedRoles = null, EntraIdentity identity = null)
+        {
+            missingPermissions ??= new List<string>();
+            requiredPermissions ??= new List<string>();
+            recommendedRoles ??= new List<string>();
+
+            return new PermissionError(
+                resourceId,
+                missingPermissions?.ToList(),
+                requiredPermissions?.ToList(),
+                recommendedRoles?.ToList(),
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntraIdentity"/>. </summary>
+        /// <param name="objectId"> The identity object id. </param>
+        /// <param name="tenantId"> The identity tenant id. </param>
+        /// <returns> A new <see cref="Models.EntraIdentity"/> instance for mocking. </returns>
+        public static EntraIdentity EntraIdentity(string objectId = null, Guid tenantId = default)
+        {
+            return new EntraIdentity(objectId, tenantId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceStateError"/>. </summary>
+        /// <param name="resourceId"> The resource id for the affected resource. </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="remediationUri"> The remediation uri. </param>
+        /// <returns> A new <see cref="Models.ResourceStateError"/> instance for mocking. </returns>
+        public static ResourceStateError ResourceStateError(string resourceId = null, int errorCode = default, string errorMessage = null, Uri remediationUri = null)
+        {
+            return new ResourceStateError(resourceId, errorCode, errorMessage, remediationUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.ChaosScenarioRunData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties of scenario run. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioRunData"/> instance for mocking. </returns>
+        public static ChaosScenarioRunData ChaosScenarioRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScenarioRunProperties properties = null)
+        {
+            return new ChaosScenarioRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScenarioRunProperties"/>. </summary>
+        /// <param name="workspaceName"> The workspace name. </param>
+        /// <param name="scenarioName"> The scenario name. </param>
+        /// <param name="scenarioConfigurationName"> The scenario configuration name. </param>
+        /// <param name="managedIdentityPrincipalId"> The principal id for the managed identity used for the run. </param>
+        /// <param name="state"> The scenario run state. </param>
+        /// <param name="resources"> All resources discovered for the scenario run. </param>
+        /// <param name="errors"> The scenario run errors. </param>
+        /// <param name="scenarioRunJson"> The scenario run json. </param>
+        /// <param name="scenarioRunSummary"> The scenario run summary. </param>
+        /// <param name="startedOn"> When the scenario run was started. </param>
+        /// <param name="completedOn"> When the scenario run was completed. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunProperties"/> instance for mocking. </returns>
+        public static ScenarioRunProperties ScenarioRunProperties(string workspaceName = null, string scenarioName = null, string scenarioConfigurationName = null, string managedIdentityPrincipalId = null, ScenarioRunState state = default, IEnumerable<SubResource> resources = null, ScenarioErrors errors = null, string scenarioRunJson = null, IEnumerable<ScenarioRunSummaryAction> scenarioRunSummary = null, DateTimeOffset startedOn = default, DateTimeOffset? completedOn = null)
+        {
+            resources ??= new List<SubResource>();
+            scenarioRunSummary ??= new List<ScenarioRunSummaryAction>();
+
+            return new ScenarioRunProperties(
+                workspaceName,
+                scenarioName,
+                scenarioConfigurationName,
+                managedIdentityPrincipalId,
+                state,
+                resources?.ToList(),
+                errors,
+                scenarioRunJson,
+                scenarioRunSummary?.ToList(),
+                startedOn,
+                completedOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScenarioRunSummaryAction"/>. </summary>
+        /// <param name="resources"> The resources associated with the specified action. </param>
+        /// <param name="actionUrn"> The urn for the given chaos action. </param>
+        /// <param name="state"> The state of the action. </param>
+        /// <param name="startedOn"> When the action was started. </param>
+        /// <param name="completedOn"> When the action was completed. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunSummaryAction"/> instance for mocking. </returns>
+        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<SubResource> resources = null, string actionUrn = null, ScenarioSummaryState state = default, DateTimeOffset? startedOn = null, DateTimeOffset? completedOn = null)
+        {
+            resources ??= new List<SubResource>();
+
+            return new ScenarioRunSummaryAction(
+                resources?.ToList(),
+                actionUrn,
+                state,
+                startedOn,
+                completedOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Chaos.ChaosExperimentData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
+        /// <param name="steps"> List of steps. </param>
+        /// <param name="selectors">
+        /// List of selectors.
+        /// Please note <see cref="T:Azure.ResourceManager.Chaos.Models.ChaosTargetSelector" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="T:Azure.ResourceManager.Chaos.Models.ChaosTargetListSelector" /> and <see cref="T:Azure.ResourceManager.Chaos.Models.ChaosTargetQuerySelector" />.
+        /// </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Chaos.ChaosExperimentData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IEnumerable<ChaosExperimentStep> steps, IEnumerable<ChaosTargetSelector> selectors)
+        {
+            return ChaosExperimentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, steps: steps, selectors: selectors, customerDataStorage: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Chaos.ChaosExperimentExecutionData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Chaos.ChaosExperimentExecutionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn)
+        {
+            return ChaosExperimentExecutionData(id: id, name: name, resourceType: resourceType, systemData: systemData, status: status, startedOn: startedOn, stoppedOn: stoppedOn, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Chaos.ChaosCapabilityData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publisher"> String of the Publisher that this Capability extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability extends. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Chaos.ChaosCapabilityData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn)
+        {
+            return ChaosCapabilityData(id: id, name: name, resourceType: resourceType, systemData: systemData, publisher: publisher, targetType: targetType, description: description, parametersSchema: parametersSchema, urn: urn, provisioningState: default);
         }
     }
 }

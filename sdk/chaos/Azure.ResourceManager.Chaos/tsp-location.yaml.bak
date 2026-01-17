@@ -1,0 +1,7 @@
+directory: specification/chaos/resource-manager/Microsoft.Chaos/Chaos
+commit: 1535397ba63c2148189f6c65bb4fcc076dbe1e19
+repo: Azure/azure-rest-api-specs-pr
+additionalDirectories: []
+emitter-options:
+  "@azure-tools/typespec-csharp":
+    api-version: 2026-02-01-preview

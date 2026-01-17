@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_CreateOrUpdate</description>
+        /// <description>Targets_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_CreateOrUpdate</description>
+        /// <description>Targets_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,11 +264,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_List</description>
+        /// <description>Targets_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,11 +295,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_List</description>
+        /// <description>Targets_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,11 +326,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,11 +457,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="type"> Chaos experiment action discriminator type. </param>
+        /// <param name="experimentActionType"> Chaos experiment action discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownChaosExperimentAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, type, serializedAdditionalRawData)
+        internal UnknownChaosExperimentAction(string name, ExperimentActionType experimentActionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, experimentActionType, serializedAdditionalRawData)
         {
-            Type = type;
+            ExperimentActionType = experimentActionType;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/> for deserialization. </summary>

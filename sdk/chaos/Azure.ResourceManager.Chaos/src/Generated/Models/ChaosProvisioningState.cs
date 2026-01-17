@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
+        private const string RunningValue = "Running";
 
         /// <summary> Resource has been created. </summary>
         public static ChaosProvisioningState Succeeded { get; } = new ChaosProvisioningState(SucceededValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.Chaos.Models
         public static ChaosProvisioningState Updating { get; } = new ChaosProvisioningState(UpdatingValue);
         /// <summary> Deletion in progress. </summary>
         public static ChaosProvisioningState Deleting { get; } = new ChaosProvisioningState(DeletingValue);
+        /// <summary> Action is running. </summary>
+        public static ChaosProvisioningState Running { get; } = new ChaosProvisioningState(RunningValue);
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ChaosProvisioningState left, ChaosProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are not the same. </summary>

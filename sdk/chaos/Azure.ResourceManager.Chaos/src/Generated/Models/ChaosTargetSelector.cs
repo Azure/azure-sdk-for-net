@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSelector"/>. </summary>
         /// <param name="id"> String of the selector ID. </param>
-        /// <param name="type"> Chaos target selector discriminator type. </param>
+        /// <param name="selectorType"> Chaos target selector discriminator type. </param>
         /// <param name="filter">
         /// Model that represents available filter types that can be applied to a targets list.
         /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetSimpleFilter"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosTargetSelector(string id, SelectorType type, ChaosTargetFilter filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChaosTargetSelector(string id, SelectorType selectorType, ChaosTargetFilter filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            Type = type;
+            SelectorType = selectorType;
             Filter = filter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> String of the selector ID. </summary>
         public string Id { get; set; }
         /// <summary> Chaos target selector discriminator type. </summary>
-        internal SelectorType Type { get; set; }
+        internal SelectorType SelectorType { get; set; }
         /// <summary>
         /// Model that represents available filter types that can be applied to a targets list.
         /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

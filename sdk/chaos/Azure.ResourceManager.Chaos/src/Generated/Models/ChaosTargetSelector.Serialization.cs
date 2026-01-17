@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SelectorType.ToString());
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);

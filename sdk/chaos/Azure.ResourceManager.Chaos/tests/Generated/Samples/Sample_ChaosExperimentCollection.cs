@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Chaos.Models;
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2025-01-01/Experiments_CreateOrUpdate.json
-            // this example is just showing the usage of "Experiment_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Experiments_CreateOrUpdate.json
+            // this example is just showing the usage of "Experiments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,13 +43,36 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // invoke the operation
             string experimentName = "exampleExperiment";
-            ChaosExperimentData data = new ChaosExperimentData(new AzureLocation("eastus2euap"), null, null)
+            ChaosExperimentData data = new ChaosExperimentData(new AzureLocation("eastus2euap"), new ChaosExperimentStep[]
+            {
+new ChaosExperimentStep("step1", new ChaosExperimentBranch[]
+{
+new ChaosExperimentBranch("branch1", new ChaosExperimentAction[]
+{
+new ChaosContinuousAction("urn:csci:microsoft:virtualMachine:shutdown/1.0", XmlConvert.ToTimeSpan("PT10M"), new ChaosKeyValuePair[]
+{
+new ChaosKeyValuePair("abruptShutdown", "false")
+}, "selector1")
+})
+})
+            }, new ChaosTargetSelector[]
+            {
+new ChaosTargetListSelector("selector1", new ChaosTargetReference[]
+{
+new ChaosTargetReference(ChaosTargetReferenceType.ChaosTarget, new ResourceIdentifier("/subscriptions/6b052e15-03d3-4f17-b2e1-be7f07588291/resourceGroups/exampleRG/providers/Microsoft.Compute/virtualMachines/exampleVM/providers/Microsoft.Chaos/targets/Microsoft-VirtualMachine"))
+})
+            })
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
+                CustomerDataStorage = new CustomerDataStorageProperties
+                {
+                    StorageAccountResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/exampleRG/providers/Microsoft.Storage/storageAccounts/exampleStorage"),
+                    BlobContainerName = "azurechaosstudioexperiments",
+                },
                 Tags =
 {
-["key7131"] = "ryohwcoiccwsnewjigfmijz",
-["key2138"] = "fjaeecgnvqd"
+["key2138"] = "fjaeecgnvqd",
+["key7131"] = "ryohwcoiccwsnewjigfmijz"
 },
             };
             ArmOperation<ChaosExperimentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, experimentName, data);
@@ -66,8 +89,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2025-01-01/Experiments_Get.json
-            // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Experiments_Get.json
+            // this example is just showing the usage of "Experiments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,8 +122,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllExperimentsInAResourceGroup()
         {
-            // Generated from example definition: 2025-01-01/Experiments_List.json
-            // this example is just showing the usage of "Experiment_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Experiments_List.json
+            // this example is just showing the usage of "Experiments_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -118,7 +141,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosExperimentCollection collection = resourceGroupResource.GetChaosExperiments();
 
             // invoke the operation and iterate over the result
-            await foreach (ChaosExperimentResource item in collection.GetAllAsync())
+            string continuationToken = null;
+            await foreach (ChaosExperimentResource item in collection.GetAllAsync(continuationToken: continuationToken))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -134,8 +158,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2025-01-01/Experiments_Get.json
-            // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Experiments_Get.json
+            // this example is just showing the usage of "Experiments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,8 +187,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2025-01-01/Experiments_Get.json
-            // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Experiments_Get.json
+            // this example is just showing the usage of "Experiments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Chaos.Models
             Duration = duration;
             Parameters = parameters.ToList();
             SelectorId = selectorId;
-            Type = ExperimentActionType.Continuous;
+            ExperimentActionType = ExperimentActionType.Continuous;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosContinuousAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="type"> Chaos experiment action discriminator type. </param>
+        /// <param name="experimentActionType"> Chaos experiment action discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
-        internal ChaosContinuousAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration, IList<ChaosKeyValuePair> parameters, string selectorId) : base(name, type, serializedAdditionalRawData)
+        internal ChaosContinuousAction(string name, ExperimentActionType experimentActionType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration, IList<ChaosKeyValuePair> parameters, string selectorId) : base(name, experimentActionType, serializedAdditionalRawData)
         {
             Duration = duration;
             Parameters = parameters;
             SelectorId = selectorId;
-            Type = type;
+            ExperimentActionType = experimentActionType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosContinuousAction"/> for deserialization. </summary>

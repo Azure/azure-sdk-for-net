@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         public ChaosExperimentCollection ExperimentCollection { get; private set; }
 
-        public ChaosTargetMetadataCollection TargetTypeCollection { get; private set; }
+        // TODO: ChaosTargetMetadataCollection removed in 2026-02-01-preview API - update tests to use DiscoveredResources
+        // public ChaosTargetMetadataCollection TargetTypeCollection { get; private set; }
 
         public MockExperimentEntities MockExperimentEntities { get; private set; }
 
@@ -63,7 +64,8 @@ namespace Azure.ResourceManager.Chaos.Tests
             this.ExperimentCollection = this.ResourceGroupResource.GetChaosExperiments();
             this.ExperimentName = Recording.GenerateAssetName(TestConstants.ExperimentNamePrefix);
             this.MockExperimentEntities = new MockExperimentEntities(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroup, this.VmssName);
-            this.TargetTypeCollection = this.SubscriptionResource.GetAllChaosTargetMetadata(this.Location.Name);
+            // TODO: ChaosTargetMetadataCollection removed in 2026-02-01-preview API - update tests to use DiscoveredResources
+            // this.TargetTypeCollection = this.SubscriptionResource.GetAllChaosTargetMetadata(this.Location.Name);
         }
 
         /// <summary>

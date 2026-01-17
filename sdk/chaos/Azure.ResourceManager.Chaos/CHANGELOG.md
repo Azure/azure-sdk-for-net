@@ -1,14 +1,23 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 2.0.0-alpha.1 (2026-01-17)
 
 ### Features Added
 
+- Updated API version to 2026-02-01-preview (Private Preview).
+- Added new resource types: `Workspace`, `Scenario`, `ScenarioRun`, `ScenarioConfiguration`, `DiscoveredResource`.
+- Added support for Scenario-based chaos engineering workflows.
+- Added new models: `ChaosScenarioParameterInfo`, `ScenarioAction`, `ScenarioStep`, `ScenarioExecutionStatus`.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed deprecated `TargetType`, `CapabilityType`, `TargetMetadata`, and `CapabilityMetadata` resource types (replaced by DiscoveredResources).
+- Updated `ChaosTargetSelector` to use new additional properties pattern.
+- Changed `ExperimentExecutionDetails` to use new execution details model.
 
 ### Other Changes
+
+- This is a private preview release. API may change before GA.
 
 ## 1.1.0 (2025-05-22)
 

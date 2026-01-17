@@ -37,39 +37,11 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
-            {
-                writer.WritePropertyName("startedAt"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
-            {
-                writer.WritePropertyName("stoppedAt"u8);
-                writer.WriteStringValue(StoppedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(FailureReason))
-            {
-                writer.WritePropertyName("failureReason"u8);
-                writer.WriteStringValue(FailureReason);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastActionOn))
-            {
-                writer.WritePropertyName("lastActionAt"u8);
-                writer.WriteStringValue(LastActionOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(RunInformation))
-            {
-                writer.WritePropertyName("runInformation"u8);
-                writer.WriteObjectValue(RunInformation, options);
-            }
-            writer.WriteEndObject();
         }
 
         ExperimentExecutionDetails IJsonModel<ExperimentExecutionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,20 +64,24 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
+            ExperimentExecutionDetailsProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string status = default;
-            DateTimeOffset? startedAt = default;
-            DateTimeOffset? stoppedAt = default;
-            string failureReason = default;
-            DateTimeOffset? lastActionAt = default;
-            ExperimentExecutionDetailsPropertiesRunInformation runInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ExperimentExecutionDetailsProperties.DeserializeExperimentExecutionDetailsProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -130,64 +106,6 @@ namespace Azure.ResourceManager.Chaos.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("status"u8))
-                        {
-                            status = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("startedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            startedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("stoppedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            stoppedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("failureReason"u8))
-                        {
-                            failureReason = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastActionAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastActionAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("runInformation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            runInformation = ExperimentExecutionDetailsPropertiesRunInformation.DeserializeExperimentExecutionDetailsPropertiesRunInformation(property0.Value, options);
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -199,12 +117,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 type,
                 systemData,
-                status,
-                startedAt,
-                stoppedAt,
-                failureReason,
-                lastActionAt,
-                runInformation,
+                properties,
                 serializedAdditionalRawData);
         }
 

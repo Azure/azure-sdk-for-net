@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2025-01-01/Capabilities_CreateOrUpdate.json
-            // this example is just showing the usage of "Capability_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Capabilities_CreateOrUpdate.json
+            // this example is just showing the usage of "Capabilities_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2025-01-01/Capabilities_Get.json
-            // this example is just showing the usage of "Capability_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Capabilities_Get.json
+            // this example is just showing the usage of "Capabilities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllCapabilitiesThatExtendAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2025-01-01/Capabilities_List.json
-            // this example is just showing the usage of "Capability_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Capabilities_List.json
+            // this example is just showing the usage of "Capabilities_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2025-01-01/Capabilities_Get.json
-            // this example is just showing the usage of "Capability_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Capabilities_Get.json
+            // this example is just showing the usage of "Capabilities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2025-01-01/Capabilities_Get.json
-            // this example is just showing the usage of "Capability_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/examples/Capabilities_Get.json
+            // this example is just showing the usage of "Capabilities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

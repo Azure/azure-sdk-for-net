@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetFilter"/>. </summary>
-        /// <param name="type"> Chaos target filter discriminator type. </param>
+        /// <param name="filterType"> Chaos target filter discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosTargetFilter(FilterType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChaosTargetFilter(FilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            FilterType = filterType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Chaos target filter discriminator type. </summary>
-        internal FilterType Type { get; set; }
+        internal FilterType FilterType { get; set; }
     }
 }

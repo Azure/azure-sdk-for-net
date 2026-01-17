@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> A map to describe the settings of an action. </summary>
+    /// <summary> A map used to describe parameters actions or configurations. </summary>
     public partial class ChaosKeyValuePair
     {
         /// <summary>

@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
     {
         private ClientDiagnostics _chaosExperimentExperimentsClientDiagnostics;
         private ExperimentsRestOperations _chaosExperimentExperimentsRestClient;
+        private ClientDiagnostics _privateAccessClientDiagnostics;
+        private PrivateAccessesRestOperations _privateAccessRestClient;
+        private ClientDiagnostics _chaosWorkspaceWorkspacesClientDiagnostics;
+        private WorkspacesRestOperations _chaosWorkspaceWorkspacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableChaosSubscriptionResource"/> class for mocking. </summary>
         protected MockableChaosSubscriptionResource()
@@ -34,6 +38,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
 
         private ClientDiagnostics ChaosExperimentExperimentsClientDiagnostics => _chaosExperimentExperimentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentResource.ResourceType.Namespace, Diagnostics);
         private ExperimentsRestOperations ChaosExperimentExperimentsRestClient => _chaosExperimentExperimentsRestClient ??= new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ChaosExperimentResource.ResourceType));
+        private ClientDiagnostics PrivateAccessClientDiagnostics => _privateAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", PrivateAccessResource.ResourceType.Namespace, Diagnostics);
+        private PrivateAccessesRestOperations PrivateAccessRestClient => _privateAccessRestClient ??= new PrivateAccessesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateAccessResource.ResourceType));
+        private ClientDiagnostics ChaosWorkspaceWorkspacesClientDiagnostics => _chaosWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private WorkspacesRestOperations ChaosWorkspaceWorkspacesRestClient => _chaosWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ChaosWorkspaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -41,12 +49,12 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ChaosTargetMetadataResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ChaosTargetTypeResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of ChaosTargetMetadataResources and their operations over a ChaosTargetMetadataResource. </returns>
-        public virtual ChaosTargetMetadataCollection GetAllChaosTargetMetadata(AzureLocation location)
+        /// <returns> An object representing collection of ChaosTargetTypeResources and their operations over a ChaosTargetTypeResource. </returns>
+        public virtual ChaosTargetTypeCollection GetChaosTargetTypes(AzureLocation location)
         {
-            return new ChaosTargetMetadataCollection(Client, Id, location);
+            return new ChaosTargetTypeCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -58,15 +66,15 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
+        /// <description>TargetTypes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
+        /// <description><see cref="ChaosTargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,9 +84,9 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosTargetMetadataResource>> GetChaosTargetMetadataAsync(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosTargetTypeResource>> GetChaosTargetTypeAsync(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetAllChaosTargetMetadata(location).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetChaosTargetTypes(location).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,15 +98,15 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
+        /// <description>TargetTypes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
+        /// <description><see cref="ChaosTargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,9 +116,9 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ChaosTargetMetadataResource> GetChaosTargetMetadata(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosTargetTypeResource> GetChaosTargetType(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return GetAllChaosTargetMetadata(location).Get(targetTypeName, cancellationToken);
+            return GetChaosTargetTypes(location).Get(targetTypeName, cancellationToken);
         }
 
         /// <summary>
@@ -122,11 +130,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiment_ListAll</description>
+        /// <description>Experiments_ListAll</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -154,11 +162,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiment_ListAll</description>
+        /// <description>Experiments_ListAll</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2026-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,6 +183,130 @@ namespace Azure.ResourceManager.Chaos.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChaosExperimentExperimentsRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChaosExperimentExperimentsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, running, continuationToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentResource(Client, ChaosExperimentData.DeserializeChaosExperimentData(e)), ChaosExperimentExperimentsClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetChaosExperiments", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of private access resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/privateAccesses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateAccesses_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateAccessResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateAccessResource> GetPrivateAccessesAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateAccessRestClient.CreateListAllRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateAccessRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateAccessResource(Client, PrivateAccessData.DeserializePrivateAccessData(e)), PrivateAccessClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetPrivateAccesses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of private access resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/privateAccesses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateAccesses_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateAccessResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateAccessResource> GetPrivateAccesses(string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateAccessRestClient.CreateListAllRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateAccessRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateAccessResource(Client, PrivateAccessData.DeserializePrivateAccessData(e)), PrivateAccessClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetPrivateAccesses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of all Workspace resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ChaosWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosWorkspaceResource> GetChaosWorkspacesAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ChaosWorkspaceWorkspacesRestClient.CreateListAllRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChaosWorkspaceWorkspacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosWorkspaceResource(Client, ChaosWorkspaceData.DeserializeChaosWorkspaceData(e)), ChaosWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetChaosWorkspaces", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of all Workspace resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosWorkspaceResource> GetChaosWorkspaces(string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ChaosWorkspaceWorkspacesRestClient.CreateListAllRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChaosWorkspaceWorkspacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosWorkspaceResource(Client, ChaosWorkspaceData.DeserializeChaosWorkspaceData(e)), ChaosWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetChaosWorkspaces", "value", "nextLink", cancellationToken);
         }
     }
 }
