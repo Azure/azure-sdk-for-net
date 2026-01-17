@@ -7,8 +7,9 @@ azure-arm: true
 csharp: true
 library-name: Chaos
 namespace: Azure.ResourceManager.Chaos
+require: https://github.com/Azure/azure-rest-api-specs-pr/blob/1535397ba63c2148189f6c65bb4fcc076dbe1e19/specification/chaos/resource-manager/readme.md
 input-file:
-  - C:/Repos/Azure/spec/azure-rest-api-specs-pr/specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/openapi.json
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/1535397ba63c2148189f6c65bb4fcc076dbe1e19/specification/chaos/resource-manager/Microsoft.Chaos/Chaos/preview/2026-02-01-preview/openapi.json
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
