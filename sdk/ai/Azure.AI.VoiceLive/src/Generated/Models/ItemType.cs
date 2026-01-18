@@ -17,6 +17,10 @@ namespace Azure.AI.VoiceLive
         private const string MessageValue = "message";
         private const string FunctionCallValue = "function_call";
         private const string FunctionCallOutputValue = "function_call_output";
+        private const string McpListToolsValue = "mcp_list_tools";
+        private const string McpCallValue = "mcp_call";
+        private const string McpApprovalRequestValue = "mcp_approval_request";
+        private const string McpApprovalResponseValue = "mcp_approval_response";
 
         /// <summary> Initializes a new instance of <see cref="ItemType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,6 +40,18 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the FunctionCallOutput. </summary>
         public static ItemType FunctionCallOutput { get; } = new ItemType(FunctionCallOutputValue);
+
+        /// <summary> Gets the McpListTools. </summary>
+        public static ItemType McpListTools { get; } = new ItemType(McpListToolsValue);
+
+        /// <summary> Gets the McpCall. </summary>
+        public static ItemType McpCall { get; } = new ItemType(McpCallValue);
+
+        /// <summary> Gets the McpApprovalRequest. </summary>
+        public static ItemType McpApprovalRequest { get; } = new ItemType(McpApprovalRequestValue);
+
+        /// <summary> Gets the McpApprovalResponse. </summary>
+        public static ItemType McpApprovalResponse { get; } = new ItemType(McpApprovalResponseValue);
 
         /// <summary> Determines if two <see cref="ItemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

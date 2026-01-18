@@ -32,12 +32,12 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemTruncated"/>. </summary>
         /// <param name="type"> The type of event. </param>
+        /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>
         /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
-        /// <param name="eventId"></param>
-        internal SessionUpdateConversationItemTruncated(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemTruncated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
@@ -49,8 +49,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> The index of the content part that was truncated. </summary>
         public int ContentIndex { get; }
-
-        /// <summary> Gets the EventId. </summary>
-        public override string EventId { get; }
     }
 }

@@ -100,6 +100,8 @@ namespace Azure.AI.VoiceLive
                         return FunctionCallItem.DeserializeFunctionCallItem(element, options);
                     case "function_call_output":
                         return FunctionCallOutputItem.DeserializeFunctionCallOutputItem(element, options);
+                    case "mcp_approval_response":
+                        return MCPApprovalResponseRequestItem.DeserializeMCPApprovalResponseRequestItem(element, options);
                 }
             }
             return UnknownConversationRequestItem.DeserializeUnknownConversationRequestItem(element, options);

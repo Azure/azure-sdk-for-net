@@ -30,6 +30,10 @@ namespace Azure.AI.VoiceLive
         private const string ShimmerValue = "shimmer";
         /// <summary> Verse voice. </summary>
         private const string VerseValue = "verse";
+        /// <summary> Marin voice. </summary>
+        private const string MarinValue = "marin";
+        /// <summary> Cedar voice. </summary>
+        private const string CedarValue = "cedar";
 
         /// <summary> Initializes a new instance of <see cref="OAIVoice"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -64,6 +68,12 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Verse voice. </summary>
         public static OAIVoice Verse { get; } = new OAIVoice(VerseValue);
+
+        /// <summary> Marin voice. </summary>
+        public static OAIVoice Marin { get; } = new OAIVoice(MarinValue);
+
+        /// <summary> Cedar voice. </summary>
+        public static OAIVoice Cedar { get; } = new OAIVoice(CedarValue);
 
         /// <summary> Determines if two <see cref="OAIVoice"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// The base representation of a voicelive tool definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLiveFunctionDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLiveFunctionDefinition"/> and <see cref="VoiceLiveMcpServerDefinition"/>.
     /// </summary>
     public abstract partial class VoiceLiveToolDefinition
     {

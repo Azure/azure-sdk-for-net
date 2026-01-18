@@ -38,6 +38,11 @@ namespace Azure.AI.VoiceLive
             {
                 throw new FormatException($"The model {nameof(AvatarConfiguration)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(IceServers))
             {
                 writer.WritePropertyName("ice_servers"u8);
@@ -55,12 +60,22 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("style"u8);
                 writer.WriteStringValue(Style);
             }
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model.Value.ToString());
+            }
             writer.WritePropertyName("customized"u8);
             writer.WriteBooleanValue(Customized);
             if (Optional.IsDefined(Video))
             {
                 writer.WritePropertyName("video"u8);
                 writer.WriteObjectValue(Video, options);
+            }
+            if (Optional.IsDefined(OutputProtocol))
+            {
+                writer.WritePropertyName("output_protocol"u8);
+                writer.WriteStringValue(OutputProtocol.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -104,14 +119,26 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
+            AvatarConfigTypes? @type = default;
             IList<IceServer> iceServers = default;
             string character = default;
             string style = default;
+            PhotoAvatarBaseModes? model = default;
             bool customized = default;
             VideoParams video = default;
+            AvatarOutputProtocol? outputProtocol = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @type = new AvatarConfigTypes(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("ice_servers"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -136,6 +163,15 @@ namespace Azure.AI.VoiceLive
                     style = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("model"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = new PhotoAvatarBaseModes(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("customized"u8))
                 {
                     customized = prop.Value.GetBoolean();
@@ -150,17 +186,29 @@ namespace Azure.AI.VoiceLive
                     video = VideoParams.DeserializeVideoParams(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("output_protocol"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputProtocol = new AvatarOutputProtocol(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AvatarConfiguration(
+                @type,
                 iceServers ?? new ChangeTrackingList<IceServer>(),
                 character,
                 style,
+                model,
                 customized,
                 video,
+                outputProtocol,
                 additionalBinaryDataProperties);
         }
 
