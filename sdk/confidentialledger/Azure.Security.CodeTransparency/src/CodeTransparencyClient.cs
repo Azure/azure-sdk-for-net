@@ -204,7 +204,7 @@ namespace Azure.Security.CodeTransparency
         public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = new RequestContext() { CancellationToken = cancellationToken };
+            RequestContext context = cancellationToken.ToRequestContext();
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
             scope.Start();
             try
@@ -253,7 +253,7 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = new RequestContext() { CancellationToken = cancellationToken };
+            RequestContext context = cancellationToken.ToRequestContext();
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
             scope.Start();
             try
@@ -575,7 +575,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetTransparencyConfigCborRequest(RequestContext context)
         {
-            var message = new HttpMessage(Pipeline.CreateRequest(), PipelineMessageClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -589,7 +589,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
         {
-            var message = new HttpMessage(Pipeline.CreateRequest(), PipelineMessageClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -603,7 +603,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = new HttpMessage(Pipeline.CreateRequest(), PipelineMessageClassifier201202);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -619,7 +619,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
         {
-            var message = new HttpMessage(Pipeline.CreateRequest(), PipelineMessageClassifier200202);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -634,7 +634,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
         {
-            var message = new HttpMessage(Pipeline.CreateRequest(), PipelineMessageClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -649,7 +649,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
         {
-            var message = new HttpMessage(Pipeline.CreateRequest(), PipelineMessageClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
