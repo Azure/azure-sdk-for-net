@@ -2,9 +2,8 @@
   <PropertyGroup>
     <Version>2.0.0-alpha.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
-    <!-- Disable API compat for private preview SDK with 2026-02-01-preview API -->
-    <EnableApiCompat>false</EnableApiCompat>
+    <!-- ApiCompatVersion cleared to disable API compat for private preview SDK with 2026-02-01-preview API -->
+    <ApiCompatVersion></ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Chaos</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Chaos.</Description>
     <PackageTags>azure;management;arm;resource manager;chaos</PackageTags>
