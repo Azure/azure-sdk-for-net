@@ -40,24 +40,35 @@ public class DefaultFoundryToolCatalog : CachedFoundryToolCatalog
     /// <summary>
     /// Fetches tool metadata from Azure AI services using the Foundry tool client.
     /// </summary>
-    protected override async Task<IReadOnlyDictionary<FoundryTool, ResolvedFoundryTool?>> FetchToolsAsync(
+    protected override async Task<IReadOnlyDictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>> FetchToolsAsync(
         IReadOnlyList<FoundryTool> tools,
         UserInfo? userInfo,
         CancellationToken cancellationToken)
     {
+        if (tools.Count == 0)
+        {
+            return new Dictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>();
+        }
+
         // For now, we'll use the client's ListToolsAsync method which fetches all tools
         // This is not optimal for single-tool lookups, but matches current behavior
         // TODO: In future, add granular fetch APIs to FoundryToolClient operations
         var allTools = await _client.ListToolsAsync(cancellationToken).ConfigureAwait(false);
 
-        // Map requested tools to resolved tools
-        var results = new Dictionary<FoundryTool, ResolvedFoundryTool?>();
+        // Map requested tools to resolved tool details
+        var results = new Dictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>();
 
         foreach (var requestedTool in tools)
         {
-            // Match by tool definition
-            var resolved = allTools.FirstOrDefault(t => ToolMatches(t, requestedTool));
-            results[requestedTool] = resolved;
+            var matchingDetails = allTools
+                .Where(t => ToolMatches(t, requestedTool))
+                .Select(t => t.Details)
+                .ToList();
+
+            if (matchingDetails.Count > 0)
+            {
+                results[requestedTool] = matchingDetails;
+            }
         }
 
         return results;
