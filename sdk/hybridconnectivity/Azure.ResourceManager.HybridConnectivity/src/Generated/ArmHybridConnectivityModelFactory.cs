@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -66,28 +67,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 null), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
-        /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>
-        /// <param name="accessKey"> Access key for hybrid connection. </param>
-        /// <param name="expiresOn"> The expiration of access key in unix time. </param>
-        /// <param name="serviceConfigurationToken"> The token to access the enabled service. </param>
-        /// <param name="hostname"> The ingress hostname. </param>
-        /// <param name="serverId"> The arc ingress gateway server app id. </param>
-        /// <param name="tenantId"> The target resource home tenant id. </param>
-        /// <returns> A new <see cref="Models.IngressGatewayAsset"/> instance for mocking. </returns>
-        public static IngressGatewayAsset IngressGatewayAsset(string namespaceName = default, string namespaceNameSuffix = default, string hybridConnectionName = default, string accessKey = default, long? expiresOn = default, string serviceConfigurationToken = default, string hostname = default, Guid? serverId = default, Guid? tenantId = default)
-        {
-            return new IngressGatewayAsset(namespaceName is null && namespaceNameSuffix is null && hybridConnectionName is null && accessKey is null && expiresOn is null && serviceConfigurationToken is null ? default : new RelayNamespaceAccessProperties(
-                namespaceName,
-                namespaceNameSuffix,
-                hybridConnectionName,
-                accessKey,
-                expiresOn,
-                serviceConfigurationToken,
-                null), hostname is null && serverId is null && tenantId is null ? default : new IngressProfileProperties(hostname, new AADProfileProperties(serverId.Value, tenantId.Value, null), null), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Represent ManageProxy Request object. </summary>
         /// <param name="service"> The name of the service. </param>
         /// <param name="hostname"> The target host name. </param>
@@ -136,6 +115,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             solutionTypes ??= new ChangeTrackingList<PublicCloudConnectorSolutionTypeSettings>();
 
             return new GenerateAwsTemplateContent(connectorId, solutionTypes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="solutionType"> The type of the solution. </param>
+        /// <param name="solutionAdditionalProperties"> Gets the AdditionalProperties. </param>
+        /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeSettings"/> instance for mocking. </returns>
+        public static PublicCloudConnectorSolutionTypeSettings PublicCloudConnectorSolutionTypeSettings(string solutionType = default, IDictionary<string, string> solutionAdditionalProperties = default)
+        {
+            return new PublicCloudConnectorSolutionTypeSettings(solutionType, solutionAdditionalProperties is null ? default : new PublicCloudConnectorSolutionSettings(solutionAdditionalProperties, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Solution settings. </summary>
@@ -195,27 +182,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             return new AwsCloudProfile(accountId, excludedAccounts.ToList(), isOrganizationalAccount, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="awsCloudExcludedAccounts"> List of AWS accounts which need to be excluded. </param>
-        /// <returns> A new <see cref="Models.PublicCloudConnectorPatch"/> instance for mocking. </returns>
-        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, IEnumerable<string> awsCloudExcludedAccounts = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PublicCloudConnectorPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesUpdate(new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), null), null));
-        }
-
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -252,6 +218,25 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties);
+        }
+
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="solutionType"> The type of the solution. </param>
+        /// <param name="solutionAdditionalProperties"> Gets the AdditionalProperties. </param>
+        /// <param name="status"> The status of solution configurations. </param>
+        /// <param name="statusDetails"> The detailed message of status details. </param>
+        /// <param name="lastSyncedOn"> The last time resources were inventoried. </param>
+        /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionConfigurationProperties"/> instance for mocking. </returns>
+        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState = default, string solutionType = default, IDictionary<string, string> solutionAdditionalProperties = default, PublicCloudConnectorSolutionConfigurationStatus? status = default, string statusDetails = default, DateTimeOffset? lastSyncedOn = default)
+        {
+            return new PublicCloudConnectorSolutionConfigurationProperties(
+                provisioningState,
+                solutionType,
+                solutionAdditionalProperties is null ? default : new PublicCloudConnectorSolutionSettings(solutionAdditionalProperties, null),
+                status,
+                statusDetails,
+                lastSyncedOn,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Solution Configuration. </summary>
@@ -362,6 +347,76 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 allowedValues.ToList(),
                 defaultValue,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IngressGatewayAsset"/>. </summary>
+        /// <param name="hostname"> The ingress hostname. </param>
+        /// <param name="serverId"> The arc ingress gateway server app id. </param>
+        /// <param name="tenantId"> The target resource home tenant id. </param>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
+        /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>
+        /// <param name="accessKey"> Access key for hybrid connection. </param>
+        /// <param name="expiresOn"> The expiration of access key in unix time. </param>
+        /// <param name="serviceConfigurationToken"> The token to access the enabled service. </param>
+        /// <returns> A new <see cref="Models.IngressGatewayAsset"/> instance for mocking. </returns>
+        public static IngressGatewayAsset IngressGatewayAsset(string hostname = default, Guid? serverId = default, Guid? tenantId = default, string namespaceName = default, string namespaceNameSuffix = default, string hybridConnectionName = default, string accessKey = default, long? expiresOn = default, string serviceConfigurationToken = default)
+        {
+            return new IngressGatewayAsset(default, default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PublicCloudConnectorSolutionConfigurationProperties"/>. </summary>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="solutionType"> The type of the solution. </param>
+        /// <param name="solutionSettings"> Solution settings. </param>
+        /// <param name="status"> The status of solution configurations. </param>
+        /// <param name="statusDetails"> The detailed message of status details. </param>
+        /// <param name="lastSyncedOn"> The last time resources were inventoried. </param>
+        /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionConfigurationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState, string solutionType, PublicCloudConnectorSolutionSettings solutionSettings, PublicCloudConnectorSolutionConfigurationStatus? status, string statusDetails, DateTimeOffset? lastSyncedOn)
+        {
+            return new PublicCloudConnectorSolutionConfigurationProperties(
+                provisioningState,
+                solutionType,
+                solutionSettings,
+                status,
+                statusDetails,
+                lastSyncedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PublicCloudConnectorPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="awsCloudExcludedAccounts"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.PublicCloudConnectorPatch"/> instance for mocking. </returns>
+        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> awsCloudExcludedAccounts = default, IDictionary<string, string> tags = default)
+        {
+            awsCloudExcludedAccounts ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PublicCloudConnectorPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PublicCloudConnectorSolutionTypeSettings"/>. </summary>
+        /// <param name="solutionType"> The type of the solution. </param>
+        /// <param name="solutionSettings"> Solution settings. </param>
+        /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeSettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PublicCloudConnectorSolutionTypeSettings PublicCloudConnectorSolutionTypeSettings(string solutionType, PublicCloudConnectorSolutionSettings solutionSettings)
+        {
+            return new PublicCloudConnectorSolutionTypeSettings(solutionType, solutionSettings, additionalBinaryDataProperties: null);
         }
     }
 }
