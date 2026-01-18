@@ -24,7 +24,7 @@ namespace Azure.Developer.DevCenter
 
             ClientDiagnostics = new ClientDiagnostics(_options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(_options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(_options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = _options.Version;
         }

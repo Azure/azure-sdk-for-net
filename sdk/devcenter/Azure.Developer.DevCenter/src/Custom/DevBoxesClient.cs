@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
-using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter
 {
@@ -29,10 +30,10 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(devBox.Name, nameof(devBox.Name));
             Argument.AssertNotNull(devBox, nameof(devBox));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = devBox.ToRequestContent();
+            RequestContext context = cancellationToken.ToRequestContext();
+            using RequestContent content = RequestContent.Create(ModelReaderWriter.Write(devBox, ModelSerializationExtensions.WireOptions));
             Operation<BinaryData> response = await CreateDevBoxAsync(waitUntil, projectName, userId, devBox.Name, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, DevBox.FromResponse, ClientDiagnostics, "DevBoxesClient.CreateDevBox");
+            return ProtocolOperationHelpers.Convert(response, (r) => ModelReaderWriter.Read<DevBox>(r, ModelSerializationExtensions.WireOptions), ClientDiagnostics, "DevBoxesClient.CreateDevBox");
         }
 
         /// <summary> Creates or replaces a Dev Box. </summary>
@@ -51,10 +52,10 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(devBox.Name, nameof(devBox.Name));
             Argument.AssertNotNull(devBox, nameof(devBox));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = devBox.ToRequestContent();
+            RequestContext context = cancellationToken.ToRequestContext();
+            using RequestContent content = RequestContent.Create(ModelReaderWriter.Write(devBox, ModelSerializationExtensions.WireOptions));
             Operation<BinaryData> response = CreateDevBox(waitUntil, projectName, userId, devBox.Name, content, context);
-            return ProtocolOperationHelpers.Convert(response, DevBox.FromResponse, ClientDiagnostics, "DevBoxesClient.CreateDevBox");
+            return ProtocolOperationHelpers.Convert(response, (r) => ModelReaderWriter.Read<DevBox>(r, ModelSerializationExtensions.WireOptions), ClientDiagnostics, "DevBoxesClient.CreateDevBox");
         }
     }
 }
