@@ -8,41 +8,58 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter
 {
     /// <summary> The type of action which will take place on a Dev Box. </summary>
     public readonly partial struct DevBoxActionType : IEquatable<DevBoxActionType>
     {
         private readonly string _value;
+        /// <summary> The action will stop the Dev Box. </summary>
+        private const string StopValue = "Stop";
 
         /// <summary> Initializes a new instance of <see cref="DevBoxActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevBoxActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StopValue = "Stop";
+            _value = value;
+        }
 
         /// <summary> The action will stop the Dev Box. </summary>
         public static DevBoxActionType Stop { get; } = new DevBoxActionType(StopValue);
+
         /// <summary> Determines if two <see cref="DevBoxActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevBoxActionType left, DevBoxActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevBoxActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevBoxActionType left, DevBoxActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevBoxActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevBoxActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevBoxActionType(string value) => new DevBoxActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevBoxActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevBoxActionType?(string value) => value == null ? null : new DevBoxActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevBoxActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevBoxActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

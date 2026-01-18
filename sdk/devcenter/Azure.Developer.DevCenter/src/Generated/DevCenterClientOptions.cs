@@ -10,21 +10,13 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter
 {
-    /// <summary> Client options for Azure.Developer.DevCenter library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class DevCenterClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_04_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-04-01". </summary>
-            V2023_04_01 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of DevCenterClientOptions. </summary>
+        /// <summary> Initializes a new instance of DevCenterClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public DevCenterClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +24,16 @@ namespace Azure.Developer.DevCenter
                 ServiceVersion.V2023_04_01 => "2023-04-01",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> The 2023-04-01 service API version. </summary>
+            V2023_04_01 = 1
         }
     }
 }
