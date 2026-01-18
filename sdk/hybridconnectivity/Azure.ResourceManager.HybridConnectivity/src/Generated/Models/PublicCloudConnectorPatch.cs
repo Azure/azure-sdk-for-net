@@ -35,5 +35,18 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal PublicCloudConnectorPropertiesUpdate Properties { get; set; }
+
+        /// <summary> List of AWS accounts which need to be excluded. </summary>
+        public IList<string> AwsCloudExcludedAccounts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicCloudConnectorPropertiesUpdate();
+                }
+                return Properties.AwsCloudExcludedAccounts;
+            }
+        }
     }
 }
