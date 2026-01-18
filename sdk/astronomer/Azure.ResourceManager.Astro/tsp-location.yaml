@@ -1,4 +1,4 @@
 directory: specification/liftrastronomer/Astronomer.Astro.Management
-commit: 381b558b1f9f05ddaefce3ac2cd9cea9cfb19239
+commit: 446d9fd1147562bafdb748b2e986e1cea5386ed5
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
