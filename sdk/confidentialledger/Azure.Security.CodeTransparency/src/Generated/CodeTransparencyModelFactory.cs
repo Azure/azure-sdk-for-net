@@ -10,20 +10,20 @@ using System.Linq;
 
 namespace Azure.Security.CodeTransparency
 {
-    /// <summary> Model factory for models. </summary>
-    public static partial class SecurityCodeTransparencyModelFactory
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    public static partial class CodeTransparencyModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="CodeTransparency.JwksDocument"/>. </summary>
+        /// <summary> A JWKS like document. </summary>
         /// <param name="keys"> List of public keys used for receipt verification. </param>
         /// <returns> A new <see cref="CodeTransparency.JwksDocument"/> instance for mocking. </returns>
-        public static JwksDocument JwksDocument(IEnumerable<JsonWebKey> keys = null)
+        public static JwksDocument JwksDocument(IEnumerable<JsonWebKey> keys = default)
         {
-            keys ??= new List<JsonWebKey>();
+            keys ??= new ChangeTrackingList<JsonWebKey>();
 
-            return new JwksDocument(keys?.ToList(), serializedAdditionalRawData: null);
+            return new JwksDocument("application/json", keys.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeTransparency.JsonWebKey"/>. </summary>
+        /// <summary> rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -77,9 +77,9 @@ namespace Azure.Security.CodeTransparency
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
         /// <returns> A new <see cref="CodeTransparency.JsonWebKey"/> instance for mocking. </returns>
-        public static JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, IEnumerable<string> x5c = null, string y = null)
+        public static JsonWebKey JsonWebKey(string alg = default, string crv = default, string d = default, string dp = default, string dq = default, string e = default, string k = default, string kid = default, string kty = default, string n = default, string p = default, string q = default, string qi = default, string use = default, string x = default, IEnumerable<string> x5c = default, string y = default)
         {
-            x5c ??= new List<string>();
+            x5c ??= new ChangeTrackingList<string>();
 
             return new JsonWebKey(
                 alg,
@@ -97,9 +97,9 @@ namespace Azure.Security.CodeTransparency
                 qi,
                 use,
                 x,
-                x5c?.ToList(),
+                x5c.ToList(),
                 y,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }

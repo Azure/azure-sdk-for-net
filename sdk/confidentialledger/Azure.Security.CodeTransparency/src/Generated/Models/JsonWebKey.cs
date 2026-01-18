@@ -13,37 +13,8 @@ namespace Azure.Security.CodeTransparency
     /// <summary> rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types. </summary>
     public partial class JsonWebKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
         /// <param name="kty">
@@ -53,11 +24,8 @@ namespace Azure.Security.CodeTransparency
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
         internal JsonWebKey(string kty)
         {
-            Argument.AssertNotNull(kty, nameof(kty));
-
             Kty = kty;
             X5c = new ChangeTrackingList<string>();
         }
@@ -115,8 +83,8 @@ namespace Azure.Security.CodeTransparency
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IReadOnlyList<string> x5c, string y, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5c, string y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alg = alg;
             Crv = crv;
@@ -135,12 +103,7 @@ namespace Azure.Security.CodeTransparency
             X = x;
             X5c = x5c;
             Y = y;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/> for deserialization. </summary>
-        internal JsonWebKey()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -151,18 +114,25 @@ namespace Azure.Security.CodeTransparency
         /// Resistant Name.
         /// </summary>
         public string Alg { get; }
+
         /// <summary> The "crv" (curve) parameter identifies the curve type. </summary>
         public string Crv { get; }
+
         /// <summary> RSA private exponent or ECC private key. </summary>
         public string D { get; }
+
         /// <summary> RSA Private Key Parameter. </summary>
         public string Dp { get; }
+
         /// <summary> RSA Private Key Parameter. </summary>
         public string Dq { get; }
+
         /// <summary> RSA public exponent, in Base64. </summary>
         public string E { get; }
+
         /// <summary> Symmetric key. </summary>
         public string K { get; }
+
         /// <summary>
         /// The "kid" (key ID) parameter is used to match a specific key.  This
         /// is used, for instance, to choose among a set of keys within a JWK Set
@@ -175,6 +145,7 @@ namespace Azure.Security.CodeTransparency
         /// value is a case-sensitive string.
         /// </summary>
         public string Kid { get; }
+
         /// <summary>
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should
@@ -183,14 +154,19 @@ namespace Azure.Security.CodeTransparency
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </summary>
         public string Kty { get; }
+
         /// <summary> RSA modulus, in Base64. </summary>
         public string N { get; }
+
         /// <summary> RSA secret prime. </summary>
         public string P { get; }
+
         /// <summary> RSA secret prime, with p &lt; q. </summary>
         public string Q { get; }
+
         /// <summary> RSA Private Key Parameter. </summary>
         public string Qi { get; }
+
         /// <summary>
         /// Use ("public key use") identifies the intended use of
         /// the public key. The "use" parameter is employed to indicate whether
@@ -198,8 +174,10 @@ namespace Azure.Security.CodeTransparency
         /// on data. Values are commonly "sig" (signature) or "enc" (encryption).
         /// </summary>
         public string Use { get; }
+
         /// <summary> X coordinate for the Elliptic Curve point. </summary>
         public string X { get; }
+
         /// <summary>
         /// The "x5c" (X.509 certificate chain) parameter contains a chain of one
         /// or more PKIX certificates [RFC5280].  The certificate chain is
@@ -209,7 +187,8 @@ namespace Azure.Security.CodeTransparency
         /// The PKIX certificate containing the key value MUST be the first
         /// certificate.
         /// </summary>
-        public IReadOnlyList<string> X5c { get; }
+        public IList<string> X5c { get; }
+
         /// <summary> Y coordinate for the Elliptic Curve point. </summary>
         public string Y { get; }
     }
