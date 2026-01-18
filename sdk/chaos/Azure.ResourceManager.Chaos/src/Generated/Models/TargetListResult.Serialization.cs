@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            IReadOnlyList<ChaosTargetData> value = default;
+            IReadOnlyList<TargetData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ChaosTargetData> array = new List<ChaosTargetData>();
+                    List<TargetData> array = new List<TargetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosTargetData.DeserializeChaosTargetData(item, options));
+                        array.Add(TargetData.DeserializeTargetData(item, options));
                     }
                     value = array;
                     continue;

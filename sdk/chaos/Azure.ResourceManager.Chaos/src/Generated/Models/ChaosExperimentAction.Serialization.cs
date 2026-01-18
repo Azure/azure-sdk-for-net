@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "continuous": return ChaosContinuousAction.DeserializeChaosContinuousAction(element, options);
-                    case "delay": return ChaosDelayAction.DeserializeChaosDelayAction(element, options);
-                    case "discrete": return ChaosDiscreteAction.DeserializeChaosDiscreteAction(element, options);
+                    case "continuous": return ContinuousAction.DeserializeContinuousAction(element, options);
+                    case "delay": return DelayAction.DeserializeDelayAction(element, options);
+                    case "discrete": return DiscreteAction.DeserializeDiscreteAction(element, options);
                 }
             }
             return UnknownChaosExperimentAction.DeserializeUnknownChaosExperimentAction(element, options);

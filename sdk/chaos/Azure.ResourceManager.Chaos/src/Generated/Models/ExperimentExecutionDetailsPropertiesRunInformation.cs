@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
         internal ExperimentExecutionDetailsPropertiesRunInformation()
         {
-            Steps = new ChangeTrackingList<ChaosExperimentRunStepStatus>();
+            Steps = new ChangeTrackingList<StepStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
         /// <param name="steps"> The steps of the experiment run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionDetailsPropertiesRunInformation(IReadOnlyList<ChaosExperimentRunStepStatus> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExperimentExecutionDetailsPropertiesRunInformation(IReadOnlyList<StepStatus> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Steps = steps;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<ChaosExperimentRunStepStatus> Steps { get; }
+        public IReadOnlyList<StepStatus> Steps { get; }
     }
 }

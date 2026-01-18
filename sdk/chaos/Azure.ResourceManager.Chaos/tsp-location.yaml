@@ -1,3 +1,5 @@
 directory: specification/chaos/resource-manager/Microsoft.Chaos/Chaos
-commit: e89374a1f5e2c4ddcf34ed01495a98dfedac0f8b
-repo: Azure/azure-rest-api-specs
+commit: 1518183c5f3dfb04f3f6a77d3c922e9a23d611b0
+repo: Azure/azure-rest-api-specs-pr
+additionalDirectories: []
+branch: user/brrusino/chaos-easy-experience-drills-preview

@@ -1,12 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.2.0-beta.1</Version>
+    <Version>1.2.0-alpha.20260201.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <!-- Disable API compat for private preview - major breaking changes from TypeSpec regeneration -->
+    <RunApiCompat>false</RunApiCompat>
     <PackageId>Azure.ResourceManager.Chaos</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Chaos.</Description>
     <PackageTags>azure;management;arm;resource manager;chaos</PackageTags>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
+    <!-- Suppress naming convention analyzer error for private preview SDK -->
+    <NoWarn>$(NoWarn);AZC0030</NoWarn>
   </PropertyGroup>
 </Project>

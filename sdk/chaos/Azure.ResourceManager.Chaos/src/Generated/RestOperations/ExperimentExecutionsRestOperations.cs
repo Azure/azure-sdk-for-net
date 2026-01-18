@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-01-01";
+            _apiVersion = apiVersion ?? "2026-02-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ChaosExperimentExecutionData>> GetExecutionAsync(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ExperimentExecutionData>> GetExecutionAsync(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ChaosExperimentExecutionData value = default;
+                        ExperimentExecutionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
+                        value = ExperimentExecutionData.DeserializeExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ChaosExperimentExecutionData)null, message.Response);
+                    return Response.FromValue((ExperimentExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ChaosExperimentExecutionData> GetExecution(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
+        public Response<ExperimentExecutionData> GetExecution(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ChaosExperimentExecutionData value = default;
+                        ExperimentExecutionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
+                        value = ExperimentExecutionData.DeserializeExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ChaosExperimentExecutionData)null, message.Response);
+                    return Response.FromValue((ExperimentExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

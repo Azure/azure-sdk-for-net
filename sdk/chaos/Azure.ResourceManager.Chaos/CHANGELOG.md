@@ -1,5 +1,17 @@
 # Release History
 
+## 1.2.0-alpha.20260201.1 (Unreleased)
+
+### Features Added
+
+- Private preview SDK for API version 2026-02-01-preview.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added

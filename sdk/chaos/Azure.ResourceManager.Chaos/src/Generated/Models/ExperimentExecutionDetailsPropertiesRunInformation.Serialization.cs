@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            IReadOnlyList<ChaosExperimentRunStepStatus> steps = default;
+            IReadOnlyList<StepStatus> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    List<ChaosExperimentRunStepStatus> array = new List<ChaosExperimentRunStepStatus>();
+                    List<StepStatus> array = new List<StepStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunStepStatus.DeserializeChaosExperimentRunStepStatus(item, options));
+                        array.Add(StepStatus.DeserializeStepStatus(item, options));
                     }
                     steps = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExperimentExecutionDetailsPropertiesRunInformation(steps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>(), serializedAdditionalRawData);
+            return new ExperimentExecutionDetailsPropertiesRunInformation(steps ?? new ChangeTrackingList<StepStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>.Write(ModelReaderWriterOptions options)

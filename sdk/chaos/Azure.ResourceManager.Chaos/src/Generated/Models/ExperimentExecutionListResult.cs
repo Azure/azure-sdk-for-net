@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionListResult"/>. </summary>
         /// <param name="value"> The ExperimentExecution items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ExperimentExecutionListResult(IEnumerable<ChaosExperimentExecutionData> value)
+        internal ExperimentExecutionListResult(IEnumerable<ExperimentExecutionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="value"> The ExperimentExecution items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionListResult(IReadOnlyList<ChaosExperimentExecutionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExperimentExecutionListResult(IReadOnlyList<ExperimentExecutionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The ExperimentExecution items on this page. </summary>
-        public IReadOnlyList<ChaosExperimentExecutionData> Value { get; }
+        public IReadOnlyList<ExperimentExecutionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

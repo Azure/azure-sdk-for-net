@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-01-01";
+            _apiVersion = apiVersion ?? "2026-02-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ChaosCapabilityData>> GetAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
+        public async Task<Response<CapabilityData>> GetAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ChaosCapabilityData value = default;
+                        CapabilityData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
+                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ChaosCapabilityData)null, message.Response);
+                    return Response.FromValue((CapabilityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ChaosCapabilityData> Get(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
+        public Response<CapabilityData> Get(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -152,19 +152,19 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ChaosCapabilityData value = default;
+                        CapabilityData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
+                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ChaosCapabilityData)null, message.Response);
+                    return Response.FromValue((CapabilityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, ChaosCapabilityData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CapabilityData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Chaos
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, ChaosCapabilityData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CapabilityData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/>, <paramref name="capabilityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ChaosCapabilityData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, ChaosCapabilityData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CapabilityData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CapabilityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                 case 201:
                     {
-                        ChaosCapabilityData value = default;
+                        CapabilityData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
+                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/>, <paramref name="capabilityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ChaosCapabilityData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, ChaosCapabilityData data, CancellationToken cancellationToken = default)
+        public Response<CapabilityData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CapabilityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                 case 201:
                     {
-                        ChaosCapabilityData value = default;
+                        CapabilityData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
+                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
