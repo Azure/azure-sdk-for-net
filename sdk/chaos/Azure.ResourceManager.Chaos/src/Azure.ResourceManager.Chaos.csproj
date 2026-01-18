@@ -11,5 +11,7 @@
     <AotCompatOptOut>true</AotCompatOptOut>
     <!-- Suppress naming convention analyzer error for private preview SDK -->
     <NoWarn>$(NoWarn);AZC0030</NoWarn>
+    <!-- Disable TypeSpec code generation - code is pre-generated and committed for private preview -->
+    <TypeSpecInput></TypeSpecInput>
   </PropertyGroup>
 </Project>
