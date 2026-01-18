@@ -20,8 +20,8 @@
   - Old TypeSpec: 15
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 25
-  - Old TypeSpec: 13
+  - New Emitter (TypeSpec): 26
+  - Old TypeSpec: 12
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 47
