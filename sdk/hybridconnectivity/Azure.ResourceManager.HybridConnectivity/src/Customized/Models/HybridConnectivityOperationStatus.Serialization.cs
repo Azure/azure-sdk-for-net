@@ -10,14 +10,22 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    public partial class HybridConnectivityOperationStatus : IUtf8JsonSerializable, IJsonModel<HybridConnectivityOperationStatus>
+    /// <summary> The current status of an async operation. </summary>
+    public partial class HybridConnectivityOperationStatus : IJsonModel<HybridConnectivityOperationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridConnectivityOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivityOperationStatus"/> for deserialization. </summary>
+        internal HybridConnectivityOperationStatus()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridConnectivityOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +37,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridConnectivityOperationStatus)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -66,7 +73,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Operations)
+                foreach (HybridConnectivityOperationStatus item in Operations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -82,15 +89,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,22 +106,27 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
-        HybridConnectivityOperationStatus IJsonModel<HybridConnectivityOperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridConnectivityOperationStatus IJsonModel<HybridConnectivityOperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HybridConnectivityOperationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridConnectivityOperationStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHybridConnectivityOperationStatus(document.RootElement, options);
         }
 
-        internal static HybridConnectivityOperationStatus DeserializeHybridConnectivityOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HybridConnectivityOperationStatus DeserializeHybridConnectivityOperationStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,116 +135,117 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             string name = default;
             string status = default;
             double? percentComplete = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             IReadOnlyList<HybridConnectivityOperationStatus> operations = default;
             ResponseError error = default;
             ResourceIdentifier resourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("percentComplete"u8))
+                if (prop.NameEquals("percentComplete"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentComplete = property.Value.GetDouble();
+                    percentComplete = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"u8))
+                if (prop.NameEquals("endTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("operations"u8))
+                if (prop.NameEquals("operations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HybridConnectivityOperationStatus> array = new List<HybridConnectivityOperationStatus>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeserializeHybridConnectivityOperationStatus(item, options));
                     }
                     operations = array;
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridConnectivityContext.Default);
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridConnectivityContext.Default);
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HybridConnectivityOperationStatus(
                 id,
                 name,
                 status,
                 percentComplete,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 operations ?? new ChangeTrackingList<HybridConnectivityOperationStatus>(),
                 error,
                 resourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<HybridConnectivityOperationStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HybridConnectivityOperationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -242,15 +255,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
-        HybridConnectivityOperationStatus IPersistableModel<HybridConnectivityOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridConnectivityOperationStatus IPersistableModel<HybridConnectivityOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HybridConnectivityOperationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridConnectivityOperationStatus(document.RootElement, options);
                     }
                 default:
@@ -258,6 +276,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HybridConnectivityOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HybridConnectivityOperationStatus"/> from. </param>
+        internal static HybridConnectivityOperationStatus FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHybridConnectivityOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

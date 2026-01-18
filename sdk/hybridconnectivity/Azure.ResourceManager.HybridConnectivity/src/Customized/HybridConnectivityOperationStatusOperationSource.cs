@@ -8,23 +8,37 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridConnectivity.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    internal class HybridConnectivityOperationStatusOperationSource : IOperationSource<HybridConnectivityOperationStatus>
+    internal partial class HybridConnectivityOperationStatusOperationSource : IOperationSource<HybridConnectivityOperationStatus>
     {
-        HybridConnectivityOperationStatus IOperationSource<HybridConnectivityOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal HybridConnectivityOperationStatusOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return HybridConnectivityOperationStatus.DeserializeHybridConnectivityOperationStatus(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        HybridConnectivityOperationStatus IOperationSource<HybridConnectivityOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HybridConnectivityOperationStatus result = HybridConnectivityOperationStatus.DeserializeHybridConnectivityOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HybridConnectivityOperationStatus> IOperationSource<HybridConnectivityOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return HybridConnectivityOperationStatus.DeserializeHybridConnectivityOperationStatus(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HybridConnectivityOperationStatus result = HybridConnectivityOperationStatus.DeserializeHybridConnectivityOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

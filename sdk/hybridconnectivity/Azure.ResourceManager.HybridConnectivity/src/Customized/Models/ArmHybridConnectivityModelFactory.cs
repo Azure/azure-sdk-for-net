@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 operations?.ToList(),
                 error,
                 resourceId,
-                serializedAdditionalRawData: null);
+                null);
         }
 
         /// <param name="hostname"> The ingress hostname. </param>
