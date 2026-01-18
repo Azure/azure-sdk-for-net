@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableElasticArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableElasticArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableElasticArmClient for mocking. </summary>
         protected MockableElasticArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableElasticArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableElasticArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableElasticArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableElasticArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ElasticMonitorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ElasticMonitorResource.CreateResourceIdentifier" /> to create an <see cref="ElasticMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ElasticMonitorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticMonitorResource"/> object. </returns>
         public virtual ElasticMonitorResource GetElasticMonitorResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             return new ElasticMonitorResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ElasticMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ElasticMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ElasticMonitoredSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ElasticMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticMonitoredSubscriptionResource"/> object. </returns>
         public virtual ElasticMonitoredSubscriptionResource GetElasticMonitoredSubscriptionResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             return new ElasticMonitoredSubscriptionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ElasticOpenAIIntegrationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ElasticOpenAIIntegrationResource.CreateResourceIdentifier" /> to create an <see cref="ElasticOpenAIIntegrationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ElasticOpenAIIntegrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticOpenAIIntegrationResource"/> object. </returns>
         public virtual ElasticOpenAIIntegrationResource GetElasticOpenAIIntegrationResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             return new ElasticOpenAIIntegrationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ElasticTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ElasticTagRuleResource.CreateResourceIdentifier" /> to create an <see cref="ElasticTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ElasticTagRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticTagRuleResource"/> object. </returns>
         public virtual ElasticTagRuleResource GetElasticTagRuleResource(ResourceIdentifier id)

@@ -1627,17 +1627,17 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
         /// <param name="extendedNetworkBlocks">
         /// Array of additional networks noncontiguous with networkBlock. Networks must be
-        ///             unique and non-overlapping across VNet in your subscription, on-premise, and
-        ///             this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
-        ///             (A.B.C.D/X).
+        ///                         unique and non-overlapping across VNet in your subscription, on-premise, and
+        ///                         this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
+        ///                         (A.B.C.D/X).
         /// </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="circuit"> An ExpressRoute Circuit. </param>
         /// <param name="endpoints"> The endpoints. </param>
         /// <param name="networkBlock">
         /// The block of addresses should be unique across VNet in your subscription as
-        ///             well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
-        ///             A,B,C,D are between 0 and 255, and X is between 0 and 22
+        ///                         well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
+        ///                         A,B,C,D are between 0 and 255, and X is between 0 and 22
         /// </param>
         /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
         /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
@@ -1649,11 +1649,11 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
         /// <param name="secondaryCircuit">
         /// A secondary expressRoute circuit from a separate AZ. Only present in a
-        ///             stretched private cloud
+        ///                         stretched private cloud
         /// </param>
         /// <param name="nsxPublicIPQuotaRaised">
         /// Flag to indicate whether the private cloud has the quota for provisioned NSX
-        ///             Public IP count raised from 64 to 1024
+        ///                         Public IP count raised from 64 to 1024
         /// </param>
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
@@ -1706,17 +1706,17 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
         /// <param name="extendedNetworkBlocks">
         /// Array of additional networks noncontiguous with networkBlock. Networks must be
-        ///             unique and non-overlapping across VNet in your subscription, on-premise, and
-        ///             this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
-        ///             (A.B.C.D/X).
+        ///                         unique and non-overlapping across VNet in your subscription, on-premise, and
+        ///                         this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
+        ///                         (A.B.C.D/X).
         /// </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="circuit"> An ExpressRoute Circuit. </param>
         /// <param name="endpoints"> The endpoints. </param>
         /// <param name="networkBlock">
         /// The block of addresses should be unique across VNet in your subscription as
-        ///             well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
-        ///             A,B,C,D are between 0 and 255, and X is between 0 and 22
+        ///                         well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
+        ///                         A,B,C,D are between 0 and 255, and X is between 0 and 22
         /// </param>
         /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
         /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
@@ -1728,11 +1728,11 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
         /// <param name="secondaryCircuit">
         /// A secondary expressRoute circuit from a separate AZ. Only present in a
-        ///             stretched private cloud
+        ///                         stretched private cloud
         /// </param>
         /// <param name="nsxPublicIPQuotaRaised">
         /// Flag to indicate whether the private cloud has the quota for provisioned NSX
-        ///             Public IP count raised from 64 to 1024
+        ///                         Public IP count raised from 64 to 1024
         /// </param>
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>

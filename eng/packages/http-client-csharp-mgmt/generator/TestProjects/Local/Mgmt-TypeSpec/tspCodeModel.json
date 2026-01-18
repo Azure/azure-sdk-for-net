@@ -3880,7 +3880,7 @@
                     "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
                     "usage": "Output,Json",
-                    "doc": "Localized display information for and operation.",
+                    "doc": "Localized display information for an operation.",
                     "decorators": [
                       {
                         "name": "Azure.ResourceManager.@armProviderNamespace",

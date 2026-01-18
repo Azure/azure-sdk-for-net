@@ -16,12 +16,12 @@
 - Total libraries: 401
 - Management Plane (MPG): 227
   - Autorest/Swagger: 153
-  - New Emitter (TypeSpec): 60
-  - Old TypeSpec: 14
+  - New Emitter (TypeSpec): 61
+  - Old TypeSpec: 13
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 24
-  - Old TypeSpec: 14
+  - New Emitter (TypeSpec): 25
+  - Old TypeSpec: 13
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 47
@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 24 / 38 (63.2%)
+**Migration Status**: 25 / 38 (65.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -67,7 +67,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |
 | openai | Azure.AI.OpenAI | ✅ |
 | planetarycomputer | Azure.Analytics.PlanetaryComputer | ✅ |
-| purview | Azure.Analytics.Purview.DataMap |  |
+| purview | Azure.Analytics.Purview.DataMap | ✅ |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | template | Azure.Template | ✅ |
 | translation | Azure.AI.Translation.Document |  |
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 60 / 74 (81.1%)
+**Migration Status**: 61 / 74 (82.4%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -174,7 +174,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
-| elastic | Azure.ResourceManager.Elastic |  |
+| elastic | Azure.ResourceManager.Elastic | ✅ |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
