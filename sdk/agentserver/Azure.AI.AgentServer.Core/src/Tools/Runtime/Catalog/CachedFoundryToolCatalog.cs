@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Concurrent;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Facade;
 using Microsoft.Extensions.Caching.Memory;
@@ -16,7 +15,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
 {
     private readonly IMemoryCache _cache;
     private readonly TimeSpan _cacheTtl;
-    private readonly ConcurrentDictionary<object, SemaphoreSlim> _fetchLocks;
+    private readonly SemaphoreSlim _cacheLock;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CachedFoundryToolCatalog"/> class.
@@ -36,7 +35,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         {
             SizeLimit = maxCacheEntries
         });
-        _fetchLocks = new ConcurrentDictionary<object, SemaphoreSlim>();
+        _cacheLock = new SemaphoreSlim(1, 1);
     }
 
     /// <summary>
@@ -58,131 +57,133 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         IEnumerable<object> tools,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(tools);
+
         var foundryTools = tools.Select(FoundryToolFactory.Create).ToList();
+        if (foundryTools.Count == 0)
+        {
+            return Array.Empty<ResolvedFoundryTool>();
+        }
 
         // Get user context for cache key generation
         var userInfo = await GetUserContextAsync(cancellationToken).ConfigureAwait(false);
 
-        // Separate cached vs uncached tools
-        var cachedResults = new Dictionary<FoundryTool, ResolvedFoundryTool>();
-        var toolsToFetch = new List<FoundryTool>();
+        var resolvingTasks = new Dictionary<FoundryTool, Task<IReadOnlyList<FoundryToolDetails>>>();
+        var toolsToFetch = new Dictionary<object, FoundryTool>();
 
         foreach (var tool in foundryTools)
         {
             var cacheKey = GetCacheKey(userInfo, tool);
 
-            if (_cache.TryGetValue<ResolvedFoundryTool>(cacheKey, out var cachedTool) && cachedTool != null)
+            if (_cache.TryGetValue<Task<IReadOnlyList<FoundryToolDetails>>>(cacheKey, out var cachedTask) &&
+                cachedTask != null)
             {
-                cachedResults[tool] = cachedTool;
+                resolvingTasks[tool] = cachedTask;
             }
             else
             {
-                toolsToFetch.Add(tool);
+                toolsToFetch[cacheKey] = tool;
             }
         }
 
-        // If all tools are cached, return immediately
-        if (toolsToFetch.Count == 0)
+        var createdTasks = new Dictionary<object, FoundryTool>();
+        if (toolsToFetch.Count > 0)
         {
-            return cachedResults.Values.ToList();
-        }
-
-        // Fetch uncached tools with concurrency control
-        var fetchedResults = await FetchAndCacheToolsAsync(
-            toolsToFetch,
-            userInfo,
-            cancellationToken).ConfigureAwait(false);
-
-        // Combine cached and fetched results, preserving order
-        var results = new List<ResolvedFoundryTool>();
-        foreach (var tool in foundryTools)
-        {
-            if (cachedResults.TryGetValue(tool, out var cachedTool))
-            {
-                results.Add(cachedTool);
-            }
-            else if (fetchedResults.TryGetValue(tool, out var fetchedTool))
-            {
-                results.Add(fetchedTool);
-            }
-        }
-
-        return results;
-    }
-
-    /// <summary>
-    /// Fetches tools from the underlying source and caches the results.
-    /// Uses per-tool locking to prevent concurrent fetches of the same tool.
-    /// </summary>
-    private async Task<Dictionary<FoundryTool, ResolvedFoundryTool>> FetchAndCacheToolsAsync(
-        IReadOnlyList<FoundryTool> tools,
-        UserInfo? userInfo,
-        CancellationToken cancellationToken)
-    {
-        var results = new Dictionary<FoundryTool, ResolvedFoundryTool>();
-
-        // Group tools by whether they need locking (to prevent duplicate fetches)
-        foreach (var tool in tools)
-        {
-            var cacheKey = GetCacheKey(userInfo, tool);
-            var lockKey = cacheKey;
-
-            // Get or create a semaphore for this cache key
-            var semaphore = _fetchLocks.GetOrAdd(lockKey, _ => new SemaphoreSlim(1, 1));
-
-            await semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            await _cacheLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                // Double-check cache after acquiring lock
-                if (_cache.TryGetValue<ResolvedFoundryTool>(cacheKey, out var cachedTool) && cachedTool != null)
+                foreach (var (cacheKey, tool) in toolsToFetch)
                 {
-                    results[tool] = cachedTool;
-                    continue;
+                    if (_cache.TryGetValue<Task<IReadOnlyList<FoundryToolDetails>>>(cacheKey, out var cachedTask) &&
+                        cachedTask != null)
+                    {
+                        resolvingTasks[tool] = cachedTask;
+                    }
+                    else
+                    {
+                        createdTasks[cacheKey] = tool;
+                    }
                 }
 
-                // Fetch from underlying source (batch fetch for efficiency)
-                var fetchedTools = await FetchToolsAsync(new[] { tool }, userInfo, cancellationToken)
-                    .ConfigureAwait(false);
-
-                if (fetchedTools.TryGetValue(tool, out var resolvedTool) && resolvedTool != null)
+                if (createdTasks.Count > 0)
                 {
-                    // Cache the result
-                    _cache.Set(cacheKey, resolvedTool, new MemoryCacheEntryOptions
+                    var fetchTask = FetchToolsAsync(createdTasks.Values.ToList(), userInfo, cancellationToken);
+                    foreach (var (cacheKey, tool) in createdTasks)
                     {
-                        AbsoluteExpirationRelativeToNow = _cacheTtl,
-                        Size = 1
-                    });
+                        var resolvingTask = ResolveToolDetailsAsync(tool, fetchTask);
+                        resolvingTasks[tool] = resolvingTask;
 
-                    results[tool] = resolvedTool;
+                        _ = _cache.Set(cacheKey, resolvingTask, new MemoryCacheEntryOptions
+                        {
+                            AbsoluteExpirationRelativeToNow = _cacheTtl,
+                            Size = 1
+                        });
+                    }
                 }
             }
             finally
             {
-                semaphore.Release();
-
-                // Clean up semaphore if no longer needed
-                if (semaphore.CurrentCount == 1)
-                {
-                    _fetchLocks.TryRemove(lockKey, out _);
-                }
+                _cacheLock.Release();
             }
         }
 
-        return results;
+        if (resolvingTasks.Count == 0)
+        {
+            return Array.Empty<ResolvedFoundryTool>();
+        }
+
+        try
+        {
+            await Task.WhenAll(resolvingTasks.Values).WaitAsync(cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
+        catch
+        {
+            foreach (var cacheKey in createdTasks.Keys)
+            {
+                _cache.Remove(cacheKey);
+            }
+
+            throw;
+        }
+
+        var resolvedTools = new List<ResolvedFoundryTool>();
+        foreach (var tool in foundryTools)
+        {
+            if (!resolvingTasks.TryGetValue(tool, out var resolvingTask))
+            {
+                continue;
+            }
+
+            var detailsList = await resolvingTask.ConfigureAwait(false);
+            foreach (var details in detailsList)
+            {
+                resolvedTools.Add(new ResolvedFoundryTool
+                {
+                    Definition = tool,
+                    Details = details
+                });
+            }
+        }
+
+        return resolvedTools;
     }
 
     /// <summary>
-    /// Fetches tool metadata from the underlying source.
+    /// Fetches tool details from the underlying source.
     /// Derived classes must implement this method to provide the actual tool data.
     /// </summary>
     /// <param name="tools">The tools to fetch.</param>
     /// <param name="userInfo">The user context for fetching tools (used for connected tools).</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
-    /// A dictionary mapping each tool to its resolved metadata.
-    /// Tools that could not be resolved should have null values.
+    /// A dictionary mapping each tool to its resolved details.
+    /// Tools that could not be resolved should be omitted.
     /// </returns>
-    protected abstract Task<IReadOnlyDictionary<FoundryTool, ResolvedFoundryTool?>> FetchToolsAsync(
+    protected abstract Task<IReadOnlyDictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>> FetchToolsAsync(
         IReadOnlyList<FoundryTool> tools,
         UserInfo? userInfo,
         CancellationToken cancellationToken);
@@ -239,13 +240,17 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         if (disposing)
         {
             _cache?.Dispose();
-
-            foreach (var semaphore in _fetchLocks.Values)
-            {
-                semaphore?.Dispose();
-            }
-
-            _fetchLocks.Clear();
+            _cacheLock.Dispose();
         }
+    }
+
+    private static async Task<IReadOnlyList<FoundryToolDetails>> ResolveToolDetailsAsync(
+        FoundryTool tool,
+        Task<IReadOnlyDictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>> fetchTask)
+    {
+        var fetched = await fetchTask.ConfigureAwait(false);
+        return fetched.TryGetValue(tool, out var details)
+            ? details
+            : Array.Empty<FoundryToolDetails>();
     }
 }
