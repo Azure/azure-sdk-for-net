@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 25 / 38 (65.8%)
+**Migration Status**: 26 / 38 (68.4%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -50,7 +50,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | communication | Azure.Communication.JobRouter |  |
 | communication | Azure.Communication.Messages |  |
 | communication | Azure.Communication.ProgrammableConnectivity |  |
-| confidentialledger | Azure.Security.CodeTransparency |  |
+| confidentialledger | Azure.Security.CodeTransparency | ✅ |
 | contentsafety | Azure.AI.ContentSafety |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |
 | devcenter | Azure.Developer.DevCenter |  |
