@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(ListIngressGatewayCredentialsContent))]
     [ModelReaderWriterBuildable(typeof(ManagedProxyAsset))]
     [ModelReaderWriterBuildable(typeof(ManagedProxyContent))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorData))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorListResult))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorPatch))]
