@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Resources;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
@@ -82,3 +82,4 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
     }
 }
+*/

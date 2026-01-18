@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 #nullable disable
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Vault. </summary>
@@ -30,3 +30,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
     }
 }
+*/

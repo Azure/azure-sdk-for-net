@@ -5,7 +5,7 @@
 
 using System;
 using Azure.Core;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc backup rules. </summary>
@@ -35,3 +35,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
     }
 }
+*/

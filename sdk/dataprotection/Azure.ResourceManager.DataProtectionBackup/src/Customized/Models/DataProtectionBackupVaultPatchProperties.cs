@@ -4,7 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionBackupVaultPatchProperties
@@ -25,3 +25,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
     }
 }
+*/

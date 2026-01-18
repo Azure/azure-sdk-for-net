@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionOperationJobExtendedInfo
@@ -23,3 +23,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string JobName { get => JobResourceId != null ? JobResourceId.Name : JobIdentifier; }
     }
 }
+*/

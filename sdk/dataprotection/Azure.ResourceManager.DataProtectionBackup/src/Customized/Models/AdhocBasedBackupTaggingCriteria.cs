@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #nullable disable
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc backup tagging criteria. </summary>
@@ -10,3 +10,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
     }
 }
+*/

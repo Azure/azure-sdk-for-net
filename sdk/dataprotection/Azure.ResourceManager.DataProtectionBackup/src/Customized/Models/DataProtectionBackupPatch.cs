@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Patch Request content for Microsoft.DataProtection resources. </summary>
@@ -42,3 +42,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IDictionary<string, string> Tags { get; }
     }
 }
+*/
