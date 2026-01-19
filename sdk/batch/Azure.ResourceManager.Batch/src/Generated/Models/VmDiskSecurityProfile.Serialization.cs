@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            BatchSecurityEncryptionType? securityEncryptionType = default;
+            BatchSecurityEncryptionTypes? securityEncryptionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityEncryptionType = new BatchSecurityEncryptionType(prop.Value.GetString());
+                    securityEncryptionType = new BatchSecurityEncryptionTypes(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

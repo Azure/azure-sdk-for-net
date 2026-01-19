@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            BatchIssueType? issueType = default;
-            BatchSeverity? severity = default;
+            IssueType? issueType = default;
+            Severity? severity = default;
             string description = default;
             IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
             IReadOnlyList<BatchAccessRule> suggestedAccessRules = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    issueType = new BatchIssueType(prop.Value.GetString());
+                    issueType = new IssueType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("severity"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    severity = new BatchSeverity(prop.Value.GetString());
+                    severity = new Severity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

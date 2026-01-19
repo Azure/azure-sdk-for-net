@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Batch
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PoolProperties properties = default;
-            ManagedServiceIdentity identity = default;
-            ETag? eTag = default;
+            BatchPoolIdentity identity = default;
+            string eTag = default;
             IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,16 +155,12 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
+                    identity = BatchPoolIdentity.DeserializeBatchPoolIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
