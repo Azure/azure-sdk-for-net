@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
-    public partial class HybridConnectivityTrackedResourceUpdate : ResourceData, IJsonModel<HybridConnectivityTrackedResourceUpdate>
+    public partial class HybridConnectivityTrackedResourcePatch : ResourceData, IJsonModel<HybridConnectivityTrackedResourcePatch>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HybridConnectivityTrackedResourceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridConnectivityTrackedResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourceUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourcePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridConnectivityTrackedResourceUpdate IJsonModel<HybridConnectivityTrackedResourceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridConnectivityTrackedResourceUpdate)JsonModelCreateCore(ref reader, options);
+        HybridConnectivityTrackedResourcePatch IJsonModel<HybridConnectivityTrackedResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridConnectivityTrackedResourcePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourceUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourcePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridConnectivityTrackedResourceUpdate(document.RootElement, options);
+            return DeserializeHybridConnectivityTrackedResourcePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HybridConnectivityTrackedResourceUpdate DeserializeHybridConnectivityTrackedResourceUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static HybridConnectivityTrackedResourcePatch DeserializeHybridConnectivityTrackedResourcePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HybridConnectivityTrackedResourceUpdate(
+            return new HybridConnectivityTrackedResourcePatch(
                 id,
                 name,
                 resourceType,
@@ -157,43 +157,43 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HybridConnectivityTrackedResourceUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HybridConnectivityTrackedResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourceUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridConnectivityTrackedResourceUpdate IPersistableModel<HybridConnectivityTrackedResourceUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridConnectivityTrackedResourceUpdate)PersistableModelCreateCore(data, options);
+        HybridConnectivityTrackedResourcePatch IPersistableModel<HybridConnectivityTrackedResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridConnectivityTrackedResourcePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHybridConnectivityTrackedResourceUpdate(document.RootElement, options);
+                        return DeserializeHybridConnectivityTrackedResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourceUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridConnectivityTrackedResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HybridConnectivityTrackedResourceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridConnectivityTrackedResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

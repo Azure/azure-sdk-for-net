@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> Public Cloud Connector. </summary>
-    public partial class PublicCloudConnectorPatch : HybridConnectivityTrackedResourceUpdate, IJsonModel<PublicCloudConnectorPatch>
+    public partial class PublicCloudConnectorPatch : HybridConnectivityTrackedResourcePatch, IJsonModel<PublicCloudConnectorPatch>
     {
         internal static PublicCloudConnectorPatch DeserializePublicCloudConnectorPatch(JsonElement element, ModelReaderWriterOptions options)
         {
