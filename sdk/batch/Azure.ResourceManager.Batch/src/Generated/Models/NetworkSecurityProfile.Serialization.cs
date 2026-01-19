@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("accessRulesVersion"u8);
                 writer.WriteNumberValue(AccessRulesVersion.Value);
             }
-            if (Optional.IsCollectionDefined(AccessRules))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AccessRules))
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("diagnosticSettingsVersion"u8);
                 writer.WriteNumberValue(DiagnosticSettingsVersion.Value);
             }
-            if (Optional.IsCollectionDefined(EnabledLogCategories))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledLogCategories))
             {
                 writer.WritePropertyName("enabledLogCategories"u8);
                 writer.WriteStartArray();
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IList<BatchAccessRule> accessRules = default;
+            IReadOnlyList<BatchAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
-            IList<string> enabledLogCategories = default;
+            IReadOnlyList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

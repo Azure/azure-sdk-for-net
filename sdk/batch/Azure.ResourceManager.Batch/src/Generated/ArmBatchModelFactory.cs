@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -21,8 +22,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
         /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
@@ -41,21 +40,21 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="poolQuota"> The pool quota for the Batch account. </param>
         /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string accountEndpoint = null, string nodeManagementEndpoint = null, BatchProvisioningState? provisioningState = null, BatchAccountPoolAllocationMode? poolAllocationMode = null, BatchKeyVaultReference keyVaultReference = null, BatchPublicNetworkAccess? publicNetworkAccess = null, BatchNetworkProfile networkProfile = null, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = null, BatchAccountAutoStorageConfiguration autoStorage = null, BatchAccountEncryptionConfiguration encryption = null, int? dedicatedCoreQuota = null, int? lowPriorityCoreQuota = null, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = null, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = null, int? poolQuota = null, int? activeJobAndJobScheduleQuota = null, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = null)
+        public static BatchAccountData BatchAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string accountEndpoint = null, string nodeManagementEndpoint = null, BatchProvisioningState? provisioningState = null, BatchAccountPoolAllocationMode? poolAllocationMode = null, BatchKeyVaultReference keyVaultReference = null, BatchPublicNetworkAccess? publicNetworkAccess = null, BatchNetworkProfile networkProfile = null, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = null, BatchAccountAutoStorageConfiguration autoStorage = null, BatchAccountEncryptionConfiguration encryption = null, int? dedicatedCoreQuota = null, int? lowPriorityCoreQuota = null, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = null, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = null, int? poolQuota = null, int? activeJobAndJobScheduleQuota = null, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<BatchPrivateEndpointConnectionData>();
             dedicatedCoreQuotaPerVmFamily ??= new List<BatchVmFamilyCoreQuota>();
             allowedAuthenticationModes ??= new List<BatchAuthenticationMode>();
+            tags ??= new Dictionary<string, string>();
 
             return new BatchAccountData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 identity,
                 accountEndpoint,
                 nodeManagementEndpoint,
@@ -74,6 +73,8 @@ namespace Azure.ResourceManager.Batch.Models
                 poolQuota,
                 activeJobAndJobScheduleQuota,
                 allowedAuthenticationModes?.ToList(),
+                location,
+                tags,
                 serializedAdditionalRawData: null);
         }
 
@@ -447,6 +448,65 @@ namespace Azure.ResourceManager.Batch.Models
                 description,
                 suggestedResourceIds?.ToList(),
                 suggestedAccessRules?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccessRule"/>. </summary>
+        /// <param name="name"> Name of the access rule. </param>
+        /// <param name="properties"> Properties of Access Rule. </param>
+        /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
+        public static BatchAccessRule BatchAccessRule(string name = null, BatchAccessRuleProperties properties = null)
+        {
+            return new BatchAccessRule(name, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccessRuleProperties"/>. </summary>
+        /// <param name="direction"> Direction of Access Rule. </param>
+        /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
+        /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
+        /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
+        /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names (FQDN) for outbound rules. </param>
+        /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
+        /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
+        /// <returns> A new <see cref="Models.BatchAccessRuleProperties"/> instance for mocking. </returns>
+        public static BatchAccessRuleProperties BatchAccessRuleProperties(BatchAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<SubResource> subscriptions = null, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = null, IEnumerable<string> fullyQualifiedDomainNames = null, IEnumerable<string> emailAddresses = null, IEnumerable<string> phoneNumbers = null)
+        {
+            addressPrefixes ??= new List<string>();
+            subscriptions ??= new List<SubResource>();
+            networkSecurityPerimeters ??= new List<NetworkSecurityPerimeter>();
+            fullyQualifiedDomainNames ??= new List<string>();
+            emailAddresses ??= new List<string>();
+            phoneNumbers ??= new List<string>();
+
+            return new BatchAccessRuleProperties(
+                direction,
+                addressPrefixes?.ToList(),
+                subscriptions?.ToList(),
+                networkSecurityPerimeters?.ToList(),
+                fullyQualifiedDomainNames?.ToList(),
+                emailAddresses?.ToList(),
+                phoneNumbers?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityProfile"/>. </summary>
+        /// <param name="name"> Name of the profile. </param>
+        /// <param name="accessRulesVersion"> Current access rules version. </param>
+        /// <param name="accessRules"> List of Access Rules. </param>
+        /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
+        /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
+        public static NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = null, IEnumerable<BatchAccessRule> accessRules = null, int? diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
+        {
+            accessRules ??= new List<BatchAccessRule>();
+            enabledLogCategories ??= new List<string>();
+
+            return new NetworkSecurityProfile(
+                name,
+                accessRulesVersion,
+                accessRules?.ToList(),
+                diagnosticSettingsVersion,
+                enabledLogCategories?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

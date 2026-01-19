@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkSecurityPerimeters))
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EmailAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EmailAddresses))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PhoneNumbers))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PhoneNumbers))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchAccessRuleDirection? direction = default;
-            IList<string> addressPrefixes = default;
-            IList<WritableSubResource> subscriptions = default;
-            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
-            IList<string> fullyQualifiedDomainNames = default;
-            IList<string> emailAddresses = default;
-            IList<string> phoneNumbers = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            IReadOnlyList<SubResource> subscriptions = default;
+            IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IReadOnlyList<string> fullyQualifiedDomainNames = default;
+            IReadOnlyList<string> emailAddresses = default;
+            IReadOnlyList<string> phoneNumbers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerBatchContext.Default));
+                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerBatchContext.Default));
                     }
                     subscriptions = array;
                     continue;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
+                subscriptions ?? new ChangeTrackingList<SubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),

@@ -273,6 +273,63 @@ directive:
     where: $.definitions.CheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;
   - from: swagger-document
-    where: $.definitions.NetworkSecurityPerimeterConfiguration
-    transform: $["x-ms-constant"] = true;
+    where: $.definitions.AccessRuleProperties.properties
+    transform: >
+      $.phoneNumbers["readOnly"] = true;
+      $.emailAddresses["readOnly"] = true;
+      $.addressPrefixes["readOnly"] = true;
+      $.subscriptions["readOnly"] = true;
+      $.networkSecurityPerimeters["readOnly"] = true;
+      $.networkSecurityPerimeters["readOnly"] = true;
+  - from: swagger-document
+    where: $.definitions.NetworkSecurityProfile.properties
+    transform: >
+      $.enabledLogCategories["readOnly"] = true;
+      $.accessRules["readOnly"] = true;
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.AzureResource = {
+          "type": "object",
+          "properties": {
+            "id": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The ID of the resource."
+            },
+            "name": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The name of the resource."
+            },
+            "type": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The type of the resource."
+            },
+            "location": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The location of the resource."
+            },
+            "tags": {
+              "readOnly": true,
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "The tags of the resource."
+            }
+          },
+          "description": "A definition of an Azure resource.",
+          "x-ms-azure-resource": true
+        };
+  - from: swagger-document
+    where: $.definitions.BatchAccount
+    transform: >
+      $['allOf'] = [
+        {
+          "$ref": "#/definitions/AzureResource"
+        }
+      ];
 ```
