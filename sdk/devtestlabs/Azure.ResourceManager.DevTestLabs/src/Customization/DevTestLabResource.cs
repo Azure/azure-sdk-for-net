@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
-
+/*
 namespace Azure.ResourceManager.DevTestLabs
 {
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricSchedules")]
@@ -146,3 +146,4 @@ namespace Azure.ResourceManager.DevTestLabs
         }
     }
 }
+*/

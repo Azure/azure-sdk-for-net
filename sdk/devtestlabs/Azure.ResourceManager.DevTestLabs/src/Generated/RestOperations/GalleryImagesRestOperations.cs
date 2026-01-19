@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string labName, string expand, string filter, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetGalleryImagesRequest(string subscriptionId, string resourceGroupName, string labName, string expand, string filter, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, string expand, string filter, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateNextGetGalleryImagesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, string expand, string filter, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
