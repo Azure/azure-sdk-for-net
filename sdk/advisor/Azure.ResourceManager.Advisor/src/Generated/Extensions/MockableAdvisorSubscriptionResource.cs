@@ -265,7 +265,23 @@ namespace Azure.ResourceManager.Advisor.Mocking
             return GetAdvisorResiliencyReviews().Get(reviewId, cancellationToken);
         }
 
-        /// <summary> Predicts a recommendation. </summary>
+        /// <summary>
+        /// Predicts a recommendation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Advisor_Predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -297,7 +313,23 @@ namespace Azure.ResourceManager.Advisor.Mocking
             }
         }
 
-        /// <summary> Predicts a recommendation. </summary>
+        /// <summary>
+        /// Predicts a recommendation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Advisor_Predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -385,7 +417,23 @@ namespace Azure.ResourceManager.Advisor.Mocking
             return new ConfigurationsGetAdvisorConfigurationsBySubscriptionCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
-        /// <summary> Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups. </summary>
+        /// <summary>
+        /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_CreateInSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -418,7 +466,23 @@ namespace Azure.ResourceManager.Advisor.Mocking
             }
         }
 
-        /// <summary> Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups. </summary>
+        /// <summary>
+        /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_CreateInSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

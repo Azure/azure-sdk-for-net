@@ -57,20 +57,15 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroup"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdvisorConfigurationData> GetAdvisorConfigurationsByResourceGroupAsync(string resourceGroup, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AdvisorConfigurationData> GetAdvisorConfigurationsByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), resourceGroup, context);
+            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
         }
 
         /// <summary>
@@ -90,32 +85,40 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroup"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdvisorConfigurationData> GetAdvisorConfigurationsByResourceGroup(string resourceGroup, CancellationToken cancellationToken = default)
+        public virtual Pageable<AdvisorConfigurationData> GetAdvisorConfigurationsByResourceGroup(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), resourceGroup, context);
+            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
         }
 
-        /// <summary> Create/Overwrite Azure Advisor configuration. </summary>
+        /// <summary>
+        /// Create/Overwrite Azure Advisor configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_CreateInResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
-        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AdvisorConfigurationData>> CreateAdvisorConfigurationInResourceGroupAsync(AdvisorConfigurationName configurationName, string resourceGroup, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<AdvisorConfigurationData>> CreateAdvisorConfigurationInResourceGroupAsync(AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateAdvisorConfigurationInResourceGroup");
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), resourceGroup, AdvisorConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), Id.ResourceGroupName, AdvisorConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,16 +145,29 @@ namespace Azure.ResourceManager.Advisor.Mocking
             }
         }
 
-        /// <summary> Create/Overwrite Azure Advisor configuration. </summary>
+        /// <summary>
+        /// Create/Overwrite Azure Advisor configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_CreateInResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
-        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AdvisorConfigurationData> CreateAdvisorConfigurationInResourceGroup(AdvisorConfigurationName configurationName, string resourceGroup, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<AdvisorConfigurationData> CreateAdvisorConfigurationInResourceGroup(AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateAdvisorConfigurationInResourceGroup");
@@ -162,7 +178,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), resourceGroup, AdvisorConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), Id.ResourceGroupName, AdvisorConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
                 if (response.Value == null)

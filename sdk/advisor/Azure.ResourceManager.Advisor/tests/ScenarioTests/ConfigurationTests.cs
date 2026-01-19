@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Advisor.Tests
             var configData = new AdvisorConfigurationData { IsExcluded = true };
 
             var resourceGroup = await CreateResourceGroupAsync();
-            await resourceGroup.CreateAdvisorConfigurationInResourceGroupAsync(configName, configData, null);
+            await resourceGroup.CreateAdvisorConfigurationInResourceGroupAsync(configName, configData);
             var data = await resourceGroup.GetAdvisorConfigurationsByResourceGroupAsync().ToEnumerableAsync();
             Assert.IsTrue(data.FirstOrDefault(x => x.Name.Equals(configName)).IsExcluded);
 
             configData.IsExcluded = false;
             await resourceGroup.CreateAdvisorConfigurationInResourceGroupAsync(configName, configData);
-            data = await resourceGroup.GetConfigurationsAsync().ToEnumerableAsync();
+            data = await resourceGroup.GetAdvisorConfigurationsByResourceGroupAsync().ToEnumerableAsync();
             Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).IsExcluded);
         }
     }
