@@ -151,7 +151,12 @@ namespace Azure.AI.VoiceLive.Tests
             _eventIDs.Add(sessionUpdate.EventId);
         }
 
-        protected async Task<List<SessionUpdate>> CollectResponseUpdates(IAsyncEnumerator<SessionUpdate> updateEnumerator, CancellationToken cancellationToken)
+        protected Task<List<SessionUpdate>> CollectResponseUpdates(IAsyncEnumerator<SessionUpdate> updateEnumerator, CancellationToken cancellationToken)
+        {
+            return CollectUpdates<SessionUpdateResponseDone>(updateEnumerator, cancellationToken);
+        }
+
+        protected async Task<List<SessionUpdate>> CollectUpdates<T>(IAsyncEnumerator<SessionUpdate> updateEnumerator, CancellationToken cancellationToken)
         {
             List<SessionUpdate> responseUpdates = new List<SessionUpdate>();
 
@@ -161,7 +166,7 @@ namespace Azure.AI.VoiceLive.Tests
             {
                 currentUpdate = await GetNextUpdate(updateEnumerator).ConfigureAwait(false);
                 responseUpdates.Add(currentUpdate);
-            } while (currentUpdate is not SessionUpdateResponseDone && !cancellationToken.IsCancellationRequested);
+            } while (currentUpdate is not T && !cancellationToken.IsCancellationRequested);
 
             if (cancellationToken.IsCancellationRequested)
             {
