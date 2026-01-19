@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string serviceId = default;
+            ResourceIdentifier serviceId = default;
             DateTimeOffset? scheduledPurgeDate = default;
             DateTimeOffset? deletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         if (property0.NameEquals("serviceId"u8))
                         {
-                            serviceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scheduledPurgeDate"u8))
@@ -272,15 +276,7 @@ namespace Azure.ResourceManager.ApiManagement
                 if (Optional.IsDefined(ServiceId))
                 {
                     builder.Append("    serviceId: ");
-                    if (ServiceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceId}'");
-                    }
+                    builder.AppendLine($"'{ServiceId.ToString()}'");
                 }
             }
 

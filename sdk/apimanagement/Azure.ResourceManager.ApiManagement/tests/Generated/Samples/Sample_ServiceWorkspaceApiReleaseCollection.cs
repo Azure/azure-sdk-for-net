@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string releaseId = "testrev";
             ApiReleaseData data = new ApiReleaseData
             {
-                ApiId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/workspaces/wks1/apis/a1",
+                ApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/workspaces/wks1/apis/a1"),
                 Notes = "yahooagain",
             };
             ArmOperation<ServiceWorkspaceApiReleaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, releaseId, data);

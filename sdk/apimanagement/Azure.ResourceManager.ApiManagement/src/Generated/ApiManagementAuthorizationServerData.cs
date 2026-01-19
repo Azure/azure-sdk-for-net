@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// OAuth token endpoint. Contains absolute URI to entity being referenced.
         /// Serialized Name: AuthorizationServerContract.properties.tokenEndpoint
         /// </param>
-        /// <param name="supportState">
+        /// <param name="doesSupportState">
         /// If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security.
         /// Serialized Name: AuthorizationServerContract.properties.supportState
         /// </param>
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: AuthorizationServerContract.properties.clientSecret
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? supportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, bool? useInTestConsole, bool? useInApiDocumentation, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, bool? useInTestConsole, bool? useInApiDocumentation, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthorizationMethods = authorizationMethods;
             ClientAuthenticationMethods = clientAuthenticationMethods;
             TokenBodyParameters = tokenBodyParameters;
             TokenEndpoint = tokenEndpoint;
-            SupportState = supportState;
+            DoesSupportState = doesSupportState;
             DefaultScope = defaultScope;
             BearerTokenSendingMethods = bearerTokenSendingMethods;
             ResourceOwnerUsername = resourceOwnerUsername;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: AuthorizationServerContract.properties.supportState
         /// </summary>
         [WirePath("properties.supportState")]
-        public bool? SupportState { get; set; }
+        public bool? DoesSupportState { get; set; }
         /// <summary>
         /// Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values.
         /// Serialized Name: AuthorizationServerContract.properties.defaultScope

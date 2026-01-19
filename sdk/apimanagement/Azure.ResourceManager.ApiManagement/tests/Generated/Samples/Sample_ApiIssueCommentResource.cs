@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 Text = "Issue comment.",
                 CreatedOn = DateTimeOffset.Parse("2018-02-01T22:21:20.467Z"),
-                UserId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1",
+                UserId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1"),
             };
             ArmOperation<ApiIssueCommentResource> lro = await apiIssueComment.UpdateAsync(WaitUntil.Completed, data);
             ApiIssueCommentResource result = lro.Value;

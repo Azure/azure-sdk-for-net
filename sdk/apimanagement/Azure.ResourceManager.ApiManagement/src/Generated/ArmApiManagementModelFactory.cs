@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: DeletedServiceContract.properties.deletionDate
         /// </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementDeletedServiceData"/> instance for mocking. </returns>
-        public static ApiManagementDeletedServiceData ApiManagementDeletedServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string serviceId = null, DateTimeOffset? scheduledPurgeOn = null, DateTimeOffset? deletedOn = null)
+        public static ApiManagementDeletedServiceData ApiManagementDeletedServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier serviceId = null, DateTimeOffset? scheduledPurgeOn = null, DateTimeOffset? deletedOn = null)
         {
             return new ApiManagementDeletedServiceData(
                 id,
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.groupIds
         /// </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnectionWrapper"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnectionWrapper RemotePrivateEndpointConnectionWrapper(string id = null, string name = null, string resourceType = null, ResourceIdentifier privateEndpointId = null, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, string provisioningState = null, IEnumerable<string> groupIds = null)
+        public static RemotePrivateEndpointConnectionWrapper RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ResourceIdentifier privateEndpointId = null, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, string provisioningState = null, IEnumerable<string> groupIds = null)
         {
             groupIds ??= new List<string>();
 
@@ -1893,7 +1893,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: IssueCommentContract.properties.userId
         /// </param>
         /// <returns> A new <see cref="ApiManagement.ApiIssueCommentData"/> instance for mocking. </returns>
-        public static ApiIssueCommentData ApiIssueCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string text = null, DateTimeOffset? createdOn = null, string userId = null)
+        public static ApiIssueCommentData ApiIssueCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string text = null, DateTimeOffset? createdOn = null, ResourceIdentifier userId = null)
         {
             return new ApiIssueCommentData(
                 id,
@@ -2217,11 +2217,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process.
         /// Serialized Name: ProductEntityBaseParameters.terms
         /// </param>
-        /// <param name="subscriptionRequired">
+        /// <param name="isSubscriptionRequired">
         /// Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true.
         /// Serialized Name: ProductEntityBaseParameters.subscriptionRequired
         /// </param>
-        /// <param name="approvalRequired">
+        /// <param name="isApprovalRequired">
         /// whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false.
         /// Serialized Name: ProductEntityBaseParameters.approvalRequired
         /// </param>
@@ -2250,15 +2250,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ProductTagResourceContractProperties.name
         /// </param>
         /// <returns> A new <see cref="Models.AssociatedProductProperties"/> instance for mocking. </returns>
-        public static AssociatedProductProperties AssociatedProductProperties(string description = null, string terms = null, bool? subscriptionRequired = null, bool? approvalRequired = null, int? subscriptionsLimit = null, IEnumerable<ProductAuthType> authenticationType = null, ProductApplicationContractEntra applicationEntra = null, ApiManagementProductState? state = null, string id = null, string name = null)
+        public static AssociatedProductProperties AssociatedProductProperties(string description = null, string terms = null, bool? isSubscriptionRequired = null, bool? isApprovalRequired = null, int? subscriptionsLimit = null, IEnumerable<ProductAuthType> authenticationType = null, ProductApplicationContractEntra applicationEntra = null, ApiManagementProductState? state = null, string id = null, string name = null)
         {
             authenticationType ??= new List<ProductAuthType>();
 
             return new AssociatedProductProperties(
                 description,
                 terms,
-                subscriptionRequired,
-                approvalRequired,
+                isSubscriptionRequired,
+                isApprovalRequired,
                 subscriptionsLimit,
                 authenticationType?.ToList(),
                 applicationEntra != null ? new ProductEntityBaseParametersApplication(applicationEntra, serializedAdditionalRawData: null) : null,
@@ -2277,11 +2277,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process.
         /// Serialized Name: ProductEntityBaseParameters.terms
         /// </param>
-        /// <param name="subscriptionRequired">
+        /// <param name="isSubscriptionRequired">
         /// Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true.
         /// Serialized Name: ProductEntityBaseParameters.subscriptionRequired
         /// </param>
-        /// <param name="approvalRequired">
+        /// <param name="isApprovalRequired">
         /// whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false.
         /// Serialized Name: ProductEntityBaseParameters.approvalRequired
         /// </param>
@@ -2302,15 +2302,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ProductEntityBaseParameters.state
         /// </param>
         /// <returns> A new <see cref="Models.ProductEntityBaseProperties"/> instance for mocking. </returns>
-        public static ProductEntityBaseProperties ProductEntityBaseProperties(string description = null, string terms = null, bool? subscriptionRequired = null, bool? approvalRequired = null, int? subscriptionsLimit = null, IEnumerable<ProductAuthType> authenticationType = null, ProductApplicationContractEntra applicationEntra = null, ApiManagementProductState? state = null)
+        public static ProductEntityBaseProperties ProductEntityBaseProperties(string description = null, string terms = null, bool? isSubscriptionRequired = null, bool? isApprovalRequired = null, int? subscriptionsLimit = null, IEnumerable<ProductAuthType> authenticationType = null, ProductApplicationContractEntra applicationEntra = null, ApiManagementProductState? state = null)
         {
             authenticationType ??= new List<ProductAuthType>();
 
             return new ProductEntityBaseProperties(
                 description,
                 terms,
-                subscriptionRequired,
-                approvalRequired,
+                isSubscriptionRequired,
+                isApprovalRequired,
                 subscriptionsLimit,
                 authenticationType?.ToList(),
                 applicationEntra != null ? new ProductEntityBaseParametersApplication(applicationEntra, serializedAdditionalRawData: null) : null,
@@ -2403,7 +2403,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ApiReleaseContract.properties.notes
         /// </param>
         /// <returns> A new <see cref="ApiManagement.ApiReleaseData"/> instance for mocking. </returns>
-        public static ApiReleaseData ApiReleaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string apiId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string notes = null)
+        public static ApiReleaseData ApiReleaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier apiId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string notes = null)
         {
             return new ApiReleaseData(
                 id,
@@ -2794,7 +2794,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// OAuth token endpoint. Contains absolute URI to entity being referenced.
         /// Serialized Name: AuthorizationServerContract.properties.tokenEndpoint
         /// </param>
-        /// <param name="supportState">
+        /// <param name="doesSupportState">
         /// If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security.
         /// Serialized Name: AuthorizationServerContract.properties.supportState
         /// </param>
@@ -2847,7 +2847,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: AuthorizationServerContract.properties.clientSecret
         /// </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementAuthorizationServerData"/> instance for mocking. </returns>
-        public static ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<AuthorizationMethod> authorizationMethods = null, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods = null, IEnumerable<TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? supportState = null, string defaultScope = null, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, bool? useInTestConsole = null, bool? useInApiDocumentation = null, string clientRegistrationEndpoint = null, string authorizationEndpoint = null, IEnumerable<GrantType> grantTypes = null, string clientId = null, string clientSecret = null)
+        public static ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<AuthorizationMethod> authorizationMethods = null, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods = null, IEnumerable<TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = null, string defaultScope = null, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, bool? useInTestConsole = null, bool? useInApiDocumentation = null, string clientRegistrationEndpoint = null, string authorizationEndpoint = null, IEnumerable<GrantType> grantTypes = null, string clientId = null, string clientSecret = null)
         {
             authorizationMethods ??= new List<AuthorizationMethod>();
             clientAuthenticationMethods ??= new List<ClientAuthenticationMethod>();
@@ -2865,7 +2865,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 clientAuthenticationMethods?.ToList(),
                 tokenBodyParameters?.ToList(),
                 tokenEndpoint,
-                supportState,
+                doesSupportState,
                 defaultScope,
                 bearerTokenSendingMethods?.ToList(),
                 resourceOwnerUsername,
@@ -3438,7 +3438,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ConnectivityHop.issues
         /// </param>
         /// <returns> A new <see cref="Models.ConnectivityHop"/> instance for mocking. </returns>
-        public static ConnectivityHop ConnectivityHop(string connectivityHopType = null, string id = null, string address = null, string resourceId = null, IEnumerable<string> nextHopIds = null, IEnumerable<ConnectivityIssue> issues = null)
+        public static ConnectivityHop ConnectivityHop(string connectivityHopType = null, string id = null, IPAddress address = null, ResourceIdentifier resourceId = null, IEnumerable<string> nextHopIds = null, IEnumerable<ConnectivityIssue> issues = null)
         {
             nextHopIds ??= new List<string>();
             issues ??= new List<ConnectivityIssue>();
@@ -4293,7 +4293,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Optional tags that when provided can be used to filter the NamedValue list.
         /// Serialized Name: NamedValueContract.properties.tags
         /// </param>
-        /// <param name="secret">
+        /// <param name="isSecret">
         /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
         /// Serialized Name: NamedValueContract.properties.secret
         /// </param>
@@ -4314,7 +4314,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: NamedValueContract.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementNamedValueData"/> instance for mocking. </returns>
-        public static ApiManagementNamedValueData ApiManagementNamedValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? secret = null, string displayName = null, string value = null, KeyVaultContractProperties keyVaultDetails = null, string provisioningState = null)
+        public static ApiManagementNamedValueData ApiManagementNamedValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? isSecret = null, string displayName = null, string value = null, KeyVaultContractProperties keyVaultDetails = null, string provisioningState = null)
         {
             tags ??= new List<string>();
 
@@ -4324,7 +4324,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 tags?.ToList(),
-                secret,
+                isSecret,
                 displayName,
                 value,
                 keyVaultDetails,
@@ -6144,6 +6144,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.Models.ProductEntityBaseProperties" />. </summary>
+        /// <param name="description"> Product description. May include HTML formatting tags. </param>
+        /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.Models.ProductEntityBaseProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProductEntityBaseProperties ProductEntityBaseProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state)
+        {
+            return ProductEntityBaseProperties(description: description, terms: terms, isSubscriptionRequired: isSubscriptionRequired, isApprovalRequired: isApprovalRequired, subscriptionsLimit: subscriptionsLimit, authenticationType: default, applicationEntra: default, state: state);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.DiagnosticContractData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -6164,6 +6178,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics)
         {
             return DiagnosticContractData(id: id, name: name, resourceType: resourceType, systemData: systemData, alwaysLog: alwaysLog, loggerId: loggerId, sampling: sampling, frontend: frontend, backend: backend, largeLanguageModel: default, isLogClientIPEnabled: isLogClientIPEnabled, httpCorrelationProtocol: httpCorrelationProtocol, verbosity: verbosity, operationNameFormat: operationNameFormat, metrics: metrics);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.Models.AssociatedProductProperties" />. </summary>
+        /// <param name="description"> Product description. May include HTML formatting tags. </param>
+        /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
+        /// <param name="id"> Identifier of the product in the form of /products/{productId}. </param>
+        /// <param name="name"> Product name. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.Models.AssociatedProductProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AssociatedProductProperties AssociatedProductProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string id, string name)
+        {
+            return AssociatedProductProperties(description: description, terms: terms, isSubscriptionRequired: isSubscriptionRequired, isApprovalRequired: isApprovalRequired, subscriptionsLimit: subscriptionsLimit, authenticationType: default, applicationEntra: default, state: state, id: id, name: name);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementServiceData" />. </summary>
@@ -6465,6 +6495,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return ApiManagementServicePatch(id: id, name: name, resourceType: resourceType, systemData: systemData, sku: sku, identity: identity, etag: etag, zones: zones, notificationSenderEmail: notificationSenderEmail, provisioningState: provisioningState, targetProvisioningState: targetProvisioningState, createdAtUtc: createdAtUtc, gatewayUri: gatewayUri, gatewayRegionalUri: gatewayRegionalUri, portalUri: portalUri, managementApiUri: managementApiUri, scmUri: scmUri, developerPortalUri: developerPortalUri, hostnameConfigurations: hostnameConfigurations, publicIPAddresses: publicIPAddresses, privateIPAddresses: privateIPAddresses, publicIPAddressId: publicIPAddressId, publicNetworkAccess: publicNetworkAccess, legacyApi: default, virtualNetworkConfiguration: virtualNetworkConfiguration, additionalLocations: additionalLocations, customProperties: customProperties, certificates: certificates, enableClientCertificate: enableClientCertificate, natGatewayState: natGatewayState, outboundPublicIPAddresses: outboundPublicIPAddresses, disableGateway: disableGateway, virtualNetworkType: virtualNetworkType, minApiVersion: minApiVersion, restore: restore, privateEndpointConnections: privateEndpointConnections, platformVersion: platformVersion, legacyPortalStatus: default, developerPortalStatus: default, releaseChannel: default, zoneRedundant: default, publisherEmail: publisherEmail, publisherName: publisherName, tags: tags);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementNamedValueData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
+        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
+        /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
+        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementNamedValueData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementNamedValueData ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails)
+        {
+            return ApiManagementNamedValueData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, isSecret: isSecret, displayName: displayName, value: value, keyVaultDetails: keyVaultDetails, provisioningState: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.PolicyFragmentContractData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -6512,6 +6559,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementGlobalSchemaData ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document)
         {
             return ApiManagementGlobalSchemaData(id: id, name: name, resourceType: resourceType, systemData: systemData, schemaType: schemaType, description: description, value: value, document: document, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the authorization server. Can contain HTML formatting tags. </param>
+        /// <param name="authorizationMethods"> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </param>
+        /// <param name="clientAuthenticationMethods"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
+        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </param>
+        /// <param name="tokenEndpoint"> OAuth token endpoint. Contains absolute URI to entity being referenced. </param>
+        /// <param name="doesSupportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
+        /// <param name="defaultScope"> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </param>
+        /// <param name="bearerTokenSendingMethods"> Specifies the mechanism by which access token is passed to the API. </param>
+        /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
+        /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
+        /// <param name="displayName"> User-friendly authorization server name. </param>
+        /// <param name="clientRegistrationEndpoint"> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </param>
+        /// <param name="authorizationEndpoint"> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </param>
+        /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
+        /// <param name="clientId"> Client or app id registered with this authorization server. </param>
+        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementAuthorizationServerData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<AuthorizationMethod> authorizationMethods, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods, IEnumerable<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IEnumerable<GrantType> grantTypes, string clientId, string clientSecret)
+        {
+            return ApiManagementAuthorizationServerData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, authorizationMethods: authorizationMethods, clientAuthenticationMethods: clientAuthenticationMethods, tokenBodyParameters: tokenBodyParameters, tokenEndpoint: tokenEndpoint, doesSupportState: doesSupportState, defaultScope: defaultScope, bearerTokenSendingMethods: bearerTokenSendingMethods, resourceOwnerUsername: resourceOwnerUsername, resourceOwnerPassword: resourceOwnerPassword, displayName: displayName, useInTestConsole: default, useInApiDocumentation: default, clientRegistrationEndpoint: clientRegistrationEndpoint, authorizationEndpoint: authorizationEndpoint, grantTypes: grantTypes, clientId: clientId, clientSecret: clientSecret);
         }
 
         /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>

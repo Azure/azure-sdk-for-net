@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IssueCommentContract.properties.userId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, ResourceIdentifier userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Text = text;
             CreatedOn = createdOn;
@@ -99,6 +99,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IssueCommentContract.properties.userId
         /// </summary>
         [WirePath("properties.userId")]
-        public string UserId { get; set; }
+        public ResourceIdentifier UserId { get; set; }
     }
 }

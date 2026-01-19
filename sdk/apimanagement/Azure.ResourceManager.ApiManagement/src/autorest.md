@@ -342,6 +342,19 @@ rename-mapping:
   IssueContract.properties.apiId: -|arm-id
   IssueContract.properties.userId: -|arm-id
   LoggerContract.properties.resourceId: -|arm-id
+  NamedValueContract.properties.secret: IsSecret
+  ProductEntityBaseParameters.subscriptionRequired: IsSubscriptionRequired
+  ProductEntityBaseParameters.approvalRequired: IsApprovalRequired
+  ConnectivityHop.address: -|ip-address
+  ConnectivityHop.resourceId: -|arm-id
+  RemotePrivateEndpointConnectionWrapper.id: -|arm-id
+  RemotePrivateEndpointConnectionWrapper.type: -|resource-type
+  ApiReleaseContract.properties.apiId: -|arm-id
+  IssueCommentContract.properties.userId: -|arm-id
+  AuthorizationServerContract.properties.supportState: DoesSupportState
+  DeletedServiceContract.properties.serviceId: -|arm-id
+  PortalSettingsContract.properties.subscriptions: IsSubscriptions
+  PortalSettingsContract.properties.userRegistration: IsUserRegistration
 
 keep-plural-resource-data:
   - ApiManagementWorkspaceLinks
@@ -352,18 +365,6 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      $.NamedValueEntityBaseParameters.properties.secret['x-ms-client-name'] = 'IsSecret';
-      $.ProductEntityBaseParameters.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
-      $.ProductEntityBaseParameters.properties.approvalRequired['x-ms-client-name'] = 'IsApprovalRequired';
-      $.ApiVersionSetContractDetails.properties.versioningScheme['x-ms-enum'] = {
-          "name": "versioningScheme",
-          "modelAsString": true
-        }
-      $.ConnectivityHop.properties.address['x-ms-format'] = 'ip-address';
-      $.ConnectivityHop.properties.resourceId['x-ms-format'] = 'arm-id';
-      $.RemotePrivateEndpointConnectionWrapper.properties.id['x-ms-format'] = 'arm-id';
-      $.RemotePrivateEndpointConnectionWrapper.properties.type['x-ms-format'] = 'resource-type';
-      $.ApiReleaseContractProperties.properties.apiId['x-ms-format'] = 'arm-id';
       $.GatewayKeyRegenerationRequestContract.properties.keyType['x-ms-enum']['name'] = 'GatewayRegenerateKeyType';
       for (var key in $) {
           if (key.endsWith('Collection')) {
@@ -374,11 +375,6 @@ directive:
               }
           }
         }
-      $.IssueCommentContractProperties.properties.userId['x-ms-format'] = 'arm-id';
-      $.AuthorizationServerContractBaseProperties.properties.supportState['x-ms-client-name'] = 'DoesSupportState';
-      $.DeletedServiceContractProperties.properties.serviceId['x-ms-format'] = 'arm-id';
-      $.PortalSettingsContractProperties.properties.subscriptions['x-ms-client-name'] = 'IsSubscriptions';
-      $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
       $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
   - from: openapi.json
     where: $.definitions

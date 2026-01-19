@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ConnectivityHop.issues
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityHop(string connectivityHopType, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectivityHop(string connectivityHopType, string id, IPAddress address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectivityHopType = connectivityHopType;
             Id = id;
@@ -109,13 +111,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ConnectivityHop.address
         /// </summary>
         [WirePath("address")]
-        public string Address { get; }
+        public IPAddress Address { get; }
         /// <summary>
         /// The ID of the resource corresponding to this hop.
         /// Serialized Name: ConnectivityHop.resourceId
         /// </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary>
         /// List of next hop identifiers.
         /// Serialized Name: ConnectivityHop.nextHopIds

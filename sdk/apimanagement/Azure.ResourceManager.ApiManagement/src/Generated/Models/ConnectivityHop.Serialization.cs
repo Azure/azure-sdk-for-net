@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
-                writer.WriteStringValue(Address);
+                writer.WriteStringValue(Address.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
@@ -115,8 +116,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string type = default;
             string id = default;
-            string address = default;
-            string resourceId = default;
+            IPAddress address = default;
+            ResourceIdentifier resourceId = default;
             IReadOnlyList<string> nextHopIds = default;
             IReadOnlyList<ConnectivityIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,12 +136,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("address"u8))
                 {
-                    address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nextHopIds"u8))
@@ -255,15 +264,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(Address))
                 {
                     builder.Append("  address: ");
-                    if (Address.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Address}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Address}'");
-                    }
+                    builder.AppendLine($"'{Address.ToString()}'");
                 }
             }
 
@@ -278,15 +279,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(ResourceId))
                 {
                     builder.Append("  resourceId: ");
-                    if (ResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceId}'");
-                    }
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 

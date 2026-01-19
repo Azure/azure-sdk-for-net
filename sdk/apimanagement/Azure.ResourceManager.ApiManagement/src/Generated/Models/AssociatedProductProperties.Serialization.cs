@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionRequired), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRequired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  subscriptionRequired: ");
@@ -290,15 +290,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsDefined(SubscriptionRequired))
+                if (Optional.IsDefined(IsSubscriptionRequired))
                 {
                     builder.Append("  subscriptionRequired: ");
-                    var boolValue = SubscriptionRequired.Value == true ? "true" : "false";
+                    var boolValue = IsSubscriptionRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovalRequired), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  approvalRequired: ");
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsDefined(ApprovalRequired))
+                if (Optional.IsDefined(IsApprovalRequired))
                 {
                     builder.Append("  approvalRequired: ");
-                    var boolValue = ApprovalRequired.Value == true ? "true" : "false";
+                    var boolValue = IsApprovalRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

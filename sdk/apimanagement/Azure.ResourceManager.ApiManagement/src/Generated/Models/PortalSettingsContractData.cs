@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// A base64-encoded validation key to validate, that a request is coming from Azure API Management.
         /// Serialized Name: PortalSettingsContract.properties.validationKey
         /// </param>
-        /// <param name="subscriptions">
+        /// <param name="isSubscriptions">
         /// Subscriptions delegation settings.
         /// Serialized Name: PortalSettingsContract.properties.subscriptions
         /// </param>
-        /// <param name="userRegistration">
+        /// <param name="isUserRegistration">
         /// User registration delegation settings.
         /// Serialized Name: PortalSettingsContract.properties.userRegistration
         /// </param>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: PortalSettingsContract.properties.termsOfService
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PortalSettingsContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties subscriptions, RegistrationDelegationSettingProperties userRegistration, bool? isRedirectEnabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PortalSettingsContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties isSubscriptions, RegistrationDelegationSettingProperties isUserRegistration, bool? isRedirectEnabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Uri = uri;
             ValidationKey = validationKey;
-            Subscriptions = subscriptions;
-            UserRegistration = userRegistration;
+            IsSubscriptions = isSubscriptions;
+            IsUserRegistration = isUserRegistration;
             IsRedirectEnabled = isRedirectEnabled;
             TermsOfService = termsOfService;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Subscriptions delegation settings.
         /// Serialized Name: PortalSettingsContract.properties.subscriptions
         /// </summary>
-        internal SubscriptionDelegationSettingProperties Subscriptions { get; set; }
+        internal SubscriptionDelegationSettingProperties IsSubscriptions { get; set; }
         /// <summary>
         /// Enable or disable delegation for subscriptions.
         /// Serialized Name: SubscriptionsDelegationSettingsProperties.enabled
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [WirePath("properties.subscriptions.enabled")]
         public bool? IsSubscriptionDelegationEnabled
         {
-            get => Subscriptions is null ? default : Subscriptions.IsSubscriptionDelegationEnabled;
+            get => IsSubscriptions is null ? default : IsSubscriptions.IsSubscriptionDelegationEnabled;
             set
             {
-                if (Subscriptions is null)
-                    Subscriptions = new SubscriptionDelegationSettingProperties();
-                Subscriptions.IsSubscriptionDelegationEnabled = value;
+                if (IsSubscriptions is null)
+                    IsSubscriptions = new SubscriptionDelegationSettingProperties();
+                IsSubscriptions.IsSubscriptionDelegationEnabled = value;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// User registration delegation settings.
         /// Serialized Name: PortalSettingsContract.properties.userRegistration
         /// </summary>
-        internal RegistrationDelegationSettingProperties UserRegistration { get; set; }
+        internal RegistrationDelegationSettingProperties IsUserRegistration { get; set; }
         /// <summary>
         /// Enable or disable delegation for user registration.
         /// Serialized Name: RegistrationDelegationSettingsProperties.enabled
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [WirePath("properties.userRegistration.enabled")]
         public bool? IsUserRegistrationDelegationEnabled
         {
-            get => UserRegistration is null ? default : UserRegistration.IsUserRegistrationDelegationEnabled;
+            get => IsUserRegistration is null ? default : IsUserRegistration.IsUserRegistrationDelegationEnabled;
             set
             {
-                if (UserRegistration is null)
-                    UserRegistration = new RegistrationDelegationSettingProperties();
-                UserRegistration.IsUserRegistrationDelegationEnabled = value;
+                if (IsUserRegistration is null)
+                    IsUserRegistration = new RegistrationDelegationSettingProperties();
+                IsUserRegistration.IsUserRegistrationDelegationEnabled = value;
             }
         }
 

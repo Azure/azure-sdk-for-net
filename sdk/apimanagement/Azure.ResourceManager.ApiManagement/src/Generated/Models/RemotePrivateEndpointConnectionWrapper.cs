@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.groupIds
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpointConnectionWrapper(string id, string name, string resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: RemotePrivateEndpointConnectionWrapper.id
         /// </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary>
         /// Private Endpoint Connection Name
         /// Serialized Name: RemotePrivateEndpointConnectionWrapper.name
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: RemotePrivateEndpointConnectionWrapper.type
         /// </summary>
         [WirePath("type")]
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
         /// <summary>
         /// The resource of private end point.
         /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.privateEndpoint

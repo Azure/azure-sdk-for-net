@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Optional.IsDefined(SupportState))
+            if (Optional.IsDefined(DoesSupportState))
             {
                 writer.WritePropertyName("supportState"u8);
-                writer.WriteBooleanValue(SupportState.Value);
+                writer.WriteBooleanValue(DoesSupportState.Value);
             }
             if (Optional.IsDefined(DefaultScope))
             {
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoesSupportState), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    supportState: ");
@@ -609,10 +609,10 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SupportState))
+                if (Optional.IsDefined(DoesSupportState))
                 {
                     builder.Append("    supportState: ");
-                    var boolValue = SupportState.Value == true ? "true" : "false";
+                    var boolValue = DoesSupportState.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

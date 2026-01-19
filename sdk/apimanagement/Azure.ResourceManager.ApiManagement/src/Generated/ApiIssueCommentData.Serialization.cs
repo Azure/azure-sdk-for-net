@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             SystemData systemData = default;
             string text = default;
             DateTimeOffset? createdDate = default;
-            string userId = default;
+            ResourceIdentifier userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,11 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("userId"u8))
                         {
-                            userId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            userId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -276,15 +280,7 @@ namespace Azure.ResourceManager.ApiManagement
                 if (Optional.IsDefined(UserId))
                 {
                     builder.Append("    userId: ");
-                    if (UserId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserId}'");
-                    }
+                    builder.AppendLine($"'{UserId.ToString()}'");
                 }
             }
 

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: ApiReleaseContract.properties.notes
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiReleaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string apiId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiReleaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier apiId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ApiId = apiId;
             CreatedOn = createdOn;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: ApiReleaseContract.properties.apiId
         /// </summary>
         [WirePath("properties.apiId")]
-        public string ApiId { get; set; }
+        public ResourceIdentifier ApiId { get; set; }
         /// <summary>
         /// The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
         /// Serialized Name: ApiReleaseContract.properties.createdDateTime

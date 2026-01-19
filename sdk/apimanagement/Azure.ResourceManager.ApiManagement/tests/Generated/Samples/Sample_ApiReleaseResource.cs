@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string ifMatch = "*";
             ApiReleaseData data = new ApiReleaseData
             {
-                ApiId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/a1",
+                ApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/a1"),
                 Notes = "yahooagain",
             };
             ApiReleaseResource result = await apiRelease.UpdateAsync(ifMatch, data);

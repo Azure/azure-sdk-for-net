@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Description = "test server",
                 AuthorizationMethods = { AuthorizationMethod.Get },
                 TokenEndpoint = "https://www.contoso.com/oauth2/token",
-                SupportState = true,
+                DoesSupportState = true,
                 DefaultScope = "read write",
                 BearerTokenSendingMethods = { BearerTokenSendingMethod.AuthorizationHeader },
                 ResourceOwnerUsername = "un",

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string apiId = default;
+            ResourceIdentifier apiId = default;
             DateTimeOffset? createdDateTime = default;
             DateTimeOffset? updatedDateTime = default;
             string notes = default;
@@ -129,7 +129,11 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         if (property0.NameEquals("apiId"u8))
                         {
-                            apiId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            apiId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createdDateTime"u8))
@@ -253,15 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
                 if (Optional.IsDefined(ApiId))
                 {
                     builder.Append("    apiId: ");
-                    if (ApiId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiId}'");
-                    }
+                    builder.AppendLine($"'{ApiId.ToString()}'");
                 }
             }
 
