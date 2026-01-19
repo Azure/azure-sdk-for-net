@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -59,6 +60,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -93,6 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
+            DevTestLabManagedIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -153,6 +160,15 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = DevTestLabManagedIdentity.DeserializeDevTestLabManagedIdentity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -165,7 +181,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 systemData,
                 additionalBinaryDataProperties,
                 location,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

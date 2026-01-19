@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location of the virtual machine. </param>
         /// <param name="fileUploadOptions"> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabArtifactGenerateArmTemplateContent(string vmName, IList<DevTestLabParameter> parameters, string location, DevTestLabFileUploadOption? fileUploadOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabArtifactGenerateArmTemplateContent(string vmName, IList<DevTestLabParameter> parameters, AzureLocation? location, DevTestLabFileUploadOption? fileUploadOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmName = vmName;
             Parameters = parameters;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public IList<DevTestLabParameter> Parameters { get; }
 
         /// <summary> The location of the virtual machine. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </summary>
         public DevTestLabFileUploadOption? FileUploadOptions { get; set; }

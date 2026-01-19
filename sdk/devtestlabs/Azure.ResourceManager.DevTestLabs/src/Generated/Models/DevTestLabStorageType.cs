@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private readonly string _value;
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
-        private const string StandardSSDValue = "StandardSSD";
+        private const string StandardSsdValue = "StandardSSD";
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Gets the Premium. </summary>
         public static DevTestLabStorageType Premium { get; } = new DevTestLabStorageType(PremiumValue);
 
-        /// <summary> Gets the StandardSSD. </summary>
-        public static DevTestLabStorageType StandardSSD { get; } = new DevTestLabStorageType(StandardSSDValue);
+        /// <summary> Gets the StandardSsd. </summary>
+        public static DevTestLabStorageType StandardSsd { get; } = new DevTestLabStorageType(StandardSsdValue);
 
         /// <summary> Determines if two <see cref="DevTestLabStorageType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

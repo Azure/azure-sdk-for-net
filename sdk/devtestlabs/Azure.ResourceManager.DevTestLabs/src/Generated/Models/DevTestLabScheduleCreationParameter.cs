@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabScheduleCreationParameter(ScheduleCreationParameterProperties properties, string name, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabScheduleCreationParameter(ScheduleCreationParameterProperties properties, string name, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Name { get; set; }
 
         /// <summary> The location of the new virtual machine or environment. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }

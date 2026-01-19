@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             string principalName = default;
             string principalId = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             string objectId = default;
             string appId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -121,7 +121,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("objectId"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal DevTestLabGalleryImage(AzureLocation location) : base(location)
+        public DevTestLabGalleryImage(AzureLocation location) : base(location)
         {
         }
 
@@ -40,14 +40,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The properties of the gallery image. </summary>
-        internal GalleryImageProperties Properties { get; }
+        internal GalleryImageProperties Properties { get; set; }
 
         /// <summary> The author of the gallery image. </summary>
         public string Author
         {
             get
             {
-                return Properties.Author;
+                return Properties is null ? default : Properties.Author;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Author = value;
             }
         }
 
@@ -56,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -65,7 +73,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Description = value;
             }
         }
 
@@ -74,7 +90,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.ImageReference;
+                return Properties is null ? default : Properties.ImageReference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.ImageReference = value;
             }
         }
 
@@ -83,7 +107,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.Icon;
+                return Properties is null ? default : Properties.Icon;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Icon = value;
             }
         }
 
@@ -92,7 +124,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.IsEnabled;
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.IsEnabled = value.Value;
             }
         }
 
@@ -101,7 +141,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.PlanId;
+                return Properties is null ? default : Properties.PlanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.PlanId = value;
             }
         }
 
@@ -110,7 +158,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.IsPlanAuthorized;
+                return Properties is null ? default : Properties.IsPlanAuthorized;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.IsPlanAuthorized = value.Value;
             }
         }
     }

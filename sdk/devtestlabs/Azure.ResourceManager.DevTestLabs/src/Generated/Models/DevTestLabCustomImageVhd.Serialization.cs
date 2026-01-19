@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             string imageName = default;
             bool? isSysPrepEnabled = default;
-            DevTestLabCustomImageOsType osType = default;
+            DevTestLabCustomImageOSType osType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = new DevTestLabCustomImageOsType(prop.Value.GetString());
+                    osType = new DevTestLabCustomImageOSType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -45,20 +45,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(PublicIpAddressId))
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
-                writer.WriteStringValue(PublicIpAddressId);
+                writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicIpAddress))
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress);
             }
-            if (Optional.IsDefined(PrivateIpAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (Optional.IsDefined(DnsName))
             {
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (Optional.IsDefined(SharedPublicIpAddressConfiguration))
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue(SharedPublicIpAddressConfiguration, options);
+                writer.WriteObjectValue(SharedPublicIPAddressConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             ResourceIdentifier virtualNetworkId = default;
             ResourceIdentifier subnetId = default;
-            ResourceIdentifier publicIpAddressId = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
+            ResourceIdentifier publicIPAddressId = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             string dnsName = default;
             string rdpAuthority = default;
             string sshAuthority = default;
-            SharedPublicIpAddressConfiguration sharedPublicIpAddressConfiguration = default;
+            SharedPublicIpAddressConfiguration sharedPublicIPAddressConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    publicIpAddressId = new ResourceIdentifier(prop.Value.GetString());
+                    publicIPAddressId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("dnsName"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sharedPublicIpAddressConfiguration = SharedPublicIpAddressConfiguration.DeserializeSharedPublicIpAddressConfiguration(prop.Value, options);
+                    sharedPublicIPAddressConfiguration = SharedPublicIpAddressConfiguration.DeserializeSharedPublicIpAddressConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabNetworkInterface(
                 virtualNetworkId,
                 subnetId,
-                publicIpAddressId,
-                publicIpAddress,
-                privateIpAddress,
+                publicIPAddressId,
+                publicIPAddress,
+                privateIPAddress,
                 dnsName,
                 rdpAuthority,
                 sshAuthority,
-                sharedPublicIpAddressConfiguration,
+                sharedPublicIPAddressConfiguration,
                 additionalBinaryDataProperties);
         }
 

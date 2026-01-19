@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -32,9 +33,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal DevTestLabServiceRunnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The identity of the resource. </param>
+        internal DevTestLabServiceRunnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, IDictionary<string, string> tags, DevTestLabManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Identity = identity;
         }
+
+        /// <summary> The identity of the resource. </summary>
+        public DevTestLabManagedIdentity Identity { get; set; }
     }
 }

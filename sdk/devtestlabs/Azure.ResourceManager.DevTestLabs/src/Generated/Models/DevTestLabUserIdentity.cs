@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="objectId"> Set to the object Id of the client JWT making the request. Not all users have object Id. For CSP (reseller) scenarios for example, object Id is not available. </param>
         /// <param name="appId"> Set to the app Id of the client JWT making the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabUserIdentity(string principalName, string principalId, string tenantId, string objectId, string appId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabUserIdentity(string principalName, string principalId, Guid? tenantId, string objectId, string appId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalName = principalName;
             PrincipalId = principalId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string PrincipalId { get; set; }
 
         /// <summary> Set to the tenant ID of the client JWT making the request. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> Set to the object Id of the client JWT making the request. Not all users have object Id. For CSP (reseller) scenarios for example, object Id is not available. </summary>
         public string ObjectId { get; set; }

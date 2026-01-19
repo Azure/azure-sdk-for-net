@@ -293,11 +293,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Indicates whether the virtual machine is to be created without a public IP address. </summary>
-        public bool? DisallowPublicIpAddress
+        public bool? DisallowPublicIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.DisallowPublicIpAddress;
+                return Properties is null ? default : Properties.DisallowPublicIPAddress;
             }
             set
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabVirtualMachineProperties();
                 }
-                Properties.DisallowPublicIpAddress = value.Value;
+                Properties.DisallowPublicIPAddress = value.Value;
             }
         }
 

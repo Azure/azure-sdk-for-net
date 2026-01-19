@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabVmCreationContent(LabVirtualMachineCreationParameterProperties properties, string name, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabVmCreationContent(LabVirtualMachineCreationParameterProperties properties, string name, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Name { get; set; }
 
         /// <summary> The location of the new virtual machine or environment. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -256,11 +256,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Indicates whether the virtual machine is to be created without a public IP address. </summary>
-        public bool? DisallowPublicIpAddress
+        public bool? DisallowPublicIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.DisallowPublicIpAddress;
+                return Properties is null ? default : Properties.DisallowPublicIPAddress;
             }
             set
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     Properties = new LabVirtualMachineCreationParameterProperties();
                 }
-                Properties.DisallowPublicIpAddress = value.Value;
+                Properties.DisallowPublicIPAddress = value.Value;
             }
         }
 

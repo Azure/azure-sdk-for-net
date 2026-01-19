@@ -14,7 +14,7 @@ using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal partial class LabsGetDevTestLabVhdsCollectionResultOfT : Pageable<LabVhd>
+    internal partial class LabsGetDevTestLabVhdsCollectionResultOfT : Pageable<DevTestLabVhd>
     {
         private readonly Labs _client;
         private readonly string _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LabsGetDevTestLabVhdsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<LabVhd>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DevTestLabVhd>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 LabVhdList result = LabVhdList.FromResponse(response);
-                yield return Page<LabVhd>.FromValues((IReadOnlyList<LabVhd>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabVhd>.FromValues((IReadOnlyList<DevTestLabVhd>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             OSType = osType;
             VmSize = vmSize;
             NetworkInterfaceId = networkInterfaceId;
-            OsDiskId = osDiskId;
+            OSDiskId = osDiskId;
             DataDiskIds = dataDiskIds;
             DataDisks = dataDisks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string NetworkInterfaceId { get; }
 
         /// <summary> Gets OS disk blob uri for the virtual machine. </summary>
-        public string OsDiskId { get; }
+        public string OSDiskId { get; }
 
         /// <summary> Gets data disks blob uri for the virtual machine. </summary>
         public IReadOnlyList<string> DataDiskIds { get; }

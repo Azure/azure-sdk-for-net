@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabImportVmContent"/>. </summary>
-        /// <param name="sourceVirtualMachineResourceId"> The full resource ID of the virtual machine to be imported. </param>
-        /// <param name="destinationVirtualMachineName"> The name of the virtual machine in the destination lab. </param>
+        /// <param name="sourceVmResourceId"> The full resource ID of the virtual machine to be imported. </param>
+        /// <param name="destinationVmName"> The name of the virtual machine in the destination lab. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabImportVmContent(ResourceIdentifier sourceVirtualMachineResourceId, string destinationVirtualMachineName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabImportVmContent(ResourceIdentifier sourceVmResourceId, string destinationVmName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceVirtualMachineResourceId = sourceVirtualMachineResourceId;
-            DestinationVirtualMachineName = destinationVirtualMachineName;
+            SourceVmResourceId = sourceVmResourceId;
+            DestinationVmName = destinationVmName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The full resource ID of the virtual machine to be imported. </summary>
-        public ResourceIdentifier SourceVirtualMachineResourceId { get; set; }
+        public ResourceIdentifier SourceVmResourceId { get; set; }
 
         /// <summary> The name of the virtual machine in the destination lab. </summary>
-        public string DestinationVirtualMachineName { get; set; }
+        public string DestinationVmName { get; set; }
     }
 }

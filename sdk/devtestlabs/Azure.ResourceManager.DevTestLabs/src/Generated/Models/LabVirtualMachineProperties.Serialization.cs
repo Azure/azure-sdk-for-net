@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("labVirtualNetworkId"u8);
                 writer.WriteStringValue(LabVirtualNetworkId);
             }
-            if (Optional.IsDefined(DisallowPublicIpAddress))
+            if (Optional.IsDefined(DisallowPublicIPAddress))
             {
                 writer.WritePropertyName("disallowPublicIpAddress"u8);
-                writer.WriteBooleanValue(DisallowPublicIpAddress.Value);
+                writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
             }
             if (Optional.IsCollectionDefined(Artifacts))
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string fqdn = default;
             string labSubnetName = default;
             ResourceIdentifier labVirtualNetworkId = default;
-            bool? disallowPublicIpAddress = default;
+            bool? disallowPublicIPAddress = default;
             IList<DevTestLabArtifactInstallInfo> artifacts = default;
             DevTestLabArtifactDeploymentStatus artifactDeploymentStatus = default;
             DevTestLabGalleryImageReference galleryImageReference = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    disallowPublicIpAddress = prop.Value.GetBoolean();
+                    disallowPublicIPAddress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("artifacts"u8))
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 fqdn,
                 labSubnetName,
                 labVirtualNetworkId,
-                disallowPublicIpAddress,
+                disallowPublicIPAddress,
                 artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>(),
                 artifactDeploymentStatus,
                 galleryImageReference,

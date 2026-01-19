@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="isAuthenticationWithSshKey"> Indicates whether this virtual machine uses an SSH key for authentication. </param>
         /// <param name="labSubnetName"> The lab subnet name of the virtual machine. </param>
         /// <param name="labVirtualNetworkId"> The lab virtual network identifier of the virtual machine. </param>
-        /// <param name="disallowPublicIpAddress"> Indicates whether the virtual machine is to be created without a public IP address. </param>
+        /// <param name="disallowPublicIPAddress"> Indicates whether the virtual machine is to be created without a public IP address. </param>
         /// <param name="artifacts"> The artifacts to be installed on the virtual machine. </param>
         /// <param name="galleryImageReference"> The Microsoft Azure Marketplace image reference of the virtual machine. </param>
         /// <param name="planId"> The id of the plan associated with the virtual machine image. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
         /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabVirtualMachineCreationParameterProperties(BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIpAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expireOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabVirtualMachineCreationParameterProperties(BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expireOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BulkCreationParameters = bulkCreationParameters;
             Notes = notes;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             IsAuthenticationWithSshKey = isAuthenticationWithSshKey;
             LabSubnetName = labSubnetName;
             LabVirtualNetworkId = labVirtualNetworkId;
-            DisallowPublicIpAddress = disallowPublicIpAddress;
+            DisallowPublicIPAddress = disallowPublicIPAddress;
             Artifacts = artifacts;
             GalleryImageReference = galleryImageReference;
             PlanId = planId;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public ResourceIdentifier LabVirtualNetworkId { get; set; }
 
         /// <summary> Indicates whether the virtual machine is to be created without a public IP address. </summary>
-        public bool? DisallowPublicIpAddress { get; set; }
+        public bool? DisallowPublicIPAddress { get; set; }
 
         /// <summary> The artifacts to be installed on the virtual machine. </summary>
         public IList<DevTestLabArtifactInstallInfo> Artifacts { get; } = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();

@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Optional.IsDefined(AllowPublicIp))
+            if (Optional.IsDefined(AllowPublicIP))
             {
                 writer.WritePropertyName("allowPublicIp"u8);
-                writer.WriteStringValue(AllowPublicIp.Value.ToString());
+                writer.WriteStringValue(AllowPublicIP.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             ResourceIdentifier resourceId = default;
             string labSubnetName = default;
-            DevTestLabUsagePermissionType? allowPublicIp = default;
+            DevTestLabUsagePermissionType? allowPublicIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    allowPublicIp = new DevTestLabUsagePermissionType(prop.Value.GetString());
+                    allowPublicIP = new DevTestLabUsagePermissionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevTestLabSubnet(resourceId, labSubnetName, allowPublicIp, additionalBinaryDataProperties);
+            return new DevTestLabSubnet(resourceId, labSubnetName, allowPublicIP, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

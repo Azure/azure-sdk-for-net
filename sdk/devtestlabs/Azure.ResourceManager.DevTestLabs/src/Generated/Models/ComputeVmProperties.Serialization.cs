@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("networkInterfaceId"u8);
                 writer.WriteStringValue(NetworkInterfaceId);
             }
-            if (Optional.IsDefined(OsDiskId))
+            if (Optional.IsDefined(OSDiskId))
             {
                 writer.WritePropertyName("osDiskId"u8);
-                writer.WriteStringValue(OsDiskId);
+                writer.WriteStringValue(OSDiskId);
             }
             if (Optional.IsCollectionDefined(DataDiskIds))
             {

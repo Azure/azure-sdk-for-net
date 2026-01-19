@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LabVhd item in Value)
+            foreach (DevTestLabVhd item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IList<LabVhd> value = default;
+            IList<DevTestLabVhd> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LabVhd> array = new List<LabVhd>();
+                    List<DevTestLabVhd> array = new List<DevTestLabVhd>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LabVhd.DeserializeLabVhd(item, options));
+                        array.Add(DevTestLabVhd.DeserializeDevTestLabVhd(item, options));
                     }
                     value = array;
                     continue;

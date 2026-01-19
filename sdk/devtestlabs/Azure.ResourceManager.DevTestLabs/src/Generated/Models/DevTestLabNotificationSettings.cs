@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
         /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabNotificationSettings(DevTestLabEnableStatus? status, int? timeInMinutes, string webhookUri, string emailRecipient, string notificationLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabNotificationSettings(DevTestLabEnableStatus? status, int? timeInMinutes, Uri webhookUri, string emailRecipient, string notificationLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             TimeInMinutes = timeInMinutes;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public int? TimeInMinutes { get; set; }
 
         /// <summary> The webhook URL to which the notification will be sent. </summary>
-        public string WebhookUri { get; set; }
+        public Uri WebhookUri { get; set; }
 
         /// <summary> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </summary>
         public string EmailRecipient { get; set; }

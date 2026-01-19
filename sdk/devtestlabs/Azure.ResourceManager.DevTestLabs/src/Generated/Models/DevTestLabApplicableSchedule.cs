@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Schedules applicable to a virtual machine. The schedules may have been defined on a VM or on lab level. </summary>
-    public partial class DevTestLabApplicableSchedule : ResourceData
+    public partial class DevTestLabApplicableSchedule : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the resource. </param>
-        internal DevTestLabApplicableSchedule(ApplicableScheduleProperties properties)
+        internal DevTestLabApplicableSchedule(AzureLocation location, ApplicableScheduleProperties properties) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 
@@ -33,22 +33,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="location"> The location of the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="properties"> The properties of the resource. </param>
-        internal DevTestLabApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, IDictionary<string, string> tags, ApplicableScheduleProperties properties) : base(id, name, resourceType, systemData)
+        internal DevTestLabApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, IDictionary<string, string> tags, ApplicableScheduleProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Location = location;
-            Tags = tags;
             Properties = properties;
         }
-
-        /// <summary> The location of the resource. </summary>
-        public AzureLocation? Location { get; }
-
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The properties of the resource. </summary>
         internal ApplicableScheduleProperties Properties { get; }

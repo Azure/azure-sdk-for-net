@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabSubnet"/>. </summary>
         /// <param name="resourceId"> The resource ID of the subnet. </param>
         /// <param name="labSubnetName"> The name of the subnet as seen in the lab. </param>
-        /// <param name="allowPublicIp"> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </param>
+        /// <param name="allowPublicIP"> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabSubnet(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? allowPublicIp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabSubnet(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? allowPublicIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             LabSubnetName = labSubnetName;
-            AllowPublicIp = allowPublicIp;
+            AllowPublicIP = allowPublicIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string LabSubnetName { get; set; }
 
         /// <summary> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </summary>
-        public DevTestLabUsagePermissionType? AllowPublicIp { get; set; }
+        public DevTestLabUsagePermissionType? AllowPublicIP { get; set; }
     }
 }

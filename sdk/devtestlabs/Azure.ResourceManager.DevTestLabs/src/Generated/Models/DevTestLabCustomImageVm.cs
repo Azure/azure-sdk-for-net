@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="windowsOsInfo"> The Windows OS information of the VM. </param>
         /// <param name="linuxOsInfo"> The Linux OS information of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabCustomImageVm(string sourceVmId, WindowsOsInfo windowsOsInfo, LinuxOsInfo linuxOsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabCustomImageVm(string sourceVmId, DevTestLabWindowsOSInfo windowsOsInfo, DevTestLabLinuxOSInfo linuxOsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVmId = sourceVmId;
             WindowsOsInfo = windowsOsInfo;
@@ -38,42 +38,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string SourceVmId { get; set; }
 
         /// <summary> The Windows OS information of the VM. </summary>
-        internal WindowsOsInfo WindowsOsInfo { get; set; }
+        internal DevTestLabWindowsOSInfo WindowsOsInfo { get; set; }
 
         /// <summary> The Linux OS information of the VM. </summary>
-        internal LinuxOsInfo LinuxOsInfo { get; set; }
+        internal DevTestLabLinuxOSInfo LinuxOsInfo { get; set; }
 
         /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>
-        public WindowsOsState? WindowsOsState
+        public DevTestLabWindowsOSState? WindowsOSState
         {
             get
             {
-                return WindowsOsInfo is null ? default : WindowsOsInfo.WindowsOsState;
+                return WindowsOsInfo is null ? default : WindowsOsInfo.WindowsOSState;
             }
             set
             {
                 if (WindowsOsInfo is null)
                 {
-                    WindowsOsInfo = new WindowsOsInfo();
+                    WindowsOsInfo = new DevTestLabWindowsOSInfo();
                 }
-                WindowsOsInfo.WindowsOsState = value;
+                WindowsOsInfo.WindowsOSState = value;
             }
         }
 
         /// <summary> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </summary>
-        public DevTestLabLinuxOsState? LinuxOsState
+        public DevTestLabLinuxOSState? LinuxOSState
         {
             get
             {
-                return LinuxOsInfo is null ? default : LinuxOsInfo.LinuxOsState;
+                return LinuxOsInfo is null ? default : LinuxOsInfo.LinuxOSState;
             }
             set
             {
                 if (LinuxOsInfo is null)
                 {
-                    LinuxOsInfo = new LinuxOsInfo();
+                    LinuxOsInfo = new DevTestLabLinuxOSInfo();
                 }
-                LinuxOsInfo.LinuxOsState = value;
+                LinuxOsInfo.LinuxOSState = value;
             }
         }
     }

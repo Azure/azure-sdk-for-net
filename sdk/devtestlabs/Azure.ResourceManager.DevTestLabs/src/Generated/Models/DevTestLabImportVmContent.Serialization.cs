@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 throw new FormatException($"The model {nameof(DevTestLabImportVmContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SourceVirtualMachineResourceId))
+            if (Optional.IsDefined(SourceVmResourceId))
             {
                 writer.WritePropertyName("sourceVirtualMachineResourceId"u8);
-                writer.WriteStringValue(SourceVirtualMachineResourceId);
+                writer.WriteStringValue(SourceVmResourceId);
             }
-            if (Optional.IsDefined(DestinationVirtualMachineName))
+            if (Optional.IsDefined(DestinationVmName))
             {
                 writer.WritePropertyName("destinationVirtualMachineName"u8);
-                writer.WriteStringValue(DestinationVirtualMachineName);
+                writer.WriteStringValue(DestinationVmName);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            ResourceIdentifier sourceVirtualMachineResourceId = default;
-            string destinationVirtualMachineName = default;
+            ResourceIdentifier sourceVmResourceId = default;
+            string destinationVmName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sourceVirtualMachineResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    sourceVmResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("destinationVirtualMachineName"u8))
                 {
-                    destinationVirtualMachineName = prop.Value.GetString();
+                    destinationVmName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevTestLabImportVmContent(sourceVirtualMachineResourceId, destinationVirtualMachineName, additionalBinaryDataProperties);
+            return new DevTestLabImportVmContent(sourceVmResourceId, destinationVmName, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

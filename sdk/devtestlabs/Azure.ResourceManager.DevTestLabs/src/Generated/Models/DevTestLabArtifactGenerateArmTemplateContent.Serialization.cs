@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(FileUploadOptions))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             string vmName = default;
             IList<DevTestLabParameter> parameters = default;
-            string location = default;
+            AzureLocation? location = default;
             DevTestLabFileUploadOption? fileUploadOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -130,7 +130,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fileUploadOptions"u8))

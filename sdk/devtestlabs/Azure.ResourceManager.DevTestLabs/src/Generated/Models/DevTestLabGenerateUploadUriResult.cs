@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriResult"/>. </summary>
         /// <param name="uploadUri"> The upload URI for the VHD. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabGenerateUploadUriResult(string uploadUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabGenerateUploadUriResult(Uri uploadUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UploadUri = uploadUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The upload URI for the VHD. </summary>
-        public string UploadUri { get; }
+        public Uri UploadUri { get; }
     }
 }

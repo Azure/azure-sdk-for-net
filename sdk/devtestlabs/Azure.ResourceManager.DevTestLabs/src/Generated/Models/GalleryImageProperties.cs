@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageProperties"/>. </summary>
-        internal GalleryImageProperties()
+        public GalleryImageProperties()
         {
         }
 
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The author of the gallery image. </summary>
-        public string Author { get; }
+        public string Author { get; set; }
 
         /// <summary> The creation date of the gallery image. </summary>
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The description of the gallery image. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> The image reference of the gallery image. </summary>
-        public DevTestLabGalleryImageReference ImageReference { get; }
+        public DevTestLabGalleryImageReference ImageReference { get; set; }
 
         /// <summary> The icon of the gallery image. </summary>
-        public string Icon { get; }
+        public string Icon { get; set; }
 
         /// <summary> Indicates whether this gallery image is enabled. </summary>
-        public bool? IsEnabled { get; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> The third party plan that applies to this image. </summary>
-        public string PlanId { get; }
+        public string PlanId { get; set; }
 
         /// <summary> Indicates if the plan has been authorized for programmatic deployment. </summary>
-        public bool? IsPlanAuthorized { get; }
+        public bool? IsPlanAuthorized { get; set; }
     }
 }

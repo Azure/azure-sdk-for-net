@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(WebhookUri))
             {
                 writer.WritePropertyName("webhookUrl"u8);
-                writer.WriteStringValue(WebhookUri);
+                writer.WriteStringValue(WebhookUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EmailRecipient))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             DevTestLabEnableStatus? status = default;
             int? timeInMinutes = default;
-            string webhookUri = default;
+            Uri webhookUri = default;
             string emailRecipient = default;
             string notificationLocale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -129,7 +129,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("webhookUrl"u8))
                 {
-                    webhookUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    webhookUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("emailRecipient"u8))

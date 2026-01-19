@@ -25,25 +25,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabNetworkInterface"/>. </summary>
         /// <param name="virtualNetworkId"> The resource ID of the virtual network. </param>
         /// <param name="subnetId"> The resource ID of the sub net. </param>
-        /// <param name="publicIpAddressId"> The resource ID of the public IP address. </param>
-        /// <param name="publicIpAddress"> The public IP address. </param>
-        /// <param name="privateIpAddress"> The private IP address. </param>
+        /// <param name="publicIPAddressId"> The resource ID of the public IP address. </param>
+        /// <param name="publicIPAddress"> The public IP address. </param>
+        /// <param name="privateIPAddress"> The private IP address. </param>
         /// <param name="dnsName"> The DNS name. </param>
         /// <param name="rdpAuthority"> The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol). </param>
         /// <param name="sshAuthority"> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </param>
-        /// <param name="sharedPublicIpAddressConfiguration"> The configuration for sharing a public IP address across multiple virtual machines. </param>
+        /// <param name="sharedPublicIPAddressConfiguration"> The configuration for sharing a public IP address across multiple virtual machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIpAddressId, string publicIpAddress, string privateIpAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIpAddressConfiguration sharedPublicIpAddressConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIPAddressId, string publicIPAddress, string privateIPAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIpAddressConfiguration sharedPublicIPAddressConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkId = virtualNetworkId;
             SubnetId = subnetId;
-            PublicIpAddressId = publicIpAddressId;
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddressId = publicIPAddressId;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             DnsName = dnsName;
             RdpAuthority = rdpAuthority;
             SshAuthority = sshAuthority;
-            SharedPublicIpAddressConfiguration = sharedPublicIpAddressConfiguration;
+            SharedPublicIPAddressConfiguration = sharedPublicIPAddressConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> The resource ID of the public IP address. </summary>
-        public ResourceIdentifier PublicIpAddressId { get; set; }
+        public ResourceIdentifier PublicIPAddressId { get; set; }
 
         /// <summary> The public IP address. </summary>
-        public string PublicIpAddress { get; set; }
+        public string PublicIPAddress { get; set; }
 
         /// <summary> The private IP address. </summary>
-        public string PrivateIpAddress { get; set; }
+        public string PrivateIPAddress { get; set; }
 
         /// <summary> The DNS name. </summary>
         public string DnsName { get; set; }
@@ -72,18 +72,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string SshAuthority { get; set; }
 
         /// <summary> The configuration for sharing a public IP address across multiple virtual machines. </summary>
-        internal SharedPublicIpAddressConfiguration SharedPublicIpAddressConfiguration { get; set; }
+        internal SharedPublicIpAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
 
         /// <summary> The incoming NAT rules. </summary>
-        public IList<DevTestLabInboundNatRule> SharedPublicIpAddressInboundNatRules
+        public IList<DevTestLabInboundNatRule> SharedPublicIPAddressInboundNatRules
         {
             get
             {
-                if (SharedPublicIpAddressConfiguration is null)
+                if (SharedPublicIPAddressConfiguration is null)
                 {
-                    SharedPublicIpAddressConfiguration = new SharedPublicIpAddressConfiguration();
+                    SharedPublicIPAddressConfiguration = new SharedPublicIpAddressConfiguration();
                 }
-                return SharedPublicIpAddressConfiguration.InboundNatRules;
+                return SharedPublicIPAddressConfiguration.InboundNatRules;
             }
         }
     }

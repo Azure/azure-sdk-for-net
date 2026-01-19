@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Schedules applicable to a virtual machine. The schedules may have been defined on a VM or on lab level. </summary>
-    public partial class DevTestLabApplicableSchedule : ResourceData, IJsonModel<DevTestLabApplicableSchedule>
+    public partial class DevTestLabApplicableSchedule : TrackedResourceData, IJsonModel<DevTestLabApplicableSchedule>
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/> for deserialization. </summary>
         internal DevTestLabApplicableSchedule()
@@ -44,11 +44,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -99,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation? location = default;
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
             ApplicableScheduleProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -138,10 +133,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }

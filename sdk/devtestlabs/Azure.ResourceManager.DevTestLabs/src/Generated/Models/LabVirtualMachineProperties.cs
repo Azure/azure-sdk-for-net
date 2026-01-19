@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="fqdn"> The fully-qualified domain name of the virtual machine. </param>
         /// <param name="labSubnetName"> The lab subnet name of the virtual machine. </param>
         /// <param name="labVirtualNetworkId"> The lab virtual network identifier of the virtual machine. </param>
-        /// <param name="disallowPublicIpAddress"> Indicates whether the virtual machine is to be created without a public IP address. </param>
+        /// <param name="disallowPublicIPAddress"> Indicates whether the virtual machine is to be created without a public IP address. </param>
         /// <param name="artifacts"> The artifacts to be installed on the virtual machine. </param>
         /// <param name="artifactDeploymentStatus"> The artifact deployment status for the virtual machine. </param>
         /// <param name="galleryImageReference"> The Microsoft Azure Marketplace image reference of the virtual machine. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabVirtualMachineProperties(string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIpAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabVirtualMachineProperties(string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Notes = notes;
             OwnerObjectId = ownerObjectId;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Fqdn = fqdn;
             LabSubnetName = labSubnetName;
             LabVirtualNetworkId = labVirtualNetworkId;
-            DisallowPublicIpAddress = disallowPublicIpAddress;
+            DisallowPublicIPAddress = disallowPublicIPAddress;
             Artifacts = artifacts;
             ArtifactDeploymentStatus = artifactDeploymentStatus;
             GalleryImageReference = galleryImageReference;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public ResourceIdentifier LabVirtualNetworkId { get; set; }
 
         /// <summary> Indicates whether the virtual machine is to be created without a public IP address. </summary>
-        public bool? DisallowPublicIpAddress { get; set; }
+        public bool? DisallowPublicIPAddress { get; set; }
 
         /// <summary> The artifacts to be installed on the virtual machine. </summary>
         public IList<DevTestLabArtifactInstallInfo> Artifacts { get; } = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();

@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("useInVmCreationPermission"u8);
                 writer.WriteStringValue(UseInVmCreationPermission.Value.ToString());
             }
-            if (Optional.IsDefined(UsePublicIpAddressPermission))
+            if (Optional.IsDefined(UsePublicIPAddressPermission))
             {
                 writer.WritePropertyName("usePublicIpAddressPermission"u8);
-                writer.WriteStringValue(UsePublicIpAddressPermission.Value.ToString());
+                writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToString());
             }
-            if (Optional.IsDefined(SharedPublicIpAddressConfiguration))
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue(SharedPublicIpAddressConfiguration, options);
+                writer.WriteObjectValue(SharedPublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(VirtualNetworkPoolName))
             {
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ResourceIdentifier resourceId = default;
             string labSubnetName = default;
             DevTestLabUsagePermissionType? useInVmCreationPermission = default;
-            DevTestLabUsagePermissionType? usePublicIpAddressPermission = default;
-            SubnetSharedPublicIpAddressConfiguration sharedPublicIpAddressConfiguration = default;
+            DevTestLabUsagePermissionType? usePublicIPAddressPermission = default;
+            SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration = default;
             string virtualNetworkPoolName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    usePublicIpAddressPermission = new DevTestLabUsagePermissionType(prop.Value.GetString());
+                    usePublicIPAddressPermission = new DevTestLabUsagePermissionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sharedPublicIpAddressConfiguration"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sharedPublicIpAddressConfiguration = SubnetSharedPublicIpAddressConfiguration.DeserializeSubnetSharedPublicIpAddressConfiguration(prop.Value, options);
+                    sharedPublicIPAddressConfiguration = SubnetSharedPublicIPAddressConfiguration.DeserializeSubnetSharedPublicIPAddressConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualNetworkPoolName"u8))
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 resourceId,
                 labSubnetName,
                 useInVmCreationPermission,
-                usePublicIpAddressPermission,
-                sharedPublicIpAddressConfiguration,
+                usePublicIPAddressPermission,
+                sharedPublicIPAddressConfiguration,
                 virtualNetworkPoolName,
                 additionalBinaryDataProperties);
         }

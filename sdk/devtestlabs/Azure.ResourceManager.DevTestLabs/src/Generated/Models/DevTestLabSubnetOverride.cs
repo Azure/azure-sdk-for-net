@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="resourceId"> The resource ID of the subnet. </param>
         /// <param name="labSubnetName"> The name given to the subnet within the lab. </param>
         /// <param name="useInVmCreationPermission"> Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny). </param>
-        /// <param name="usePublicIpAddressPermission"> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </param>
-        /// <param name="sharedPublicIpAddressConfiguration"> Properties that virtual machines on this subnet will share. </param>
+        /// <param name="usePublicIPAddressPermission"> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </param>
+        /// <param name="sharedPublicIPAddressConfiguration"> Properties that virtual machines on this subnet will share. </param>
         /// <param name="virtualNetworkPoolName"> The virtual network pool associated with this subnet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabSubnetOverride(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? useInVmCreationPermission, DevTestLabUsagePermissionType? usePublicIpAddressPermission, SubnetSharedPublicIpAddressConfiguration sharedPublicIpAddressConfiguration, string virtualNetworkPoolName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabSubnetOverride(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? useInVmCreationPermission, DevTestLabUsagePermissionType? usePublicIPAddressPermission, SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, string virtualNetworkPoolName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             LabSubnetName = labSubnetName;
             UseInVmCreationPermission = useInVmCreationPermission;
-            UsePublicIpAddressPermission = usePublicIpAddressPermission;
-            SharedPublicIpAddressConfiguration = sharedPublicIpAddressConfiguration;
+            UsePublicIPAddressPermission = usePublicIPAddressPermission;
+            SharedPublicIPAddressConfiguration = sharedPublicIPAddressConfiguration;
             VirtualNetworkPoolName = virtualNetworkPoolName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -51,24 +51,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabUsagePermissionType? UseInVmCreationPermission { get; set; }
 
         /// <summary> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </summary>
-        public DevTestLabUsagePermissionType? UsePublicIpAddressPermission { get; set; }
+        public DevTestLabUsagePermissionType? UsePublicIPAddressPermission { get; set; }
 
         /// <summary> Properties that virtual machines on this subnet will share. </summary>
-        internal SubnetSharedPublicIpAddressConfiguration SharedPublicIpAddressConfiguration { get; set; }
+        internal SubnetSharedPublicIPAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
 
         /// <summary> The virtual network pool associated with this subnet. </summary>
         public string VirtualNetworkPoolName { get; set; }
 
         /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>
-        public IList<DevTestLabPort> SharedPublicIpAddressAllowedPorts
+        public IList<DevTestLabPort> SharedPublicIPAddressAllowedPorts
         {
             get
             {
-                if (SharedPublicIpAddressConfiguration is null)
+                if (SharedPublicIPAddressConfiguration is null)
                 {
-                    SharedPublicIpAddressConfiguration = new SubnetSharedPublicIpAddressConfiguration();
+                    SharedPublicIPAddressConfiguration = new SubnetSharedPublicIPAddressConfiguration();
                 }
-                return SharedPublicIpAddressConfiguration.AllowedPorts;
+                return SharedPublicIPAddressConfiguration.AllowedPorts;
             }
         }
     }

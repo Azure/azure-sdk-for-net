@@ -1033,8 +1033,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabVhd"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LabVhd> GetDevTestLabVhdsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabVhd"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabVhd> GetDevTestLabVhdsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1065,8 +1065,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabVhd"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LabVhd> GetDevTestLabVhds(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabVhd"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabVhd> GetDevTestLabVhds(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

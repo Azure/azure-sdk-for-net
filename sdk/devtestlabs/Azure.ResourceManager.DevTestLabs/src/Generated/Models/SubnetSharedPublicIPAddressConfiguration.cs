@@ -12,21 +12,21 @@ using Azure.ResourceManager.DevTestLabs;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Configuration for public IP address sharing. </summary>
-    internal partial class SubnetSharedPublicIpAddressConfiguration
+    internal partial class SubnetSharedPublicIPAddressConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIpAddressConfiguration"/>. </summary>
-        public SubnetSharedPublicIpAddressConfiguration()
+        /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIPAddressConfiguration"/>. </summary>
+        public SubnetSharedPublicIPAddressConfiguration()
         {
             AllowedPorts = new ChangeTrackingList<DevTestLabPort>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIpAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIPAddressConfiguration"/>. </summary>
         /// <param name="allowedPorts"> Backend ports that virtual machines on this subnet are allowed to expose. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetSharedPublicIpAddressConfiguration(IList<DevTestLabPort> allowedPorts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubnetSharedPublicIPAddressConfiguration(IList<DevTestLabPort> allowedPorts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedPorts = allowedPorts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

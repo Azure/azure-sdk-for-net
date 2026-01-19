@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(UploadUri))
             {
                 writer.WritePropertyName("uploadUri"u8);
-                writer.WriteStringValue(UploadUri);
+                writer.WriteStringValue(UploadUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -82,13 +82,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            string uploadUri = default;
+            Uri uploadUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("uploadUri"u8))
                 {
-                    uploadUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uploadUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
