@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Batch.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
-        internal NetworkSecurityProfile()
+        public NetworkSecurityProfile()
         {
             AccessRules = new ChangeTrackingList<BatchAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IReadOnlyList<BatchAccessRule> accessRules, int? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<BatchAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Name of the profile. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Current access rules version. </summary>
-        public int? AccessRulesVersion { get; }
+        public int? AccessRulesVersion { get; set; }
         /// <summary> List of Access Rules. </summary>
-        public IReadOnlyList<BatchAccessRule> AccessRules { get; }
+        public IList<BatchAccessRule> AccessRules { get; }
         /// <summary> Current diagnostic settings version. </summary>
-        public int? DiagnosticSettingsVersion { get; }
+        public int? DiagnosticSettingsVersion { get; set; }
         /// <summary> List of log categories that are enabled. </summary>
-        public IReadOnlyList<string> EnabledLogCategories { get; }
+        public IList<string> EnabledLogCategories { get; }
     }
 }

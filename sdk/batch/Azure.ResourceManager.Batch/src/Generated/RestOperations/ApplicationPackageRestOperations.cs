@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Lists all of the application packages in the specified application. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Lists all of the application packages in the specified application. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Gets information about the specified application package. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Gets information about the specified application package. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Creates an application package record. The record contains a storageUrl where the package should be uploaded to.  Once it is uploaded the `ApplicationPackage` needs to be activated using `ApplicationPackageActive` before it can be used. If the auto storage account was configured to use storage keys, the URL returned will contain a SAS. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="data"> The parameters for the request. </param>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Creates an application package record. The record contains a storageUrl where the package should be uploaded to.  Once it is uploaded the `ApplicationPackage` needs to be activated using `ApplicationPackageActive` before it can be used. If the auto storage account was configured to use storage keys, the URL returned will contain a SAS. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="data"> The parameters for the request. </param>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Deletes an application package record and its associated binary file. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Deletes an application package record and its associated binary file. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Activates the specified application package. This should be done after the `ApplicationPackage` was created and uploaded. This needs to be done before an `ApplicationPackage` can be used on Pools or Tasks. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="content"> The parameters for the request. </param>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Activates the specified application package. This should be done after the `ApplicationPackage` was created and uploaded. This needs to be done before an `ApplicationPackage` can be used on Pools or Tasks. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="content"> The parameters for the request. </param>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

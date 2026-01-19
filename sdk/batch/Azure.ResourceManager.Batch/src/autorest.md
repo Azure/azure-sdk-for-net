@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/560f5eef0eb553db1884e5b623448ebdfee7a081/specification/batch/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/461499f28a486b095d4b981e7c529b42634ba927/specification/batch/resource-manager/readme.md
 #tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -271,5 +271,8 @@ directive:
         };
   - from: openapi.json
     where: $.definitions.CheckNameAvailabilityParameters.properties.type
+    transform: $["x-ms-constant"] = true;
+  - from: swagger-document
+    where: $.definitions.NetworkSecurityPerimeterConfiguration
     transform: $["x-ms-constant"] = true;
 ```

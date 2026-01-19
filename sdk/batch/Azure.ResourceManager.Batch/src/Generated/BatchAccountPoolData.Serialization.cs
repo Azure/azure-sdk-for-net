@@ -681,6 +681,8 @@ namespace Azure.ResourceManager.Batch
                 type,
                 systemData,
                 identity,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 displayName,
                 lastModified,
                 creationTime,
@@ -710,8 +712,6 @@ namespace Azure.ResourceManager.Batch
                 currentNodeCommunicationMode,
                 upgradePolicy,
                 resourceTags ?? new ChangeTrackingDictionary<string, string>(),
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

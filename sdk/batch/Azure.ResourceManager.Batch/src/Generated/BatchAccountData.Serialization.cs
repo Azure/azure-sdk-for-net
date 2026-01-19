@@ -43,22 +43,6 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(AccountEndpoint))
@@ -234,8 +218,8 @@ namespace Azure.ResourceManager.Batch
                 return null;
             }
             ManagedServiceIdentity identity = default;
-            AzureLocation? location = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -270,15 +254,6 @@ namespace Azure.ResourceManager.Batch
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerBatchContext.Default);
                     continue;
                 }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -291,6 +266,11 @@ namespace Azure.ResourceManager.Batch
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -507,6 +487,8 @@ namespace Azure.ResourceManager.Batch
                 name,
                 type,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 identity,
                 accountEndpoint,
                 nodeManagementEndpoint,
@@ -525,8 +507,6 @@ namespace Azure.ResourceManager.Batch
                 poolQuota,
                 activeJobAndJobScheduleQuota,
                 allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

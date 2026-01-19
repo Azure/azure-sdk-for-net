@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Checks whether the Batch account name is available in the specified region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Checks whether the Batch account name is available in the specified region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

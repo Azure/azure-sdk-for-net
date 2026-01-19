@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch
     /// A class representing the BatchAccount data model.
     /// Contains information about an Azure Batch account.
     /// </summary>
-    public partial class BatchAccountData : ResourceData
+    public partial class BatchAccountData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
-        public BatchAccountData()
+        /// <param name="location"> The location. </param>
+        public BatchAccountData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
             DedicatedCoreQuotaPerVmFamily = new ChangeTrackingList<BatchVmFamilyCoreQuota>();
             AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
@@ -65,6 +65,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
         /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
@@ -83,10 +85,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="poolQuota"> The pool quota for the Batch account. </param>
         /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             AccountEndpoint = accountEndpoint;
@@ -106,9 +106,12 @@ namespace Azure.ResourceManager.Batch
             PoolQuota = poolQuota;
             ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuota;
             AllowedAuthenticationModes = allowedAuthenticationModes;
-            Location = location;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountData"/> for deserialization. </summary>
+        internal BatchAccountData()
+        {
         }
 
         /// <summary> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
@@ -147,9 +150,5 @@ namespace Azure.ResourceManager.Batch
         public int? ActiveJobAndJobScheduleQuota { get; }
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
         public IReadOnlyList<BatchAuthenticationMode> AllowedAuthenticationModes { get; }
-        /// <summary> The location of the resource. </summary>
-        public AzureLocation? Location { get; }
-        /// <summary> The tags of the resource. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

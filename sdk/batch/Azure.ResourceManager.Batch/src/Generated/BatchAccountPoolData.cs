@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of <see cref="BatchAccountPoolData"/>. </summary>
         public BatchAccountPoolData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             UserAccounts = new ChangeTrackingList<BatchUserAccount>();
             Metadata = new ChangeTrackingList<BatchAccountPoolMetadataItem>();
             Certificates = new ChangeTrackingList<BatchCertificateReference>();
@@ -61,7 +62,6 @@ namespace Azure.ResourceManager.Batch
             ApplicationLicenses = new ChangeTrackingList<string>();
             MountConfiguration = new ChangeTrackingList<BatchMountConfiguration>();
             ResourceTags = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountPoolData"/>. </summary>
@@ -70,6 +70,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> The type of identity used for the Batch Pool. Current supported identity types: UserAssigned, None. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
         /// <param name="createdOn"> The creation time of the pool. </param>
@@ -103,12 +105,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="currentNodeCommunicationMode"> Determines how a pool communicates with the Batch service. </param>
         /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="resourceTags"> The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<BatchUserAccount> userAccounts, IList<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IList<BatchCertificateReference> certificates, IList<BatchApplicationPackageReference> applicationPackages, IList<string> applicationLicenses, BatchResizeOperationStatus resizeOperationStatus, IList<BatchMountConfiguration> mountConfiguration, NodeCommunicationMode? targetNodeCommunicationMode, NodeCommunicationMode? currentNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, string> resourceTags, ETag? etag, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, string> tags, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<BatchUserAccount> userAccounts, IList<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IList<BatchCertificateReference> certificates, IList<BatchApplicationPackageReference> applicationPackages, IList<string> applicationLicenses, BatchResizeOperationStatus resizeOperationStatus, IList<BatchMountConfiguration> mountConfiguration, NodeCommunicationMode? targetNodeCommunicationMode, NodeCommunicationMode? currentNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, string> resourceTags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
+            ETag = etag;
+            Tags = tags;
             DisplayName = displayName;
             LastModifiedOn = lastModifiedOn;
             CreatedOn = createdOn;
@@ -138,13 +140,15 @@ namespace Azure.ResourceManager.Batch
             CurrentNodeCommunicationMode = currentNodeCommunicationMode;
             UpgradePolicy = upgradePolicy;
             ResourceTags = resourceTags;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of identity used for the Batch Pool. Current supported identity types: UserAssigned, None. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The tags of the resource. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>
         public string DisplayName { get; set; }
         /// <summary> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </summary>
@@ -227,9 +231,5 @@ namespace Azure.ResourceManager.Batch
         public UpgradePolicy UpgradePolicy { get; set; }
         /// <summary> The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'. </summary>
         public IDictionary<string, string> ResourceTags { get; }
-        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

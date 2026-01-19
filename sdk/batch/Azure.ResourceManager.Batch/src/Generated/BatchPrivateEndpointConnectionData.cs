@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of <see cref="BatchPrivateEndpointConnectionData"/>. </summary>
         public BatchPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPrivateEndpointConnectionData"/>. </summary>
@@ -64,24 +64,28 @@ namespace Azure.ResourceManager.Batch
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The private endpoint of the private endpoint connection. </param>
         /// <param name="groupIds"> The value has one and only one group id. </param>
         /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, ETag? etag, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
+            Tags = tags;
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             ConnectionState = connectionState;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The tags of the resource. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The provisioning state of the private endpoint connection. </summary>
         public BatchPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
         /// <summary> The private endpoint of the private endpoint connection. </summary>
@@ -96,9 +100,5 @@ namespace Azure.ResourceManager.Batch
         public IReadOnlyList<string> GroupIds { get; }
         /// <summary> The private link service connection state of the private endpoint connection. </summary>
         public BatchPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

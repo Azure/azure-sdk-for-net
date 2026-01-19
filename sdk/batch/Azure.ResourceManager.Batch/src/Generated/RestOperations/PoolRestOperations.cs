@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Lists all of the pools in the specified account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Lists all of the pools in the specified account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Gets information about the specified pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Gets information about the specified pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Creates a new pool inside the specified account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Additional parameters for pool creation. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Creates a new pool inside the specified account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Additional parameters for pool creation. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Updates the properties of an existing pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Updates the properties of an existing pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Deletes the specified pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Deletes the specified pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Disables automatic scaling for a pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Disables automatic scaling for a pool. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> This does not restore the pool to its previous state before the resize operation: it only stops any further changes being made, and the pool maintains its current state. After stopping, the pool stabilizes at the number of nodes it was at when the stop operation was done. During the stop operation, the pool allocation state changes first to stopping and then to steady. A resize operation need not be an explicit resize pool request; this API can also be used to halt the initial sizing of the pool when it is created. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> This does not restore the pool to its previous state before the resize operation: it only stops any further changes being made, and the pool maintains its current state. After stopping, the pool stabilizes at the number of nodes it was at when the stop operation was done. During the stop operation, the pool allocation state changes first to stopping and then to steady. A resize operation need not be an explicit resize pool request; this API can also be used to halt the initial sizing of the pool when it is created. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">

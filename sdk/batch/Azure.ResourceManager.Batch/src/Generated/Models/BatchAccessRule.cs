@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Batch.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccessRule"/>. </summary>
-        internal BatchAccessRule()
+        public BatchAccessRule()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Name of the access rule. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Properties of Access Rule. </summary>
-        public BatchAccessRuleProperties Properties { get; }
+        public BatchAccessRuleProperties Properties { get; set; }
     }
 }

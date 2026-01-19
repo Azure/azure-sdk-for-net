@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>

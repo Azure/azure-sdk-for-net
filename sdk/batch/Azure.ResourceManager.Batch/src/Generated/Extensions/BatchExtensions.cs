@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)

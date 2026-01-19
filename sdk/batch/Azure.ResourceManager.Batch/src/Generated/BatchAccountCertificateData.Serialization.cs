@@ -282,6 +282,8 @@ namespace Azure.ResourceManager.Batch
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 thumbprintAlgorithm,
                 thumbprint,
                 format,
@@ -291,8 +293,6 @@ namespace Azure.ResourceManager.Batch
                 previousProvisioningStateTransitionTime,
                 publicData,
                 deleteCertificateError,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 
