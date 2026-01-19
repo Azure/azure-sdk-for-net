@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Astro.Samples
             string organizationName = "U.1-:7";
             AstroOrganizationData data = new AstroOrganizationData(new AzureLocation("mhqthlsatwvqkl"))
             {
-                Properties = new AstroOrganizationProperties(new AstroMarketplaceDetails("ntthclydlpqmasr", new AstroOfferDetails("gfsqxygpnerxmvols", "krzkefmpxztqyusidzgpchfaswuyce", "kndxzygsanuiqzwbfbbvoipv")
+                Properties = new AstroOrganizationProperties(new AstroMarketplaceDetails(new AstroOfferDetails("gfsqxygpnerxmvols", "krzkefmpxztqyusidzgpchfaswuyce", "kndxzygsanuiqzwbfbbvoipv")
                 {
                     PlanName = "pwqjwlq",
                     TermUnit = "xyygyzcazkuelz",

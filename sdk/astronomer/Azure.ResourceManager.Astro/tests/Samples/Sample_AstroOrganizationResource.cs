@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Astro.Samples
 },
                 Properties = new AstroOrganizationUpdateProperties
                 {
-                    User = new AstroUserUpdateDetails
+                    User = new AstroUserDetails
                     {
                         FirstName = "qeuofehzypzljgcuysugefbgxde",
                         LastName = "g",
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Astro.Samples
                         Upn = "uwtprzdfpsqmktx",
                         PhoneNumber = "aqpyxznvqpgkzohevynofrjdfgoo",
                     },
-                    PartnerOrganizationProperties = new AstroPartnerOrganizationUpdateProperties
+                    PartnerOrganizationProperties = new AstroPartnerOrganizationProperties
                     {
                         OrganizationId = "lrtmbkvyvvoszhjevohkmyjhfyty",
                         WorkspaceId = "xsepuskdhejaadusyxq",
