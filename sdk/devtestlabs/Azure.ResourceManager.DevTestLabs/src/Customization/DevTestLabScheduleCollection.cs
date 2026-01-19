@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<AsyncPageable<DevTestLabScheduleResource>> GetApplicableAsync(string name, CancellationToken cancellationToken = default)
-            => (await GetAsync(name, default, cancellationToken).ConfigureAwait(false)).Value.GetApplicableAsync(cancellationToken);
+        public virtual AsyncPageable<DevTestLabScheduleResource> GetApplicableAsync(string name, CancellationToken cancellationToken = default)
+            => GetAsync(name, default, cancellationToken).Result.Value.GetApplicableAsync(cancellationToken);
 
         /// <summary>
         /// Lists all applicable schedules
