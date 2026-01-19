@@ -43,6 +43,13 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
+        public void TestDeserializerInvalidEmptyType()
+        {
+            var identityJsonProperty = DeserializerHelper("InvalidTypeIsEmpty.json", out _);
+            Assert.AreEqual(default(ManagedServiceIdentityType), ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty).ManagedServiceIdentityType);
+        }
+
+        [TestCase]
         public void TestDeserializerInvalidType()
         {
             var identityJsonProperty = DeserializerHelper("InvalidType.json", out _);
