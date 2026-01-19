@@ -47,5 +47,26 @@ namespace Azure.ResourceManager.Tests
             var result = ManagedServiceIdentity.DeserializeManagedServiceIdentity(document.RootElement);
             Assert.AreEqual(default(ManagedServiceIdentityType), result.ManagedServiceIdentityType);
         }
+
+        [Test]
+        public void TestEmptyStringType()
+        {
+            // Test when type property is an empty string
+            string json = @"{
+                ""principalId"": ""22fddec1-8a9f-49dc-bd72-ddaf8f215577"",
+                ""tenantId"": ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
+                ""type"": """",
+                ""userAssignedIdentities"": {}
+            }";
+            
+            using JsonDocument document = JsonDocument.Parse(json);
+            
+            // This should not throw and return default value
+            Assert.DoesNotThrow(() =>
+            {
+                var result = ManagedServiceIdentity.DeserializeManagedServiceIdentity(document.RootElement);
+                Assert.AreEqual(default(ManagedServiceIdentityType), result.ManagedServiceIdentityType);
+            });
+        }
     }
 }

@@ -248,6 +248,10 @@ namespace Azure.ResourceManager.Models
                         continue;
                     }
                     var propertyValue = property.Value.GetString();
+                    if (propertyValue?.Length == 0)
+                    {
+                        continue;
+                    }
                     if (useManagedServiceIdentityV3 && propertyValue == SystemAssignedUserAssignedV3Value)
                     {
                         type = ManagedServiceIdentityType.SystemAssignedUserAssigned;
