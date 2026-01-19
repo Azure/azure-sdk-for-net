@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateGetVhdsRequest(string subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetDevTestLabVhdsRequest(string subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateNextGetVhdsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateNextGetDevTestLabVhdsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

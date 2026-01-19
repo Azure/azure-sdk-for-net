@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevTestLabScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<AsyncPageable<DevTestLabGlobalScheduleResource>> GetApplicableAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<AsyncPageable<DevTestLabScheduleResource>> GetApplicableAsync(string name, CancellationToken cancellationToken = default)
             => (await GetAsync(name, default, cancellationToken).ConfigureAwait(false)).Value.GetApplicableAsync(cancellationToken);
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevTestLabScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DevTestLabGlobalScheduleResource> GetApplicable(string name, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabScheduleResource> GetApplicable(string name, CancellationToken cancellationToken = default)
             => Get(name, default, cancellationToken).Value.GetApplicable(cancellationToken);
     }
 }

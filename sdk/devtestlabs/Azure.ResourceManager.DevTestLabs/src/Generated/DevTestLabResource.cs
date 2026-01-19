@@ -1034,13 +1034,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LabVhd"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LabVhd> GetVhdsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LabVhd> GetDevTestLabVhdsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetVhdsAsyncCollectionResultOfT(_labsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new LabsGetDevTestLabVhdsAsyncCollectionResultOfT(_labsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1066,13 +1066,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LabVhd"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LabVhd> GetVhds(CancellationToken cancellationToken = default)
+        public virtual Pageable<LabVhd> GetDevTestLabVhds(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetVhdsCollectionResultOfT(_labsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new LabsGetDevTestLabVhdsCollectionResultOfT(_labsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
