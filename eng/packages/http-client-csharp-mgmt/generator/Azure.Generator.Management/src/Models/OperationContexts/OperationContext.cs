@@ -36,12 +36,72 @@ internal class OperationContext
 {
     public static OperationContext Create(RequestPathPattern contextualPath)
     {
+        // Validate the path before creating the context
+        if (!ValidatePathPattern(contextualPath))
+        {
+            // Return an empty context for malformed paths
+            return CreateEmptyContext(contextualPath);
+        }
         return new OperationContext(contextualPath, null, null);
     }
 
     public static OperationContext Create(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector)
     {
+        // Validate the path before creating the context
+        if (!ValidatePathPattern(contextualPath))
+        {
+            // Return an empty context for malformed paths
+            return CreateEmptyContext(contextualPath);
+        }
         return new OperationContext(contextualPath, secondaryContextualPath, fieldSelector);
+    }
+
+    /// <summary>
+    /// Validates that the request path pattern will not cause issues during contextual parameter building.
+    /// Reports a diagnostic if the path is malformed.
+    /// </summary>
+    /// <param name="contextualPath">The path to validate.</param>
+    /// <returns>True if the path is valid, false if it's malformed.</returns>
+    private static bool ValidatePathPattern(RequestPathPattern contextualPath)
+    {
+        // Walk through the hierarchy to check if any diff would have odd segments
+        var current = contextualPath;
+        while (current != RequestPathPattern.Tenant)
+        {
+            var parent = current.GetParent();
+
+            // Skip the special patterns that don't use ReverselySplitIntoPairs
+            if (current == RequestPathPattern.Subscription ||
+                current == RequestPathPattern.ManagementGroup ||
+                current == RequestPathPattern.ResourceGroup ||
+                (current.Count == 1 && !current[0].IsConstant))
+            {
+                current = parent;
+                continue;
+            }
+
+            // Check if the diff would have odd segments
+            var diffPath = parent.TrimAncestorFrom(current);
+            if (diffPath.Count % 2 != 0)
+            {
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    code: "malformed-resource-detected",
+                    message: $"The request path has a malformed structure: segment diff between '{parent}' and '{current}' has {diffPath.Count} segments, but an even number is required for pairing."
+                );
+                return false;
+            }
+
+            current = parent;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Creates an empty context for malformed paths to allow graceful degradation.
+    /// </summary>
+    private static OperationContext CreateEmptyContext(RequestPathPattern contextualPath)
+    {
+        return new OperationContext(contextualPath, null, null, isEmpty: true);
     }
 
     public RequestPathPattern ContextualPath { get; }
@@ -60,14 +120,23 @@ internal class OperationContext
     /// <param name="secondaryContextualPath">An optional secondary request path pattern that provides additional context for the operation. Can be null
     /// if no secondary context is required.</param>
     /// <param name="fieldSelector">The function to get the corresponding field for secondary contextual parameters.</param>
-    private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector)
+    /// <param name="isEmpty">If true, creates an empty context without building parameters (for malformed paths).</param>
+    private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector, bool isEmpty = false)
     {
         ContextualPath = contextualPath;
         SecondaryContextualPath = secondaryContextualPath;
-        ContextualPathParameters = BuildContextualParameters(contextualPath);
-        SecondaryContextualPathParameters = secondaryContextualPath != null && fieldSelector != null ?
-            BuildSecondaryContextualParameters(contextualPath, secondaryContextualPath, fieldSelector) :
-            [];
+        if (isEmpty)
+        {
+            ContextualPathParameters = [];
+            SecondaryContextualPathParameters = [];
+        }
+        else
+        {
+            ContextualPathParameters = BuildContextualParameters(contextualPath);
+            SecondaryContextualPathParameters = secondaryContextualPath != null && fieldSelector != null ?
+                BuildSecondaryContextualParameters(contextualPath, secondaryContextualPath, fieldSelector) :
+                [];
+        }
     }
 
     /// <summary>
@@ -190,28 +259,7 @@ internal class OperationContext
         static IReadOnlyList<KeyValuePair<RequestPathSegment, RequestPathSegment>> ReverselySplitIntoPairs(IReadOnlyList<RequestPathSegment> requestPath)
         {
             // in our current cases, we will always have even segments.
-            // If the request path has an odd number of segments, report a diagnostic and return an empty array
-            if (requestPath.Count % 2 != 0)
-            {
-                try
-                {
-                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                        code: "malformed-resource-detected",
-                        message: $"The request path should have an even number of segments for pairing, but got {requestPath.Count} segments."
-                    );
-                }
-                catch (InvalidOperationException ex) when (ex.Message.Contains("ManagementClientGenerator is not loaded"))
-                {
-                    // ManagementClientGenerator is not loaded (e.g., in unit tests)
-                    // Note: This string check is necessary because ManagementClientGenerator.Instance is the only way to access the emitter,
-                    // and it throws InvalidOperationException with this specific message when not loaded.
-                    // In production scenarios, the generator is always loaded, so this catch is only for test scenarios.
-                    // Silently continue - the empty array return below will handle the graceful degradation
-                }
-
-                return Array.Empty<KeyValuePair<RequestPathSegment, RequestPathSegment>>();
-            }
-
+            Debug.Assert(requestPath.Count % 2 == 0, "The request path should always have an even number of segments for pairing.");
             int maxNumberOfPairs = requestPath.Count / 2;
             var pairs = new KeyValuePair<RequestPathSegment, RequestPathSegment>[maxNumberOfPairs];
 

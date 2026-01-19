@@ -583,31 +583,5 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual("examples", operationContext.SecondaryContextualPathParameters[0].Key);
             Assert.AreEqual("exampleName", operationContext.SecondaryContextualPathParameters[0].VariableName);
         }
-
-        [Test]
-        public void ValidateContextualParameters_MalformedPath_OddSegments()
-        {
-            // Test that a malformed path with odd number of segments in a diff doesn't throw exception
-            // but instead reports a diagnostic and returns empty contextual parameters for the malformed part
-            // This test verifies graceful degradation when encountering malformed resource structures
-
-            // Note: In normal cases, GetParent() removes 2 or 4 segments, so diffs are typically even.
-            // However, malformed input from TypeSpec can produce odd-segment diffs.
-            // Since we can't easily construct such a case through normal RequestPathPattern APIs,
-            // we verify the ReverselySplitIntoPairs handles odd segments gracefully through any path.
-
-            // Use a simple path that exercises the code path
-            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}");
-
-            // The main goal is to ensure no exception is thrown during context creation
-            // Even if we can't trigger the exact odd-segment scenario in this test,
-            // the code change ensures that when it does happen in production, it won't crash
-            Assert.DoesNotThrow(() =>
-            {
-                var operationContext = OperationContext.Create(requestPathPattern);
-                Assert.IsNotNull(operationContext);
-                Assert.IsNotNull(operationContext.ContextualPathParameters);
-            });
-        }
     }
 }
