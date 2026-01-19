@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     internal readonly partial struct FaultKind : IEquatable<FaultKind>
     {
         private readonly string _value;
+        /// <summary> Simulates an availability zone down. </summary>
+        private const string ZoneValue = "Zone";
 
         /// <summary> Initializes a new instance of <see cref="FaultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FaultKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ZoneValue = "Zone";
+            _value = value;
+        }
 
         /// <summary> Simulates an availability zone down. </summary>
         public static FaultKind Zone { get; } = new FaultKind(ZoneValue);
+
         /// <summary> Determines if two <see cref="FaultKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FaultKind left, FaultKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FaultKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FaultKind left, FaultKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FaultKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FaultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FaultKind(string value) => new FaultKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FaultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FaultKind?(string value) => value == null ? null : new FaultKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FaultKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FaultKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,14 +1,9 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.10.0 (2026-01-19)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Support identity-based connection.
 
 ## 1.9.0 (2025-07-29)
 

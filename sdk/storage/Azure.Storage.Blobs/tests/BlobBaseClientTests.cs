@@ -282,9 +282,9 @@ namespace Azure.Storage.Blobs.Test
             var client = test.Container.GetBlobClient(GetNewBlobName());
             await client.UploadAsync(new MemoryStream());
             Uri blobUri = client.Uri;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             var sasBuilder = new BlobSasBuilder(BlobSasPermissions.All, Recording.UtcNow.AddHours(1))
             {
                 BlobContainerName = client.BlobContainerName,
@@ -3715,9 +3715,9 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> createResponse = await blob.CreateAsync();
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             SasQueryParameters sasQueryParameters = GetBlobVersionIdentitySas(
                 test.Container.Name,
                 blob.Name,
@@ -3746,9 +3746,9 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> createResponse = await blob.CreateAsync();
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
                 test.Container.Name,
                 blob.Name,
@@ -3804,9 +3804,9 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> createResponse = await blob.CreateAsync();
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
                 test.Container.Name,
                 blob.Name,
@@ -3861,9 +3861,9 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> createResponse = await blob.CreateAsync();
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
                 test.Container.Name,
                 blobContainerSasPermissions,
@@ -3917,6 +3917,92 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
 
             Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteAsync_BlobAccessTierRequestConditions(bool isAccessTierModifiedSince)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // modify the access tier
+            await blob.SetAccessTierAsync(AccessTier.Cool);
+            DateTimeOffset changeTime = Recording.UtcNow;
+
+            BlobRequestConditions accessConditions;
+            if (isAccessTierModifiedSince)
+            {
+                accessConditions = new BlobRequestConditions
+                {
+                    // requires modification since yesterday (which there should be modification in this time window)
+                    AccessTierIfModifiedSince = changeTime.AddDays(-1)
+                };
+            }
+            else
+            {
+                accessConditions = new BlobRequestConditions
+                {
+                    // requires no modification after 5 minutes from now (which there should be no modification then)
+                    AccessTierIfUnmodifiedSince = changeTime.AddMinutes(5)
+                };
+            }
+
+            // Act
+            Response response = await blob.DeleteAsync(conditions: accessConditions);
+
+            // Assert
+            Assert.IsNotNull(response.Headers.RequestId);
+            Assert.IsFalse(await blob.ExistsAsync());
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteAsync_BlobAccessTierRequestConditions_Fail(bool isAccessTierModifiedSince)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // modify the access tier
+            await blob.SetAccessTierAsync(AccessTier.Cool);
+            DateTimeOffset changeTime = Recording.UtcNow;
+
+            BlobRequestConditions accessConditions;
+            if (isAccessTierModifiedSince)
+            {
+                accessConditions = new BlobRequestConditions
+                {
+                    // requires modification after 5 minutes from now (which there should be no modification then)
+                    AccessTierIfModifiedSince = changeTime.AddMinutes(5)
+                };
+            }
+            else
+            {
+                accessConditions = new BlobRequestConditions
+                {
+                    // requires no modification since yesterday (which there should be modification in this time window)
+                    AccessTierIfUnmodifiedSince = changeTime.AddDays(-1)
+                };
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.DeleteAsync(conditions: accessConditions),
+                e =>
+                {
+                    Assert.AreEqual(412, e.Status);
+                    Assert.AreEqual("AccessTierChangeTimeConditionNotMet", e.ErrorCode);
+                    StringAssert.Contains("The condition specified using access tier change time conditional header(s) is not met.", e.Message);
+                });
 
             // Assert
             Assert.IsTrue(await blob.ExistsAsync());
@@ -4384,9 +4470,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             BlobSasQueryParameters blobSasQueryParameters = GetContainerIdentitySas(
                 containerName: test.Container.Name,
@@ -4548,9 +4634,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             BlockBlobClient identitySasBlob = InstrumentClient(
                 GetServiceClient_BlobServiceIdentitySas_Blob(
@@ -4658,9 +4744,9 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
             Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             BlobSasQueryParameters blobSasQueryParameters = GetSnapshotIdentitySas(
                 containerName: test.Container.Name,
@@ -6572,9 +6658,9 @@ namespace Azure.Storage.Blobs.Test
 
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
                 test.Container.Name,
@@ -6607,9 +6693,9 @@ namespace Azure.Storage.Blobs.Test
 
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
                 test.Container.Name,
@@ -6682,9 +6768,9 @@ namespace Azure.Storage.Blobs.Test
 
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
                 test.Container.Name,
@@ -6716,9 +6802,9 @@ namespace Azure.Storage.Blobs.Test
 
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
                 test.Container.Name,
@@ -7760,9 +7846,9 @@ namespace Azure.Storage.Blobs.Test
                 GetOptions()));
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -7811,9 +7897,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -7853,9 +7939,9 @@ namespace Azure.Storage.Blobs.Test
                 GetOptions()));
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -7925,9 +8011,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -7975,9 +8061,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -8015,9 +8101,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -8064,9 +8150,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -8107,9 +8193,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -8164,9 +8250,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -8207,9 +8293,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -8266,9 +8352,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -8306,9 +8392,9 @@ namespace Azure.Storage.Blobs.Test
             await createClient.CreateAsync();
 
             string stringToSign = null;
+            BlobGetUserDelegationKeyOptions getUserDelegationKeyOptions = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await serviceClient.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act

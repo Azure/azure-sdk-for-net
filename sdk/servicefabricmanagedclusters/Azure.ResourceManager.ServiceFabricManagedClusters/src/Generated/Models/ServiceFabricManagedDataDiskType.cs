@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedDataDiskType : IEquatable<ServiceFabricManagedDataDiskType>
     {
         private readonly string _value;
+        /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
+        private const string StandardLrsValue = "Standard_LRS";
+        /// <summary> Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test. </summary>
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
+        private const string PremiumLrsValue = "Premium_LRS";
+        /// <summary> Premium SSD V2 locally redundant storage. Best for production and performance sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
+        private const string PremiumV2LRSValue = "PremiumV2_LRS";
+        /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
+        private const string PremiumZrsValue = "StandardSSD_ZRS";
+        /// <summary> Premium SSD zone redundant storage. Best for production workloads that need storage resiliency against zone failures. </summary>
+        private const string PremiumZRSValue = "Premium_ZRS";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedDataDiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedDataDiskType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardLrsValue = "Standard_LRS";
-        private const string StandardSsdLrsValue = "StandardSSD_LRS";
-        private const string PremiumLrsValue = "Premium_LRS";
-        private const string PremiumV2LRSValue = "PremiumV2_LRS";
-        private const string PremiumZrsValue = "StandardSSD_ZRS";
-        private const string PremiumZRSValue = "Premium_ZRS";
+            _value = value;
+        }
 
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
         public static ServiceFabricManagedDataDiskType StandardLrs { get; } = new ServiceFabricManagedDataDiskType(StandardLrsValue);
+
         /// <summary> Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test. </summary>
         public static ServiceFabricManagedDataDiskType StandardSsdLrs { get; } = new ServiceFabricManagedDataDiskType(StandardSsdLrsValue);
+
         /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
         public static ServiceFabricManagedDataDiskType PremiumLrs { get; } = new ServiceFabricManagedDataDiskType(PremiumLrsValue);
+
         /// <summary> Premium SSD V2 locally redundant storage. Best for production and performance sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
         public static ServiceFabricManagedDataDiskType PremiumV2LRS { get; } = new ServiceFabricManagedDataDiskType(PremiumV2LRSValue);
+
         /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
         public static ServiceFabricManagedDataDiskType PremiumZrs { get; } = new ServiceFabricManagedDataDiskType(PremiumZrsValue);
+
         /// <summary> Premium SSD zone redundant storage. Best for production workloads that need storage resiliency against zone failures. </summary>
         public static ServiceFabricManagedDataDiskType PremiumZRS { get; } = new ServiceFabricManagedDataDiskType(PremiumZRSValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedDataDiskType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedDataDiskType left, ServiceFabricManagedDataDiskType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedDataDiskType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedDataDiskType left, ServiceFabricManagedDataDiskType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedDataDiskType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedDataDiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedDataDiskType(string value) => new ServiceFabricManagedDataDiskType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedDataDiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedDataDiskType?(string value) => value == null ? null : new ServiceFabricManagedDataDiskType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedDataDiskType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedDataDiskType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

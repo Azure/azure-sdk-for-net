@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterLoadBalanceProbeProtocol : IEquatable<ManagedClusterLoadBalanceProbeProtocol>
     {
         private readonly string _value;
+        /// <summary> Probe protocol is TCP. </summary>
+        private const string TcpValue = "tcp";
+        /// <summary> Probe protocol is HTTP. </summary>
+        private const string HttpValue = "http";
+        /// <summary> Probe protocol is HTTPS. </summary>
+        private const string HttpsValue = "https";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalanceProbeProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterLoadBalanceProbeProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "tcp";
-        private const string HttpValue = "http";
-        private const string HttpsValue = "https";
+            _value = value;
+        }
 
         /// <summary> Probe protocol is TCP. </summary>
         public static ManagedClusterLoadBalanceProbeProtocol Tcp { get; } = new ManagedClusterLoadBalanceProbeProtocol(TcpValue);
+
         /// <summary> Probe protocol is HTTP. </summary>
         public static ManagedClusterLoadBalanceProbeProtocol Http { get; } = new ManagedClusterLoadBalanceProbeProtocol(HttpValue);
+
         /// <summary> Probe protocol is HTTPS. </summary>
         public static ManagedClusterLoadBalanceProbeProtocol Https { get; } = new ManagedClusterLoadBalanceProbeProtocol(HttpsValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalanceProbeProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterLoadBalanceProbeProtocol left, ManagedClusterLoadBalanceProbeProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalanceProbeProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterLoadBalanceProbeProtocol left, ManagedClusterLoadBalanceProbeProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterLoadBalanceProbeProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalanceProbeProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterLoadBalanceProbeProtocol(string value) => new ManagedClusterLoadBalanceProbeProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalanceProbeProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterLoadBalanceProbeProtocol?(string value) => value == null ? null : new ManagedClusterLoadBalanceProbeProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterLoadBalanceProbeProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterLoadBalanceProbeProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

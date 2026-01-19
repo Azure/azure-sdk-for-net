@@ -35,6 +35,14 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
+        /// When requested using <see cref="DownloadTransferValidationOptions"/>, this value contains the CRC for the download blob range.
+        /// This value may only become populated once the network stream is fully consumed. If this instance is accessed through
+        /// <see cref="BlobDownloadResult"/>, the network stream has already been consumed. Otherwise, consume the content stream before
+        /// checking this value.
+        /// </summary>
+        public byte[] ContentCrc { get; internal set; }
+
+        /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public DateTimeOffset LastModified { get; internal set; }

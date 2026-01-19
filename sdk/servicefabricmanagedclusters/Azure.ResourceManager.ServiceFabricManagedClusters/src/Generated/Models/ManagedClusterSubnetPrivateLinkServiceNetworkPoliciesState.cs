@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState : IEquatable<ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState>
     {
         private readonly string _value;
+        /// <summary> Enable apply network policies on private link service in the subnet. </summary>
+        private const string EnabledValue = "enabled";
+        /// <summary> Disable apply network policies on private link service in the subnet. </summary>
+        private const string DisabledValue = "disabled";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
+            _value = value;
+        }
 
         /// <summary> Enable apply network policies on private link service in the subnet. </summary>
         public static ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState Enabled { get; } = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(EnabledValue);
+
         /// <summary> Disable apply network policies on private link service in the subnet. </summary>
         public static ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState Disabled { get; } = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(DisabledValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState left, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState left, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(string value) => new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState?(string value) => value == null ? null : new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

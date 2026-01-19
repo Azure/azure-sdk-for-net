@@ -3,12 +3,7 @@
 ## 12.25.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2026-04-06.
 
 ## 12.24.0 (2026-01-08)
 
