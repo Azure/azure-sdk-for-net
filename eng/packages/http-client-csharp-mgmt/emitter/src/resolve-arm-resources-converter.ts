@@ -358,8 +358,15 @@ function validateAndPruneSchema(
 
     // Only include the resource if it has at least one valid method
     if (validatedMethods.length > 0) {
-      resource.metadata.methods = validatedMethods;
-      validatedResources.push(resource);
+      // Create a new resource object to avoid mutating the original
+      const validatedResource: ArmResourceSchema = {
+        resourceModelId: resource.resourceModelId,
+        metadata: {
+          ...resource.metadata,
+          methods: validatedMethods
+        }
+      };
+      validatedResources.push(validatedResource);
     } else {
       // Report diagnostic if all methods were pruned
       sdkContext.logger.reportDiagnostic({
