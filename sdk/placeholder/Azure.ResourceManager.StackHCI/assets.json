@@ -1,0 +1,7 @@
+
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/stackhci/Azure.ResourceManager.StackHCI",
+  "Tag": ""
+}
