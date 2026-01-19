@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<SiteSlotPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, new RemotePrivateEndpointConnectionARMResourceData(_data.Id, _data.Name, _data.ResourceType, _data.SystemData, _data.ProvisioningState, _data.PrivateEndpoint, info.PrivateLinkServiceConnectionState, _data.IPAddresses, info.Kind, null), cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, new RemotePrivateEndpointConnectionARMResourceData(_data.Id, _data.Name, _data.ResourceType, _data.SystemData, info.Kind, _data.ProvisioningState, _data.PrivateEndpoint, info.PrivateLinkServiceConnectionState, _data.IPAddresses, null), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Description for Approves or rejects a private endpoint connection
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<SiteSlotPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken)
-            => Update(waitUntil, new RemotePrivateEndpointConnectionARMResourceData(_data.Id, _data.Name, _data.ResourceType, _data.SystemData, _data.ProvisioningState, _data.PrivateEndpoint, info.PrivateLinkServiceConnectionState, _data.IPAddresses, info.Kind, null), cancellationToken);
+            => Update(waitUntil, new RemotePrivateEndpointConnectionARMResourceData(_data.Id, _data.Name, _data.ResourceType, _data.SystemData, info.Kind, _data.ProvisioningState, _data.PrivateEndpoint, info.PrivateLinkServiceConnectionState, _data.IPAddresses, null), cancellationToken);
     }
 }
