@@ -68,7 +68,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         // Get user context for cache key generation
         var userInfo = await GetUserContextAsync(cancellationToken).ConfigureAwait(false);
 
-        var resolvingTasks = new Dictionary<FoundryTool, Task<IReadOnlyList<FoundryToolDetails>>>();
+        var resolvingTasks = new Dictionary<string, Task<IReadOnlyList<FoundryToolDetails>>>(StringComparer.Ordinal);
         var toolsToFetch = new Dictionary<object, FoundryTool>();
 
         foreach (var tool in foundryTools)
@@ -78,7 +78,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
             if (_cache.TryGetValue<Task<IReadOnlyList<FoundryToolDetails>>>(cacheKey, out var cachedTask) &&
                 cachedTask != null)
             {
-                resolvingTasks[tool] = cachedTask;
+                resolvingTasks[tool.Id] = cachedTask;
             }
             else
             {
@@ -97,7 +97,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
                     if (_cache.TryGetValue<Task<IReadOnlyList<FoundryToolDetails>>>(cacheKey, out var cachedTask) &&
                         cachedTask != null)
                     {
-                        resolvingTasks[tool] = cachedTask;
+                        resolvingTasks[tool.Id] = cachedTask;
                     }
                     else
                     {
@@ -110,8 +110,8 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
                     var fetchTask = FetchToolsAsync(createdTasks.Values.ToList(), userInfo, cancellationToken);
                     foreach (var (cacheKey, tool) in createdTasks)
                     {
-                        var resolvingTask = ResolveToolDetailsAsync(tool, fetchTask);
-                        resolvingTasks[tool] = resolvingTask;
+                        var resolvingTask = ResolveToolDetailsAsync(tool.Id, fetchTask);
+                        resolvingTasks[tool.Id] = resolvingTask;
 
                         _ = _cache.Set(cacheKey, resolvingTask, new MemoryCacheEntryOptions
                         {
@@ -136,10 +136,6 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         {
             await Task.WhenAll(resolvingTasks.Values).WaitAsync(cancellationToken).ConfigureAwait(false);
         }
-        catch (OperationCanceledException)
-        {
-            throw;
-        }
         catch
         {
             foreach (var cacheKey in createdTasks.Keys)
@@ -153,7 +149,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         var resolvedTools = new List<ResolvedFoundryTool>();
         foreach (var tool in foundryTools)
         {
-            if (!resolvingTasks.TryGetValue(tool, out var resolvingTask))
+            if (!resolvingTasks.TryGetValue(tool.Id, out var resolvingTask))
             {
                 continue;
             }
@@ -180,10 +176,10 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
     /// <param name="userInfo">The user context for fetching tools (used for connected tools).</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
-    /// A dictionary mapping each tool to its resolved details.
+    /// A dictionary mapping each tool Id to its resolved details.
     /// Tools that could not be resolved should be omitted.
     /// </returns>
-    protected abstract Task<IReadOnlyDictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>> FetchToolsAsync(
+    protected abstract Task<IReadOnlyDictionary<string, IReadOnlyList<FoundryToolDetails>>> FetchToolsAsync(
         IReadOnlyList<FoundryTool> tools,
         UserInfo? userInfo,
         CancellationToken cancellationToken);
@@ -245,11 +241,11 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
     }
 
     private static async Task<IReadOnlyList<FoundryToolDetails>> ResolveToolDetailsAsync(
-        FoundryTool tool,
-        Task<IReadOnlyDictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>> fetchTask)
+        string toolId,
+        Task<IReadOnlyDictionary<string, IReadOnlyList<FoundryToolDetails>>> fetchTask)
     {
         var fetched = await fetchTask.ConfigureAwait(false);
-        return fetched.TryGetValue(tool, out var details)
+        return fetched.TryGetValue(toolId, out var details)
             ? details
             : Array.Empty<FoundryToolDetails>();
     }
