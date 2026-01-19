@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -25,75 +24,69 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountDetectorCollection : ArmCollection, IEnumerable<BatchAccountDetectorResource>, IAsyncEnumerable<BatchAccountDetectorResource>
     {
-        private readonly ClientDiagnostics _batchAccountClientDiagnostics;
-        private readonly BatchAccount _batchAccountRestClient;
+        private readonly ClientDiagnostics _batchAccountDetectorBatchAccountClientDiagnostics;
+        private readonly BatchAccountRestOperations _batchAccountDetectorBatchAccountRestClient;
 
-        /// <summary> Initializes a new instance of BatchAccountDetectorCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchAccountDetectorCollection"/> class for mocking. </summary>
         protected BatchAccountDetectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountDetectorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchAccountDetectorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BatchAccountDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BatchAccountDetectorResource.ResourceType, out string batchAccountDetectorApiVersion);
-            _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountDetectorResource.ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Endpoint, batchAccountDetectorApiVersion ?? "2024-07-01");
-            ValidateResourceId(id);
+            _batchAccountDetectorBatchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountDetectorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BatchAccountDetectorResource.ResourceType, out string batchAccountDetectorBatchAccountApiVersion);
+            _batchAccountDetectorBatchAccountRestClient = new BatchAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountDetectorBatchAccountApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BatchAccountResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), id);
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets information about the given detector for a given Batch account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_GetDetector. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BatchAccountDetectorResource>> GetDetectorAsync(string detectorId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
+        public virtual async Task<Response<BatchAccountDetectorResource>> GetAsync(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetDetector");
+            using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BatchAccountDetectorData> response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
+                var response = await _batchAccountDetectorBatchAccountRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BatchAccountDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -107,42 +100,38 @@ namespace Azure.ResourceManager.Batch
         /// Gets information about the given detector for a given Batch account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_GetDetector. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BatchAccountDetectorResource> GetDetector(string detectorId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
+        public virtual Response<BatchAccountDetectorResource> Get(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetDetector");
+            using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BatchAccountDetectorData> response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
+                var response = _batchAccountDetectorBatchAccountRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorId, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BatchAccountDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -156,44 +145,50 @@ namespace Azure.ResourceManager.Batch
         /// Gets information about the detectors available for a given Batch account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_ListDetectors. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_ListDetectors</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountDetectorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsAsyncCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BatchAccountDetectorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountDetectorResource(Client, BatchAccountDetectorData.DeserializeBatchAccountDetectorData(e)), _batchAccountDetectorBatchAccountClientDiagnostics, Pipeline, "BatchAccountDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets information about the detectors available for a given Batch account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_ListDetectors. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_ListDetectors</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,61 +196,45 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchAccountDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BatchAccountDetectorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountDetectorResource(Client, BatchAccountDetectorData.DeserializeBatchAccountDetectorData(e)), _batchAccountDetectorBatchAccountClientDiagnostics, Pipeline, "BatchAccountDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_GetDetector. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Exists");
+            using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BatchAccountDetectorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BatchAccountDetectorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _batchAccountDetectorBatchAccountRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,50 +248,36 @@ namespace Azure.ResourceManager.Batch
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_GetDetector. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual Response<bool> Exists(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Exists");
+            using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BatchAccountDetectorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BatchAccountDetectorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _batchAccountDetectorBatchAccountRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,54 +291,38 @@ namespace Azure.ResourceManager.Batch
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_GetDetector. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual async Task<NullableResponse<BatchAccountDetectorResource>> GetIfExistsAsync(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetIfExists");
+            using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BatchAccountDetectorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BatchAccountDetectorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _batchAccountDetectorBatchAccountRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BatchAccountDetectorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BatchAccountDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,54 +336,38 @@ namespace Azure.ResourceManager.Batch
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DetectorResponses_GetDetector. </description>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual NullableResponse<BatchAccountDetectorResource> GetIfExists(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetIfExists");
+            using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BatchAccountDetectorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BatchAccountDetectorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _batchAccountDetectorBatchAccountRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BatchAccountDetectorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BatchAccountDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,7 +387,6 @@ namespace Azure.ResourceManager.Batch
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BatchAccountDetectorResource> IAsyncEnumerable<BatchAccountDetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

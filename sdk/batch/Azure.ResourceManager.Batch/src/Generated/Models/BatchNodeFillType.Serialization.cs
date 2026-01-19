@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchNodeFillTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchNodeFillType value) => value switch
         {
             BatchNodeFillType.Spread => "Spread",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodeFillType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BatchNodeFillType ToBatchNodeFillType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Spread"))
-            {
-                return BatchNodeFillType.Spread;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pack"))
-            {
-                return BatchNodeFillType.Pack;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Spread")) return BatchNodeFillType.Spread;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pack")) return BatchNodeFillType.Pack;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodeFillType value.");
         }
     }

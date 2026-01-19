@@ -9,15 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Batch;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> A task which is run when a compute node joins a pool in the Azure Batch service, or when the compute node is rebooted or reimaged. </summary>
-    public partial class BatchAccountPoolStartTask : IJsonModel<BatchAccountPoolStartTask>
+    public partial class BatchAccountPoolStartTask : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolStartTask>
     {
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPoolStartTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
         void IJsonModel<BatchAccountPoolStartTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,11 +28,12 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("commandLine"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
-                foreach (BatchResourceFile item in ResourceFiles)
+                foreach (var item in ResourceFiles)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
-                foreach (BatchEnvironmentSetting item in EnvironmentSettings)
+                foreach (var item in EnvironmentSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,27 +96,22 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAccountPoolStartTask IJsonModel<BatchAccountPoolStartTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchAccountPoolStartTask JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchAccountPoolStartTask IJsonModel<BatchAccountPoolStartTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchAccountPoolStartTask(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BatchAccountPoolStartTask DeserializeBatchAccountPoolStartTask(JsonElement element, ModelReaderWriterOptions options)
+        internal static BatchAccountPoolStartTask DeserializeBatchAccountPoolStartTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -128,83 +123,85 @@ namespace Azure.ResourceManager.Batch.Models
             int? maxTaskRetryCount = default;
             bool? waitForSuccess = default;
             BatchTaskContainerSettings containerSettings = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("commandLine"u8))
+                if (property.NameEquals("commandLine"u8))
                 {
-                    commandLine = prop.Value.GetString();
+                    commandLine = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceFiles"u8))
+                if (property.NameEquals("resourceFiles"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchResourceFile> array = new List<BatchResourceFile>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(BatchResourceFile.DeserializeBatchResourceFile(item, options));
                     }
                     resourceFiles = array;
                     continue;
                 }
-                if (prop.NameEquals("environmentSettings"u8))
+                if (property.NameEquals("environmentSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchEnvironmentSetting> array = new List<BatchEnvironmentSetting>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item, options));
                     }
                     environmentSettings = array;
                     continue;
                 }
-                if (prop.NameEquals("userIdentity"u8))
+                if (property.NameEquals("userIdentity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(prop.Value, options);
+                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("maxTaskRetryCount"u8))
+                if (property.NameEquals("maxTaskRetryCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxTaskRetryCount = prop.Value.GetInt32();
+                    maxTaskRetryCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("waitForSuccess"u8))
+                if (property.NameEquals("waitForSuccess"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    waitForSuccess = prop.Value.GetBoolean();
+                    waitForSuccess = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("containerSettings"u8))
+                if (property.NameEquals("containerSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(prop.Value, options);
+                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchAccountPoolStartTask(
                 commandLine,
                 resourceFiles ?? new ChangeTrackingList<BatchResourceFile>(),
@@ -213,16 +210,13 @@ namespace Azure.ResourceManager.Batch.Models
                 maxTaskRetryCount,
                 waitForSuccess,
                 containerSettings,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchAccountPoolStartTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchAccountPoolStartTask>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
@@ -232,20 +226,15 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAccountPoolStartTask IPersistableModel<BatchAccountPoolStartTask>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchAccountPoolStartTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        BatchAccountPoolStartTask IPersistableModel<BatchAccountPoolStartTask>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchAccountPoolStartTask(document.RootElement, options);
                     }
                 default:
@@ -253,7 +242,6 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchAccountPoolStartTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
     public enum BatchDiskEncryptionTarget
     {
         /// <summary> The OS Disk on the compute node is encrypted. </summary>
-        OsDisk,
+        OSDisk,
         /// <summary> The temporary disk on the compute node is encrypted. On Linux this encryption applies to other partitions (such as those on mounted data disks) when encryption occurs at boot time. </summary>
         TemporaryDisk
     }

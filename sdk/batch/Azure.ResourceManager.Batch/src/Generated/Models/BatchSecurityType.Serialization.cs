@@ -11,25 +11,17 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchSecurityTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchSecurityType value) => value switch
         {
             BatchSecurityType.TrustedLaunch => "trustedLaunch",
-            BatchSecurityType.ConfidentialVM => "confidentialVM",
+            BatchSecurityType.ConfidentialVm => "confidentialVM",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchSecurityType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BatchSecurityType ToBatchSecurityType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "trustedLaunch"))
-            {
-                return BatchSecurityType.TrustedLaunch;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "confidentialVM"))
-            {
-                return BatchSecurityType.ConfidentialVM;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "trustedLaunch")) return BatchSecurityType.TrustedLaunch;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "confidentialVM")) return BatchSecurityType.ConfidentialVm;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchSecurityType value.");
         }
     }

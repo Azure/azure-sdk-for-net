@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchNameUnavailableReasonExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchNameUnavailableReason value) => value switch
         {
             BatchNameUnavailableReason.Invalid => "Invalid",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNameUnavailableReason value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BatchNameUnavailableReason ToBatchNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
-            {
-                return BatchNameUnavailableReason.Invalid;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
-            {
-                return BatchNameUnavailableReason.AlreadyExists;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return BatchNameUnavailableReason.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return BatchNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNameUnavailableReason value.");
         }
     }

@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAutoUserScopeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAutoUserScope value) => value switch
         {
             BatchAutoUserScope.Task => "Task",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAutoUserScope value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BatchAutoUserScope ToBatchAutoUserScope(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Task"))
-            {
-                return BatchAutoUserScope.Task;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pool"))
-            {
-                return BatchAutoUserScope.Pool;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Task")) return BatchAutoUserScope.Task;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pool")) return BatchAutoUserScope.Pool;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAutoUserScope value.");
         }
     }

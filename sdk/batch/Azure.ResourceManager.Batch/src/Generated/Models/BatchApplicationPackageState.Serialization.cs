@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchApplicationPackageStateExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchApplicationPackageState value) => value switch
         {
             BatchApplicationPackageState.Pending => "Pending",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchApplicationPackageState value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BatchApplicationPackageState ToBatchApplicationPackageState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending"))
-            {
-                return BatchApplicationPackageState.Pending;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active"))
-            {
-                return BatchApplicationPackageState.Active;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return BatchApplicationPackageState.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return BatchApplicationPackageState.Active;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchApplicationPackageState value.");
         }
     }
