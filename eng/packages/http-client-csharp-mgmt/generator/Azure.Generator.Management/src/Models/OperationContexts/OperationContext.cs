@@ -200,7 +200,7 @@ internal class OperationContext
                         message: $"The request path should have an even number of segments for pairing, but got {requestPath.Count} segments."
                     );
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException ex) when (ex.Message.Contains("ManagementClientGenerator is not loaded"))
                 {
                     // ManagementClientGenerator is not loaded (e.g., in unit tests)
                     // Silently continue - the empty array return below will handle the graceful degradation
