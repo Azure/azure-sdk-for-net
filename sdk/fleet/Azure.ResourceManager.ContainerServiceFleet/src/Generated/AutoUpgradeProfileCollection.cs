@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), null, context);
+                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
                     new AutoUpgradeProfileOperationSource(Client),
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), null, context);
+                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
                     new AutoUpgradeProfileOperationSource(Client),

@@ -51,20 +51,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> If specified, the ClusterResourcePlacement's Tolerations. Tolerations cannot be updated or deleted. This field is beta-level and is for the taints and tolerations feature. </summary>
         public IList<ContainerServiceFleetToleration> Tolerations { get; }
 
-        /// <summary> ClusterAffinity contains cluster affinity scheduling rules for the selected resources. </summary>
-        public ContainerServiceFleetClusterAffinity ClusterAffinity
+        /// <summary> ClusterSelectorTerms is a list of cluster selector terms. The terms are `ORed`. </summary>
+        public IList<ContainerServiceFleetClusterSelectorTerm> AffinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms
         {
             get
-            {
-                return Affinity is null ? default : Affinity.ClusterAffinity;
-            }
-            set
             {
                 if (Affinity is null)
                 {
                     Affinity = new Affinity();
                 }
-                Affinity.ClusterAffinity = value;
+                return Affinity.RequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms;
             }
         }
     }

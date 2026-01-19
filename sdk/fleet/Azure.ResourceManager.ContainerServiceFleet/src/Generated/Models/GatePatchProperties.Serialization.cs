@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Properties of a Gate that can be patched. </summary>
-    public partial class GatePatchProperties : IJsonModel<GatePatchProperties>
+    internal partial class GatePatchProperties : IJsonModel<GatePatchProperties>
     {
         /// <summary> Initializes a new instance of <see cref="GatePatchProperties"/> for deserialization. </summary>
         internal GatePatchProperties()

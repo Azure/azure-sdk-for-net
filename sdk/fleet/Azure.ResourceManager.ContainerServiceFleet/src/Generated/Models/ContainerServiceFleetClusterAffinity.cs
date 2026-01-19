@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> ClusterAffinity contains cluster affinity scheduling rules for the selected resources. </summary>
-    public partial class ContainerServiceFleetClusterAffinity
+    internal partial class ContainerServiceFleetClusterAffinity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -39,10 +39,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             get
             {
                 return RequiredDuringSchedulingIgnoredDuringExecution is null ? default : RequiredDuringSchedulingIgnoredDuringExecution.ClusterSelectorTerms;
-            }
-            set
-            {
-                RequiredDuringSchedulingIgnoredDuringExecution = new ClusterSelector(value);
             }
         }
     }

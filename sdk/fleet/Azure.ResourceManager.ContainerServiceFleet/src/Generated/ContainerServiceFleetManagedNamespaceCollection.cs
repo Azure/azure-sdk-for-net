@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), null, context);
+                HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource>(
                     new ContainerServiceFleetManagedNamespaceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), null, context);
+                HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource>(
                     new ContainerServiceFleetManagedNamespaceOperationSource(Client),

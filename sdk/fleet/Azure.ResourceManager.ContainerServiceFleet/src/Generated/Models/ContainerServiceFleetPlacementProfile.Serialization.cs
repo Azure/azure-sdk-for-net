@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The configuration profile for default ClusterResourcePlacement for placement. </summary>
-    public partial class ContainerServiceFleetPlacementProfile : IJsonModel<ContainerServiceFleetPlacementProfile>
+    internal partial class ContainerServiceFleetPlacementProfile : IJsonModel<ContainerServiceFleetPlacementProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

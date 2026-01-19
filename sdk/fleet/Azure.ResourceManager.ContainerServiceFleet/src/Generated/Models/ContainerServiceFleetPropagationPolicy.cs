@@ -38,6 +38,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ContainerServiceFleetPropagationType Type { get; set; }
 
         /// <summary> The profile to be used for propagation via placement. </summary>
-        public ContainerServiceFleetPlacementProfile PlacementProfile { get; set; }
+        internal ContainerServiceFleetPlacementProfile PlacementProfile { get; set; }
+
+        /// <summary> Policy defines how to select member clusters to place the selected resources. If unspecified, all the joined member clusters are selected. </summary>
+        public ContainerServiceFleetPlacementPolicy DefaultClusterResourcePlacementPolicy
+        {
+            get
+            {
+                return PlacementProfile is null ? default : PlacementProfile.DefaultClusterResourcePlacementPolicy;
+            }
+            set
+            {
+                if (PlacementProfile is null)
+                {
+                    PlacementProfile = new ContainerServiceFleetPlacementProfile();
+                }
+                PlacementProfile.DefaultClusterResourcePlacementPolicy = value;
+            }
+        }
     }
 }

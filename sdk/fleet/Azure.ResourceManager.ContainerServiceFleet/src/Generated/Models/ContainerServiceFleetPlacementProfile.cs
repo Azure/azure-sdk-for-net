@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The configuration profile for default ClusterResourcePlacement for placement. </summary>
-    public partial class ContainerServiceFleetPlacementProfile
+    internal partial class ContainerServiceFleetPlacementProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> ClusterAffinity contains cluster affinity scheduling rules for the selected resources. </summary>
-    public partial class ContainerServiceFleetClusterAffinity : IJsonModel<ContainerServiceFleetClusterAffinity>
+    internal partial class ContainerServiceFleetClusterAffinity : IJsonModel<ContainerServiceFleetClusterAffinity>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

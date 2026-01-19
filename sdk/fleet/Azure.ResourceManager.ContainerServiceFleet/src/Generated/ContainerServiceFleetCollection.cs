@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ContainerServiceFleetData.ToRequestContent(data), null, context);
+                HttpMessage message = _fleetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ContainerServiceFleetData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(
                     new ContainerServiceFleetOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ContainerServiceFleetData.ToRequestContent(data), null, context);
+                HttpMessage message = _fleetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ContainerServiceFleetData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(
                     new ContainerServiceFleetOperationSource(Client),

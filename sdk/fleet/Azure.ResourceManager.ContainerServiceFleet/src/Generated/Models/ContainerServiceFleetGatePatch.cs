@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -18,13 +17,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGatePatch"/>. </summary>
-        /// <param name="properties"> Properties of a Gate that can be patched. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ContainerServiceFleetGatePatch(GatePatchProperties properties)
+        /// <param name="gatePatchState"> The state of the Gate. </param>
+        public ContainerServiceFleetGatePatch(ContainerServiceFleetGateState? gatePatchState)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
 
-            Properties = properties;
+            Properties = gatePatchState is null ? default : new GatePatchProperties(gatePatchState.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGatePatch"/>. </summary>

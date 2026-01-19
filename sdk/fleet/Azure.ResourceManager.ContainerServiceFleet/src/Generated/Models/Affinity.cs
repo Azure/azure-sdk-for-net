@@ -31,6 +31,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> ClusterAffinity contains cluster affinity scheduling rules for the selected resources. </summary>
-        public ContainerServiceFleetClusterAffinity ClusterAffinity { get; set; }
+        internal ContainerServiceFleetClusterAffinity ClusterAffinity { get; set; }
+
+        /// <summary> ClusterSelectorTerms is a list of cluster selector terms. The terms are `ORed`. </summary>
+        public IList<ContainerServiceFleetClusterSelectorTerm> RequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms
+        {
+            get
+            {
+                if (ClusterAffinity is null)
+                {
+                    ClusterAffinity = new ContainerServiceFleetClusterAffinity();
+                }
+                return ClusterAffinity.RequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms;
+            }
+        }
     }
 }

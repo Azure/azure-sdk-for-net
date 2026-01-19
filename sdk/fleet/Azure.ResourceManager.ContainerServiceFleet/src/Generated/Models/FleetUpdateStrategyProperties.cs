@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FleetUpdateStrategyProperties"/>. </summary>
-        /// <param name="strategy"> Defines the update sequence of the clusters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="strategy"/> is null. </exception>
-        public FleetUpdateStrategyProperties(ContainerServiceFleetUpdateRunStrategy strategy)
+        /// <param name="strategyStages"> The list of stages that compose this update run. Min size: 1. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="strategyStages"/> is null. </exception>
+        public FleetUpdateStrategyProperties(IList<ContainerServiceFleetUpdateStage> strategyStages)
         {
-            Argument.AssertNotNull(strategy, nameof(strategy));
+            Argument.AssertNotNull(strategyStages, nameof(strategyStages));
 
-            Strategy = strategy;
+            Strategy = new ContainerServiceFleetUpdateRunStrategy(strategyStages);
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetUpdateStrategyProperties"/>. </summary>
@@ -54,10 +54,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     Strategy = new ContainerServiceFleetUpdateRunStrategy();
                 }
                 return Strategy.Stages;
-            }
-            set
-            {
-                Strategy = new ContainerServiceFleetUpdateRunStrategy(value);
             }
         }
     }

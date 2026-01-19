@@ -45,10 +45,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return PropertySelector is null ? default : PropertySelector.MatchExpressions;
             }
-            set
-            {
-                PropertySelector = new PropertySelector(value);
-            }
         }
     }
 }

@@ -289,6 +289,126 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
+        /// Skips one or a combination of member/group/stage/afterStageWait(s) of an update run.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}/skip. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Skip. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceFleetUpdateRunResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> SkipAsync(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunResource.Skip");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateSkipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetSkipProperties.ToRequestContent(body), ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
+                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    _updateRunsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Skips one or a combination of member/group/stage/afterStageWait(s) of an update run.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}/skip. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Skip. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceFleetUpdateRunResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Skip(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunResource.Skip");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateSkipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetSkipProperties.ToRequestContent(body), ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
+                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    _updateRunsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Starts an UpdateRun.
         /// <list type="bullet">
         /// <item>
@@ -513,126 +633,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Skips one or a combination of member/group/stage/afterStageWait(s) of an update run.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}/skip. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Skip. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceFleetUpdateRunResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
-        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> SkipAsync(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunResource.Skip");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateSkipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetSkipProperties.ToRequestContent(body), ifMatch, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
-                    _updateRunsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Skips one or a combination of member/group/stage/afterStageWait(s) of an update run.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}/skip. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Skip. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceFleetUpdateRunResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
-        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Skip(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunResource.Skip");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateSkipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetSkipProperties.ToRequestContent(body), ifMatch, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
-                    _updateRunsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Update a ContainerServiceFleetUpdateRun.
         /// <list type="bullet">
         /// <item>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), null, context);
+                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
                     new ContainerServiceFleetUpdateRunOperationSource(Client),
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), null, context);
+                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
                     new ContainerServiceFleetUpdateRunOperationSource(Client),

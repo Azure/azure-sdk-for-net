@@ -106,10 +106,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return Strategy is null ? default : Strategy.Stages;
             }
-            set
-            {
-                Strategy = new ContainerServiceFleetUpdateRunStrategy(value);
-            }
         }
     }
 }
