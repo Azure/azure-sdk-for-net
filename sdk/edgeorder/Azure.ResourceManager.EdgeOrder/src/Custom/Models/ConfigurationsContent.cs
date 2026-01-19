@@ -7,10 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     // Manually add to maintain its backward compatibility
+    //[CodeGenSerialization(nameof(ConfigurationFilters), "configurationFilter")]
     public partial class ConfigurationsContent
     {
         /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter, string expand, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter, string expand, string skipToken, CancellationToken cancellationToken)
         {
             return GetAllAsync(filter, expand, skipToken, top: null, cancellationToken);
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<EdgeOrderItemResource> GetAll(string filter, string expand, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItemResource> GetAll(string filter, string expand, string skipToken, CancellationToken cancellationToken)
         {
             return GetAll(filter, expand, skipToken, top: null, cancellationToken);
         }

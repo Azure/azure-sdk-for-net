@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using Azure.Core;
 using Azure.ResourceManager.EdgeOrder.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -46,9 +47,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<EdgeOrderAddressResource> GetEdgeOrderAddressesAsync(this SubscriptionResource subscriptionResource, string filter, string skipToken, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EdgeOrderAddressResource> GetEdgeOrderAddressesAsync(this SubscriptionResource subscriptionResource, string filter, string skipToken, CancellationToken cancellationToken)
         {
-            return GetEdgeOrderAddressesAsync(subscriptionResource, filter, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderAddressesAsync(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -83,9 +86,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<EdgeOrderAddressResource> GetEdgeOrderAddresses(this SubscriptionResource subscriptionResource, string filter, string skipToken, CancellationToken cancellationToken = default)
+        public static Pageable<EdgeOrderAddressResource> GetEdgeOrderAddresses(this SubscriptionResource subscriptionResource, string filter, string skipToken, CancellationToken cancellationToken)
         {
-            return GetEdgeOrderAddresses(subscriptionResource, filter, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderAddresses(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -121,9 +126,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, string filter, string expand, string skipToken, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, string filter, string expand, string skipToken, CancellationToken cancellationToken)
         {
-            return GetEdgeOrderItemsAsync(subscriptionResource, filter, expand, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderItemsAsync(filter, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -159,9 +166,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, string filter, string expand, string skipToken, CancellationToken cancellationToken = default)
+        public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, string filter, string expand, string skipToken, CancellationToken cancellationToken)
         {
-            return GetEdgeOrderItems(subscriptionResource, filter, expand, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderItems(filter, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -190,10 +199,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetByResourceGroupAsync(resourceGroupResource, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -222,10 +232,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<EdgeOrderResource> GetEdgeOrders(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetByResourceGroup(resourceGroupResource, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrders(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -254,10 +265,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetBySubscriptionAsync(subscriptionResource, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -286,10 +298,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<EdgeOrderResource> GetEdgeOrders(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetBySubscription(subscriptionResource, skipToken, top: null, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrders(skipToken, cancellationToken);
         }
     }
 }
