@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeVmssDataDisk : IUtf8JsonSerializable, IJsonModel<NodeTypeVmssDataDisk>
+    /// <summary> Managed data disk description. </summary>
+    public partial class NodeTypeVmssDataDisk : IJsonModel<NodeTypeVmssDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeTypeVmssDataDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssDataDisk"/> for deserialization. </summary>
+        internal NodeTypeVmssDataDisk()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NodeTypeVmssDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NodeTypeVmssDataDisk)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
             writer.WritePropertyName("diskSizeGB"u8);
@@ -42,15 +47,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(DiskType.ToString());
             writer.WritePropertyName("diskLetter"u8);
             writer.WriteStringValue(DiskLetter);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -59,67 +64,73 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        NodeTypeVmssDataDisk IJsonModel<NodeTypeVmssDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NodeTypeVmssDataDisk IJsonModel<NodeTypeVmssDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NodeTypeVmssDataDisk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NodeTypeVmssDataDisk)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNodeTypeVmssDataDisk(document.RootElement, options);
         }
 
-        internal static NodeTypeVmssDataDisk DeserializeNodeTypeVmssDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NodeTypeVmssDataDisk DeserializeNodeTypeVmssDataDisk(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int lun = default;
-            int diskSizeGB = default;
+            int diskSizeInGB = default;
             ServiceFabricManagedDataDiskType diskType = default;
             string diskLetter = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"u8))
+                if (prop.NameEquals("lun"u8))
                 {
-                    lun = property.Value.GetInt32();
+                    lun = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"u8))
+                if (prop.NameEquals("diskSizeGB"u8))
                 {
-                    diskSizeGB = property.Value.GetInt32();
+                    diskSizeInGB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskType"u8))
+                if (prop.NameEquals("diskType"u8))
                 {
-                    diskType = new ServiceFabricManagedDataDiskType(property.Value.GetString());
+                    diskType = new ServiceFabricManagedDataDiskType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskLetter"u8))
+                if (prop.NameEquals("diskLetter"u8))
                 {
-                    diskLetter = property.Value.GetString();
+                    diskLetter = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NodeTypeVmssDataDisk(lun, diskSizeGB, diskType, diskLetter, serializedAdditionalRawData);
+            return new NodeTypeVmssDataDisk(lun, diskSizeInGB, diskType, diskLetter, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<NodeTypeVmssDataDisk>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NodeTypeVmssDataDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -129,15 +140,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        NodeTypeVmssDataDisk IPersistableModel<NodeTypeVmssDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NodeTypeVmssDataDisk IPersistableModel<NodeTypeVmssDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NodeTypeVmssDataDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNodeTypeVmssDataDisk(document.RootElement, options);
                     }
                 default:
@@ -145,6 +161,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NodeTypeVmssDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

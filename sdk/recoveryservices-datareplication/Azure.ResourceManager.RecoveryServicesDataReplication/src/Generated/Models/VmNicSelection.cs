@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct VmNicSelection : IEquatable<VmNicSelection>
     {
         private readonly string _value;
+        /// <summary> Not Selected. </summary>
+        private const string NotSelectedValue = "NotSelected";
+        /// <summary> Selected by user. </summary>
+        private const string SelectedByUserValue = "SelectedByUser";
+        /// <summary> Default selection by ASR. </summary>
+        private const string SelectedByDefaultValue = "SelectedByDefault";
+        /// <summary> NIC configuration overridden by user. Differs from SelectedByUser in the sense that the legacy SelectedByUser is used both for explicit modification by user and implicit approval of user if the settings are used for TFO/FO. SelectedByUserOverride implies user overriding at least one of the configurations. </summary>
+        private const string SelectedByUserOverrideValue = "SelectedByUserOverride";
 
         /// <summary> Initializes a new instance of <see cref="VmNicSelection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VmNicSelection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSelectedValue = "NotSelected";
-        private const string SelectedByUserValue = "SelectedByUser";
-        private const string SelectedByDefaultValue = "SelectedByDefault";
-        private const string SelectedByUserOverrideValue = "SelectedByUserOverride";
+            _value = value;
+        }
 
         /// <summary> Not Selected. </summary>
         public static VmNicSelection NotSelected { get; } = new VmNicSelection(NotSelectedValue);
+
         /// <summary> Selected by user. </summary>
         public static VmNicSelection SelectedByUser { get; } = new VmNicSelection(SelectedByUserValue);
+
         /// <summary> Default selection by ASR. </summary>
         public static VmNicSelection SelectedByDefault { get; } = new VmNicSelection(SelectedByDefaultValue);
+
         /// <summary> NIC configuration overridden by user. Differs from SelectedByUser in the sense that the legacy SelectedByUser is used both for explicit modification by user and implicit approval of user if the settings are used for TFO/FO. SelectedByUserOverride implies user overriding at least one of the configurations. </summary>
         public static VmNicSelection SelectedByUserOverride { get; } = new VmNicSelection(SelectedByUserOverrideValue);
+
         /// <summary> Determines if two <see cref="VmNicSelection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VmNicSelection left, VmNicSelection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VmNicSelection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VmNicSelection left, VmNicSelection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmNicSelection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VmNicSelection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VmNicSelection(string value) => new VmNicSelection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VmNicSelection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VmNicSelection?(string value) => value == null ? null : new VmNicSelection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VmNicSelection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VmNicSelection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

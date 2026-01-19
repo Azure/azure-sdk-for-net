@@ -8,85 +8,80 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
     /// A class representing a collection of <see cref="PublicCloudInventoryResource"/> and their operations.
-    /// Each <see cref="PublicCloudInventoryResource"/> in the collection will belong to the same instance of <see cref="PublicCloudConnectorSolutionConfigurationResource"/>.
-    /// To get a <see cref="PublicCloudInventoryCollection"/> instance call the GetPublicCloudInventories method from an instance of <see cref="PublicCloudConnectorSolutionConfigurationResource"/>.
+    /// Each <see cref="PublicCloudInventoryResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="PublicCloudInventoryCollection"/> instance call the GetPublicCloudInventories method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class PublicCloudInventoryCollection : ArmCollection, IEnumerable<PublicCloudInventoryResource>, IAsyncEnumerable<PublicCloudInventoryResource>
     {
-        private readonly ClientDiagnostics _publicCloudInventoryInventoryClientDiagnostics;
-        private readonly InventoryRestOperations _publicCloudInventoryInventoryRestClient;
+        private readonly ClientDiagnostics _inventoryClientDiagnostics;
+        private readonly Inventory _inventoryRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PublicCloudInventoryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PublicCloudInventoryCollection for mocking. </summary>
         protected PublicCloudInventoryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublicCloudInventoryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCloudInventoryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicCloudInventoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publicCloudInventoryInventoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudInventoryResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PublicCloudInventoryResource.ResourceType, out string publicCloudInventoryInventoryApiVersion);
-            _publicCloudInventoryInventoryRestClient = new InventoryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudInventoryInventoryApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != PublicCloudConnectorSolutionConfigurationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PublicCloudConnectorSolutionConfigurationResource.ResourceType), nameof(id));
+            TryGetApiVersion(PublicCloudInventoryResource.ResourceType, out string publicCloudInventoryApiVersion);
+            _inventoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudInventoryResource.ResourceType.Namespace, Diagnostics);
+            _inventoryRestClient = new Inventory(_inventoryClientDiagnostics, Pipeline, Endpoint, publicCloudInventoryApiVersion ?? "2024-12-01");
         }
 
         /// <summary>
         /// Get a InventoryResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryId"> Inventory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PublicCloudInventoryResource>> GetAsync(string inventoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
 
-            using var scope = _publicCloudInventoryInventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Get");
+            using DiagnosticScope scope = _inventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _publicCloudInventoryInventoryRestClient.GetAsync(Id.Parent, Id.Name, inventoryId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudInventoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +95,42 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Get a InventoryResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryId"> Inventory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PublicCloudInventoryResource> Get(string inventoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
 
-            using var scope = _publicCloudInventoryInventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Get");
+            using DiagnosticScope scope = _inventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Get");
             scope.Start();
             try
             {
-                var response = _publicCloudInventoryInventoryRestClient.Get(Id.Parent, Id.Name, inventoryId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudInventoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +144,44 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// List InventoryResource resources by SolutionConfiguration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_ListBySolutionConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_ListBySolutionConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicCloudInventoryResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublicCloudInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicCloudInventoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicCloudInventoryInventoryRestClient.CreateListBySolutionConfigurationRequest(Id.Parent, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publicCloudInventoryInventoryRestClient.CreateListBySolutionConfigurationNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicCloudInventoryResource(Client, PublicCloudInventoryData.DeserializePublicCloudInventoryData(e)), _publicCloudInventoryInventoryClientDiagnostics, Pipeline, "PublicCloudInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationAsyncCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>
         /// List InventoryResource resources by SolutionConfiguration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_ListBySolutionConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_ListBySolutionConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +189,61 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> A collection of <see cref="PublicCloudInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicCloudInventoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicCloudInventoryInventoryRestClient.CreateListBySolutionConfigurationRequest(Id.Parent, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publicCloudInventoryInventoryRestClient.CreateListBySolutionConfigurationNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicCloudInventoryResource(Client, PublicCloudInventoryData.DeserializePublicCloudInventoryData(e)), _publicCloudInventoryInventoryClientDiagnostics, Pipeline, "PublicCloudInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryId"> Inventory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string inventoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
 
-            using var scope = _publicCloudInventoryInventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Exists");
+            using DiagnosticScope scope = _inventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _publicCloudInventoryInventoryRestClient.GetAsync(Id.Parent, Id.Name, inventoryId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublicCloudInventoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudInventoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +257,50 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryId"> Inventory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string inventoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
 
-            using var scope = _publicCloudInventoryInventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Exists");
+            using DiagnosticScope scope = _inventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _publicCloudInventoryInventoryRestClient.Get(Id.Parent, Id.Name, inventoryId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublicCloudInventoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudInventoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +314,54 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryId"> Inventory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PublicCloudInventoryResource>> GetIfExistsAsync(string inventoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
 
-            using var scope = _publicCloudInventoryInventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.GetIfExists");
+            using DiagnosticScope scope = _inventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _publicCloudInventoryInventoryRestClient.GetAsync(Id.Parent, Id.Name, inventoryId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublicCloudInventoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudInventoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublicCloudInventoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudInventoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +375,54 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/inventory/{inventoryId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Inventory_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudInventoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryId"> Inventory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PublicCloudInventoryResource> GetIfExists(string inventoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
 
-            using var scope = _publicCloudInventoryInventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.GetIfExists");
+            using DiagnosticScope scope = _inventoryClientDiagnostics.CreateScope("PublicCloudInventoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _publicCloudInventoryInventoryRestClient.Get(Id.Parent, Id.Name, inventoryId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublicCloudInventoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudInventoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublicCloudInventoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudInventoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +442,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PublicCloudInventoryResource> IAsyncEnumerable<PublicCloudInventoryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

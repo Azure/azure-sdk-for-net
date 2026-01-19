@@ -16,8 +16,8 @@
 - Total libraries: 401
 - Management Plane (MPG): 227
   - Autorest/Swagger: 150
-  - New Emitter (TypeSpec): 62
-  - Old TypeSpec: 15
+  - New Emitter (TypeSpec): 66
+  - Old TypeSpec: 11
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
   - New Emitter (TypeSpec): 25
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 62 / 77 (80.5%)
+**Migration Status**: 66 / 77 (85.7%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -185,7 +185,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthbot | Azure.ResourceManager.HealthBot | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
-| hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
+| hybridconnectivity | Azure.ResourceManager.HybridConnectivity | ✅ |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
 | impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
@@ -207,13 +207,13 @@ Libraries that provide resource management APIs for Azure services and have been
 | qumulo | Azure.ResourceManager.Qumulo | ✅ |
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
-| recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
+| recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
-| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters |  |
-| servicenetworking | Azure.ResourceManager.ServiceNetworking |  |
+| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
+| servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager |  |
 | standbypool | Azure.ResourceManager.StandbyPool |  |
 | storageactions | Azure.ResourceManager.StorageActions | ✅ |
