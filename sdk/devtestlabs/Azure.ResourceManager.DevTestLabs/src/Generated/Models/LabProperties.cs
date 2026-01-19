@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>
         /// <param name="support"> The properties of any lab support message associated with this lab. </param>
         /// <param name="vmCreationResourceGroup"> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </param>
-        /// <param name="publicIpId"> The public IP address for the lab's load balancer. </param>
+        /// <param name="publicIPId"> The public IP address for the lab's load balancer. </param>
         /// <param name="loadBalancerId"> The load balancer used to for lab VMs that use shared IP address. </param>
         /// <param name="networkSecurityGroupId"> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </param>
         /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabProperties(string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIpId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabProperties(string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultStorageAccount = defaultStorageAccount;
             DefaultPremiumStorageAccount = defaultPremiumStorageAccount;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Announcement = announcement;
             Support = support;
             VmCreationResourceGroup = vmCreationResourceGroup;
-            PublicIpId = publicIpId;
+            PublicIPId = publicIPId;
             LoadBalancerId = loadBalancerId;
             NetworkSecurityGroupId = networkSecurityGroupId;
             ExtendedProperties = extendedProperties;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string VmCreationResourceGroup { get; }
 
         /// <summary> The public IP address for the lab's load balancer. </summary>
-        public string PublicIpId { get; }
+        public string PublicIPId { get; }
 
         /// <summary> The load balancer used to for lab VMs that use shared IP address. </summary>
         public string LoadBalancerId { get; }

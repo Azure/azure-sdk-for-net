@@ -19,72 +19,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDevTestLabsModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="defaultStorageAccount"> The lab's default storage account. </param>
-        /// <param name="defaultPremiumStorageAccount"> The lab's default premium storage account. </param>
-        /// <param name="artifactsStorageAccount"> The lab's artifact storage account. </param>
-        /// <param name="premiumDataDiskStorageAccount"> The lab's premium data disk storage account. </param>
-        /// <param name="vaultName"> The lab's Key vault. </param>
-        /// <param name="labStorageType"> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </param>
-        /// <param name="mandatoryArtifactsResourceIdsLinux"> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </param>
-        /// <param name="mandatoryArtifactsResourceIdsWindows"> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </param>
-        /// <param name="createdOn"> The creation date of the lab. </param>
-        /// <param name="premiumDataDisks">
-        /// The setting to enable usage of premium data disks.
-        /// When its value is 'Enabled', creation of standard or premium data disks is allowed.
-        /// When its value is 'Disabled', only creation of standard data disks is allowed.
-        /// </param>
-        /// <param name="environmentPermission"> The access rights to be granted to the user when provisioning an environment. </param>
-        /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>
-        /// <param name="support"> The properties of any lab support message associated with this lab. </param>
-        /// <param name="vmCreationResourceGroup"> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </param>
-        /// <param name="publicIpId"> The public IP address for the lab's load balancer. </param>
-        /// <param name="loadBalancerId"> The load balancer used to for lab VMs that use shared IP address. </param>
-        /// <param name="networkSecurityGroupId"> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </param>
-        /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="DevTestLabs.DevTestLabData"/> instance for mocking. </returns>
-        public static DevTestLabData DevTestLabData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string defaultStorageAccount = default, string defaultPremiumStorageAccount = default, string artifactsStorageAccount = default, string premiumDataDiskStorageAccount = default, string vaultName = default, DevTestLabStorageType? labStorageType = default, IEnumerable<string> mandatoryArtifactsResourceIdsLinux = default, IEnumerable<string> mandatoryArtifactsResourceIdsWindows = default, DateTimeOffset? createdOn = default, DevTestLabPremiumDataDisk? premiumDataDisks = default, DevTestLabEnvironmentPermission? environmentPermission = default, DevTestLabAnnouncement announcement = default, DevTestLabSupport support = default, string vmCreationResourceGroup = default, string publicIpId = default, string loadBalancerId = default, string networkSecurityGroupId = default, IDictionary<string, string> extendedProperties = default, string provisioningState = default, Guid? uniqueIdentifier = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                defaultStorageAccount is null && defaultPremiumStorageAccount is null && artifactsStorageAccount is null && premiumDataDiskStorageAccount is null && vaultName is null && labStorageType is null && mandatoryArtifactsResourceIdsLinux is null && mandatoryArtifactsResourceIdsWindows is null && createdOn is null && premiumDataDisks is null && environmentPermission is null && announcement is null && support is null && vmCreationResourceGroup is null && publicIpId is null && loadBalancerId is null && networkSecurityGroupId is null && extendedProperties is null && provisioningState is null && uniqueIdentifier is null ? default : new LabProperties(
-                    defaultStorageAccount,
-                    defaultPremiumStorageAccount,
-                    artifactsStorageAccount,
-                    premiumDataDiskStorageAccount,
-                    vaultName,
-                    labStorageType,
-                    (mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>()).ToList(),
-                    (mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>()).ToList(),
-                    createdOn,
-                    premiumDataDisks,
-                    environmentPermission,
-                    announcement,
-                    support,
-                    vmCreationResourceGroup,
-                    publicIpId,
-                    loadBalancerId,
-                    networkSecurityGroupId,
-                    extendedProperties,
-                    provisioningState,
-                    uniqueIdentifier,
-                    null),
-                tags);
-        }
 
         /// <summary> Properties of a lab's announcement banner. </summary>
         /// <param name="title"> The plain text title for the lab announcement. </param>
@@ -394,45 +328,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevTestLabFormulaPatch(tags, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="webHookUri"> The webhook URL to send notifications to. </param>
-        /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
-        /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
-        /// <param name="description"> Description of notification. </param>
-        /// <param name="events"> The list of event for which this notification is enabled. </param>
-        /// <param name="createdOn"> The creation date of the notification channel. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="DevTestLabs.DevTestLabNotificationChannelData"/> instance for mocking. </returns>
-        public static DevTestLabNotificationChannelData DevTestLabNotificationChannelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri webHookUri = default, string emailRecipient = default, string notificationLocale = default, string description = default, IEnumerable<DevTestLabNotificationChannelEvent> events = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default, IDictionary<string, string> tags = default, string location = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabNotificationChannelData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                webHookUri is null && emailRecipient is null && notificationLocale is null && description is null && events is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new NotificationChannelProperties(
-                    webHookUri,
-                    emailRecipient,
-                    notificationLocale,
-                    description,
-                    (events ?? new ChangeTrackingList<DevTestLabNotificationChannelEvent>()).ToList(),
-                    createdOn,
-                    provisioningState,
-                    uniqueIdentifier,
-                    null),
-                tags,
-                location);
         }
 
         /// <summary> A notification. </summary>
@@ -807,8 +702,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevTestLabData DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IEnumerable<string> mandatoryArtifactsResourceIdsLinux, IEnumerable<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, Guid? uniqueIdentifier)
+        public static DevTestLabData DevTestLabData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string defaultStorageAccount = default, string defaultPremiumStorageAccount = default, string artifactsStorageAccount = default, string premiumDataDiskStorageAccount = default, string vaultName = default, DevTestLabStorageType? labStorageType = default, IEnumerable<string> mandatoryArtifactsResourceIdsLinux = default, IEnumerable<string> mandatoryArtifactsResourceIdsWindows = default, DateTimeOffset? createdOn = default, DevTestLabPremiumDataDisk? premiumDataDisks = default, DevTestLabEnvironmentPermission? environmentPermission = default, DevTestLabAnnouncement announcement = default, DevTestLabSupport support = default, string vmCreationResourceGroup = default, string publicIPId = default, string loadBalancerId = default, string networkSecurityGroupId = default, IDictionary<string, string> extendedProperties = default, string provisioningState = default, Guid? uniqueIdentifier = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             mandatoryArtifactsResourceIdsLinux ??= new ChangeTrackingList<string>();
@@ -1127,8 +1021,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabNotificationChannelData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevTestLabNotificationChannelData DevTestLabNotificationChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri webHookUri, string emailRecipient, string notificationLocale, string description, IEnumerable<DevTestLabNotificationChannelEvent> events, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier)
+        public static DevTestLabNotificationChannelData DevTestLabNotificationChannelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri webHookUri = default, string emailRecipient = default, string notificationLocale = default, string description = default, IEnumerable<DevTestLabNotificationChannelEvent> events = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             events ??= new ChangeTrackingList<DevTestLabNotificationChannelEvent>();
@@ -1139,9 +1032,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 default,
-                tags,
-                location);
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabPolicyData"/>. </summary>

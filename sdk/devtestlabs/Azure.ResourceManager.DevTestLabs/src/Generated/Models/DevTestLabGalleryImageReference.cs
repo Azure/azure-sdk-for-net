@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Offer = offer;
             Publisher = publisher;
             Sku = sku;
-            OsType = osType;
+            OSType = osType;
             Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Sku { get; set; }
 
         /// <summary> The OS type of the gallery image. </summary>
-        public string OsType { get; set; }
+        public string OSType { get; set; }
 
         /// <summary> The version of the gallery image. </summary>
         public string Version { get; set; }

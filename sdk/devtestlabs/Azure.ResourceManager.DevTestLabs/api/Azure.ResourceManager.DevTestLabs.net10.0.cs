@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabArmTemplateData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>
     {
-        internal DevTestLabArmTemplateData() { }
+        public DevTestLabArmTemplateData(Azure.Core.AzureLocation location) { }
         public System.BinaryData Contents { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabArtifactData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>
     {
-        internal DevTestLabArtifactData() { }
+        public DevTestLabArtifactData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
         public string FilePath { get { throw null; } }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? PremiumDataDisks { get { throw null; } set { } }
         public string PremiumDataDiskStorageAccount { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public string PublicIpId { get { throw null; } }
+        public string PublicIPId { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport Support { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string VaultName { get { throw null; } }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent FormulaContent { get { throw null; } set { } }
         public string LabVmId { get { throw null; } set { } }
-        public string OsType { get { throw null; } set { } }
+        public string OSType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -614,17 +614,15 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabNotificationChannelData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>
+    public partial class DevTestLabNotificationChannelData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>
     {
-        public DevTestLabNotificationChannelData() { }
+        public DevTestLabNotificationChannelData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string EmailRecipient { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> Events { get { throw null; } }
-        public string Location { get { throw null; } set { } }
         public string NotificationLocale { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public System.Uri WebHookUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1306,7 +1304,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string LastKnownPowerState { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface NetworkInterface { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
-        public string OsType { get { throw null; } }
+        public string OSType { get { throw null; } }
         public string OwnerObjectId { get { throw null; } set { } }
         public string OwnerUserPrincipalName { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
@@ -1491,8 +1489,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails DevTestLabCostDetails(System.DateTimeOffset? on = default(System.DateTimeOffset?), double? cost = default(double?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType? costType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType?)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData DevTestLabCustomImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm vm = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd vhd = null, string description = null, string author = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string managedImageId = null, string managedSnapshotId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan customImagePlan = null, bool? isPlanAuthorized = default(bool?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch DevTestLabCustomImagePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabData DevTestLabData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string defaultStorageAccount = null, string defaultPremiumStorageAccount = null, string artifactsStorageAccount = null, string premiumDataDiskStorageAccount = null, string vaultName = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? labStorageType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType?), System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsLinux = null, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsWindows = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? premiumDataDisks = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? environmentPermission = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement announcement = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport support = null, string vmCreationResourceGroup = null, string publicIpId = null, string loadBalancerId = null, string networkSecurityGroupId = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabData DevTestLabData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? labStorageType, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsLinux, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsWindows, System.DateTimeOffset? createdOn, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? premiumDataDisks, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? environmentPermission, Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement announcement, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, System.Collections.Generic.IDictionary<string, string> extendedProperties, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabData DevTestLabData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string defaultStorageAccount = null, string defaultPremiumStorageAccount = null, string artifactsStorageAccount = null, string premiumDataDiskStorageAccount = null, string vaultName = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? labStorageType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType?), System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsLinux = null, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsWindows = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? premiumDataDisks = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? environmentPermission = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement announcement = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport support = null, string vmCreationResourceGroup = null, string publicIPId = null, string loadBalancerId = null, string networkSecurityGroupId = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabDiskData DevTestLabDiskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? diskType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType?), int? diskSizeGiB = default(int?), Azure.Core.ResourceIdentifier leasedByLabVmId = null, string diskBlobName = null, System.Uri diskUri = null, string storageAccountId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string hostCaching = null, Azure.Core.ResourceIdentifier managedDiskId = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch DevTestLabDiskPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData DevTestLabEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment deploymentProperties = null, string armTemplateDisplayName = null, string resourceGroupId = null, string createdByUser = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
@@ -1505,8 +1502,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch DevTestLabFormulaPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage DevTestLabGalleryImage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string author = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string description = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference imageReference = null, string icon = null, bool? isEnabled = default(bool?), string planId = null, bool? isPlanAuthorized = default(bool?)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(string uploadUri = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData DevTestLabNotificationChannelData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Uri webHookUri, string emailRecipient, string notificationLocale, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> events, System.DateTimeOffset? createdOn, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData DevTestLabNotificationChannelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri webHookUri = null, string emailRecipient = null, string notificationLocale = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> events = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData DevTestLabNotificationChannelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Uri webHookUri = null, string emailRecipient = null, string notificationLocale = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> events = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch DevTestLabNotificationChannelPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, System.BinaryData parametersValueInfo = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch DevTestLabPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
@@ -1596,7 +1592,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk> DataDisks { get { throw null; } }
         public string NetworkInterfaceId { get { throw null; } }
         public string OsDiskId { get { throw null; } }
-        public string OsType { get { throw null; } }
+        public string OSType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus> Statuses { get { throw null; } }
         public string VmSize { get { throw null; } }
         protected virtual Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1878,7 +1874,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabCustomImageVhd(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType osType) { }
         public string ImageName { get { throw null; } set { } }
         public bool? IsSysPrepEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType OsType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType OSType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2169,7 +2165,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabGalleryImageReference() { }
         public string Offer { get { throw null; } set { } }
-        public string OsType { get { throw null; } set { } }
+        public string OSType { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }

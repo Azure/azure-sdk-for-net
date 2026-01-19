@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(VmSize))
             {

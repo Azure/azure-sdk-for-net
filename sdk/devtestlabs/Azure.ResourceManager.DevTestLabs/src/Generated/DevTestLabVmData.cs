@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The OS type of the virtual machine. </summary>
-        public string OsType
+        public string OSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
 

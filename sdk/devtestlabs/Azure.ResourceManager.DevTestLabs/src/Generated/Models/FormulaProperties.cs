@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             Description = description;
             Author = author;
-            OsType = osType;
+            OSType = osType;
             CreatedOn = createdOn;
             FormulaContent = formulaContent;
             Vm = vm;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Author { get; }
 
         /// <summary> The OS type of the formula. </summary>
-        public string OsType { get; set; }
+        public string OSType { get; set; }
 
         /// <summary> The creation date of the formula. </summary>
         public DateTimeOffset? CreatedOn { get; }

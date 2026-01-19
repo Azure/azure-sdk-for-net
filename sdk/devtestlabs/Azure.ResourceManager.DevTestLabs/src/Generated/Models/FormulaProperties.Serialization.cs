@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {

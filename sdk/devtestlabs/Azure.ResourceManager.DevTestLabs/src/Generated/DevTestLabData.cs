@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The public IP address for the lab's load balancer. </summary>
-        public string PublicIpId
+        public string PublicIPId
         {
             get
             {
-                return Properties is null ? default : Properties.PublicIpId;
+                return Properties is null ? default : Properties.PublicIPId;
             }
         }
 

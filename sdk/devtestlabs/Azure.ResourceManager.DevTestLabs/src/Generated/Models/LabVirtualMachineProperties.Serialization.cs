@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("customImageId"u8);
                 writer.WriteStringValue(CustomImageId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsType))
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(Size))
             {

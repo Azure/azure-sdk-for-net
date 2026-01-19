@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("vmCreationResourceGroup"u8);
                 writer.WriteStringValue(VmCreationResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpId))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPId))
             {
                 writer.WritePropertyName("publicIpId"u8);
-                writer.WriteStringValue(PublicIpId);
+                writer.WriteStringValue(PublicIPId);
             }
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerId))
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DevTestLabAnnouncement announcement = default;
             DevTestLabSupport support = default;
             string vmCreationResourceGroup = default;
-            string publicIpId = default;
+            string publicIPId = default;
             string loadBalancerId = default;
             string networkSecurityGroupId = default;
             IDictionary<string, string> extendedProperties = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("publicIpId"u8))
                 {
-                    publicIpId = prop.Value.GetString();
+                    publicIPId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("loadBalancerId"u8))
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 announcement,
                 support,
                 vmCreationResourceGroup,
-                publicIpId,
+                publicIPId,
                 loadBalancerId,
                 networkSecurityGroupId,
                 extendedProperties ?? new ChangeTrackingDictionary<string, string>(),

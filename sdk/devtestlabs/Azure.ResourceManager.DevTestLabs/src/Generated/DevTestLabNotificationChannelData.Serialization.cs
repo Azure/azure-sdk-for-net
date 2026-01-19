@@ -18,8 +18,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary> A notification. </summary>
-    public partial class DevTestLabNotificationChannelData : ResourceData, IJsonModel<DevTestLabNotificationChannelData>
+    public partial class DevTestLabNotificationChannelData : TrackedResourceData, IJsonModel<DevTestLabNotificationChannelData>
     {
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelData"/> for deserialization. </summary>
+        internal DevTestLabNotificationChannelData()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabNotificationChannelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -60,11 +65,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             NotificationChannelProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.DevTestLabs
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevTestLabsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -164,11 +169,6 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location);
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

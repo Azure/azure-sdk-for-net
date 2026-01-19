@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteBooleanValue(IsSysPrepEnabled.Value);
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToString());
+            writer.WriteStringValue(OSType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

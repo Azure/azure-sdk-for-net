@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             CreatedOn = createdOn;
             ComputeId = computeId;
             CustomImageId = customImageId;
-            OsType = osType;
+            OSType = osType;
             Size = size;
             UserName = userName;
             Password = password;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string CustomImageId { get; set; }
 
         /// <summary> The OS type of the virtual machine. </summary>
-        public string OsType { get; }
+        public string OSType { get; }
 
         /// <summary> The size of the virtual machine. </summary>
         public string Size { get; set; }

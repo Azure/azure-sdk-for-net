@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal ComputeVmProperties(IReadOnlyList<ComputeVmInstanceViewStatus> statuses, string osType, string vmSize, string networkInterfaceId, string osDiskId, IReadOnlyList<string> dataDiskIds, IReadOnlyList<ComputeDataDisk> dataDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Statuses = statuses;
-            OsType = osType;
+            OSType = osType;
             VmSize = vmSize;
             NetworkInterfaceId = networkInterfaceId;
             OsDiskId = osDiskId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public IReadOnlyList<ComputeVmInstanceViewStatus> Statuses { get; }
 
         /// <summary> Gets the OS type of the virtual machine. </summary>
-        public string OsType { get; }
+        public string OSType { get; }
 
         /// <summary> Gets the size of the virtual machine. </summary>
         public string VmSize { get; }

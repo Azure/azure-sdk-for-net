@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
         public DevTestLabCustomImageVhd(DevTestLabCustomImageOsType osType)
         {
-            OsType = osType;
+            OSType = osType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             ImageName = imageName;
             IsSysPrepEnabled = isSysPrepEnabled;
-            OsType = osType;
+            OSType = osType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public bool? IsSysPrepEnabled { get; set; }
 
         /// <summary> The OS type of the custom image (i.e. Windows, Linux). </summary>
-        public DevTestLabCustomImageOsType OsType { get; set; }
+        public DevTestLabCustomImageOsType OSType { get; set; }
     }
 }

@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(Version))
             {
