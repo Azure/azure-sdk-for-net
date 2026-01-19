@@ -89,8 +89,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         var createdTasks = new Dictionary<object, FoundryTool>();
         if (toolsToFetch.Count > 0)
         {
-            await _cacheLock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
+            using (await AcquireCacheLockAsync(_cacheLock, cancellationToken).ConfigureAwait(false))
             {
                 foreach (var (cacheKey, tool) in toolsToFetch)
                 {
@@ -120,10 +119,6 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
                         });
                     }
                 }
-            }
-            finally
-            {
-                _cacheLock.Release();
             }
         }
 
@@ -248,5 +243,32 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         return fetched.TryGetValue(toolId, out var details)
             ? details
             : Array.Empty<FoundryToolDetails>();
+    }
+
+    private static async Task<IDisposable> AcquireCacheLockAsync(
+        SemaphoreSlim semaphore,
+        CancellationToken cancellationToken)
+    {
+        await semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+        return new SemaphoreReleaser(semaphore);
+    }
+
+    private sealed class SemaphoreReleaser : IDisposable
+    {
+        private SemaphoreSlim? _semaphore;
+
+        public SemaphoreReleaser(SemaphoreSlim semaphore)
+        {
+            _semaphore = semaphore ?? throw new ArgumentNullException(nameof(semaphore));
+        }
+
+        public void Dispose()
+        {
+            var semaphore = Interlocked.Exchange(ref _semaphore, null);
+            if (semaphore != null)
+            {
+                semaphore.Release();
+            }
+        }
     }
 }
