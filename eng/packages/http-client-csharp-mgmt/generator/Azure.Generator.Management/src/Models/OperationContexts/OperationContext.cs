@@ -86,7 +86,7 @@ internal class OperationContext
             {
                 ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
                     code: "malformed-resource-detected",
-                    message: $"The request path has a malformed structure: segment diff between '{parent}' and '{current}' has {diffPath.Count} segments, but an even number is required for pairing."
+                    message: $"The request path '{contextualPath}' has a malformed structure: segment diff between '{parent}' and '{current}' has {diffPath.Count} segments, but an even number is required for pairing."
                 );
                 return false;
             }
