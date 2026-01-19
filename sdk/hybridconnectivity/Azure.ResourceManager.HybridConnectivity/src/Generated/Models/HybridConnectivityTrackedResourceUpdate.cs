@@ -14,25 +14,25 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
-    public partial class TrackedResourceUpdate : ResourceData
+    public partial class HybridConnectivityTrackedResourceUpdate : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TrackedResourceUpdate"/>. </summary>
-        public TrackedResourceUpdate()
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivityTrackedResourceUpdate"/>. </summary>
+        public HybridConnectivityTrackedResourceUpdate()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrackedResourceUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivityTrackedResourceUpdate"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal TrackedResourceUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal HybridConnectivityTrackedResourceUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Tags = tags;

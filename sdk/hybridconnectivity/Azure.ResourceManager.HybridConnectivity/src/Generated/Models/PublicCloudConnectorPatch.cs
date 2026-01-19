@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> Public Cloud Connector. </summary>
-    public partial class PublicCloudConnectorPatch : TrackedResourceUpdate
+    public partial class PublicCloudConnectorPatch : HybridConnectivityTrackedResourceUpdate
     {
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPatch"/>. </summary>
         public PublicCloudConnectorPatch()

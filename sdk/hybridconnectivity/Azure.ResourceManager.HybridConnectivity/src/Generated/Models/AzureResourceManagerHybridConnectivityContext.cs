@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(HybridConnectivityServiceConfigurationData))]
     [ModelReaderWriterBuildable(typeof(HybridConnectivityServiceConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(HybridConnectivityServiceConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(HybridConnectivityTrackedResourceUpdate))]
     [ModelReaderWriterBuildable(typeof(IngressGatewayAsset))]
     [ModelReaderWriterBuildable(typeof(IngressProfileProperties))]
     [ModelReaderWriterBuildable(typeof(InventoryResourceListResult))]
@@ -65,7 +66,6 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(SolutionTypeResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetResourceEndpointAccess))]
-    [ModelReaderWriterBuildable(typeof(TrackedResourceUpdate))]
     public partial class AzureResourceManagerHybridConnectivityContext : ModelReaderWriterContext
     {
     }

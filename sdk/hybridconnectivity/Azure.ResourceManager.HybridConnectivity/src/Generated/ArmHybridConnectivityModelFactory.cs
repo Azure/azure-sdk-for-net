@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TrackedResourceUpdate"/> instance for mocking. </returns>
-        public static TrackedResourceUpdate TrackedResourceUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.HybridConnectivityTrackedResourceUpdate"/> instance for mocking. </returns>
+        public static HybridConnectivityTrackedResourceUpdate HybridConnectivityTrackedResourceUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrackedResourceUpdate(
+            return new HybridConnectivityTrackedResourceUpdate(
                 id,
                 name,
                 resourceType,
