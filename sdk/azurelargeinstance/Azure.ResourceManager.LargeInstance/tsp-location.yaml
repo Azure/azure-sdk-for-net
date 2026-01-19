@@ -1,4 +1,4 @@
 directory: specification/azurelargeinstance/resource-manager/Microsoft.AzureLargeInstance/AzureLargeInstance
-commit: 113b466bf76cd86da547beee5300d2ef5210cfb3
+commit: 461499f28a486b095d4b981e7c529b42634ba927
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
