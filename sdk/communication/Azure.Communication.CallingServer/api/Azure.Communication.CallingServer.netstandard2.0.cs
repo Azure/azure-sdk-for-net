@@ -143,9 +143,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.CallConnectionState Transferring { get { throw null; } }
         public static Azure.Communication.CallingServer.CallConnectionState Unknown { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.CallConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.CallConnectionState left, Azure.Communication.CallingServer.CallConnectionState right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.CallConnectionState (string value) { throw null; }
@@ -167,7 +165,6 @@ namespace Azure.Communication.CallingServer
         protected CallLocator() { }
         public string Id { get { throw null; } }
         public abstract bool Equals(Azure.Communication.CallingServer.CallLocator other);
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
     }
     public partial class CallMedia
@@ -191,9 +188,7 @@ namespace Azure.Communication.CallingServer
         public CallMediaRecognitionType(string value) { throw null; }
         public static Azure.Communication.CallingServer.CallMediaRecognitionType Dtmf { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.CallMediaRecognitionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.CallMediaRecognitionType left, Azure.Communication.CallingServer.CallMediaRecognitionType right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.CallMediaRecognitionType (string value) { throw null; }
@@ -269,9 +264,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.CallRejectReason Forbidden { get { throw null; } }
         public static Azure.Communication.CallingServer.CallRejectReason None { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.CallRejectReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.CallRejectReason left, Azure.Communication.CallingServer.CallRejectReason right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.CallRejectReason (string value) { throw null; }
@@ -346,15 +339,10 @@ namespace Azure.Communication.CallingServer
         public long InitialTransferSize { get { throw null; } set { } }
         public int MaximumConcurrency { get { throw null; } set { } }
         public long MaximumTransferSize { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Communication.CallingServer.ContentTransferOptions obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator ==(Azure.Communication.CallingServer.ContentTransferOptions left, Azure.Communication.CallingServer.ContentTransferOptions right) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Communication.CallingServer.ContentTransferOptions left, Azure.Communication.CallingServer.ContentTransferOptions right) { throw null; }
     }
     public partial class CreateCallOptions
@@ -402,9 +390,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.DtmfTone Two { get { throw null; } }
         public static Azure.Communication.CallingServer.DtmfTone Zero { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.DtmfTone other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.DtmfTone left, Azure.Communication.CallingServer.DtmfTone right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.DtmfTone (string value) { throw null; }
@@ -440,9 +426,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.MediaStreamingAudioChannel Mixed { get { throw null; } }
         public static Azure.Communication.CallingServer.MediaStreamingAudioChannel Unmixed { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.MediaStreamingAudioChannel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.MediaStreamingAudioChannel left, Azure.Communication.CallingServer.MediaStreamingAudioChannel right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.MediaStreamingAudioChannel (string value) { throw null; }
@@ -465,9 +449,7 @@ namespace Azure.Communication.CallingServer
         public MediaStreamingContent(string value) { throw null; }
         public static Azure.Communication.CallingServer.MediaStreamingContent Audio { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.MediaStreamingContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.MediaStreamingContent left, Azure.Communication.CallingServer.MediaStreamingContent right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.MediaStreamingContent (string value) { throw null; }
@@ -514,9 +496,7 @@ namespace Azure.Communication.CallingServer
         public MediaStreamingTransport(string value) { throw null; }
         public static Azure.Communication.CallingServer.MediaStreamingTransport Websocket { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.MediaStreamingTransport other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.MediaStreamingTransport left, Azure.Communication.CallingServer.MediaStreamingTransport right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.MediaStreamingTransport (string value) { throw null; }
@@ -592,9 +572,7 @@ namespace Azure.Communication.CallingServer
         public RecognizeInputType(string value) { throw null; }
         public static Azure.Communication.CallingServer.RecognizeInputType Dtmf { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.RecognizeInputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.RecognizeInputType left, Azure.Communication.CallingServer.RecognizeInputType right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.RecognizeInputType (string value) { throw null; }
@@ -610,9 +588,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.RecordingChannel Mixed { get { throw null; } }
         public static Azure.Communication.CallingServer.RecordingChannel Unmixed { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.RecordingChannel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.RecordingChannel left, Azure.Communication.CallingServer.RecordingChannel right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.RecordingChannel (string value) { throw null; }
@@ -628,9 +604,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.RecordingContent Audio { get { throw null; } }
         public static Azure.Communication.CallingServer.RecordingContent AudioVideo { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.RecordingContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.RecordingContent left, Azure.Communication.CallingServer.RecordingContent right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.RecordingContent (string value) { throw null; }
@@ -647,9 +621,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.RecordingFormat Mp4 { get { throw null; } }
         public static Azure.Communication.CallingServer.RecordingFormat Wav { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.RecordingFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.RecordingFormat left, Azure.Communication.CallingServer.RecordingFormat right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.RecordingFormat (string value) { throw null; }
@@ -665,9 +637,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.RecordingState Active { get { throw null; } }
         public static Azure.Communication.CallingServer.RecordingState Inactive { get { throw null; } }
         public bool Equals(Azure.Communication.CallingServer.RecordingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CallingServer.RecordingState left, Azure.Communication.CallingServer.RecordingState right) { throw null; }
         public static implicit operator Azure.Communication.CallingServer.RecordingState (string value) { throw null; }

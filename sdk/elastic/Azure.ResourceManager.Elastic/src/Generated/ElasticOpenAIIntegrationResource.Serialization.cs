@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Elastic
 {
+    /// <summary></summary>
     public partial class ElasticOpenAIIntegrationResource : IJsonModel<ElasticOpenAIIntegrationData>
     {
-        private static ElasticOpenAIIntegrationData s_dataDeserializationInstance;
-        private static ElasticOpenAIIntegrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ElasticOpenAIIntegrationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ElasticOpenAIIntegrationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticOpenAIIntegrationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticOpenAIIntegrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticOpenAIIntegrationData>)Data).Write(writer, options);
 
-        ElasticOpenAIIntegrationData IJsonModel<ElasticOpenAIIntegrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticOpenAIIntegrationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticOpenAIIntegrationData IJsonModel<ElasticOpenAIIntegrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticOpenAIIntegrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticOpenAIIntegrationData>(Data, options, AzureResourceManagerElasticContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticOpenAIIntegrationData IPersistableModel<ElasticOpenAIIntegrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticOpenAIIntegrationData>(data, options, AzureResourceManagerElasticContext.Default);
 
-        string IPersistableModel<ElasticOpenAIIntegrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticOpenAIIntegrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ElasticOpenAIIntegrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

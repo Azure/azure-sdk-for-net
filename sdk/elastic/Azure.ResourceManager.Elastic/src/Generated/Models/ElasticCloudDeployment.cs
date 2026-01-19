@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Details of the user's elastic deployment associated with the monitor resource. </summary>
     public partial class ElasticCloudDeployment
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticCloudDeployment"/>. </summary>
         public ElasticCloudDeployment()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="elasticsearchServiceUri"> Elasticsearch ingestion endpoint of the Elastic deployment. </param>
         /// <param name="kibanaServiceUri"> Kibana endpoint of the Elastic deployment. </param>
         /// <param name="kibanaSsoUri"> Kibana dashboard sso URL of the Elastic deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticCloudDeployment(string name, string deploymentId, string azureSubscriptionId, string elasticsearchRegion, Uri elasticsearchServiceUri, Uri kibanaServiceUri, Uri kibanaSsoUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticCloudDeployment(string name, string deploymentId, string azureSubscriptionId, string elasticsearchRegion, Uri elasticsearchServiceUri, Uri kibanaServiceUri, Uri kibanaSsoUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DeploymentId = deploymentId;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.Elastic.Models
             ElasticsearchServiceUri = elasticsearchServiceUri;
             KibanaServiceUri = kibanaServiceUri;
             KibanaSsoUri = kibanaSsoUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Elastic deployment name. </summary>
         public string Name { get; }
+
         /// <summary> Elastic deployment Id. </summary>
         public string DeploymentId { get; }
+
         /// <summary> Associated Azure subscription Id for the elastic deployment. </summary>
         public string AzureSubscriptionId { get; }
+
         /// <summary> Region where Deployment at Elastic side took place. </summary>
         public string ElasticsearchRegion { get; }
+
         /// <summary> Elasticsearch ingestion endpoint of the Elastic deployment. </summary>
         public Uri ElasticsearchServiceUri { get; }
+
         /// <summary> Kibana endpoint of the Elastic deployment. </summary>
         public Uri KibanaServiceUri { get; }
+
         /// <summary> Kibana dashboard sso URL of the Elastic deployment. </summary>
         public Uri KibanaSsoUri { get; }
     }

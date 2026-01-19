@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Unknown version of FaultSimulationContent. </summary>
     internal partial class UnknownFaultSimulationContent : FaultSimulationContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFaultSimulationContent"/>. </summary>
         /// <param name="faultKind"> The kind of fault to be simulated. </param>
         /// <param name="isForced"> Force the action to go through without any check on the cluster. </param>
         /// <param name="constraints"> Constraints for Fault Simulation action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFaultSimulationContent(FaultKind faultKind, bool? isForced, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(faultKind, isForced, constraints, serializedAdditionalRawData)
-        {
-            FaultKind = faultKind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownFaultSimulationContent"/> for deserialization. </summary>
-        internal UnknownFaultSimulationContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFaultSimulationContent(FaultKind faultKind, bool? isForced, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(faultKind != default ? faultKind : "unknown", isForced, constraints, additionalBinaryDataProperties)
         {
         }
     }

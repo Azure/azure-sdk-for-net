@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmNetworkSecurityGroupResource : IJsonModel<HciVmNetworkSecurityGroupData>
     {
-        private static HciVmNetworkSecurityGroupData s_dataDeserializationInstance;
-        private static HciVmNetworkSecurityGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmNetworkSecurityGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmNetworkSecurityGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmNetworkSecurityGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmNetworkSecurityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmNetworkSecurityGroupData>)Data).Write(writer, options);
 
-        HciVmNetworkSecurityGroupData IJsonModel<HciVmNetworkSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmNetworkSecurityGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmNetworkSecurityGroupData IJsonModel<HciVmNetworkSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmNetworkSecurityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmNetworkSecurityGroupData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmNetworkSecurityGroupData IPersistableModel<HciVmNetworkSecurityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmNetworkSecurityGroupData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmNetworkSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmNetworkSecurityGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmNetworkSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -640,7 +640,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.MediaType.endpoint"
+              "crossLanguageDefinitionId": "Payload.MediaType.StringBody.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -649,9 +649,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "17"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
