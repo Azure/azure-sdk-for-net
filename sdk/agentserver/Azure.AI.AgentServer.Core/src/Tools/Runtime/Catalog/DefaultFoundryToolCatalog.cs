@@ -40,14 +40,14 @@ public class DefaultFoundryToolCatalog : CachedFoundryToolCatalog
     /// <summary>
     /// Fetches tool metadata from Azure AI services using the Foundry tool client.
     /// </summary>
-    protected override async Task<IReadOnlyDictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>> FetchToolsAsync(
+    protected override async Task<IReadOnlyDictionary<string, IReadOnlyList<FoundryToolDetails>>> FetchToolsAsync(
         IReadOnlyList<FoundryTool> tools,
         UserInfo? userInfo,
         CancellationToken cancellationToken)
     {
         if (tools.Count == 0)
         {
-            return new Dictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>();
+            return new Dictionary<string, IReadOnlyList<FoundryToolDetails>>(StringComparer.Ordinal);
         }
 
         // For now, we'll use the client's ListToolsAsync method which fetches all tools
@@ -56,7 +56,7 @@ public class DefaultFoundryToolCatalog : CachedFoundryToolCatalog
         var allTools = await _client.ListToolsAsync(cancellationToken).ConfigureAwait(false);
 
         // Map requested tools to resolved tool details
-        var results = new Dictionary<FoundryTool, IReadOnlyList<FoundryToolDetails>>();
+        var results = new Dictionary<string, IReadOnlyList<FoundryToolDetails>>(StringComparer.Ordinal);
 
         foreach (var requestedTool in tools)
         {
@@ -67,7 +67,7 @@ public class DefaultFoundryToolCatalog : CachedFoundryToolCatalog
 
             if (matchingDetails.Count > 0)
             {
-                results[requestedTool] = matchingDetails;
+                results[requestedTool.Id] = matchingDetails;
             }
         }
 
