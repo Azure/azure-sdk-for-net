@@ -1,4 +1,4 @@
 directory: specification/advisor/resource-manager/Microsoft.Advisor/Advisor
-commit: ef620ad2c84da6e5cf49587b5c749b3cd142d736
+commit: 416d65ca9ba75611fd3d53f53c749804b49ad264
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
