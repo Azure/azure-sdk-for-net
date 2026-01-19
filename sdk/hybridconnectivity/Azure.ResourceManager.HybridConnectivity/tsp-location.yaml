@@ -1,4 +1,4 @@
 directory: specification/hybridconnectivity/HybridConnectivity.Management
-commit: f59f9b5d41fbaed121319b2ce71d912bf79d81be
+commit: 8f1483b667e766b958aeb34ac811286e67de52e3
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath:  eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
