@@ -6,13 +6,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     // Manually add to maintain its backward compatibility
-    //[CodeGenSerialization(nameof(DeviceDetails), "parentDeviceDetails")]
-    //[CodeGenSerialization(nameof(Count), "quantity")]
+    // After https://github.com/microsoft/typespec/issues/9403 is resolved,
+    // [CodeGenSerialization(nameof(DeviceDetails), "parentDeviceDetails")] needs to be added and regenerated
+    // same as [CodeGenSerialization(nameof(Count), "quantity")]
     public partial class ProductDetails
     {
         /// <summary> Quantity of the product. </summary>

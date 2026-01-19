@@ -5,6 +5,7 @@
 
 using System.ComponentModel;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Mocking
 {
@@ -158,6 +159,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             return GetBySubscriptionAsync(skipToken, top: null, cancellationToken);
@@ -184,6 +186,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = null, CancellationToken cancellationToken = default)
         {
             return GetBySubscription(skipToken, top: null, cancellationToken);
