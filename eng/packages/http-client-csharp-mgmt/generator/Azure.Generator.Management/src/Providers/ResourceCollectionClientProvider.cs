@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Models;
@@ -29,7 +30,8 @@ namespace Azure.Generator.Management.Providers
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
-        private readonly Dictionary<ParameterProvider, FieldProvider> _pathParameterMap;
+        private readonly IReadOnlyList<ParameterProvider> _extraCtorParameters;
+        private readonly IReadOnlyList<FieldProvider> _extraFields;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
@@ -46,12 +48,11 @@ namespace Azure.Generator.Management.Providers
         // This is the resource type of the current resource. Not the resource type of my parent resource
         private ScopedApi<ResourceType> _resourceTypeExpression;
 
-        private readonly RequestPathPattern _contextualPath;
+        private readonly OperationContext _operationContext;
 
         internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
 
             // Initialize client info dictionary using extension method
@@ -60,9 +61,44 @@ namespace Azure.Generator.Management.Providers
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
+            _operationContext = InitializeContext(this, resourceMetadata, _getAll);
 
             // this depends on _getAll being initialized
-            _pathParameterMap = BuildPathParameterMap();
+            (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
+        }
+
+        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, ResourceMetadata resourceMetadata, ResourceMethod? getAll)
+        {
+            var contextualPath = GetContextualPath(resourceMetadata);
+            if (getAll is not null)
+            {
+                var secondaryContextualPath = new RequestPathPattern(getAll.OperationPath);
+                // validate the contextualPath should be an ancestor of the secondaryContextualPath, otherwise report diagnostic.
+                if (!contextualPath.IsAncestorOf(secondaryContextualPath))
+                {
+                    // Report diagnostic
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        code: "malformed-resource-detected",
+                        message: $"The contextual path '{contextualPath}' is not an ancestor of the secondary contextual path '{secondaryContextualPath}'.",
+                        targetCrossLanguageDefinitionId: getAll.InputMethod.CrossLanguageDefinitionId
+                    );
+                }
+                return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField);
+            }
+            else
+            {
+                return OperationContext.Create(contextualPath);
+            }
+        }
+
+        private FieldProvider FindField(string variableName)
+        {
+            // in majority of cases (more than 99.9%) we will only have one or less extra ctor parameters
+            // in the majority of rest of cases, we will only have two extra ctor parameters
+            // we have never seen more than two extra ctor parameters in real world so far
+            // it would be negative optimization to build a dictionary here instead of just searching the list linearly.
+            // considering how this extraCtorParamaters are built, we could ensure here we always have a match.
+            return _extraCtorParameters.First(p => p.WireInfo.SerializedName == variableName).Field!;
         }
 
         /// <summary>
@@ -72,7 +108,7 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resourceMetadata"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        private static RequestPathPattern GetContextualRequestPattern(ResourceMetadata resourceMetadata)
+        private static RequestPathPattern GetContextualPath(ResourceMetadata resourceMetadata)
         {
             if (resourceMetadata.ParentResourceId is not null)
             {
@@ -89,6 +125,25 @@ namespace Azure.Generator.Management.Providers
             }
 
             return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
+        }
+
+        private (IReadOnlyList<ParameterProvider> ExtraParameters, IReadOnlyList<FieldProvider> ExtraFields) BuildExtraConstructorParametersAndFields()
+        {
+            var extraParameters = new List<ParameterProvider>();
+            var extraFields = new List<FieldProvider>();
+            var secondaryContextualParameters = _operationContext.SecondaryContextualPathParameters;
+            foreach (var contextualParameter in secondaryContextualParameters)
+            {
+                var parameter = new ParameterProvider(
+                    contextualParameter.VariableName,
+                    $"The {contextualParameter.VariableName} for the resource.",
+                    ResourceHelpers.GetRequestPathParameterType(contextualParameter.VariableName, _getAll!.InputMethod));
+                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{contextualParameter.VariableName}", this, description: $"The {contextualParameter.VariableName}.");
+                parameter.Field = field;
+                extraParameters.Add(parameter);
+                extraFields.Add(field);
+            }
+            return (extraParameters, extraFields);
         }
 
         private static void InitializeMethods(
@@ -120,9 +175,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ResourceClientProvider Resource => _resource;
-        public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterMap.Values.ToList();
-        public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
-        public RequestPathPattern ContextualPath => _contextualPath;
+        public IReadOnlyList<ParameterProvider> PathParameters => _extraCtorParameters;
 
         // Cached Get method providers for reuse in other places
         public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);
@@ -176,31 +229,6 @@ namespace Azure.Generator.Management.Providers
             return [.. properties];
         }
 
-        private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
-        {
-            var map = new Dictionary<ParameterProvider, FieldProvider>();
-            if (_getAll is null)
-            {
-                return map;
-            }
-
-            var diff = ContextualPath.TrimAncestorFrom(new RequestPathPattern(_getAll.OperationPath));
-            var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
-
-            foreach (var seg in variableSegments)
-            {
-                var parameter = new ParameterProvider(
-                    seg.VariableName,
-                    $"The {seg.VariableName} for the resource.",
-                    Resource.GetPathParameterType(seg.VariableName));
-                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, Resource.GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
-                map.Add(parameter, field);
-            }
-            return map;
-        }
-
-        // BuildPathParameters is now handled by BuildPathParametersAndFields
-
         protected override FieldProvider[] BuildFields()
         {
             var fields = new List<FieldProvider>();
@@ -209,7 +237,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
-            return [.. fields, .. _pathParameterMap.Values];
+            return [.. fields, .. _extraFields];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -227,7 +255,7 @@ namespace Azure.Generator.Management.Providers
             var initializer = new ConstructorInitializer(true, baseParameters);
             var parameters = new List<ParameterProvider>(baseParameters);
 
-            parameters.AddRange(_pathParameterMap.Keys);
+            parameters.AddRange(_extraCtorParameters);
 
             var signature = new ConstructorSignature(
                 Type,
@@ -244,9 +272,9 @@ namespace Azure.Generator.Management.Providers
             bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
 
             // Assign all path parameter fields by assigning from the path parameters
-            foreach (var kvp in _pathParameterMap)
+            foreach (var parameter in _extraCtorParameters)
             {
-                bodyStatements.Add(kvp.Value.Assign(kvp.Key).Terminate());
+                bodyStatements.Add(parameter.Field!.Assign(parameter).Terminate());
             }
 
             // Initialize all client diagnostics and rest client fields
@@ -364,7 +392,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
                 var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
+                result.Add(new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
             return result;
@@ -376,7 +404,7 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
                 _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
             };
         }
@@ -387,10 +415,10 @@ namespace Azure.Generator.Management.Providers
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, _resource);
             }
 
-            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)
@@ -401,7 +429,8 @@ namespace Azure.Generator.Management.Providers
             }
 
             var restClientInfo = _clientInfos[_get.InputClient];
-            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync, true);
+            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, _get.InputMethod, isAsync, methodName);
         }
 
         private List<MethodProvider> BuildGetMethods()
@@ -437,7 +466,7 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, _operationContext, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(existsMethodProvider);
             }
 
@@ -455,19 +484,11 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _operationContext, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }
 
             return result;
-        }
-
-        public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
-        {
-            matchingField = _pathParameterMap
-                .FirstOrDefault(kvp => kvp.Key.WireInfo.SerializedName.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
-                .Value;
-            return matchingField != null;
         }
     }
 }

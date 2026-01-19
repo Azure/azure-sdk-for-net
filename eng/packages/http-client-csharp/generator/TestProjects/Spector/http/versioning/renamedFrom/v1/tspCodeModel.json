@@ -696,7 +696,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.endpoint"
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface.endpoint"
             },
             {
               "$id": "52",
@@ -723,7 +723,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface.version"
             }
           ],
           "initializedBy": 0,
@@ -734,9 +734,11 @@
           ],
           "parent": {
             "$ref": "24"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    internal class TrafficControllerFrontendOperationSource : IOperationSource<TrafficControllerFrontendResource>
+    /// <summary></summary>
+    internal partial class TrafficControllerFrontendOperationSource : IOperationSource<TrafficControllerFrontendResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal TrafficControllerFrontendOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         TrafficControllerFrontendResource IOperationSource<TrafficControllerFrontendResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrafficControllerFrontendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            TrafficControllerFrontendData data = TrafficControllerFrontendData.DeserializeTrafficControllerFrontendData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new TrafficControllerFrontendResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<TrafficControllerFrontendResource> IOperationSource<TrafficControllerFrontendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrafficControllerFrontendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
-            return await Task.FromResult(new TrafficControllerFrontendResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            TrafficControllerFrontendData data = TrafficControllerFrontendData.DeserializeTrafficControllerFrontendData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new TrafficControllerFrontendResource(_client, data);
         }
     }
 }

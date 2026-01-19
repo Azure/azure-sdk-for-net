@@ -10,42 +10,141 @@ using System.Linq;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswerContext"/>. </summary>
+        /// <summary> Parameters to query a knowledge base. </summary>
+        /// <param name="qnaId">
+        /// Exact QnA ID to fetch from the knowledge base, this field takes priority over
+        /// question.
+        /// </param>
+        /// <param name="question"> User question to query against the knowledge base. </param>
+        /// <param name="size"> Max number of answers to be returned for the question. </param>
+        /// <param name="userId"> Unique identifier for the user. </param>
+        /// <param name="confidenceThreshold"> Minimum threshold score for answers, value ranges from 0 to 1. </param>
+        /// <param name="answerContext"> Context object with previous QnA's information. </param>
+        /// <param name="rankerKind"> Type of ranker to be used. </param>
+        /// <param name="filters"> Filter QnAs based on given metadata list and knowledge base sources. </param>
+        /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
+        /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
+        /// <param name="queryPreferences"> To fine tune query results. </param>
+        /// <returns> A new <see cref="Inference.AnswersOptions"/> instance for mocking. </returns>
+        public static AnswersOptions AnswersOptions(int? qnaId = default, string question = default, int? size = default, string userId = default, double? confidenceThreshold = default, KnowledgeBaseAnswerContext answerContext = default, RankerKind? rankerKind = default, QueryFilters filters = default, ShortAnswerOptions shortAnswerOptions = default, bool? includeUnstructuredSources = default, QueryPreferences queryPreferences = default)
+        {
+            return new AnswersOptions(
+                qnaId,
+                question,
+                size,
+                userId,
+                confidenceThreshold,
+                answerContext,
+                rankerKind,
+                filters,
+                shortAnswerOptions,
+                includeUnstructuredSources,
+                queryPreferences,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Context object with previous QnA's information. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
         /// <param name="previousQuestion"> Previous user query. </param>
         /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = null)
+        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = default)
         {
-            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, serializedAdditionalRawData: null);
+            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.ShortAnswerOptions"/>. </summary>
-        /// <param name="isEnabled"> Enable or disable Answer Span prediction. </param>
+        /// <summary> filters over knowledge base. </summary>
+        /// <param name="metadataFilter"> Find QnAs that are associated with the given list of metadata. </param>
+        /// <param name="sourceFilter">
+        /// Find QnAs that are associated with any of the given list of sources in
+        /// knowledge base.
+        /// </param>
+        /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
+        /// <returns> A new <see cref="Inference.QueryFilters"/> instance for mocking. </returns>
+        public static QueryFilters QueryFilters(MetadataFilter metadataFilter = default, IEnumerable<string> sourceFilter = default, LogicalOperationKind? logicalOperation = default)
+        {
+            sourceFilter ??= new ChangeTrackingList<string>();
+
+            return new QueryFilters(metadataFilter, sourceFilter.ToList(), logicalOperation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
+        /// <param name="metadata"> Dictionary of string. </param>
+        /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
+        /// <returns> A new <see cref="Inference.MetadataFilter"/> instance for mocking. </returns>
+        public static MetadataFilter MetadataFilter(IEnumerable<MetadataRecord> metadata = default, LogicalOperationKind? logicalOperation = default)
+        {
+            metadata ??= new ChangeTrackingList<MetadataRecord>();
+
+            return new MetadataFilter(metadata.ToList(), logicalOperation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Object to provide the key value pair for each metadata. </summary>
+        /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
+        /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
+        /// <returns> A new <see cref="Inference.MetadataRecord"/> instance for mocking. </returns>
+        public static MetadataRecord MetadataRecord(string key = default, string value = default)
+        {
+            return new MetadataRecord(key, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> To configure Answer span prediction feature. </summary>
+        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
         /// <param name="confidenceThreshold">
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
         /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <returns> A new <see cref="Inference.ShortAnswerOptions"/> instance for mocking. </returns>
-        public static ShortAnswerOptions ShortAnswerOptions(bool isEnabled = default, double? confidenceThreshold = null, int? size = null)
+        public static ShortAnswerOptions ShortAnswerOptions(bool enable = default, double? confidenceThreshold = default, int? size = default)
         {
-            return new ShortAnswerOptions(isEnabled, confidenceThreshold, size, serializedAdditionalRawData: null);
+            return new ShortAnswerOptions(enable, confidenceThreshold, size, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.AnswersResult"/>. </summary>
+        /// <summary> Additional properties to fine tune query results. </summary>
+        /// <param name="scorer"> To specify what scoring algorithm is preferred. </param>
+        /// <param name="matchingPolicy"> Policy for controling exact query match behavior. </param>
+        /// <returns> A new <see cref="Inference.QueryPreferences"/> instance for mocking. </returns>
+        public static QueryPreferences QueryPreferences(Scorer? scorer = default, MatchingPolicy matchingPolicy = default)
+        {
+            return new QueryPreferences(scorer, matchingPolicy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Specify parameters for query matching
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Inference.PrebuiltQueryMatchingPolicy"/>.
+        /// </summary>
+        /// <param name="kind"> Kind of matching policy to be applied. </param>
+        /// <returns> A new <see cref="Inference.MatchingPolicy"/> instance for mocking. </returns>
+        public static MatchingPolicy MatchingPolicy(string kind = default)
+        {
+            return new UnknownMatchingPolicy(new MatchingPolicyKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents fields for Prebuilt query matching. Prebuilt weights will be used for giving preference to question and answer columns when quering AI search. </summary>
+        /// <param name="fields"> List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column. </param>
+        /// <param name="disableFullMatch"> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </param>
+        /// <returns> A new <see cref="Inference.PrebuiltQueryMatchingPolicy"/> instance for mocking. </returns>
+        public static PrebuiltQueryMatchingPolicy PrebuiltQueryMatchingPolicy(IEnumerable<MatchingPolicyFieldsType> fields = default, bool? disableFullMatch = default)
+        {
+            fields ??= new ChangeTrackingList<MatchingPolicyFieldsType>();
+
+            return new PrebuiltQueryMatchingPolicy(MatchingPolicyKind.Prebuilt, additionalBinaryDataProperties: null, fields.ToList(), disableFullMatch);
+        }
+
+        /// <summary> Represents List of Question Answers. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
         /// <returns> A new <see cref="Inference.AnswersResult"/> instance for mocking. </returns>
-        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = null)
+        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = default)
         {
-            answers ??= new List<KnowledgeBaseAnswer>();
+            answers ??= new ChangeTrackingList<KnowledgeBaseAnswer>();
 
-            return new AnswersResult(answers?.ToList(), serializedAdditionalRawData: null);
+            return new AnswersResult(answers.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswer"/>. </summary>
+        /// <summary> Represents knowledge base answer. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -58,13 +157,13 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
         /// <returns> A new <see cref="Inference.KnowledgeBaseAnswer"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidence = null, int? qnaId = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgeBaseAnswerDialog dialog = null, AnswerSpan shortAnswer = null)
+        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = default, string answer = default, double? confidence = default, int? qnaId = default, string source = default, IDictionary<string, string> metadata = default, KnowledgeBaseAnswerDialog dialog = default, AnswerSpan shortAnswer = default)
         {
-            questions ??= new List<string>();
-            metadata ??= new Dictionary<string, string>();
+            questions ??= new ChangeTrackingList<string>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new KnowledgeBaseAnswer(
-                questions?.ToList(),
+                questions.ToList(),
                 answer,
                 confidence,
                 qnaId,
@@ -72,10 +171,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 metadata,
                 dialog,
                 shortAnswer,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswerDialog"/>. </summary>
+        /// <summary> Dialog associated with Answer. </summary>
         /// <param name="isContextOnly">
         /// To mark if a prompt is relevant only with a previous question or not. If true,
         /// do not include this QnA as search result for queries without context;
@@ -83,35 +182,35 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
         /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = null, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = null)
+        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = default)
         {
-            prompts ??= new List<KnowledgeBaseAnswerPrompt>();
+            prompts ??= new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
 
-            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList(), serializedAdditionalRawData: null);
+            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswerPrompt"/>. </summary>
+        /// <summary> Prompt for an answer. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
-        /// <param name="id"> QnA ID corresponding to the prompt. </param>
+        /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? id = null, string displayText = null)
+        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? qnaId = default, string displayText = default)
         {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, id, displayText, serializedAdditionalRawData: null);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.AnswerSpan"/>. </summary>
+        /// <summary> Answer span object of QnA. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
         /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
         /// <param name="length"> The length of the answer span. </param>
         /// <returns> A new <see cref="Inference.AnswerSpan"/> instance for mocking. </returns>
-        public static AnswerSpan AnswerSpan(string text = null, double? confidence = null, int? offset = null, int? length = null)
+        public static AnswerSpan AnswerSpan(string text = default, double? confidence = default, int? offset = default, int? length = default)
         {
-            return new AnswerSpan(text, confidence, offset, length, serializedAdditionalRawData: null);
+            return new AnswerSpan(text, confidence, offset, length, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.AnswersFromTextOptions"/>. </summary>
+        /// <summary> The question and text record parameters to answer. </summary>
         /// <param name="question"> User question to query against the given text records. </param>
         /// <param name="textDocuments"> Text records to be searched for given question. </param>
         /// <param name="language">
@@ -125,24 +224,33 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// see https://aka.ms/text-analytics-offsets.
         /// </param>
         /// <returns> A new <see cref="Inference.AnswersFromTextOptions"/> instance for mocking. </returns>
-        public static AnswersFromTextOptions AnswersFromTextOptions(string question = null, IEnumerable<TextDocument> textDocuments = null, string language = null, StringIndexType? stringIndexType = null)
+        public static AnswersFromTextOptions AnswersFromTextOptions(string question = default, IEnumerable<TextDocument> textDocuments = default, string language = default, StringIndexType? stringIndexType = default)
         {
-            textDocuments ??= new List<TextDocument>();
+            textDocuments ??= new ChangeTrackingList<TextDocument>();
 
-            return new AnswersFromTextOptions(question, textDocuments?.ToList(), language, stringIndexType, serializedAdditionalRawData: null);
+            return new AnswersFromTextOptions(question, textDocuments.ToList(), language, stringIndexType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.AnswersFromTextResult"/>. </summary>
+        /// <summary> Represent input text record to be queried. </summary>
+        /// <param name="id"> Unique identifier for the text record. </param>
+        /// <param name="text"> Text contents of the record. </param>
+        /// <returns> A new <see cref="Inference.TextDocument"/> instance for mocking. </returns>
+        public static TextDocument TextDocument(string id = default, string text = default)
+        {
+            return new TextDocument(id, text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the answer results. </summary>
         /// <param name="answers"> Represents the answer results. </param>
         /// <returns> A new <see cref="Inference.AnswersFromTextResult"/> instance for mocking. </returns>
-        public static AnswersFromTextResult AnswersFromTextResult(IEnumerable<TextAnswer> answers = null)
+        public static AnswersFromTextResult AnswersFromTextResult(IEnumerable<TextAnswer> answers = default)
         {
-            answers ??= new List<TextAnswer>();
+            answers ??= new ChangeTrackingList<TextAnswer>();
 
-            return new AnswersFromTextResult(answers?.ToList(), serializedAdditionalRawData: null);
+            return new AnswersFromTextResult(answers.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.TextAnswer"/>. </summary>
+        /// <summary> Represents answer result. </summary>
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>
@@ -150,7 +258,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
         /// <returns> A new <see cref="Inference.TextAnswer"/> instance for mocking. </returns>
-        public static TextAnswer TextAnswer(string answer = null, double? confidence = null, string id = null, AnswerSpan shortAnswer = null, int? offset = null, int? length = null)
+        public static TextAnswer TextAnswer(string answer = default, double? confidence = default, string id = default, AnswerSpan shortAnswer = default, int? offset = default, int? length = default)
         {
             return new TextAnswer(
                 answer,
@@ -159,7 +267,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 shortAnswer,
                 offset,
                 length,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }

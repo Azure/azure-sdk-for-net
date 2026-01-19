@@ -3272,7 +3272,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknown.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3281,7 +3281,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "299",
@@ -3520,7 +3521,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDerived.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3529,7 +3530,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "313",
@@ -3768,7 +3770,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3777,7 +3779,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "327",
@@ -4016,7 +4019,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknown.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4025,7 +4028,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "341",
@@ -4264,7 +4268,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDerived.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4273,7 +4277,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "355",
@@ -4512,7 +4517,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDiscriminated.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4521,7 +4526,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "369",
@@ -4760,7 +4766,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4769,7 +4775,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "383",
@@ -5008,7 +5015,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5017,7 +5024,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "397",
@@ -5256,7 +5264,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5265,7 +5273,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "411",
@@ -5504,7 +5513,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5513,7 +5522,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "425",
@@ -5752,7 +5762,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5761,7 +5771,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "439",
@@ -6000,7 +6011,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6009,7 +6020,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "453",
@@ -6248,7 +6260,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6257,7 +6269,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "467",
@@ -6496,7 +6509,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6505,7 +6518,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "481",
@@ -6744,7 +6758,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6753,7 +6767,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "495",
@@ -6992,7 +7007,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7001,7 +7016,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "509",
@@ -7240,7 +7256,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7249,7 +7265,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "523",
@@ -7488,7 +7505,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7497,7 +7514,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "537",
@@ -7736,7 +7754,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7745,7 +7763,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "551",
@@ -7984,7 +8003,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7993,7 +8012,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "565",
@@ -8232,7 +8252,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8241,7 +8261,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "579",
@@ -8480,7 +8501,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8489,7 +8510,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "593",
@@ -8728,7 +8750,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8737,7 +8759,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "607",
@@ -8976,7 +8999,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8985,7 +9008,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "621",
@@ -9224,7 +9248,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9233,7 +9257,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "635",
@@ -9472,7 +9497,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9481,7 +9506,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "649",
@@ -9720,7 +9746,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.MultipleSpread.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9729,7 +9755,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "663",
@@ -9968,7 +9995,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordUnion.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9977,7 +10004,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "677",
@@ -10216,7 +10244,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10225,7 +10253,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "691",
@@ -10464,7 +10493,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion2.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10473,7 +10502,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "705",
@@ -10712,7 +10742,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion3.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10721,9 +10751,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "281"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

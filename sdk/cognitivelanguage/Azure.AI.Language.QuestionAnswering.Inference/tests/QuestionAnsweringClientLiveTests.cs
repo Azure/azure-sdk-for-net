@@ -81,7 +81,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
                     MetadataFilter = new()
                     {
                         LogicalOperation = LogicalOperationKind.OR,
-                        MetadataRecords =
+                        Metadata =
                         {
                             new("explicitlytaggedheading", "check the battery level"),
                             new("explicitlytaggedheading", "make your battery last"),

@@ -762,7 +762,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Numeric.endpoint"
+              "crossLanguageDefinitionId": "Encode.Numeric.Property.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -771,9 +771,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

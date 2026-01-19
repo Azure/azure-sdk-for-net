@@ -1,4 +1,6 @@
 directory: specification/connectedcache/ConnectedCache.Management
-commit: dce561a52fe216fd097629dfd5fa4904dc0ba05a
+commit: be46becafeb29aa993898709e35759d3643b2809
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

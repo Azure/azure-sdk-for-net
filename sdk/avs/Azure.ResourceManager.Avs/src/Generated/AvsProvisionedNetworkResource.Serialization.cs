@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class AvsProvisionedNetworkResource : IJsonModel<AvsProvisionedNetworkData>
     {
-        private static AvsProvisionedNetworkData s_dataDeserializationInstance;
-        private static AvsProvisionedNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvsProvisionedNetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvsProvisionedNetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvsProvisionedNetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsProvisionedNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsProvisionedNetworkData>)Data).Write(writer, options);
 
-        AvsProvisionedNetworkData IJsonModel<AvsProvisionedNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsProvisionedNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsProvisionedNetworkData IJsonModel<AvsProvisionedNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AvsProvisionedNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsProvisionedNetworkData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AvsProvisionedNetworkData IPersistableModel<AvsProvisionedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsProvisionedNetworkData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsProvisionedNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsProvisionedNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsProvisionedNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
