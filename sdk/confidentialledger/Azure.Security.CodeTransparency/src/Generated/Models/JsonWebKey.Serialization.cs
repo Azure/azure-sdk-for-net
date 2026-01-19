@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.CodeTransparency
 {
-    public partial class JsonWebKey : IUtf8JsonSerializable, IJsonModel<JsonWebKey>
+    /// <summary> rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types. </summary>
+    public partial class JsonWebKey : IJsonModel<JsonWebKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/> for deserialization. </summary>
+        internal JsonWebKey()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Security.CodeTransparency
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Alg))
             {
                 writer.WritePropertyName("alg"u8);
@@ -110,8 +114,13 @@ namespace Azure.Security.CodeTransparency
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
-                foreach (var item in X5c)
+                foreach (string item in X5c)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -121,15 +130,15 @@ namespace Azure.Security.CodeTransparency
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -138,22 +147,27 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        JsonWebKey IJsonModel<JsonWebKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JsonWebKey IJsonModel<JsonWebKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JsonWebKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeJsonWebKey(document.RootElement, options);
         }
 
-        internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -173,112 +187,117 @@ namespace Azure.Security.CodeTransparency
             string qi = default;
             string use = default;
             string x = default;
-            IReadOnlyList<string> x5c = default;
+            IList<string> x5c = default;
             string y = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("alg"u8))
+                if (prop.NameEquals("alg"u8))
                 {
-                    alg = property.Value.GetString();
+                    alg = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("crv"u8))
+                if (prop.NameEquals("crv"u8))
                 {
-                    crv = property.Value.GetString();
+                    crv = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("d"u8))
+                if (prop.NameEquals("d"u8))
                 {
-                    d = property.Value.GetString();
+                    d = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dp"u8))
+                if (prop.NameEquals("dp"u8))
                 {
-                    dp = property.Value.GetString();
+                    dp = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dq"u8))
+                if (prop.NameEquals("dq"u8))
                 {
-                    dq = property.Value.GetString();
+                    dq = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("e"u8))
+                if (prop.NameEquals("e"u8))
                 {
-                    e = property.Value.GetString();
+                    e = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("k"u8))
+                if (prop.NameEquals("k"u8))
                 {
-                    k = property.Value.GetString();
+                    k = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kid"u8))
+                if (prop.NameEquals("kid"u8))
                 {
-                    kid = property.Value.GetString();
+                    kid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kty"u8))
+                if (prop.NameEquals("kty"u8))
                 {
-                    kty = property.Value.GetString();
+                    kty = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("n"u8))
+                if (prop.NameEquals("n"u8))
                 {
-                    n = property.Value.GetString();
+                    n = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("p"u8))
+                if (prop.NameEquals("p"u8))
                 {
-                    p = property.Value.GetString();
+                    p = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("q"u8))
+                if (prop.NameEquals("q"u8))
                 {
-                    q = property.Value.GetString();
+                    q = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qi"u8))
+                if (prop.NameEquals("qi"u8))
                 {
-                    qi = property.Value.GetString();
+                    qi = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("use"u8))
+                if (prop.NameEquals("use"u8))
                 {
-                    use = property.Value.GetString();
+                    use = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x"u8))
+                if (prop.NameEquals("x"u8))
                 {
-                    x = property.Value.GetString();
+                    x = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x5c"u8))
+                if (prop.NameEquals("x5c"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     x5c = array;
                     continue;
                 }
-                if (property.NameEquals("y"u8))
+                if (prop.NameEquals("y"u8))
                 {
-                    y = property.Value.GetString();
+                    y = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new JsonWebKey(
                 alg,
                 crv,
@@ -297,13 +316,16 @@ namespace Azure.Security.CodeTransparency
                 x,
                 x5c ?? new ChangeTrackingList<string>(),
                 y,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -313,15 +335,20 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        JsonWebKey IPersistableModel<JsonWebKey>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JsonWebKey IPersistableModel<JsonWebKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JsonWebKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeJsonWebKey(document.RootElement, options);
                     }
                 default:
@@ -329,22 +356,7 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JsonWebKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static JsonWebKey FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeJsonWebKey(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

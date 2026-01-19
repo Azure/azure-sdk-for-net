@@ -20,8 +20,8 @@
   - Old TypeSpec: 13
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 25
-  - Old TypeSpec: 13
+  - New Emitter (TypeSpec): 26
+  - Old TypeSpec: 12
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 47
@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 25 / 38 (65.8%)
+**Migration Status**: 26 / 38 (68.4%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -50,7 +50,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | communication | Azure.Communication.JobRouter |  |
 | communication | Azure.Communication.Messages |  |
 | communication | Azure.Communication.ProgrammableConnectivity |  |
-| confidentialledger | Azure.Security.CodeTransparency |  |
+| confidentialledger | Azure.Security.CodeTransparency | ✅ |
 | contentsafety | Azure.AI.ContentSafety |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |
 | devcenter | Azure.Developer.DevCenter |  |
