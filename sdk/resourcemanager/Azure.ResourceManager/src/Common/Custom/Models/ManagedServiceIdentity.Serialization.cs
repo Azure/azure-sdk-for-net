@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Models
                         continue;
                     }
                     var propertyValue = property.Value.GetString();
-                    if (propertyValue?.Length == 0)
+                    if (string.IsNullOrEmpty(propertyValue))
                     {
                         continue;
                     }
