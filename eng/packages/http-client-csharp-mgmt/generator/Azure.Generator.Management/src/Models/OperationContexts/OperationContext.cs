@@ -193,10 +193,19 @@ internal class OperationContext
             // If the request path has an odd number of segments, report a diagnostic and return an empty array
             if (requestPath.Count % 2 != 0)
             {
-                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                    code: "malformed-resource-detected",
-                    message: $"The request path should have an even number of segments for pairing, but got {requestPath.Count} segments."
-                );
+                try
+                {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        code: "malformed-resource-detected",
+                        message: $"The request path should have an even number of segments for pairing, but got {requestPath.Count} segments."
+                    );
+                }
+                catch (InvalidOperationException)
+                {
+                    // ManagementClientGenerator is not loaded (e.g., in unit tests)
+                    // Silently continue - the empty array return below will handle the graceful degradation
+                }
+
                 return Array.Empty<KeyValuePair<RequestPathSegment, RequestPathSegment>>();
             }
 
