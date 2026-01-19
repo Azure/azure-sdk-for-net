@@ -14,21 +14,21 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
-/*
+
 namespace Azure.ResourceManager.DevTestLabs
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricSchedules")]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabVmSchedules")]
+    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricSchedules")]
+    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabVmSchedules")]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabPolicies")]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricScheduleAsync", typeof(string), typeof(string), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricSchedule", typeof(string), typeof(string), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabVmScheduleAsync", typeof(string), typeof(string), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabVmSchedule", typeof(string), typeof(string), typeof(CancellationToken))]
+    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricScheduleAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricSchedule", typeof(string), typeof(string), typeof(CancellationToken))]
+    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabVmScheduleAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabVmSchedule", typeof(string), typeof(string), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabPolicyAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabPolicy", typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class DevTestLabResource : ArmResource
     {
-        /// <summary> Gets a collection of DevTestLabServiceFabricSchedules in the <see cref="DevTestLabResource"/>. </summary>
+        /* /// <summary> Gets a collection of DevTestLabServiceFabricSchedules in the <see cref="DevTestLabResource"/>. </summary>
         /// <param name="userName"> The userName for the resource. </param>
         /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
         /// <returns> An object representing collection of DevTestLabServiceFabricSchedules and their operations over a DevTestLabServiceFabricScheduleResource. </returns>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual DevTestLabVmScheduleCollection GetDevTestLabVmSchedules(string virtualMachineName)
         {
             return this.GetCachedClient(client => new DevTestLabVmScheduleCollection(client, Id));
-        }
+        } */
 
         /// <summary> Gets a collection of DevTestLabPolicies in the <see cref="DevTestLabResource"/>. </summary>
         /// <param name="policySetName"> The policySetName for the resource. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return this.GetCachedClient(client => new DevTestLabPolicyCollection(client, Id, policySetName));
         }
 
-        /// <summary> Get schedule. </summary>
+        /* /// <summary> Get schedule. </summary>
         /// <param name="userName"> The userName for the resource. </param>
         /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
         /// <param name="name"> The name of the Schedule. </param>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return this.GetDevTestLabVmSchedules(virtualMachineName).Get(virtualMachineName, name, expand, cancellationToken);
-        }
+        } */
 
         /// <summary> Get policy. </summary>
         /// <param name="policySetName"> The policySetName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the Policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> Get policy. </summary>
         /// <param name="policySetName"> The policySetName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the Policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -146,4 +146,3 @@ namespace Azure.ResourceManager.DevTestLabs
         }
     }
 }
-*/

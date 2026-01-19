@@ -1751,42 +1751,6 @@ namespace Azure.ResourceManager.DevTestLabs
             return GetDevTestLabNotificationChannels().Get(name, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevTestLabPolicies in the <see cref="DevTestLabResource"/>. </summary>
-        /// <param name="policySetName"> The policySetName for the resource. </param>
-        /// <returns> An object representing collection of DevTestLabPolicies and their operations over a DevTestLabPolicyResource. </returns>
-        public virtual DevTestLabPolicyCollection GetDevTestLabPolicies(string policySetName)
-        {
-            return this.GetCachedClient(client => new DevTestLabPolicyCollection(client, Id));
-        }
-
-        /// <summary> Get policy. </summary>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabPolicyResource>> GetDevTestLabPolicyAsync(string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await this.GetDevTestLabPolicies().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get policy. </summary>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DevTestLabPolicyResource> GetDevTestLabPolicy(string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return this.GetDevTestLabPolicies().Get(name, expand, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DevTestLabServiceRunners in the <see cref="DevTestLabResource"/>. </summary>
         /// <returns> An object representing collection of DevTestLabServiceRunners and their operations over a DevTestLabServiceRunnerResource. </returns>
         public virtual DevTestLabServiceRunnerCollection GetDevTestLabServiceRunners()

@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary></summary>
-    public partial class DevTestLabResource : IJsonModel<DevTestLabData>
+    public partial class DevTestLabResource : ArmResource, IJsonModel<DevTestLabData>
     {
         private static IJsonModel<DevTestLabData> s_dataDeserializationInstance;
 
