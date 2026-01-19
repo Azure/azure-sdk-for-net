@@ -36,72 +36,12 @@ internal class OperationContext
 {
     public static OperationContext Create(RequestPathPattern contextualPath)
     {
-        // Validate the path before creating the context
-        if (!ValidatePathPattern(contextualPath))
-        {
-            // Return an empty context for malformed paths
-            return CreateEmptyContext(contextualPath);
-        }
         return new OperationContext(contextualPath, null, null);
     }
 
     public static OperationContext Create(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector)
     {
-        // Validate the path before creating the context
-        if (!ValidatePathPattern(contextualPath))
-        {
-            // Return an empty context for malformed paths
-            return CreateEmptyContext(contextualPath);
-        }
         return new OperationContext(contextualPath, secondaryContextualPath, fieldSelector);
-    }
-
-    /// <summary>
-    /// Validates that the request path pattern will not cause issues during contextual parameter building.
-    /// Reports a diagnostic if the path is malformed.
-    /// </summary>
-    /// <param name="contextualPath">The path to validate.</param>
-    /// <returns>True if the path is valid, false if it's malformed.</returns>
-    private static bool ValidatePathPattern(RequestPathPattern contextualPath)
-    {
-        // Walk through the hierarchy to check if any diff would have odd segments
-        var current = contextualPath;
-        while (current != RequestPathPattern.Tenant)
-        {
-            var parent = current.GetParent();
-
-            // Skip the special patterns that don't use ReverselySplitIntoPairs
-            if (current == RequestPathPattern.Subscription ||
-                current == RequestPathPattern.ManagementGroup ||
-                current == RequestPathPattern.ResourceGroup ||
-                (current.Count == 1 && !current[0].IsConstant))
-            {
-                current = parent;
-                continue;
-            }
-
-            // Check if the diff would have odd segments
-            var diffPath = parent.TrimAncestorFrom(current);
-            if (diffPath.Count % 2 != 0)
-            {
-                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                    code: "malformed-resource-detected",
-                    message: $"The request path '{contextualPath}' has a malformed structure: segment diff between '{parent}' and '{current}' has {diffPath.Count} segments, but an even number is required for pairing."
-                );
-                return false;
-            }
-
-            current = parent;
-        }
-        return true;
-    }
-
-    /// <summary>
-    /// Creates an empty context for malformed paths to allow graceful degradation.
-    /// </summary>
-    private static OperationContext CreateEmptyContext(RequestPathPattern contextualPath)
-    {
-        return new OperationContext(contextualPath, null, null, isEmpty: true);
     }
 
     public RequestPathPattern ContextualPath { get; }
@@ -120,23 +60,14 @@ internal class OperationContext
     /// <param name="secondaryContextualPath">An optional secondary request path pattern that provides additional context for the operation. Can be null
     /// if no secondary context is required.</param>
     /// <param name="fieldSelector">The function to get the corresponding field for secondary contextual parameters.</param>
-    /// <param name="isEmpty">If true, creates an empty context without building parameters (for malformed paths).</param>
-    private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector, bool isEmpty = false)
+    private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector)
     {
         ContextualPath = contextualPath;
         SecondaryContextualPath = secondaryContextualPath;
-        if (isEmpty)
-        {
-            ContextualPathParameters = [];
-            SecondaryContextualPathParameters = [];
-        }
-        else
-        {
-            ContextualPathParameters = BuildContextualParameters(contextualPath);
-            SecondaryContextualPathParameters = secondaryContextualPath != null && fieldSelector != null ?
-                BuildSecondaryContextualParameters(contextualPath, secondaryContextualPath, fieldSelector) :
-                [];
-        }
+        ContextualPathParameters = BuildContextualParameters(contextualPath);
+        SecondaryContextualPathParameters = secondaryContextualPath != null && fieldSelector != null ?
+            BuildSecondaryContextualParameters(contextualPath, secondaryContextualPath, fieldSelector) :
+            [];
     }
 
     /// <summary>
@@ -149,12 +80,25 @@ internal class OperationContext
     /// <returns></returns>
     private static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern contextualPath)
     {
-        // we use a stack here because we are building the contextual parameters in reverse order.
-        var result = new Stack<ContextualParameter>();
+        try
+        {
+            // we use a stack here because we are building the contextual parameters in reverse order.
+            var result = new Stack<ContextualParameter>();
 
-        BuildContextualParameterHierarchy(contextualPath, result, 0);
+            BuildContextualParameterHierarchy(contextualPath, result, 0);
 
-        return [.. result];
+            return [.. result];
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Report diagnostic for malformed resource structure
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                code: "malformed-resource-detected",
+                message: $"The request path '{contextualPath}' has a malformed structure: {ex.Message}"
+            );
+            // Return empty list to allow graceful degradation
+            return [];
+        }
     }
 
     private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
@@ -259,7 +203,11 @@ internal class OperationContext
         static IReadOnlyList<KeyValuePair<RequestPathSegment, RequestPathSegment>> ReverselySplitIntoPairs(IReadOnlyList<RequestPathSegment> requestPath)
         {
             // in our current cases, we will always have even segments.
-            Debug.Assert(requestPath.Count % 2 == 0, "The request path should always have an even number of segments for pairing.");
+            if (requestPath.Count % 2 != 0)
+            {
+                throw new InvalidOperationException($"The request path should have an even number of segments for pairing, but got {requestPath.Count} segments.");
+            }
+
             int maxNumberOfPairs = requestPath.Count / 2;
             var pairs = new KeyValuePair<RequestPathSegment, RequestPathSegment>[maxNumberOfPairs];
 
@@ -278,9 +226,22 @@ internal class OperationContext
 
     private static IReadOnlyList<ContextualParameter> BuildSecondaryContextualParameters(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector)
     {
-        // for secondary contextual path, we first trim off the main contextual path part from it
-        var extraContextualPath = contextualPath.TrimAncestorFrom(secondaryContextualPath);
-        return BuildSecondaryContextualParametersCore(extraContextualPath, fieldSelector);
+        try
+        {
+            // for secondary contextual path, we first trim off the main contextual path part from it
+            var extraContextualPath = contextualPath.TrimAncestorFrom(secondaryContextualPath);
+            return BuildSecondaryContextualParametersCore(extraContextualPath, fieldSelector);
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Report diagnostic for malformed resource structure
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                code: "malformed-resource-detected",
+                message: $"The secondary request path '{secondaryContextualPath}' has a malformed structure: {ex.Message}"
+            );
+            // Return empty list to allow graceful degradation
+            return [];
+        }
 
         static List<ContextualParameter> BuildSecondaryContextualParametersCore(RequestPathPattern extraPath, Func<string, FieldProvider> fieldSelector)
         {
