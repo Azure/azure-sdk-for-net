@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedServicePackageActivationMode : IEquatable<ManagedServicePackageActivationMode>
     {
         private readonly string _value;
+        /// <summary> Indicates the application package activation mode will use shared process. </summary>
+        private const string SharedProcessValue = "SharedProcess";
+        /// <summary> Indicates the application package activation mode will use exclusive process. </summary>
+        private const string ExclusiveProcessValue = "ExclusiveProcess";
 
         /// <summary> Initializes a new instance of <see cref="ManagedServicePackageActivationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedServicePackageActivationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SharedProcessValue = "SharedProcess";
-        private const string ExclusiveProcessValue = "ExclusiveProcess";
+            _value = value;
+        }
 
         /// <summary> Indicates the application package activation mode will use shared process. </summary>
         public static ManagedServicePackageActivationMode SharedProcess { get; } = new ManagedServicePackageActivationMode(SharedProcessValue);
+
         /// <summary> Indicates the application package activation mode will use exclusive process. </summary>
         public static ManagedServicePackageActivationMode ExclusiveProcess { get; } = new ManagedServicePackageActivationMode(ExclusiveProcessValue);
+
         /// <summary> Determines if two <see cref="ManagedServicePackageActivationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedServicePackageActivationMode left, ManagedServicePackageActivationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedServicePackageActivationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedServicePackageActivationMode left, ManagedServicePackageActivationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedServicePackageActivationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedServicePackageActivationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedServicePackageActivationMode(string value) => new ManagedServicePackageActivationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedServicePackageActivationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedServicePackageActivationMode?(string value) => value == null ? null : new ManagedServicePackageActivationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedServicePackageActivationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedServicePackageActivationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

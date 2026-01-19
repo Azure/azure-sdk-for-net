@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsProvisionedNetworkType : IEquatable<AvsProvisionedNetworkType>
     {
         private readonly string _value;
+        /// <summary> network for ESX management. </summary>
+        private const string EsxManagementValue = "esxManagement";
+        /// <summary> network for ESX replication. </summary>
+        private const string EsxReplicationValue = "esxReplication";
+        /// <summary> network for HCX management. </summary>
+        private const string HcxManagementValue = "hcxManagement";
+        /// <summary> network for HCX uplink. </summary>
+        private const string HcxUplinkValue = "hcxUplink";
+        /// <summary> network for vCenter management. </summary>
+        private const string VcenterManagementValue = "vcenterManagement";
+        /// <summary> network for vmotion. </summary>
+        private const string VmotionValue = "vmotion";
+        /// <summary> network for vsan. </summary>
+        private const string VsanValue = "vsan";
 
         /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsProvisionedNetworkType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EsxManagementValue = "esxManagement";
-        private const string EsxReplicationValue = "esxReplication";
-        private const string HcxManagementValue = "hcxManagement";
-        private const string HcxUplinkValue = "hcxUplink";
-        private const string VcenterManagementValue = "vcenterManagement";
-        private const string VmotionValue = "vmotion";
-        private const string VsanValue = "vsan";
+            _value = value;
+        }
 
         /// <summary> network for ESX management. </summary>
         public static AvsProvisionedNetworkType EsxManagement { get; } = new AvsProvisionedNetworkType(EsxManagementValue);
+
         /// <summary> network for ESX replication. </summary>
         public static AvsProvisionedNetworkType EsxReplication { get; } = new AvsProvisionedNetworkType(EsxReplicationValue);
+
         /// <summary> network for HCX management. </summary>
         public static AvsProvisionedNetworkType HcxManagement { get; } = new AvsProvisionedNetworkType(HcxManagementValue);
+
         /// <summary> network for HCX uplink. </summary>
         public static AvsProvisionedNetworkType HcxUplink { get; } = new AvsProvisionedNetworkType(HcxUplinkValue);
+
         /// <summary> network for vCenter management. </summary>
         public static AvsProvisionedNetworkType VcenterManagement { get; } = new AvsProvisionedNetworkType(VcenterManagementValue);
+
         /// <summary> network for vmotion. </summary>
         public static AvsProvisionedNetworkType Vmotion { get; } = new AvsProvisionedNetworkType(VmotionValue);
+
         /// <summary> network for vsan. </summary>
         public static AvsProvisionedNetworkType Vsan { get; } = new AvsProvisionedNetworkType(VsanValue);
+
         /// <summary> Determines if two <see cref="AvsProvisionedNetworkType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsProvisionedNetworkType left, AvsProvisionedNetworkType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvsProvisionedNetworkType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsProvisionedNetworkType left, AvsProvisionedNetworkType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsProvisionedNetworkType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvsProvisionedNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvsProvisionedNetworkType(string value) => new AvsProvisionedNetworkType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvsProvisionedNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvsProvisionedNetworkType?(string value) => value == null ? null : new AvsProvisionedNetworkType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsProvisionedNetworkType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvsProvisionedNetworkType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

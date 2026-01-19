@@ -8,8 +8,8 @@ namespace Azure.ResourceManager.Resources.Bicep
     }
     public static partial class ResourcesBicepExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult> BicepDecompileOperationGroup(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult>> BicepDecompileOperationGroupAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult> BicepDecompile(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult>> BicepDecompileAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Resources.Bicep.Mocking
@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Resources.Bicep.Mocking
     public partial class MockableResourcesBicepSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableResourcesBicepSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult> BicepDecompileOperationGroup(Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult>> BicepDecompileOperationGroupAsync(Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult> BicepDecompile(Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult>> BicepDecompileAsync(Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Resources.Bicep.Models
@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     public static partial class ArmResourcesBicepModelFactory
     {
         public static Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition DecompiledFileDefinition(string path = null, string contents = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent DecompileOperationContent(string template = null) { throw null; }
         public static Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult DecompileOperationSuccessResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition> files = null, string entryPoint = null) { throw null; }
     }
     public partial class DecompiledFileDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition>
@@ -33,7 +34,10 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         internal DecompiledFileDefinition() { }
         public string Contents { get { throw null; } }
         public string Path { get { throw null; } }
+        protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -44,7 +48,10 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     {
         public DecompileOperationContent(string template) { }
         public string Template { get { throw null; } }
+        protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -55,8 +62,11 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     {
         internal DecompileOperationSuccessResult() { }
         public string EntryPoint { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition> Files { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition> Files { get { throw null; } }
+        protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

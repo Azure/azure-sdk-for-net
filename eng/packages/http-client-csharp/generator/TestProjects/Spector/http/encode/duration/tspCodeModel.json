@@ -2561,7 +2561,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.endpoint"
+              "crossLanguageDefinitionId": "Encode.Duration.Query.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2570,7 +2570,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "119"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "241",
@@ -4792,7 +4793,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.endpoint"
+              "crossLanguageDefinitionId": "Encode.Duration.Property.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4801,7 +4802,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "119"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "357",
@@ -6207,7 +6209,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.endpoint"
+              "crossLanguageDefinitionId": "Encode.Duration.Header.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6216,9 +6218,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "119"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

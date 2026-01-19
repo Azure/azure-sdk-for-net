@@ -721,7 +721,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.endpoint"
+          "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.endpoint"
         },
         {
           "$id": "57",
@@ -760,7 +760,8 @@
       "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

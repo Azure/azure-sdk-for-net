@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Storage
 {
@@ -25,7 +26,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2026-02-06";
+        public const string DefaultSasVersion = "2026-04-06";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -128,6 +129,9 @@ namespace Azure.Storage
 
         public const string DisableExpectContinueHeaderSwitchName = "Azure.Storage.DisableExpectContinueHeader";
         public const string DisableExpectContinueHeaderEnvVar = "AZURE_STORAGE_DISABLE_EXPECT_CONTINUE_HEADER";
+
+        public const string UseLegacyDefaultConcurrencySwitchName = "Azure.Storage.UseLegacyDefaultConcurrency";
+        public const string UseLegacyDefaultConcurrencyEnvVar = "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY";
 
         public const string DefaultScope = "/.default";
 
@@ -241,7 +245,9 @@ namespace Azure.Storage
 
             internal static class Block
             {
-                public const int DefaultConcurrentTransfersCount = 5;
+                [EditorBrowsable(EditorBrowsableState.Never)]
+                public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
+                public const int LegacyDefaultConcurrentTransfersCount = 5;
                 public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
                 public const int Pre_2019_12_12_MaxUploadBytes = 256 * Constants.MB; // 256 MB
                 public const long MaxUploadBytes = 5000L * Constants.MB; // 5000MB
@@ -378,7 +384,13 @@ namespace Azure.Storage
             /// <summary>
             /// Default concurrent transfers count.
             /// </summary>
-            public const int DefaultConcurrentTransfersCount = 5;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
+
+            /// <summary>
+            /// Legacy default concurrent transfers count.
+            /// </summary>
+            public const int LegacyDefaultConcurrentTransfersCount = 5;
 
             /// <summary>
             /// Max upload bytes for less than Service Version 2019-12-12.
@@ -543,6 +555,8 @@ namespace Azure.Storage
         {
             public const string ObjectId = "oid";
 
+            public const string TenantId = "tid";
+
             internal static class Permissions
             {
                 public const char Read = 'r';
@@ -600,6 +614,8 @@ namespace Azure.Storage
                 public const string KeyServiceUpper = "SKS";
                 public const string KeyVersion = "skv";
                 public const string KeyVersionUpper = "SKV";
+                public const string KeyDelegatedUserTenantId = "skdutid";
+                public const string KeyDelegatedUserTenantIdUpper = "SKDUTID";
                 public const string CacheControl = "rscc";
                 public const string CacheControlUpper = "RSCC";
                 public const string ContentDisposition = "rscd";
@@ -622,6 +638,10 @@ namespace Azure.Storage
                 public const string EncryptionScopeUpper = "SES";
                 public const string DelegatedUserObjectId = "sduoid";
                 public const string DelegatedUserObjectIdUpper = "SDUOID";
+                public const string RequestHeaders = "srh";
+                public const string RequestHeadersUpper = "SRH";
+                public const string RequestQueryParameters = "srq";
+                public const string RequestQueryParametersUpper = "SRQ";
             }
 
             internal static class Resource
@@ -675,6 +695,15 @@ namespace Azure.Storage
             /// Copied from Microsoft.Azure.Storage.Core.Util
             /// </summary>
             internal static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
+        }
+
+        internal static class StructuredMessage
+        {
+            public const string StructuredMessageHeader = "x-ms-structured-body";
+            public const string StructuredContentLength = "x-ms-structured-content-length";
+            public const string CrcStructuredMessage = "XSM/1.0; properties=crc64";
+            public const int DefaultSegmentContentLength = 4 * MB;
+            public const int MaxDownloadCrcWithHeader = 4 * MB;
         }
 
         internal static class ClientSideEncryption

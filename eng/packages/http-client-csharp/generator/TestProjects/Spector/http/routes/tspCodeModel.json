@@ -372,7 +372,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.PathParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -585,7 +585,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -594,7 +594,8 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "7"
-              }
+              },
+              "isMultiServiceClient": false
             },
             {
               "$id": "45",
@@ -631,7 +632,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -938,7 +939,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -947,7 +948,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "45"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "72",
@@ -1218,7 +1220,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1227,9 +1229,11 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "45"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "90",
@@ -1266,7 +1270,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -1546,7 +1550,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1555,7 +1559,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "90"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "112",
@@ -1826,7 +1831,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1835,9 +1840,11 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "90"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "130",
@@ -1874,7 +1881,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -2154,7 +2161,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -2163,7 +2170,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "130"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "152",
@@ -2434,7 +2442,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -2443,9 +2451,11 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "130"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "170",
@@ -2482,7 +2492,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -2762,7 +2772,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -2771,7 +2781,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "170"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "192",
@@ -3042,7 +3053,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -3051,11 +3062,14 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "170"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "210",
@@ -3333,7 +3347,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.QueryParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3379,7 +3393,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -3650,7 +3664,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -3659,7 +3673,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "232"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "254",
@@ -3921,7 +3936,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -3930,9 +3945,11 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "232"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "272",
@@ -3969,7 +3986,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -4240,7 +4257,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -4249,7 +4266,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "272"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "294",
@@ -4511,7 +4529,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -4520,11 +4538,14 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "272"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "312",
@@ -4599,7 +4620,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.InInterface.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4608,9 +4629,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "1"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

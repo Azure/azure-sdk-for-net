@@ -5,8 +5,6 @@ const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
 const SubscriptionScopePrefix = "/subscriptions";
 const TenantScopePrefix = "/tenants";
-const ManagementGroupScopePrefix =
-  "/providers/Microsoft.Management/managementGroups";
 const Providers = "/providers";
 
 export function calculateResourceTypeFromPath(path: string): string {
@@ -18,8 +16,6 @@ export function calculateResourceTypeFromPath(path: string): string {
       return "Microsoft.Resources/subscriptions";
     } else if (path.startsWith(TenantScopePrefix)) {
       return "Microsoft.Resources/tenants";
-    } else if (path.startsWith(ManagementGroupScopePrefix)) {
-      return "Microsoft.Resources/managementGroups";
     }
     throw `Path ${path} doesn't have resource type`;
   }
@@ -117,6 +113,48 @@ export enum ResourceOperationKind {
   Read = "Read",
   List = "List",
   Update = "Update"
+}
+
+/**
+ * Get the sort order for a resource operation kind.
+ * Create operations come first, followed by other CRUD operations (Read, Update, Delete), then List, then Action.
+ */
+function getKindSortOrder(kind: ResourceOperationKind): number {
+  switch (kind) {
+    case ResourceOperationKind.Create:
+      return 1;
+    case ResourceOperationKind.Read:
+      return 2;
+    case ResourceOperationKind.Update:
+      return 3;
+    case ResourceOperationKind.Delete:
+      return 4;
+    case ResourceOperationKind.List:
+      return 5;
+    case ResourceOperationKind.Action:
+      return 6;
+    default:
+      return 99;
+  }
+}
+
+/**
+ * Sort resource methods by kind (CRUD, List, Action) and then by methodId.
+ * This ensures deterministic ordering of methods in generated code.
+ */
+export function sortResourceMethods(methods: ResourceMethod[]): void {
+  methods.sort((a, b) => {
+    // First, sort by kind
+    const kindOrderA = getKindSortOrder(a.kind);
+    const kindOrderB = getKindSortOrder(b.kind);
+
+    if (kindOrderA !== kindOrderB) {
+      return kindOrderA - kindOrderB;
+    }
+
+    // For methods with the same kind, sort by methodId
+    return a.methodId.localeCompare(b.methodId);
+  });
 }
 
 /**

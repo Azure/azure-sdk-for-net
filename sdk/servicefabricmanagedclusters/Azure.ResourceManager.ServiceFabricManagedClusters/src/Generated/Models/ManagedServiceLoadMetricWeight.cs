@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedServiceLoadMetricWeight : IEquatable<ManagedServiceLoadMetricWeight>
     {
         private readonly string _value;
+        /// <summary> Disables resource balancing for this metric. This value is zero. </summary>
+        private const string ZeroValue = "Zero";
+        /// <summary> Specifies the metric weight of the service load as Low. The value is 1. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Specifies the metric weight of the service load as Medium. The value is 2. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceLoadMetricWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedServiceLoadMetricWeight(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ZeroValue = "Zero";
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Disables resource balancing for this metric. This value is zero. </summary>
         public static ManagedServiceLoadMetricWeight Zero { get; } = new ManagedServiceLoadMetricWeight(ZeroValue);
+
         /// <summary> Specifies the metric weight of the service load as Low. The value is 1. </summary>
         public static ManagedServiceLoadMetricWeight Low { get; } = new ManagedServiceLoadMetricWeight(LowValue);
+
         /// <summary> Specifies the metric weight of the service load as Medium. The value is 2. </summary>
         public static ManagedServiceLoadMetricWeight Medium { get; } = new ManagedServiceLoadMetricWeight(MediumValue);
+
         /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
         public static ManagedServiceLoadMetricWeight High { get; } = new ManagedServiceLoadMetricWeight(HighValue);
+
         /// <summary> Determines if two <see cref="ManagedServiceLoadMetricWeight"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedServiceLoadMetricWeight left, ManagedServiceLoadMetricWeight right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedServiceLoadMetricWeight"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedServiceLoadMetricWeight left, ManagedServiceLoadMetricWeight right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedServiceLoadMetricWeight"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedServiceLoadMetricWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedServiceLoadMetricWeight(string value) => new ManagedServiceLoadMetricWeight(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedServiceLoadMetricWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedServiceLoadMetricWeight?(string value) => value == null ? null : new ManagedServiceLoadMetricWeight(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedServiceLoadMetricWeight other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedServiceLoadMetricWeight other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

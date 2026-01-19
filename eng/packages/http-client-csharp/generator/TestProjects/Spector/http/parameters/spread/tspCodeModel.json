@@ -1358,7 +1358,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Model.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1367,7 +1367,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "50"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "110",
@@ -2414,7 +2415,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Alias.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2423,9 +2424,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "50"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

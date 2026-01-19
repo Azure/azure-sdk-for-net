@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class UniformInt64RangePartitionScheme : IUtf8JsonSerializable, IJsonModel<UniformInt64RangePartitionScheme>
+    /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
+    public partial class UniformInt64RangePartitionScheme : ManagedServicePartitionScheme, IJsonModel<UniformInt64RangePartitionScheme>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UniformInt64RangePartitionScheme>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionScheme"/> for deserialization. </summary>
+        internal UniformInt64RangePartitionScheme()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UniformInt64RangePartitionScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UniformInt64RangePartitionScheme)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
@@ -43,67 +48,73 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteNumberValue(HighKey);
         }
 
-        UniformInt64RangePartitionScheme IJsonModel<UniformInt64RangePartitionScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UniformInt64RangePartitionScheme IJsonModel<UniformInt64RangePartitionScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UniformInt64RangePartitionScheme)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServicePartitionScheme JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UniformInt64RangePartitionScheme)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUniformInt64RangePartitionScheme(document.RootElement, options);
         }
 
-        internal static UniformInt64RangePartitionScheme DeserializeUniformInt64RangePartitionScheme(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UniformInt64RangePartitionScheme DeserializeUniformInt64RangePartitionScheme(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            PartitionScheme partitionScheme = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int count = default;
             long lowKey = default;
             long highKey = default;
-            PartitionScheme partitionScheme = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("partitionScheme"u8))
                 {
-                    count = property.Value.GetInt32();
+                    partitionScheme = new PartitionScheme(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lowKey"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    lowKey = property.Value.GetInt64();
+                    count = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("highKey"u8))
+                if (prop.NameEquals("lowKey"u8))
                 {
-                    highKey = property.Value.GetInt64();
+                    lowKey = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("partitionScheme"u8))
+                if (prop.NameEquals("highKey"u8))
                 {
-                    partitionScheme = new PartitionScheme(property.Value.GetString());
+                    highKey = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UniformInt64RangePartitionScheme(partitionScheme, serializedAdditionalRawData, count, lowKey, highKey);
+            return new UniformInt64RangePartitionScheme(partitionScheme, additionalBinaryDataProperties, count, lowKey, highKey);
         }
 
-        BinaryData IPersistableModel<UniformInt64RangePartitionScheme>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UniformInt64RangePartitionScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -113,15 +124,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        UniformInt64RangePartitionScheme IPersistableModel<UniformInt64RangePartitionScheme>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UniformInt64RangePartitionScheme IPersistableModel<UniformInt64RangePartitionScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => (UniformInt64RangePartitionScheme)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServicePartitionScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUniformInt64RangePartitionScheme(document.RootElement, options);
                     }
                 default:
@@ -129,6 +145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UniformInt64RangePartitionScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

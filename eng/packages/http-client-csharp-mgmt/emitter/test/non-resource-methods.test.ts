@@ -3,12 +3,14 @@ import {
   createCSharpSdkContext,
   createEmitterContext,
   createEmitterTestHost,
-  typeSpecCompile
+  typeSpecCompile,
+  normalizeSchemaForComparison
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
-import { ok, strictEqual } from "assert";
+import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
+import { ok, strictEqual, deepStrictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
@@ -54,11 +56,14 @@ model ValidationResponse {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify non-resource methods
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
 
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
@@ -75,6 +80,16 @@ model ValidationResponse {
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should detect non-resource methods on tenant scope", async () => {
@@ -133,7 +148,10 @@ model GlobalSettings {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -164,6 +182,16 @@ model GlobalSettings {
         "/providers/Microsoft.ContosoProviderHub/updateGlobalSettings"
     );
     ok(globalSettingsMethod, "Should find globalSettings method");
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should not detect ARM resource operations as non-resource methods", async () => {
@@ -212,6 +240,16 @@ interface Employees {
       nonResourceMethods.length,
       0,
       "Should have no non-resource methods for standard ARM operations"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
     );
   });
 
@@ -304,7 +342,10 @@ model MigrationResponse {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -328,6 +369,16 @@ model MigrationResponse {
     );
     ok(migrateMethod, "Should find migrate method");
     strictEqual(migrateMethod.operationScope, ResourceScope.Tenant);
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should handle complex operation paths correctly", async () => {
@@ -375,7 +426,10 @@ model WorkspaceValidationResponse {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -391,6 +445,16 @@ model WorkspaceValidationResponse {
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should handle methods with query parameters correctly", async () => {
@@ -448,7 +512,10 @@ model SearchResult {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -462,6 +529,16 @@ model SearchResult {
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources"
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should detect ARM provider actions with location parameters", async () => {
@@ -503,7 +580,10 @@ model FooPreviewAction {
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    ok(
+      armProviderSchemaResult.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
@@ -517,5 +597,15 @@ model FooPreviewAction {
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 });

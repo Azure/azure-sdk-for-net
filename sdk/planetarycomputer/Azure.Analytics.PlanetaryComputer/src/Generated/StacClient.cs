@@ -865,7 +865,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetMosaics(collectionId, cancellationToken.ToRequestContext());
-            IList<StacMosaic> value = new List<StacMosaic>();
+            List<StacMosaic> value = new List<StacMosaic>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -886,7 +886,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetMosaicsAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<StacMosaic> value = new List<StacMosaic>();
+            List<StacMosaic> value = new List<StacMosaic>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -2023,7 +2023,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetRenderOptions(collectionId, cancellationToken.ToRequestContext());
-            IList<RenderConfiguration> value = new List<RenderConfiguration>();
+            List<RenderConfiguration> value = new List<RenderConfiguration>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -2044,7 +2044,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetRenderOptionsAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<RenderConfiguration> value = new List<RenderConfiguration>();
+            List<RenderConfiguration> value = new List<RenderConfiguration>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -3340,7 +3340,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = CreateQueryables(collectionId, content, cancellationToken.ToRequestContext());
-            IList<StacQueryable> value = new List<StacQueryable>();
+            List<StacQueryable> value = new List<StacQueryable>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -3364,7 +3364,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = await CreateQueryablesAsync(collectionId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<StacQueryable> value = new List<StacQueryable>();
+            List<StacQueryable> value = new List<StacQueryable>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
