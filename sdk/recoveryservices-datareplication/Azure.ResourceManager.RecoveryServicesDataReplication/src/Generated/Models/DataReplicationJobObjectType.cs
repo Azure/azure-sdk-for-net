@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct DataReplicationJobObjectType : IEquatable<DataReplicationJobObjectType>
     {
         private readonly string _value;
+        /// <summary> AVS disk pool. </summary>
+        private const string AvsDiskPoolValue = "AvsDiskPool";
+        /// <summary> Fabric agent level workflow. </summary>
+        private const string FabricAgentValue = "FabricAgent";
+        /// <summary> Fabric level job. </summary>
+        private const string FabricValue = "Fabric";
+        /// <summary> Policy level job. </summary>
+        private const string PolicyValue = "Policy";
+        /// <summary> Protected item level job. </summary>
+        private const string ProtectedItemValue = "ProtectedItem";
+        /// <summary> Recovery plan level job. </summary>
+        private const string RecoveryPlanValue = "RecoveryPlan";
+        /// <summary> Replication extension level job. </summary>
+        private const string ReplicationExtensionValue = "ReplicationExtension";
+        /// <summary> Vault level job. </summary>
+        private const string VaultValue = "Vault";
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationJobObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataReplicationJobObjectType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvsDiskPoolValue = "AvsDiskPool";
-        private const string FabricAgentValue = "FabricAgent";
-        private const string FabricValue = "Fabric";
-        private const string PolicyValue = "Policy";
-        private const string ProtectedItemValue = "ProtectedItem";
-        private const string RecoveryPlanValue = "RecoveryPlan";
-        private const string ReplicationExtensionValue = "ReplicationExtension";
-        private const string VaultValue = "Vault";
+            _value = value;
+        }
 
         /// <summary> AVS disk pool. </summary>
         public static DataReplicationJobObjectType AvsDiskPool { get; } = new DataReplicationJobObjectType(AvsDiskPoolValue);
+
         /// <summary> Fabric agent level workflow. </summary>
         public static DataReplicationJobObjectType FabricAgent { get; } = new DataReplicationJobObjectType(FabricAgentValue);
+
         /// <summary> Fabric level job. </summary>
         public static DataReplicationJobObjectType Fabric { get; } = new DataReplicationJobObjectType(FabricValue);
+
         /// <summary> Policy level job. </summary>
         public static DataReplicationJobObjectType Policy { get; } = new DataReplicationJobObjectType(PolicyValue);
+
         /// <summary> Protected item level job. </summary>
         public static DataReplicationJobObjectType ProtectedItem { get; } = new DataReplicationJobObjectType(ProtectedItemValue);
+
         /// <summary> Recovery plan level job. </summary>
         public static DataReplicationJobObjectType RecoveryPlan { get; } = new DataReplicationJobObjectType(RecoveryPlanValue);
+
         /// <summary> Replication extension level job. </summary>
         public static DataReplicationJobObjectType ReplicationExtension { get; } = new DataReplicationJobObjectType(ReplicationExtensionValue);
+
         /// <summary> Vault level job. </summary>
         public static DataReplicationJobObjectType Vault { get; } = new DataReplicationJobObjectType(VaultValue);
+
         /// <summary> Determines if two <see cref="DataReplicationJobObjectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataReplicationJobObjectType left, DataReplicationJobObjectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataReplicationJobObjectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataReplicationJobObjectType left, DataReplicationJobObjectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationJobObjectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataReplicationJobObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataReplicationJobObjectType(string value) => new DataReplicationJobObjectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataReplicationJobObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataReplicationJobObjectType?(string value) => value == null ? null : new DataReplicationJobObjectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataReplicationJobObjectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataReplicationJobObjectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

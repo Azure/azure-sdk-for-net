@@ -6,15 +6,15 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AffectedObjectDetails))]
     [ModelReaderWriterBuildable(typeof(AzStackHciClusterProperties))]
@@ -110,6 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(PlannedFailoverCustomProperties))]
     [ModelReaderWriterBuildable(typeof(PlannedFailoverProperties))]
     [ModelReaderWriterBuildable(typeof(PolicyModelListResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProxyListResult))]
     [ModelReaderWriterBuildable(typeof(ProtectedItemDynamicMemoryConfig))]
     [ModelReaderWriterBuildable(typeof(ProtectedItemJobProperties))]
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(RecoveryServicesDataReplicationPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesDataReplicationPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(RemotePrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateEndpointConnectionDetails))]
     [ModelReaderWriterBuildable(typeof(ReplicationExtensionModelListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
@@ -150,7 +152,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciProtectedNicProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciRecoveryPointCustomProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciReplicationExtensionCustomProperties))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerRecoveryServicesDataReplicationContext : ModelReaderWriterContext
     {
     }
