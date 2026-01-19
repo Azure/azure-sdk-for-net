@@ -6,13 +6,10 @@ namespace Azure
         protected AsyncPageable(System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public abstract System.Collections.Generic.IAsyncEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static Azure.AsyncPageable<T> FromPages(System.Collections.Generic.IEnumerable<Azure.Page<T>> pages) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
     public static partial class AzureCoreExtensions
@@ -29,21 +26,18 @@ namespace Azure
     public partial class AzureKeyCredential : System.ClientModel.ApiKeyCredential
     {
         public AzureKeyCredential(string key) : base (default(string)) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Key { get { throw null; } }
     }
     public partial class AzureNamedKeyCredential
     {
         public AzureNamedKeyCredential(string name, string key) { }
         public string Name { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Deconstruct(out string name, out string key) { throw null; }
         public void Update(string name, string key) { }
     }
     public partial class AzureSasCredential
     {
         public AzureSasCredential(string signature) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Signature { get { throw null; } }
         public void Update(string signature) { }
     }
@@ -66,7 +60,6 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ETag left, Azure.ETag right) { throw null; }
         public static bool operator !=(Azure.ETag left, Azure.ETag right) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
     }
@@ -85,9 +78,7 @@ namespace Azure
         public long? Length { get { throw null; } }
         public long Offset { get { throw null; } }
         public bool Equals(Azure.HttpRange other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
@@ -124,9 +115,7 @@ namespace Azure
         protected NullableResponse() { }
         public abstract bool HasValue { get; }
         public abstract T? Value { get; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
         public override string ToString() { throw null; }
@@ -136,9 +125,7 @@ namespace Azure
         protected Operation() { }
         public abstract bool HasCompleted { get; }
         public abstract string Id { get; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
         public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
@@ -148,7 +135,6 @@ namespace Azure
         public static System.Threading.Tasks.Task<Azure.Operation<T>> RehydrateAsync<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static Azure.Operation<T> Rehydrate<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -170,15 +156,12 @@ namespace Azure
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class PageableOperation<T> : Azure.Operation<Azure.AsyncPageable<T>> where T : notnull
     {
         protected PageableOperation() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.AsyncPageable<T> Value { get { throw null; } }
         public abstract Azure.Pageable<T> GetValues(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract Azure.AsyncPageable<T> GetValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -189,14 +172,11 @@ namespace Azure
         protected Pageable(System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Pageable<T> FromPages(System.Collections.Generic.IEnumerable<Azure.Page<T>> pages) { throw null; }
         public virtual System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
     public abstract partial class Page<T>
@@ -204,13 +184,10 @@ namespace Azure
         protected Page() { }
         public abstract string? ContinuationToken { get; }
         public abstract System.Collections.Generic.IReadOnlyList<T> Values { get; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Page<T> FromValues(System.Collections.Generic.IReadOnlyList<T> values, string? continuationToken, Azure.Response response) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
     public partial class RequestConditions : Azure.MatchConditions
@@ -234,11 +211,8 @@ namespace Azure
         public RequestFailedException(Azure.Response response) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
         [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
         protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
@@ -284,12 +258,9 @@ namespace Azure
     public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
         protected Response() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator T (Azure.Response<T> response) { throw null; }
     }
@@ -404,9 +375,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation WestUS2 { get { throw null; } }
         public static Azure.Core.AzureLocation WestUS3 { get { throw null; } }
         public bool Equals(Azure.Core.AzureLocation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public static implicit operator string (Azure.Core.AzureLocation location) { throw null; }
@@ -424,11 +393,8 @@ namespace Azure.Core
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -692,15 +658,11 @@ namespace Azure.Core
         public string? ResourceGroupName { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public string? SubscriptionId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier AppendChildResource(string childResourceType, string childResourceName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier AppendProviderResource(string providerNamespace, string resourceType, string resourceName) { throw null; }
         public int CompareTo(Azure.Core.ResourceIdentifier? other) { throw null; }
         public bool Equals(Azure.Core.ResourceIdentifier? other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static bool operator >(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
@@ -723,11 +685,8 @@ namespace Azure.Core
         public string Type { get { throw null; } }
         public int CompareTo(Azure.Core.ResourceType other) { throw null; }
         public bool Equals(Azure.Core.ResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string GetLastType() { throw null; }
         public static bool operator ==(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public static implicit operator string (Azure.Core.ResourceType resourceType) { throw null; }
@@ -808,11 +767,8 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = null, System.Uri? requestUri = null, string? requestMethod = null) { throw null; }
         public string? Claims { get { throw null; } }
@@ -1166,9 +1122,7 @@ namespace Azure.Core.Serialization
     {
         internal DynamicData() { }
         public void Dispose() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Serialization.DynamicData? left, object? right) { throw null; }
         public static explicit operator System.DateTime (Azure.Core.Serialization.DynamicData value) { throw null; }
@@ -1253,7 +1207,6 @@ namespace Azure.Messaging
     {
         public MessageContent() { }
         public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
         public virtual System.BinaryData? Data { get { throw null; } set { } }
         public virtual bool IsReadOnly { get { throw null; } }

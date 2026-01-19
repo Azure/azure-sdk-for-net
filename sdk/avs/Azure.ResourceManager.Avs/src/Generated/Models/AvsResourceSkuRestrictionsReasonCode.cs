@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsResourceSkuRestrictionsReasonCode : IEquatable<AvsResourceSkuRestrictionsReasonCode>
     {
         private readonly string _value;
+        /// <summary> The restriction is due to exceeding a quota limitation. </summary>
+        private const string QuotaIdValue = "QuotaId";
+        /// <summary> The restriction is not available for this subscription. </summary>
+        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
         /// <summary> Initializes a new instance of <see cref="AvsResourceSkuRestrictionsReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsResourceSkuRestrictionsReasonCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string QuotaIdValue = "QuotaId";
-        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
+            _value = value;
+        }
 
         /// <summary> The restriction is due to exceeding a quota limitation. </summary>
         public static AvsResourceSkuRestrictionsReasonCode QuotaId { get; } = new AvsResourceSkuRestrictionsReasonCode(QuotaIdValue);
+
         /// <summary> The restriction is not available for this subscription. </summary>
         public static AvsResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get; } = new AvsResourceSkuRestrictionsReasonCode(NotAvailableForSubscriptionValue);
+
         /// <summary> Determines if two <see cref="AvsResourceSkuRestrictionsReasonCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsResourceSkuRestrictionsReasonCode left, AvsResourceSkuRestrictionsReasonCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvsResourceSkuRestrictionsReasonCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsResourceSkuRestrictionsReasonCode left, AvsResourceSkuRestrictionsReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsResourceSkuRestrictionsReasonCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvsResourceSkuRestrictionsReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvsResourceSkuRestrictionsReasonCode(string value) => new AvsResourceSkuRestrictionsReasonCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvsResourceSkuRestrictionsReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvsResourceSkuRestrictionsReasonCode?(string value) => value == null ? null : new AvsResourceSkuRestrictionsReasonCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsResourceSkuRestrictionsReasonCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvsResourceSkuRestrictionsReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

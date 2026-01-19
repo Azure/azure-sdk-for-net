@@ -2,18 +2,6 @@
 
 trigger: none
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/virtualenclaves/ci.mgmt.yml
-    - sdk/virtualenclaves/Azure.ResourceManager.VirtualEnclaves/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

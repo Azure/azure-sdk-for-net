@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -46,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             ClientOptions = options;
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[]
@@ -88,7 +87,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             ClientOptions = options;
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[]

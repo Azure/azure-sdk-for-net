@@ -3,11 +3,11 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
 using System;
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {

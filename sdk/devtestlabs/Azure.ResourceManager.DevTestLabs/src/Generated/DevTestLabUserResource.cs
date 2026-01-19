@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
@@ -676,31 +676,31 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get disk. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the disk. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabDiskResource>> GetDevTestLabDiskAsync(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabDiskResource>> GetDevTestLabDiskAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabDisks().GetAsync(userName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabDisks().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get disk. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the disk. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabDiskResource> GetDevTestLabDisk(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabDiskResource> GetDevTestLabDisk(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabDisks().Get(userName, expand, cancellationToken);
+            return GetDevTestLabDisks().Get(name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevTestLabEnvironments in the <see cref="DevTestLabUserResource"/>. </summary>
@@ -711,31 +711,31 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get environment. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabEnvironments().GetAsync(userName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabEnvironments().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get environment. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabEnvironmentResource> GetDevTestLabEnvironment(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabEnvironmentResource> GetDevTestLabEnvironment(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabEnvironments().Get(userName, expand, cancellationToken);
+            return GetDevTestLabEnvironments().Get(name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevTestLabSecrets in the <see cref="DevTestLabUserResource"/>. </summary>
@@ -746,31 +746,31 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get secret. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabSecretResource>> GetDevTestLabSecretAsync(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabSecretResource>> GetDevTestLabSecretAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabSecrets().GetAsync(userName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabSecrets().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get secret. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabSecretResource> GetDevTestLabSecret(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabSecretResource> GetDevTestLabSecret(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabSecrets().Get(userName, expand, cancellationToken);
+            return GetDevTestLabSecrets().Get(name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevTestLabServiceFabrics in the <see cref="DevTestLabUserResource"/>. </summary>
@@ -781,31 +781,31 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get service fabric. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the service fabric. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabServiceFabrics().GetAsync(userName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabServiceFabrics().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get service fabric. </summary>
-        /// <param name="userName"> The name of the user profile. </param>
+        /// <param name="name"> The name of the service fabric. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(string userName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabServiceFabrics().Get(userName, expand, cancellationToken);
+            return GetDevTestLabServiceFabrics().Get(name, expand, cancellationToken);
         }
     }
 }

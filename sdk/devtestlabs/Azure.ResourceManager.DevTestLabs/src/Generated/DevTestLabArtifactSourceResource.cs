@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -680,31 +680,31 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get azure resource manager template. </summary>
-        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="name"> The name of the azure resource manager template. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabArmTemplates().GetAsync(artifactSourceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabArmTemplates().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get azure resource manager template. </summary>
-        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="name"> The name of the azure resource manager template. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabArmTemplates().Get(artifactSourceName, expand, cancellationToken);
+            return GetDevTestLabArmTemplates().Get(name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevTestLabArtifacts in the <see cref="DevTestLabArtifactSourceResource"/>. </summary>
@@ -715,31 +715,31 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get artifact. </summary>
-        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="name"> The name of the artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabArtifacts().GetAsync(artifactSourceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabArtifacts().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get artifact. </summary>
-        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="name"> The name of the artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabArtifactResource> GetDevTestLabArtifact(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabArtifactResource> GetDevTestLabArtifact(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabArtifacts().Get(artifactSourceName, expand, cancellationToken);
+            return GetDevTestLabArtifacts().Get(name, expand, cancellationToken);
         }
     }
 }

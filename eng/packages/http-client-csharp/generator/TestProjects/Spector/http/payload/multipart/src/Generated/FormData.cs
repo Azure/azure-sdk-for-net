@@ -23,6 +23,14 @@ namespace Payload.MultiPart._FormData
 
         public virtual Task<Response> BasicAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
+        public virtual Response WithWireName(RequestContent content, string contentType, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> WithWireNameAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+
+        public virtual Response OptionalParts(RequestContent content, string contentType, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> OptionalPartsAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+
         public virtual Response FileArrayAndBasic(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Task<Response> FileArrayAndBasicAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;

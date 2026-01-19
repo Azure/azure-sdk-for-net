@@ -340,7 +340,6 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
-    <ImportDefaultReferences>false</ImportDefaultReferences>
 
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>

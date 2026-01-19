@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabServiceFabricSchedules and their operations over a DevTestLabServiceFabricScheduleResource. </returns>
         public virtual DevTestLabServiceFabricScheduleCollection GetDevTestLabServiceFabricSchedules(string userName, string serviceFabricName)
         {
-            return this.GetCachedClient(client => new DevTestLabServiceFabricScheduleCollection(client, Id, userName, serviceFabricName));
+            return this.GetCachedClient(client => new DevTestLabServiceFabricScheduleCollection(client, Id));
         }
 
         /// <summary> Gets a collection of DevTestLabVmSchedules in the <see cref="DevTestLabResource"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabVmSchedules and their operations over a DevTestLabVmScheduleResource. </returns>
         public virtual DevTestLabVmScheduleCollection GetDevTestLabVmSchedules(string virtualMachineName)
         {
-            return this.GetCachedClient(client => new DevTestLabVmScheduleCollection(client, Id, virtualMachineName));
+            return this.GetCachedClient(client => new DevTestLabVmScheduleCollection(client, Id));
         }
 
         /// <summary> Gets a collection of DevTestLabPolicies in the <see cref="DevTestLabResource"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await this.GetDevTestLabServiceFabricSchedules(userName, serviceFabricName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await this.GetDevTestLabServiceFabricSchedules(userName, serviceFabricName).GetAsync(name, serviceFabricName, name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get schedule. </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return this.GetDevTestLabServiceFabricSchedules(userName, serviceFabricName).Get(name, expand, cancellationToken);
+            return this.GetDevTestLabServiceFabricSchedules(userName, serviceFabricName).Get(name, serviceFabricName, name, expand, cancellationToken);
         }
 
         /// <summary> Get schedule. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await this.GetDevTestLabVmSchedules(virtualMachineName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await this.GetDevTestLabVmSchedules(virtualMachineName).GetAsync(virtualMachineName, name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get schedule. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return this.GetDevTestLabVmSchedules(virtualMachineName).Get(name, expand, cancellationToken);
+            return this.GetDevTestLabVmSchedules(virtualMachineName).Get(virtualMachineName, name, expand, cancellationToken);
         }
 
         /// <summary> Get policy. </summary>

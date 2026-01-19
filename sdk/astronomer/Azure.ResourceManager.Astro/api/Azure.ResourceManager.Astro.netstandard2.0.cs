@@ -207,9 +207,7 @@ namespace Azure.ResourceManager.Astro.Models
         public static Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState left, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState (string value) { throw null; }
@@ -241,9 +239,7 @@ namespace Azure.ResourceManager.Astro.Models
         public static Azure.ResourceManager.Astro.Models.AstroSingleSignOnState Enable { get { throw null; } }
         public static Azure.ResourceManager.Astro.Models.AstroSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState left, Azure.ResourceManager.Astro.Models.AstroSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Astro.Models.AstroSingleSignOnState (string value) { throw null; }
@@ -291,9 +287,7 @@ namespace Azure.ResourceManager.Astro.Models
         public static Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus (string value) { throw null; }

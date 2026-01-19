@@ -173,7 +173,12 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2026-02-06 service version.
             /// </summary>
-            V2026_02_06 = 29
+            V2026_02_06 = 29,
+
+            /// <summary>
+            /// The 2026-04-06 service version.
+            /// </summary>
+            V2026_04_06 = 30
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

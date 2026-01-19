@@ -8,88 +8,80 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceConnector.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableResourceConnectorSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _resourceConnectorApplianceAppliancesClientDiagnostics;
-        private AppliancesRestOperations _resourceConnectorApplianceAppliancesRestClient;
+        private ClientDiagnostics _appliancesClientDiagnostics;
+        private Appliances _appliancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceConnectorSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableResourceConnectorSubscriptionResource for mocking. </summary>
         protected MockableResourceConnectorSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceConnectorSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourceConnectorSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourceConnectorSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ResourceConnectorApplianceAppliancesClientDiagnostics => _resourceConnectorApplianceAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ResourceConnectorApplianceResource.ResourceType.Namespace, Diagnostics);
-        private AppliancesRestOperations ResourceConnectorApplianceAppliancesRestClient => _resourceConnectorApplianceAppliancesRestClient ??= new AppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceConnectorApplianceResource.ResourceType));
+        private ClientDiagnostics AppliancesClientDiagnostics => _appliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceConnector.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Appliances AppliancesRestClient => _appliancesRestClient ??= new Appliances(AppliancesClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
 
         /// <summary>
         /// Gets a list of Appliances in the specified subscription. The operation returns properties of each Appliance
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/appliances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/appliances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionAsyncCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of Appliances in the specified subscription. The operation returns properties of each Appliance
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/appliances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/appliances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,40 +89,48 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>
         /// Gets the telemetry config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/telemetryconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/telemetryconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_GetTelemetryConfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppliancesOperationGroup_GetTelemetryConfig. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplianceTelemetryConfigResult>> GetApplianceTelemetryConfigAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAppliance");
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfig");
             scope.Start();
             try
             {
-                var response = await ResourceConnectorApplianceAppliancesRestClient.GetTelemetryConfigAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplianceTelemetryConfigResult> response = Response.FromValue(ApplianceTelemetryConfigResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -144,31 +144,37 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// Gets the telemetry config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/telemetryconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceConnector/telemetryconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_GetTelemetryConfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppliancesOperationGroup_GetTelemetryConfig. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(CancellationToken cancellationToken = default)
+        public virtual Response<ApplianceTelemetryConfigResult> GetApplianceTelemetryConfig(CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAppliance");
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfig");
             scope.Start();
             try
             {
-                var response = ResourceConnectorApplianceAppliancesRestClient.GetTelemetryConfig(Id.SubscriptionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplianceTelemetryConfigResult> response = Response.FromValue(ApplianceTelemetryConfigResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

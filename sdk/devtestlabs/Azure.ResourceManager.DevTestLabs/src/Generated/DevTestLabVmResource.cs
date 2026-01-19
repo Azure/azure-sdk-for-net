@@ -1719,7 +1719,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1767,7 +1767,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1814,7 +1814,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1899,7 +1899,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1945,7 +1945,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());

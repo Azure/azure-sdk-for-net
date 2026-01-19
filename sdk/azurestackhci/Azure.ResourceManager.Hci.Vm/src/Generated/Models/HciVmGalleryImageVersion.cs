@@ -38,20 +38,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Describes the properties of a gallery image version. </summary>
         internal HciVmGalleryImageVersionProperties Properties { get; set; }
 
-        /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-        public HciVmGalleryImageVersionStorageProfile StorageProfile
+        /// <summary> This property indicates the size of the VHD to be created. </summary>
+        public long? StorageOSDiskImageSizeInMB
         {
             get
             {
-                return Properties is null ? default : Properties.StorageProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HciVmGalleryImageVersionProperties();
-                }
-                Properties.StorageProfile = value;
+                return Properties is null ? default : Properties.StorageOSDiskImageSizeInMB;
             }
         }
     }

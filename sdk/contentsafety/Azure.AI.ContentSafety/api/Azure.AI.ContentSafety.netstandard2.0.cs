@@ -43,9 +43,7 @@ namespace Azure.AI.ContentSafety
         public AnalyzeImageOutputType(string value) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeImageOutputType FourSeverityLevels { get { throw null; } }
         public bool Equals(Azure.AI.ContentSafety.AnalyzeImageOutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.AnalyzeImageOutputType left, Azure.AI.ContentSafety.AnalyzeImageOutputType right) { throw null; }
         public static implicit operator Azure.AI.ContentSafety.AnalyzeImageOutputType (string value) { throw null; }
@@ -87,9 +85,7 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.AnalyzeTextOutputType EightSeverityLevels { get { throw null; } }
         public static Azure.AI.ContentSafety.AnalyzeTextOutputType FourSeverityLevels { get { throw null; } }
         public bool Equals(Azure.AI.ContentSafety.AnalyzeTextOutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.AnalyzeTextOutputType left, Azure.AI.ContentSafety.AnalyzeTextOutputType right) { throw null; }
         public static implicit operator Azure.AI.ContentSafety.AnalyzeTextOutputType (string value) { throw null; }
@@ -215,7 +211,6 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.ImageCategoriesAnalysis ImageCategoriesAnalysis(Azure.AI.ContentSafety.ImageCategory category = default(Azure.AI.ContentSafety.ImageCategory), int? severity = default(int?)) { throw null; }
         public static Azure.AI.ContentSafety.ShieldPromptResult ShieldPromptResult(Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult userPromptAnalysis = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult> documentsAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklist TextBlocklist(string name = null, string description = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.ContentSafety.TextBlocklistItem TextBlocklistItem(string blocklistItemId, string description, string text) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null, bool? isRegex = default(bool?)) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklistMatch TextBlocklistMatch(string blocklistName = null, string blocklistItemId = null, string blocklistItemText = null) { throw null; }
@@ -279,9 +274,7 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.ImageCategory Sexual { get { throw null; } }
         public static Azure.AI.ContentSafety.ImageCategory Violence { get { throw null; } }
         public bool Equals(Azure.AI.ContentSafety.ImageCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.ImageCategory left, Azure.AI.ContentSafety.ImageCategory right) { throw null; }
         public static implicit operator Azure.AI.ContentSafety.ImageCategory (string value) { throw null; }
@@ -385,9 +378,7 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.TextCategory Sexual { get { throw null; } }
         public static Azure.AI.ContentSafety.TextCategory Violence { get { throw null; } }
         public bool Equals(Azure.AI.ContentSafety.TextCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.TextCategory left, Azure.AI.ContentSafety.TextCategory right) { throw null; }
         public static implicit operator Azure.AI.ContentSafety.TextCategory (string value) { throw null; }

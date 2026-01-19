@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// Each <see cref="DevTestLabFormulaResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
     /// To get a <see cref="DevTestLabFormulaCollection"/> instance call the GetDevTestLabFormulas method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
-    public partial class DevTestLabFormulaCollection : ArmCollection
+    public partial class DevTestLabFormulaCollection : ArmCollection, IEnumerable<DevTestLabFormulaResource>, IAsyncEnumerable<DevTestLabFormulaResource>
     {
         private readonly ClientDiagnostics _formulasClientDiagnostics;
         private readonly Formulas _formulasRestClient;
@@ -70,14 +72,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="data"> A formula for creating a VM, specifying an image base and other parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DevTestLabFormulaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string labName, DevTestLabFormulaData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DevTestLabFormulaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabFormulaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.CreateOrUpdate");
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, DevTestLabFormulaData.ToRequestContent(data), context);
+                HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabFormulaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabFormulaResource> operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(
                     new DevTestLabFormulaOperationSource(Client),
@@ -128,14 +130,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="data"> A formula for creating a VM, specifying an image base and other parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DevTestLabFormulaResource> CreateOrUpdate(WaitUntil waitUntil, string labName, DevTestLabFormulaData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DevTestLabFormulaResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabFormulaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.CreateOrUpdate");
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, DevTestLabFormulaData.ToRequestContent(data), context);
+                HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabFormulaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabFormulaResource> operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(
                     new DevTestLabFormulaOperationSource(Client),
@@ -185,14 +187,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DevTestLabFormulaResource>> GetAsync(string labName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DevTestLabFormulaResource>> GetAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.Get");
             scope.Start();
@@ -202,7 +204,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, expand, context);
+                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabFormulaData> response = Response.FromValue(DevTestLabFormulaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,14 +237,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DevTestLabFormulaResource> Get(string labName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DevTestLabFormulaResource> Get(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.Get");
             scope.Start();
@@ -252,7 +254,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, expand, context);
+                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabFormulaData> response = Response.FromValue(DevTestLabFormulaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,6 +271,88 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
+        /// List formulas in a given lab.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/formulas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Formulas_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevTestLabFormulaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabFormulaResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevTestLabFormulaData, DevTestLabFormulaResource>(new FormulasGetAllAsyncCollectionResultOfT(
+                _formulasRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                filter,
+                top,
+                @orderby,
+                context), data => new DevTestLabFormulaResource(Client, data));
+        }
+
+        /// <summary>
+        /// List formulas in a given lab.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/formulas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Formulas_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevTestLabFormulaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabFormulaResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevTestLabFormulaData, DevTestLabFormulaResource>(new FormulasGetAllCollectionResultOfT(
+                _formulasRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                filter,
+                top,
+                @orderby,
+                context), data => new DevTestLabFormulaResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -285,14 +369,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string labName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.Exists");
             scope.Start();
@@ -302,7 +386,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, expand, context);
+                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabFormulaData> response = default;
@@ -343,14 +427,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string labName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.Exists");
             scope.Start();
@@ -360,7 +444,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, expand, context);
+                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabFormulaData> response = default;
@@ -401,14 +485,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DevTestLabFormulaResource>> GetIfExistsAsync(string labName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DevTestLabFormulaResource>> GetIfExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.GetIfExists");
             scope.Start();
@@ -418,7 +502,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, expand, context);
+                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabFormulaData> response = default;
@@ -463,14 +547,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DevTestLabFormulaResource> GetIfExists(string labName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DevTestLabFormulaResource> GetIfExists(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _formulasClientDiagnostics.CreateScope("DevTestLabFormulaCollection.GetIfExists");
             scope.Start();
@@ -480,7 +564,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, Id.Name, expand, context);
+                HttpMessage message = _formulasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabFormulaData> response = default;
@@ -506,6 +590,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DevTestLabFormulaResource> IEnumerable<DevTestLabFormulaResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DevTestLabFormulaResource> IAsyncEnumerable<DevTestLabFormulaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

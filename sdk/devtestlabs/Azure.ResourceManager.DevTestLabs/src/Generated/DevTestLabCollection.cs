@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -33,8 +32,6 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly GalleryImages _galleryImagesRestClient;
         private readonly ClientDiagnostics _policySetsClientDiagnostics;
         private readonly PolicySets _policySetsRestClient;
-        /// <summary> The labName. </summary>
-        private readonly string _labName;
 
         /// <summary> Initializes a new instance of DevTestLabCollection for mocking. </summary>
         protected DevTestLabCollection()
@@ -44,11 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of <see cref="DevTestLabCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        internal DevTestLabCollection(ArmClient client, ResourceIdentifier id, string labName) : base(client, id)
+        internal DevTestLabCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DevTestLabResource.ResourceType, out string devTestLabApiVersion);
-            _labName = labName;
             _labsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabResource.ResourceType.Namespace, Diagnostics);
             _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Endpoint, devTestLabApiVersion ?? "2018-09-15");
             _galleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabResource.ResourceType.Namespace, Diagnostics);
@@ -285,15 +280,15 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// List gallery images in a given lab.
+        /// List labs in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/galleryimages. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GalleryImages_List. </description>
+        /// <description> Labs_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -301,40 +296,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGalleryImage> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleryImagesGetAllAsyncCollectionResultOfT(
-                _galleryImagesRestClient,
+            return new AsyncPageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetByResourceGroupAsyncCollectionResultOfT(
+                _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
                 expand,
                 filter,
                 top,
                 @orderby,
-                context);
+                context), data => new DevTestLabResource(Client, data));
         }
 
         /// <summary>
-        /// List gallery images in a given lab.
+        /// List labs in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/galleryimages. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GalleryImages_List. </description>
+        /// <description> Labs_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -342,28 +336,27 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGalleryImage> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleryImagesGetAllCollectionResultOfT(
-                _galleryImagesRestClient,
+            return new PageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetByResourceGroupCollectionResultOfT(
+                _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
                 expand,
                 filter,
                 top,
                 @orderby,
-                context);
+                context), data => new DevTestLabResource(Client, data));
         }
 
         /// <summary>
