@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DevTestLabVmScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DevTestLabVmScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, DevTestLabScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, DevTestLabScheduleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DevTestLabVmScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DevTestLabVmScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, DevTestLabScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, DevTestLabScheduleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetAsync(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetAsync(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Get");
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -235,15 +235,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DevTestLabVmScheduleResource> Get(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DevTestLabVmScheduleResource> Get(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Get");
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -287,15 +287,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Exists");
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -347,15 +347,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Exists");
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -407,15 +407,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DevTestLabVmScheduleResource>> GetIfExistsAsync(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DevTestLabVmScheduleResource>> GetIfExistsAsync(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.GetIfExists");
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -471,15 +471,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DevTestLabVmScheduleResource> GetIfExists(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DevTestLabVmScheduleResource> GetIfExists(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.GetIfExists");
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmName, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;

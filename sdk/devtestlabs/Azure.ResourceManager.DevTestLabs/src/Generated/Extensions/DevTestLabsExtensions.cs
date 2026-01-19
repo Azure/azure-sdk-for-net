@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -596,11 +596,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedulesAsync(this ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedulesAsync(this ResourceGroupResource resourceGroupResource, string labName, string vmName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmSchedulesAsync(labName, virtualMachineName, expand, filter, top, @orderby, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmSchedulesAsync(labName, vmName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -620,11 +620,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedules(this ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedules(this ResourceGroupResource resourceGroupResource, string labName, string vmName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmSchedules(labName, virtualMachineName, expand, filter, top, @orderby, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmSchedules(labName, vmName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>

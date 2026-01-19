@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabManagedIdentity"/>. </summary>
         /// <param name="type"> Managed identity. </param>
         /// <param name="principalId"> The principal id of resource identity. </param>
-        /// <param name="tenantId"> The tenant identifier of resource. </param>
-        /// <param name="clientSecretUri"> The client secret URL of the identity. </param>
+        /// <param name="uuid"> The tenant identifier of resource. </param>
+        /// <param name="uri"> The client secret URL of the identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabManagedIdentity(ManagedServiceIdentityType? @type, Guid? principalId, string tenantId, string clientSecretUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabManagedIdentity(ManagedServiceIdentityType? @type, Guid? principalId, string uuid, string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             PrincipalId = principalId;
-            TenantId = tenantId;
-            ClientSecretUri = clientSecretUri;
+            Uuid = uuid;
+            Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Guid? PrincipalId { get; set; }
 
         /// <summary> The tenant identifier of resource. </summary>
-        public string TenantId { get; set; }
+        public string Uuid { get; set; }
 
         /// <summary> The client secret URL of the identity. </summary>
-        public string ClientSecretUri { get; set; }
+        public string Uri { get; set; }
     }
 }

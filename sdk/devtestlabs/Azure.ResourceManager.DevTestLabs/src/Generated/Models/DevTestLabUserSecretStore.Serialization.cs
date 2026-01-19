@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
-                writer.WriteStringValue(KeyVaultUri);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyVaultId))
             {
@@ -87,14 +87,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            string keyVaultUri = default;
+            Uri keyVaultUri = default;
             ResourceIdentifier keyVaultId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("keyVaultUri"u8))
                 {
-                    keyVaultUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultId"u8))

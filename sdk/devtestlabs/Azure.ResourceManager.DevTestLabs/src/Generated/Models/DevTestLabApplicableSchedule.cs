@@ -21,10 +21,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties of the resource. </param>
-        internal DevTestLabApplicableSchedule(AzureLocation location, ApplicableScheduleProperties properties) : base(location)
+        public DevTestLabApplicableSchedule(AzureLocation location) : base(location)
         {
-            Properties = properties;
+
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
@@ -43,14 +42,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The properties of the resource. </summary>
-        internal ApplicableScheduleProperties Properties { get; }
+        internal ApplicableScheduleProperties Properties { get; set; }
 
         /// <summary> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </summary>
         public DevTestLabScheduleData LabVmsShutdown
         {
             get
             {
-                return Properties.LabVmsShutdown;
+                return Properties is null ? default : Properties.LabVmsShutdown;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicableScheduleProperties();
+                }
+                Properties.LabVmsShutdown = value;
             }
         }
 
@@ -59,7 +66,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties.LabVmsStartup;
+                return Properties is null ? default : Properties.LabVmsStartup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicableScheduleProperties();
+                }
+                Properties.LabVmsStartup = value;
             }
         }
     }

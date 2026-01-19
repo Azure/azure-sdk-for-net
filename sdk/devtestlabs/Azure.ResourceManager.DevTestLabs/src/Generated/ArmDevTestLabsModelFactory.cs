@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Properties of a VHD in the lab. </summary>
         /// <param name="id"> The URI to the VHD. </param>
         /// <returns> A new <see cref="Models.DevTestLabVhd"/> instance for mocking. </returns>
-        public static DevTestLabVhd DevTestLabVhd(string id = default)
+        public static DevTestLabVhd DevTestLabVhd(Uri id = default)
         {
             return new DevTestLabVhd(id, additionalBinaryDataProperties: null);
         }

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabVhd"/>. </summary>
         /// <param name="id"> The URI to the VHD. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabVhd(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabVhd(Uri id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URI to the VHD. </summary>
-        public string Id { get; }
+        public Uri Id { get; }
     }
 }

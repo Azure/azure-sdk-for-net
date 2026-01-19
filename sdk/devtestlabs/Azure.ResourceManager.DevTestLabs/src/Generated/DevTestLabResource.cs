@@ -1545,35 +1545,35 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get schedule. </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabVmSchedules().GetAsync(virtualMachineName, name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabVmSchedules().GetAsync(vmName, name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get schedule. </summary>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string vmName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabVmSchedules().Get(virtualMachineName, name, expand, cancellationToken);
+            return GetDevTestLabVmSchedules().Get(vmName, name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevTestLabArtifactSources in the <see cref="DevTestLabResource"/>. </summary>

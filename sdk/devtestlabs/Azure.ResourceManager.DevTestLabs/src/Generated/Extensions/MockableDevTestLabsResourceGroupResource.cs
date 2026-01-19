@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -301,19 +301,19 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </list>
         /// </summary>
         /// <param name="labName"> labs. </param>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="virtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="vmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedulesAsync(string labName, string virtualMachineName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedulesAsync(string labName, string vmName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(labName, nameof(labName));
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             RequestContext context = new RequestContext
             {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 labName,
-                virtualMachineName,
+                vmName,
                 expand,
                 filter,
                 top,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -350,19 +350,19 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </list>
         /// </summary>
         /// <param name="labName"> labs. </param>
-        /// <param name="virtualMachineName"> virtualmachines. </param>
+        /// <param name="vmName"> virtualmachines. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="virtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="vmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedules(string labName, string virtualMachineName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabVmSchedules(string labName, string vmName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(labName, nameof(labName));
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             RequestContext context = new RequestContext
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 labName,
-                virtualMachineName,
+                vmName,
                 expand,
                 filter,
                 top,

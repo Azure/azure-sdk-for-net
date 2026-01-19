@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicableScheduleProperties"/>. </summary>
-        internal ApplicableScheduleProperties()
+        public ApplicableScheduleProperties()
         {
         }
 
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </summary>
-        public DevTestLabScheduleData LabVmsShutdown { get; }
+        public DevTestLabScheduleData LabVmsShutdown { get; set; }
 
         /// <summary> The auto-startup schedule, if one has been set at the lab or lab resource level. </summary>
-        public DevTestLabScheduleData LabVmsStartup { get; }
+        public DevTestLabScheduleData LabVmsStartup { get; set; }
     }
 }
