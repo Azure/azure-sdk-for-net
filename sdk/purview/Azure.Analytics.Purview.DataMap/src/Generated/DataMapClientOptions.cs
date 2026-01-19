@@ -10,21 +10,13 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    /// <summary> Client options for DataMapClient. </summary>
+    /// <summary> Client options for <see cref="DataMapClient"/>. </summary>
     public partial class DataMapClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_09_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-09-01". </summary>
-            V2023_09_01 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of DataMapClientOptions. </summary>
+        /// <summary> Initializes a new instance of DataMapClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public DataMapClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +24,16 @@ namespace Azure.Analytics.Purview.DataMap
                 ServiceVersion.V2023_09_01 => "2023-09-01",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> 2023-09-01 service API version. </summary>
+            V2023_09_01 = 1
         }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class ScriptPackageResource : IJsonModel<ScriptPackageData>
     {
-        private static ScriptPackageData s_dataDeserializationInstance;
-        private static ScriptPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScriptPackageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ScriptPackageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScriptPackageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScriptPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScriptPackageData>)Data).Write(writer, options);
 
-        ScriptPackageData IJsonModel<ScriptPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScriptPackageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScriptPackageData IJsonModel<ScriptPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ScriptPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScriptPackageData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ScriptPackageData IPersistableModel<ScriptPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScriptPackageData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<ScriptPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScriptPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScriptPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

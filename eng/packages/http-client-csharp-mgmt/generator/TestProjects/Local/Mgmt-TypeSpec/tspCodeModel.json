@@ -3880,7 +3880,7 @@
                     "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
                     "usage": "Output,Json",
-                    "doc": "Localized display information for and operation.",
+                    "doc": "Localized display information for an operation.",
                     "decorators": [
                       {
                         "name": "Azure.ResourceManager.@armProviderNamespace",
@@ -14474,7 +14474,7 @@
                     "$id": "1132",
                     "methodId": "MgmtTypeSpec.Bars.list",
                     "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
                   },
@@ -15461,7 +15461,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1215",
@@ -15734,7 +15735,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1233",
@@ -16533,7 +16535,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1291",
@@ -16837,7 +16840,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1313",
@@ -18757,7 +18761,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1445",
@@ -19738,7 +19743,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1511",
@@ -19789,7 +19795,7 @@
                     "optional": false,
                     "scope": "Client",
                     "decorators": [],
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.apiVersion",
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.apiVersion",
                     "readOnly": false
                   },
                   {
@@ -19821,7 +19827,7 @@
                     "scope": "Client",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.subscriptionId"
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.subscriptionId"
                   },
                   {
                     "$id": "1520",
@@ -19845,13 +19851,13 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.resourceGroupName"
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.resourceGroupName"
                   },
                   {
                     "$id": "1522",
                     "kind": "path",
-                    "name": "fooName",
-                    "serializedName": "fooName",
+                    "name": "name",
+                    "serializedName": "name",
                     "doc": "The name of the Foo",
                     "type": {
                       "$id": "1523",
@@ -19869,7 +19875,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.fooName"
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.name"
                   },
                   {
                     "$id": "1524",
@@ -19905,7 +19911,7 @@
                 ],
                 "httpMethod": "GET",
                 "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars",
                 "bufferResponse": true,
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
@@ -19935,7 +19941,7 @@
                   "isApiVersion": false,
                   "optional": false,
                   "scope": "Method",
-                  "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.resourceGroupName",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.resourceGroupName",
                   "readOnly": false,
                   "access": "public",
                   "decorators": []
@@ -19943,8 +19949,8 @@
                 {
                   "$id": "1527",
                   "kind": "method",
-                  "name": "fooName",
-                  "serializedName": "fooName",
+                  "name": "name",
+                  "serializedName": "name",
                   "doc": "The name of the Foo",
                   "type": {
                     "$id": "1528",
@@ -19957,7 +19963,7 @@
                   "isApiVersion": false,
                   "optional": false,
                   "scope": "Method",
-                  "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.fooName",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.name",
                   "readOnly": false,
                   "access": "public",
                   "decorators": []
@@ -20759,7 +20765,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1583",
@@ -21524,7 +21531,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1637",
@@ -22359,7 +22367,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1695",
@@ -22724,7 +22733,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1721",
@@ -24422,7 +24432,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1837",
@@ -26364,7 +26375,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "1971",
@@ -27571,7 +27583,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2052",
@@ -27836,7 +27849,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2071",
@@ -28124,7 +28138,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2090",
@@ -29000,7 +29015,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2150",
@@ -29753,7 +29769,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2204",
@@ -29977,7 +29994,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2219",
@@ -30242,7 +30260,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2238",
@@ -31593,7 +31612,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2341",
@@ -31998,7 +32018,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2373",
@@ -32324,7 +32345,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2392",
@@ -33202,7 +33224,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2454",
@@ -34163,7 +34186,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2520",
@@ -35129,7 +35153,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2581",
@@ -36325,7 +36350,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2662",
@@ -36962,7 +36988,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2706",
@@ -38089,7 +38116,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2784",
@@ -38328,7 +38356,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2799",
@@ -39455,7 +39484,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2877",
@@ -40460,7 +40490,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "2943",
@@ -41465,7 +41496,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "3009",
@@ -42176,7 +42208,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "3061",
@@ -42475,7 +42508,8 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "3083",
@@ -43500,9 +43534,11 @@
           ],
           "parent": {
             "$ref": "1084"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

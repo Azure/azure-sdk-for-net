@@ -987,9 +987,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "27"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
