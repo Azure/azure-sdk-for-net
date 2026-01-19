@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DataBox
     /// </summary>
     public partial class DataBoxJobCollection : ArmCollection, IEnumerable<DataBoxJobResource>, IAsyncEnumerable<DataBoxJobResource>
     {
-        private readonly ClientDiagnostics _dataBoxClientClientDiagnostics;
-        private readonly DataBoxClient _dataBoxClientRestClient;
         private readonly ClientDiagnostics _jobResourcesClientDiagnostics;
         private readonly JobResources _jobResourcesRestClient;
+        private readonly ClientDiagnostics _dataBoxClientClientDiagnostics;
+        private readonly DataBoxClient _dataBoxClientRestClient;
 
         /// <summary> Initializes a new instance of DataBoxJobCollection for mocking. </summary>
         protected DataBoxJobCollection()
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DataBox
         internal DataBoxJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DataBoxJobResource.ResourceType, out string dataBoxJobApiVersion);
-            _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
-            _dataBoxClientRestClient = new DataBoxClient(_dataBoxClientClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
             _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
+            _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
+            _dataBoxClientRestClient = new DataBoxClient(_dataBoxClientClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// Gets information about the specified job.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// Gets information about the specified job.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// Gets information about the specified job.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// Gets information about the specified job.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

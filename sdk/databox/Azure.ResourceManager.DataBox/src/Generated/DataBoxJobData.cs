@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public DataBoxJobData(AzureLocation location, DataBoxJobTransferType transferType, DataBoxSku sku) : base(location)
         {
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Properties = new JobProperties(transferType);
             Sku = sku;

@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("stageStatus"u8);
                 writer.WriteStringValue(StageStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StageTime))
+            if (options.Format != "W" && Optional.IsDefined(StageOn))
             {
                 writer.WritePropertyName("stageTime"u8);
-                writer.WriteStringValue(StageTime.Value, "O");
+                writer.WriteStringValue(StageOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(JobStageDetails))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxStageName? stageName = default;
             string displayName = default;
             DataBoxStageStatus? stageStatus = default;
-            DateTimeOffset? stageTime = default;
+            DateTimeOffset? stageOn = default;
             BinaryData jobStageDetails = default;
             IReadOnlyList<JobDelayDetails> delayInformation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    stageTime = prop.Value.GetDateTimeOffset("O");
+                    stageOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("jobStageDetails"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 stageName,
                 displayName,
                 stageStatus,
-                stageTime,
+                stageOn,
                 jobStageDetails,
                 delayInformation ?? new ChangeTrackingList<JobDelayDetails>(),
                 additionalBinaryDataProperties);

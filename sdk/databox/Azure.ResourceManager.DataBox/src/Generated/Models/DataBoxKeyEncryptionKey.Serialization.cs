@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    kekUri = new Uri(prop.Value.GetString());
+                    kekUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kekVaultResourceID"u8))

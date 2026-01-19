@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox
                 AvailableSkusResult result = AvailableSkusResult.FromResponse(response);
                 yield return Page<DataBoxSkuInformation>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

@@ -104,7 +104,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetAllCollectionResultOfT(JobResourcesRestClient, Id.SubscriptionId, skipToken, context), data => new DataBoxJobResource(Client, data));
         }
 
-        /// <summary> This API provides configuration details specific to given region/location at Subscription level. </summary>
+        /// <summary>
+        /// This API provides configuration details specific to given region/location at Subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_RegionConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,7 +153,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> This API provides configuration details specific to given region/location at Subscription level. </summary>
+        /// <summary>
+        /// This API provides configuration details specific to given region/location at Subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_RegionConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,7 +202,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any. </summary>
+        /// <summary>
+        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ValidateAddress. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -203,7 +251,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any. </summary>
+        /// <summary>
+        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ValidateAddress. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -236,7 +300,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> This method does all necessary pre-job creation validation under subscription. </summary>
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ValidateInputs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,7 +349,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> This method does all necessary pre-job creation validation under subscription. </summary>
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ValidateInputs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

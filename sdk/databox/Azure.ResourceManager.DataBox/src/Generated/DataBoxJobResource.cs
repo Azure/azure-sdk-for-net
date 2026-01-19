@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.DataBox
     /// </summary>
     public partial class DataBoxJobResource : ArmResource
     {
-        private readonly ClientDiagnostics _dataBoxClientClientDiagnostics;
-        private readonly DataBoxClient _dataBoxClientRestClient;
         private readonly ClientDiagnostics _jobResourcesClientDiagnostics;
         private readonly JobResources _jobResourcesRestClient;
+        private readonly ClientDiagnostics _dataBoxClientClientDiagnostics;
+        private readonly DataBoxClient _dataBoxClientRestClient;
         private readonly DataBoxJobData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBox/jobs/mitigate";
+        public static readonly ResourceType ResourceType = "Microsoft.DataBox/jobs";
 
         /// <summary> Initializes a new instance of DataBoxJobResource for mocking. </summary>
         protected DataBoxJobResource()
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DataBox
         internal DataBoxJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string dataBoxJobApiVersion);
-            _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ResourceType.Namespace, Diagnostics);
-            _dataBoxClientRestClient = new DataBoxClient(_dataBoxClientClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ResourceType.Namespace, Diagnostics);
             _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
+            _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ResourceType.Namespace, Diagnostics);
+            _dataBoxClientRestClient = new DataBoxClient(_dataBoxClientClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -94,100 +94,6 @@ namespace Azure.ResourceManager.DataBox
             if (id.ResourceType != ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
-            }
-        }
-
-        /// <summary>
-        /// Request to mitigate for a given job
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DataBox_Mitigate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataBoxJobResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Mitigation Request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> MitigateAsync(MitigateJobContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _dataBoxClientClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dataBoxClientRestClient.CreateMitigateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MitigateJobContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Request to mitigate for a given job
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DataBox_Mitigate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataBoxJobResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Mitigation Request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response Mitigate(MitigateJobContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _dataBoxClientClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dataBoxClientRestClient.CreateMitigateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MitigateJobContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
             }
         }
 
@@ -863,6 +769,100 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
+        /// <summary>
+        /// Request to mitigate for a given job
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBox_Mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxJobResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> MitigateAsync(MitigateJobContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _dataBoxClientClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataBoxClientRestClient.CreateMitigateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MitigateJobContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Request to mitigate for a given job
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBox_Mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxJobResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Mitigate(MitigateJobContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _dataBoxClientClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataBoxClientRestClient.CreateMitigateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MitigateJobContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());

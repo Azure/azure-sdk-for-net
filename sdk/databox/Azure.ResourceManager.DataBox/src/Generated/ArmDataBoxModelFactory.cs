@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -18,6 +19,16 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDataBoxModelFactory
     {
+        /// <summary> The Mitigate Job captured from request body for Mitigate API. </summary>
+        /// <param name="customerResolutionCode"> Resolution code for the job. </param>
+        /// <param name="serialNumberCustomerResolutionMap"> Serial number and the customer resolution code corresponding to each serial number. </param>
+        /// <returns> A new <see cref="Models.MitigateJobContent"/> instance for mocking. </returns>
+        public static MitigateJobContent MitigateJobContent(CustomerResolutionCode? customerResolutionCode = default, IDictionary<string, CustomerResolutionCode> serialNumberCustomerResolutionMap = default)
+        {
+            serialNumberCustomerResolutionMap ??= new ChangeTrackingDictionary<string, CustomerResolutionCode>();
+
+            return new MitigateJobContent(customerResolutionCode, serialNumberCustomerResolutionMap, additionalBinaryDataProperties: null);
+        }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -141,11 +152,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
-        /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
+        /// <param name="stageOn"> Time for the job stage in UTC ISO 8601 format. </param>
         /// <param name="jobStageDetails"> Job Stage Details. </param>
         /// <param name="delayInformation"> Delay information for the job stages. </param>
         /// <returns> A new <see cref="Models.DataBoxJobStage"/> instance for mocking. </returns>
-        public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName = default, string displayName = default, DataBoxStageStatus? stageStatus = default, DateTimeOffset? stageTime = default, BinaryData jobStageDetails = default, IEnumerable<JobDelayDetails> delayInformation = default)
+        public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName = default, string displayName = default, DataBoxStageStatus? stageStatus = default, DateTimeOffset? stageOn = default, BinaryData jobStageDetails = default, IEnumerable<JobDelayDetails> delayInformation = default)
         {
             delayInformation ??= new ChangeTrackingList<JobDelayDetails>();
 
@@ -153,7 +164,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 stageName,
                 displayName,
                 stageStatus,
-                stageTime,
+                stageOn,
                 jobStageDetails,
                 delayInformation.ToList(),
                 additionalBinaryDataProperties: null);
@@ -1522,6 +1533,242 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataBoxSkuCost DataBoxSkuCost(Guid? meterId = default, string meterType = default, double? multiplier = default)
         {
             return new DataBoxSkuCost(meterId, meterType, multiplier, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType)
+        {
+            return CreateOrderLimitForSubscriptionValidationContent(deviceType, model: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <returns> A new <see cref="Models.DataBoxScheduleAvailabilityContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation, string country)
+        {
+            return DataBoxScheduleAvailabilityContent(storageLocation, country, model: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataTransferDetailsValidationContent"/>. </summary>
+        /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
+        /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
+        /// <param name="deviceType"> Device type. </param>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <returns> A new <see cref="Models.DataTransferDetailsValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails, IEnumerable<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType)
+        {
+            return DataTransferDetailsValidationContent(dataExportDetails, dataImportDetails, deviceType, transferType, model: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DiskScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
+        /// <returns> A new <see cref="Models.DiskScheduleAvailabilityContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation, string country, int expectedDataSizeInTerabytes)
+        {
+            return DiskScheduleAvailabilityContent(storageLocation, country, model: default, expectedDataSizeInTerabytes);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HeavyScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <returns> A new <see cref="Models.HeavyScheduleAvailabilityContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation, string country)
+        {
+            return HeavyScheduleAvailabilityContent(storageLocation, country, model: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PreferencesValidationContent"/>. </summary>
+        /// <param name="preference"> Preference of transport and data center. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <returns> A new <see cref="Models.PreferencesValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference, DataBoxSkuName deviceType)
+        {
+            return PreferencesValidationContent(preference, deviceType, model: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidateAddressContent"/>. </summary>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        /// <returns> A new <see cref="Models.DataBoxValidateAddressContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences)
+        {
+            return DataBoxValidateAddressContent(shippingAddress, deviceType, transportPreferences, model: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SkuAvailabilityValidationContent"/>. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
+        /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <returns> A new <see cref="Models.SkuAvailabilityValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType, string country, AzureLocation location)
+        {
+            return SkuAvailabilityValidationContent(deviceType, transferType, country, location, model: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBox.DataBoxJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="transferType"> Type of the data transfer. </param>
+        /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
+        /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
+        /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
+        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
+        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
+        /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
+        /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
+        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
+        /// <param name="error"> Top level error for the job. </param>
+        /// <param name="details">
+        /// Details of a job run. This field will only be sent for expand details filter.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , ,  and .
+        /// </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="deliveryType"> Delivery type of Job. </param>
+        /// <param name="deliveryInfoScheduledOn"> Delivery Info of Job. </param>
+        /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
+        /// <param name="sku"> The sku type. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DataBoxStageName? delayedStage, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, DateTimeOffset? deliveryInfoScheduledOn, bool? isCancellableWithoutFee, bool? areAllDevicesLost, DataBoxSku sku, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataBoxJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                sku,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceErasureDetails"/>. </summary>
+        /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
+        /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
+        /// <returns> A new <see cref="Models.DeviceErasureDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeviceErasureDetails DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey)
+        {
+            return DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBox.DataBoxJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="transferType"> Type of the data transfer. </param>
+        /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
+        /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
+        /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
+        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
+        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
+        /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
+        /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
+        /// <param name="error"> Top level error for the job. </param>
+        /// <param name="details">
+        /// Details of a job run. This field will only be sent for expand details filter.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , ,  and .
+        /// </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="deliveryType"> Delivery type of Job. </param>
+        /// <param name="deliveryInfoScheduledOn"> Delivery Info of Job. </param>
+        /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="sku"> The sku type. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, DateTimeOffset? deliveryInfoScheduledOn, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataBoxJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                sku,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
+        /// <param name="stageName"> Name of the job stage. </param>
+        /// <param name="displayName"> Display name of the job stage. </param>
+        /// <param name="stageStatus"> Status of the job stage. </param>
+        /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
+        /// <param name="jobStageDetails"> Job Stage Details. </param>
+        /// <returns> A new <see cref="Models.DataBoxJobStage"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails)
+        {
+            return new DataBoxJobStage(
+                stageName,
+                displayName,
+                stageStatus,
+                default,
+                jobStageDetails,
+                default,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCapacity"/>. </summary>
+        /// <param name="usable"> Usable capacity in TB. </param>
+        /// <param name="maximum"> Maximum capacity in TB. </param>
+        /// <returns> A new <see cref="Models.DataBoxSkuCapacity"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxSkuCapacity DataBoxSkuCapacity(string usable, string maximum)
+        {
+            return DataBoxSkuCapacity(usable, maximum, individualSkuUsable: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RegionConfigurationResult"/>. </summary>
+        /// <param name="scheduleAvailabilityResponseAvailableDates"> Schedule availability for given sku in a region. </param>
+        /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
+        /// <param name="dataCenterAddressResponse">
+        /// Datacenter address for given sku in a region.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include  and .
+        /// </param>
+        /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails, DataCenterAddressResult dataCenterAddressResponse)
+        {
+            return RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates, transportAvailabilityDetails, dataCenterAddressResponse, deviceCapabilityDetails: default);
         }
     }
 }

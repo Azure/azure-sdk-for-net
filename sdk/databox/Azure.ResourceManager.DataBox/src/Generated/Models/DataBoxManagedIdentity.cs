@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -37,5 +38,22 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> User assigned identity properties. </summary>
         internal DataBoxUserAssignedIdentity UserAssigned { get; set; }
+
+        /// <summary> Arm resource id for user assigned identity to be used to fetch MSI token. </summary>
+        public ResourceIdentifier UserAssignedResourceId
+        {
+            get
+            {
+                return UserAssigned is null ? default : UserAssigned.ResourceId;
+            }
+            set
+            {
+                if (UserAssigned is null)
+                {
+                    UserAssigned = new DataBoxUserAssignedIdentity();
+                }
+                UserAssigned.ResourceId = value;
+            }
+        }
     }
 }

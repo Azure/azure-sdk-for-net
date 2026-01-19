@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="MitigateJobContent"/>. </summary>
+        public MitigateJobContent()
+        {
+            SerialNumberCustomerResolutionMap = new ChangeTrackingDictionary<string, CustomerResolutionCode>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="MitigateJobContent"/>. </summary>
         /// <param name="customerResolutionCode"> Resolution code for the job. </param>
@@ -26,6 +33,9 @@ namespace Azure.ResourceManager.DataBox.Models
             SerialNumberCustomerResolutionMap = serialNumberCustomerResolutionMap;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resolution code for the job. </summary>
+        public CustomerResolutionCode? CustomerResolutionCode { get; set; }
 
         /// <summary> Serial number and the customer resolution code corresponding to each serial number. </summary>
         public IDictionary<string, CustomerResolutionCode> SerialNumberCustomerResolutionMap { get; }

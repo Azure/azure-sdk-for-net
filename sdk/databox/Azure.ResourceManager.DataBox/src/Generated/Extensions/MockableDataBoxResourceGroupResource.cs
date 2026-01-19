@@ -107,7 +107,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             return GetDataBoxJobs().Get(jobName, expand, cancellationToken);
         }
 
-        /// <summary> This method provides the list of available skus for the given subscription, resource group and location. </summary>
+        /// <summary>
+        /// This method provides the list of available skus for the given subscription, resource group and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ListAvailableSkusByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,7 +146,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 context);
         }
 
-        /// <summary> This method provides the list of available skus for the given subscription, resource group and location. </summary>
+        /// <summary>
+        /// This method provides the list of available skus for the given subscription, resource group and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ListAvailableSkusByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,7 +185,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 context);
         }
 
-        /// <summary> This API provides configuration details specific to given region/location at Resource group level. </summary>
+        /// <summary>
+        /// This API provides configuration details specific to given region/location at Resource group level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_RegionConfigurationByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,7 +234,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> This API provides configuration details specific to given region/location at Resource group level. </summary>
+        /// <summary>
+        /// This API provides configuration details specific to given region/location at Resource group level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_RegionConfigurationByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,7 +283,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> This method does all necessary pre-job creation validation under resource group. </summary>
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ValidateInputsByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -252,7 +332,23 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary> This method does all necessary pre-job creation validation under resource group. </summary>
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceOperationGroup_ValidateInputsByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
