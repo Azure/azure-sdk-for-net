@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedResourceProvisioningState : IEquatable<ServiceFabricManagedResourceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The resource does not have a provisioning state. </summary>
+        private const string NoneValue = "None";
+        /// <summary> The resource is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The resource is created. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> The resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The resource provisioning has succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The resource provisioning has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The resource provisioning has been canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The resource is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The resource has been deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The resource provisioning state is a state other than the previously specified states. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedResourceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string CreatingValue = "Creating";
-        private const string CreatedValue = "Created";
-        private const string UpdatingValue = "Updating";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
-        private const string DeletedValue = "Deleted";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> The resource does not have a provisioning state. </summary>
         public static ServiceFabricManagedResourceProvisioningState None { get; } = new ServiceFabricManagedResourceProvisioningState(NoneValue);
+
         /// <summary> The resource is being created. </summary>
         public static ServiceFabricManagedResourceProvisioningState Creating { get; } = new ServiceFabricManagedResourceProvisioningState(CreatingValue);
+
         /// <summary> The resource is created. </summary>
         public static ServiceFabricManagedResourceProvisioningState Created { get; } = new ServiceFabricManagedResourceProvisioningState(CreatedValue);
+
         /// <summary> The resource is being updated. </summary>
         public static ServiceFabricManagedResourceProvisioningState Updating { get; } = new ServiceFabricManagedResourceProvisioningState(UpdatingValue);
+
         /// <summary> The resource provisioning has succeeded. </summary>
         public static ServiceFabricManagedResourceProvisioningState Succeeded { get; } = new ServiceFabricManagedResourceProvisioningState(SucceededValue);
+
         /// <summary> The resource provisioning has failed. </summary>
         public static ServiceFabricManagedResourceProvisioningState Failed { get; } = new ServiceFabricManagedResourceProvisioningState(FailedValue);
+
         /// <summary> The resource provisioning has been canceled. </summary>
         public static ServiceFabricManagedResourceProvisioningState Canceled { get; } = new ServiceFabricManagedResourceProvisioningState(CanceledValue);
+
         /// <summary> The resource is being deleted. </summary>
         public static ServiceFabricManagedResourceProvisioningState Deleting { get; } = new ServiceFabricManagedResourceProvisioningState(DeletingValue);
+
         /// <summary> The resource has been deleted. </summary>
         public static ServiceFabricManagedResourceProvisioningState Deleted { get; } = new ServiceFabricManagedResourceProvisioningState(DeletedValue);
+
         /// <summary> The resource provisioning state is a state other than the previously specified states. </summary>
         public static ServiceFabricManagedResourceProvisioningState Other { get; } = new ServiceFabricManagedResourceProvisioningState(OtherValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedResourceProvisioningState(string value) => new ServiceFabricManagedResourceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedResourceProvisioningState?(string value) => value == null ? null : new ServiceFabricManagedResourceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedResourceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

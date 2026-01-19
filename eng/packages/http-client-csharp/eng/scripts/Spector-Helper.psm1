@@ -4,12 +4,9 @@ $failingSpecs = @(
     Join-Path 'http' 'streaming' 'jsonl'
     Join-Path 'http' 'payload' 'xml'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
+    Join-Path 'http' 'service' 'multi-service'
 # Azure scenarios not yet buildable
     Join-Path 'http' 'azure' 'client-generator-core' 'alternate-type'
-    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-method-parameter-to-client' # long path issue
-    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-to-existing-sub-client' # long path issue
-    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-to-new-sub-client' # long path issue
-    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-to-root-client' # long path issue
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
 # These scenarios will be covered in Azure.Generator.Management
     Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
@@ -18,6 +15,9 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'resources'
     Join-Path 'http' 'azure' 'resource-manager' 'large-header'
     Join-Path 'http' 'azure' 'resource-manager' 'method-subscription-id'
+    Join-Path 'http' 'azure' 'resource-manager' 'multi-service'
+    Join-Path 'http' 'azure' 'resource-manager' 'multi-service-shared-models'
+    Join-Path 'http' 'azure' 'resource-manager' 'multi-service-older-versions'
 )
 
 function Capitalize-FirstLetter {

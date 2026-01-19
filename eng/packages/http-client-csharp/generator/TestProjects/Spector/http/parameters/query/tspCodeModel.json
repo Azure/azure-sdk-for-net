@@ -202,9 +202,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "5"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

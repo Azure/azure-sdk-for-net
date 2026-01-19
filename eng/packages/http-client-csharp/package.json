@@ -38,7 +38,7 @@
     "dist/generator/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260115.1"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260116.3"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.35",
@@ -58,8 +58,8 @@
     "@typespec/openapi": "1.8.0",
     "@typespec/rest": "0.78.0",
     "@typespec/spec-api": "0.1.0-alpha.11",
-    "@typespec/spector": "0.1.0-alpha.20",
-    "@typespec/tspd": "0.73.1",
+    "@typespec/spector": "0.1.0-alpha.21",
+    "@typespec/tspd": "0.73.2",
     "@typespec/versioning": "0.78.0",
     "@typespec/xml": "0.78.0",
     "@vitest/coverage-v8": "^3.0.5",

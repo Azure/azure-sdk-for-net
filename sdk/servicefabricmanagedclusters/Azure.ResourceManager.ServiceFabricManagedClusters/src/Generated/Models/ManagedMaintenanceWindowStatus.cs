@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the maintenance window status of the Service Fabric Managed Cluster. </summary>
     public partial class ManagedMaintenanceWindowStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedMaintenanceWindowStatus"/>. </summary>
         internal ManagedMaintenanceWindowStatus()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="lastWindowStatusUpdatedOn"> Last window update time in UTC. </param>
         /// <param name="lastWindowStartOn"> Last window start time in UTC. </param>
         /// <param name="lastWindowEndOn"> Last window end time in UTC. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedMaintenanceWindowStatus(bool? isWindowEnabled, bool? isRegionReady, bool? isWindowActive, bool? canApplyUpdates, DateTimeOffset? lastWindowStatusUpdatedOn, DateTimeOffset? lastWindowStartOn, DateTimeOffset? lastWindowEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedMaintenanceWindowStatus(bool? isWindowEnabled, bool? isRegionReady, bool? isWindowActive, bool? canApplyUpdates, DateTimeOffset? lastWindowStatusUpdatedOn, DateTimeOffset? lastWindowStartOn, DateTimeOffset? lastWindowEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsWindowEnabled = isWindowEnabled;
             IsRegionReady = isRegionReady;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             LastWindowStatusUpdatedOn = lastWindowStatusUpdatedOn;
             LastWindowStartOn = lastWindowStartOn;
             LastWindowEndOn = lastWindowEndOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If maintenance window is enabled on this cluster. </summary>
         public bool? IsWindowEnabled { get; }
+
         /// <summary> Indicates if the region is ready to configure maintenance windows. </summary>
         public bool? IsRegionReady { get; }
+
         /// <summary> If maintenance window is active. </summary>
         public bool? IsWindowActive { get; }
+
         /// <summary> If updates can be applied. </summary>
         public bool? CanApplyUpdates { get; }
+
         /// <summary> Last window update time in UTC. </summary>
         public DateTimeOffset? LastWindowStatusUpdatedOn { get; }
+
         /// <summary> Last window start time in UTC. </summary>
         public DateTimeOffset? LastWindowStartOn { get; }
+
         /// <summary> Last window end time in UTC. </summary>
         public DateTimeOffset? LastWindowEndOn { get; }
     }

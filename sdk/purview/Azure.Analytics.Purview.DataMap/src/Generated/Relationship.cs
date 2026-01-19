@@ -8,25 +8,16 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    // Data plane generated sub-client.
     /// <summary> The Relationship sub-client. </summary>
     public partial class Relationship
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of Relationship for mocking. </summary>
         protected Relationship()
@@ -34,340 +25,223 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Initializes a new instance of Relationship. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        internal Relationship(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint)
+        /// <param name="endpoint"> Service endpoint. </param>
+        internal Relationship(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            Pipeline = pipeline;
         }
 
-        /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Create a new relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Create(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasRelationship.FromResponse(response), response);
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a new relationship between entities. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(AtlasRelationship,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasRelationship> Create(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(content, context);
-            return Response.FromValue(AtlasRelationship.FromResponse(response), response);
+            Response result = Create(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasRelationship)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create a new relationship between entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateAsync(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Relationship.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new relationship between entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Create(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
-        public virtual Response Create(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Relationship.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update an existing relationship between entities. </summary>
+        /// <summary> Create a new relationship between entities. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasRelationship.FromResponse(response), response);
+            Response result = await CreateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasRelationship)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update an existing relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Update(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Update");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update an existing relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Update");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(AtlasRelationship,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasRelationship> Update(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Update(content, context);
-            return Response.FromValue(AtlasRelationship.FromResponse(response), response);
+            Response result = Update(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasRelationship)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Update an existing relationship between entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UpdateAsync(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <summary> Update an existing relationship between entities. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ClientDiagnostics.CreateScope("Relationship.Update");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update an existing relationship between entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Update(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(RequestContent,RequestContext)']/*" />
-        public virtual Response Update(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Relationship.Update");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get relationship information between entities by its GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationshipAsync(string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRelationshipAsync(guid, extendedInfo, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasRelationshipWithExtInfo.FromResponse(response), response);
-        }
-
-        /// <summary> Get relationship information between entities by its GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationship(string,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRelationship(guid, extendedInfo, context);
-            return Response.FromValue(AtlasRelationshipWithExtInfo.FromResponse(response), response);
+            Response result = await UpdateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasRelationship)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Get relationship information between entities by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelationshipAsync(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationshipAsync(string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetRelationshipRequest(guid, extendedInfo, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get relationship information between entities by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelationship(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationship(string,bool?,RequestContext)']/*" />
         public virtual Response GetRelationship(string guid, bool? extendedInfo, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
                 using HttpMessage message = CreateGetRelationshipRequest(guid, extendedInfo, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -376,34 +250,31 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete a relationship between entities by its GUID.
+        /// [Protocol Method] Get relationship information between entities by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("Relationship.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetRelationshipRequest(guid, extendedInfo, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -412,34 +283,60 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary> Get relationship information between entities by its GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the relationship. </param>
+        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            Response result = GetRelationship(guid, extendedInfo, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasRelationshipWithExtInfo)result, result);
+        }
+
+        /// <summary> Get relationship information between entities by its GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the relationship. </param>
+        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            Response result = await GetRelationshipAsync(guid, extendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasRelationshipWithExtInfo)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Delete a relationship between entities by its GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
-        public virtual Response Delete(string guid, RequestContext context = null)
+        public virtual Response Delete(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("Relationship.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Delete");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
                 using HttpMessage message = CreateDeleteRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -448,85 +345,62 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Delete a relationship between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the relationship. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteAsync(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/relationship", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/relationship", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetRelationshipRequest(string guid, bool? extendedInfo, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/relationship/guid/", false);
-            uri.AppendPath(guid, true);
-            if (extendedInfo != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Delete");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("extendedInfo", extendedInfo.Value, true);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateDeleteRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/relationship/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
+            catch (Exception e)
             {
-                return DefaultRequestContext;
+                scope.Failed(e);
+                throw;
             }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        /// <summary> Delete a relationship between entities by its GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Delete(string guid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            return Delete(guid, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Delete a relationship between entities by its GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAsync(string guid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            return await DeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
     }
 }
