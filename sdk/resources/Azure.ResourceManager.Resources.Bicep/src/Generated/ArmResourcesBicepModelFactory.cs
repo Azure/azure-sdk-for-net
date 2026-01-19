@@ -8,30 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
+using Azure.ResourceManager.Resources.Bicep;
 
 namespace Azure.ResourceManager.Resources.Bicep.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourcesBicepModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DecompileOperationSuccessResult"/>. </summary>
+        /// <summary> The body of the request for the decompileBicep operation. </summary>
+        /// <param name="template"> The ARM json template to be decompiled into a Bicep file. </param>
+        /// <returns> A new <see cref="Models.DecompileOperationContent"/> instance for mocking. </returns>
+        public static DecompileOperationContent DecompileOperationContent(string template = default)
+        {
+            return new DecompileOperationContent(template, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response of the decompileBicep operation. </summary>
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
         /// <returns> A new <see cref="Models.DecompileOperationSuccessResult"/> instance for mocking. </returns>
-        public static DecompileOperationSuccessResult DecompileOperationSuccessResult(IEnumerable<DecompiledFileDefinition> files = null, string entryPoint = null)
+        public static DecompileOperationSuccessResult DecompileOperationSuccessResult(IEnumerable<DecompiledFileDefinition> files = default, string entryPoint = default)
         {
-            files ??= new List<DecompiledFileDefinition>();
+            files ??= new ChangeTrackingList<DecompiledFileDefinition>();
 
-            return new DecompileOperationSuccessResult(files?.ToList(), entryPoint, serializedAdditionalRawData: null);
+            return new DecompileOperationSuccessResult(files.ToList(), entryPoint, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DecompiledFileDefinition"/>. </summary>
+        /// <summary> The definition of a file along with its contents. </summary>
         /// <param name="path"> The file path of the Bicep file. </param>
         /// <param name="contents"> The contents of the Bicep file. </param>
         /// <returns> A new <see cref="Models.DecompiledFileDefinition"/> instance for mocking. </returns>
-        public static DecompiledFileDefinition DecompiledFileDefinition(string path = null, string contents = null)
+        public static DecompiledFileDefinition DecompiledFileDefinition(string path = default, string contents = default)
         {
-            return new DecompiledFileDefinition(path, contents, serializedAdditionalRawData: null);
+            return new DecompiledFileDefinition(path, contents, additionalBinaryDataProperties: null);
         }
     }
 }

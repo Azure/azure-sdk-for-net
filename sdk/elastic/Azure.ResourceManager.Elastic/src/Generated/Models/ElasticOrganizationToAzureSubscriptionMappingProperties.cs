@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> The properties of Azure Subscription ID to which the Organization of the logged in user belongs and gets billed into. </summary>
     public partial class ElasticOrganizationToAzureSubscriptionMappingProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticOrganizationToAzureSubscriptionMappingProperties"/>. </summary>
         internal ElasticOrganizationToAzureSubscriptionMappingProperties()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="marketplaceSaasInfo"> Marketplace SaaS Info of the resource. </param>
         /// <param name="elasticOrganizationId"> The Elastic Organization Id. </param>
         /// <param name="elasticOrganizationName"> The Elastic Organization Name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticOrganizationToAzureSubscriptionMappingProperties(string billedAzureSubscriptionId, MarketplaceSaaSInfo marketplaceSaasInfo, string elasticOrganizationId, string elasticOrganizationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticOrganizationToAzureSubscriptionMappingProperties(string billedAzureSubscriptionId, MarketplaceSaaSInfo marketplaceSaasInfo, string elasticOrganizationId, string elasticOrganizationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BilledAzureSubscriptionId = billedAzureSubscriptionId;
             MarketplaceSaasInfo = marketplaceSaasInfo;
             ElasticOrganizationId = elasticOrganizationId;
             ElasticOrganizationName = elasticOrganizationName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure Subscription ID to which the Organization belongs and gets billed into. This is empty for a new user OR a user without an Elastic Organization. </summary>
         public string BilledAzureSubscriptionId { get; }
+
         /// <summary> Marketplace SaaS Info of the resource. </summary>
         public MarketplaceSaaSInfo MarketplaceSaasInfo { get; }
+
         /// <summary> The Elastic Organization Id. </summary>
         public string ElasticOrganizationId { get; }
+
         /// <summary> The Elastic Organization Name. </summary>
         public string ElasticOrganizationName { get; }
     }

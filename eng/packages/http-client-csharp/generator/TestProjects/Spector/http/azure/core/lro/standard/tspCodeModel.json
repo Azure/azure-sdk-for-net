@@ -1753,7 +1753,8 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

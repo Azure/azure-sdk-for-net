@@ -8,15 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
+    /// <summary>
+    /// Abstract placement policy properties
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmPlacementPolicyProperties"/> and <see cref="VmHostPlacementPolicyProperties"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownPlacementPolicyProperties))]
-    public partial class PlacementPolicyProperties : IUtf8JsonSerializable, IJsonModel<PlacementPolicyProperties>
+    public abstract partial class PlacementPolicyProperties : IJsonModel<PlacementPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlacementPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +32,11 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(State))
@@ -51,15 +54,15 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,41 +71,51 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        PlacementPolicyProperties IJsonModel<PlacementPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlacementPolicyProperties IJsonModel<PlacementPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PlacementPolicyProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePlacementPolicyProperties(document.RootElement, options);
         }
 
-        internal static PlacementPolicyProperties DeserializePlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PlacementPolicyProperties DeserializePlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmHost": return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element, options);
-                    case "VmVm": return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element, options);
+                    case "VmVm":
+                        return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element, options);
+                    case "VmHost":
+                        return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element, options);
                 }
             }
             return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element, options);
         }
 
-        BinaryData IPersistableModel<PlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PlacementPolicyProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -112,15 +125,20 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        PlacementPolicyProperties IPersistableModel<PlacementPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlacementPolicyProperties IPersistableModel<PlacementPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PlacementPolicyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePlacementPolicyProperties(document.RootElement, options);
                     }
                 default:
@@ -128,6 +146,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlacementPolicyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
