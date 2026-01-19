@@ -203,6 +203,9 @@ internal class OperationContext
                 catch (InvalidOperationException ex) when (ex.Message.Contains("ManagementClientGenerator is not loaded"))
                 {
                     // ManagementClientGenerator is not loaded (e.g., in unit tests)
+                    // Note: This string check is necessary because ManagementClientGenerator.Instance is the only way to access the emitter,
+                    // and it throws InvalidOperationException with this specific message when not loaded.
+                    // In production scenarios, the generator is always loaded, so this catch is only for test scenarios.
                     // Silently continue - the empty array return below will handle the graceful degradation
                 }
 
