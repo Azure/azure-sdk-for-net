@@ -229,7 +229,8 @@
       "crossLanguageDefinitionId": "Server.Path.Multiple",
       "apiVersions": [
         "v1.0"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

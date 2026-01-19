@@ -1367,7 +1367,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "50"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "110",
@@ -2423,9 +2424,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "50"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

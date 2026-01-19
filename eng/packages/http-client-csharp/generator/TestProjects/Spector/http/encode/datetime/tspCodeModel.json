@@ -955,7 +955,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "88",
@@ -1782,7 +1783,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "132",
@@ -2287,7 +2289,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "172",
@@ -2562,9 +2565,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "44"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
