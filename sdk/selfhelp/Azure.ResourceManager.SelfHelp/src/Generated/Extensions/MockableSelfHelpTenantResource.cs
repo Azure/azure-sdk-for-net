@@ -111,7 +111,23 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             return GetSelfHelpSolutionResults().Get(solutionId, cancellationToken);
         }
 
-        /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
+        /// <summary>
+        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Help/discoverSolutions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoverySolutionNLPOperationGroup_DiscoverSolutions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
@@ -140,7 +156,23 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             }
         }
 
-        /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
+        /// <summary>
+        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Help/discoverSolutions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoverySolutionNLPOperationGroup_DiscoverSolutions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiscoveryNlpResult> DiscoverSolutionsNlp(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
