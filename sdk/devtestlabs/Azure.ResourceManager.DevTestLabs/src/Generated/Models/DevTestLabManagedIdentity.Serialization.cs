@@ -35,25 +35,30 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 throw new FormatException($"The model {nameof(DevTestLabManagedIdentity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ManagedIdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                SerializeTypeValue(writer, options);
+                writer.WriteStringValue(ManagedIdentityType.Value.ToString());
             }
             if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(Uuid);
+                writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(ClientSecretUri))
             {
                 writer.WritePropertyName("clientSecretUrl"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(ClientSecretUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                SerializeTypeValue(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -97,16 +102,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            ManagedServiceIdentityType? @type = default;
+            ManagedServiceIdentityType? managedIdentityType = default;
             Guid? principalId = default;
-            string uuid = default;
-            string uri = default;
+            Guid? tenantId = default;
+            Uri clientSecretUri = default;
+            ResourceManager.Models.ManagedServiceIdentityType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    DeserializeTypeValue(prop, ref @type);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedIdentityType = new ManagedServiceIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("principalId"u8))
@@ -120,12 +130,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    uuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientSecretUrl"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    DeserializeTypeValue(prop, ref @type);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +156,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevTestLabManagedIdentity(@type, principalId, uuid, uri, additionalBinaryDataProperties);
+            return new DevTestLabManagedIdentity(
+                managedIdentityType,
+                principalId,
+                tenantId,
+                clientSecretUri,
+                @type,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

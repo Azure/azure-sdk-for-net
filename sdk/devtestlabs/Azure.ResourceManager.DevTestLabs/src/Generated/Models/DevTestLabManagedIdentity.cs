@@ -23,27 +23,32 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabManagedIdentity"/>. </summary>
-        /// <param name="type"> Managed identity. </param>
+        /// <param name="managedIdentityType"> Managed identity. </param>
         /// <param name="principalId"> The principal id of resource identity. </param>
-        /// <param name="uuid"> The tenant identifier of resource. </param>
-        /// <param name="uri"> The client secret URL of the identity. </param>
+        /// <param name="tenantId"> The tenant identifier of resource. </param>
+        /// <param name="clientSecretUri"> The client secret URL of the identity. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabManagedIdentity(ManagedServiceIdentityType? @type, Guid? principalId, string uuid, string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabManagedIdentity(ManagedServiceIdentityType? managedIdentityType, Guid? principalId, Guid? tenantId, Uri clientSecretUri, ResourceManager.Models.ManagedServiceIdentityType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ManagedIdentityType = managedIdentityType;
             PrincipalId = principalId;
-            Uuid = uuid;
-            Uri = uri;
+            TenantId = tenantId;
+            ClientSecretUri = clientSecretUri;
+            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Managed identity. </summary>
+        public ManagedServiceIdentityType? ManagedIdentityType { get; set; }
 
         /// <summary> The principal id of resource identity. </summary>
         public Guid? PrincipalId { get; set; }
 
         /// <summary> The tenant identifier of resource. </summary>
-        public string Uuid { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> The client secret URL of the identity. </summary>
-        public string Uri { get; set; }
+        public Uri ClientSecretUri { get; set; }
     }
 }
