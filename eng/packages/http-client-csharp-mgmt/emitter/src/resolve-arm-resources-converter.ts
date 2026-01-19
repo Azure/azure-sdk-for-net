@@ -261,9 +261,139 @@ export function resolveArmResources(
     filteredResources.push(resource);
   }
 
+  // Validate and prune resources and methods that cannot be found in the library
+  const { validatedResources, validatedNonResourceMethods } =
+    validateAndPruneSchema(
+      program,
+      sdkContext,
+      filteredResources,
+      nonResourceMethods
+    );
+
   return {
-    resources: filteredResources,
-    nonResourceMethods
+    resources: validatedResources,
+    nonResourceMethods: validatedNonResourceMethods
+  };
+}
+
+/**
+ * Validates and prunes resources and methods that cannot be found in the library
+ * by their crossLanguageDefinitionId.
+ *
+ * This function removes:
+ * - Resources whose model ID doesn't exist in the SDK package
+ * - Methods (in resources) whose operation ID doesn't exist in the SDK package
+ * - Non-resource methods whose operation ID doesn't exist in the SDK package
+ *
+ * @param program - The TypeSpec program
+ * @param sdkContext - The emitter context containing SDK package information
+ * @param resources - The resources to validate
+ * @param nonResourceMethods - The non-resource methods to validate
+ * @returns Validated resources and non-resource methods with invalid items removed
+ */
+function validateAndPruneSchema(
+  program: Program,
+  sdkContext: CSharpEmitterContext,
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[]
+): {
+  validatedResources: ArmResourceSchema[];
+  validatedNonResourceMethods: NonResourceMethod[];
+} {
+  // Build sets of valid model IDs and operation IDs from the SDK package
+  const validModelIds = new Set<string>(
+    sdkContext.sdkPackage.models.map((m) => m.crossLanguageDefinitionId)
+  );
+
+  const validOperationIds = new Set<string>();
+  // Traverse all clients and their methods to collect valid operation IDs
+  const collectOperationIds = (
+    clients: Array<{ methods: Array<{ crossLanguageDefinitionId: string }>, children?: any[] }>
+  ) => {
+    for (const client of clients) {
+      for (const method of client.methods) {
+        validOperationIds.add(method.crossLanguageDefinitionId);
+      }
+      if (client.children) {
+        collectOperationIds(client.children);
+      }
+    }
+  };
+  collectOperationIds(sdkContext.sdkPackage.clients);
+
+  // Validate and prune resources
+  const validatedResources: ArmResourceSchema[] = [];
+  for (const resource of resources) {
+    // Check if the resource model exists in the SDK package
+    if (!validModelIds.has(resource.resourceModelId)) {
+      // Report diagnostic for pruned resource
+      sdkContext.logger.reportDiagnostic({
+        code: "general-warning",
+        messageId: "default",
+        format: {
+          message: `Resource model with crossLanguageDefinitionId '${resource.resourceModelId}' not found in SDK package. This resource will be excluded from code generation.`
+        },
+        target: program.getGlobalNamespaceType()
+      });
+      continue;
+    }
+
+    // Validate methods in this resource
+    const validatedMethods: ResourceMethod[] = [];
+    for (const method of resource.metadata.methods) {
+      if (!validOperationIds.has(method.methodId)) {
+        // Report diagnostic for pruned method
+        sdkContext.logger.reportDiagnostic({
+          code: "general-warning",
+          messageId: "default",
+          format: {
+            message: `Resource method with crossLanguageDefinitionId '${method.methodId}' not found in SDK package. This method will be excluded from resource '${resource.resourceModelId}'.`
+          },
+          target: program.getGlobalNamespaceType()
+        });
+        continue;
+      }
+      validatedMethods.push(method);
+    }
+
+    // Only include the resource if it has at least one valid method
+    if (validatedMethods.length > 0) {
+      resource.metadata.methods = validatedMethods;
+      validatedResources.push(resource);
+    } else {
+      // Report diagnostic if all methods were pruned
+      sdkContext.logger.reportDiagnostic({
+        code: "general-warning",
+        messageId: "default",
+        format: {
+          message: `Resource '${resource.resourceModelId}' has no valid methods after validation. This resource will be excluded from code generation.`
+        },
+        target: program.getGlobalNamespaceType()
+      });
+    }
+  }
+
+  // Validate and prune non-resource methods
+  const validatedNonResourceMethods: NonResourceMethod[] = [];
+  for (const method of nonResourceMethods) {
+    if (!validOperationIds.has(method.methodId)) {
+      // Report diagnostic for pruned non-resource method
+      sdkContext.logger.reportDiagnostic({
+        code: "general-warning",
+        messageId: "default",
+        format: {
+          message: `Non-resource method with crossLanguageDefinitionId '${method.methodId}' not found in SDK package. This method will be excluded from code generation.`
+        },
+        target: program.getGlobalNamespaceType()
+      });
+      continue;
+    }
+    validatedNonResourceMethods.push(method);
+  }
+
+  return {
+    validatedResources,
+    validatedNonResourceMethods
   };
 }
 
