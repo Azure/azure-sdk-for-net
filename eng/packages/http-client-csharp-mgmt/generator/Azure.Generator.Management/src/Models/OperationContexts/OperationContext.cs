@@ -190,7 +190,16 @@ internal class OperationContext
         static IReadOnlyList<KeyValuePair<RequestPathSegment, RequestPathSegment>> ReverselySplitIntoPairs(IReadOnlyList<RequestPathSegment> requestPath)
         {
             // in our current cases, we will always have even segments.
-            Debug.Assert(requestPath.Count % 2 == 0, "The request path should always have an even number of segments for pairing.");
+            // If the request path has an odd number of segments, report a diagnostic and return an empty array
+            if (requestPath.Count % 2 != 0)
+            {
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    code: "malformed-resource-detected",
+                    message: $"The request path should have an even number of segments for pairing, but got {requestPath.Count} segments."
+                );
+                return Array.Empty<KeyValuePair<RequestPathSegment, RequestPathSegment>>();
+            }
+
             int maxNumberOfPairs = requestPath.Count / 2;
             var pairs = new KeyValuePair<RequestPathSegment, RequestPathSegment>[maxNumberOfPairs];
 

@@ -583,5 +583,27 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual("examples", operationContext.SecondaryContextualPathParameters[0].Key);
             Assert.AreEqual("exampleName", operationContext.SecondaryContextualPathParameters[0].VariableName);
         }
+
+        [Test]
+        public void ValidateContextualParameters_MalformedPath_OddSegments()
+        {
+            // Test that a malformed path with odd number of segments doesn't throw exception
+            // but instead reports a diagnostic and returns empty contextual parameters for the malformed part
+            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Example/examples");
+            var operationContext = OperationContext.Create(requestPathPattern);
+            
+            // The operation should still complete without throwing an exception
+            // The contextual parameters should only include subscriptionId (from the valid prefix)
+            // The malformed part (providers/Microsoft.Example/examples with 3 segments) should be handled gracefully
+            Assert.IsNotNull(operationContext);
+            Assert.IsNotNull(operationContext.ContextualPathParameters);
+            
+            // Since the path /subscriptions/{subscriptionId}/providers/Microsoft.Example/examples
+            // has valid prefix /subscriptions/{subscriptionId} but malformed suffix,
+            // the contextual parameters should reflect only the valid parts processed
+            Assert.AreEqual(1, operationContext.ContextualPathParameters.Count);
+            Assert.AreEqual("subscriptions", operationContext.ContextualPathParameters[0].Key);
+            Assert.AreEqual("subscriptionId", operationContext.ContextualPathParameters[0].VariableName);
+        }
     }
 }
