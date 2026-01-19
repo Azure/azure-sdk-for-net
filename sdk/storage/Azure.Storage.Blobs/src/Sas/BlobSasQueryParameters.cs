@@ -52,6 +52,11 @@ namespace Azure.Storage.Sas
         public string KeyVersion => KeyProperties?.Version;
 
         /// <summary>
+        /// Gets the delegated user tenant id.
+        /// </summary>
+        public string KeyDelegatedUserTenantId => KeyProperties?.DelegatedUserTenantId;
+
+        /// <summary>
         /// Gets empty shared access signature query parameters.
         /// </summary>
         public static new BlobSasQueryParameters Empty => new BlobSasQueryParameters();
@@ -64,7 +69,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new BlobSasQueryParameters instance.
         /// </summary>
-        internal BlobSasQueryParameters (
+        internal BlobSasQueryParameters(
             string version,
             AccountSasServices? services,
             AccountSasResourceTypes? resourceTypes,
@@ -91,7 +96,10 @@ namespace Azure.Storage.Sas
             string unauthorizedAadObjectId = default,
             string correlationId = default,
             string encryptionScope = default,
-            string delegatedUserObjectId = default)
+            string delegatedUserObjectId = default,
+            string keyDelegatedUserTenantId = default,
+            List<string> requestHeaders = default,
+            List<string> requestQueryParameters = default)
             : base(
                 version,
                 services,
@@ -114,7 +122,9 @@ namespace Azure.Storage.Sas
                 correlationId,
                 directoryDepth: null,
                 encryptionScope,
-                delegatedUserObjectId)
+                delegatedUserObjectId,
+                requestHeaders,
+                requestQueryParameters)
         {
             KeyProperties = new UserDelegationKeyProperties
             {
@@ -123,7 +133,8 @@ namespace Azure.Storage.Sas
                 StartsOn = keyStart,
                 ExpiresOn = keyExpiry,
                 Service = keyService,
-                Version = keyVersion
+                Version = keyVersion,
+                DelegatedUserTenantId = keyDelegatedUserTenantId
             };
         }
 
@@ -134,7 +145,7 @@ namespace Azure.Storage.Sas
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        internal BlobSasQueryParameters (
+        internal BlobSasQueryParameters(
             IDictionary<string, string> values)
             : base(values)
         {

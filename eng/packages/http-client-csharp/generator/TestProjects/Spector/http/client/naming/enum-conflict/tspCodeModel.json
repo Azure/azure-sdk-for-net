@@ -526,7 +526,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -535,7 +535,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "25"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "41",
@@ -731,7 +732,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -740,9 +741,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "25"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

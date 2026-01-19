@@ -5862,7 +5862,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Models.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5871,7 +5871,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "194"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "400",
@@ -6136,7 +6137,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.ModelProperties.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6145,7 +6146,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "194"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "416",
@@ -7405,7 +7407,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Operations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7414,7 +7416,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "194"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "486",
@@ -10173,7 +10176,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Parameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10182,9 +10185,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "194"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

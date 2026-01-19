@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
+        /// <description>2025-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
+        /// <description>2025-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

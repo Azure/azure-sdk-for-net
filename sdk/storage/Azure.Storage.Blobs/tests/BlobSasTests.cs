@@ -63,9 +63,9 @@ namespace Azure.Storage.Blobs.Test
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
                 permissions: BlobSasPermissions.All,
@@ -128,9 +128,9 @@ namespace Azure.Storage.Blobs.Test
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             Response<BlobContentInfo> createResponse = await blob.CreateAsync();
@@ -198,9 +198,9 @@ namespace Azure.Storage.Blobs.Test
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             await blob.CreateAsync();
@@ -262,9 +262,9 @@ namespace Azure.Storage.Blobs.Test
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
                 permissions: BlobContainerSasPermissions.All,
@@ -286,6 +286,171 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_DelegatedTenantId()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act
+            Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
+            AssertSasUserDelegationKey(identitySasBlob.Uri, userDelegationKey.Value);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_DelegatedTenantId_Fail()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                // We are deliberately not passing in DelegatedUserObjectId to cause an auth failure
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act & Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasBlob.GetPropertiesAsync(),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_DelegatedTenantId_Roundtrip()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder originalBlobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlobUriBuilder roundtripBlobUriBuilder = new BlobUriBuilder(originalBlobUriBuilder.ToUri());
+
+            Assert.AreEqual(originalBlobUriBuilder.ToUri(), roundtripBlobUriBuilder.ToUri());
+            Assert.AreEqual(originalBlobUriBuilder.Sas.ToString(), roundtripBlobUriBuilder.Sas.ToString());
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ContainerIdentitySAS_DelegatedObjectId()
         {
@@ -297,9 +462,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
@@ -346,9 +511,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
@@ -379,6 +544,187 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasBlob.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_RequestHeadersAndQueryParameters()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(options: options);
+
+            Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
+            {
+                { "foo$", "bar!" },
+                { "company", "msft" },
+                { "city", "redmond,atlanta,reston" }
+            };
+
+            Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
+            {
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
+            };
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            CustomRequestHeadersAndQueryParametersPolicy customRequestPolicy = new CustomRequestHeadersAndQueryParametersPolicy();
+            // Send the request headers based on 'requestHeaders' Dictionary
+            foreach (var header in requestHeaders)
+            {
+                if (header.Key != null)
+                {
+                    customRequestPolicy.AddRequestHeader(header.Key, header.Value);
+                }
+            }
+
+            // Send the query parameters based on 'requestQueryParameters' Dictionary
+            foreach (var param in requestQueryParameters)
+            {
+                if (param.Key != null)
+                {
+                    customRequestPolicy.AddQueryParameter(param.Key, param.Value);
+                }
+            }
+
+            BlobClientOptions blobClientOptions = GetOptions();
+            blobClientOptions.AddPolicy(customRequestPolicy, HttpPipelinePosition.PerCall);
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, blobClientOptions));
+
+            // Act
+            Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_RequestHeadersAndQueryParameters_Fail()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: options);
+
+            Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
+            {
+                { "foo$", "bar!" },
+                { "company", "msft" },
+                { "city", "redmond,atlanta,reston" }
+            };
+
+            Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
+            {
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
+            };
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            // Deliberately do not send the request header and query parameter to cause an auth failure
+
+            BlobClientOptions blobClientOptions = GetOptions();
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, blobClientOptions));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasBlob.GetPropertiesAsync(),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_RequestHeadersAndQueryParameters_Roundtrip()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: options);
+
+            Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
+            {
+                { "foo$", "bar!" },
+                { "company", "msft" },
+                { "city", "redmond,atlanta,reston" }
+            };
+
+            Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
+            {
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
+            };
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder originalBlobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlobUriBuilder roundtripBlobUriBuilder = new BlobUriBuilder(originalBlobUriBuilder.ToUri());
+
+            Assert.AreEqual(originalBlobUriBuilder.ToUri(), roundtripBlobUriBuilder.ToUri());
+            Assert.AreEqual(originalBlobUriBuilder.Sas.ToString(), roundtripBlobUriBuilder.Sas.ToString());
         }
 
         [RecordedTest]

@@ -2210,7 +2210,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.endpoint"
             },
             {
               "$ref": "136"
@@ -2224,9 +2224,11 @@
           ],
           "parent": {
             "$ref": "93"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -5,7 +5,6 @@
      <IsClientLibrary>false</IsClientLibrary>
      <IsTestProject>true</IsTestProject>
      <IsTestSupportProject>false</IsTestSupportProject>
-     <ImportDefaultReferences>false</ImportDefaultReferences>
      <IsShippingLibrary>false</IsShippingLibrary>
      <EnableSourceLink>false</EnableSourceLink>
      <ImportRepoCommonSettings>true</ImportRepoCommonSettings>

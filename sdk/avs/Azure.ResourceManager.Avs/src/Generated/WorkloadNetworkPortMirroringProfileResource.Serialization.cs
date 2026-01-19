@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class WorkloadNetworkPortMirroringProfileResource : IJsonModel<WorkloadNetworkPortMirroringProfileData>
     {
-        private static WorkloadNetworkPortMirroringProfileData s_dataDeserializationInstance;
-        private static WorkloadNetworkPortMirroringProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkloadNetworkPortMirroringProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkloadNetworkPortMirroringProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkloadNetworkPortMirroringProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadNetworkPortMirroringProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPortMirroringProfileData>)Data).Write(writer, options);
 
-        WorkloadNetworkPortMirroringProfileData IJsonModel<WorkloadNetworkPortMirroringProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPortMirroringProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadNetworkPortMirroringProfileData IJsonModel<WorkloadNetworkPortMirroringProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkPortMirroringProfileData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkloadNetworkPortMirroringProfileData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkPortMirroringProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkPortMirroringProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadNetworkPortMirroringProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

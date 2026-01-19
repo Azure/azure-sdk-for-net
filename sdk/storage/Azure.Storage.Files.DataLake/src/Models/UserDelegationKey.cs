@@ -43,6 +43,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public string SignedVersion { get; internal set; }
 
         /// <summary>
+        /// The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified.
+        /// </summary>
+        public string SignedDelegatedUserTenantId { get; internal set; }
+
+        /// <summary>
         /// The key as a base64 string
         /// </summary>
         public string Value { get; internal set; }
@@ -62,6 +67,7 @@ namespace Azure.Storage.Files.DataLake.Models
             SignedService = blobUserDelegationKey.SignedService;
             SignedVersion = blobUserDelegationKey.SignedVersion;
             Value = blobUserDelegationKey.Value;
+            SignedDelegatedUserTenantId = blobUserDelegationKey.SignedDelegatedUserTenantId;
         }
     }
 }

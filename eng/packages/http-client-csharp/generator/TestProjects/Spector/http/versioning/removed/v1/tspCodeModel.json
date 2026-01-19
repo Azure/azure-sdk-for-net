@@ -1360,7 +1360,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint"
             },
             {
               "$id": "99",
@@ -1387,7 +1387,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.version"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version"
             }
           ],
           "initializedBy": 0,
@@ -1398,9 +1398,11 @@
           ],
           "parent": {
             "$ref": "55"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
