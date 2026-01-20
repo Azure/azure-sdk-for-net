@@ -951,18 +951,9 @@ function buildArmProviderSchemaFromDetectedResources(
           // For resources without Get operation, List operations should belong to the parent resource
           // Other operations (Create, Update, Delete) should be treated as non-resource methods
           
-          // Separate List operations from other operations
-          const listMethods = metadata.methods.filter(
-            (m) => m.kind === ResourceOperationKind.List
-          );
-          const otherMethods = metadata.methods.filter(
-            (m) => m.kind !== ResourceOperationKind.List
-          );
-
-          // Move List operations to parent resource if parent exists
-          if (metadata.parentResourceModelId && listMethods.length > 0) {
-            // Find parent metadata in resourcePathToMetadataMap
-            let parentMetadata: ResourceMetadata | undefined;
+          // Find parent metadata if parent exists
+          let parentMetadata: ResourceMetadata | undefined;
+          if (metadata.parentResourceModelId) {
             for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
               const parentModelId = parentKey.split("|")[0];
               if (parentModelId === metadata.parentResourceModelId) {
@@ -970,38 +961,30 @@ function buildArmProviderSchemaFromDetectedResources(
                 break;
               }
             }
+          }
 
-            if (parentMetadata) {
-              // Add List operations to parent resource's methods
-              parentMetadata.methods.push(...listMethods);
-            } else {
-              // If parent not found, treat as non-resource methods
-              for (const method of listMethods) {
+          // Iterate through all methods and handle List operations separately
+          for (const method of metadata.methods) {
+            if (method.kind === ResourceOperationKind.List) {
+              // Move List operations to parent resource if parent exists
+              if (parentMetadata) {
+                parentMetadata.methods.push(method);
+              } else {
+                // If parent not found, treat as non-resource method
                 nonResourceMethods.set(method.methodId, {
                   methodId: method.methodId,
                   operationPath: method.operationPath,
                   operationScope: method.operationScope
                 });
               }
-            }
-          } else {
-            // No parent or no list methods - treat list methods as non-resource methods
-            for (const method of listMethods) {
+            } else {
+              // Move other methods (Create, Update, Delete) to non-resource methods
               nonResourceMethods.set(method.methodId, {
                 methodId: method.methodId,
                 operationPath: method.operationPath,
                 operationScope: method.operationScope
               });
             }
-          }
-
-          // Move other methods (Create, Update, Delete) to non-resource methods
-          for (const method of otherMethods) {
-            nonResourceMethods.set(method.methodId, {
-              methodId: method.methodId,
-              operationPath: method.operationPath,
-              operationScope: method.operationScope
-            });
           }
 
           sdkContext.logger.reportDiagnostic({
