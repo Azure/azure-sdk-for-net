@@ -799,7 +799,6 @@ namespace Azure.Data.AppConfiguration
             {
                 return CreateCheckKeyValuesRequest(key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
             }
-            ;
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string after)
             {
