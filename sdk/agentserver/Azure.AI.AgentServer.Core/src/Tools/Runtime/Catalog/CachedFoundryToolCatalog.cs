@@ -68,6 +68,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         // Get user context for cache key generation
         var userInfo = await GetUserContextAsync(cancellationToken).ConfigureAwait(false);
 
+        var cachedDetailsById = new Dictionary<string, IReadOnlyList<FoundryToolDetails>>(StringComparer.Ordinal);
         var resolvingTasks = new Dictionary<string, Task<IReadOnlyList<FoundryToolDetails>>>(StringComparer.Ordinal);
         var toolsToFetch = new Dictionary<object, FoundryTool>();
 
@@ -75,8 +76,17 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         {
             var cacheKey = GetCacheKey(userInfo, tool);
 
-            if (_cache.TryGetValue<Task<IReadOnlyList<FoundryToolDetails>>>(cacheKey, out var cachedTask) &&
-                cachedTask != null)
+            if (!TryGetCachedEntry(cacheKey, out var cachedDetails, out var cachedTask))
+            {
+                toolsToFetch[cacheKey] = tool;
+                continue;
+            }
+
+            if (cachedDetails != null)
+            {
+                cachedDetailsById[tool.Id] = cachedDetails;
+            }
+            else if (cachedTask != null)
             {
                 resolvingTasks[tool.Id] = cachedTask;
             }
@@ -93,8 +103,17 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
             {
                 foreach (var (cacheKey, tool) in toolsToFetch)
                 {
-                    if (_cache.TryGetValue<Task<IReadOnlyList<FoundryToolDetails>>>(cacheKey, out var cachedTask) &&
-                        cachedTask != null)
+                    if (!TryGetCachedEntry(cacheKey, out var cachedDetails, out var cachedTask))
+                    {
+                        createdTasks[cacheKey] = tool;
+                        continue;
+                    }
+
+                    if (cachedDetails != null)
+                    {
+                        cachedDetailsById[tool.Id] = cachedDetails;
+                    }
+                    else if (cachedTask != null)
                     {
                         resolvingTasks[tool.Id] = cachedTask;
                     }
@@ -112,24 +131,23 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
                         var resolvingTask = ResolveToolDetailsAsync(tool.Id, fetchTask);
                         resolvingTasks[tool.Id] = resolvingTask;
 
-                        _ = _cache.Set(cacheKey, resolvingTask, new MemoryCacheEntryOptions
-                        {
-                            AbsoluteExpirationRelativeToNow = _cacheTtl,
-                            Size = 1
-                        });
+                        SetCacheEntry(cacheKey, resolvingTask);
                     }
                 }
             }
         }
 
-        if (resolvingTasks.Count == 0)
+        if (resolvingTasks.Count == 0 && cachedDetailsById.Count == 0)
         {
             return Array.Empty<ResolvedFoundryTool>();
         }
 
         try
         {
-            await Task.WhenAll(resolvingTasks.Values).WaitAsync(cancellationToken).ConfigureAwait(false);
+            if (resolvingTasks.Count > 0)
+            {
+                await Task.WhenAll(resolvingTasks.Values).WaitAsync(cancellationToken).ConfigureAwait(false);
+            }
         }
         catch
         {
@@ -144,12 +162,21 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         var resolvedTools = new List<ResolvedFoundryTool>();
         foreach (var tool in foundryTools)
         {
-            if (!resolvingTasks.TryGetValue(tool.Id, out var resolvingTask))
+            IReadOnlyList<FoundryToolDetails>? detailsList = null;
+            if (cachedDetailsById.TryGetValue(tool.Id, out var cachedDetails))
+            {
+                detailsList = cachedDetails;
+            }
+            else if (resolvingTasks.TryGetValue(tool.Id, out var resolvingTask))
+            {
+                detailsList = await resolvingTask.ConfigureAwait(false);
+            }
+
+            if (detailsList == null)
             {
                 continue;
             }
 
-            var detailsList = await resolvingTask.ConfigureAwait(false);
             foreach (var details in detailsList)
             {
                 resolvedTools.Add(new ResolvedFoundryTool
@@ -243,6 +270,73 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         return fetched.TryGetValue(toolId, out var details)
             ? details
             : Array.Empty<FoundryToolDetails>();
+    }
+
+    private bool TryGetCachedEntry(
+        object cacheKey,
+        out IReadOnlyList<FoundryToolDetails>? cachedDetails,
+        out Task<IReadOnlyList<FoundryToolDetails>>? resolvingTask)
+    {
+        cachedDetails = null;
+        resolvingTask = null;
+        if (!_cache.TryGetValue(cacheKey, out var cachedValue) || cachedValue == null)
+        {
+            return false;
+        }
+
+        if (cachedValue is IReadOnlyList<FoundryToolDetails> details)
+        {
+            cachedDetails = details;
+            return true;
+        }
+
+        if (cachedValue is Task<IReadOnlyList<FoundryToolDetails>> cachedTask)
+        {
+            resolvingTask = cachedTask;
+            return true;
+        }
+
+        return false;
+    }
+
+    private void SetCacheEntry(
+        object cacheKey,
+        Task<IReadOnlyList<FoundryToolDetails>> resolvingTask)
+    {
+        _ = _cache.Set(cacheKey, resolvingTask, new MemoryCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = _cacheTtl,
+            Size = 1
+        });
+
+        _ = UpdateCacheEntryAsync(cacheKey, resolvingTask);
+    }
+
+    private async Task UpdateCacheEntryAsync(
+        object cacheKey,
+        Task<IReadOnlyList<FoundryToolDetails>> resolvingTask)
+    {
+        try
+        {
+            var details = await resolvingTask.ConfigureAwait(false);
+            if (_cache.TryGetValue(cacheKey, out var cachedValue) &&
+                ReferenceEquals(cachedValue, resolvingTask))
+            {
+                _ = _cache.Set(cacheKey, details, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = _cacheTtl,
+                    Size = 1
+                });
+            }
+        }
+        catch
+        {
+            if (_cache.TryGetValue(cacheKey, out var cachedValue) &&
+                ReferenceEquals(cachedValue, resolvingTask))
+            {
+                _cache.Remove(cacheKey);
+            }
+        }
     }
 
     private static async Task<IDisposable> AcquireCacheLockAsync(
