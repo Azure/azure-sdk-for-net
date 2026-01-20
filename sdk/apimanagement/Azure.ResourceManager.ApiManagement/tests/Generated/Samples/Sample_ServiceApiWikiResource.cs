@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceApiWikiResource serviceApiWiki = client.GetServiceApiWikiResource(serviceApiWikiResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceApiWiki.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceApiWikiResource serviceApiWiki = client.GetServiceApiWikiResource(serviceApiWikiResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             WikiUpdateContract wikiUpdateContract = new WikiUpdateContract
             {
                 Documents = {new WikiDocumentationContract

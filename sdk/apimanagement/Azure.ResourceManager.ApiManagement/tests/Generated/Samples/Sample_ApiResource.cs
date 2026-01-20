@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiResource api = client.GetApiResource(apiResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await api.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiResource api = client.GetApiResource(apiResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiPatch patch = new ApiPatch
             {
                 DisplayName = "Echo API New",

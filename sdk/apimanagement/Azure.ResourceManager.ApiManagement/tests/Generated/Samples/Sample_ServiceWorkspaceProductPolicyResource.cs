@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceProductPolicyResource serviceWorkspaceProductPolicy = client.GetServiceWorkspaceProductPolicyResource(serviceWorkspaceProductPolicyResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceProductPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

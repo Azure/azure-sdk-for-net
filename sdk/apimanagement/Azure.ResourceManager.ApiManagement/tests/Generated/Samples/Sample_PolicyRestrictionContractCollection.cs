@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Scope = "Sample Path to the policy document.",
                 RequireBase = PolicyRestrictionRequireBase.True,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<PolicyRestrictionContractResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyRestrictionId, data, ifMatch: ifMatch);
             PolicyRestrictionContractResource result = lro.Value;
 

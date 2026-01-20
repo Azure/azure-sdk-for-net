@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementLoggerResource apiManagementLogger = client.GetApiManagementLoggerResource(apiManagementLoggerResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementLogger.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementLoggerResource apiManagementLogger = client.GetApiManagementLoggerResource(apiManagementLoggerResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementLoggerPatch patch = new ApiManagementLoggerPatch
             {
                 LoggerType = LoggerType.AzureEventHub,

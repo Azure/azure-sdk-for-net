@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// The Key being regenerated.
         /// Serialized Name: GatewayKeyRegenerationRequestContract.keyType
         /// </param>
-        public GatewayKeyRegenerateContent(TokenGenerationUsedKeyType keyType)
+        public GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType)
         {
             KeyType = keyType;
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: GatewayKeyRegenerationRequestContract.keyType
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayKeyRegenerateContent(TokenGenerationUsedKeyType keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyType = keyType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: GatewayKeyRegenerationRequestContract.keyType
         /// </summary>
         [WirePath("keyType")]
-        public TokenGenerationUsedKeyType KeyType { get; }
+        public GatewayRegenerateKeyType KeyType { get; }
     }
 }

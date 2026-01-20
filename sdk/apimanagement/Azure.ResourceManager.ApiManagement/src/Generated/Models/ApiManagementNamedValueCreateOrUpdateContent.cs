@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Optional tags that when provided can be used to filter the NamedValue list.
         /// Serialized Name: NamedValueCreateContract.properties.tags
         /// </param>
-        /// <param name="secret">
+        /// <param name="isSecret">
         /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
         /// Serialized Name: NamedValueCreateContract.properties.secret
         /// </param>
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: NamedValueCreateContract.properties.keyVault
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNamedValueCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? secret, string displayName, string value, KeyVaultContractCreateProperties keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementNamedValueCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractCreateProperties keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
-            Secret = secret;
+            IsSecret = isSecret;
             DisplayName = displayName;
             Value = value;
             KeyVault = keyVault;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: NamedValueCreateContract.properties.secret
         /// </summary>
         [WirePath("properties.secret")]
-        public bool? Secret { get; set; }
+        public bool? IsSecret { get; set; }
         /// <summary>
         /// Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
         /// Serialized Name: NamedValueCreateContract.properties.displayName

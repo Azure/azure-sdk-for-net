@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementCacheResource apiManagementCache = client.GetApiManagementCacheResource(apiManagementCacheResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementCache.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementCacheResource apiManagementCache = client.GetApiManagementCacheResource(apiManagementCacheResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementCachePatch patch = new ApiManagementCachePatch
             {
                 UseFromLocation = "westindia",

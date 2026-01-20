@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceTagResource serviceWorkspaceTag = client.GetServiceWorkspaceTagResource(serviceWorkspaceTagResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceTag.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceTagResource serviceWorkspaceTag = client.GetServiceWorkspaceTagResource(serviceWorkspaceTagResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementTagCreateOrUpdateContent content = new ApiManagementTagCreateOrUpdateContent
             {
                 DisplayName = "temp tag",

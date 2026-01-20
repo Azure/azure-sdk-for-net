@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Value = "<policies> <inbound /> <backend>    <forward-request />  </backend>  <outbound /></policies>",
                 Format = PolicyContentFormat.Xml,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ServiceWorkspaceApiOperationPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyId, data, ifMatch: ifMatch);
             ServiceWorkspaceApiOperationPolicyResource result = lro.Value;
 

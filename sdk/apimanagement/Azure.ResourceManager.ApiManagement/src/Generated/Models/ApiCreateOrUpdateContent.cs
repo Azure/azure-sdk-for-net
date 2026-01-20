@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// A resource identifier for the related ApiVersionSet.
         /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersionSetId
         /// </param>
-        /// <param name="subscriptionRequired">
+        /// <param name="isSubscriptionRequired">
         /// Specifies whether an API or Product subscription is required for accessing the API.
         /// Serialized Name: ApiCreateOrUpdateParameter.properties.subscriptionRequired
         /// </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ApiCreateOrUpdateParameter.properties.translateRequiredQueryParameters
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
-            SubscriptionRequired = subscriptionRequired;
+            IsSubscriptionRequired = isSubscriptionRequired;
             TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ApiCreateOrUpdateParameter.properties.subscriptionRequired
         /// </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? SubscriptionRequired { get; set; }
+        public bool? IsSubscriptionRequired { get; set; }
         /// <summary>
         /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
         /// Serialized Name: ApiCreateOrUpdateParameter.properties.termsOfServiceUrl

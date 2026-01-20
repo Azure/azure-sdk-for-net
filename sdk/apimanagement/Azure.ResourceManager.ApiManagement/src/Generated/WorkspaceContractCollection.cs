@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkspaceContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceId, WorkspaceContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WorkspaceContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceId, WorkspaceContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNull(data, nameof(data));
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkspaceContractResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceId, WorkspaceContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WorkspaceContractResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceId, WorkspaceContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNull(data, nameof(data));

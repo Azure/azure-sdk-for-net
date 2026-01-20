@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (Optional.IsDefined(SubscriptionRequired))
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(SubscriptionRequired.Value);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
             if (Optional.IsDefined(TermsOfServiceLink))
             {

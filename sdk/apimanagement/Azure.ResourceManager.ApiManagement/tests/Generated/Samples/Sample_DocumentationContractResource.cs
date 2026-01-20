@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             DocumentationContractResource documentationContract = client.GetDocumentationContractResource(documentationContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await documentationContract.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             DocumentationContractResource documentationContract = client.GetDocumentationContractResource(documentationContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             DocumentationContractPatch patch = new DocumentationContractPatch
             {
                 Title = "Title updated",

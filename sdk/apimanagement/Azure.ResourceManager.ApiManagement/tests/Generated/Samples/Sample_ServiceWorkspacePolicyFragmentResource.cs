@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspacePolicyFragmentResource serviceWorkspacePolicyFragment = client.GetServiceWorkspacePolicyFragmentResource(serviceWorkspacePolicyFragmentResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspacePolicyFragment.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

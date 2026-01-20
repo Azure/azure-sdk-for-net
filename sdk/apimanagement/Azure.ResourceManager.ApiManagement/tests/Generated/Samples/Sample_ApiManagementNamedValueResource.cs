@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementNamedValueResource apiManagementNamedValue = client.GetApiManagementNamedValueResource(apiManagementNamedValueResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementNamedValue.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementNamedValueResource apiManagementNamedValue = client.GetApiManagementNamedValueResource(apiManagementNamedValueResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementNamedValuePatch patch = new ApiManagementNamedValuePatch
             {
                 Tags = { "foo", "bar2" },
-                Secret = false,
+                IsSecret = false,
                 DisplayName = "prop3name",
                 Value = "propValue",
             };

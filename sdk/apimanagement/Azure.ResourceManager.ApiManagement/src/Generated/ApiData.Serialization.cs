@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (Optional.IsDefined(SubscriptionRequired))
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(SubscriptionRequired.Value);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
             if (Optional.IsDefined(TermsOfServiceLink))
             {
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionRequired), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRequired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    subscriptionRequired: ");
@@ -725,10 +725,10 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SubscriptionRequired))
+                if (Optional.IsDefined(IsSubscriptionRequired))
                 {
                     builder.Append("    subscriptionRequired: ");
-                    var boolValue = SubscriptionRequired.Value == true ? "true" : "false";
+                    var boolValue = IsSubscriptionRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

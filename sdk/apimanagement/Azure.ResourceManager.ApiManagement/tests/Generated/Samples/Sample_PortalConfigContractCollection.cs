@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string portalConfigId = "default";
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             PortalConfigContractData data = new PortalConfigContractData
             {
                 EnableBasicAuth = true,

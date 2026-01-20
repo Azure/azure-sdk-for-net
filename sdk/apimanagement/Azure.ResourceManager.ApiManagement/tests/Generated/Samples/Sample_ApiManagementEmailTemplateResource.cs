@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementEmailTemplateResource apiManagementEmailTemplate = client.GetApiManagementEmailTemplateResource(apiManagementEmailTemplateResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementEmailTemplate.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementEmailTemplateResource apiManagementEmailTemplate = client.GetApiManagementEmailTemplateResource(apiManagementEmailTemplateResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementEmailTemplateCreateOrUpdateContent content = new ApiManagementEmailTemplateCreateOrUpdateContent
             {
                 Subject = "Your request $IssueName was received",

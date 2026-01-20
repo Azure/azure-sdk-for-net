@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiOperation.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiOperationPatch patch = new ApiOperationPatch
             {
                 TemplateParameters = { },

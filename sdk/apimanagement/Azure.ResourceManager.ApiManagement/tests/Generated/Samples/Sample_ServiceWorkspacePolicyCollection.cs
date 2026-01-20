@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Value = "<policies> <inbound /> <backend>    <forward-request />  </backend>  <outbound /></policies>",
                 Format = PolicyContentFormat.Xml,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ServiceWorkspacePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyId, data, ifMatch: ifMatch);
             ServiceWorkspacePolicyResource result = lro.Value;
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Value = "<policies>\r\n     <inbound>\r\n     <base />\r\n  <set-header name=\"newvalue\" exists-action=\"override\">\r\n   <value>\"@(context.Request.Headers.FirstOrDefault(h => h.Ke==\"Via\"))\" </value>\r\n    </set-header>\r\n  </inbound>\r\n      </policies>",
                 Format = PolicyContentFormat.RawXml,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ServiceWorkspacePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyId, data, ifMatch: ifMatch);
             ServiceWorkspacePolicyResource result = lro.Value;
 

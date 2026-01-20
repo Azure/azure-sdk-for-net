@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPolicyResource apiManagementPolicy = client.GetApiManagementPolicyResource(apiManagementPolicyResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

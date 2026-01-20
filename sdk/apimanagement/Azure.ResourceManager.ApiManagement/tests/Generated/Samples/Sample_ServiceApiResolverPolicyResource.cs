@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceApiResolverPolicyResource serviceApiResolverPolicy = client.GetServiceApiResolverPolicyResource(serviceApiResolverPolicyResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceApiResolverPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Value = "<http-data-source><http-request><set-method>GET</set-method><set-backend-service base-url=\"https://some.service.com\" /><set-url>/api/users</set-url></http-request></http-data-source>",
                 Format = PolicyContentFormat.Xml,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ServiceApiResolverPolicyResource> lro = await serviceApiResolverPolicy.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch);
             ServiceApiResolverPolicyResource result = lro.Value;
 

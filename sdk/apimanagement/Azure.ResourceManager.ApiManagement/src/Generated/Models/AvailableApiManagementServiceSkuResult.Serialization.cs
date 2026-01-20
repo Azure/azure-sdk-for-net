@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteStringValue(ResourceType);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            ResourceType? resourceType = default;
+            string resourceType = default;
             ResourceSku sku = default;
             ApiManagementResourceSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -96,11 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("resourceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(property.Value.GetString());
+                    resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -152,7 +148,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(ResourceType))
                 {
                     builder.Append("  resourceType: ");
-                    builder.AppendLine($"'{ResourceType.Value.ToString()}'");
+                    if (ResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceType}'");
+                    }
                 }
             }
 

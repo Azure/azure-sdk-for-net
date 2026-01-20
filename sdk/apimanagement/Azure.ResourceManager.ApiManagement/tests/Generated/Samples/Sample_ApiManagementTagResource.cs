@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementTagResource apiManagementTag = client.GetApiManagementTagResource(apiManagementTagResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementTag.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementTagResource apiManagementTag = client.GetApiManagementTagResource(apiManagementTagResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementTagCreateOrUpdateContent content = new ApiManagementTagCreateOrUpdateContent
             {
                 DisplayName = "temp tag",

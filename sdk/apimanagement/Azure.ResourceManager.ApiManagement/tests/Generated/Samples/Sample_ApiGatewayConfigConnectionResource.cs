@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiGatewayConfigConnectionResource apiGatewayConfigConnection = client.GetApiGatewayConfigConnectionResource(apiGatewayConfigConnectionResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiGatewayConfigConnection.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

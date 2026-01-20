@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiDiagnosticResource apiDiagnostic = client.GetApiDiagnosticResource(apiDiagnosticResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiDiagnostic.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiDiagnosticResource apiDiagnostic = client.GetApiDiagnosticResource(apiDiagnosticResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             DiagnosticContractData data = new DiagnosticContractData
             {
                 AlwaysLog = AlwaysLog.AllErrors,

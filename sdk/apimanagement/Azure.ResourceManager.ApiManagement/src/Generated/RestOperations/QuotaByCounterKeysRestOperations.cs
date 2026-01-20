@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QuotaCounterCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, CancellationToken cancellationToken = default)
+        public async Task<Response<QuotaCounterListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        QuotaCounterCollection value = default;
+                        QuotaCounterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = QuotaCounterCollection.DeserializeQuotaCounterCollection(document.RootElement);
+                        value = QuotaCounterListResult.DeserializeQuotaCounterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QuotaCounterCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, CancellationToken cancellationToken = default)
+        public Response<QuotaCounterListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        QuotaCounterCollection value = default;
+                        QuotaCounterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = QuotaCounterCollection.DeserializeQuotaCounterCollection(document.RootElement);
+                        value = QuotaCounterListResult.DeserializeQuotaCounterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QuotaCounterCollection>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<QuotaCounterListResult>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        QuotaCounterCollection value = default;
+                        QuotaCounterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = QuotaCounterCollection.DeserializeQuotaCounterCollection(document.RootElement);
+                        value = QuotaCounterListResult.DeserializeQuotaCounterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QuotaCounterCollection> Update(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<QuotaCounterListResult> Update(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        QuotaCounterCollection value = default;
+                        QuotaCounterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = QuotaCounterCollection.DeserializeQuotaCounterCollection(document.RootElement);
+                        value = QuotaCounterListResult.DeserializeQuotaCounterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

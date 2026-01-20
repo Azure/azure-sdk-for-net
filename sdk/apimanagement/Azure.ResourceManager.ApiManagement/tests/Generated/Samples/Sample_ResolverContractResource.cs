@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResolverContractResource resolverContract = client.GetResolverContractResource(resolverContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await resolverContract.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResolverContractResource resolverContract = client.GetResolverContractResource(resolverContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ResolverContractPatch patch = new ResolverContractPatch
             {
                 DisplayName = "Query AdminUsers",

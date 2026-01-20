@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPortalSignInSettingResource apiManagementPortalSignInSetting = client.GetApiManagementPortalSignInSettingResource(apiManagementPortalSignInSettingResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementPortalSignInSettingData data = new ApiManagementPortalSignInSettingData
             {
                 IsRedirectEnabled = true,
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 IsRedirectEnabled = true,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ApiManagementPortalSignInSettingResource> lro = await apiManagementPortalSignInSetting.CreateOrUpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch);
             ApiManagementPortalSignInSettingResource result = lro.Value;
 

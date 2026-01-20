@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiReleaseResource apiRelease = client.GetApiReleaseResource(apiReleaseResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiRelease.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiReleaseResource apiRelease = client.GetApiReleaseResource(apiReleaseResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiReleaseData data = new ApiReleaseData
             {
                 ApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/a1"),

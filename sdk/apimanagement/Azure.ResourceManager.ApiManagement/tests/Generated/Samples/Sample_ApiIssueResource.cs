@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiIssueResource apiIssue = client.GetApiIssueResource(apiIssueResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiIssue.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiIssueResource apiIssue = client.GetApiIssueResource(apiIssueResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiIssuePatch patch = new ApiIssuePatch
             {
                 State = IssueState.Closed,

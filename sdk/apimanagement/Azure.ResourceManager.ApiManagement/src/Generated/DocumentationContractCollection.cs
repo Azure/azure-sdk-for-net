@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="documentationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="documentationId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DocumentationContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string documentationId, DocumentationContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DocumentationContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string documentationId, DocumentationContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentationId, nameof(documentationId));
             Argument.AssertNotNull(data, nameof(data));
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="documentationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="documentationId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DocumentationContractResource> CreateOrUpdate(WaitUntil waitUntil, string documentationId, DocumentationContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DocumentationContractResource> CreateOrUpdate(WaitUntil waitUntil, string documentationId, DocumentationContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentationId, nameof(documentationId));
             Argument.AssertNotNull(data, nameof(data));

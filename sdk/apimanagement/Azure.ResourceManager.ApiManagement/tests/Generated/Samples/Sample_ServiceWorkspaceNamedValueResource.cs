@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceNamedValueResource serviceWorkspaceNamedValue = client.GetServiceWorkspaceNamedValueResource(serviceWorkspaceNamedValueResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceNamedValue.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceNamedValueResource serviceWorkspaceNamedValue = client.GetServiceWorkspaceNamedValueResource(serviceWorkspaceNamedValueResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementNamedValuePatch patch = new ApiManagementNamedValuePatch
             {
                 Tags = { "foo", "bar2" },
-                Secret = false,
+                IsSecret = false,
                 DisplayName = "prop3name",
                 Value = "propValue",
             };

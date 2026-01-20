@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process.
         /// Serialized Name: ProductUpdateParameters.properties.terms
         /// </param>
-        /// <param name="subscriptionRequired">
+        /// <param name="isSubscriptionRequired">
         /// Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true.
         /// Serialized Name: ProductUpdateParameters.properties.subscriptionRequired
         /// </param>
-        /// <param name="approvalRequired">
+        /// <param name="isApprovalRequired">
         /// whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false.
         /// Serialized Name: ProductUpdateParameters.properties.approvalRequired
         /// </param>
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ProductUpdateParameters.properties.displayName
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementProductPatch(string description, string terms, bool? subscriptionRequired, bool? approvalRequired, int? subscriptionsLimit, IList<ProductAuthType> authenticationType, ProductEntityBaseParametersApplication application, ApiManagementProductState? state, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementProductPatch(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, IList<ProductAuthType> authenticationType, ProductEntityBaseParametersApplication application, ApiManagementProductState? state, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Terms = terms;
-            SubscriptionRequired = subscriptionRequired;
-            ApprovalRequired = approvalRequired;
+            IsSubscriptionRequired = isSubscriptionRequired;
+            IsApprovalRequired = isApprovalRequired;
             SubscriptionsLimit = subscriptionsLimit;
             AuthenticationType = authenticationType;
             Application = application;
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ProductUpdateParameters.properties.subscriptionRequired
         /// </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? SubscriptionRequired { get; set; }
+        public bool? IsSubscriptionRequired { get; set; }
         /// <summary>
         /// whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false.
         /// Serialized Name: ProductUpdateParameters.properties.approvalRequired
         /// </summary>
         [WirePath("properties.approvalRequired")]
-        public bool? ApprovalRequired { get; set; }
+        public bool? IsApprovalRequired { get; set; }
         /// <summary>
         /// Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false.
         /// Serialized Name: ProductUpdateParameters.properties.subscriptionsLimit

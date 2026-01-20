@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             GatewayHostnameBindingResource gatewayHostnameBindingResource = client.GetGatewayHostnameBindingResource(gatewayHostnameBindingResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await gatewayHostnameBindingResource.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

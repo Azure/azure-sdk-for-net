@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspaceLoggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceWorkspaceLoggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
             Argument.AssertNotNull(data, nameof(data));
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspaceLoggerResource> CreateOrUpdate(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceWorkspaceLoggerResource> CreateOrUpdate(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
             Argument.AssertNotNull(data, nameof(data));

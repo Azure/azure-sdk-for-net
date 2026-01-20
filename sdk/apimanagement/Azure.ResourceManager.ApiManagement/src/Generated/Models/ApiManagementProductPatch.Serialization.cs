@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
-            if (Optional.IsDefined(SubscriptionRequired))
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(SubscriptionRequired.Value);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(ApprovalRequired))
+            if (Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("approvalRequired"u8);
-                writer.WriteBooleanValue(ApprovalRequired.Value);
+                writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
             if (Optional.IsDefined(SubscriptionsLimit))
             {

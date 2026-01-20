@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             TenantAccessInfoResource tenantAccessInfo = client.GetTenantAccessInfoResource(tenantAccessInfoResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             TenantAccessInfoPatch patch = new TenantAccessInfoPatch
             {
                 IsDirectAccessEnabled = true,

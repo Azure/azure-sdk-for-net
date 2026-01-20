@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceGroup.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementGroupPatch patch = new ApiManagementGroupPatch
             {
                 DisplayName = "temp group",

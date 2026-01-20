@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationAccessPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationAccessPolicyId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AuthorizationAccessPolicyContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationAccessPolicyId, AuthorizationAccessPolicyContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AuthorizationAccessPolicyContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationAccessPolicyId, AuthorizationAccessPolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationAccessPolicyId, nameof(authorizationAccessPolicyId));
             Argument.AssertNotNull(data, nameof(data));
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationAccessPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationAccessPolicyId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AuthorizationAccessPolicyContractResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationAccessPolicyId, AuthorizationAccessPolicyContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AuthorizationAccessPolicyContractResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationAccessPolicyId, AuthorizationAccessPolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationAccessPolicyId, nameof(authorizationAccessPolicyId));
             Argument.AssertNotNull(data, nameof(data));

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 Description = "Copy of Existing Echo Api including Operations.",
                 IsCurrent = true,
-                SubscriptionRequired = true,
+                IsSubscriptionRequired = true,
                 SourceApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/58a4aeac497000007d040001"),
                 DisplayName = "Echo API2",
                 ServiceLink = "http://echoapi.cloudapp.net/api",
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 ApiVersion = "v4",
                 IsCurrent = true,
                 ApiVersionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apiVersionSets/aa9c59e6-c0cd-4258-9356-9ca7d2f0b458"),
-                SubscriptionRequired = true,
+                IsSubscriptionRequired = true,
                 SourceApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echoPath"),
                 DisplayName = "Echo API2",
                 ServiceLink = "http://echoapi.cloudapp.net/api",

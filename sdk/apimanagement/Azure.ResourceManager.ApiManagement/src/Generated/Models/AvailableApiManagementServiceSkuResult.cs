@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ResourceSkuResult.capacity
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableApiManagementServiceSkuResult(ResourceType? resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvailableApiManagementServiceSkuResult(string resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ResourceSkuResult.resourceType
         /// </summary>
         [WirePath("resourceType")]
-        public ResourceType? ResourceType { get; }
+        public string ResourceType { get; }
         /// <summary>
         /// Specifies API Management SKU.
         /// Serialized Name: ResourceSkuResult.sku

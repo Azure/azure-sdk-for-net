@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiOperationPolicyResource apiOperationPolicy = client.GetApiOperationPolicyResource(apiOperationPolicyResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiOperationPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Value = "<policies> <inbound /> <backend>    <forward-request />  </backend>  <outbound /></policies>",
                 Format = PolicyContentFormat.Xml,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ApiOperationPolicyResource> lro = await apiOperationPolicy.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch);
             ApiOperationPolicyResource result = lro.Value;
 

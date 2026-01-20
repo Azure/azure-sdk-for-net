@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceApiSchemaResource serviceWorkspaceApiSchema = client.GetServiceWorkspaceApiSchemaResource(serviceWorkspaceApiSchemaResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceApiSchema.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

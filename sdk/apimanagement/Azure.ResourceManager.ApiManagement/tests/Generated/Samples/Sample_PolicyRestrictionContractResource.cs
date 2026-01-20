@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             PolicyRestrictionContractResource policyRestrictionContract = client.GetPolicyRestrictionContractResource(policyRestrictionContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             await policyRestrictionContract.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             PolicyRestrictionContractResource policyRestrictionContract = client.GetPolicyRestrictionContractResource(policyRestrictionContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             PolicyRestrictionContractPatch patch = new PolicyRestrictionContractPatch
             {
                 Scope = "Sample Path 2 to the policy document.",

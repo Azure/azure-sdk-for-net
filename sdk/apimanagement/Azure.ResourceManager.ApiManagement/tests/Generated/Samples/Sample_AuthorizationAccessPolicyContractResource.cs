@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationAccessPolicyContractResource authorizationAccessPolicyContract = client.GetAuthorizationAccessPolicyContractResource(authorizationAccessPolicyContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await authorizationAccessPolicyContract.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

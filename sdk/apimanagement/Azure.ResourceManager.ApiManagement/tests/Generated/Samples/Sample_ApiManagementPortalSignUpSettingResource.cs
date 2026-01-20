@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPortalSignUpSettingResource apiManagementPortalSignUpSetting = client.GetApiManagementPortalSignUpSettingResource(apiManagementPortalSignUpSettingResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementPortalSignUpSettingData data = new ApiManagementPortalSignUpSettingData
             {
                 IsSignUpDeveloperPortalEnabled = true,
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     IsConsentRequired = true,
                 },
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ApiManagementPortalSignUpSettingResource> lro = await apiManagementPortalSignUpSetting.CreateOrUpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch);
             ApiManagementPortalSignUpSettingResource result = lro.Value;
 

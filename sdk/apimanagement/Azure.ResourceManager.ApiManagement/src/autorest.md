@@ -170,7 +170,7 @@ rename-mapping:
   RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties
   OpenidConnectProviderContract: ApiManagementOpenIdConnectProvider
   OpenidConnectProviderUpdateContract: OpenIdConnectProviderUpdateContract
-  VirtualNetworkConfiguration.vnetid: VnetId
+  VirtualNetworkConfiguration.vnetid: VnetId|uuid
   AccessInformationContract: TenantAccessInfo
   AccessInformationContract.properties.id: AccessInfoType
   AccessIdName: AccessName
@@ -247,7 +247,7 @@ rename-mapping:
   NameAvailabilityReason: ApiManagementServiceNameUnavailableReason
   ApiType.websocket: WebSocket
   ApiType.graphql: GraphQL
-  ProvisioningState: AssociationEntityProvisioningState
+  AssociationContractPropertiesProvisioningState: AssociationEntityProvisioningState
   AuthenticationSettingsContract.openid: OpenId
   CertificateInformation.expiry: ExpireOn
   Confirmation: ConfirmationEmailType
@@ -335,7 +335,6 @@ rename-mapping:
   ApiEntityBaseContract.subscriptionRequired: IsSubscriptionRequired
   CacheContract.properties.resourceId: resourceUri
   CacheUpdateParameters.properties.resourceId: resourceUri
-#   IdentityProviderContract.properties.type: IdentityProviderType
   IdentityProviderContract.properties.signinTenant: SignInTenant
   IdentityProviderContract.properties.signupPolicyName: SignUpPolicyName
   IdentityProviderContract.properties.signinPolicyName: SignInPolicyName
@@ -356,11 +355,27 @@ rename-mapping:
   PortalSettingsContract.properties.subscriptions: IsSubscriptions
   PortalSettingsContract.properties.userRegistration: IsUserRegistration
   PrivateEndpointConnectionRequest.id: -|arm-id
-  VirtualNetworkConfiguration.vnetid: -|uuid
   VirtualNetworkConfiguration.subnetResourceId: -|arm-id
-  GatewayResourceSkuResult.resourceType: -|resource-type
   ApiManagementServiceResource.properties.publicIpAddressId: -|arm-id
   AdditionalLocation.publicIpAddressId: -|arm-id
+  ApiContract.properties.subscriptionRequired: IsSubscriptionRequired
+  ApiUpdateContract.properties.subscriptionRequired: IsSubscriptionRequired
+  ApiCreateOrUpdateParameter.properties.subscriptionRequired: IsSubscriptionRequired
+  NamedValueUpdateParameters.properties.secret: IsSecret
+  ProductUpdateParameters.properties.subscriptionRequired: IsSubscriptionRequired
+  ProductUpdateParameters.properties.approvalRequired: IsApprovalRequired
+  NamedValueCreateContract.properties.secret: IsSecret
+  IdentityProviderUpdateParameters.properties.signupPolicyName: SignUpPolicyName
+  IdentityProviderUpdateParameters.properties.signinPolicyName: SignInPolicyName
+  IdentityProviderUpdateParameters.properties.signinTenant: SignInTenant
+  IdentityProviderUpdateParameters.properties.type: IdentityProviderType
+  IdentityProviderCreateContract.properties.signupPolicyName: SignUpPolicyName
+  IdentityProviderCreateContract.properties.signinPolicyName: SignInPolicyName
+  IdentityProviderCreateContract.properties.signinTenant: SignInTenant
+  IdentityProviderCreateContract.properties.type: IdentityProviderType
+  AuthorizationServerUpdateContract.properties.supportState: DoesSupportState
+  ProductContract.properties.subscriptionRequired: IsSubscriptionRequired
+  ProductContract.properties.approvalRequired: IsApprovalRequired
 
 keep-plural-resource-data:
   - ApiManagementWorkspaceLinks
@@ -371,7 +386,7 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      $.GatewayKeyRegenerationRequestContract.properties.keyType['x-ms-enum']['name'] = 'GatewayRegenerateKeyType';
+      $.KeyType['x-ms-enum']['name'] = 'GatewayRegenerateKeyType';
       for (var key in $) {
           if (key.endsWith('Collection')) {
               for (var property in $[key].properties) {
@@ -387,11 +402,35 @@ directive:
       delete $.Operation;
       delete $.OperationListResult;
   - from: openapi.json
-    where: $.parameters
+    where: $
     transform: >
-      $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
-      $.IfMatchOptionalParameter['x-ms-format'] = 'etag';
-      $.IfMatchRequiredParameter['x-ms-format'] = 'etag';
+      for (var pathName in $.paths) {
+          var path = $.paths[pathName];
+          if (path.parameters) {
+              for (var i = 0; i < path.parameters.length; i++) {
+                  if (path.parameters[i].name === 'If-Match') {
+                      path.parameters[i]['x-ms-format'] = 'etag';
+                  }
+              }
+          }
+          for (var methodName in path) {
+              if (methodName === 'parameters') continue;
+              var operation = path[methodName];
+              if (operation.parameters) {
+                  for (var i = 0; i < operation.parameters.length; i++) {
+                      if (operation.parameters[i].name === 'If-Match') {
+                          operation.parameters[i]['x-ms-format'] = 'etag';
+                      }
+                  }
+              }
+          }
+      }
+#   - from: openapi.json
+#     where: $.parameters
+#     transform: >
+#       $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
+#       $.IfMatchOptionalParameter['x-ms-format'] = 'etag';
+#       $.IfMatchRequiredParameter['x-ms-format'] = 'etag';
   - from: openapi.json
     where: $.paths
     transform: >

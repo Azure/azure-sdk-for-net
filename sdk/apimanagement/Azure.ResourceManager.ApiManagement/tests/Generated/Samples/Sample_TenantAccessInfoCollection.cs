@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             AccessName accessName = AccessName.TenantAccess;
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             TenantAccessInfoCreateOrUpdateContent content = new TenantAccessInfoCreateOrUpdateContent
             {
                 IsDirectAccessEnabled = true,

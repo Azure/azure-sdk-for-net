@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementBackendResource apiManagementBackend = client.GetApiManagementBackendResource(apiManagementBackendResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementBackend.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementBackendResource apiManagementBackend = client.GetApiManagementBackendResource(apiManagementBackendResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementBackendPatch patch = new ApiManagementBackendPatch
             {
                 Description = "description5308",

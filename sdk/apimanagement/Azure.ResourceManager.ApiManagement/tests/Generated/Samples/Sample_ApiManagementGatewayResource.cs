@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementGateway.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementGatewayData data = new ApiManagementGatewayData
             {
                 LocationData = new ResourceLocationDataContract("my location"),
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation
-            GatewayKeyRegenerateContent content = new GatewayKeyRegenerateContent(TokenGenerationUsedKeyType.Primary);
+            GatewayKeyRegenerateContent content = new GatewayKeyRegenerateContent(GatewayRegenerateKeyType.Primary);
             await apiManagementGateway.RegenerateKeyAsync(content);
 
             Console.WriteLine("Succeeded");
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string apiId = "echo-api";
             AssociationContract associationContract = new AssociationContract
             {
-                ProvisioningState = AssociationContractPropertiesProvisioningState.Created,
+                ProvisioningState = AssociationEntityProvisioningState.Created,
             };
             GatewayApiData result = await apiManagementGateway.CreateOrUpdateGatewayApiAsync(apiId, associationContract: associationContract);
 

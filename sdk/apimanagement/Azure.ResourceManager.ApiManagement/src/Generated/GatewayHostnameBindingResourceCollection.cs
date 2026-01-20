@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GatewayHostnameBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GatewayHostnameBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingResourceData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
             Argument.AssertNotNull(data, nameof(data));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GatewayHostnameBindingResource> CreateOrUpdate(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GatewayHostnameBindingResource> CreateOrUpdate(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingResourceData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
             Argument.AssertNotNull(data, nameof(data));

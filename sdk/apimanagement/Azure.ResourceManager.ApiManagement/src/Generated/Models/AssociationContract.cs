@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: AssociationContract.properties.provisioningState
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssociationContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssociationContractPropertiesProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AssociationContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssociationEntityProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: AssociationContract.properties.provisioningState
         /// </summary>
         [WirePath("properties.provisioningState")]
-        public AssociationContractPropertiesProvisioningState? ProvisioningState { get; set; }
+        public AssociationEntityProvisioningState? ProvisioningState { get; set; }
     }
 }

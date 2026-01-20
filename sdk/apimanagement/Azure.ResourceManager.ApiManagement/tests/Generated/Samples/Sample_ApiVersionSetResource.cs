@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiVersionSetResource apiVersionSet = client.GetApiVersionSetResource(apiVersionSetResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiVersionSet.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiVersionSetResource apiVersionSet = client.GetApiVersionSetResource(apiVersionSetResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiVersionSetPatch patch = new ApiVersionSetPatch
             {
                 Description = "Version configuration",

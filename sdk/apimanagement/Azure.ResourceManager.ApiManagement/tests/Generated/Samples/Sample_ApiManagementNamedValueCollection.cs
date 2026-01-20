@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent
             {
                 Tags = { "foo", "bar" },
-                Secret = false,
+                IsSecret = false,
                 DisplayName = "prop3name",
                 Value = "propValue",
             };
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent
             {
                 Tags = { "foo", "bar" },
-                Secret = true,
+                IsSecret = true,
                 DisplayName = "prop6namekv",
                 KeyVault = new KeyVaultContractCreateProperties
                 {

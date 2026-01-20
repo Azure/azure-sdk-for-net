@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPortalDelegationSettingResource apiManagementPortalDelegationSetting = client.GetApiManagementPortalDelegationSettingResource(apiManagementPortalDelegationSettingResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementPortalDelegationSettingData data = new ApiManagementPortalDelegationSettingData
             {
                 Uri = new Uri("http://contoso.com/delegation"),
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 IsSubscriptionDelegationEnabled = true,
                 IsUserRegistrationDelegationEnabled = true,
             };
-            string ifMatch = "*";
+            ETag? ifMatch = new ETag("*");
             ArmOperation<ApiManagementPortalDelegationSettingResource> lro = await apiManagementPortalDelegationSetting.CreateOrUpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch);
             ApiManagementPortalDelegationSettingResource result = lro.Value;
 

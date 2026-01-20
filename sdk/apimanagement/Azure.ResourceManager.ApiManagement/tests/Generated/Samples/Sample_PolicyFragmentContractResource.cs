@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             PolicyFragmentContractResource policyFragmentContract = client.GetPolicyFragmentContractResource(policyFragmentContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await policyFragmentContract.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

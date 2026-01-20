@@ -759,7 +759,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation
             string contentTypeId = "page";
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementService.DeleteContentTypeAsync(contentTypeId, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -874,7 +874,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             // invoke the operation
             string contentTypeId = "page";
             string contentItemId = "4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8";
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementService.DeleteContentItemAsync(contentTypeId, contentItemId, ifMatch);
 
             Console.WriteLine("Succeeded");

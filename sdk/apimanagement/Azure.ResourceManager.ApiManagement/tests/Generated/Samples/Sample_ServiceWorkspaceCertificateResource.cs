@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceCertificateResource serviceWorkspaceCertificate = client.GetServiceWorkspaceCertificateResource(serviceWorkspaceCertificateResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceCertificate.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

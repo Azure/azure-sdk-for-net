@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderType))
+            if (Optional.IsDefined(IdentityProviderType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ProviderType.Value.ToString());
+                writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Optional.IsDefined(SigninTenant))
+            if (Optional.IsDefined(SignInTenant))
             {
                 writer.WritePropertyName("signinTenant"u8);
-                writer.WriteStringValue(SigninTenant);
+                writer.WriteStringValue(SignInTenant);
             }
             if (Optional.IsCollectionDefined(AllowedTenants))
             {
@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(SignupPolicyName))
+            if (Optional.IsDefined(SignUpPolicyName))
             {
                 writer.WritePropertyName("signupPolicyName"u8);
-                writer.WriteStringValue(SignupPolicyName);
+                writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Optional.IsDefined(SigninPolicyName))
+            if (Optional.IsDefined(SignInPolicyName))
             {
                 writer.WritePropertyName("signinPolicyName"u8);
-                writer.WriteStringValue(SigninPolicyName);
+                writer.WriteStringValue(SignInPolicyName);
             }
             if (Optional.IsDefined(ProfileEditingPolicyName))
             {

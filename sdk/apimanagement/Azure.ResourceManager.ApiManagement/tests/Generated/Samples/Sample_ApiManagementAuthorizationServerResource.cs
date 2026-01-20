@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementAuthorizationServerResource apiManagementAuthorizationServer = client.GetApiManagementAuthorizationServerResource(apiManagementAuthorizationServerResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementAuthorizationServer.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementAuthorizationServerResource apiManagementAuthorizationServer = client.GetApiManagementAuthorizationServerResource(apiManagementAuthorizationServerResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementAuthorizationServerPatch patch = new ApiManagementAuthorizationServerPatch
             {
                 UseInTestConsole = false,

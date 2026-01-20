@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceLoggerResource serviceWorkspaceLogger = client.GetServiceWorkspaceLoggerResource(serviceWorkspaceLoggerResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceLogger.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceLoggerResource serviceWorkspaceLogger = client.GetServiceWorkspaceLoggerResource(serviceWorkspaceLoggerResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementLoggerPatch patch = new ApiManagementLoggerPatch
             {
                 LoggerType = LoggerType.AzureEventHub,

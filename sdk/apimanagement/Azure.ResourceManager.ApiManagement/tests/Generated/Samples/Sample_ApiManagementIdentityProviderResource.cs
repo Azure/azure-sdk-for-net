@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementIdentityProviderResource apiManagementIdentityProvider = client.GetApiManagementIdentityProviderResource(apiManagementIdentityProviderResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementIdentityProvider.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementIdentityProviderResource apiManagementIdentityProvider = client.GetApiManagementIdentityProviderResource(apiManagementIdentityProviderResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementIdentityProviderPatch patch = new ApiManagementIdentityProviderPatch
             {
                 ClientId = "updatedfacebookid",

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            AssociationContractPropertiesProvisioningState? provisioningState = default;
+            AssociationEntityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            provisioningState = new AssociationContractPropertiesProvisioningState(property0.Value.GetString());
+                            provisioningState = new AssociationEntityProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

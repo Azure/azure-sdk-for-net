@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPortalRevisionResource apiManagementPortalRevision = client.GetApiManagementPortalRevisionResource(apiManagementPortalRevisionResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             ApiManagementPortalRevisionData data = new ApiManagementPortalRevisionData
             {
                 Description = "portal revision update",

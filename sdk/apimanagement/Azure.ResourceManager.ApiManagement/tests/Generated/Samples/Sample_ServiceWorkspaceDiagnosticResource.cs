@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceDiagnosticResource serviceWorkspaceDiagnostic = client.GetServiceWorkspaceDiagnosticResource(serviceWorkspaceDiagnosticResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await serviceWorkspaceDiagnostic.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceDiagnosticResource serviceWorkspaceDiagnostic = client.GetServiceWorkspaceDiagnosticResource(serviceWorkspaceDiagnosticResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             DiagnosticUpdateContract diagnosticUpdateContract = new DiagnosticUpdateContract
             {
                 AlwaysLog = AlwaysLog.AllErrors,

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayCertificateAuthorityResource apiManagementGatewayCertificateAuthority = client.GetApiManagementGatewayCertificateAuthorityResource(apiManagementGatewayCertificateAuthorityResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiManagementGatewayCertificateAuthority.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");

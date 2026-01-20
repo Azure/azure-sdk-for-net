@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspaceApiSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaId, ApiSchemaData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceWorkspaceApiSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaId, ApiSchemaData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
             Argument.AssertNotNull(data, nameof(data));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspaceApiSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string schemaId, ApiSchemaData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceWorkspaceApiSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string schemaId, ApiSchemaData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
             Argument.AssertNotNull(data, nameof(data));

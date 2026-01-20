@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            TokenGenerationUsedKeyType keyType = default;
+            GatewayRegenerateKeyType keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyType"u8))
                 {
-                    keyType = property.Value.GetString().ToTokenGenerationUsedKeyType();
+                    keyType = property.Value.GetString().ToGatewayRegenerateKeyType();
                     continue;
                 }
                 if (options.Format != "W")

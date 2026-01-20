@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ApiManagementNotificationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementNotificationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, NotificationName notificationName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementNotificationNotificationClientDiagnostics.CreateScope("ApiManagementNotificationCollection.CreateOrUpdate");
             scope.Start();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ApiManagementNotificationResource> CreateOrUpdate(WaitUntil waitUntil, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementNotificationResource> CreateOrUpdate(WaitUntil waitUntil, NotificationName notificationName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementNotificationNotificationClientDiagnostics.CreateScope("ApiManagementNotificationCollection.CreateOrUpdate");
             scope.Start();

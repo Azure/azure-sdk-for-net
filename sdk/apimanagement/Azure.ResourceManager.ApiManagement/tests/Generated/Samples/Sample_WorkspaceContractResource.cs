@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await workspaceContract.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             WorkspaceContractData data = new WorkspaceContractData
             {
                 DisplayName = "my workspace",

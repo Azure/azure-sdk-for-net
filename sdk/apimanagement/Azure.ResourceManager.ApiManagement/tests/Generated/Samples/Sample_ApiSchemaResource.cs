@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiSchemaResource apiSchema = client.GetApiSchemaResource(apiSchemaResourceId);
 
             // invoke the operation
-            string ifMatch = "*";
+            ETag ifMatch = new ETag("*");
             await apiSchema.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
