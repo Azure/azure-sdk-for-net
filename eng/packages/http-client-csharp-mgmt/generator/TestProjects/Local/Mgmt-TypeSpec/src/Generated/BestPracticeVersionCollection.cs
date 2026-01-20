@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Each <see cref="BestPracticeVersionResource"/> in the collection will belong to the same instance of <see cref="BestPracticeResource"/>.
     /// To get a <see cref="BestPracticeVersionCollection"/> instance call the GetBestPracticeVersions method from an instance of <see cref="BestPracticeResource"/>.
     /// </summary>
-    public partial class BestPracticeVersionCollection : ArmCollection
+    public partial class BestPracticeVersionCollection : ArmCollection, IEnumerable<BestPracticeVersionResource>, IAsyncEnumerable<BestPracticeVersionResource>
     {
         private readonly ClientDiagnostics _bestPracticeVersionsClientDiagnostics;
         private readonly BestPracticeVersions _bestPracticeVersionsRestClient;
@@ -261,6 +263,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPracticeVersions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BestPracticeVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllAsyncCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context), data => new BestPracticeVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPracticeVersions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BestPracticeVersionResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context), data => new BestPracticeVersionResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -494,6 +552,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<BestPracticeVersionResource> IEnumerable<BestPracticeVersionResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<BestPracticeVersionResource> IAsyncEnumerable<BestPracticeVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

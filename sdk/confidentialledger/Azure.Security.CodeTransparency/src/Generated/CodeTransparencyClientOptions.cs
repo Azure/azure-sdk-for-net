@@ -10,21 +10,13 @@ using Azure.Core;
 
 namespace Azure.Security.CodeTransparency
 {
-    /// <summary> Client options for CodeTransparencyClient. </summary>
+    /// <summary> Client options for <see cref="CodeTransparencyClient"/>. </summary>
     public partial class CodeTransparencyClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_31_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2025-01-31-preview". </summary>
-            V2025_01_31_Preview = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of CodeTransparencyClientOptions. </summary>
+        /// <summary> Initializes a new instance of CodeTransparencyClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public CodeTransparencyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +24,16 @@ namespace Azure.Security.CodeTransparency
                 ServiceVersion.V2025_01_31_Preview => "2025-01-31-preview",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> The 2025-01-31-preview version of the Microsoft.CodeTransparency service. </summary>
+            V2025_01_31_Preview = 1
         }
     }
 }

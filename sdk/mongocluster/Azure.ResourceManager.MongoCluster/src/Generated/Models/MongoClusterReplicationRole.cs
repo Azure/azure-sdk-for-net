@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterReplicationRole : IEquatable<MongoClusterReplicationRole>
     {
         private readonly string _value;
+        /// <summary> The cluster is a primary replica. </summary>
+        private const string PrimaryValue = "Primary";
+        /// <summary> The cluster is a local asynchronous replica. </summary>
+        private const string AsyncReplicaValue = "AsyncReplica";
+        /// <summary> The cluster is a geo-asynchronous replica. </summary>
+        private const string GeoAsyncReplicaValue = "GeoAsyncReplica";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterReplicationRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryValue = "Primary";
-        private const string AsyncReplicaValue = "AsyncReplica";
-        private const string GeoAsyncReplicaValue = "GeoAsyncReplica";
+            _value = value;
+        }
 
         /// <summary> The cluster is a primary replica. </summary>
         public static MongoClusterReplicationRole Primary { get; } = new MongoClusterReplicationRole(PrimaryValue);
+
         /// <summary> The cluster is a local asynchronous replica. </summary>
         public static MongoClusterReplicationRole AsyncReplica { get; } = new MongoClusterReplicationRole(AsyncReplicaValue);
+
         /// <summary> The cluster is a geo-asynchronous replica. </summary>
         public static MongoClusterReplicationRole GeoAsyncReplica { get; } = new MongoClusterReplicationRole(GeoAsyncReplicaValue);
+
         /// <summary> Determines if two <see cref="MongoClusterReplicationRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterReplicationRole left, MongoClusterReplicationRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterReplicationRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterReplicationRole left, MongoClusterReplicationRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterReplicationRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterReplicationRole(string value) => new MongoClusterReplicationRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterReplicationRole?(string value) => value == null ? null : new MongoClusterReplicationRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterReplicationRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterReplicationRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -388,7 +388,8 @@
       "crossLanguageDefinitionId": "Versioning.Added",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

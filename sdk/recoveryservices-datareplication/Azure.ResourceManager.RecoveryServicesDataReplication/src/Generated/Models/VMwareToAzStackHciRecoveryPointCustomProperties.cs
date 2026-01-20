@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,20 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class VMwareToAzStackHciRecoveryPointCustomProperties : DataReplicationRecoveryPointCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciRecoveryPointCustomProperties"/>. </summary>
-        internal VMwareToAzStackHciRecoveryPointCustomProperties()
+        internal VMwareToAzStackHciRecoveryPointCustomProperties() : base("VMwareToAzStackHCIRecoveryPointModelCustomProperties")
         {
             DiskIds = new ChangeTrackingList<string>();
-            InstanceType = "VMwareToAzStackHCIRecoveryPointModelCustomProperties";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciRecoveryPointCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationRecoveryPointCustomProperties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
-        internal VMwareToAzStackHciRecoveryPointCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> diskIds) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareToAzStackHciRecoveryPointCustomProperties(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> diskIds) : base(instanceType, additionalBinaryDataProperties)
         {
             DiskIds = diskIds;
-            InstanceType = instanceType ?? "VMwareToAzStackHCIRecoveryPointModelCustomProperties";
         }
 
         /// <summary> Gets or sets the list of the disk Ids. </summary>

@@ -18,7 +18,7 @@ namespace Azure.Generator.Management.Providers
     internal sealed class MockableArmClientProvider : MockableResourceProvider
     {
         private MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
-            : base(typeof(ArmClient), RequestPathPattern.Tenant, resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), nonResourceMethods)
+            : base(typeof(ArmClient), OperationContext.Create(RequestPathPattern.Tenant), resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), nonResourceMethods)
         {
         }
 
@@ -62,28 +62,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var method in _nonResourceMethods)
             {
                 // Process both async and sync method variants
-                var methodsToProcess = new[] {
-                    BuildServiceMethod(method.InputMethod, method.InputClient, true),
-                    BuildServiceMethod(method.InputMethod, method.InputClient, false)
-                };
-                foreach (var m in methodsToProcess)
-                {
-                    methods.Add(m);
-                    var updated = false;
-                    foreach (var p in m.Signature.Parameters)
-                    {
-                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
-                        if (normalizedName != null && normalizedName != p.Name)
-                        {
-                            p.Update(name: normalizedName);
-                            updated = true;
-                        }
-                    }
-                    if (updated)
-                    {
-                        m.Update();
-                    }
-                }
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
 
             return [.. methods];

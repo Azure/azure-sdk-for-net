@@ -416,7 +416,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

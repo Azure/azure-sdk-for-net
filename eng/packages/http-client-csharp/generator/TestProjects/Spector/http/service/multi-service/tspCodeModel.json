@@ -1,0 +1,452 @@
+{
+  "name": "Service.MultiService.ServiceA",
+  "apiVersions": [],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "VersionsA",
+      "crossLanguageDefinitionId": "Service.MultiService.ServiceA.VersionsA",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "av1",
+          "value": "av1",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "av2",
+          "value": "av2",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Service.MultiService.ServiceA",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "Input,ApiVersionEnum",
+      "decorators": []
+    },
+    {
+      "$id": "5",
+      "kind": "enum",
+      "name": "VersionsB",
+      "crossLanguageDefinitionId": "Service.MultiService.ServiceB.VersionsB",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "7",
+          "kind": "enumvalue",
+          "name": "bv1",
+          "value": "bv1",
+          "valueType": {
+            "$ref": "6"
+          },
+          "enumType": {
+            "$ref": "5"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "8",
+          "kind": "enumvalue",
+          "name": "bv2",
+          "value": "bv2",
+          "valueType": {
+            "$ref": "6"
+          },
+          "enumType": {
+            "$ref": "5"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Service.MultiService.ServiceB",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "Input,ApiVersionEnum",
+      "decorators": []
+    }
+  ],
+  "constants": [],
+  "models": [],
+  "clients": [
+    {
+      "$id": "9",
+      "kind": "client",
+      "name": "Combined",
+      "namespace": "Service.MultiService.Combined",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "10",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "11",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "12",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Service.MultiService.Combined.endpoint"
+        },
+        {
+          "$id": "13",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "type": {
+            "$id": "14",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Service.MultiService.Combined",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "15",
+          "kind": "client",
+          "name": "Foo",
+          "namespace": "Service.MultiService.ServiceA",
+          "methods": [
+            {
+              "$id": "16",
+              "kind": "basic",
+              "name": "test",
+              "accessibility": "public",
+              "apiVersions": [
+                "av1",
+                "av2"
+              ],
+              "operation": {
+                "$id": "17",
+                "name": "test",
+                "resourceName": "Foo",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "18",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "19",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "av2"
+                    },
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test.apiVersion",
+                    "readOnly": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/service/multi-service/service-a/foo/test",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test",
+                "decorators": []
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "20",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "21",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "22",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.endpoint"
+            },
+            {
+              "$id": "23",
+              "kind": "method",
+              "name": "apiVersion",
+              "serializedName": "apiVersion",
+              "type": {
+                "$ref": "1"
+              },
+              "location": "",
+              "isApiVersion": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "24",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "av2"
+              },
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test.apiVersion",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo",
+          "apiVersions": [
+            "av1",
+            "av2"
+          ],
+          "parent": {
+            "$ref": "9"
+          }
+        },
+        {
+          "$id": "25",
+          "kind": "client",
+          "name": "Bar",
+          "namespace": "Service.MultiService.ServiceB",
+          "methods": [
+            {
+              "$id": "26",
+              "kind": "basic",
+              "name": "test",
+              "accessibility": "public",
+              "apiVersions": [
+                "bv1",
+                "bv2"
+              ],
+              "operation": {
+                "$id": "27",
+                "name": "test",
+                "resourceName": "Bar",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "28",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "type": {
+                      "$ref": "5"
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "29",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "bv2"
+                    },
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.test.apiVersion",
+                    "readOnly": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/service/multi-service/service-b/bar/test",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.test",
+                "decorators": []
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.test"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "30",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "31",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "32",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.endpoint"
+            },
+            {
+              "$id": "33",
+              "kind": "method",
+              "name": "apiVersion",
+              "serializedName": "apiVersion",
+              "type": {
+                "$ref": "5"
+              },
+              "location": "",
+              "isApiVersion": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "34",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "bv2"
+              },
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.test.apiVersion",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar",
+          "apiVersions": [
+            "bv1",
+            "bv2"
+          ],
+          "parent": {
+            "$ref": "9"
+          }
+        }
+      ]
+    }
+  ]
+}

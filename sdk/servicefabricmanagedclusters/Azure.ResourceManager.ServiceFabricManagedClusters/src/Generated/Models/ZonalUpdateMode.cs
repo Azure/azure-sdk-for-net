@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ZonalUpdateMode : IEquatable<ZonalUpdateMode>
     {
         private readonly string _value;
+        /// <summary> The cluster will use 5 upgrade domains for Cross Az Node types. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> The cluster will use a maximum of 3 upgrade domains per zone instead of 5 for Cross Az Node types for faster deployments. </summary>
+        private const string FastValue = "Fast";
 
         /// <summary> Initializes a new instance of <see cref="ZonalUpdateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ZonalUpdateMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string FastValue = "Fast";
+            _value = value;
+        }
 
         /// <summary> The cluster will use 5 upgrade domains for Cross Az Node types. </summary>
         public static ZonalUpdateMode Standard { get; } = new ZonalUpdateMode(StandardValue);
+
         /// <summary> The cluster will use a maximum of 3 upgrade domains per zone instead of 5 for Cross Az Node types for faster deployments. </summary>
         public static ZonalUpdateMode Fast { get; } = new ZonalUpdateMode(FastValue);
+
         /// <summary> Determines if two <see cref="ZonalUpdateMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ZonalUpdateMode left, ZonalUpdateMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ZonalUpdateMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ZonalUpdateMode left, ZonalUpdateMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ZonalUpdateMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ZonalUpdateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ZonalUpdateMode(string value) => new ZonalUpdateMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ZonalUpdateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ZonalUpdateMode?(string value) => value == null ? null : new ZonalUpdateMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ZonalUpdateMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ZonalUpdateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

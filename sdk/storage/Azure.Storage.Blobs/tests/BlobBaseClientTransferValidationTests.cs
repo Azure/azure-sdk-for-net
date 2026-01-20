@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Buffers;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -37,7 +39,10 @@ namespace Azure.Storage.Blobs.Tests
             StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
             StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None)
         {
-            var disposingContainer = await ClientBuilder.GetTestContainerAsync(service: service, containerName: containerName);
+            var disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                service: service,
+                containerName: containerName,
+                publicAccessType: PublicAccessType.None);
 
             disposingContainer.Container.ClientConfiguration.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
             disposingContainer.Container.ClientConfiguration.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
@@ -91,57 +96,96 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         #region Added Tests
-        [TestCaseSource("GetValidationAlgorithms")]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned(StorageChecksumAlgorithm algorithm)
+        [Test]
+        public virtual async Task OlderServiceVersionThrowsOnStructuredMessage()
         {
-            await using var test = await GetDisposingContainerAsync();
+            // use service version before structured message was introduced
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                service: ClientBuilder.GetServiceClient_SharedKey(
+                    InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2024_11_04))),
+                publicAccessType: PublicAccessType.None);
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            // don't make options instance at all for no hash request
-            DownloadTransferValidationOptions transferValidation = algorithm == StorageChecksumAlgorithm.None
-                ? default
-                : new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
-            // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
-            {
-                TransferValidation = transferValidation,
-                Range = new HttpRange(length: data.Length)
-            });
+            var resourceName = GetNewResourceName();
+            var blob = InstrumentClient(disposingContainer.Container.GetBlobClient(GetNewResourceName()));
+            await blob.UploadAsync(BinaryData.FromBytes(data));
 
-            // Assert
-            // validated stream is buffered
-            Assert.AreEqual(typeof(MemoryStream), response.Value.Content.GetType());
+            var validationOptions = new DownloadTransferValidationOptions
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+            };
+            AsyncTestDelegate operation = async () => await (await blob.DownloadStreamingAsync(
+                new BlobDownloadOptions
+                {
+                    Range = new HttpRange(length: Constants.StructuredMessage.MaxDownloadCrcWithHeader + 1),
+                    TransferValidation = validationOptions,
+                })).Value.Content.CopyToAsync(Stream.Null);
+            Assert.That(operation, Throws.TypeOf<RequestFailedException>());
         }
 
         [Test]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned_None()
+        public async Task StructuredMessagePopulatesCrcDownloadStreaming()
         {
-            await using var test = await GetDisposingContainerAsync();
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                publicAccessType: PublicAccessType.None);
 
-            // Arrange
-            var data = GetRandomBuffer(Constants.KB);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+            byte[] dataCrc = new byte[8];
+            StorageCrc64Calculator.ComputeSlicedSafe(data, 0L).WriteCrc64(dataCrc);
 
-            // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
+            var blob = disposingContainer.Container.GetBlobClient(GetNewResourceName());
+            await blob.UploadAsync(BinaryData.FromBytes(data));
+
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new()
             {
-                Range = new HttpRange(length: data.Length)
+                TransferValidation = new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+                }
             });
 
-            // Assert
-            // unvalidated stream type is private; just check we didn't get back a buffered stream
-            Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
+            // crc is not present until response stream is consumed
+            Assert.That(response.Value.Details.ContentCrc, Is.Null);
+
+            byte[] downloadedData;
+            using (MemoryStream ms = new())
+            {
+                await response.Value.Content.CopyToAsync(ms);
+                downloadedData = ms.ToArray();
+            }
+
+            Assert.That(response.Value.Details.ContentCrc, Is.EqualTo(dataCrc));
+            Assert.That(downloadedData, Is.EqualTo(data));
+        }
+
+        [Test]
+        public async Task StructuredMessagePopulatesCrcDownloadContent()
+        {
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                publicAccessType: PublicAccessType.None);
+
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+            byte[] dataCrc = new byte[8];
+            StorageCrc64Calculator.ComputeSlicedSafe(data, 0L).WriteCrc64(dataCrc);
+
+            var blob = disposingContainer.Container.GetBlobClient(GetNewResourceName());
+            await blob.UploadAsync(BinaryData.FromBytes(data));
+
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobDownloadOptions()
+            {
+                TransferValidation = new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+                }
+            });
+
+            Assert.That(response.Value.Details.ContentCrc, Is.EqualTo(dataCrc));
+            Assert.That(response.Value.Content.ToArray(), Is.EqualTo(data));
         }
         #endregion
     }

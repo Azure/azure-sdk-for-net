@@ -87,6 +87,7 @@ namespace Azure.Generator.Management.Utilities
                         break;
                     case ResourceOperationKind.List:
                         // list method goes to resource if the method's resource scope matches the resource's ID pattern
+                        // This handles cases like listByParent where we list children of a specific parent instance
                         if (method.ResourceScope == resourceMetadata.ResourceIdPattern)
                         {
                             methodsInResource.Add(method);

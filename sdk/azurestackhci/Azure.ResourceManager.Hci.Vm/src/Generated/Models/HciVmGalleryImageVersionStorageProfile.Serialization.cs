@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-    public partial class HciVmGalleryImageVersionStorageProfile : IJsonModel<HciVmGalleryImageVersionStorageProfile>
+    internal partial class HciVmGalleryImageVersionStorageProfile : IJsonModel<HciVmGalleryImageVersionStorageProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

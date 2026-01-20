@@ -29,9 +29,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.AlignMode Inner { get { throw null; } }
         public static Azure.AI.AnomalyDetector.AlignMode Outer { get { throw null; } }
         public bool Equals(Azure.AI.AnomalyDetector.AlignMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.AlignMode left, Azure.AI.AnomalyDetector.AlignMode right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.AlignMode (string value) { throw null; }
@@ -148,9 +146,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.DataSchema MultiTable { get { throw null; } }
         public static Azure.AI.AnomalyDetector.DataSchema OneTable { get { throw null; } }
         public bool Equals(Azure.AI.AnomalyDetector.DataSchema other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.DataSchema left, Azure.AI.AnomalyDetector.DataSchema right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.DataSchema (string value) { throw null; }
@@ -193,9 +189,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.FillNAMethod Subsequent { get { throw null; } }
         public static Azure.AI.AnomalyDetector.FillNAMethod Zero { get { throw null; } }
         public bool Equals(Azure.AI.AnomalyDetector.FillNAMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.FillNAMethod left, Azure.AI.AnomalyDetector.FillNAMethod right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.FillNAMethod (string value) { throw null; }
@@ -215,9 +209,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.ImputeMode Previous { get { throw null; } }
         public static Azure.AI.AnomalyDetector.ImputeMode Zero { get { throw null; } }
         public bool Equals(Azure.AI.AnomalyDetector.ImputeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.ImputeMode left, Azure.AI.AnomalyDetector.ImputeMode right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.ImputeMode (string value) { throw null; }
@@ -269,9 +261,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.ModelStatus Ready { get { throw null; } }
         public static Azure.AI.AnomalyDetector.ModelStatus Running { get { throw null; } }
         public bool Equals(Azure.AI.AnomalyDetector.ModelStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.ModelStatus left, Azure.AI.AnomalyDetector.ModelStatus right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.ModelStatus (string value) { throw null; }
@@ -348,9 +338,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Ready { get { throw null; } }
         public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Running { get { throw null; } }
         public bool Equals(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus left, Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus (string value) { throw null; }
@@ -410,9 +398,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.TimeGranularity Weekly { get { throw null; } }
         public static Azure.AI.AnomalyDetector.TimeGranularity Yearly { get { throw null; } }
         public bool Equals(Azure.AI.AnomalyDetector.TimeGranularity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.TimeGranularity left, Azure.AI.AnomalyDetector.TimeGranularity right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.TimeGranularity (string value) { throw null; }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Astro.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Astro
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AstroMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(AstroOfferDetails))]
@@ -23,10 +24,8 @@ namespace Azure.ResourceManager.Astro
     [ModelReaderWriterBuildable(typeof(AstroOrganizationResource))]
     [ModelReaderWriterBuildable(typeof(AstroOrganizationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AstroPartnerOrganizationProperties))]
-    [ModelReaderWriterBuildable(typeof(AstroPartnerOrganizationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AstroSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(AstroUserDetails))]
-    [ModelReaderWriterBuildable(typeof(AstroUserUpdateDetails))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
