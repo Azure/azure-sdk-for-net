@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes a network security rule. </summary>
     public partial class ServiceFabricManagedNetworkSecurityRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/>. </summary>
         /// <param name="name"> Network security rule name. </param>
@@ -82,8 +54,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="access"> The network traffic is allowed or denied. </param>
         /// <param name="priority"> The priority of the rule. The value can be in the range 1000 to 3000. Values outside this range are reserved for Service Fabric ManagerCluster Resource Provider. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> Network security rule direction. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedNetworkSecurityRule(string name, string description, ServiceFabricManagedNsgProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, string sourcePortRange, string destinationPortRange, ServiceFabricManagedNetworkTrafficAccess access, int priority, ServiceFabricManagedNetworkSecurityRuleDirection direction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedNetworkSecurityRule(string name, string description, ServiceFabricManagedNsgProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, string sourcePortRange, string destinationPortRange, ServiceFabricManagedNetworkTrafficAccess access, int priority, ServiceFabricManagedNetworkSecurityRuleDirection direction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -99,40 +71,48 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Access = access;
             Priority = priority;
             Direction = direction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/> for deserialization. </summary>
-        internal ServiceFabricManagedNetworkSecurityRule()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Network security rule name. </summary>
         public string Name { get; set; }
+
         /// <summary> Network security rule description. </summary>
         public string Description { get; set; }
+
         /// <summary> Network protocol this rule applies to. </summary>
         public ServiceFabricManagedNsgProtocol Protocol { get; set; }
+
         /// <summary> The CIDR or source IP ranges. </summary>
         public IList<string> SourceAddressPrefixes { get; }
+
         /// <summary> The destination address prefixes. CIDR or destination IP ranges. </summary>
         public IList<string> DestinationAddressPrefixes { get; }
+
         /// <summary> The source port ranges. </summary>
         public IList<string> SourcePortRanges { get; }
+
         /// <summary> The destination port ranges. </summary>
         public IList<string> DestinationPortRanges { get; }
+
         /// <summary> The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from. </summary>
         public string SourceAddressPrefix { get; set; }
+
         /// <summary> The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. </summary>
         public string DestinationAddressPrefix { get; set; }
+
         /// <summary> The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public string SourcePortRange { get; set; }
+
         /// <summary> he destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public string DestinationPortRange { get; set; }
+
         /// <summary> The network traffic is allowed or denied. </summary>
         public ServiceFabricManagedNetworkTrafficAccess Access { get; set; }
+
         /// <summary> The priority of the rule. The value can be in the range 1000 to 3000. Values outside this range are reserved for Service Fabric ManagerCluster Resource Provider. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </summary>
         public int Priority { get; set; }
+
         /// <summary> Network security rule direction. </summary>
         public ServiceFabricManagedNetworkSecurityRuleDirection Direction { get; set; }
     }

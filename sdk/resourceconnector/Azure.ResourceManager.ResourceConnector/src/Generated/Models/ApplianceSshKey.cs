@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Appliance SSHKey definition. </summary>
     public partial class ApplianceSshKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplianceSshKey"/>. </summary>
         internal ApplianceSshKey()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="expirationTimeStamp"> Certificate expiration timestamp (Unix). </param>
         /// <param name="privateKey"> Private Key. </param>
         /// <param name="publicKey"> Public Key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplianceSshKey(string certificate, long? creationTimeStamp, long? expirationTimeStamp, string privateKey, string publicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceSshKey(string certificate, long? creationTimeStamp, long? expirationTimeStamp, string privateKey, string publicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Certificate = certificate;
             CreationTimeStamp = creationTimeStamp;
             ExpirationTimeStamp = expirationTimeStamp;
             PrivateKey = privateKey;
             PublicKey = publicKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Certificate associated with the public key if the key is signed. </summary>
         public string Certificate { get; }
+
         /// <summary> Certificate creation timestamp (Unix). </summary>
         public long? CreationTimeStamp { get; }
+
         /// <summary> Certificate expiration timestamp (Unix). </summary>
         public long? ExpirationTimeStamp { get; }
+
         /// <summary> Private Key. </summary>
         public string PrivateKey { get; }
+
         /// <summary> Public Key. </summary>
         public string PublicKey { get; }
     }

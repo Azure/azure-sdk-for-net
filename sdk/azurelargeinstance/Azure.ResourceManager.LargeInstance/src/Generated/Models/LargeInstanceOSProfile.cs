@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.LargeInstance.Models
     /// <summary> Specifies the operating system settings for the Azure Large Instance. </summary>
     public partial class LargeInstanceOSProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceOSProfile"/>. </summary>
-        internal LargeInstanceOSProfile()
+        public LargeInstanceOSProfile()
         {
         }
 
@@ -55,23 +26,26 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="osType"> This property allows you to specify the type of the OS. </param>
         /// <param name="version"> Specifies version of operating system. </param>
         /// <param name="sshPublicKey"> Specifies the SSH public key used to access the operating system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceOSProfile(string computerName, string osType, string version, string sshPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LargeInstanceOSProfile(string computerName, string osType, string version, string sshPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerName = computerName;
             OSType = osType;
             Version = version;
             SshPublicKey = sshPublicKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the host OS name of the Azure Large Instance. </summary>
-        public string ComputerName { get; }
+        public string ComputerName { get; set; }
+
         /// <summary> This property allows you to specify the type of the OS. </summary>
-        public string OSType { get; }
+        public string OSType { get; set; }
+
         /// <summary> Specifies version of operating system. </summary>
-        public string Version { get; }
+        public string Version { get; set; }
+
         /// <summary> Specifies the SSH public key used to access the operating system. </summary>
-        public string SshPublicKey { get; }
+        public string SshPublicKey { get; set; }
     }
 }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary>
-    /// A class representing the WorkloadNetworkPortMirroringProfile data model.
-    /// NSX Port Mirroring
-    /// </summary>
+    /// <summary> NSX Port Mirroring. </summary>
     public partial class WorkloadNetworkPortMirroringProfileData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringProfileData"/>. </summary>
         public WorkloadNetworkPortMirroringProfileData()
@@ -57,43 +25,122 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the port mirroring profile. </param>
-        /// <param name="direction"> Direction of port mirroring profile. </param>
-        /// <param name="source"> Source VM Group. </param>
-        /// <param name="destination"> Destination VM Group. </param>
-        /// <param name="status"> Port Mirroring Status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkPortMirroringProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, PortMirroringProfileDirection? direction, string source, string destination, PortMirroringProfileStatus? status, WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal WorkloadNetworkPortMirroringProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkloadNetworkPortMirroringProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Direction = direction;
-            Source = source;
-            Destination = destination;
-            Status = status;
-            ProvisioningState = provisioningState;
-            Revision = revision;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal WorkloadNetworkPortMirroringProperties Properties { get; set; }
+
         /// <summary> Display name of the port mirroring profile. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkPortMirroringProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Direction of port mirroring profile. </summary>
-        public PortMirroringProfileDirection? Direction { get; set; }
+        public PortMirroringProfileDirection? Direction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Direction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkPortMirroringProperties();
+                }
+                Properties.Direction = value.Value;
+            }
+        }
+
         /// <summary> Source VM Group. </summary>
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkPortMirroringProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> Destination VM Group. </summary>
-        public string Destination { get; set; }
+        public string Destination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Destination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkPortMirroringProperties();
+                }
+                Properties.Destination = value;
+            }
+        }
+
         /// <summary> Port Mirroring Status. </summary>
-        public PortMirroringProfileStatus? Status { get; }
+        public PortMirroringProfileStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The provisioning state. </summary>
-        public WorkloadNetworkPortMirroringProfileProvisioningState? ProvisioningState { get; }
+        public WorkloadNetworkPortMirroringProfileProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> NSX revision number. </summary>
-        public long? Revision { get; set; }
+        public long? Revision
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Revision;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkPortMirroringProperties();
+                }
+                Properties.Revision = value.Value;
+            }
+        }
     }
 }

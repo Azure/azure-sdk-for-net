@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Unknown version of WorkloadNetworkDhcpEntity. </summary>
     internal partial class UnknownWorkloadNetworkDhcpEntity : WorkloadNetworkDhcpEntity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWorkloadNetworkDhcpEntity"/>. </summary>
@@ -19,14 +18,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownWorkloadNetworkDhcpEntity(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dhcpType, displayName, segments, provisioningState, revision, serializedAdditionalRawData)
-        {
-            DhcpType = dhcpType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownWorkloadNetworkDhcpEntity"/> for deserialization. </summary>
-        internal UnknownWorkloadNetworkDhcpEntity()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWorkloadNetworkDhcpEntity(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dhcpType != default ? dhcpType : "unknown", displayName, segments, provisioningState, revision, additionalBinaryDataProperties)
         {
         }
     }

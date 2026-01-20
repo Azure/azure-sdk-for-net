@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Fault simulation object with status. </summary>
     public partial class FaultSimulation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FaultSimulation"/>. </summary>
         internal FaultSimulation()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="startOn"> The start time of the fault simulation. </param>
         /// <param name="endOn"> The end time of the fault simulation. </param>
         /// <param name="details"> Fault simulation details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaultSimulation(string simulationId, FaultSimulationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, FaultSimulationDetails details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FaultSimulation(string simulationId, FaultSimulationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, FaultSimulationDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SimulationId = simulationId;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             Details = details;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> unique identifier for the fault simulation. </summary>
         public string SimulationId { get; }
+
         /// <summary> Fault simulation status. </summary>
         public FaultSimulationStatus? Status { get; }
+
         /// <summary> The start time of the fault simulation. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The end time of the fault simulation. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> Fault simulation details. </summary>
         public FaultSimulationDetails Details { get; }
     }

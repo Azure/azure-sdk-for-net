@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceConnector.Models;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.ResourceConnector
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApplianceArtifactProfile))]
-    [ModelReaderWriterBuildable(typeof(ApplianceClusterUserCredentialResult))]
-    [ModelReaderWriterBuildable(typeof(ApplianceClusterUserKeysResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceCredentialKubeconfig))]
+    [ModelReaderWriterBuildable(typeof(ApplianceEvent))]
+    [ModelReaderWriterBuildable(typeof(ApplianceListCredentialResult))]
+    [ModelReaderWriterBuildable(typeof(ApplianceListKeysResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceListResult))]
+    [ModelReaderWriterBuildable(typeof(ApplianceNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(ApplianceProperties))]
     [ModelReaderWriterBuildable(typeof(AppliancePropertiesInfrastructureConfig))]
     [ModelReaderWriterBuildable(typeof(ApplianceSshKey))]
     [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersion))]
@@ -29,13 +33,17 @@ namespace Azure.ResourceManager.ResourceConnector
     [ModelReaderWriterBuildable(typeof(ApplianceTelemetryConfigResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraph))]
     [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraphProperties))]
+    [ModelReaderWriterBuildable(typeof(DnsConfiguration))]
+    [ModelReaderWriterBuildable(typeof(GatewayConfiguration))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ProxyConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceData))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorAppliancePatch))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerResourceConnectorContext : ModelReaderWriterContext
     {
     }

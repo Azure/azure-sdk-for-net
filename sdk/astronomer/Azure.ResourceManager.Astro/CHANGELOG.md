@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgraded to api-version 2024-08-27.
+- Make `Azure.ResourceManager.Astro` AOT-compatible.
+
 ### Breaking Changes
 
 ### Bugs Fixed
