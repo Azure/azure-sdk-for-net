@@ -41,13 +41,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         if (ProvisionableProperties.TryGetValue(property.Self!.PropertyName!, out IBicepValue? existing) &&
             existing != property)
         {
-            // Allow setting properties on dictionary and list items, which have the same PropertyName
-            // as their parent collection but are represented by specialized reference types
-            bool isCollectionItem = property.Self is BicepDictionaryValueReference or BicepListValueReference;
-            if (!isCollectionItem)
-            {
-                throw new ArgumentException($"Property {property.Self!.PropertyName} is not defined on construct {GetType().Name}.", nameof(property));
-            }
+            throw new ArgumentException($"Property {property.Self!.PropertyName} is not defined on construct {GetType().Name}.", nameof(property));
         }
         property.Assign(value);
     }
@@ -96,7 +90,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 
     private protected BicepExpression CompileProperties()
     {
-        if (_kind == BicepValueKind.Expression) { return _expression ?? BicepSyntax.Null(); }
+        if (_kind == BicepValueKind.Expression)
+        {
+            return _expression ?? BicepSyntax.Null();
+        }
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];
@@ -225,7 +222,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
+        if (_isOutput)
+        {
+            throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}");
+        }
 
         // Track the source so we can correctly link references across modules
         _source = source?.Self;
