@@ -191,7 +191,8 @@
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path",
       "apiVersions": [
         "2025-01-01"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

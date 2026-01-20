@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
+    /// <summary></summary>
     public partial class DataReplicationPrivateEndpointConnectionProxyResource : IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>
     {
-        private static DataReplicationPrivateEndpointConnectionProxyData s_dataDeserializationInstance;
-        private static DataReplicationPrivateEndpointConnectionProxyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataReplicationPrivateEndpointConnectionProxyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataReplicationPrivateEndpointConnectionProxyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataReplicationPrivateEndpointConnectionProxyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>)Data).Write(writer, options);
 
-        DataReplicationPrivateEndpointConnectionProxyData IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationPrivateEndpointConnectionProxyData IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationPrivateEndpointConnectionProxyData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationPrivateEndpointConnectionProxyData IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationPrivateEndpointConnectionProxyData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        string IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

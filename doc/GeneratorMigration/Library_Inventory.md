@@ -15,13 +15,13 @@
 
 - Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 153
-  - New Emitter (TypeSpec): 56
-  - Old TypeSpec: 18
+  - Autorest/Swagger: 150
+  - New Emitter (TypeSpec): 67
+  - Old TypeSpec: 10
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 24
-  - Old TypeSpec: 14
+  - New Emitter (TypeSpec): 26
+  - Old TypeSpec: 12
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 47
@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 24 / 38 (63.2%)
+**Migration Status**: 26 / 38 (68.4%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -50,7 +50,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | communication | Azure.Communication.JobRouter |  |
 | communication | Azure.Communication.Messages |  |
 | communication | Azure.Communication.ProgrammableConnectivity |  |
-| confidentialledger | Azure.Security.CodeTransparency |  |
+| confidentialledger | Azure.Security.CodeTransparency | ✅ |
 | contentsafety | Azure.AI.ContentSafety |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |
 | devcenter | Azure.Developer.DevCenter |  |
@@ -67,7 +67,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |
 | openai | Azure.AI.OpenAI | ✅ |
 | planetarycomputer | Azure.Analytics.PlanetaryComputer | ✅ |
-| purview | Azure.Analytics.Purview.DataMap |  |
+| purview | Azure.Analytics.Purview.DataMap | ✅ |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | template | Azure.Template | ✅ |
 | translation | Azure.AI.Translation.Document |  |
@@ -145,13 +145,16 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 56 / 74 (75.7%)
+**Migration Status**: 67 / 77 (87%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
+| advisor | Azure.ResourceManager.Advisor | ✅ |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
-| avs | Azure.ResourceManager.Avs |  |
+| astronomer | Azure.ResourceManager.Astro | ✅ |
+| avs | Azure.ResourceManager.Avs | ✅ |
+| azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | chaos | Azure.ResourceManager.Chaos |  |
@@ -174,7 +177,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
-| elastic | Azure.ResourceManager.Elastic |  |
+| elastic | Azure.ResourceManager.Elastic | ✅ |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
@@ -182,7 +185,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthbot | Azure.ResourceManager.HealthBot | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
-| hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
+| hybridconnectivity | Azure.ResourceManager.HybridConnectivity | ✅ |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
 | impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
@@ -204,15 +207,15 @@ Libraries that provide resource management APIs for Azure services and have been
 | qumulo | Azure.ResourceManager.Qumulo | ✅ |
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
-| recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
+| recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
-| resources | Azure.ResourceManager.Resources.Bicep |  |
+| resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
-| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters |  |
-| servicenetworking | Azure.ResourceManager.ServiceNetworking |  |
+| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
+| servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager |  |
-| standbypool | Azure.ResourceManager.StandbyPool |  |
+| standbypool | Azure.ResourceManager.StandbyPool | ✅ |
 | storageactions | Azure.ResourceManager.StorageActions | ✅ |
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
 | storagemover | Azure.ResourceManager.StorageMover | ✅ |
@@ -227,11 +230,10 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 153
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 150
 
 | Service | Library |
 | ------- | ------- |
-| advisor | Azure.ResourceManager.Advisor |
 | agrifood | Azure.ResourceManager.AgFoodPlatform |
 | alertsmanagement | Azure.ResourceManager.AlertsManagement |
 | analysisservices | Azure.ResourceManager.Analysis |
@@ -242,12 +244,10 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | applicationinsights | Azure.ResourceManager.ApplicationInsights |
 | appplatform | Azure.ResourceManager.AppPlatform |
 | arc-scvmm | Azure.ResourceManager.ScVmm |
-| astronomer | Azure.ResourceManager.Astro |
 | attestation | Azure.ResourceManager.Attestation |
 | authorization | Azure.ResourceManager.Authorization |
 | automanage | Azure.ResourceManager.Automanage |
 | automation | Azure.ResourceManager.Automation |
-| azurelargeinstance | Azure.ResourceManager.LargeInstance |
 | azurestackhci | Azure.ResourceManager.Hci |
 | batch | Azure.ResourceManager.Batch |
 | billing | Azure.ResourceManager.Billing |

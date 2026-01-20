@@ -126,7 +126,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.Noauth.Union",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

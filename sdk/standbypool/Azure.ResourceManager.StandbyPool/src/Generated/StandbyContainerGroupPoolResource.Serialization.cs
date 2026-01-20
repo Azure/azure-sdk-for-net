@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StandbyPool
 {
+    /// <summary></summary>
     public partial class StandbyContainerGroupPoolResource : IJsonModel<StandbyContainerGroupPoolData>
     {
-        private static StandbyContainerGroupPoolData s_dataDeserializationInstance;
-        private static StandbyContainerGroupPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StandbyContainerGroupPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StandbyContainerGroupPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StandbyContainerGroupPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyContainerGroupPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StandbyContainerGroupPoolData>)Data).Write(writer, options);
 
-        StandbyContainerGroupPoolData IJsonModel<StandbyContainerGroupPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyContainerGroupPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StandbyContainerGroupPoolData IJsonModel<StandbyContainerGroupPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StandbyContainerGroupPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StandbyContainerGroupPoolData>(Data, options, AzureResourceManagerStandbyPoolContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StandbyContainerGroupPoolData IPersistableModel<StandbyContainerGroupPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyContainerGroupPoolData>(data, options, AzureResourceManagerStandbyPoolContext.Default);
 
-        string IPersistableModel<StandbyContainerGroupPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyContainerGroupPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StandbyContainerGroupPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

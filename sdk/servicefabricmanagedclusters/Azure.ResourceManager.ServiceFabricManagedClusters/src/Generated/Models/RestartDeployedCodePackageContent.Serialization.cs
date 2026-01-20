@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class RestartDeployedCodePackageContent : IUtf8JsonSerializable, IJsonModel<RestartDeployedCodePackageContent>
+    /// <summary> Parameters for restarting a deployed code package. </summary>
+    public partial class RestartDeployedCodePackageContent : IJsonModel<RestartDeployedCodePackageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestartDeployedCodePackageContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RestartDeployedCodePackageContent"/> for deserialization. </summary>
+        internal RestartDeployedCodePackageContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestartDeployedCodePackageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestartDeployedCodePackageContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("nodeName"u8);
             writer.WriteStringValue(NodeName);
             writer.WritePropertyName("serviceManifestName"u8);
@@ -47,15 +53,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("servicePackageActivationId"u8);
                 writer.WriteStringValue(ServicePackageActivationId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,22 +70,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        RestartDeployedCodePackageContent IJsonModel<RestartDeployedCodePackageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestartDeployedCodePackageContent IJsonModel<RestartDeployedCodePackageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestartDeployedCodePackageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestartDeployedCodePackageContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRestartDeployedCodePackageContent(document.RootElement, options);
         }
 
-        internal static RestartDeployedCodePackageContent DeserializeRestartDeployedCodePackageContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RestartDeployedCodePackageContent DeserializeRestartDeployedCodePackageContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,54 +100,55 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string codePackageName = default;
             string codePackageInstanceId = default;
             string servicePackageActivationId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"u8))
+                if (prop.NameEquals("nodeName"u8))
                 {
-                    nodeName = property.Value.GetString();
+                    nodeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceManifestName"u8))
+                if (prop.NameEquals("serviceManifestName"u8))
                 {
-                    serviceManifestName = property.Value.GetString();
+                    serviceManifestName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("codePackageName"u8))
+                if (prop.NameEquals("codePackageName"u8))
                 {
-                    codePackageName = property.Value.GetString();
+                    codePackageName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("codePackageInstanceId"u8))
+                if (prop.NameEquals("codePackageInstanceId"u8))
                 {
-                    codePackageInstanceId = property.Value.GetString();
+                    codePackageInstanceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePackageActivationId"u8))
+                if (prop.NameEquals("servicePackageActivationId"u8))
                 {
-                    servicePackageActivationId = property.Value.GetString();
+                    servicePackageActivationId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RestartDeployedCodePackageContent(
                 nodeName,
                 serviceManifestName,
                 codePackageName,
                 codePackageInstanceId,
                 servicePackageActivationId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<RestartDeployedCodePackageContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RestartDeployedCodePackageContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -146,15 +158,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        RestartDeployedCodePackageContent IPersistableModel<RestartDeployedCodePackageContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestartDeployedCodePackageContent IPersistableModel<RestartDeployedCodePackageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestartDeployedCodePackageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestartDeployedCodePackageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRestartDeployedCodePackageContent(document.RootElement, options);
                     }
                 default:
@@ -162,6 +179,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RestartDeployedCodePackageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="restartDeployedCodePackageContent"> The <see cref="RestartDeployedCodePackageContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RestartDeployedCodePackageContent restartDeployedCodePackageContent)
+        {
+            if (restartDeployedCodePackageContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(restartDeployedCodePackageContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }
