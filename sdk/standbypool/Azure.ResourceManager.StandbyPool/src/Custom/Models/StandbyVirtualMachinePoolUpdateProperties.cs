@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The updatable properties of the StandbyVirtualMachinePoolResource. </summary>
     [CodeGenType("StandbyVirtualMachinePoolResourceUpdateProperties")]
     public partial class StandbyVirtualMachinePoolUpdateProperties
     {
