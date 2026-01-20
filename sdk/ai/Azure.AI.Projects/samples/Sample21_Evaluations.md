@@ -39,7 +39,6 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 
 3. Define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and data mappings for them. In this example we will use three built in evaluators: "violence", "fluency" and "task_adherence". We will use Agent's string and structured JSON outputs, named `sample.output_text` and `sample.output_items` respectively as response parameter for the evaluation and take query property from the data set, using `item.query` placeholder.
 
-Synchronous sample:
 ```C# Snippet:Sample_CreateData_Evaluations
 object[] testingCriteria = [
     new {
@@ -89,7 +88,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 );
 ```
 
-4. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. On of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
+4. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
 
 ```C# Snippet:Sampple_GetStringValues_Evaluations
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
@@ -147,7 +146,7 @@ string evaluationId = fields["id"];
 Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
 ```
 
-6. Create the data source. It contains name, the ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent.
+6. Create the `runData` object. It contains name and ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent.
 
 
 ```C# Snippet:Sample_CreateDataSource_Evaluations
@@ -218,6 +217,7 @@ Synchronous sample:
 ```C# Snippet:Sample_WaitForRun_Evaluations_Sync
 while (runStatus != "failed" && runStatus != "completed")
 {
+    Thread.Sleep(TimeSpan.FromMilliseconds(500));
     run = evaluationClient.GetEvaluationRun(evaluationId: evaluationId, evaluationRunId: runId, options: new());
     runStatus = ParseClientResult(run, ["status"])["status"];
     Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
@@ -232,6 +232,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_WaitForRun_Evaluations_Async
 while (runStatus != "failed" && runStatus != "completed")
 {
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
     run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
     runStatus = ParseClientResult(run, ["status"])["status"];
     Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");

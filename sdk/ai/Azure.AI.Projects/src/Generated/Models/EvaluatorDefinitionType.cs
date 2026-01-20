@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The type of evaluator definition. </summary>
-    internal readonly partial struct EvaluatorDefinitionType : IEquatable<EvaluatorDefinitionType>
+    public readonly partial struct EvaluatorDefinitionType : IEquatable<EvaluatorDefinitionType>
     {
         private readonly string _value;
         /// <summary> Prompt-based definition. </summary>
