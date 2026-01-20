@@ -9,58 +9,33 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using Service.MultiService.Combined;
-using Service.MultiService.ServiceA;
-using Service.MultiService.ServiceB;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class ServiceMultiServiceCombinedClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="FooClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="CombinedClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service host. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<FooClient, FooClientOptions> AddFooClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<CombinedClient, CombinedClientOptions> AddCombinedClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            return builder.RegisterClientFactory<FooClient, FooClientOptions>(options => new FooClient(endpoint, options));
+            return builder.RegisterClientFactory<CombinedClient, CombinedClientOptions>(options => new CombinedClient(endpoint, options));
         }
 
-        /// <summary> Registers a <see cref="FooClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="CombinedClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<FooClient, FooClientOptions> AddFooClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<CombinedClient, CombinedClientOptions> AddCombinedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<FooClient, FooClientOptions>(configuration);
-        }
-
-        /// <summary> Registers a <see cref="BarClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<BarClient, BarClientOptions> AddBarClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<BarClient, BarClientOptions>(options => new BarClient(endpoint, options));
-        }
-
-        /// <summary> Registers a <see cref="BarClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<BarClient, BarClientOptions> AddBarClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<BarClient, BarClientOptions>(configuration);
+            return builder.RegisterClientFactory<CombinedClient, CombinedClientOptions>(configuration);
         }
     }
 }

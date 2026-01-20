@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Service.MultiService.ServiceA client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation Service.MultiService.ServiceA</AssemblyTitle>
+    <Description>This is the Service.MultiService.Combined client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Service.MultiService.Combined</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Service.MultiService.Combined</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

@@ -11,11 +11,11 @@ using Azure.Core;
 namespace Service.MultiService.ServiceB
 {
     /// <summary></summary>
-    public partial class BarClient
+    public partial class Bar
     {
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateTestRequest(RequestContext context)
         {

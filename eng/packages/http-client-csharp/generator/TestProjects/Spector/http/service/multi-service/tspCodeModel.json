@@ -1,5 +1,5 @@
 {
-  "name": "Service.MultiService.ServiceA",
+  "name": "Service.MultiService.Combined",
   "apiVersions": [],
   "enums": [
     {
@@ -101,7 +101,7 @@
     {
       "$id": "9",
       "kind": "client",
-      "name": "Combined",
+      "name": "CombinedClient",
       "namespace": "Service.MultiService.Combined",
       "methods": [],
       "parameters": [
@@ -141,7 +141,11 @@
           "name": "apiVersion",
           "serializedName": "apiVersion",
           "type": {
-            "$ref": "1"
+            "$id": "14",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
           },
           "location": "",
           "isApiVersion": true,
@@ -159,13 +163,13 @@
       "apiVersions": [],
       "children": [
         {
-          "$id": "14",
+          "$id": "15",
           "kind": "client",
           "name": "Foo",
           "namespace": "Service.MultiService.ServiceA",
           "methods": [
             {
-              "$id": "15",
+              "$id": "16",
               "kind": "basic",
               "name": "test",
               "accessibility": "public",
@@ -174,13 +178,13 @@
                 "av2"
               ],
               "operation": {
-                "$id": "16",
+                "$id": "17",
                 "name": "test",
                 "resourceName": "Foo",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "17",
+                    "$id": "18",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
@@ -191,7 +195,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "18",
+                        "$id": "19",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -233,13 +237,13 @@
           ],
           "parameters": [
             {
-              "$id": "19",
+              "$id": "20",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "20",
+                "$id": "21",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -250,7 +254,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "21",
+                  "$id": "22",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -263,7 +267,7 @@
               "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.endpoint"
             },
             {
-              "$id": "22",
+              "$id": "23",
               "kind": "method",
               "name": "apiVersion",
               "serializedName": "apiVersion",
@@ -274,7 +278,7 @@
               "isApiVersion": true,
               "defaultValue": {
                 "type": {
-                  "$id": "23",
+                  "$id": "24",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -298,16 +302,17 @@
           ],
           "parent": {
             "$ref": "9"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
-          "$id": "24",
+          "$id": "25",
           "kind": "client",
           "name": "Bar",
           "namespace": "Service.MultiService.ServiceB",
           "methods": [
             {
-              "$id": "25",
+              "$id": "26",
               "kind": "basic",
               "name": "test",
               "accessibility": "public",
@@ -316,13 +321,13 @@
                 "bv2"
               ],
               "operation": {
-                "$id": "26",
+                "$id": "27",
                 "name": "test",
                 "resourceName": "Bar",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "27",
+                    "$id": "28",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
@@ -333,7 +338,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "28",
+                        "$id": "29",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -375,13 +380,13 @@
           ],
           "parameters": [
             {
-              "$id": "29",
+              "$id": "30",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "30",
+                "$id": "31",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -392,7 +397,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "31",
+                  "$id": "32",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -405,7 +410,7 @@
               "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.endpoint"
             },
             {
-              "$id": "32",
+              "$id": "33",
               "kind": "method",
               "name": "apiVersion",
               "serializedName": "apiVersion",
@@ -416,7 +421,7 @@
               "isApiVersion": true,
               "defaultValue": {
                 "type": {
-                  "$id": "33",
+                  "$id": "34",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -440,9 +445,11 @@
           ],
           "parent": {
             "$ref": "9"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": true
     }
   ]
 }

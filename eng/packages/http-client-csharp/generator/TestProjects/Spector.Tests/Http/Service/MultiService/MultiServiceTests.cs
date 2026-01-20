@@ -3,8 +3,7 @@
 
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Service.MultiService.ServiceA;
-using Service.MultiService.ServiceB;
+using Service.MultiService.Combined;
 
 
 namespace TestProjects.Spector.Tests.Http.Service.MultiService
@@ -14,23 +13,23 @@ namespace TestProjects.Spector.Tests.Http.Service.MultiService
         [SpectorTest]
         public Task ServiceAOperation() => Test(async (host) =>
         {
-            var response = await new FooClient(host).TestAsync();
-            Assert.AreEqual(204, response.GetRawResponse().Status);
+            var response = await new CombinedClient(host, new CombinedClientOptions()).GetFooClient().TestAsync();
+            Assert.AreEqual(204, response.Status);
         });
 
         [SpectorTest]
         public Task ServiceBOperation() => Test(async (host) =>
         {
-            var response = await new BarClient(host).TestAsync();
-            Assert.AreEqual(204, response.GetRawResponse().Status);
+            var response = await new CombinedClient(host, new CombinedClientOptions()).GetBarClient().TestAsync();
+            Assert.AreEqual(204, response.Status);
         });
 
         [Test]
         public Task ServiceAOperation_SetDiffServiceVersion() => Test(async (host) =>
         {
-            var serviceVersion = FooClientOptions.ServiceVersion.Av1;
-            var clientOptions = new FooClientOptions(serviceVersion);
-            var client = new FooClient(host, clientOptions);
+            var serviceVersion = CombinedClientOptions.ServiceAVersion.Vav1;
+            var clientOptions = new CombinedClientOptions(serviceVersion);
+            var client = new CombinedClient(host, clientOptions).GetFooClient();
 
             Assert.IsNotNull(client);
         });
@@ -38,9 +37,9 @@ namespace TestProjects.Spector.Tests.Http.Service.MultiService
         [Test]
         public Task ServiceBOperation_SetDiffServiceVersion() => Test(async (host) =>
         {
-            var serviceVersion = BarClientOptions.ServiceVersion.Bv1;
-            var clientOptions = new BarClientOptions(serviceVersion);
-            var client = new BarClient(host, clientOptions);
+            var serviceVersion = CombinedClientOptions.ServiceBVersion.Vbv1;
+            var clientOptions = new CombinedClientOptions(serviceBVersion: serviceVersion);
+            var client = new CombinedClient(host, clientOptions).GetBarClient();
 
             Assert.IsNotNull(client);
         });
