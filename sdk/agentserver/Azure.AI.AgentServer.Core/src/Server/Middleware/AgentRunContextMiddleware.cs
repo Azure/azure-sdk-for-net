@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
+using Azure.AI.AgentServer.Core.Common.Http.Json;
 using Azure.AI.AgentServer.Core.Tools.Runtime.User;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.AspNetCore.Builder;
@@ -167,11 +168,15 @@ public class AgentRunContextMiddleware
         bodyStream.Position = 0;
 
         // Deserialize to dictionary for raw payload
-        var rawPayload = JsonSerializer.Deserialize<Dictionary<string, object?>>(jsonElement.GetRawText())
+        var rawPayload = JsonSerializer.Deserialize<Dictionary<string, object?>>(
+            jsonElement.GetRawText(),
+            JsonExtensions.DefaultJsonSerializerOptions)
             ?? new Dictionary<string, object?>();
 
         // Deserialize to typed request
-        var request = JsonSerializer.Deserialize<CreateResponseRequest>(jsonElement.GetRawText())
+        var request = JsonSerializer.Deserialize<CreateResponseRequest>(
+            jsonElement.GetRawText(),
+            JsonExtensions.DefaultJsonSerializerOptions)
             ?? throw new InvalidOperationException("Failed to deserialize CreateResponseRequest.");
 
         return (request, rawPayload);
@@ -229,6 +234,8 @@ public static class AgentRunContextMiddlewareExtensions
         this IApplicationBuilder app,
         IEnumerable<object>? agentTools = null)
     {
-        return app.UseMiddleware<AgentRunContextMiddleware>(agentTools);
+        return agentTools == null
+            ? app.UseMiddleware<AgentRunContextMiddleware>()
+            : app.UseMiddleware<AgentRunContextMiddleware>(agentTools);
     }
 }
