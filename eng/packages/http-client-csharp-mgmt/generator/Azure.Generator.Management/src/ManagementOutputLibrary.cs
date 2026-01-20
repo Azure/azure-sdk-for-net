@@ -302,8 +302,7 @@ namespace Azure.Generator.Management
 
         internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type.WithNullable(false));
 
-        /// <inheritdoc/>
-        protected override TypeProvider[] BuildTypeProviders()
+        private IReadOnlyList<TypeProvider> BuildArmProviders()
         {
             // we need to add the clients (including resources, collections, mockable resources and extension static class)
             // to the types to keep
@@ -326,7 +325,6 @@ namespace Azure.Generator.Management
             var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
@@ -339,8 +337,14 @@ namespace Azure.Generator.Management
                 PageableWrapper,
                 AsyncPageableWrapper,
                 .. arrayResponseCollectionResults,
-                .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+                .. ResourceProviders.SelectMany(r => r.SerializationProviders)
+                ];
         }
+
+        /// <inheritdoc/>
+        protected override TypeProvider[] BuildTypeProviders()
+            => [.. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                .. BuildArmProviders()];
 
         private List<ArrayResponseCollectionResultDefinition> ExtractArrayResponseCollectionResults()
         {

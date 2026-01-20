@@ -202,6 +202,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="jobResourceData"> The <see cref="JobResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(JobResourceData jobResourceData)
+        {
+            if (jobResourceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(jobResourceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="JobResourceData"/> from. </param>
         internal static JobResourceData FromResponse(Response response)
         {
