@@ -27,6 +27,9 @@ var chatClient = new AzureOpenAIClient(
     .GetChatClient(deploymentName)
     .AsIChatClient()
     .AsBuilder()
+    // .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
+    .UseFoundryTools(new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
+    //   .UseFoundryTools(FoundryHostedMcpTool.Create("web_search_preview"))
     .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
     .Build();
 
@@ -56,9 +59,6 @@ var agent = new ChatClientAgent(chatClient,
   - microsoft_docs_search: Searches Microsoft/Azure documentation
   - microsoft_code_sample_search: Searches for code examples", tools: [AIFunctionFactory.Create(GetWeather)])
       .AsBuilder()
-        // .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
-        .UseFoundryTools(new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
-      //   .UseFoundryTools(FoundryHostedMcpTool.Create("web_search_preview"))
       .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
       .Build();
 

@@ -46,6 +46,8 @@ public class Program
             .GetChatClient(deploymentName)
             .AsIChatClient()
             .AsBuilder()
+            //   .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
+            .UseFoundryTools(new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
             .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
             .Build();
 
@@ -63,8 +65,6 @@ public class Program
                 - microsoft_docs_search: Searches Microsoft/Azure documentation
                 - microsoft_code_sample_search: Searches for code examples")
               .AsBuilder()
-              //   .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
-              .UseFoundryTools(new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
               .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
               .Build();
 
