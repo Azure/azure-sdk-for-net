@@ -1,4 +1,4 @@
 directory: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/DevTestLabs
-commit: b28ce31e6e0c6c12353cb7021c0a4b31f3a2f494
+commit: 0c4ddf1d0eb11e643b92025e0588d8dd18c67068
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
