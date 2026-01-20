@@ -8,7 +8,6 @@
     <Version>1.11.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.10.0</ApiCompatVersion>
-    <!--The ApiCompatVersion is removed temporarily to allow the removal of [ConnectionString] attribute.-->
     <NoWarn>$(NoWarn);CS8632;CA1056;CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <AotCompatOptOut>true</AotCompatOptOut>
