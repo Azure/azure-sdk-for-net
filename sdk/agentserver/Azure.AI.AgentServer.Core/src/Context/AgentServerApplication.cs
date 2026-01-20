@@ -3,6 +3,10 @@
 
 using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Core.HealthCheck;
+using Azure.AI.AgentServer.Core.Server;
+using Azure.AI.AgentServer.Core.Server.Middleware;
+using Azure.AI.AgentServer.Core.Tools.Runtime;
+using Azure.AI.AgentServer.Core.Tools.Runtime.User;
 using Azure.AI.AgentServer.Responses.Endpoint;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.AspNetCore.Builder;
@@ -65,9 +69,39 @@ public static class AgentServerApplication
         // Configure
         builder.ConfigureAndValidateServices(applicationOptions.ConfigureServices);
 
+        // Register user provider (optional override from ApplicationOptions)
+        if (applicationOptions.UserProvider != null)
+        {
+            builder.Services.AddSingleton(applicationOptions.UserProvider);
+        }
+        else if (!builder.Services.Any(d => d.ServiceType == typeof(IUserProvider)))
+        {
+            // Default to AsyncLocalUserProvider if not registered
+            builder.Services.AddSingleton<IUserProvider, AsyncLocalUserProvider>();
+        }
+
+        // Register agent tools if provided
+        if (applicationOptions.AgentTools != null)
+        {
+            builder.Services.AddSingleton(applicationOptions.AgentTools);
+        }
+
         builder.Services.AddSingleton<AgentInvoker>();
 
         var app = builder.Build();
+
+        // Initialize AgentServerContext with tool runtime
+        var toolRuntime = applicationOptions.ToolRuntime
+            ?? app.Services.GetService<IFoundryToolRuntime>();
+
+        if (toolRuntime != null)
+        {
+            _ = new AgentServerContext(toolRuntime);
+        }
+
+        // Register middleware pipeline (order matters: user info before agent run context)
+        app.UseUserInfoContext();
+        app.UseAgentRunContext(applicationOptions.AgentTools);
 
         app.MapHealthChecksEndpoints()
             .MapAgentRunEndpoints();

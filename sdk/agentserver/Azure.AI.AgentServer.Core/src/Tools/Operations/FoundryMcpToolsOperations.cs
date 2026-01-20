@@ -6,14 +6,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.AI.AgentServer.Core.Common.Http.Json;
 using Azure.AI.AgentServer.Core.Tools.Models;
-using Azure.AI.AgentServer.Core.Tools.Utilities;
 
 namespace Azure.AI.AgentServer.Core.Tools.Operations;
 
 /// <summary>
 /// Handles operations for MCP (Model Context Protocol) tools.
 /// </summary>
-internal class FoundryMcpToolsOperations
+internal partial class FoundryMcpToolsOperations
 {
     // Use relative path (without leading /) so it's appended to BaseAddress correctly
     private const string McpEndpointPath = "mcp_tools";
@@ -125,20 +124,16 @@ internal class FoundryMcpToolsOperations
         };
 
         // Add _meta if tool definition exists and metadata schema is present
-        if (tool.FoundryTool != null)
+        if (tool.Definition != null)
         {
-            var metaSchema = ToolMetadataExtractor.ExtractMetadataSchema(tool.Metadata);
-            if (metaSchema != null)
-            {
-                var metaConfig = MetadataMapper.PrepareMetadataDict(
-                    tool.Metadata,
-                    tool.FoundryTool,
-                    GetToolPropertyOverrides(tool.Name));
+            var metaConfig = PrepareMetadataConfig(
+                tool.Metadata,
+                tool.Definition,
+                GetToolPropertyOverrides(tool.Name));
 
-                if (metaConfig.Count > 0)
-                {
-                    parameters["_meta"] = metaConfig;
-                }
+            if (metaConfig.Count > 0)
+            {
+                parameters["_meta"] = metaConfig;
             }
         }
 
@@ -186,13 +181,8 @@ internal class FoundryMcpToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var rawTools = JsonSerializer.Deserialize<List<Dictionary<string, object?>>>(
-            toolsElement.GetRawText(),
-            JsonExtensions.DefaultJsonSerializerOptions) ?? new List<Dictionary<string, object?>>();
-
-        EnrichWithHostedToolDefinitions(rawTools);
-
-        return ToolDescriptorBuilder.BuildDescriptors(rawTools, FoundryToolSource.HOSTED_MCP);
+        var tools = ParseHostedMcpTools(toolsElement, _options.ToolConfig.HostedMcpTools);
+        return BuildResolvedTools(tools);
     }
 
     private async Task<IReadOnlyList<ResolvedFoundryTool>> ProcessListToolsResponseAsync(
@@ -214,13 +204,8 @@ internal class FoundryMcpToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var rawTools = JsonSerializer.Deserialize<List<Dictionary<string, object?>>>(
-            toolsElement.GetRawText(),
-            JsonExtensions.DefaultJsonSerializerOptions) ?? new List<Dictionary<string, object?>>();
-
-        EnrichWithHostedToolDefinitions(rawTools);
-
-        return ToolDescriptorBuilder.BuildDescriptors(rawTools, FoundryToolSource.HOSTED_MCP);
+        var tools = ParseHostedMcpTools(toolsElement, _options.ToolConfig.HostedMcpTools);
+        return BuildResolvedTools(tools);
     }
 
     private object? ProcessInvokeToolResponse(Response response)
@@ -264,33 +249,97 @@ internal class FoundryMcpToolsOperations
             JsonExtensions.DefaultJsonSerializerOptions);
     }
 
-    private void EnrichWithHostedToolDefinitions(List<Dictionary<string, object?>> rawTools)
+    private static IReadOnlyList<FoundryToolDetails> ParseHostedMcpTools(
+        JsonElement toolsElement,
+        IReadOnlyList<FoundryHostedMcpTool> hostedMcpTools)
     {
-        if (rawTools.Count == 0 || _options.ToolConfig.HostedMcpTools.Count == 0)
+        if (hostedMcpTools.Count == 0)
         {
-            return;
+            return Array.Empty<FoundryToolDetails>();
         }
 
-        var toolsByName = _options.ToolConfig.HostedMcpTools
+        var toolsByName = hostedMcpTools
             .GroupBy(tool => tool.Name, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
 
-        var filteredTools = new List<Dictionary<string, object?>>(rawTools.Count);
+        var parsedTools = new List<FoundryToolDetails>();
 
-        foreach (var raw in rawTools)
+        foreach (var toolElement in toolsElement.EnumerateArray())
         {
-            var (toolName, _) = ToolMetadataExtractor.ExtractNameDescription(raw);
-            if (string.IsNullOrWhiteSpace(toolName) ||
-                !toolsByName.TryGetValue(toolName, out var foundryTool))
+            var name = toolElement.TryGetProperty("name", out var nameElement)
+                ? nameElement.GetString()
+                : null;
+            if (string.IsNullOrWhiteSpace(name) ||
+                !toolsByName.TryGetValue(name, out var foundryTool))
             {
                 continue;
             }
 
-            raw["foundry_tool"] = foundryTool;
-            filteredTools.Add(raw);
+            var description = toolElement.TryGetProperty("description", out var descriptionElement)
+                ? descriptionElement.GetString()
+                : null;
+            var inputSchema = TryDeserializeSchema(toolElement, "inputSchema", "input_schema", "schema", "parameters");
+
+            var metadata = JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                toolElement.GetRawText(),
+                JsonExtensions.DefaultJsonSerializerOptions) ?? new Dictionary<string, object?>();
+            metadata["foundry_tool"] = foundryTool;
+
+            parsedTools.Add(new FoundryToolDetails(
+                name,
+                description ?? string.Empty,
+                metadata,
+                inputSchema));
         }
 
-        rawTools.Clear();
-        rawTools.AddRange(filteredTools);
+        return parsedTools;
+    }
+
+    private static IReadOnlyDictionary<string, object?>? TryDeserializeSchema(
+        JsonElement element,
+        params string[] propertyNames)
+    {
+        foreach (var propertyName in propertyNames)
+        {
+            if (element.TryGetProperty(propertyName, out var schemaElement))
+            {
+                return JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                    schemaElement.GetRawText(),
+                    JsonExtensions.DefaultJsonSerializerOptions);
+            }
+        }
+
+        return null;
+    }
+
+    private static IReadOnlyList<ResolvedFoundryTool> BuildResolvedTools(IReadOnlyList<FoundryToolDetails> tools)
+    {
+        if (tools.Count == 0)
+        {
+            return Array.Empty<ResolvedFoundryTool>();
+        }
+
+        var descriptors = new List<ResolvedFoundryTool>(tools.Count);
+
+        foreach (var tool in tools)
+        {
+            descriptors.Add(new ResolvedFoundryTool
+            {
+                Definition = GetDefinition(tool.Metadata),
+                Details = tool
+            });
+        }
+
+        return descriptors;
+    }
+
+    private static FoundryTool? GetDefinition(IReadOnlyDictionary<string, object?> metadata)
+    {
+        if (metadata.TryGetValue("foundry_tool", out var definition) && definition is FoundryTool foundryTool)
+        {
+            return foundryTool;
+        }
+
+        return null;
     }
 }

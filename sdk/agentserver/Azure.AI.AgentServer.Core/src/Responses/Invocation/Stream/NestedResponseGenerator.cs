@@ -12,14 +12,9 @@ namespace Azure.AI.AgentServer.Responses.Invocation.Stream;
 public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.Generated.Responses.Response>
 {
     /// <summary>
-    /// Gets or initializes the agent invocation context.
+    /// Gets or initializes the agent run context containing request and context information.
     /// </summary>
-    required public AgentInvocationContext Context { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the create response request.
-    /// </summary>
-    required public CreateResponseRequest Request { get; init; }
+    required public AgentRunContext Context { get; init; }
 
     /// <summary>
     /// Gets or initializes the output generator for item resources.
@@ -78,7 +73,7 @@ public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.
     private Contracts.Generated.Responses.Response ToResponse(ResponseStatus status = ResponseStatus.Completed,
         IEnumerable<ItemResource>? output = null)
     {
-        return Request.ToResponse(
+        return Context.Request.ToResponse(
             context: Context,
             output: output,
             status: status,

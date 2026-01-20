@@ -7,7 +7,6 @@ using Azure.Core.Pipeline;
 using Azure.AI.AgentServer.Core.Common.Http.Json;
 using Azure.AI.AgentServer.Core.Tools.Exceptions;
 using Azure.AI.AgentServer.Core.Tools.Models;
-using Azure.AI.AgentServer.Core.Tools.Utilities;
 
 namespace Azure.AI.AgentServer.Core.Tools.Operations;
 
@@ -135,7 +134,7 @@ internal class FoundryConnectedToolsOperations
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken)
     {
-        var connectedTool = tool.FoundryTool as FoundryConnectedTool;
+        var connectedTool = tool.Definition as FoundryConnectedTool;
 
         var content = new Dictionary<string, object?>
         {
@@ -180,9 +179,8 @@ internal class FoundryConnectedToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
-
-        return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
+        var enrichedTools = ParseConnectedTools(toolsElement, _options.ToolConfig.ConnectedTools);
+        return BuildResolvedTools(enrichedTools);
     }
 
     private async Task<IReadOnlyList<ResolvedFoundryTool>> ProcessResolveToolsResponseAsync(
@@ -206,9 +204,8 @@ internal class FoundryConnectedToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
-
-        return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
+        var enrichedTools = ParseConnectedTools(toolsElement, _options.ToolConfig.ConnectedTools);
+        return BuildResolvedTools(enrichedTools);
     }
 
     private object? ProcessInvokeToolResponse(Response response)
@@ -275,11 +272,11 @@ internal class FoundryConnectedToolsOperations
         }
     }
 
-    private List<Dictionary<string, object?>> ParseEnrichedTools(
+    private static IReadOnlyList<FoundryToolDetails> ParseConnectedTools(
         JsonElement toolsElement,
         IReadOnlyList<FoundryConnectedTool> foundryTools)
     {
-        var enrichedTools = new List<Dictionary<string, object?>>();
+        var enrichedTools = new List<FoundryToolDetails>();
 
         foreach (var toolEntry in toolsElement.EnumerateArray())
         {
@@ -288,8 +285,12 @@ internal class FoundryConnectedToolsOperations
                 continue;
             }
 
-            var projectConnectionId = remoteServer.GetProperty("projectConnectionId").GetString();
-            var protocol = remoteServer.GetProperty("protocol").GetString();
+            var projectConnectionId = remoteServer.TryGetProperty("projectConnectionId", out var projectIdElement)
+                ? projectIdElement.GetString()
+                : null;
+            var protocol = remoteServer.TryGetProperty("protocol", out var protocolElement)
+                ? protocolElement.GetString()
+                : null;
 
             var foundryTool = foundryTools.FirstOrDefault(td =>
                 string.Equals(td.Type, protocol, StringComparison.OrdinalIgnoreCase) &&
@@ -302,26 +303,76 @@ internal class FoundryConnectedToolsOperations
 
             foreach (var manifest in manifestArray.EnumerateArray())
             {
-                var enrichedTool = new Dictionary<string, object?>
+                var name = manifest.TryGetProperty("name", out var nameElement)
+                    ? nameElement.GetString()
+                    : null;
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                    ["name"] = manifest.TryGetProperty("name", out var nameEl) ? nameEl.GetString() : null,
-                    ["description"] = manifest.TryGetProperty("description", out var descEl) ? descEl.GetString() : null,
+                    continue;
+                }
+
+                var description = manifest.TryGetProperty("description", out var descElement)
+                    ? descElement.GetString()
+                    : null;
+                var inputSchema = manifest.TryGetProperty("parameters", out var parametersElement)
+                    ? JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                        parametersElement.GetRawText(),
+                        JsonExtensions.DefaultJsonSerializerOptions)
+                    : null;
+
+                var metadata = new Dictionary<string, object?>
+                {
+                    ["name"] = name,
+                    ["description"] = description,
                     ["foundry_tool"] = foundryTool,
                     ["projectConnectionId"] = projectConnectionId,
                     ["protocol"] = protocol
                 };
 
-                if (manifest.TryGetProperty("parameters", out var parametersEl))
+                if (inputSchema != null)
                 {
-                    enrichedTool["inputSchema"] = JsonSerializer.Deserialize<Dictionary<string, object?>>(
-                        parametersEl.GetRawText(),
-                        JsonExtensions.DefaultJsonSerializerOptions);
+                    metadata["inputSchema"] = inputSchema;
                 }
 
-                enrichedTools.Add(enrichedTool);
+                enrichedTools.Add(new FoundryToolDetails(
+                    name,
+                    description ?? string.Empty,
+                    metadata,
+                    inputSchema));
             }
         }
 
         return enrichedTools;
+    }
+
+    private static IReadOnlyList<ResolvedFoundryTool> BuildResolvedTools(IReadOnlyList<FoundryToolDetails> tools)
+    {
+        if (tools.Count == 0)
+        {
+            return Array.Empty<ResolvedFoundryTool>();
+        }
+
+        var descriptors = new List<ResolvedFoundryTool>(tools.Count);
+
+        foreach (var tool in tools)
+        {
+            descriptors.Add(new ResolvedFoundryTool
+            {
+                Definition = GetDefinition(tool.Metadata),
+                Details = tool
+            });
+        }
+
+        return descriptors;
+    }
+
+    private static FoundryTool? GetDefinition(IReadOnlyDictionary<string, object?> metadata)
+    {
+        if (metadata.TryGetValue("foundry_tool", out var definition) && definition is FoundryTool foundryTool)
+        {
+            return foundryTool;
+        }
+
+        return null;
     }
 }

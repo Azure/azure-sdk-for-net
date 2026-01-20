@@ -17,47 +17,47 @@ internal class AgentInvoker(
     ILogger<AgentInvoker> logger)
 {
     /// <summary>
-    /// Invokes the agent to create a response based on the request and context.
+    /// Invokes the agent to create a response based on the context from middleware.
     /// </summary>
-    /// <param name="requestId">The optional request ID for tracing.</param>
-    /// <param name="request">The create response request.</param>
-    /// <param name="context">The agent invocation context.</param>
+    /// <param name="httpContext">The HTTP context containing the AgentRunContext.</param>
     /// <param name="ct">Cancellation token.</param>
     /// <returns>An IResult representing the response or streaming updates.</returns>
-    public async Task<IResult> InvokeAsync(string? requestId,
-        CreateResponseRequest request,
-        AgentInvocationContext context,
-        CancellationToken ct = default)
+    public async Task<IResult> InvokeAsync(HttpContext httpContext, CancellationToken ct = default)
     {
+        // Retrieve context from middleware
+        var context = httpContext.Items["AgentRunContext"] as AgentRunContext
+            ?? throw new InvalidOperationException("AgentRunContext not found in HttpContext. Ensure AgentRunContextMiddleware is registered.");
+
+        // Extract request ID from headers if present
+        var requestId = httpContext.Request.Headers.TryGetValue("X-Request-Id", out var value) ? value.ToString() : null;
+
         logger.LogInformation($"Processing CreateResponse request: response_id={context.ResponseId}, "
-                              + $"conversation_id={context.ConversationId}, streaming={request.Stream ?? false}, "
+                              + $"conversation_id={context.ConversationId}, streaming={context.Stream}, "
                               + $"request_id={requestId}.");
         try
         {
-            if (request.Stream ?? false)
+            if (context.Stream)
             {
                 logger.LogInformation("Invoking agent to create streaming response.");
-                return InvokeStreamAsync(request, context, ct);
+                return InvokeStreamAsync(context, ct);
             }
 
             logger.LogInformation("Invoking agent to create response.");
-            return await InvokeNonStreamAsync(request, context, ct).ConfigureAwait(false);
+            return await InvokeNonStreamAsync(context, ct).ConfigureAwait(false);
         }
         finally
         {
             logger.LogInformation($"End of processing CreateResponse request: response_id={context.ResponseId}, "
-                                  + $"conversation_id={context.ConversationId}, streaming={request.Stream ?? false}, "
+                                  + $"conversation_id={context.ConversationId}, streaming={context.Stream}, "
                                   + $"request_id={requestId}.");
         }
     }
 
-    private async Task<IResult> InvokeNonStreamAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
-        CancellationToken ct)
+    private async Task<IResult> InvokeNonStreamAsync(AgentRunContext context, CancellationToken ct)
     {
         try
         {
-            var response = await agentInvocation.InvokeAsync(request, context, ct).ConfigureAwait(false);
+            var response = await agentInvocation.InvokeAsync(context, ct).ConfigureAwait(false);
             return Results.Json(response);
         }
         catch (Exception e)
@@ -82,11 +82,9 @@ internal class AgentInvoker(
         }
     }
 
-    private SseResult InvokeStreamAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
-        CancellationToken ct)
+    private SseResult InvokeStreamAsync(AgentRunContext context, CancellationToken ct)
     {
-        var updates = agentInvocation.InvokeStreamAsync(request, context, ct);
+        var updates = agentInvocation.InvokeStreamAsync(context, ct);
         return ReadUpdates(updates, ct).ToSseResult(
             e => SseFrame.Of(name: e.Type.ToString(), data: e),
             logger,

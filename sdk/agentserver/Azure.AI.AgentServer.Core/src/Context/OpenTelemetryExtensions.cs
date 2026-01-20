@@ -3,9 +3,6 @@
 
 using Azure.AI.AgentServer.Core.Common;
 using Azure.AI.AgentServer.Core.Telemetry;
-using Azure.AI.Projects;
-using Azure.Identity;
-using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -100,79 +97,5 @@ internal static class OpenTelemetryExtensions
         var provider = new OpenTelemetryLoggerProvider(new SingletonOptionsMonitor<OpenTelemetryLoggerOptions>(opts));
         loggerFactory.AddProvider(provider);
         return provider;
-    }
-
-    private static (bool Enabled, string? ConnectionString) TryUseApplicationInsights(
-        this IHostApplicationBuilder builder,
-        AppConfiguration appConf)
-    {
-        if (!appConf.AppInsightsEnabled)
-        {
-            return (false, null);
-        }
-
-        var appInsightsConnectionString = appConf.AppInsightsConnectionString;
-        if (string.IsNullOrWhiteSpace(appConf.AppInsightsConnectionString) && appConf.FoundryProjectInfo is not null)
-        {
-            var projectClient = new AIProjectClient(appConf.FoundryProjectInfo.ProjectEndpoint,
-                new DefaultAzureCredential());
-            try
-            {
-                appInsightsConnectionString = projectClient.Telemetry.GetApplicationInsightsConnectionString();
-            }
-            catch (Exception e)
-            {
-                // Ignore any exceptions, we just won't enable App Insights
-                Console.WriteLine(
-                    $"Failed to get Application Insights connection string from Foundry project. {e.Message}");
-            }
-        }
-
-        if (!string.IsNullOrWhiteSpace(appInsightsConnectionString))
-        {
-            builder.Services.AddOpenTelemetry()
-                .UseAzureMonitor(o => o.ConnectionString = appInsightsConnectionString);
-            return (true, appInsightsConnectionString);
-        }
-
-        return (false, null);
-    }
-
-    private static (bool Enabled, string? OtelEndpoint) TryUseOpenTelemetryExporter(
-        this IHostApplicationBuilder builder,
-        AppConfiguration appConf,
-        bool azureMonitorEnabled)
-    {
-        if (string.IsNullOrWhiteSpace(appConf.OpenTelemetryExporterEndpoint))
-        {
-            return (false, null);
-        }
-
-        var uri = new Uri(appConf.OpenTelemetryExporterEndpoint);
-        var otel = builder.Services.AddOpenTelemetry();
-
-        otel.WithTracing(b =>
-        {
-            if (!azureMonitorEnabled)
-            {
-                b.AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation();
-            }
-
-            b.AddOtlpExporter(o => o.Endpoint = uri);
-        });
-
-        otel.WithMetrics(b =>
-        {
-            if (!azureMonitorEnabled)
-            {
-                b.AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation();
-            }
-
-            b.AddOtlpExporter(o => { o.Endpoint = uri; });
-        });
-
-        return (true, appConf.OpenTelemetryExporterEndpoint);
     }
 }

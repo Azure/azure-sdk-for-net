@@ -262,7 +262,9 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
         foreach (var tool in tools)
         {
             var resolvedName = NameResolver.EnsureUniqueName(tool.Name, existingNames);
-            var resolvedTool = resolvedName == tool.Name ? tool : tool with { Name = resolvedName };
+            var resolvedTool = resolvedName == tool.Name
+                ? tool
+                : tool with { Details = tool.Details with { Name = resolvedName } };
             existingNames.Add(resolvedName);
             resolvedTools.Add(resolvedTool);
         }

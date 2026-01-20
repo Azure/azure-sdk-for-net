@@ -11,6 +11,12 @@ namespace Azure.AI.AgentServer.Responses.Invocation;
 /// <param name="idGenerator">The ID generator for creating unique identifiers.</param>
 /// <param name="responseId">The response ID for this invocation.</param>
 /// <param name="conversationId">The conversation ID for this invocation.</param>
+/// <remarks>
+/// NOTE: This class is deprecated. Use <see cref="AgentRunContext"/> instead,
+/// which provides richer context including request data, user information, and tool definitions.
+/// See the MIGRATION_GUIDE.md for detailed migration instructions.
+/// </remarks>
+[Obsolete("AgentInvocationContext is deprecated. Use AgentRunContext from Azure.AI.AgentServer.Responses.Invocation namespace instead. See MIGRATION_GUIDE.md for details.", false)]
 public class AgentInvocationContext(IIdGenerator idGenerator,
     string responseId,
     string conversationId)

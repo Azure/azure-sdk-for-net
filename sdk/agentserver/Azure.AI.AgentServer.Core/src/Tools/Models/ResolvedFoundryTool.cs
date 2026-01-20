@@ -9,36 +9,50 @@ namespace Azure.AI.AgentServer.Core.Tools.Models;
 public record ResolvedFoundryTool
 {
     /// <summary>
-    /// Gets or initializes the display name of the tool.
+    /// Gets or initializes the tool definition configuration.
     /// </summary>
-    required public string Name { get; init; }
+    public FoundryTool? Definition { get; init; }
 
     /// <summary>
-    /// Gets or initializes the description of the tool.
+    /// Gets or initializes the resolved tool details.
     /// </summary>
-    required public string Description { get; init; }
+    required public FoundryToolDetails Details { get; init; }
+
+    /// <summary>
+    /// Gets the unique identifier for the tool.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when no tool definition is configured.</exception>
+    public string Id =>
+        Definition == null
+            ? throw new InvalidOperationException("Tool definition is missing.")
+            : $"{Definition.Id}:{Details.Name}";
 
     /// <summary>
     /// Gets the source of the tool.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when no tool definition is configured.</exception>
     public FoundryToolSource Source =>
-        FoundryTool?.Source ?? throw new InvalidOperationException("Tool definition is missing.");
+        Definition?.Source ?? throw new InvalidOperationException("Tool definition is missing.");
 
     /// <summary>
-    /// Gets or initializes the raw metadata from the tool API.
+    /// Gets the display name of the tool.
     /// </summary>
-    required public IReadOnlyDictionary<string, object?> Metadata { get; init; }
+    public string Name => Details.Name;
 
     /// <summary>
-    /// Gets or initializes the JSON schema describing the tool's input parameters.
+    /// Gets the description of the tool.
     /// </summary>
-    public IReadOnlyDictionary<string, object?>? InputSchema { get; init; }
+    public string Description => Details.Description;
 
     /// <summary>
-    /// Gets or initializes the tool definition configuration.
+    /// Gets the raw metadata from the tool API.
     /// </summary>
-    public FoundryTool? FoundryTool { get; init; }
+    public IReadOnlyDictionary<string, object?> Metadata => Details.Metadata;
+
+    /// <summary>
+    /// Gets the JSON schema describing the tool's input parameters.
+    /// </summary>
+    public IReadOnlyDictionary<string, object?>? InputSchema => Details.InputSchema;
 
     /// <summary>
     /// Gets or sets the synchronous invoker function for this tool.

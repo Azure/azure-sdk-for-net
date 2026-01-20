@@ -9,9 +9,9 @@ namespace Agents.Customized.Integration.Tests;
 
 public class CustomizedAgentInvocation : IAgentInvocation
 {
-    public Task<Response> InvokeAsync(CreateResponseRequest request, AgentInvocationContext context,
-        CancellationToken cancellationToken = default)
+    public Task<Response> InvokeAsync(AgentRunContext context, CancellationToken cancellationToken = default)
     {
+        var request = context.Request;
         var inputText = GetInputText(request);
 
         var text = "I am a mock agent with no intelligence. You said: " + inputText;
@@ -31,10 +31,10 @@ public class CustomizedAgentInvocation : IAgentInvocation
         return Task.FromResult(ToResponse(request, context, output: outputs));
     }
 
-    public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
+    public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(AgentRunContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        var request = context.Request;
         var seq = -1;
 
         #region response.*
@@ -113,7 +113,7 @@ public class CustomizedAgentInvocation : IAgentInvocation
         return request.Input.ToObject<string>() ?? string.Empty;
     }
 
-    private static Response ToResponse(CreateResponseRequest request, AgentInvocationContext context,
+    private static Response ToResponse(CreateResponseRequest request, AgentRunContext context,
         ResponseStatus status = ResponseStatus.Completed,
         IEnumerable<ItemResource>? output = null)
     {
