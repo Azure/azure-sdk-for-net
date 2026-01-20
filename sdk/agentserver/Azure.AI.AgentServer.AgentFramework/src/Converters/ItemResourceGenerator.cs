@@ -22,9 +22,9 @@ public class ItemResourceGenerator
     : NestedChunkedUpdatingGeneratorBase<IEnumerable<ItemResource>, AgentRunResponseUpdate>
 {
     /// <summary>
-    /// Gets or initializes the agent invocation context.
+    /// Gets or initializes the agent run context.
     /// </summary>
-    required public AgentInvocationContext Context { get; init; }
+    required public AgentRunContext Context { get; init; }
 
     /// <summary>
     /// Gets or initializes the action to notify when usage is updated.
