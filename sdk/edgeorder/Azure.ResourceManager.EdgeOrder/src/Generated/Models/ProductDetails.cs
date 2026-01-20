@@ -39,8 +39,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="optInAdditionalConfigurations"> List of additional configurations customer wants in the order item apart from the ones included in the base configuration. </param>
         /// <param name="childConfigurationDeviceDetails"> Details of all child configurations that are part of the order item. </param>
         /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
+        /// <param name="count"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, DoubleEncryptionStatus? productDoubleEncryptionStatus, EdgeOrderIdentificationType? identificationType, EdgeOrderProductDeviceDetails parentDeviceDetails, EdgeOrderProvisioningDetails parentProvisioningDetails, IList<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations, IReadOnlyList<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails, EdgeOrderTermCommitmentInformation termCommitmentInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, DoubleEncryptionStatus? productDoubleEncryptionStatus, EdgeOrderIdentificationType? identificationType, EdgeOrderProductDeviceDetails parentDeviceDetails, EdgeOrderProvisioningDetails parentProvisioningDetails, IList<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations, IReadOnlyList<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails, EdgeOrderTermCommitmentInformation termCommitmentInformation, int? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayInfo = displayInfo;
             HierarchyInformation = hierarchyInformation;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             OptInAdditionalConfigurations = optInAdditionalConfigurations;
             ChildConfigurationDeviceDetails = childConfigurationDeviceDetails;
             TermCommitmentInformation = termCommitmentInformation;
+            Count = count;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

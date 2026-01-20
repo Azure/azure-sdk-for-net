@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// List orders at resource group level.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetByResourceGroupAsync(string, int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrdersAsync(string, int?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -274,18 +274,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderResource> GetByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this ResourceGroupResource resourceGroupResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetByResourceGroupAsync(skipToken, top, cancellationToken);
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrdersAsync(skipToken, top, cancellationToken);
         }
 
         /// <summary>
         /// List orders at resource group level.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetByResourceGroup(string, int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrders(string, int?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderResource> GetByResourceGroup(this ResourceGroupResource resourceGroupResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public static Pageable<EdgeOrderResource> GetEdgeOrders(this ResourceGroupResource resourceGroupResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetByResourceGroup(skipToken, top, cancellationToken);
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrders(skipToken, top, cancellationToken);
         }
 
         /// <summary>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// List orders at subscription level.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetBySubscriptionAsync(string, int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrdersAsync(string, int?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -520,18 +520,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(skipToken, top, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrdersAsync(skipToken, top, cancellationToken);
         }
 
         /// <summary>
         /// List orders at subscription level.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetBySubscription(string, int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrders(string, int?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -540,11 +540,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderResource> GetBySubscription(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public static Pageable<EdgeOrderResource> GetEdgeOrders(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetBySubscription(skipToken, top, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrders(skipToken, top, cancellationToken);
         }
     }
 }

@@ -14,21 +14,21 @@ using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    internal partial class OrdersOperationGroupGetBySubscriptionCollectionResultOfT : Pageable<EdgeOrderData>
+    internal partial class OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT : Pageable<EdgeOrderData>
     {
-        private readonly OrdersOperationGroup _client;
+        private readonly OrdersOperationGroup2 _client;
         private readonly Guid _subscriptionId;
         private readonly string _skipToken;
         private readonly int? _top;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of OrdersOperationGroupGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The OrdersOperationGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The OrdersOperationGroup2 client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OrdersOperationGroupGetBySubscriptionCollectionResultOfT(OrdersOperationGroup client, Guid subscriptionId, string skipToken, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        public OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT(OrdersOperationGroup2 client, Guid subscriptionId, string skipToken, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.EdgeOrder
             _context = context;
         }
 
-        /// <summary> Gets the pages of OrdersOperationGroupGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OrdersOperationGroupGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<EdgeOrderData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _skipToken, _top, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _skipToken, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableEdgeOrderSubscriptionResource.GetBySubscription");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetEdgeOrdersRequest(nextLink, _subscriptionId, _skipToken, _top, _context) : _client.CreateGetEdgeOrdersRequest(_subscriptionId, _skipToken, _top, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableEdgeOrderSubscriptionResource.GetEdgeOrders");
             scope.Start();
             try
             {

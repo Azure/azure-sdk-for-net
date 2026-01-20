@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    internal partial class OrdersOperationGroup
+    internal partial class OrdersOperationGroup2
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of OrdersOperationGroup for mocking. </summary>
-        protected OrdersOperationGroup()
+        /// <summary> Initializes a new instance of OrdersOperationGroup2 for mocking. </summary>
+        protected OrdersOperationGroup2()
         {
         }
 
-        /// <summary> Initializes a new instance of OrdersOperationGroup. </summary>
+        /// <summary> Initializes a new instance of OrdersOperationGroup2. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal OrdersOperationGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal OrdersOperationGroup2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,14 +41,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetEdgeOrdersRequest(Guid subscriptionId, string resourceGroupName, string skipToken, int? top, RequestContext context)
+        internal HttpMessage CreateGetEdgeOrdersRequest(Guid subscriptionId, string skipToken, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orders", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return message;
         }
 
-        internal HttpMessage CreateNextGetEdgeOrdersRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string skipToken, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetEdgeOrdersRequest(Uri nextPage, Guid subscriptionId, string skipToken, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

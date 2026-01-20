@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         private OrderItemResources _orderItemResourcesRestClient;
         private ClientDiagnostics _productsAndConfigurationsOperationGroupClientDiagnostics;
         private ProductsAndConfigurationsOperationGroup _productsAndConfigurationsOperationGroupRestClient;
-        private ClientDiagnostics _ordersOperationGroupClientDiagnostics;
-        private OrdersOperationGroup _ordersOperationGroupRestClient;
+        private ClientDiagnostics _ordersOperationGroup2ClientDiagnostics;
+        private OrdersOperationGroup2 _ordersOperationGroup2RestClient;
 
         /// <summary> Initializes a new instance of MockableEdgeOrderSubscriptionResource for mocking. </summary>
         protected MockableEdgeOrderSubscriptionResource()
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
         private ProductsAndConfigurationsOperationGroup ProductsAndConfigurationsOperationGroupRestClient => _productsAndConfigurationsOperationGroupRestClient ??= new ProductsAndConfigurationsOperationGroup(ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
-        private ClientDiagnostics OrdersOperationGroupClientDiagnostics => _ordersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics OrdersOperationGroup2ClientDiagnostics => _ordersOperationGroup2ClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrdersOperationGroup OrdersOperationGroupRestClient => _ordersOperationGroupRestClient ??= new OrdersOperationGroup(OrdersOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private OrdersOperationGroup2 OrdersOperationGroup2RestClient => _ordersOperationGroup2RestClient ??= new OrdersOperationGroup2(OrdersOperationGroup2ClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
         /// <summary>
         /// List all the addresses available under the subscription.
@@ -434,13 +434,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderResource> GetBySubscriptionAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetBySubscriptionAsyncCollectionResultOfT(OrdersOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), skipToken, top, context), data => new EdgeOrderResource(Client, data));
+            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersAsyncCollectionResultOfT(OrdersOperationGroup2RestClient, Guid.Parse(Id.SubscriptionId), skipToken, top, context), data => new EdgeOrderResource(Client, data));
         }
 
         /// <summary>
@@ -464,13 +464,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderResource> GetBySubscription(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetBySubscriptionCollectionResultOfT(OrdersOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), skipToken, top, context), data => new EdgeOrderResource(Client, data));
+            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT(OrdersOperationGroup2RestClient, Guid.Parse(Id.SubscriptionId), skipToken, top, context), data => new EdgeOrderResource(Client, data));
         }
     }
 }

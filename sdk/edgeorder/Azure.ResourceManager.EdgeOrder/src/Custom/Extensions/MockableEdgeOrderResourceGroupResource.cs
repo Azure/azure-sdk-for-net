@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken, CancellationToken cancellationToken)
         {
-            return GetByResourceGroupAsync(skipToken, top: null, cancellationToken);
+            return GetEdgeOrdersAsync(skipToken, top: null, cancellationToken);
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken, CancellationToken cancellationToken)
         {
-            return GetByResourceGroup(skipToken, top: null, cancellationToken);
+            return GetEdgeOrders(skipToken, top: null, cancellationToken);
         }
     }
 }

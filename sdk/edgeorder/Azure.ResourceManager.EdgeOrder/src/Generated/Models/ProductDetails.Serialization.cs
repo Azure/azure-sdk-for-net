@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("termCommitmentInformation"u8);
                 writer.WriteObjectValue(TermCommitmentInformation, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -142,6 +147,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IList<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations = default;
             IReadOnlyList<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails = default;
             EdgeOrderTermCommitmentInformation termCommitmentInformation = default;
+            int? count = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,6 +238,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     termCommitmentInformation = EdgeOrderTermCommitmentInformation.DeserializeEdgeOrderTermCommitmentInformation(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("count"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        count = null;
+                        continue;
+                    }
+                    count = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -247,6 +263,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 optInAdditionalConfigurations ?? new ChangeTrackingList<EdgeOrderAdditionalConfiguration>(),
                 childConfigurationDeviceDetails ?? new ChangeTrackingList<EdgeOrderConfigurationDeviceDetails>(),
                 termCommitmentInformation,
+                count,
                 additionalBinaryDataProperties);
         }
 

@@ -259,13 +259,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderResource> GetByResourceGroupAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetEdgeOrdersAsyncCollectionResultOfT(
                 OrdersOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -295,13 +295,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderResource> GetByResourceGroup(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetEdgeOrdersCollectionResultOfT(
                 OrdersOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

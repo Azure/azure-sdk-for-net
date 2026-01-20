@@ -193,8 +193,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="optInAdditionalConfigurations"> List of additional configurations customer wants in the order item apart from the ones included in the base configuration. </param>
         /// <param name="childConfigurationDeviceDetails"> Details of all child configurations that are part of the order item. </param>
         /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
+        /// <param name="count"></param>
         /// <returns> A new <see cref="Models.ProductDetails"/> instance for mocking. </returns>
-        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = default, HierarchyInformation hierarchyInformation = default, DoubleEncryptionStatus? productDoubleEncryptionStatus = default, EdgeOrderIdentificationType? identificationType = default, EdgeOrderProductDeviceDetails parentDeviceDetails = default, EdgeOrderProvisioningDetails parentProvisioningDetails = default, IEnumerable<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations = default, IEnumerable<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails = default, EdgeOrderTermCommitmentInformation termCommitmentInformation = default)
+        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = default, HierarchyInformation hierarchyInformation = default, DoubleEncryptionStatus? productDoubleEncryptionStatus = default, EdgeOrderIdentificationType? identificationType = default, EdgeOrderProductDeviceDetails parentDeviceDetails = default, EdgeOrderProvisioningDetails parentProvisioningDetails = default, IEnumerable<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations = default, IEnumerable<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails = default, EdgeOrderTermCommitmentInformation termCommitmentInformation = default, int? count = default)
         {
             optInAdditionalConfigurations ??= new ChangeTrackingList<EdgeOrderAdditionalConfiguration>();
             childConfigurationDeviceDetails ??= new ChangeTrackingList<EdgeOrderConfigurationDeviceDetails>();
@@ -209,6 +210,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 optInAdditionalConfigurations.ToList(),
                 childConfigurationDeviceDetails.ToList(),
                 termCommitmentInformation,
+                count,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1139,6 +1141,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default,
                 default,
                 default,
+                count,
                 additionalBinaryDataProperties: null);
         }
 
