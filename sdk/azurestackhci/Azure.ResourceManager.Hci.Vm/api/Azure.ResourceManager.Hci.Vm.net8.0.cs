@@ -1157,9 +1157,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus (string value) { throw null; }
@@ -1177,9 +1175,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus (string value) { throw null; }
@@ -1196,9 +1192,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType NonPersistedTpm { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType left, Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType (string value) { throw null; }
@@ -1215,9 +1209,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType Sevsnp { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType left, Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType (string value) { throw null; }
@@ -1236,9 +1228,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus Unhealthy { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus (string value) { throw null; }
@@ -1256,9 +1246,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus Enabled { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus (string value) { throw null; }
@@ -1275,9 +1263,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource Azure { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource NoCloud { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource left, Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource (string value) { throw null; }
@@ -1294,9 +1280,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType GpuDda { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType GpuP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType left, Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType (string value) { throw null; }
@@ -1332,9 +1316,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction Repair { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction Uninstall { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction left, Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction (string value) { throw null; }
@@ -1420,9 +1402,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat Vhd { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat Vhdx { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat left, Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat (string value) { throw null; }
@@ -1453,9 +1433,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmExtendedLocationType(string value) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType CustomLocation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType left, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType (string value) { throw null; }
@@ -1474,9 +1452,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmFabricConnectionHealthStateType Unknown { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmFabricConnectionHealthStateType Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmFabricConnectionHealthStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmFabricConnectionHealthStateType left, Azure.ResourceManager.Hci.Vm.Models.HciVmFabricConnectionHealthStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmFabricConnectionHealthStateType (string value) { throw null; }
@@ -1496,9 +1472,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmFabricIntegrationStateType Misconfigured { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmFabricIntegrationStateType NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmFabricIntegrationStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmFabricIntegrationStateType left, Azure.ResourceManager.Hci.Vm.Models.HciVmFabricIntegrationStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmFabricIntegrationStateType (string value) { throw null; }
@@ -1551,9 +1525,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmFabricResourceType L2IsolationDomain { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmFabricResourceType L3InternalNetwork { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmFabricResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmFabricResourceType left, Azure.ResourceManager.Hci.Vm.Models.HciVmFabricResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmFabricResourceType (string value) { throw null; }
@@ -1683,7 +1655,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmGalleryImageVersion() { }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
+        public long? StorageOSDiskImageSizeInMB { get { throw null; } }
         protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1693,20 +1665,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HciVmGalleryImageVersionStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile>
-    {
-        public HciVmGalleryImageVersionStorageProfile() { }
-        public long? OSDiskImageSizeInMB { get { throw null; } }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersionStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HciVmGuestAgentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties>
     {
@@ -1784,9 +1742,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration V1 { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration V2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration left, Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration (string value) { throw null; }
@@ -1836,9 +1792,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol left, Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol (string value) { throw null; }
@@ -2113,7 +2067,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmInstanceStorageProfileOSDisk() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent ManagedDisk { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType? ManagedDiskSecurityEncryptionType { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOSType? OSType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2152,9 +2106,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod Dynamic { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod left, Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod (string value) { throw null; }
@@ -2218,9 +2170,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType VipPool { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType Vm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType left, Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType (string value) { throw null; }
@@ -2252,9 +2202,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState Down { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState Up { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState left, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState (string value) { throw null; }
@@ -2337,9 +2285,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerProbeProtocol Http { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerProbeProtocol Tcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerProbeProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerProbeProtocol left, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerProbeProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerProbeProtocol (string value) { throw null; }
@@ -2412,9 +2358,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleSessionPersistenceType SourceIP { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleSessionPersistenceType SourceIPProtocol { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleSessionPersistenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleSessionPersistenceType left, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleSessionPersistenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleSessionPersistenceType (string value) { throw null; }
@@ -2432,9 +2376,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol left, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol (string value) { throw null; }
@@ -2562,9 +2504,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType Infrastructure { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType Workload { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType left, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType (string value) { throw null; }
@@ -2946,9 +2886,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus left, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus (string value) { throw null; }
@@ -3026,9 +2964,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmOSType Linux { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmOSType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmOSType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmOSType left, Azure.ResourceManager.Hci.Vm.Models.HciVmOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmOSType (string value) { throw null; }
@@ -3052,9 +2988,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState Stopping { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState left, Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState (string value) { throw null; }
@@ -3075,9 +3009,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState InProgress { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState left, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState (string value) { throw null; }
@@ -3141,9 +3073,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmPublicIPAddressType IPv4 { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmPublicIPAddressType IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmPublicIPAddressType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmPublicIPAddressType left, Azure.ResourceManager.Hci.Vm.Models.HciVmPublicIPAddressType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmPublicIPAddressType (string value) { throw null; }
@@ -3159,9 +3089,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmSecurityEncryptionType(string value) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType NonPersistedTpm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType (string value) { throw null; }
@@ -3178,9 +3106,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess Allow { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess (string value) { throw null; }
@@ -3197,9 +3123,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection (string value) { throw null; }
@@ -3241,9 +3165,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol (string value) { throw null; }
@@ -3260,9 +3182,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType ConfidentialVm { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType (string value) { throw null; }
@@ -3300,9 +3220,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSize StandardNV12 { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSize StandardNV6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmSize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSize left, Azure.ResourceManager.Hci.Vm.Models.HciVmSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSize (string value) { throw null; }
@@ -3320,9 +3238,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType Info { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType left, Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType (string value) { throw null; }
@@ -3726,29 +3642,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType InProgress { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType left, Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType left, Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class VirtualMachineInstanceManagedDiskContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>
-    {
-        public VirtualMachineInstanceManagedDiskContent() { }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VirtualNetworkSubnetUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualNetworkSubnetUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualNetworkSubnetUpdateProperties>
     {

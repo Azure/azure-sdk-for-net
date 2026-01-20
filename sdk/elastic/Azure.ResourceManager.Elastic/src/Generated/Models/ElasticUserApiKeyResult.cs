@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> The User Api Key created for the Organization associated with the User Email Id that was passed in the request. </summary>
     public partial class ElasticUserApiKeyResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticUserApiKeyResult"/>. </summary>
         internal ElasticUserApiKeyResult()
@@ -52,19 +23,23 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Initializes a new instance of <see cref="ElasticUserApiKeyResult"/>. </summary>
         /// <param name="properties"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticUserApiKeyResult(ElasticUserApiKeyProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticUserApiKeyResult(ElasticUserApiKeyProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ElasticUserApiKeyProperties Properties { get; }
+
         /// <summary> The User Api Key Generated based on GenerateApiKey flag. This is applicable for non-Portal clients only. </summary>
         public string ElasticUserApiKey
         {
-            get => Properties?.ApiKey;
+            get
+            {
+                return Properties.ApiKey;
+            }
         }
     }
 }

@@ -243,7 +243,15 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     var propertyValue = property.Value.GetString();
+                    if (string.IsNullOrEmpty(propertyValue))
+                    {
+                        continue;
+                    }
                     if (useManagedServiceIdentityV3 && propertyValue == SystemAssignedUserAssignedV3Value)
                     {
                         type = ManagedServiceIdentityType.SystemAssignedUserAssigned;

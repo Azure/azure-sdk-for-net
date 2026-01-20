@@ -10,16 +10,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudData>
+    /// <summary> A private cloud resource. </summary>
+    public partial class AvsPrivateCloudData : TrackedResourceData, IJsonModel<AvsPrivateCloudData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/> for deserialization. </summary>
+        internal AvsPrivateCloudData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsPrivateCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +38,17 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Identity))
@@ -49,114 +60,7 @@ namespace Azure.ResourceManager.Avs
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (var item in Zones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ManagementCluster))
-            {
-                writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster, options);
-            }
-            if (Optional.IsDefined(Internet))
-            {
-                writer.WritePropertyName("internet"u8);
-                writer.WriteStringValue(Internet.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(IdentitySources))
-            {
-                writer.WritePropertyName("identitySources"u8);
-                writer.WriteStartArray();
-                foreach (var item in IdentitySources)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Availability))
-            {
-                writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability, options);
-            }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
-            }
-            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
-            {
-                writer.WritePropertyName("extendedNetworkBlocks"u8);
-                writer.WriteStartArray();
-                foreach (var item in ExtendedNetworkBlocks)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(Circuit))
-            {
-                writer.WritePropertyName("circuit"u8);
-                writer.WriteObjectValue(Circuit, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Endpoints))
-            {
-                writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints, options);
-            }
-            if (Optional.IsDefined(NetworkBlock))
-            {
-                writer.WritePropertyName("networkBlock"u8);
-                writer.WriteStringValue(NetworkBlock);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagementNetwork))
-            {
-                writer.WritePropertyName("managementNetwork"u8);
-                writer.WriteStringValue(ManagementNetwork);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningNetwork))
-            {
-                writer.WritePropertyName("provisioningNetwork"u8);
-                writer.WriteStringValue(ProvisioningNetwork);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VMotionNetwork))
-            {
-                writer.WritePropertyName("vmotionNetwork"u8);
-                writer.WriteStringValue(VMotionNetwork);
-            }
-            if (Optional.IsDefined(VCenterPassword))
-            {
-                writer.WritePropertyName("vcenterPassword"u8);
-                writer.WriteStringValue(VCenterPassword);
-            }
-            if (Optional.IsDefined(NsxtPassword))
-            {
-                writer.WritePropertyName("nsxtPassword"u8);
-                writer.WriteStringValue(NsxtPassword);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VCenterCertificateThumbprint))
-            {
-                writer.WritePropertyName("vcenterCertificateThumbprint"u8);
-                writer.WriteStringValue(VCenterCertificateThumbprint);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NsxtCertificateThumbprint))
-            {
-                writer.WritePropertyName("nsxtCertificateThumbprint"u8);
-                writer.WriteStringValue(NsxtCertificateThumbprint);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalCloudLinks))
-            {
-                writer.WritePropertyName("externalCloudLinks"u8);
-                writer.WriteStartArray();
-                foreach (var item in ExternalCloudLinks)
+                foreach (string item in Zones)
                 {
                     if (item == null)
                     {
@@ -167,400 +71,174 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SecondaryCircuit))
-            {
-                writer.WritePropertyName("secondaryCircuit"u8);
-                writer.WriteObjectValue(SecondaryCircuit, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
-            {
-                writer.WritePropertyName("nsxPublicIpQuotaRaised"u8);
-                writer.WriteStringValue(NsxPublicIPQuotaRaised.Value.ToString());
-            }
-            if (Optional.IsDefined(VirtualNetworkId))
-            {
-                writer.WritePropertyName("virtualNetworkId"u8);
-                writer.WriteStringValue(VirtualNetworkId);
-            }
-            if (Optional.IsDefined(DnsZoneType))
-            {
-                writer.WritePropertyName("dnsZoneType"u8);
-                writer.WriteStringValue(DnsZoneType.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        AvsPrivateCloudData IJsonModel<AvsPrivateCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsPrivateCloudData IJsonModel<AvsPrivateCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AvsPrivateCloudData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAvsPrivateCloudData(document.RootElement, options);
         }
 
-        internal static AvsPrivateCloudData DeserializeAvsPrivateCloudData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AvsPrivateCloudData DeserializeAvsPrivateCloudData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            PrivateCloudProperties properties = default;
             AvsSku sku = default;
             ManagedServiceIdentity identity = default;
             IList<string> zones = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            AvsManagementCluster managementCluster = default;
-            InternetConnectivityState? internet = default;
-            IList<SingleSignOnIdentitySource> identitySources = default;
-            PrivateCloudAvailabilityProperties availability = default;
-            CustomerManagedEncryption encryption = default;
-            IList<string> extendedNetworkBlocks = default;
-            AvsPrivateCloudProvisioningState? provisioningState = default;
-            ExpressRouteCircuit circuit = default;
-            AvsPrivateCloudEndpoints endpoints = default;
-            string networkBlock = default;
-            string managementNetwork = default;
-            string provisioningNetwork = default;
-            string vmotionNetwork = default;
-            string vcenterPassword = default;
-            string nsxtPassword = default;
-            string vcenterCertificateThumbprint = default;
-            string nsxtCertificateThumbprint = default;
-            IReadOnlyList<ResourceIdentifier> externalCloudLinks = default;
-            ExpressRouteCircuit secondaryCircuit = default;
-            NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
-            ResourceIdentifier virtualNetworkId = default;
-            AvsDnsZoneType? dnsZoneType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAvsContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    zones = array;
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
+                    properties = PrivateCloudProperties.DeserializePrivateCloudProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    sku = AvsSku.DeserializeAvsSku(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("zones"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("managementCluster"u8))
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
-                            continue;
+                            array.Add(null);
                         }
-                        if (property0.NameEquals("internet"u8))
+                        else
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            internet = new InternetConnectivityState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("identitySources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item, options));
-                            }
-                            identitySources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("availability"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("encryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("extendedNetworkBlocks"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            extendedNetworkBlocks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AvsPrivateCloudProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("circuit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            circuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("endpoints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endpoints = AvsPrivateCloudEndpoints.DeserializeAvsPrivateCloudEndpoints(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkBlock"u8))
-                        {
-                            networkBlock = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("managementNetwork"u8))
-                        {
-                            managementNetwork = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningNetwork"u8))
-                        {
-                            provisioningNetwork = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmotionNetwork"u8))
-                        {
-                            vmotionNetwork = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vcenterPassword"u8))
-                        {
-                            vcenterPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("nsxtPassword"u8))
-                        {
-                            nsxtPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vcenterCertificateThumbprint"u8))
-                        {
-                            vcenterCertificateThumbprint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("nsxtCertificateThumbprint"u8))
-                        {
-                            nsxtCertificateThumbprint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("externalCloudLinks"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            externalCloudLinks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("secondaryCircuit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            secondaryCircuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("nsxPublicIpQuotaRaised"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            nsxPublicIPQuotaRaised = new NsxPublicIPQuotaRaisedEnum(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualNetworkId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualNetworkId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsZoneType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dnsZoneType = new AvsDnsZoneType(property0.Value.GetString());
-                            continue;
+                            array.Add(item.GetString());
                         }
                     }
+                    zones = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AvsPrivateCloudData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managementCluster,
-                internet,
-                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
-                availability,
-                encryption,
-                extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
-                provisioningState,
-                circuit,
-                endpoints,
-                networkBlock,
-                managementNetwork,
-                provisioningNetwork,
-                vmotionNetwork,
-                vcenterPassword,
-                nsxtPassword,
-                vcenterCertificateThumbprint,
-                nsxtCertificateThumbprint,
-                externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>(),
-                secondaryCircuit,
-                nsxPublicIPQuotaRaised,
-                virtualNetworkId,
-                dnsZoneType,
+                properties,
                 sku,
                 identity,
-                zones ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                zones ?? new ChangeTrackingList<string>());
         }
 
-        BinaryData IPersistableModel<AvsPrivateCloudData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvsPrivateCloudData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -570,15 +248,20 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        AvsPrivateCloudData IPersistableModel<AvsPrivateCloudData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsPrivateCloudData IPersistableModel<AvsPrivateCloudData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsPrivateCloudData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAvsPrivateCloudData(document.RootElement, options);
                     }
                 default:
@@ -586,6 +269,26 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsPrivateCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="avsPrivateCloudData"> The <see cref="AvsPrivateCloudData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AvsPrivateCloudData avsPrivateCloudData)
+        {
+            if (avsPrivateCloudData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(avsPrivateCloudData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvsPrivateCloudData"/> from. </param>
+        internal static AvsPrivateCloudData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAvsPrivateCloudData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsSubscriptionTrialStatus : IEquatable<AvsSubscriptionTrialStatus>
     {
         private readonly string _value;
+        /// <summary> is available. </summary>
+        private const string TrialAvailableValue = "TrialAvailable";
+        /// <summary> is used. </summary>
+        private const string TrialUsedValue = "TrialUsed";
+        /// <summary> is disabled. </summary>
+        private const string TrialDisabledValue = "TrialDisabled";
 
         /// <summary> Initializes a new instance of <see cref="AvsSubscriptionTrialStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsSubscriptionTrialStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrialAvailableValue = "TrialAvailable";
-        private const string TrialUsedValue = "TrialUsed";
-        private const string TrialDisabledValue = "TrialDisabled";
+            _value = value;
+        }
 
         /// <summary> is available. </summary>
         public static AvsSubscriptionTrialStatus TrialAvailable { get; } = new AvsSubscriptionTrialStatus(TrialAvailableValue);
+
         /// <summary> is used. </summary>
         public static AvsSubscriptionTrialStatus TrialUsed { get; } = new AvsSubscriptionTrialStatus(TrialUsedValue);
+
         /// <summary> is disabled. </summary>
         public static AvsSubscriptionTrialStatus TrialDisabled { get; } = new AvsSubscriptionTrialStatus(TrialDisabledValue);
+
         /// <summary> Determines if two <see cref="AvsSubscriptionTrialStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsSubscriptionTrialStatus left, AvsSubscriptionTrialStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvsSubscriptionTrialStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsSubscriptionTrialStatus left, AvsSubscriptionTrialStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsSubscriptionTrialStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvsSubscriptionTrialStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvsSubscriptionTrialStatus(string value) => new AvsSubscriptionTrialStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvsSubscriptionTrialStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvsSubscriptionTrialStatus?(string value) => value == null ? null : new AvsSubscriptionTrialStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsSubscriptionTrialStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvsSubscriptionTrialStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

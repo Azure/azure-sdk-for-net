@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMwareToAzStack disk input. </summary>
     public partial class VMwareToAzStackHciDiskInput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciDiskInput"/>. </summary>
         /// <param name="diskId"> Gets or sets the disk Id. </param>
@@ -75,8 +47,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="diskPhysicalSectorSize"> Gets or sets a value of disk physical sector size. </param>
         /// <param name="diskIdentifier"> Gets or sets a value of disk identifier. </param>
         /// <param name="diskController"> Disk controller. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareToAzStackHciDiskInput(string diskId, ResourceIdentifier storageContainerId, bool? isDynamic, long diskSizeGB, string diskFileFormat, bool isOSDisk, long? diskBlockSize, long? diskLogicalSectorSize, long? diskPhysicalSectorSize, string diskIdentifier, DataReplicationDiskControllerInputs diskController, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareToAzStackHciDiskInput(string diskId, ResourceIdentifier storageContainerId, bool? isDynamic, long diskSizeGB, string diskFileFormat, bool isOSDisk, long? diskBlockSize, long? diskLogicalSectorSize, long? diskPhysicalSectorSize, string diskIdentifier, DataReplicationDiskControllerInputs diskController, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             StorageContainerId = storageContainerId;
@@ -89,34 +61,39 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DiskPhysicalSectorSize = diskPhysicalSectorSize;
             DiskIdentifier = diskIdentifier;
             DiskController = diskController;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciDiskInput"/> for deserialization. </summary>
-        internal VMwareToAzStackHciDiskInput()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the disk Id. </summary>
         public string DiskId { get; set; }
+
         /// <summary> Gets or sets the target storage account ARM Id. </summary>
         public ResourceIdentifier StorageContainerId { get; set; }
+
         /// <summary> Gets or sets a value indicating whether dynamic sizing is enabled on the virtual hard disk. </summary>
         public bool? IsDynamic { get; set; }
+
         /// <summary> Gets or sets the disk size in GB. </summary>
         public long DiskSizeGB { get; set; }
+
         /// <summary> Gets or sets the type of the virtual hard disk, vhd or vhdx. </summary>
         public string DiskFileFormat { get; set; }
+
         /// <summary> Gets or sets a value indicating whether disk is os disk. </summary>
         public bool IsOSDisk { get; set; }
+
         /// <summary> Gets or sets a value of disk block size. </summary>
         public long? DiskBlockSize { get; set; }
+
         /// <summary> Gets or sets a value of disk logical sector size. </summary>
         public long? DiskLogicalSectorSize { get; set; }
+
         /// <summary> Gets or sets a value of disk physical sector size. </summary>
         public long? DiskPhysicalSectorSize { get; set; }
+
         /// <summary> Gets or sets a value of disk identifier. </summary>
         public string DiskIdentifier { get; set; }
+
         /// <summary> Disk controller. </summary>
         public DataReplicationDiskControllerInputs DiskController { get; set; }
     }
