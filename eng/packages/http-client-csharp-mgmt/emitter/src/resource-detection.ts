@@ -968,22 +968,16 @@ function buildArmProviderSchemaFromDetectedResources(
 
               if (parentMetadata) {
                 parentMetadata.methods.push(method);
-              } else {
-                // If parent not found, treat as non-resource method
-                nonResourceMethods.set(method.methodId, {
-                  methodId: method.methodId,
-                  operationPath: method.operationPath,
-                  operationScope: method.operationScope
-                });
+                continue; // Skip to next method, don't add to nonResourceMethods
               }
-            } else {
-              // Move other methods (Create, Update, Delete) to non-resource methods
-              nonResourceMethods.set(method.methodId, {
-                methodId: method.methodId,
-                operationPath: method.operationPath,
-                operationScope: method.operationScope
-              });
             }
+
+            // Move methods to non-resource methods if not added to parent
+            nonResourceMethods.set(method.methodId, {
+              methodId: method.methodId,
+              operationPath: method.operationPath,
+              operationScope: method.operationScope
+            });
           }
 
           sdkContext.logger.reportDiagnostic({
