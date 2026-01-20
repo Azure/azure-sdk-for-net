@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,9 +14,9 @@ using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    internal partial class EndpointsGetAllAsyncCollectionResultOfT : AsyncPageable<NeonEndpoint>
+    internal partial class NeonRolesGetNeonRolesCollectionResultOfT : Pageable<NeonRole>
     {
-        private readonly Endpoints _client;
+        private readonly NeonRoles _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _organizationName;
@@ -25,15 +24,15 @@ namespace Azure.ResourceManager.NeonPostgres
         private readonly string _branchName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of EndpointsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Endpoints client used to send requests. </param>
+        /// <summary> Initializes a new instance of NeonRolesGetNeonRolesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The NeonRoles client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EndpointsGetAllAsyncCollectionResultOfT(Endpoints client, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public NeonRolesGetNeonRolesCollectionResultOfT(NeonRoles client, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,22 +43,22 @@ namespace Azure.ResourceManager.NeonPostgres
             _context = context;
         }
 
-        /// <summary> Gets the pages of EndpointsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NeonRolesGetNeonRolesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EndpointsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NeonEndpoint>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of NeonRolesGetNeonRolesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<NeonRole>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                EndpointListResult result = EndpointListResult.FromResponse(response);
-                yield return Page<NeonEndpoint>.FromValues((IReadOnlyList<NeonEndpoint>)result.Value, nextPage?.AbsoluteUri, response);
+                NeonRoleListResult result = NeonRoleListResult.FromResponse(response);
+                yield return Page<NeonRole>.FromValues((IReadOnlyList<NeonRole>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -71,14 +70,14 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNeonRolesRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetNeonRolesRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetNeonRoles");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

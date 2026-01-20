@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
+        internal HttpMessage CreateGetNeonRolesRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
+        internal HttpMessage CreateNextGetNeonRolesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string neonRoleName, RequestContext context)
+        internal HttpMessage CreateDeleteNeonRoleRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string neonRoleName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

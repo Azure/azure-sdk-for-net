@@ -15,7 +15,7 @@ using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    internal partial class NeonRolesGetAllAsyncCollectionResultOfT : AsyncPageable<NeonRole>
+    internal partial class NeonRolesGetNeonRolesAsyncCollectionResultOfT : AsyncPageable<NeonRole>
     {
         private readonly NeonRoles _client;
         private readonly Guid _subscriptionId;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NeonPostgres
         private readonly string _branchName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of NeonRolesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of NeonRolesGetNeonRolesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NeonRoles client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public NeonRolesGetAllAsyncCollectionResultOfT(NeonRoles client, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public NeonRolesGetNeonRolesAsyncCollectionResultOfT(NeonRoles client, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NeonPostgres
             _context = context;
         }
 
-        /// <summary> Gets the pages of NeonRolesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NeonRolesGetNeonRolesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NeonRolesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of NeonRolesGetNeonRolesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<NeonRole>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNeonRolesRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetNeonRolesRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetNeonRoles");
             scope.Start();
             try
             {

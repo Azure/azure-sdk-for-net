@@ -103,29 +103,5 @@ namespace Azure.ResourceManager.NeonPostgres
             request.Content = content;
             return message;
         }
-
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string neonDatabaseName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Neon.Postgres/organizations/", false);
-            uri.AppendPath(organizationName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/branches/", false);
-            uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonDatabases/", false);
-            uri.AppendPath(neonDatabaseName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            return message;
-        }
     }
 }
