@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string resourceType = default;
+            ResourceType? resourceType = default;
             ResourceSku sku = default;
             ApiManagementResourceSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -96,7 +96,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -148,15 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(ResourceType))
                 {
                     builder.Append("  resourceType: ");
-                    if (ResourceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceType}'");
-                    }
+                    builder.AppendLine($"'{ResourceType.Value.ToString()}'");
                 }
             }
 

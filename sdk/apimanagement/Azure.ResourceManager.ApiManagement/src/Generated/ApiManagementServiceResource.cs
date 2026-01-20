@@ -1495,14 +1495,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="opid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="opid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetApiManagementOpenIdConnectProviderAsync(string opid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetApiManagementOpenIdConnectProviderAsync(string openId, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementOpenIdConnectProviders().GetAsync(opid, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementOpenIdConnectProviders().GetAsync(openId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1526,14 +1526,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="opid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="opid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvider(string opid, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvider(string openId, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementOpenIdConnectProviders().Get(opid, cancellationToken);
+            return GetApiManagementOpenIdConnectProviders().Get(openId, cancellationToken);
         }
 
         /// <summary> Gets a collection of PolicyFragmentContractResources in the ApiManagementService. </summary>
@@ -3710,7 +3710,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
@@ -3750,7 +3750,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
@@ -4015,7 +4015,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
@@ -4057,7 +4057,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));

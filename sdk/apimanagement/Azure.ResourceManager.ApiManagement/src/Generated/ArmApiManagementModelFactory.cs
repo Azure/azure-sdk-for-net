@@ -2894,7 +2894,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional.
         /// Serialized Name: AuthorizationServerUpdateContract.properties.authorizationMethods
         /// </param>
-        /// <param name="clientAuthenticationMethod">
+        /// <param name="clientAuthenticationMethods">
         /// Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format.
         /// Serialized Name: AuthorizationServerUpdateContract.properties.clientAuthenticationMethod
         /// </param>
@@ -2959,10 +2959,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: AuthorizationServerUpdateContract.properties.clientSecret
         /// </param>
         /// <returns> A new <see cref="Models.ApiManagementAuthorizationServerPatch"/> instance for mocking. </returns>
-        public static ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<AuthorizationMethod> authorizationMethods = null, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethod = null, IEnumerable<TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = null, string defaultScope = null, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, bool? useInTestConsole = null, bool? useInApiDocumentation = null, string clientRegistrationEndpoint = null, string authorizationEndpoint = null, IEnumerable<GrantType> grantTypes = null, string clientId = null, string clientSecret = null)
+        public static ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<AuthorizationMethod> authorizationMethods = null, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods = null, IEnumerable<TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = null, string defaultScope = null, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, bool? useInTestConsole = null, bool? useInApiDocumentation = null, string clientRegistrationEndpoint = null, string authorizationEndpoint = null, IEnumerable<GrantType> grantTypes = null, string clientId = null, string clientSecret = null)
         {
             authorizationMethods ??= new List<AuthorizationMethod>();
-            clientAuthenticationMethod ??= new List<ClientAuthenticationMethod>();
+            clientAuthenticationMethods ??= new List<ClientAuthenticationMethod>();
             tokenBodyParameters ??= new List<TokenBodyParameterContract>();
             bearerTokenSendingMethods ??= new List<BearerTokenSendingMethod>();
             grantTypes ??= new List<GrantType>();
@@ -2974,7 +2974,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 description,
                 authorizationMethods?.ToList(),
-                clientAuthenticationMethod?.ToList(),
+                clientAuthenticationMethods?.ToList(),
                 tokenBodyParameters?.ToList(),
                 tokenEndpoint,
                 doesSupportState,
@@ -5651,7 +5651,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ResourceSkuResult.capacity
         /// </param>
         /// <returns> A new <see cref="Models.AvailableApiManagementServiceSkuResult"/> instance for mocking. </returns>
-        public static AvailableApiManagementServiceSkuResult AvailableApiManagementServiceSkuResult(string resourceType = null, ApiManagementServiceSkuType? skuName = null, ApiManagementResourceSkuCapacity capacity = null)
+        public static AvailableApiManagementServiceSkuResult AvailableApiManagementServiceSkuResult(ResourceType? resourceType = null, ApiManagementServiceSkuType? skuName = null, ApiManagementResourceSkuCapacity capacity = null)
         {
             return new AvailableApiManagementServiceSkuResult(resourceType, skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null, capacity, serializedAdditionalRawData: null);
         }
@@ -6768,6 +6768,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<AuthorizationMethod> authorizationMethods, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods, IEnumerable<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IEnumerable<GrantType> grantTypes, string clientId, string clientSecret)
         {
             return ApiManagementAuthorizationServerData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, authorizationMethods: authorizationMethods, clientAuthenticationMethods: clientAuthenticationMethods, tokenBodyParameters: tokenBodyParameters, tokenEndpoint: tokenEndpoint, doesSupportState: doesSupportState, defaultScope: defaultScope, bearerTokenSendingMethods: bearerTokenSendingMethods, resourceOwnerUsername: resourceOwnerUsername, resourceOwnerPassword: resourceOwnerPassword, displayName: displayName, useInTestConsole: default, useInApiDocumentation: default, clientRegistrationEndpoint: clientRegistrationEndpoint, authorizationEndpoint: authorizationEndpoint, grantTypes: grantTypes, clientId: clientId, clientSecret: clientSecret);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerPatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the authorization server. Can contain HTML formatting tags. </param>
+        /// <param name="authorizationMethods"> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </param>
+        /// <param name="clientAuthenticationMethods"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
+        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </param>
+        /// <param name="tokenEndpoint"> OAuth token endpoint. Contains absolute URI to entity being referenced. </param>
+        /// <param name="doesSupportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
+        /// <param name="defaultScope"> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </param>
+        /// <param name="bearerTokenSendingMethods"> Specifies the mechanism by which access token is passed to the API. </param>
+        /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
+        /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
+        /// <param name="displayName"> User-friendly authorization server name. </param>
+        /// <param name="clientRegistrationEndpoint"> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </param>
+        /// <param name="authorizationEndpoint"> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </param>
+        /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
+        /// <param name="clientId"> Client or app id registered with this authorization server. </param>
+        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationServerPatch" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<AuthorizationMethod> authorizationMethods, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods, IEnumerable<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IEnumerable<GrantType> grantTypes, string clientId, string clientSecret)
+        {
+            return ApiManagementAuthorizationServerPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, authorizationMethods: authorizationMethods, clientAuthenticationMethods: clientAuthenticationMethods, tokenBodyParameters: tokenBodyParameters, tokenEndpoint: tokenEndpoint, doesSupportState: doesSupportState, defaultScope: defaultScope, bearerTokenSendingMethods: bearerTokenSendingMethods, resourceOwnerUsername: resourceOwnerUsername, resourceOwnerPassword: resourceOwnerPassword, displayName: displayName, useInTestConsole: default, useInApiDocumentation: default, clientRegistrationEndpoint: clientRegistrationEndpoint, authorizationEndpoint: authorizationEndpoint, grantTypes: grantTypes, clientId: clientId, clientSecret: clientSecret);
         }
 
         /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>

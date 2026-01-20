@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientAuthenticationMethod))
+            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
             {
                 writer.WritePropertyName("clientAuthenticationMethod"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClientAuthenticationMethod)
+                foreach (var item in ClientAuthenticationMethods)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthenticationMethod), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthenticationMethods), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    clientAuthenticationMethod: ");
@@ -539,13 +539,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(ClientAuthenticationMethod))
+                if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
                 {
-                    if (ClientAuthenticationMethod.Any())
+                    if (ClientAuthenticationMethods.Any())
                     {
                         builder.Append("    clientAuthenticationMethod: ");
                         builder.AppendLine("[");
-                        foreach (var item in ClientAuthenticationMethod)
+                        foreach (var item in ClientAuthenticationMethods)
                         {
                             builder.AppendLine($"      '{item.ToString()}'");
                         }

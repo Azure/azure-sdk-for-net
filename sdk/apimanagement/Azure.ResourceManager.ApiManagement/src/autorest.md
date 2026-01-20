@@ -376,6 +376,8 @@ rename-mapping:
   AuthorizationServerUpdateContract.properties.supportState: DoesSupportState
   ProductContract.properties.subscriptionRequired: IsSubscriptionRequired
   ProductContract.properties.approvalRequired: IsApprovalRequired
+  ResourceSkuResult.resourceType: -|resource-type
+  AuthorizationServerUpdateContract.properties.clientAuthenticationMethod: ClientAuthenticationMethods
 
 keep-plural-resource-data:
   - ApiManagementWorkspaceLinks
@@ -425,12 +427,27 @@ directive:
               }
           }
       }
-#   - from: openapi.json
-#     where: $.parameters
-#     transform: >
-#       $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
-#       $.IfMatchOptionalParameter['x-ms-format'] = 'etag';
-#       $.IfMatchRequiredParameter['x-ms-format'] = 'etag';
+      for (var pathName in $.paths) {
+          var path = $.paths[pathName];
+          if (path.parameters) {
+              for (var i = 0; i < path.parameters.length; i++) {
+                  if (path.parameters[i].name === 'opid') {
+                      path.parameters[i]['x-ms-client-name'] = 'OpenId';
+                  }
+              }
+          }
+          for (var methodName in path) {
+              if (methodName === 'parameters') continue;
+              var operation = path[methodName];
+              if (operation.parameters) {
+                  for (var i = 0; i < operation.parameters.length; i++) {
+                      if (operation.parameters[i].name === 'opid') {
+                          operation.parameters[i]['x-ms-client-name'] = 'OpenId';
+                      }
+                  }
+              }
+          }
+      }
   - from: openapi.json
     where: $.paths
     transform: >
@@ -681,7 +698,8 @@ directive:
                         "in": "header",
                         "description": "ETag of the Entity. Not required when creating an entity, but required when updating an entity.",
                         "required": false,
-                        "type": "string"
+                        "type": "string",
+                        "x-ms-format": "etag"
                       },
                       {
                           "name": "api-version",
@@ -747,7 +765,8 @@ directive:
                         "in": "header",
                         "description": "ETag of the Entity. Not required when creating an entity, but required when updating an entity.",
                         "required": false,
-                        "type": "string"
+                        "type": "string",
+                        "x-ms-format": "etag"
                       },
                       {
                           "name": "api-version",
