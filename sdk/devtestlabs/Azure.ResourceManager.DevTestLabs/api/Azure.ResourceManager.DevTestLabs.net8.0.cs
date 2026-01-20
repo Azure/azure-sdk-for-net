@@ -2295,10 +2295,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabManagedIdentity() { }
         public System.Uri ClientSecretUri { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType? ManagedIdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentityType ManagedIdentityType { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3089,25 +3088,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabWindowsOSState (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabWindowsOSState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabWindowsOSState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabWindowsOSState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType left, Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType left, Azure.ResourceManager.DevTestLabs.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
