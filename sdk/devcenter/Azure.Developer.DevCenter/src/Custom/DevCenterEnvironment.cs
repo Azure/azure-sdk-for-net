@@ -34,5 +34,12 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(catalogName, nameof(catalogName));
             Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
         }
+
+        internal RequestContent ToRequestContent()
+        {
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }
