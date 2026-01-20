@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string privateEndpointConnectionName = "privateEndpointConnectionName";
             ApiManagementPrivateEndpointConnectionCreateOrUpdateContent content = new ApiManagementPrivateEndpointConnectionCreateOrUpdateContent
             {
-                Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/privateEndpointConnections/connectionName",
+                Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/privateEndpointConnections/connectionName"),
                 PrivateLinkServiceConnectionState = new ApiManagementPrivateLinkServiceConnectionState
                 {
                     Status = ApiManagementPrivateEndpointServiceConnectionStatus.Approved,

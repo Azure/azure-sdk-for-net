@@ -355,6 +355,12 @@ rename-mapping:
   DeletedServiceContract.properties.serviceId: -|arm-id
   PortalSettingsContract.properties.subscriptions: IsSubscriptions
   PortalSettingsContract.properties.userRegistration: IsUserRegistration
+  PrivateEndpointConnectionRequest.id: -|arm-id
+  VirtualNetworkConfiguration.vnetid: -|uuid
+  VirtualNetworkConfiguration.subnetResourceId: -|arm-id
+  GatewayResourceSkuResult.resourceType: -|resource-type
+  ApiManagementServiceResource.properties.publicIpAddressId: -|arm-id
+  AdditionalLocation.publicIpAddressId: -|arm-id
 
 keep-plural-resource-data:
   - ApiManagementWorkspaceLinks
@@ -375,21 +381,11 @@ directive:
               }
           }
         }
-      $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
-  - from: openapi.json
-    where: $.definitions
-    transform: >
-      $.ApiManagementSku.properties.locations.items['x-ms-format'] = 'azure-location';
   - from: openapi.json
     where: $.definitions
     transform: >
       delete $.Operation;
       delete $.OperationListResult;
-      $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
-      $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
-      $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';
-      $.ApiManagementServiceBaseProperties.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
-      $.AdditionalLocation.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
   - from: openapi.json
     where: $.parameters
     transform: >

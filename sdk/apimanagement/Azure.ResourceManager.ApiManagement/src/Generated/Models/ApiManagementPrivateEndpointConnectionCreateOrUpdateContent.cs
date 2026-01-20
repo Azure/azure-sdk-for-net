@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: PrivateEndpointConnectionRequest.properties
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(string id, PrivateEndpointConnectionRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, PrivateEndpointConnectionRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Properties = properties;
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: PrivateEndpointConnectionRequest.id
         /// </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary>
         /// The connection state of the private endpoint connection.
         /// Serialized Name: PrivateEndpointConnectionRequest.properties
