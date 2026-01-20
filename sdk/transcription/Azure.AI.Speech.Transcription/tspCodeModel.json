@@ -173,6 +173,7 @@
       "name": "TranscriptionContent",
       "namespace": "Azure.AI.Speech.Transcription",
       "crossLanguageDefinitionId": "Azure.Ai.Speech.Transcription.TranscriptionContent",
+      "access": "internal",
       "usage": "Input,MultipartFormData",
       "doc": "Request model for transcription operation.",
       "decorators": [],

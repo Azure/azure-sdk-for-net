@@ -9,13 +9,8 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Speech.Transcription
 {
-    public static partial class SpeechTranscriptionModelFactory
+    public static partial class AzureAISpeechTranscriptionModelFactory
     {
-        public static TranscriptionContent TranscriptionContent(TranscriptionOptions options = default, BinaryData audio = default)
-        {
-            return new TranscriptionContent(options, audio, additionalBinaryDataProperties: null);
-        }
-
         public static TranscriptionOptions TranscriptionOptions(Uri audioUri = default, IEnumerable<string> locales = default, IDictionary<string, Uri> models = default, ProfanityFilterMode? profanityFilterMode = default, TranscriptionDiarizationOptions diarizationOptions = default, IEnumerable<int> activeChannels = default, EnhancedModeProperties enhancedMode = default, PhraseListProperties phraseList = default)
         {
             locales ??= new ChangeTrackingList<string>();

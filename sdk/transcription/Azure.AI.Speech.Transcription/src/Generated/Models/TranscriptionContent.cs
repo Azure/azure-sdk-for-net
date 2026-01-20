@@ -7,14 +7,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Speech.Transcription
 {
-    public partial class TranscriptionContent
+    internal partial class TranscriptionContent
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         public TranscriptionContent(TranscriptionOptions options)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
             Options = options;
         }
 

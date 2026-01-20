@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Speech.Transcription
 {
-    public partial class TranscriptionContent : IJsonModel<TranscriptionContent>
+    internal partial class TranscriptionContent : IJsonModel<TranscriptionContent>
     {
         internal TranscriptionContent()
         {
