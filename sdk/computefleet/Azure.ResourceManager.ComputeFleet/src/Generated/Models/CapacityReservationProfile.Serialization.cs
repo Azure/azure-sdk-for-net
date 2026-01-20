@@ -14,7 +14,7 @@ using Azure.ResourceManager.ComputeFleet;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> The parameters of a capacity reservation Profile. </summary>
-    public partial class CapacityReservationProfile : IJsonModel<CapacityReservationProfile>
+    internal partial class CapacityReservationProfile : IJsonModel<CapacityReservationProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

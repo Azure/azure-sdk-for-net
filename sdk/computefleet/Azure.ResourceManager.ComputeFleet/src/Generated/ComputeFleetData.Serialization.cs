@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeFleet
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan, options);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ComputeFleet
             ComputeFleetProperties properties = default;
             IList<string> zones = default;
             ManagedServiceIdentity identity = default;
-            ComputeFleetPlan plan = default;
+            ArmPlan plan = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     {
                         continue;
                     }
-                    plan = ComputeFleetPlan.DeserializeComputeFleetPlan(prop.Value, options);
+                    plan = ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

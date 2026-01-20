@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="ComputeFleet.ComputeFleetData"/> instance for mocking. </returns>
-        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeFleetProperties properties = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ComputeFleetPlan plan = default)
+        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeFleetProperties properties = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -215,11 +215,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// encoded. Customer should not pass any secrets in here. Minimum api-version:
         /// 2021-03-01.
         /// </param>
-        /// <param name="capacityReservation">
-        /// Specifies the capacity reservation related details of a scale set. Minimum
-        /// api-version: 2021-04-01.
-        /// </param>
-        /// <param name="applicationGalleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="capacityReservationGroupId"> Resource Id. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="hardwareVmSizeProperties">
         /// Specifies the properties for customizing the size of the virtual machine.
         /// Minimum api-version: 2021-11-01. Please follow the instructions in [VM
@@ -240,7 +237,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// with minimum api-version 2023-09-01. Examples: "2024-07-01T00:00:01.1234567+00:00"
         /// </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmProfile"/> instance for mocking. </returns>
-        public static ComputeFleetVmProfile ComputeFleetVmProfile(ComputeFleetVmssOSProfile osProfile = default, ComputeFleetVmssStorageProfile storageProfile = default, ComputeFleetVmssNetworkProfile networkProfile = default, ComputeFleetSecurityProfile securityProfile = default, ComputeFleetBootDiagnostics bootDiagnostics = default, ComputeFleetVmssExtensionProfile extensionProfile = default, string licenseType = default, ComputeFleetScheduledEventsProfile scheduledEventsProfile = default, string userData = default, CapacityReservationProfile capacityReservation = default, IEnumerable<ComputeFleetVmGalleryApplication> applicationGalleryApplications = default, ComputeFleetVmSizeProperties hardwareVmSizeProperties = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeFleetSecurityPostureReference securityPostureReference = default, DateTimeOffset? createdOn = default)
+        public static ComputeFleetVmProfile ComputeFleetVmProfile(ComputeFleetVmssOSProfile osProfile = default, ComputeFleetVmssStorageProfile storageProfile = default, ComputeFleetVmssNetworkProfile networkProfile = default, ComputeFleetSecurityProfile securityProfile = default, ComputeFleetBootDiagnostics bootDiagnostics = default, ComputeFleetVmssExtensionProfile extensionProfile = default, string licenseType = default, ComputeFleetScheduledEventsProfile scheduledEventsProfile = default, string userData = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<ComputeFleetVmGalleryApplication> galleryApplications = default, ComputeFleetVmSizeProperties hardwareVmSizeProperties = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeFleetSecurityPostureReference securityPostureReference = default, DateTimeOffset? createdOn = default)
         {
             return new ComputeFleetVmProfile(
                 osProfile,
@@ -252,8 +249,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 licenseType,
                 scheduledEventsProfile,
                 userData,
-                capacityReservation,
-                applicationGalleryApplications is null ? default : new ComputeFleetApplicationProfile((applicationGalleryApplications ?? new ChangeTrackingList<ComputeFleetVmGalleryApplication>()).ToList(), null),
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new SubResource(capacityReservationGroupId, null), null),
+                galleryApplications is null ? default : new ComputeFleetApplicationProfile((galleryApplications ?? new ChangeTrackingList<ComputeFleetVmGalleryApplication>()).ToList(), null),
                 hardwareVmSizeProperties is null ? default : new ComputeFleetVmssHardwareProfile(hardwareVmSizeProperties, null),
                 serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, null),
                 securityPostureReference,
@@ -797,7 +794,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="plan"> Updatable resource plan. </param>
         /// <param name="properties"> RP-specific updatable properties. </param>
         /// <returns> A new <see cref="Models.ComputeFleetPatch"/> instance for mocking. </returns>
-        public static ComputeFleetPatch ComputeFleetPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ComputeFleetPlan plan = default, ComputeFleetProperties properties = default)
+        public static ComputeFleetPatch ComputeFleetPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default, ComputeFleetProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -809,11 +806,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmss"/> instance for mocking. </returns>
-        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @type = default, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = default)
+        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = default)
         {
             return new ComputeFleetVmss(
                 id,
@@ -821,7 +817,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                @type,
                 operationStatus,
                 error);
         }
@@ -900,92 +895,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId)
         {
             return ComputeFleetProperties(provisioningState, spotPriorityProfile, regularPriorityProfile, vmSizesProfile, vmAttributes, additionalLocationsLocationProfiles, computeProfile, createdOn, uniqueId, mode: default, capacityType: default, zoneAllocationPolicy: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVmProfile"/>. </summary>
-        /// <param name="osProfile">
-        /// Specifies the operating system settings for the virtual machines in the scale
-        ///             set.
-        /// </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="networkProfile">
-        /// Specifies properties of the network interfaces of the virtual machines in the
-        ///             scale set.
-        /// </param>
-        /// <param name="securityProfile">
-        /// Specifies the Security related profile settings for the virtual machines in the
-        ///             scale set.
-        /// </param>
-        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. </param>
-        /// <param name="extensionProfile">
-        /// Specifies a collection of settings for extensions installed on virtual machines
-        ///             in the scale set.
-        /// </param>
-        /// <param name="licenseType">
-        /// Specifies that the image or disk that is being used was licensed on-premises.
-        ///             &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt;
-        ///             Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux
-        ///             Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS
-        ///             (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for
-        ///             Windows
-        ///             Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
-        ///             &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux
-        ///             Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
-        ///             &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15
-        /// </param>
-        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
-        /// <param name="userData">
-        /// UserData for the virtual machines in the scale set, which must be base-64
-        ///             encoded. Customer should not pass any secrets in here. Minimum api-version:
-        ///             2021-03-01.
-        /// </param>
-        /// <param name="capacityReservationGroupId">
-        /// Specifies the capacity reservation related details of a scale set. Minimum
-        ///             api-version: 2021-04-01.
-        /// </param>
-        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        /// <param name="hardwareVmSizeProperties">
-        /// Specifies the hardware profile related details of a scale set. Minimum
-        ///             api-version: 2021-11-01.
-        /// </param>
-        /// <param name="serviceArtifactReferenceId">
-        /// Specifies the service artifact reference id used to set same image version for
-        ///             all virtual machines in the scale set when using 'latest' image version.
-        ///             Minimum api-version: 2022-11-01
-        /// </param>
-        /// <param name="securityPostureReference">
-        /// Specifies the security posture to be used for all virtual machines in the scale
-        ///             set. Minimum api-version: 2023-03-01
-        /// </param>
-        /// <param name="createdOn">
-        /// Specifies the time in which this VM profile for the Virtual Machine Scale Set
-        ///             was created. Minimum API version for this property is 2023-09-01. This value
-        ///             will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile
-        ///             with minimum api-version 2023-09-01. Examples: "2024-07-01T00:00:01.1234567+00:00"
-        /// </param>
-        /// <returns> A new <see cref="Models.ComputeFleetVmProfile"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComputeFleetVmProfile ComputeFleetVmProfile(ComputeFleetVmssOSProfile osProfile, ComputeFleetVmssStorageProfile storageProfile, ComputeFleetVmssNetworkProfile networkProfile, ComputeFleetSecurityProfile securityProfile, ComputeFleetBootDiagnostics bootDiagnostics, ComputeFleetVmssExtensionProfile extensionProfile, string licenseType, ComputeFleetScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<ComputeFleetVmGalleryApplication> galleryApplications, ComputeFleetVmSizeProperties hardwareVmSizeProperties, ResourceIdentifier serviceArtifactReferenceId, ComputeFleetSecurityPostureReference securityPostureReference, DateTimeOffset? createdOn)
-        {
-            galleryApplications ??= new ChangeTrackingList<ComputeFleetVmGalleryApplication>();
-
-            return new ComputeFleetVmProfile(
-                osProfile,
-                storageProfile,
-                networkProfile,
-                securityProfile,
-                default,
-                extensionProfile,
-                licenseType,
-                scheduledEventsProfile,
-                userData,
-                default,
-                default,
-                default,
-                default,
-                securityPostureReference,
-                createdOn,
-                additionalBinaryDataProperties: null);
         }
     }
 }

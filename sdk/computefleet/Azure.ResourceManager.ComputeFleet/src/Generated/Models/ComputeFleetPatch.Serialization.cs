@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ComputeFleet;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan, options);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            ComputeFleetPlan plan = default;
+            ArmPlan plan = default;
             ComputeFleetProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    plan = ComputeFleetPlan.DeserializeComputeFleetPlan(prop.Value, options);
+                    plan = ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

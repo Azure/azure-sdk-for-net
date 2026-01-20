@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> An AzureFleet's virtualMachineScaleSet. </summary>
-    public partial class ComputeFleetVmss
+    public partial class ComputeFleetVmss : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -29,13 +29,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
-        internal ComputeFleetVmss(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @type, ComputeFleetProvisioningState operationStatus, ComputeFleetApiError error) : base(id, name, resourceType, systemData)
+        internal ComputeFleetVmss(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeFleetProvisioningState operationStatus, ComputeFleetApiError error) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Type = @type;
             OperationStatus = operationStatus;
             Error = error;
         }

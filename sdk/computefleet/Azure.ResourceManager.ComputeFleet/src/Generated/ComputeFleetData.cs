@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="zones"> Zones in which the Compute Fleet is available. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        internal ComputeFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ComputeFleetProperties properties, IList<string> zones, ManagedServiceIdentity identity, ComputeFleetPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        internal ComputeFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ComputeFleetProperties properties, IList<string> zones, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.ComputeFleet
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Details of the resource plan. </summary>
-        public ComputeFleetPlan Plan { get; set; }
+        public ArmPlan Plan { get; set; }
     }
 }

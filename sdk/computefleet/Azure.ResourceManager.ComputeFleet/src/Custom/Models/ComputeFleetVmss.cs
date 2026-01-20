@@ -3,11 +3,9 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
-
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetVmss : ResourceData
+    public partial class ComputeFleetVmss
     {
         /// <summary> Type of the virtualMachineScaleSet. </summary>
         public string Type => ResourceType.ToString();

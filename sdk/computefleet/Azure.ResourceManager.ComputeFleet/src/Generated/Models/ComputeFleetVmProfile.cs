@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies the capacity reservation related details of a scale set. Minimum
         /// api-version: 2021-04-01.
         /// </summary>
-        public CapacityReservationProfile CapacityReservation { get; set; }
+        internal CapacityReservationProfile CapacityReservation { get; set; }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
         internal ComputeFleetApplicationProfile ApplicationProfile { get; set; }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<ComputeFleetVmGalleryApplication> ApplicationGalleryApplications
+        public IList<ComputeFleetVmGalleryApplication> GalleryApplications
         {
             get
             {

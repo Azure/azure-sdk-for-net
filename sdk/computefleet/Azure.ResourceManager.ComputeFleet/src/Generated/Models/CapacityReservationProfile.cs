@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> The parameters of a capacity reservation Profile. </summary>
-    public partial class CapacityReservationProfile
+    internal partial class CapacityReservationProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

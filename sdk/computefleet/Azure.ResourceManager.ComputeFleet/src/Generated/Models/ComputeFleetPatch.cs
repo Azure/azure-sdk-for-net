@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="plan"> Updatable resource plan. </param>
         /// <param name="properties"> RP-specific updatable properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ComputeFleetPlan plan, ComputeFleetProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan, ComputeFleetProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Updatable resource plan. </summary>
-        public ComputeFleetPlan Plan { get; set; }
+        public ArmPlan Plan { get; set; }
 
         /// <summary> RP-specific updatable properties. </summary>
         public ComputeFleetProperties Properties { get; set; }
