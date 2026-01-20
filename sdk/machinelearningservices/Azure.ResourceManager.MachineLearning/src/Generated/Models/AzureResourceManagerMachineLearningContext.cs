@@ -585,8 +585,6 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(UnknownWorkspaceConnectionPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(UpdateWorkspaceQuotasResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(UserCreatedAcrAccount))]
-    [ModelReaderWriterBuildable(typeof(UserCreatedStorageAccount))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineImage))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineSizeListResult))]
     [ModelReaderWriterBuildable(typeof(VolumeDefinition))]
