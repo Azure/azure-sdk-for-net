@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
             ResourceGroupResource resourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
             await this.CreateResources(resourceGroup);
-            // await this.CreateResources(resourceGroup);
+            await this.CreateResources(resourceGroup);
             List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolCollection = await resourceGroup.GetStandbyContainerGroupPools().ToEnumerableAsync();
             Assert.AreEqual(2, standbyContainerGroupPoolCollection.Count);
         }

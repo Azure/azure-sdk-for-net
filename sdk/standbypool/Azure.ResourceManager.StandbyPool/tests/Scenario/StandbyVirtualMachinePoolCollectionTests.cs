@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
             ResourceGroupResource resourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
             await this.CreateResources(resourceGroup);
-            // await this.CreateResources(resourceGroup);
+            await this.CreateResources(resourceGroup);
             List<StandbyVirtualMachinePoolResource> standbyVirtualMachinePoolCollection = await resourceGroup.GetStandbyVirtualMachinePools().ToEnumerableAsync();
             Assert.AreEqual(2, standbyVirtualMachinePoolCollection.Count);
         }
