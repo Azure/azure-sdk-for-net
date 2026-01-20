@@ -2,28 +2,26 @@
 // Licensed under the MIT License.
 
 using System.Reflection;
-using Azure.AI.AgentServer.Core.Tools;
+using Azure.Identity;
+using Microsoft.Extensions.AI;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Facade;
-using Azure.Core;
-using Azure.Identity;
-using Microsoft.Agents.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework.Extensions;
 
 /// <summary>
-/// Provides extension methods for configuring and customizing <see cref="AIAgentBuilder"/> instances.
+/// Provides extension methods for configuring chat client builders.
 /// </summary>
-public static class AIAgentBuilderExtensions
+public static class ChatClientBuilderExtensions
 {
     /// <summary>
-    /// Adds Foundry tool discovery to the agent pipeline and enables tool calling using the resolved tools.
+    /// Adds Foundry tool discovery to the chat client pipeline and enables tool calling using the resolved tools.
     /// </summary>
-    /// <param name="builder">The <see cref="AIAgentBuilder"/> to augment.</param>
+    /// <param name="builder">The chat client builder.</param>
     /// <param name="foundryTools">The Foundry tool definitions to resolve.</param>
-    /// <returns>The <see cref="AIAgentBuilder"/> instance with tool discovery added.</returns>
-    public static AIAgentBuilder UseFoundryTools(
-        this AIAgentBuilder builder,
+    /// <returns>The updated <see cref="ChatClientBuilder"/> instance.</returns>
+    public static ChatClientBuilder UseFoundryTools(
+        this ChatClientBuilder builder,
         params FoundryTool[] foundryTools)
     {
         ArgumentNullException.ThrowIfNull(builder);
@@ -35,15 +33,15 @@ public static class AIAgentBuilderExtensions
     /// <summary>
     /// Adds Foundry tool discovery using dictionary or anonymous-object facades.
     /// </summary>
-    /// <param name="builder">The <see cref="AIAgentBuilder"/> to augment.</param>
+    /// <param name="builder">The chat client builder.</param>
     /// <param name="foundryTools">
     /// Tool facades with a <c>type</c> discriminator. Use <c>type</c> values of
     /// <c>mcp</c> or <c>a2a</c> with <c>project_connection_id</c> for connected tools;
     /// any other <c>type</c> value maps to a hosted MCP tool name.
     /// </param>
-    /// <returns>The <see cref="AIAgentBuilder"/> instance with tool discovery added.</returns>
-    public static AIAgentBuilder UseFoundryTools(
-        this AIAgentBuilder builder,
+    /// <returns>The updated <see cref="ChatClientBuilder"/> instance.</returns>
+    public static ChatClientBuilder UseFoundryTools(
+        this ChatClientBuilder builder,
         params object[] foundryTools)
     {
         ArgumentNullException.ThrowIfNull(builder);
@@ -51,6 +49,25 @@ public static class AIAgentBuilderExtensions
 
         var converted = foundryTools.Select(ConvertToFoundryTool).ToList();
         return UseFoundryToolsInternal(builder, converted);
+    }
+
+    private static ChatClientBuilder UseFoundryToolsInternal(
+        ChatClientBuilder builder,
+        IReadOnlyList<FoundryTool> foundryTools)
+    {
+        if (foundryTools.Count == 0)
+        {
+            return builder;
+        }
+
+        var endpoint = ResolveProjectEndpoint();
+        var credential = new DefaultAzureCredential();
+
+        return builder.Use(innerClient =>
+        {
+            var functionInvokingClient = new FunctionInvokingChatClient(innerClient, loggerFactory: null, functionInvocationServices: null);
+            return new FoundryToolsChatClient(functionInvokingClient, endpoint, credential, foundryTools);
+        });
     }
 
     private static Uri ResolveProjectEndpoint()
@@ -62,25 +79,6 @@ public static class AIAgentBuilderExtensions
         }
 
         throw new InvalidOperationException("AZURE_AI_PROJECT_ENDPOINT must be set to resolve tools.");
-    }
-
-    private static AIAgentBuilder UseFoundryToolsInternal(
-        AIAgentBuilder builder,
-        IReadOnlyList<FoundryTool> foundryTools)
-    {
-        return builder.Use((innerAgent, services) =>
-        {
-            var endpoint = ResolveProjectEndpoint();
-            var toolCredential = (services.GetService(typeof(TokenCredential)) as TokenCredential) ?? new DefaultAzureCredential();
-
-            var options = new FoundryToolClientOptions
-            {
-                Tools = new List<FoundryTool>(foundryTools)
-            };
-
-            var toolClient = new ToolClient(new FoundryToolClient(endpoint, toolCredential, options));
-            return new FoundryToolAgent(innerAgent, toolClient);
-        });
     }
 
     private static FoundryTool ConvertToFoundryTool(object tool)
