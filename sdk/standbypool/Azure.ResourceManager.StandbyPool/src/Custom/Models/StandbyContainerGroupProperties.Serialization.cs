@@ -3,8 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -15,20 +18,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
     [CodeGenSerialization(nameof(SubnetIds), DeserializationValueHook = nameof(DeserializeSubnetIds))]
     public partial class StandbyContainerGroupProperties
     {
-        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element)
-        {
-            ResourceIdentifier id = null;
-            foreach (JsonProperty item in element.EnumerateObject())
-            {
-                if (item.NameEquals("id") && item.Value.ValueKind != JsonValueKind.Null)
-                {
-                    id = new ResourceIdentifier(item.Value.GetString());
-                }
-            }
-
-            return new WritableSubResource() { Id = id };
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void DeserializeSubnetIds(JsonProperty property, ref IList<WritableSubResource> subnetIds)
         {
@@ -39,7 +28,11 @@ namespace Azure.ResourceManager.StandbyPool.Models
             List<WritableSubResource> array = new List<WritableSubResource>();
             foreach (var item in property.Value.EnumerateArray())
             {
-                array.Add(DeserializeWritableSubResource(item));
+                if (item.ValueKind != JsonValueKind.Null)
+                {
+                    var writableSubResource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStandbyPoolContext.Default);
+                    array.Add(writableSubResource);
+                }
             }
             subnetIds = array;
         }
