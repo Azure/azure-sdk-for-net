@@ -31,7 +31,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(devBox, nameof(devBox));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(ModelReaderWriter.Write(devBox, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default));
+            using RequestContent content = ModelReaderWriter.Write(devBox, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default);
             Operation<BinaryData> response = await CreateDevBoxAsync(waitUntil, projectName, userId, devBox.Name, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, (Response r) => ModelReaderWriter.Read<DevBox>(r.Content, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default), ClientDiagnostics, "DevBoxesClient.CreateDevBox");
         }
@@ -53,7 +53,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(devBox, nameof(devBox));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(ModelReaderWriter.Write(devBox, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default));
+            using RequestContent content = ModelReaderWriter.Write(devBox, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default);
             Operation<BinaryData> response = CreateDevBox(waitUntil, projectName, userId, devBox.Name, content, context);
             return ProtocolOperationHelpers.Convert(response, (Response r) => ModelReaderWriter.Read<DevBox>(r.Content, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default), ClientDiagnostics, "DevBoxesClient.CreateDevBox");
         }

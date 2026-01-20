@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(environment, nameof(environment));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(ModelReaderWriter.Write(environment, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default));
+            using RequestContent content = ModelReaderWriter.Write(environment, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default);
             Operation<BinaryData> response = await CreateOrUpdateEnvironmentAsync(waitUntil, projectName, userId, environment.Name, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, (Response r) => ModelReaderWriter.Read<DevCenterEnvironment>(r.Content, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default), ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
         }
@@ -51,7 +51,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(environment, nameof(environment));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(ModelReaderWriter.Write(environment, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default));
+            using RequestContent content = ModelReaderWriter.Write(environment, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default);
             Operation<BinaryData> response = CreateOrUpdateEnvironment(waitUntil, projectName, userId, environment.Name, content, context);
             return ProtocolOperationHelpers.Convert(response, (Response r) => ModelReaderWriter.Read<DevCenterEnvironment>(r.Content, ModelSerializationExtensions.WireOptions, AzureDeveloperDevCenterContext.Default), ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
         }
