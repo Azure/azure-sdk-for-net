@@ -67,9 +67,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="toolChoice"> Specifies which tools the model is allowed to call during the session. </param>
         /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
         /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
+        /// <param name="reasoningEffort">
+        /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
+        /// Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
+        /// </param>
+        /// <param name="fillerResponse"> Configuration for filler response generation during latency or tool calls. </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
-        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, BinaryData turnDetection = default)
+        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, ReasoningEffort? reasoningEffort = default, BinaryData fillerResponse = default, BinaryData turnDetection = default)
         {
             modalities ??= new ChangeTrackingList<InteractionModality>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
@@ -93,6 +98,8 @@ namespace Azure.AI.VoiceLive
                 toolChoice,
                 temperature,
                 maxResponseOutputTokens,
+                reasoningEffort,
+                fillerResponse,
                 turnDetection,
                 additionalBinaryDataProperties: null);
         }
@@ -346,7 +353,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// The base representation of a voicelive tool definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.VoiceLiveFunctionDefinition"/> and <see cref="VoiceLive.VoiceLiveMcpServerDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.VoiceLiveFunctionDefinition"/>, <see cref="VoiceLive.VoiceLiveMcpServerDefinition"/>, and <see cref="VoiceLive.VoiceLiveFoundryAgentDefinition"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveToolDefinition"/> instance for mocking. </returns>
@@ -387,6 +394,95 @@ namespace Azure.AI.VoiceLive
                 headers,
                 allowedTools.ToList(),
                 requireApproval);
+        }
+
+        /// <summary> The definition of a Foundry agent tool as used by the voicelive endpoint. </summary>
+        /// <param name="agentName"> The name of the Foundry agent to call. </param>
+        /// <param name="agentVersion"> The version of the Foundry agent to call. </param>
+        /// <param name="projectName"> The name of the Foundry project containing the agent. </param>
+        /// <param name="clientId"> The client ID associated with the Foundry agent. </param>
+        /// <param name="description"> An optional description for the Foundry agent tool. If this is provided, it will be used instead of the agent's description in foundry portal. </param>
+        /// <param name="foundryResourceOverride"> An optional override for the Foundry resource used to execute the agent. </param>
+        /// <param name="agentContextType"> The context type to use when invoking the Foundry agent. Defaults to 'agent_context'. </param>
+        /// <param name="returnAgentResponseDirectly"> Whether to return the agent's response directly in the VoiceLive response. Set to false means to ask the voice live to rewrite the response. </param>
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveFoundryAgentDefinition"/> instance for mocking. </returns>
+        public static VoiceLiveFoundryAgentDefinition VoiceLiveFoundryAgentDefinition(string agentName = default, string agentVersion = default, string projectName = default, string clientId = default, string description = default, string foundryResourceOverride = default, FoundryAgentContextType? agentContextType = default, bool? returnAgentResponseDirectly = default)
+        {
+            return new VoiceLiveFoundryAgentDefinition(
+                ToolType.FoundryAgent,
+                additionalBinaryDataProperties: null,
+                agentName,
+                agentVersion,
+                projectName,
+                clientId,
+                description,
+                foundryResourceOverride,
+                agentContextType,
+                returnAgentResponseDirectly);
+        }
+
+        /// <summary>
+        /// Configuration for basic/static filler response generation.
+        /// Randomly selects from configured texts when any trigger condition is met.
+        /// </summary>
+        /// <param name="triggers">
+        /// List of triggers that can fire the filler. Any trigger can activate the filler (OR logic).
+        /// Supported: 'latency', 'tool'.
+        /// </param>
+        /// <param name="latencyThresholdMs"> Latency threshold in milliseconds before triggering filler response. Default is 2000ms. </param>
+        /// <param name="texts"> List of filler text options to randomly select from. </param>
+        /// <returns> A new <see cref="VoiceLive.BasicFillerResponseConfig"/> instance for mocking. </returns>
+        public static BasicFillerResponseConfig BasicFillerResponseConfig(IEnumerable<FillerTrigger> triggers = default, int? latencyThresholdMs = default, IEnumerable<string> texts = default)
+        {
+            triggers ??= new ChangeTrackingList<FillerTrigger>();
+            texts ??= new ChangeTrackingList<string>();
+
+            return new BasicFillerResponseConfig(FillerResponseConfigType.StaticFiller, triggers.ToList(), latencyThresholdMs, additionalBinaryDataProperties: null, texts.ToList());
+        }
+
+        /// <summary>
+        /// Base model for filler response configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.BasicFillerResponseConfig"/> and <see cref="VoiceLive.LlmFillerResponseConfig"/>.
+        /// </summary>
+        /// <param name="type"> The type of filler response configuration. </param>
+        /// <param name="triggers">
+        /// List of triggers that can fire the filler. Any trigger can activate the filler (OR logic).
+        /// Supported: 'latency', 'tool'.
+        /// </param>
+        /// <param name="latencyThresholdMs"> Latency threshold in milliseconds before triggering filler response. Default is 2000ms. </param>
+        /// <returns> A new <see cref="VoiceLive.FillerResponseConfigBase"/> instance for mocking. </returns>
+        public static FillerResponseConfigBase FillerResponseConfigBase(string @type = default, IEnumerable<FillerTrigger> triggers = default, int? latencyThresholdMs = default)
+        {
+            triggers ??= new ChangeTrackingList<FillerTrigger>();
+
+            return new UnknownFillerResponseConfigBase(new FillerResponseConfigType(@type), triggers.ToList(), latencyThresholdMs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Configuration for LLM-based filler response generation.
+        /// Uses LLM to generate context-aware filler responses when any trigger condition is met.
+        /// </summary>
+        /// <param name="triggers">
+        /// List of triggers that can fire the filler. Any trigger can activate the filler (OR logic).
+        /// Supported: 'latency', 'tool'.
+        /// </param>
+        /// <param name="latencyThresholdMs"> Latency threshold in milliseconds before triggering filler response. Default is 2000ms. </param>
+        /// <param name="model"> The model to use for LLM-based filler generation. Default is gpt-4.1-mini. </param>
+        /// <param name="instructions"> Custom instructions for generating filler responses. If not provided, a default prompt is used. </param>
+        /// <param name="maxCompletionTokens"> Maximum number of tokens to generate for the filler response. </param>
+        /// <returns> A new <see cref="VoiceLive.LlmFillerResponseConfig"/> instance for mocking. </returns>
+        public static LlmFillerResponseConfig LlmFillerResponseConfig(IEnumerable<FillerTrigger> triggers = default, int? latencyThresholdMs = default, string model = default, string instructions = default, int? maxCompletionTokens = default)
+        {
+            triggers ??= new ChangeTrackingList<FillerTrigger>();
+
+            return new LlmFillerResponseConfig(
+                FillerResponseConfigType.LlmFiller,
+                triggers.ToList(),
+                latencyThresholdMs,
+                additionalBinaryDataProperties: null,
+                model,
+                instructions,
+                maxCompletionTokens);
         }
 
         /// <summary>
@@ -743,11 +839,17 @@ namespace Azure.AI.VoiceLive
         /// Maximum number of output tokens for a single assistant response,
         /// inclusive of tool calls, that was used in this response.
         /// </param>
+        /// <param name="metadata">
+        /// Set of up to 16 key-value pairs that can be attached to an object.
+        /// This can be useful for storing additional information about the object in a structured format.
+        /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
+        /// </param>
         /// <returns> A new <see cref="VoiceLive.SessionResponse"/> instance for mocking. </returns>
-        public static SessionResponse SessionResponse(string id = default, string @object = default, SessionResponseStatus? status = default, ResponseStatusDetails statusDetails = default, IEnumerable<SessionResponseItem> output = default, ResponseTokenStatistics usage = default, string conversationId = default, VoiceProvider voice = default, IEnumerable<InteractionModality> modalities = default, OutputAudioFormat? outputAudioFormat = default, float? temperature = default, MaxResponseOutputTokensOption maxOutputTokens = default)
+        public static SessionResponse SessionResponse(string id = default, string @object = default, SessionResponseStatus? status = default, ResponseStatusDetails statusDetails = default, IEnumerable<SessionResponseItem> output = default, ResponseTokenStatistics usage = default, string conversationId = default, VoiceProvider voice = default, IEnumerable<InteractionModality> modalities = default, OutputAudioFormat? outputAudioFormat = default, float? temperature = default, MaxResponseOutputTokensOption maxOutputTokens = default, IDictionary<string, string> metadata = default)
         {
             output ??= new ChangeTrackingList<SessionResponseItem>();
             modalities ??= new ChangeTrackingList<InteractionModality>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new SessionResponse(
                 id,
@@ -762,6 +864,7 @@ namespace Azure.AI.VoiceLive
                 outputAudioFormat,
                 temperature,
                 maxOutputTokens,
+                metadata,
                 additionalBinaryDataProperties: null);
         }
 
@@ -802,7 +905,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any response item; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionResponseMessageItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>, <see cref="VoiceLive.SessionResponseMcpListToolItem"/>, <see cref="VoiceLive.SessionResponseMcpCallItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalRequestItem"/>, and <see cref="VoiceLive.SessionResponseMcpApprovalResponseItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionResponseMessageItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>, <see cref="VoiceLive.SessionResponseMcpListToolItem"/>, <see cref="VoiceLive.SessionResponseMcpCallItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalRequestItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalResponseItem"/>, and <see cref="VoiceLive.SessionResponseFoundryAgentCallItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -1017,6 +1120,31 @@ namespace Azure.AI.VoiceLive
                 reason);
         }
 
+        /// <summary> A response item that represents a call to a Foundry agent. </summary>
+        /// <param name="id"></param>
+        /// <param name="object"></param>
+        /// <param name="name"> The name of the Foundry agent. </param>
+        /// <param name="callId"> The ID of the call. </param>
+        /// <param name="arguments"> The arguments for the agent call. </param>
+        /// <param name="agentResponseId"> The ID of the agent response, if any. </param>
+        /// <param name="output"> The output of the agent call. </param>
+        /// <param name="error"> The error, if any, from the agent call. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionResponseFoundryAgentCallItem"/> instance for mocking. </returns>
+        public static SessionResponseFoundryAgentCallItem SessionResponseFoundryAgentCallItem(string id = default, string @object = default, string name = default, string callId = default, string arguments = default, string agentResponseId = default, string output = default, BinaryData error = default)
+        {
+            return new SessionResponseFoundryAgentCallItem(
+                ItemType.FoundryAgentCall,
+                id,
+                @object,
+                additionalBinaryDataProperties: null,
+                name,
+                callId,
+                arguments,
+                agentResponseId,
+                output,
+                error);
+        }
+
         /// <summary> Overall usage statistics for a response. </summary>
         /// <param name="totalTokens"> Total number of tokens (input + output). </param>
         /// <param name="inputTokens"> Number of input tokens. </param>
@@ -1074,7 +1202,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// A voicelive server event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, and <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted"/>, and <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallFailed"/>.
         /// </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
@@ -1847,6 +1975,113 @@ namespace Azure.AI.VoiceLive
             return new SessionUpdateResponseMcpCallFailed(ServerEventType.ResponseMcpCallFailed, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
         }
 
+        /// <summary> Represents a delta update of the arguments for a Foundry agent call. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="delta"> The delta of the arguments. </param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="responseId"> The ID of the response associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallArgumentsDelta SessionUpdateResponseFoundryAgentCallArgumentsDelta(string eventId = default, string delta = default, string itemId = default, string responseId = default, int outputIndex = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallArgumentsDelta(
+                ServerEventType.ResponseFoundryAgentCallArgumentsDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                delta,
+                itemId,
+                responseId,
+                outputIndex);
+        }
+
+        /// <summary> Indicates the completion of the arguments for a Foundry agent call. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="responseId"> The ID of the response associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <param name="arguments"> The full arguments for the agent call. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallArgumentsDone SessionUpdateResponseFoundryAgentCallArgumentsDone(string eventId = default, string itemId = default, string responseId = default, int outputIndex = default, string arguments = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallArgumentsDone(
+                ServerEventType.ResponseFoundryAgentCallArgumentsDone,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                responseId,
+                outputIndex,
+                arguments);
+        }
+
+        /// <summary> Indicates the Foundry agent call is in progress. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <param name="agentResponseId"> The ID of the agent response, if any. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallInProgress SessionUpdateResponseFoundryAgentCallInProgress(string eventId = default, string itemId = default, int outputIndex = default, string agentResponseId = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallInProgress(
+                ServerEventType.ResponseFoundryAgentCallInProgress,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                outputIndex,
+                agentResponseId);
+        }
+
+        /// <summary> Indicates the Foundry agent call has completed. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallCompleted SessionUpdateResponseFoundryAgentCallCompleted(string eventId = default, string itemId = default, int outputIndex = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallCompleted(ServerEventType.ResponseFoundryAgentCallCompleted, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
+        }
+
+        /// <summary> Indicates the Foundry agent call has failed. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallFailed"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallFailed SessionUpdateResponseFoundryAgentCallFailed(string eventId = default, string itemId = default, int outputIndex = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallFailed(ServerEventType.ResponseFoundryAgentCallFailed, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
+        }
+
+        /// <summary> Base for session configuration shared between request and response. </summary>
+        /// <param name="model"> The model for the session. </param>
+        /// <param name="modalities"> The modalities to be used in the session. </param>
+        /// <param name="animation"> The animation configuration for the session. </param>
+        /// <param name="voice"> Gets or sets the Voice. </param>
+        /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
+        /// <param name="inputAudioSamplingRate">
+        /// Input audio sampling rate in Hz. Available values:
+        ///             
+        ///             - For pcm16: 8000, 16000, 24000
+        ///             
+        ///             - For g711_alaw/g711_ulaw: 8000
+        /// </param>
+        /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
+        /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
+        /// <param name="inputAudioNoiseReduction"> Configuration for input audio noise reduction. </param>
+        /// <param name="inputAudioEchoCancellation"> Configuration for echo cancellation during server-side audio processing. </param>
+        /// <param name="avatar"> Configuration for avatar streaming and behavior during the session. </param>
+        /// <param name="inputAudioTranscription"> Configuration for input audio transcription. </param>
+        /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
+        /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
+        /// <param name="toolChoice"> Gets or sets the tool choice strategy for response generation. </param>
+        /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
+        /// <param name="maxResponseOutputTokens"> Gets or sets the maximum number of tokens to generate in the response. </param>
+        /// <param name="turnDetection"></param>
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model, IEnumerable<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IEnumerable<AudioTimestampType> outputAudioTimestampTypes, IEnumerable<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, BinaryData turnDetection)
+        {
+            return VoiceLiveSessionOptions(model, modalities, animation, voice, instructions, inputAudioSamplingRate, inputAudioFormat, outputAudioFormat, inputAudioNoiseReduction, inputAudioEchoCancellation, avatar, inputAudioTranscription, outputAudioTimestampTypes, tools, toolChoice, temperature, maxResponseOutputTokens, reasoningEffort: default, fillerResponse: default, turnDetection);
+        }
+
         /// <summary>
         /// OpenAI voice configuration with explicit type field.
         ///             
@@ -1893,6 +2128,50 @@ namespace Azure.AI.VoiceLive
         public static AvatarConfiguration AvatarConfiguration(IEnumerable<IceServer> iceServers, string character, string style, bool customized, VideoParams video)
         {
             return AvatarConfiguration(type: default, iceServers, character, style, model: default, customized, video, outputProtocol: default);
+        }
+
+        /// <summary> The response resource. </summary>
+        /// <param name="id"> The unique ID of the response. </param>
+        /// <param name="object"></param>
+        /// <param name="status">
+        /// The final status of the response.
+        ///             
+        ///             One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
+        /// </param>
+        /// <param name="statusDetails"> Additional details about the status. </param>
+        /// <param name="output"> The list of output items generated by the response. </param>
+        /// <param name="usage">
+        /// Usage statistics for the Response, this will correspond to billing. A
+        ///             VoiceLive API session will maintain a conversation context and append new
+        ///             Items to the Conversation, thus output from previous turns (text and
+        ///             audio tokens) will become the input for later turns.
+        /// </param>
+        /// <param name="conversationId">
+        /// Which conversation the response is added to, determined by the `conversation`
+        ///             field in the `response.create` event. If `auto`, the response will be added to
+        ///             the default conversation and the value of `conversation_id` will be an id like
+        ///             `conv_1234`. If `none`, the response will not be added to any conversation and
+        ///             the value of `conversation_id` will be `null`. If responses are being triggered
+        ///             by server VAD, the response will be added to the default conversation, thus
+        ///             the `conversation_id` will be an id like `conv_1234`.
+        /// </param>
+        /// <param name="voice"> supported voice identifiers and configurations. </param>
+        /// <param name="modalities">
+        /// The set of modalities the model used to respond. If there are multiple modalities,
+        ///             the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
+        ///             could be responding in either text or audio.
+        /// </param>
+        /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
+        /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
+        /// <param name="maxOutputTokens">
+        /// Maximum number of output tokens for a single assistant response,
+        ///                 inclusive of tool calls, that was used in this response.
+        /// </param>
+        /// <returns> A new <see cref="VoiceLive.SessionResponse"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SessionResponse SessionResponse(string id, string @object, SessionResponseStatus? status, ResponseStatusDetails statusDetails, IEnumerable<SessionResponseItem> output, ResponseTokenStatistics usage, string conversationId, VoiceProvider voice, IEnumerable<InteractionModality> modalities, OutputAudioFormat? outputAudioFormat, float? temperature, MaxResponseOutputTokensOption maxOutputTokens)
+        {
+            return SessionResponse(id, @object, status, statusDetails, output, usage, conversationId, voice, modalities, outputAudioFormat, temperature, maxOutputTokens, metadata: default);
         }
 
         /// <summary> Details of input token usage. </summary>

@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// The base representation of a voicelive tool definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLiveFunctionDefinition"/> and <see cref="VoiceLiveMcpServerDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLiveFunctionDefinition"/>, <see cref="VoiceLiveMcpServerDefinition"/>, and <see cref="VoiceLiveFoundryAgentDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVoiceLiveToolDefinition))]
     public abstract partial class VoiceLiveToolDefinition : IJsonModel<VoiceLiveToolDefinition>
@@ -93,6 +93,8 @@ namespace Azure.AI.VoiceLive
                         return VoiceLiveFunctionDefinition.DeserializeVoiceLiveFunctionDefinition(element, options);
                     case "mcp":
                         return VoiceLiveMcpServerDefinition.DeserializeVoiceLiveMcpServerDefinition(element, options);
+                    case "foundry_agent":
+                        return VoiceLiveFoundryAgentDefinition.DeserializeVoiceLiveFoundryAgentDefinition(element, options);
                 }
             }
             return UnknownVoiceLiveToolDefinition.DeserializeUnknownVoiceLiveToolDefinition(element, options);

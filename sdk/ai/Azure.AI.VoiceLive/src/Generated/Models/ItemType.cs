@@ -21,6 +21,7 @@ namespace Azure.AI.VoiceLive
         private const string McpCallValue = "mcp_call";
         private const string McpApprovalRequestValue = "mcp_approval_request";
         private const string McpApprovalResponseValue = "mcp_approval_response";
+        private const string FoundryAgentCallValue = "foundry_agent_call";
 
         /// <summary> Initializes a new instance of <see cref="ItemType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -52,6 +53,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the McpApprovalResponse. </summary>
         public static ItemType McpApprovalResponse { get; } = new ItemType(McpApprovalResponseValue);
+
+        /// <summary> Gets the FoundryAgentCall. </summary>
+        public static ItemType FoundryAgentCall { get; } = new ItemType(FoundryAgentCallValue);
 
         /// <summary> Determines if two <see cref="ItemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

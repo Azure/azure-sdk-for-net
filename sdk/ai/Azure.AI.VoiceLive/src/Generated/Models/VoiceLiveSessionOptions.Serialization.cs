@@ -133,6 +133,23 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("max_response_output_tokens"u8);
                 writer.WriteObjectValue(MaxResponseOutputTokens, options);
             }
+            if (Optional.IsDefined(ReasoningEffort))
+            {
+                writer.WritePropertyName("reasoning_effort"u8);
+                writer.WriteStringValue(ReasoningEffort.Value.ToString());
+            }
+            if (Optional.IsDefined(FillerResponse))
+            {
+                writer.WritePropertyName("filler_response"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(FillerResponse);
+#else
+                using (JsonDocument document = JsonDocument.Parse(FillerResponse))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(_turnDetection))
             {
                 writer.WritePropertyName("turn_detection"u8);
@@ -204,6 +221,8 @@ namespace Azure.AI.VoiceLive
             ToolChoiceOption toolChoice = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
+            ReasoningEffort? reasoningEffort = default;
+            BinaryData fillerResponse = default;
             BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -368,6 +387,24 @@ namespace Azure.AI.VoiceLive
                     maxResponseOutputTokens = MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("reasoning_effort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reasoningEffort = new ReasoningEffort(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("filler_response"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fillerResponse = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (prop.NameEquals("turn_detection"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -400,6 +437,8 @@ namespace Azure.AI.VoiceLive
                 toolChoice,
                 temperature,
                 maxResponseOutputTokens,
+                reasoningEffort,
+                fillerResponse,
                 turnDetection,
                 additionalBinaryDataProperties);
         }

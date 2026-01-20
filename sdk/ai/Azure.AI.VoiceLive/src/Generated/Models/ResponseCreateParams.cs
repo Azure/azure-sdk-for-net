@@ -24,6 +24,7 @@ namespace Azure.AI.VoiceLive
             InputItems = new ChangeTrackingList<ConversationRequestItem>();
             Modalities = new ChangeTrackingList<InteractionModality>();
             Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseCreateParams"/>. </summary>
@@ -70,8 +71,17 @@ namespace Azure.AI.VoiceLive
         /// Create the response with pre-generated assistant message. The message item would be
         /// added into the conversation history and returned with synthesized audio output in the created response.
         /// </param>
+        /// <param name="reasoningEffort">
+        /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
+        /// Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
+        /// </param>
+        /// <param name="metadata">
+        /// Set of up to 16 key-value pairs that can be attached to an object.
+        /// This can be useful for storing additional information about the object in a structured format.
+        /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InteractionModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, AssistantMessageItem preGeneratedAssistantMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InteractionModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, AssistantMessageItem preGeneratedAssistantMessage, ReasoningEffort? reasoningEffort, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Commit = commit;
             CancelPrevious = cancelPrevious;
@@ -86,6 +96,8 @@ namespace Azure.AI.VoiceLive
             Temperature = temperature;
             MaxOutputTokens = maxOutputTokens;
             PreGeneratedAssistantMessage = preGeneratedAssistantMessage;
+            ReasoningEffort = reasoningEffort;
+            Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -234,5 +246,18 @@ namespace Azure.AI.VoiceLive
         /// added into the conversation history and returned with synthesized audio output in the created response.
         /// </summary>
         public AssistantMessageItem PreGeneratedAssistantMessage { get; set; }
+
+        /// <summary>
+        /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
+        /// Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
+        /// </summary>
+        public ReasoningEffort? ReasoningEffort { get; set; }
+
+        /// <summary>
+        /// Set of up to 16 key-value pairs that can be attached to an object.
+        /// This can be useful for storing additional information about the object in a structured format.
+        /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
+        /// </summary>
+        public IDictionary<string, string> Metadata { get; }
     }
 }

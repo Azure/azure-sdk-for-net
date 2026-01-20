@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, and <see cref="SessionResponseMcpApprovalResponseItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, <see cref="SessionResponseMcpApprovalResponseItem"/>, and <see cref="SessionResponseFoundryAgentCallItem"/>.
     /// </summary>
     public abstract partial class SessionResponseItem
     {

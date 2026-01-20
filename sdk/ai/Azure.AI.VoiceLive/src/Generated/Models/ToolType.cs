@@ -19,6 +19,7 @@ namespace Azure.AI.VoiceLive
         private readonly string _value;
         private const string FunctionValue = "function";
         private const string McpValue = "mcp";
+        private const string FoundryAgentValue = "foundry_agent";
 
         /// <summary> Initializes a new instance of <see cref="ToolType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +36,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Mcp. </summary>
         public static ToolType Mcp { get; } = new ToolType(McpValue);
+
+        /// <summary> Gets the FoundryAgent. </summary>
+        public static ToolType FoundryAgent { get; } = new ToolType(FoundryAgentValue);
 
         /// <summary> Determines if two <see cref="ToolType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
