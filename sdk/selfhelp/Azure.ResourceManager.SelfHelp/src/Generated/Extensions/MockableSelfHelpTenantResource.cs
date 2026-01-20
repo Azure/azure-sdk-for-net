@@ -130,30 +130,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = DiscoverySolutionNLPOperationGroupClientDiagnostics.CreateScope("MockableSelfHelpTenantResource.DiscoverSolutionsNlp");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = DiscoverySolutionNLPOperationGroupRestClient.CreateDiscoverSolutionsNlpRequest(DiscoveryNlpContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DiscoveryNlpResult> response = Response.FromValue(DiscoveryNlpResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPOperationGroupRestClient, DiscoveryNlpContent.ToRequestContent(content), context);
         }
 
         /// <summary>
@@ -175,30 +159,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiscoveryNlpResult> DiscoverSolutionsNlp(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = DiscoverySolutionNLPOperationGroupClientDiagnostics.CreateScope("MockableSelfHelpTenantResource.DiscoverSolutionsNlp");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = DiscoverySolutionNLPOperationGroupRestClient.CreateDiscoverSolutionsNlpRequest(DiscoveryNlpContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DiscoveryNlpResult> response = Response.FromValue(DiscoveryNlpResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpCollectionResultOfT(DiscoverySolutionNLPOperationGroupRestClient, DiscoveryNlpContent.ToRequestContent(content), context);
         }
 
         /// <summary>

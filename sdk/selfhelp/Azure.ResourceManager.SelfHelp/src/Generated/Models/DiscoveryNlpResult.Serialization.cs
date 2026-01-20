@@ -15,7 +15,7 @@ using Azure.ResourceManager.SelfHelp;
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Successfully fetched list of solution metadata. </summary>
-    public partial class DiscoveryNlpResult : IJsonModel<DiscoveryNlpResult>
+    internal partial class DiscoveryNlpResult : IJsonModel<DiscoveryNlpResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

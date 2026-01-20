@@ -12,7 +12,7 @@ using Azure.ResourceManager.SelfHelp;
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Successfully fetched list of solution metadata. </summary>
-    public partial class DiscoveryNlpResult
+    internal partial class DiscoveryNlpResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

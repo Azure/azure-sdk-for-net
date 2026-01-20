@@ -409,11 +409,12 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlpAsync(content, cancellationToken).ConfigureAwait(false);
+            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlpAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -427,7 +428,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DiscoveryNlpResult> DiscoverSolutionsNlp(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -500,11 +502,12 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpAsync(this TenantResource tenantResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this TenantResource tenantResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsNlpAsync(content, cancellationToken).ConfigureAwait(false);
+            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsNlpAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -518,7 +521,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<DiscoveryNlpResult> DiscoverSolutionsNlp(this TenantResource tenantResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(this TenantResource tenantResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

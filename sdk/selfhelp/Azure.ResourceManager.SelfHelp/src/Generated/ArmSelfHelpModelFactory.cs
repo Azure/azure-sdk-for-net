@@ -458,16 +458,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Successfully fetched list of solution metadata. </summary>
-        /// <param name="value"> The list of solution metadata. </param>
-        /// <returns> A new <see cref="Models.DiscoveryNlpResult"/> instance for mocking. </returns>
-        public static DiscoveryNlpResult DiscoveryNlpResult(IEnumerable<SolutionNlpMetadata> value = default)
-        {
-            value ??= new ChangeTrackingList<SolutionNlpMetadata>();
-
-            return new DiscoveryNlpResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
