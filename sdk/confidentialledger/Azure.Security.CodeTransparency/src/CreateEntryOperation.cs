@@ -11,8 +11,8 @@ using Azure.Core;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry"/>
-    /// or <see cref="CodeTransparencyClient.CreateEntryAsync"/> until completion.
+    /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>
+    /// or <see cref="CodeTransparencyClient.CreateEntryAsync(WaitUntil, BinaryData, CancellationToken)"/> until completion.
     /// </summary>
     internal class CreateEntryOperation : Operation<BinaryData>, IOperation
     {
@@ -26,7 +26,7 @@ namespace Azure.Security.CodeTransparency
         { }
 
         /// <summary>
-        /// Initializes a previously run operation with the given <paramref name="operationId"/> <see cref="CodeTransparencyClient.CreateEntry"/>.
+        /// Initializes a previously run operation with the given <paramref name="operationId"/> <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>.
         /// </summary>
         /// <param name="client"> The <see cref="CodeTransparencyClient"/>. </param>
         /// <param name="operationId"> The operation id from a previous call to create the entry. </param>
