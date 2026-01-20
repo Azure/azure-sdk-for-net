@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpSolutionResultData"/> instance for mocking. </returns>
-        public static SelfHelpSolutionResult SelfHelpSolutionResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string solutionId = default, string title = default, string content = default, ReplacementMapsResult replacementMaps = default, IEnumerable<SolutionSection> sections = default)
+        public static SelfHelpSolutionResultData SelfHelpSolutionResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string solutionId = default, string title = default, string content = default, ReplacementMapsResult replacementMaps = default, IEnumerable<SolutionSection> sections = default)
         {
-            return new SelfHelpSolutionResult(
+            return new SelfHelpSolutionResultData(
                 id,
                 name,
                 resourceType,
