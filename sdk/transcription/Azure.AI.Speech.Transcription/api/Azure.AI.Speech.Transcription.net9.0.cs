@@ -6,20 +6,6 @@ namespace Azure.AI.Speech.Transcription
         public static Azure.AI.Speech.Transcription.AzureAISpeechTranscriptionContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public static partial class AzureAISpeechTranscriptionModelFactory
-    {
-        public static Azure.AI.Speech.Transcription.ChannelCombinedPhrases ChannelCombinedPhrases(int? channel = default(int?), string text = null) { throw null; }
-        public static Azure.AI.Speech.Transcription.EnhancedModeProperties EnhancedModeProperties(bool? enabled = default(bool?), string task = null, string targetLanguage = null, System.Collections.Generic.IEnumerable<string> prompt = null) { throw null; }
-        public static Azure.Core.Foundations.Error Error(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Core.Foundations.Error> details = null, Azure.Core.Foundations.InnerError innererror = null) { throw null; }
-        public static Azure.Core.Foundations.ErrorResponse ErrorResponse(Azure.Core.Foundations.Error error = null, string errorCode = null) { throw null; }
-        public static Azure.Core.Foundations.InnerError InnerError(string code = null, Azure.Core.Foundations.InnerError innererror = null) { throw null; }
-        public static Azure.AI.Speech.Transcription.PhraseListProperties PhraseListProperties(System.Collections.Generic.IEnumerable<string> phrases = null, float? biasingWeight = default(float?)) { throw null; }
-        public static Azure.AI.Speech.Transcription.TranscribedPhrase TranscribedPhrase(int? channel = default(int?), int? speaker = default(int?), int offsetMilliseconds = 0, int durationMilliseconds = 0, string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedWord> words = null, string locale = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.Speech.Transcription.TranscribedWord TranscribedWord(string text = null, int offsetMilliseconds = 0, int durationMilliseconds = 0) { throw null; }
-        public static Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions TranscriptionDiarizationOptions(bool? enabled = default(bool?), int? maxSpeakers = default(int?)) { throw null; }
-        public static Azure.AI.Speech.Transcription.TranscriptionOptions TranscriptionOptions(System.Uri audioUri = null, System.Collections.Generic.IEnumerable<string> locales = null, System.Collections.Generic.IDictionary<string, System.Uri> models = null, Azure.AI.Speech.Transcription.ProfanityFilterMode? profanityFilterMode = default(Azure.AI.Speech.Transcription.ProfanityFilterMode?), Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions diarizationOptions = null, System.Collections.Generic.IEnumerable<int> activeChannels = null, Azure.AI.Speech.Transcription.EnhancedModeProperties enhancedMode = null, Azure.AI.Speech.Transcription.PhraseListProperties phraseList = null) { throw null; }
-        public static Azure.AI.Speech.Transcription.TranscriptionResult TranscriptionResult(int durationMilliseconds = 0, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.ChannelCombinedPhrases> combinedPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedPhrase> phrases = null) { throw null; }
-    }
     public partial class ChannelCombinedPhrases : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>
     {
         internal ChannelCombinedPhrases() { }
@@ -84,6 +70,20 @@ namespace Azure.AI.Speech.Transcription
         public static bool operator !=(Azure.AI.Speech.Transcription.ProfanityFilterMode left, Azure.AI.Speech.Transcription.ProfanityFilterMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class SpeechTranscriptionModelFactory
+    {
+        public static Azure.AI.Speech.Transcription.ChannelCombinedPhrases ChannelCombinedPhrases(int? channel = default(int?), string text = null) { throw null; }
+        public static Azure.AI.Speech.Transcription.EnhancedModeProperties EnhancedModeProperties(bool? enabled = default(bool?), string task = null, string targetLanguage = null, System.Collections.Generic.IEnumerable<string> prompt = null) { throw null; }
+        public static Azure.Core.Foundations.Error Error(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Core.Foundations.Error> details = null, Azure.Core.Foundations.InnerError innererror = null) { throw null; }
+        public static Azure.Core.Foundations.ErrorResponse ErrorResponse(Azure.Core.Foundations.Error error = null, string errorCode = null) { throw null; }
+        public static Azure.Core.Foundations.InnerError InnerError(string code = null, Azure.Core.Foundations.InnerError innererror = null) { throw null; }
+        public static Azure.AI.Speech.Transcription.PhraseListProperties PhraseListProperties(System.Collections.Generic.IEnumerable<string> phrases = null, float? biasingWeight = default(float?)) { throw null; }
+        public static Azure.AI.Speech.Transcription.TranscribedPhrase TranscribedPhrase(int? channel = default(int?), int? speaker = default(int?), int offsetMilliseconds = 0, int durationMilliseconds = 0, string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedWord> words = null, string locale = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.Speech.Transcription.TranscribedWord TranscribedWord(string text = null, int offsetMilliseconds = 0, int durationMilliseconds = 0) { throw null; }
+        public static Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions TranscriptionDiarizationOptions(bool? enabled = default(bool?), int? maxSpeakers = default(int?)) { throw null; }
+        public static Azure.AI.Speech.Transcription.TranscriptionOptions TranscriptionOptions(System.Uri audioUri = null, System.Collections.Generic.IEnumerable<string> locales = null, System.Collections.Generic.IDictionary<string, System.Uri> models = null, Azure.AI.Speech.Transcription.ProfanityFilterMode? profanityFilterMode = default(Azure.AI.Speech.Transcription.ProfanityFilterMode?), Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions diarizationOptions = null, System.Collections.Generic.IEnumerable<int> activeChannels = null, Azure.AI.Speech.Transcription.EnhancedModeProperties enhancedMode = null, Azure.AI.Speech.Transcription.PhraseListProperties phraseList = null) { throw null; }
+        public static Azure.AI.Speech.Transcription.TranscriptionResult TranscriptionResult(int durationMilliseconds = 0, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.ChannelCombinedPhrases> combinedPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedPhrase> phrases = null) { throw null; }
+    }
     public partial class TranscribedPhrase : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscribedPhrase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribedPhrase>
     {
         internal TranscribedPhrase() { }
@@ -136,7 +136,6 @@ namespace Azure.AI.Speech.Transcription
         public TranscriptionClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Speech.Transcription.TranscriptionClientOptions options) { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult<Azure.AI.Speech.Transcription.TranscriptionResult> Transcribe(Azure.AI.Speech.Transcription.TranscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Speech.Transcription.TranscriptionResult>> TranscribeAsync(Azure.AI.Speech.Transcription.TranscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TranscriptionClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
