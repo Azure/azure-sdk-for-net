@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,24 +14,65 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ConfigData))]
-    [ModelReaderWriterBuildable(typeof(ConfigurationListResult))]
-    [ModelReaderWriterBuildable(typeof(DigestConfig))]
-    [ModelReaderWriterBuildable(typeof(MetadataEntityData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorAssessmentData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorAssessmentProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorAssessmentResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorAssessmentType))]
+    [ModelReaderWriterBuildable(typeof(AdvisorConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(AdvisorConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorDigestConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AdvisorMetadataEntityData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorMetadataEntityProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorMetadataEntityResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorPredictionContent))]
+    [ModelReaderWriterBuildable(typeof(AdvisorPredictionContentProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorPredictionResult))]
+    [ModelReaderWriterBuildable(typeof(AdvisorPredictionResultProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorRecommendationData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorRecommendationPatch))]
+    [ModelReaderWriterBuildable(typeof(AdvisorRecommendationPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorRecommendationProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorRecommendationResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorResiliencyReviewData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorResiliencyReviewListResult))]
+    [ModelReaderWriterBuildable(typeof(AdvisorResiliencyReviewProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorResiliencyReviewResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorScoreEntityContent))]
+    [ModelReaderWriterBuildable(typeof(AdvisorScoreEntityData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorScoreEntityProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorScoreEntityResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorScoreResult))]
+    [ModelReaderWriterBuildable(typeof(AdvisorSuppressionContractData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorSuppressionContractResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorSuppressionProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTimeSeriesEntity))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageListResult))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageRecommendationData))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageRecommendationListResult))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageRecommendationProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageRecommendationResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorTriageResource))]
+    [ModelReaderWriterBuildable(typeof(AdvisorWorkload))]
+    [ModelReaderWriterBuildable(typeof(AssessmentListResult))]
+    [ModelReaderWriterBuildable(typeof(AssessmentTypeListResult))]
     [ModelReaderWriterBuildable(typeof(MetadataEntityListResult))]
-    [ModelReaderWriterBuildable(typeof(MetadataEntityResource))]
     [ModelReaderWriterBuildable(typeof(MetadataSupportedValueDetail))]
-    [ModelReaderWriterBuildable(typeof(ResourceMetadata))]
-    [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseData))]
+    [ModelReaderWriterBuildable(typeof(RecommendationRejectContent))]
+    [ModelReaderWriterBuildable(typeof(RecommendationResourceMetadata))]
+    [ModelReaderWriterBuildable(typeof(RecommendationResourceWorkload))]
+    [ModelReaderWriterBuildable(typeof(RecommendationReview))]
+    [ModelReaderWriterBuildable(typeof(RecommendationShortDescription))]
     [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseListResult))]
-    [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseResource))]
-    [ModelReaderWriterBuildable(typeof(ShortDescription))]
-    [ModelReaderWriterBuildable(typeof(SuppressionContractData))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SuppressionContractListResult))]
-    [ModelReaderWriterBuildable(typeof(SuppressionContractResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TrackedRecommendationProperties))]
+    [ModelReaderWriterBuildable(typeof(WorkloadListResult))]
     public partial class AzureResourceManagerAdvisorContext : ModelReaderWriterContext
     {
     }
