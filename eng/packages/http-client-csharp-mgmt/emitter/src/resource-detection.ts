@@ -951,22 +951,21 @@ function buildArmProviderSchemaFromDetectedResources(
           // For resources without Get operation, List operations should belong to the parent resource
           // Other operations (Create, Update, Delete) should be treated as non-resource methods
           
-          // Find parent metadata if parent exists
-          let parentMetadata: ResourceMetadata | undefined;
-          if (metadata.parentResourceModelId) {
-            for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
-              const parentModelId = parentKey.split("|")[0];
-              if (parentModelId === metadata.parentResourceModelId) {
-                parentMetadata = parentMeta;
-                break;
-              }
-            }
-          }
-
           // Iterate through all methods and handle List operations separately
           for (const method of metadata.methods) {
             if (method.kind === ResourceOperationKind.List) {
               // Move List operations to parent resource if parent exists
+              let parentMetadata: ResourceMetadata | undefined;
+              if (metadata.parentResourceModelId) {
+                for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
+                  const parentModelId = parentKey.split("|")[0];
+                  if (parentModelId === metadata.parentResourceModelId) {
+                    parentMetadata = parentMeta;
+                    break;
+                  }
+                }
+              }
+
               if (parentMetadata) {
                 parentMetadata.methods.push(method);
               } else {
