@@ -948,19 +948,43 @@ function buildArmProviderSchemaFromDetectedResources(
           (m) => m.kind === ResourceOperationKind.Read
         );
         if (!hasReadOperation && !metadata.singletonResourceName) {
-          // Move all methods to non-resource methods since there's no Get operation
+          // For resources without Get operation, List operations should belong to the parent resource
+          // Other operations (Create, Update, Delete) should be treated as non-resource methods
+          
+          // Iterate through all methods and handle List operations separately
           for (const method of metadata.methods) {
+            if (method.kind === ResourceOperationKind.List) {
+              // Move List operations to parent resource if parent exists
+              let parentMetadata: ResourceMetadata | undefined;
+              if (metadata.parentResourceModelId) {
+                for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
+                  const parentModelId = parentKey.split("|")[0];
+                  if (parentModelId === metadata.parentResourceModelId) {
+                    parentMetadata = parentMeta;
+                    break;
+                  }
+                }
+              }
+
+              if (parentMetadata) {
+                parentMetadata.methods.push(method);
+                continue; // Skip to next method, don't add to nonResourceMethods
+              }
+            }
+
+            // Move methods to non-resource methods if not added to parent
             nonResourceMethods.set(method.methodId, {
               methodId: method.methodId,
               operationPath: method.operationPath,
               operationScope: method.operationScope
             });
           }
+
           sdkContext.logger.reportDiagnostic({
             code: "general-warning",
             messageId: "default",
             format: {
-              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be treated as non-resource methods.`
+              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. List operations will be added to parent resource, other operations will be treated as non-resource methods.`
             },
             target: NoTarget
           });
