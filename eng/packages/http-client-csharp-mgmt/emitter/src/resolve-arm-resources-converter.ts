@@ -239,17 +239,28 @@ export function resolveArmResources(
     sortResourceMethods(resource.metadata.methods);
   }
 
+  // Validate and prune resources and methods that cannot be found in the library
+  // This must happen before filtering resources without Get/Read operations
+  // because pruning could remove methods and leave a resource without a read operation
+  const { validatedResources, validatedNonResourceMethods } =
+    validateAndPruneSchema(
+      program,
+      sdkContext,
+      validResources,
+      nonResourceMethods
+    );
+
   // Filter out resources without Get/Read operations (non-singleton resources only)
   // Singleton resources can exist without Get operations
   const filteredResources: ArmResourceSchema[] = [];
-  for (const resource of validResources) {
+  for (const resource of validatedResources) {
     const hasReadOperation = resource.metadata.methods.some(
       (m) => m.kind === ResourceOperationKind.Read
     );
     if (!hasReadOperation && !resource.metadata.singletonResourceName) {
       // Move all methods to non-resource methods since there's no Get operation
       for (const method of resource.metadata.methods) {
-        nonResourceMethods.push({
+        validatedNonResourceMethods.push({
           methodId: method.methodId,
           operationPath: method.operationPath,
           operationScope: method.operationScope
@@ -261,17 +272,8 @@ export function resolveArmResources(
     filteredResources.push(resource);
   }
 
-  // Validate and prune resources and methods that cannot be found in the library
-  const { validatedResources, validatedNonResourceMethods } =
-    validateAndPruneSchema(
-      program,
-      sdkContext,
-      filteredResources,
-      nonResourceMethods
-    );
-
   return {
-    resources: validatedResources,
+    resources: filteredResources,
     nonResourceMethods: validatedNonResourceMethods
   };
 }
@@ -306,10 +308,11 @@ function validateAndPruneSchema(
   );
 
   const validOperationIds = new Set<string>();
+  
   // Traverse all clients and their methods to collect valid operation IDs
-  const collectOperationIds = (
+  function collectOperationIds(
     clients: Array<{ methods: Array<{ crossLanguageDefinitionId: string }>, children?: any[] }>
-  ) => {
+  ) {
     for (const client of clients) {
       for (const method of client.methods) {
         validOperationIds.add(method.crossLanguageDefinitionId);
@@ -318,7 +321,8 @@ function validateAndPruneSchema(
         collectOperationIds(client.children);
       }
     }
-  };
+  }
+  
   collectOperationIds(sdkContext.sdkPackage.clients);
 
   // Validate and prune resources
@@ -326,15 +330,6 @@ function validateAndPruneSchema(
   for (const resource of resources) {
     // Check if the resource model exists in the SDK package
     if (!validModelIds.has(resource.resourceModelId)) {
-      // Report diagnostic for pruned resource
-      sdkContext.logger.reportDiagnostic({
-        code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Resource model with crossLanguageDefinitionId '${resource.resourceModelId}' not found in SDK package. This resource will be excluded from code generation.`
-        },
-        target: program.getGlobalNamespaceType()
-      });
       continue;
     }
 
@@ -342,15 +337,6 @@ function validateAndPruneSchema(
     const validatedMethods: ResourceMethod[] = [];
     for (const method of resource.metadata.methods) {
       if (!validOperationIds.has(method.methodId)) {
-        // Report diagnostic for pruned method
-        sdkContext.logger.reportDiagnostic({
-          code: "general-warning",
-          messageId: "default",
-          format: {
-            message: `Resource method with crossLanguageDefinitionId '${method.methodId}' not found in SDK package. This method will be excluded from resource '${resource.resourceModelId}'.`
-          },
-          target: program.getGlobalNamespaceType()
-        });
         continue;
       }
       validatedMethods.push(method);
@@ -367,16 +353,6 @@ function validateAndPruneSchema(
         }
       };
       validatedResources.push(validatedResource);
-    } else {
-      // Report diagnostic if all methods were pruned
-      sdkContext.logger.reportDiagnostic({
-        code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Resource '${resource.resourceModelId}' has no valid methods after validation. This resource will be excluded from code generation.`
-        },
-        target: program.getGlobalNamespaceType()
-      });
     }
   }
 
@@ -384,15 +360,6 @@ function validateAndPruneSchema(
   const validatedNonResourceMethods: NonResourceMethod[] = [];
   for (const method of nonResourceMethods) {
     if (!validOperationIds.has(method.methodId)) {
-      // Report diagnostic for pruned non-resource method
-      sdkContext.logger.reportDiagnostic({
-        code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Non-resource method with crossLanguageDefinitionId '${method.methodId}' not found in SDK package. This method will be excluded from code generation.`
-        },
-        target: program.getGlobalNamespaceType()
-      });
       continue;
     }
     validatedNonResourceMethods.push(method);
