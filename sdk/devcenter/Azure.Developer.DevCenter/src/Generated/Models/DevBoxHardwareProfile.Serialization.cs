@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Hardware specifications for the Dev Box. </summary>
     public partial class DevBoxHardwareProfile : IJsonModel<DevBoxHardwareProfile>

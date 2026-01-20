@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> An environment definition. </summary>
     public partial class EnvironmentDefinition : IJsonModel<EnvironmentDefinition>
@@ -119,7 +120,7 @@ namespace Azure.Developer.DevCenter
             string name = default;
             string catalogName = default;
             string description = default;
-            IList<EnvironmentDefinitionParameter> parameters = default;
+            IReadOnlyList<EnvironmentDefinitionParameter> parameters = default;
             string parametersSchema = default;
             string templatePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

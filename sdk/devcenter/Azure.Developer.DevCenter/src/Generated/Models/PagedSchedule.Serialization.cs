@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Paged collection of Schedule items. </summary>
     internal partial class PagedSchedule : IJsonModel<PagedSchedule>

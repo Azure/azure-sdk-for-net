@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A pool of Dev Boxes. </summary>
     public partial class DevBoxPool : IJsonModel<DevBoxPool>

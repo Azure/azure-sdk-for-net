@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> An action which will take place on a Dev Box. </summary>
     public partial class DevBoxAction : IJsonModel<DevBoxAction>

@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Storage settings for the Dev Box's disks. </summary>
     public partial class DevBoxStorageProfile : IJsonModel<DevBoxStorageProfile>

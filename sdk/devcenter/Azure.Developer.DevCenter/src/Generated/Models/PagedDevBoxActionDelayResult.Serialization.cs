@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Paged collection of DevBoxActionDelayResult items. </summary>
     internal partial class PagedDevBoxActionDelayResult : IJsonModel<PagedDevBoxActionDelayResult>

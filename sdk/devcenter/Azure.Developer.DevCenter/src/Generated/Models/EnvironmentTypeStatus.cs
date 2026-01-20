@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates whether an environment type is enabled for use in a project. </summary>
     public readonly partial struct EnvironmentTypeStatus : IEquatable<EnvironmentTypeStatus>

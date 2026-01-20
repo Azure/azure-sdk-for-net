@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates the Dev Box compute. </summary>
     public readonly partial struct SkuName : IEquatable<SkuName>

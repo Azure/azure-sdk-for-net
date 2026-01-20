@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
     public partial class StopOnDisconnectConfiguration : IJsonModel<StopOnDisconnectConfiguration>

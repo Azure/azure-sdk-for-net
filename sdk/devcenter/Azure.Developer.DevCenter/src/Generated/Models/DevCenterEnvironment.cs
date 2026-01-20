@@ -9,31 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment. </summary>
     public partial class DevCenterEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
-        /// <param name="environmentTypeName"> Environment type. </param>
-        /// <param name="catalogName"> Name of the catalog. </param>
-        /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
-        public DevCenterEnvironment(string environmentTypeName, string catalogName, string environmentDefinitionName)
-        {
-            Argument.AssertNotNull(environmentTypeName, nameof(environmentTypeName));
-            Argument.AssertNotNull(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
-
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
-            EnvironmentTypeName = environmentTypeName;
-            CatalogName = catalogName;
-            EnvironmentDefinitionName = environmentDefinitionName;
-        }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
@@ -46,7 +30,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironment(IDictionary<string, BinaryData> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, string resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterEnvironment(IDictionary<string, BinaryData> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Name = name;
@@ -99,9 +83,6 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> The provisioning state of the environment. </summary>
         public EnvironmentProvisioningState? ProvisioningState { get; }
-
-        /// <summary> The identifier of the resource group containing the environment's resources. </summary>
-        public string ResourceGroupId { get; }
 
         /// <summary> Name of the catalog. </summary>
         public string CatalogName { get; set; }

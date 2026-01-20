@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The type of data a parameter accepts. </summary>
     public readonly partial struct EnvironmentDefinitionParameterType : IEquatable<EnvironmentDefinitionParameterType>

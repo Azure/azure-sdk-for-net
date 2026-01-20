@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates whether the feature to stop the devbox on disconnect once the grace period has lapsed is enabled. </summary>
     public readonly partial struct StopOnDisconnectStatus : IEquatable<StopOnDisconnectStatus>

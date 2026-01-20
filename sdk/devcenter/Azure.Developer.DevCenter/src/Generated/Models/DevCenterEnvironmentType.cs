@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment type. </summary>
     public partial class DevCenterEnvironmentType
@@ -23,7 +24,7 @@ namespace Azure.Developer.DevCenter
         /// or management group.
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
-        internal DevCenterEnvironmentType(string deploymentTargetId, EnvironmentTypeStatus status)
+        internal DevCenterEnvironmentType(ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status)
         {
             DeploymentTargetId = deploymentTargetId;
             Status = status;
@@ -38,7 +39,7 @@ namespace Azure.Developer.DevCenter
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironmentType(string name, string deploymentTargetId, EnvironmentTypeStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterEnvironmentType(string name, ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DeploymentTargetId = deploymentTargetId;
@@ -48,13 +49,6 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Name of the environment type. </summary>
         public string Name { get; }
-
-        /// <summary>
-        /// Id of a subscription or management group that the environment type will be
-        /// mapped to. The environment's resources will be deployed into this subscription
-        /// or management group.
-        /// </summary>
-        public string DeploymentTargetId { get; }
 
         /// <summary> Indicates whether this environment type is enabled for use in this project. </summary>
         public EnvironmentTypeStatus Status { get; }

@@ -12,8 +12,9 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A Dev Box. </summary>
     public partial class DevBox : IJsonModel<DevBox>

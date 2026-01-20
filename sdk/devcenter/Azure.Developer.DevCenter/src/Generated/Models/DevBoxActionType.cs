@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The type of action which will take place on a Dev Box. </summary>
     public readonly partial struct DevBoxActionType : IEquatable<DevBoxActionType>

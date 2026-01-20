@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates whether owners of Dev Boxes in a pool are local administrators on the Dev Boxes. </summary>
     public readonly partial struct LocalAdministratorStatus : IEquatable<LocalAdministratorStatus>

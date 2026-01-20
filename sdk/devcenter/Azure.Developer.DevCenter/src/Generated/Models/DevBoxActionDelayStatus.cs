@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The result of the delay operation on this action. </summary>
     public readonly partial struct DevBoxActionDelayStatus : IEquatable<DevBoxActionDelayStatus>

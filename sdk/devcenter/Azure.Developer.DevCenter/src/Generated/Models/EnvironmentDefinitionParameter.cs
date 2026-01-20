@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an Environment Definition parameter. </summary>
     public partial class EnvironmentDefinitionParameter
@@ -47,7 +48,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool @required, IList<string> allowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool @required, IReadOnlyList<string> allowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -88,6 +89,6 @@ namespace Azure.Developer.DevCenter
         public bool Required { get; }
 
         /// <summary> An array of allowed values. </summary>
-        public IList<string> Allowed { get; }
+        public IReadOnlyList<string> Allowed { get; }
     }
 }

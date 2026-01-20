@@ -11,8 +11,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment. </summary>
     public partial class DevCenterEnvironment : IJsonModel<DevCenterEnvironment>
@@ -141,7 +143,7 @@ namespace Azure.Developer.DevCenter
             string environmentTypeName = default;
             Guid? userId = default;
             EnvironmentProvisioningState? provisioningState = default;
-            string resourceGroupId = default;
+            ResourceIdentifier resourceGroupId = default;
             string catalogName = default;
             string environmentDefinitionName = default;
             ResponseError error = default;
@@ -199,7 +201,11 @@ namespace Azure.Developer.DevCenter
                 }
                 if (prop.NameEquals("resourceGroupId"u8))
                 {
-                    resourceGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("catalogName"u8))

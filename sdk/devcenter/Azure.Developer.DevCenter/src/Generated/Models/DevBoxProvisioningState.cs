@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates the provisioning state of the Dev Box. </summary>
     public readonly partial struct DevBoxProvisioningState : IEquatable<DevBoxProvisioningState>

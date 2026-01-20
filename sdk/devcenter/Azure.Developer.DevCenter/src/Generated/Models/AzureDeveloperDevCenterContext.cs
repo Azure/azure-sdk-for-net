@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure;
+using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter
 {

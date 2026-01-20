@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The action delay result. </summary>
     public partial class DevBoxActionDelayResult

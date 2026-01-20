@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The operating system type. </summary>
     public readonly partial struct DevBoxOSType : IEquatable<DevBoxOSType>

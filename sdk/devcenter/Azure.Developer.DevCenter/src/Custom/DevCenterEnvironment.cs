@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     [CodeGenSuppress("DevCenterEnvironment", typeof(string), typeof(string), typeof(string))]
     public partial class DevCenterEnvironment
@@ -41,5 +41,8 @@ namespace Azure.Developer.DevCenter
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
+
+        /// <summary> The identifier of the resource group containing the environment's resources. </summary>
+        public ResourceIdentifier ResourceGroupId { get; }
     }
 }

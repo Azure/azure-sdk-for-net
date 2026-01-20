@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> An environment definition. </summary>
     public partial class EnvironmentDefinition
@@ -35,7 +36,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -60,7 +61,7 @@ namespace Azure.Developer.DevCenter
         public string Description { get; }
 
         /// <summary> Input parameters passed to an environment. </summary>
-        public IList<EnvironmentDefinitionParameter> Parameters { get; }
+        public IReadOnlyList<EnvironmentDefinitionParameter> Parameters { get; }
 
         /// <summary> JSON schema defining the parameters object passed to an environment. </summary>
         public string ParametersSchema { get; }

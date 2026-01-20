@@ -10,23 +10,13 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A Dev Box. </summary>
     public partial class DevBox
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
-        /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        public DevBox(string poolName)
-        {
-            Argument.AssertNotNull(poolName, nameof(poolName));
-
-            PoolName = poolName;
-        }
 
         /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>

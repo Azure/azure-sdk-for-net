@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The provisioning state of the environment. </summary>
     public readonly partial struct EnvironmentProvisioningState : IEquatable<EnvironmentProvisioningState>

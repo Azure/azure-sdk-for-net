@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Pool status indicating whether a pool is available to create Dev Boxes. </summary>
     public readonly partial struct PoolHealthStatus : IEquatable<PoolHealthStatus>

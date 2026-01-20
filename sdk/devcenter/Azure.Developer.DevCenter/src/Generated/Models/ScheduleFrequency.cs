@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The frequency of task execution. </summary>
     public readonly partial struct ScheduleFrequency : IEquatable<ScheduleFrequency>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
     public partial class StopOnDisconnectConfiguration

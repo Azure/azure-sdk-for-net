@@ -9,8 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment type. </summary>
     public partial class DevCenterEnvironmentType : IJsonModel<DevCenterEnvironmentType>
@@ -90,7 +92,7 @@ namespace Azure.Developer.DevCenter
                 return null;
             }
             string name = default;
-            string deploymentTargetId = default;
+            ResourceIdentifier deploymentTargetId = default;
             EnvironmentTypeStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -102,7 +104,7 @@ namespace Azure.Developer.DevCenter
                 }
                 if (prop.NameEquals("deploymentTargetId"u8))
                 {
-                    deploymentTargetId = prop.Value.GetString();
+                    deploymentTargetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

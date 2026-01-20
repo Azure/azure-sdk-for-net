@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     [CodeGenSuppress("DevBox", typeof(string))]
     public partial class DevBox

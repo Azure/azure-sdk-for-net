@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an Environment Definition parameter. </summary>
     public partial class EnvironmentDefinitionParameter : IJsonModel<EnvironmentDefinitionParameter>
@@ -128,7 +129,7 @@ namespace Azure.Developer.DevCenter
             EnvironmentDefinitionParameterType parameterType = default;
             bool? readOnly = default;
             bool @required = default;
-            IList<string> allowed = default;
+            IReadOnlyList<string> allowed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

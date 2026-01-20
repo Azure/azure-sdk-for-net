@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The supported types for a scheduled task. </summary>
     public readonly partial struct ScheduleType : IEquatable<ScheduleType>

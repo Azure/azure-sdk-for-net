@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter
+namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The action delay result. </summary>
     public partial class DevBoxActionDelayResult : IJsonModel<DevBoxActionDelayResult>
