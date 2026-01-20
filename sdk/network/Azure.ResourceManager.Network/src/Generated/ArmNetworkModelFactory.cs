@@ -535,8 +535,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sharingScope"> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </param>
         /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. </param>
         /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools for allocating IP address prefixes. </param>
+        /// <param name="serviceGatewayId"> Reference to an existing service gateway. </param>
         /// <returns> A new <see cref="Network.SubnetData"/> instance for mocking. </returns>
-        public static SubnetData SubnetData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string addressPrefix = null, IEnumerable<string> addressPrefixes = null, NetworkSecurityGroupData networkSecurityGroup = null, RouteTableData routeTable = null, ResourceIdentifier natGatewayId = null, IEnumerable<ServiceEndpointProperties> serviceEndpoints = null, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies = null, IEnumerable<PrivateEndpointData> privateEndpoints = null, IEnumerable<NetworkIPConfiguration> ipConfigurations = null, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles = null, IEnumerable<WritableSubResource> ipAllocations = null, IEnumerable<ResourceNavigationLink> resourceNavigationLinks = null, IEnumerable<ServiceAssociationLink> serviceAssociationLinks = null, IEnumerable<ServiceDelegation> delegations = null, string purpose = null, NetworkProvisioningState? provisioningState = null, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy = null, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy = null, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = null, SharingScope? sharingScope = null, bool? defaultOutboundAccess = null, IEnumerable<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = null)
+        public static SubnetData SubnetData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string addressPrefix = null, IEnumerable<string> addressPrefixes = null, NetworkSecurityGroupData networkSecurityGroup = null, RouteTableData routeTable = null, ResourceIdentifier natGatewayId = null, IEnumerable<ServiceEndpointProperties> serviceEndpoints = null, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies = null, IEnumerable<PrivateEndpointData> privateEndpoints = null, IEnumerable<NetworkIPConfiguration> ipConfigurations = null, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles = null, IEnumerable<WritableSubResource> ipAllocations = null, IEnumerable<ResourceNavigationLink> resourceNavigationLinks = null, IEnumerable<ServiceAssociationLink> serviceAssociationLinks = null, IEnumerable<ServiceDelegation> delegations = null, string purpose = null, NetworkProvisioningState? provisioningState = null, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy = null, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy = null, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = null, SharingScope? sharingScope = null, bool? defaultOutboundAccess = null, IEnumerable<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = null, ResourceIdentifier serviceGatewayId = null)
         {
             addressPrefixes ??= new List<string>();
             serviceEndpoints ??= new List<ServiceEndpointProperties>();
@@ -578,7 +579,8 @@ namespace Azure.ResourceManager.Network.Models
                 applicationGatewayIPConfigurations?.ToList(),
                 sharingScope,
                 defaultOutboundAccess,
-                ipamPoolPrefixAllocations?.ToList());
+                ipamPoolPrefixAllocations?.ToList(),
+                serviceGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(serviceGatewayId) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityGroupData"/>. </summary>
@@ -1312,10 +1314,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="sourceVirtualNetworkId"> A reference to the source virtual network using this nat gateway resource. </param>
+        /// <param name="serviceGatewayId"> Reference to an existing service gateway. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
         /// <returns> A new <see cref="Network.NatGatewayData"/> instance for mocking. </returns>
-        public static NatGatewayData NatGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, NatGatewaySkuName? skuName = null, IEnumerable<string> zones = null, ETag? etag = null, int? idleTimeoutInMinutes = null, IEnumerable<WritableSubResource> publicIPAddresses = null, IEnumerable<WritableSubResource> publicIPAddressesV6 = null, IEnumerable<WritableSubResource> publicIPPrefixes = null, IEnumerable<WritableSubResource> publicIPPrefixesV6 = null, IEnumerable<WritableSubResource> subnets = null, ResourceIdentifier sourceVirtualNetworkId = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null)
+        public static NatGatewayData NatGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, NatGatewaySkuName? skuName = null, IEnumerable<string> zones = null, ETag? etag = null, int? idleTimeoutInMinutes = null, IEnumerable<WritableSubResource> publicIPAddresses = null, IEnumerable<WritableSubResource> publicIPAddressesV6 = null, IEnumerable<WritableSubResource> publicIPPrefixes = null, IEnumerable<WritableSubResource> publicIPPrefixesV6 = null, IEnumerable<WritableSubResource> subnets = null, ResourceIdentifier sourceVirtualNetworkId = null, ResourceIdentifier serviceGatewayId = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -1342,6 +1345,7 @@ namespace Azure.ResourceManager.Network.Models
                 publicIPPrefixesV6?.ToList(),
                 subnets?.ToList(),
                 sourceVirtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualNetworkId) : null,
+                serviceGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(serviceGatewayId) : null,
                 resourceGuid,
                 provisioningState);
         }
@@ -6639,88 +6643,47 @@ namespace Azure.ResourceManager.Network.Models
                 bgpCommunities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagsListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Network.ServiceGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="changeNumber"> The iteration number. </param>
-        /// <param name="cloud"> The name of the cloud. </param>
-        /// <param name="values"> The list of service tag information resources. </param>
-        /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
-        /// <returns> A new <see cref="Models.ServiceTagsListResult"/> instance for mocking. </returns>
-        public static ServiceTagsListResult ServiceTagsListResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string changeNumber = null, string cloud = null, IEnumerable<ServiceTagInformation> values = null, string nextLink = null)
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="sku"> The service gateway SKU. </param>
+        /// <param name="zones">
+        /// A list of availability zones denoting the zone in which service gateway should be deployed.
+        ///
+        /// - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
+        /// </param>
+        /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
+        /// <param name="routeTargetAddress"> Route Target address of Service gateway. </param>
+        /// <param name="routeTargetAddressV6"> Route Target address V6 of Service gateway. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the service gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the service gateway resource. </param>
+        /// <returns> A new <see cref="Network.ServiceGatewayData"/> instance for mocking. </returns>
+        public static ServiceGatewayData ServiceGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ServiceGatewaySku sku = null, IEnumerable<string> zones = null, VirtualNetworkData virtualNetwork = null, RouteTargetAddressPropertiesFormat routeTargetAddress = null, RouteTargetAddressPropertiesFormat routeTargetAddressV6 = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null)
         {
-            values ??= new List<ServiceTagInformation>();
+            tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
 
-            return new ServiceTagsListResult(
+            return new ServiceGatewayData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                changeNumber,
-                cloud,
-                values?.ToList(),
-                nextLink,
+                tags,
+                location,
+                etag,
+                sku,
+                zones?.ToList(),
+                virtualNetwork,
+                routeTargetAddress,
+                routeTargetAddressV6,
+                resourceGuid,
+                provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagInformation"/>. </summary>
-        /// <param name="properties"> Properties of the service tag information. </param>
-        /// <param name="name"> The name of service tag. </param>
-        /// <param name="id"> The ID of service tag. </param>
-        /// <param name="serviceTagChangeNumber"> The iteration number of service tag object for region. </param>
-        /// <returns> A new <see cref="Models.ServiceTagInformation"/> instance for mocking. </returns>
-        public static ServiceTagInformation ServiceTagInformation(ServiceTagInformationPropertiesFormat properties = null, string name = null, string id = null, string serviceTagChangeNumber = null)
-        {
-            return new ServiceTagInformation(properties, name, id, serviceTagChangeNumber, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagInformationPropertiesFormat"/>. </summary>
-        /// <param name="changeNumber"> The iteration number of service tag. </param>
-        /// <param name="region"> The region of service tag. </param>
-        /// <param name="systemService"> The name of system service. </param>
-        /// <param name="addressPrefixes"> The list of IP address prefixes. </param>
-        /// <param name="state"> The state of the service tag. </param>
-        /// <returns> A new <see cref="Models.ServiceTagInformationPropertiesFormat"/> instance for mocking. </returns>
-        public static ServiceTagInformationPropertiesFormat ServiceTagInformationPropertiesFormat(string changeNumber = null, string region = null, string systemService = null, IEnumerable<string> addressPrefixes = null, string state = null)
-        {
-            addressPrefixes ??= new List<string>();
-
-            return new ServiceTagInformationPropertiesFormat(
-                changeNumber,
-                region,
-                systemService,
-                addressPrefixes?.ToList(),
-                state,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkUsage"/>. </summary>
-        /// <param name="id"> Resource identifier. </param>
-        /// <param name="unit"> An enum describing the unit of measurement. </param>
-        /// <param name="currentValue"> The current value of the usage. </param>
-        /// <param name="limit"> The limit of usage. </param>
-        /// <param name="name"> The name of the type of usage. </param>
-        /// <returns> A new <see cref="Models.NetworkUsage"/> instance for mocking. </returns>
-        public static NetworkUsage NetworkUsage(ResourceIdentifier id = null, NetworkUsageUnit unit = default, long currentValue = default, long limit = default, NetworkUsageName name = null)
-        {
-            return new NetworkUsage(
-                id,
-                unit,
-                currentValue,
-                limit,
-                name,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkUsageName"/>. </summary>
-        /// <param name="value"> A string describing the resource name. </param>
-        /// <param name="localizedValue"> A localized string describing the resource name. </param>
-        /// <returns> A new <see cref="Models.NetworkUsageName"/> instance for mocking. </returns>
-        public static NetworkUsageName NetworkUsageName(string value = null, string localizedValue = null)
-        {
-            return new NetworkUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkData"/>. </summary>
@@ -6852,6 +6815,101 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceGatewayAddressLocationResponse"/>. </summary>
+        /// <param name="addressLocation"> Location to update. </param>
+        /// <param name="addresses"> An array of addresses to create or update in locations. </param>
+        /// <returns> A new <see cref="Models.ServiceGatewayAddressLocationResponse"/> instance for mocking. </returns>
+        public static ServiceGatewayAddressLocationResponse ServiceGatewayAddressLocationResponse(string addressLocation = null, IEnumerable<ServiceGatewayAddress> addresses = null)
+        {
+            addresses ??= new List<ServiceGatewayAddress>();
+
+            return new ServiceGatewayAddressLocationResponse(addressLocation, addresses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagsListResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="changeNumber"> The iteration number. </param>
+        /// <param name="cloud"> The name of the cloud. </param>
+        /// <param name="values"> The list of service tag information resources. </param>
+        /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
+        /// <returns> A new <see cref="Models.ServiceTagsListResult"/> instance for mocking. </returns>
+        public static ServiceTagsListResult ServiceTagsListResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string changeNumber = null, string cloud = null, IEnumerable<ServiceTagInformation> values = null, string nextLink = null)
+        {
+            values ??= new List<ServiceTagInformation>();
+
+            return new ServiceTagsListResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                changeNumber,
+                cloud,
+                values?.ToList(),
+                nextLink,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagInformation"/>. </summary>
+        /// <param name="properties"> Properties of the service tag information. </param>
+        /// <param name="name"> The name of service tag. </param>
+        /// <param name="id"> The ID of service tag. </param>
+        /// <param name="serviceTagChangeNumber"> The iteration number of service tag object for region. </param>
+        /// <returns> A new <see cref="Models.ServiceTagInformation"/> instance for mocking. </returns>
+        public static ServiceTagInformation ServiceTagInformation(ServiceTagInformationPropertiesFormat properties = null, string name = null, string id = null, string serviceTagChangeNumber = null)
+        {
+            return new ServiceTagInformation(properties, name, id, serviceTagChangeNumber, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagInformationPropertiesFormat"/>. </summary>
+        /// <param name="changeNumber"> The iteration number of service tag. </param>
+        /// <param name="region"> The region of service tag. </param>
+        /// <param name="systemService"> The name of system service. </param>
+        /// <param name="addressPrefixes"> The list of IP address prefixes. </param>
+        /// <param name="state"> The state of the service tag. </param>
+        /// <returns> A new <see cref="Models.ServiceTagInformationPropertiesFormat"/> instance for mocking. </returns>
+        public static ServiceTagInformationPropertiesFormat ServiceTagInformationPropertiesFormat(string changeNumber = null, string region = null, string systemService = null, IEnumerable<string> addressPrefixes = null, string state = null)
+        {
+            addressPrefixes ??= new List<string>();
+
+            return new ServiceTagInformationPropertiesFormat(
+                changeNumber,
+                region,
+                systemService,
+                addressPrefixes?.ToList(),
+                state,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkUsage"/>. </summary>
+        /// <param name="id"> Resource identifier. </param>
+        /// <param name="unit"> An enum describing the unit of measurement. </param>
+        /// <param name="currentValue"> The current value of the usage. </param>
+        /// <param name="limit"> The limit of usage. </param>
+        /// <param name="name"> The name of the type of usage. </param>
+        /// <returns> A new <see cref="Models.NetworkUsage"/> instance for mocking. </returns>
+        public static NetworkUsage NetworkUsage(ResourceIdentifier id = null, NetworkUsageUnit unit = default, long currentValue = default, long limit = default, NetworkUsageName name = null)
+        {
+            return new NetworkUsage(
+                id,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkUsageName"/>. </summary>
+        /// <param name="value"> A string describing the resource name. </param>
+        /// <param name="localizedValue"> A localized string describing the resource name. </param>
+        /// <returns> A new <see cref="Models.NetworkUsageName"/> instance for mocking. </returns>
+        public static NetworkUsageName NetworkUsageName(string value = null, string localizedValue = null)
+        {
+            return new NetworkUsageName(value, localizedValue, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NetworkIntentPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -6911,6 +6969,65 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkUsageName VirtualNetworkUsageName(string localizedValue = null, string value = null)
         {
             return new VirtualNetworkUsageName(localizedValue, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkApplianceData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="bandwidthInGbps"> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </param>
+        /// <param name="ipConfigurations"> A list of IPConfigurations of the virtual network appliance. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network appliance resource. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
+        /// <param name="subnet"> The reference to the subnet resource. </param>
+        /// <returns> A new <see cref="Network.VirtualNetworkApplianceData"/> instance for mocking. </returns>
+        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, string bandwidthInGbps = null, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, SubnetData subnet = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            ipConfigurations ??= new List<VirtualNetworkApplianceIPConfiguration>();
+
+            return new VirtualNetworkApplianceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null,
+                etag,
+                bandwidthInGbps,
+                ipConfigurations?.ToList(),
+                provisioningState,
+                resourceGuid,
+                subnet);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkApplianceIPConfiguration"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
+        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
+        /// <param name="primary"> Whether the ip configuration is primary or not. </param>
+        /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
+        /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkApplianceIPConfiguration"/> instance for mocking. </returns>
+        public static VirtualNetworkApplianceIPConfiguration VirtualNetworkApplianceIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, bool? primary = null, NetworkProvisioningState? provisioningState = null, NetworkIPVersion? privateIPAddressVersion = null)
+        {
+            return new VirtualNetworkApplianceIPConfiguration(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                primary,
+                provisioningState,
+                privateIPAddressVersion);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkGatewayData"/>. </summary>
@@ -9229,6 +9346,65 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectionMonitorQueryResult(sourceStatus, states?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.SubnetData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="addressPrefix"> The address prefix for the subnet. </param>
+        /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
+        /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
+        /// <param name="routeTable"> The reference to the RouteTable resource. </param>
+        /// <param name="natGatewayId"> Nat gateway associated with this subnet. </param>
+        /// <param name="serviceEndpoints"> An array of service endpoints. </param>
+        /// <param name="serviceEndpointPolicies"> An array of service endpoint policies. </param>
+        /// <param name="privateEndpoints"> An array of references to private endpoints. </param>
+        /// <param name="ipConfigurations"> An array of references to the network interface IP configurations using subnet. </param>
+        /// <param name="ipConfigurationProfiles"> Array of IP configuration profiles which reference this subnet. </param>
+        /// <param name="ipAllocations"> Array of IpAllocation which reference this subnet. </param>
+        /// <param name="resourceNavigationLinks"> An array of references to the external resources using subnet. </param>
+        /// <param name="serviceAssociationLinks"> An array of references to services injecting into this subnet. </param>
+        /// <param name="delegations"> An array of references to the delegations on the subnet. </param>
+        /// <param name="purpose"> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </param>
+        /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
+        /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
+        /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
+        /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
+        /// <param name="sharingScope"> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </param>
+        /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. </param>
+        /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools for allocating IP address prefixes. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.SubnetData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubnetData SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IEnumerable<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, ResourceIdentifier natGatewayId, IEnumerable<ServiceEndpointProperties> serviceEndpoints, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies, IEnumerable<PrivateEndpointData> privateEndpoints, IEnumerable<NetworkIPConfiguration> ipConfigurations, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<ResourceNavigationLink> resourceNavigationLinks, IEnumerable<ServiceAssociationLink> serviceAssociationLinks, IEnumerable<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IEnumerable<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations)
+        {
+            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: sharingScope, defaultOutboundAccess: defaultOutboundAccess, ipamPoolPrefixAllocations: ipamPoolPrefixAllocations, serviceGatewayId: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NatGatewayData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="skuName"> The nat gateway SKU. </param>
+        /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddressesV6"> An array of public ip addresses V6 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
+        /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
+        /// <param name="sourceVirtualNetworkId"> A reference to the source virtual network using this nat gateway resource. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NatGatewayData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NatGatewayData NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NatGatewaySkuName? skuName, IEnumerable<string> zones, ETag? etag, int? idleTimeoutInMinutes, IEnumerable<WritableSubResource> publicIPAddresses, IEnumerable<WritableSubResource> publicIPAddressesV6, IEnumerable<WritableSubResource> publicIPPrefixes, IEnumerable<WritableSubResource> publicIPPrefixesV6, IEnumerable<WritableSubResource> subnets, ResourceIdentifier sourceVirtualNetworkId, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
+        {
+            return NatGatewayData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, skuName: skuName, zones: zones, etag: etag, idleTimeoutInMinutes: idleTimeoutInMinutes, publicIPAddresses: publicIPAddresses, publicIPAddressesV6: publicIPAddressesV6, publicIPPrefixes: publicIPPrefixes, publicIPPrefixesV6: publicIPPrefixesV6, subnets: subnets, sourceVirtualNetworkId: sourceVirtualNetworkId, serviceGatewayId: default, resourceGuid: resourceGuid, provisioningState: provisioningState);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.ApplicationGatewayData" />. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -9760,7 +9936,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubnetData SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IEnumerable<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, ResourceIdentifier natGatewayId, IEnumerable<ServiceEndpointProperties> serviceEndpoints, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies, IEnumerable<PrivateEndpointData> privateEndpoints, IEnumerable<NetworkIPConfiguration> ipConfigurations, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<ResourceNavigationLink> resourceNavigationLinks, IEnumerable<ServiceAssociationLink> serviceAssociationLinks, IEnumerable<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations)
         {
-            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: default, defaultOutboundAccess: default, ipamPoolPrefixAllocations: default);
+            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: default, defaultOutboundAccess: default, ipamPoolPrefixAllocations: default, serviceGatewayId: default);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayListener. </summary>
@@ -9832,7 +10008,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NatGatewayData NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NatGatewaySkuName? skuName, IEnumerable<string> zones, ETag? etag, int? idleTimeoutInMinutes, IEnumerable<WritableSubResource> publicIPAddresses, IEnumerable<WritableSubResource> publicIPPrefixes, IEnumerable<WritableSubResource> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
         {
-            return NatGatewayData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, skuName: skuName, zones: zones, etag: etag, idleTimeoutInMinutes: idleTimeoutInMinutes, publicIPAddresses: publicIPAddresses, publicIPAddressesV6: default, publicIPPrefixes: publicIPPrefixes, publicIPPrefixesV6: default, subnets: subnets, sourceVirtualNetworkId: default, resourceGuid: resourceGuid, provisioningState: provisioningState);
+            return NatGatewayData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, skuName: skuName, zones: zones, etag: etag, idleTimeoutInMinutes: idleTimeoutInMinutes, publicIPAddresses: publicIPAddresses, publicIPAddressesV6: default, publicIPPrefixes: publicIPPrefixes, publicIPPrefixesV6: default, subnets: subnets, sourceVirtualNetworkId: default, serviceGatewayId: default, resourceGuid: resourceGuid, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig" />. </summary>
@@ -10103,7 +10279,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubnetData SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IEnumerable<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, ResourceIdentifier natGatewayId, IEnumerable<ServiceEndpointProperties> serviceEndpoints, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies, IEnumerable<PrivateEndpointData> privateEndpoints, IEnumerable<NetworkIPConfiguration> ipConfigurations, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<ResourceNavigationLink> resourceNavigationLinks, IEnumerable<ServiceAssociationLink> serviceAssociationLinks, IEnumerable<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess)
         {
-            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: sharingScope, defaultOutboundAccess: defaultOutboundAccess, ipamPoolPrefixAllocations: default);
+            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: sharingScope, defaultOutboundAccess: defaultOutboundAccess, ipamPoolPrefixAllocations: default, serviceGatewayId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NetworkInterfaceData" />. </summary>
@@ -10443,7 +10619,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubnetData SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IEnumerable<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, ResourceIdentifier natGatewayId, IEnumerable<ServiceEndpointProperties> serviceEndpoints, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies, IEnumerable<PrivateEndpointData> privateEndpoints, IEnumerable<NetworkIPConfiguration> ipConfigurations, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<ResourceNavigationLink> resourceNavigationLinks, IEnumerable<ServiceAssociationLink> serviceAssociationLinks, IEnumerable<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, bool? defaultOutboundAccess)
         {
-            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: default, defaultOutboundAccess: defaultOutboundAccess, ipamPoolPrefixAllocations: default);
+            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: default, defaultOutboundAccess: defaultOutboundAccess, ipamPoolPrefixAllocations: default, serviceGatewayId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.ExpressRouteCircuitData" />. </summary>

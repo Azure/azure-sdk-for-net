@@ -47,9 +47,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="sourceVirtualNetwork"> A reference to the source virtual network using this nat gateway resource. </param>
+        /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
-        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NatGatewaySku sku, IList<string> zones, ETag? etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPAddressesV6, IList<WritableSubResource> publicIPPrefixes, IList<WritableSubResource> publicIPPrefixesV6, IReadOnlyList<WritableSubResource> subnets, WritableSubResource sourceVirtualNetwork, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NatGatewaySku sku, IList<string> zones, ETag? etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPAddressesV6, IList<WritableSubResource> publicIPPrefixes, IList<WritableSubResource> publicIPPrefixesV6, IReadOnlyList<WritableSubResource> subnets, WritableSubResource sourceVirtualNetwork, WritableSubResource serviceGateway, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Sku = sku;
             Zones = zones;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.Network
             PublicIPPrefixesV6 = publicIPPrefixesV6;
             Subnets = subnets;
             SourceVirtualNetwork = sourceVirtualNetwork;
+            ServiceGateway = serviceGateway;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
@@ -116,6 +118,21 @@ namespace Azure.ResourceManager.Network
                 if (SourceVirtualNetwork is null)
                     SourceVirtualNetwork = new WritableSubResource();
                 SourceVirtualNetwork.Id = value;
+            }
+        }
+
+        /// <summary> Reference to an existing service gateway. </summary>
+        internal WritableSubResource ServiceGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.serviceGateway.id")]
+        public ResourceIdentifier ServiceGatewayId
+        {
+            get => ServiceGateway is null ? default : ServiceGateway.Id;
+            set
+            {
+                if (ServiceGateway is null)
+                    ServiceGateway = new WritableSubResource();
+                ServiceGateway.Id = value;
             }
         }
 
