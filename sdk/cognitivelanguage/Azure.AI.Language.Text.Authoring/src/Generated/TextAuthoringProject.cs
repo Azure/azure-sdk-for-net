@@ -6,32 +6,19 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    // Data plane generated sub-client.
     /// <summary> The TextAuthoringProject sub-client. </summary>
     public partial class TextAuthoringProject
     {
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of TextAuthoringProject for mocking. </summary>
         protected TextAuthoringProject()
@@ -39,81 +26,48 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of TextAuthoringProject. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="keyCredential"> The key credential to copy. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal TextAuthoringProject(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"></param>
+        internal TextAuthoringProject(HttpPipeline pipeline, string endpoint, string apiVersion)
         {
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _keyCredential = keyCredential;
-            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets the status for a project deletion job. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TextAuthoringProjectDeletionState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetProjectDeletionStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringProjectDeletionState.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the status for a project deletion job. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TextAuthoringProjectDeletionState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetProjectDeletionStatus(jobId, context);
-            return Response.FromValue(TextAuthoringProjectDeletionState.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Gets the status for a project deletion job.
+        /// [Protocol Method] Gets the status for an import.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetProjectDeletionStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The new project name. </param>
         /// <param name="jobId"> The job ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetProjectDeletionStatusAsync(string jobId, RequestContext context)
+        public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProjectDeletionStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetImportStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetProjectDeletionStatusRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -123,36 +77,1163 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
+        /// [Protocol Method] Gets the status for an import.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetImportStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for an import. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringImportProjectState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetImportStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringImportProjectState)result, result);
+        }
+
+        /// <summary> Gets the status for an import. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringImportProjectState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetImportStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringImportProjectState)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetExportStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetExportStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringExportProjectState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetExportStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringExportProjectState)result, result);
+        }
+
+        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringExportProjectState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetExportStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringExportProjectState)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetProject(string projectName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+                using HttpMessage message = CreateGetProjectRequest(projectName, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+                using HttpMessage message = CreateGetProjectRequest(projectName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the details of a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringProjectMetadata> GetProject(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            Response result = GetProject(projectName, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringProjectMetadata)result, result);
+        }
+
+        /// <summary> Gets the details of a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringProjectMetadata>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            Response result = await GetProjectAsync(projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringProjectMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The most basic operation that applies to a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CreateProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The most basic operation that applies to a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CreateProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.DeleteProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.DeleteProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.DeleteProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return DeleteProject(waitUntil, projectName, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return await DeleteProjectAsync(waitUntil, projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AuthorizeProjectCopy(string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AuthorizeProjectCopy");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAuthorizeProjectCopyRequest(projectName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AuthorizeProjectCopyAsync(string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AuthorizeProjectCopy");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAuthorizeProjectCopyRequest(projectName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="projectKind"> Represents the project kind. </param>
+        /// <param name="storageInputContainerName"> The name of the storage container. </param>
+        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringCopyProjectDetails> AuthorizeProjectCopy(string projectName, TextAuthoringProjectKind projectKind, string storageInputContainerName = default, bool? allowOverwrite = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            CopyProjectAuthorizationRequest spreadModel = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, default);
+            Response result = AuthorizeProjectCopy(projectName, spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringCopyProjectDetails)result, result);
+        }
+
+        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="projectKind"> Represents the project kind. </param>
+        /// <param name="storageInputContainerName"> The name of the storage container. </param>
+        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(string projectName, TextAuthoringProjectKind projectKind, string storageInputContainerName = default, bool? allowOverwrite = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            CopyProjectAuthorizationRequest spreadModel = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, default);
+            Response result = await AuthorizeProjectCopyAsync(projectName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringCopyProjectDetails)result, result);
+        }
+
+        /// <summary> Copies an existing project to another Azure resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CopyProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCopyProjectRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Copies an existing project to another Azure resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CopyProject");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCopyProjectRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Copies an existing project to another Azure resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The copy project info. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, TextAuthoringCopyProjectDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return CopyProject(waitUntil, projectName, body, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Copies an existing project to another Azure resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The copy project info. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, TextAuthoringCopyProjectDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await CopyProjectAsync(waitUntil, projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, string stringIndexType, string assetKind = default, string trainedModelLabel = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Export");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+                using HttpMessage message = CreateExportRequest(projectName, stringIndexType, assetKind, trainedModelLabel, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, string stringIndexType, string assetKind = default, string trainedModelLabel = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Export");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+                using HttpMessage message = CreateExportRequest(projectName, stringIndexType, assetKind, trainedModelLabel, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.ExportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, StringIndexType stringIndexType, string assetKind = default, string trainedModelLabel = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return Export(waitUntil, projectName, stringIndexType.ToString(), assetKind, trainedModelLabel, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, StringIndexType stringIndexType, string assetKind = default, string trainedModelLabel = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return await ExportAsync(waitUntil, projectName, stringIndexType.ToString(), assetKind, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Import");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateImportRequest(projectName, content, format, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Import");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateImportRequest(projectName, content, format, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.ImportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The project data to import. </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, TextAuthoringExportedProject body, string format = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return Import(waitUntil, projectName, body, format, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The project data to import. </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, TextAuthoringExportedProject body, string format = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await ImportAsync(waitUntil, projectName, body, format, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary> Triggers a training job for a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation<BinaryData> Train(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Train");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateTrainRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a training job for a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Train");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateTrainRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.TrainAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a training job for a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The training input parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<TextAuthoringTrainingJobResult> Train(WaitUntil waitUntil, string projectName, TextAuthoringTrainingJobDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return Train(waitUntil, projectName, body, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Triggers a training job for a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The training input parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<TextAuthoringTrainingJobResult>> TrainAsync(WaitUntil waitUntil, string projectName, TextAuthoringTrainingJobDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await TrainAsync(waitUntil, projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing copy project job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCopyProjectStatus(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetCopyProjectStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetCopyProjectStatusRequest(projectName, jobId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing copy project job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCopyProjectStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetCopyProjectStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetCopyProjectStatusRequest(projectName, jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing copy project job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringCopyProjectState> GetCopyProjectStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetCopyProjectStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringCopyProjectState)result, result);
+        }
+
+        /// <summary> Gets the status of an existing copy project job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringCopyProjectState>> GetCopyProjectStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetCopyProjectStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringCopyProjectState)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for a training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTrainingStatus(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetTrainingStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetTrainingStatusRequest(projectName, jobId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for a training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTrainingStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetTrainingStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetTrainingStatusRequest(projectName, jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for a training job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringTrainingState> GetTrainingStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetTrainingStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringTrainingState)result, result);
+        }
+
+        /// <summary> Gets the status for a training job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringTrainingState>> GetTrainingStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetTrainingStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringTrainingState)result, result);
+        }
+
+        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CancelTrainingJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CancelTrainingJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CancelTrainingJobAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<TextAuthoringTrainingJobResult> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            return CancelTrainingJob(waitUntil, projectName, jobId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<TextAuthoringTrainingJobResult>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            return await CancelTrainingJobAsync(waitUntil, projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// [Protocol Method] Gets the status for a project deletion job.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetProjectDeletionStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The job ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetProjectDeletionStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProjectDeletionStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProjectDeletionStatus");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
                 using HttpMessage message = CreateGetProjectDeletionStatusRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -161,393 +1242,616 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        internal HttpMessage CreateGetImportStatusRequest(string projectName, string jobId, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Gets the status for a project deletion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetProjectDeletionStatusAsync(string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/import/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetExportStatusRequest(string projectName, string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/export/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetProjectRequest(string projectName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateProjectRequest(string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateAuthorizeProjectCopyRequest(string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/:authorize-copy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCopyProjectRequest(string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/:copy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateExportRequest(string projectName, string stringIndexType, string assetKind, string trainedModelLabel, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/:export", false);
-            uri.AppendQuery("stringIndexType", stringIndexType, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (assetKind != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProjectDeletionStatus");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("assetKind", assetKind, true);
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetProjectDeletionStatusRequest(jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (trainedModelLabel != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("trainedModelLabel", trainedModelLabel, true);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            return message;
         }
 
-        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string format, RequestContext context)
+        /// <summary> Gets the status for a project deletion job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringProjectDeletionState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (format != null)
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetProjectDeletionStatus(jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringProjectDeletionState)result, result);
+        }
+
+        /// <summary> Gets the status for a project deletion job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringProjectDeletionState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetProjectDeletionStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringProjectDeletionState)result, result);
+        }
+
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.UnassignDeploymentResources");
+            scope.Start();
+            try
             {
-                request.Headers.Add("format", format);
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateTrainRequest(string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/:train", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetCopyProjectStatusRequest(string projectName, string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/copy/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTrainingStatusRequest(string projectName, string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/train/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCancelTrainingJobRequest(string projectName, string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/train/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/:cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateGetProjectDeletionStatusRequest(string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/global/deletion-jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUnassignDeploymentResourcesRequest(string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/resources/:unassign", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetUnassignDeploymentResourcesStatusRequest(string projectName, string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/resources/unassign/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateAssignDeploymentResourcesRequest(string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/resources/:assign", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAssignDeploymentResourcesStatusRequest(string projectName, string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/resources/assign/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateSwapDeploymentsRequest(string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/deployments/:swap", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetSwapDeploymentsStatusRequest(string projectName, string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/deployments/swap/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
+            catch (Exception e)
             {
-                return DefaultRequestContext;
+                scope.Failed(e);
+                throw;
             }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier200201;
-        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-
-        private TextAuthoringTrainingJobResult FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState(Response response)
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
-            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
-            return TextAuthoringTrainingJobResult.DeserializeTextAuthoringTrainingJobResult(resultJsonElement);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.UnassignDeploymentResources");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.UnassignDeploymentResourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The info for the deployment resources to be deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, TextAuthoringUnassignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return UnassignDeploymentResources(waitUntil, projectName, body, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The info for the deployment resources to be deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, TextAuthoringUnassignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await UnassignDeploymentResourcesAsync(waitUntil, projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing unassign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetUnassignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetUnassignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing unassign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetUnassignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetUnassignDeploymentResourcesStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)result, result);
+        }
+
+        /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetUnassignDeploymentResourcesStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)result, result);
+        }
+
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AssignDeploymentResources");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AssignDeploymentResources");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.AssignDeploymentResourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The new project resources info. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, TextAuthoringAssignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return AssignDeploymentResources(waitUntil, projectName, body, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The new project resources info. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, TextAuthoringAssignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await AssignDeploymentResourcesAsync(waitUntil, projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing assign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAssignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetAssignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing assign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetAssignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing assign deployment resources job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringDeploymentResourcesState> GetAssignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetAssignDeploymentResourcesStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)result, result);
+        }
+
+        /// <summary> Gets the status of an existing assign deployment resources job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringDeploymentResourcesState>> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetAssignDeploymentResourcesStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)result, result);
+        }
+
+        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.SwapDeployments");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.SwapDeployments");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.SwapDeploymentsAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The job object to swap two deployments. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, TextAuthoringSwapDeploymentsDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return SwapDeployments(waitUntil, projectName, body, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> The job object to swap two deployments. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, TextAuthoringSwapDeploymentsDetails body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await SwapDeploymentsAsync(waitUntil, projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing swap deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSwapDeploymentsStatus(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetSwapDeploymentsStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(projectName, jobId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing swap deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSwapDeploymentsStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetSwapDeploymentsStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(projectName, jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing swap deployment job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TextAuthoringSwapDeploymentsState> GetSwapDeploymentsStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = GetSwapDeploymentsStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TextAuthoringSwapDeploymentsState)result, result);
+        }
+
+        /// <summary> Gets the status of an existing swap deployment job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TextAuthoringSwapDeploymentsState>> GetSwapDeploymentsStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            Response result = await GetSwapDeploymentsStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringSwapDeploymentsState)result, result);
         }
     }
 }
