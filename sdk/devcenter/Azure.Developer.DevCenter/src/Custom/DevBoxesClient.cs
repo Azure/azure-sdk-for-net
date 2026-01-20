@@ -31,7 +31,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(devBox, nameof(devBox));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(devBox, ModelSerializationExtensions.WireOptions);
+            using RequestContent content = ((IPersistableModel<DevBox>)devBox).Write(ModelSerializationExtensions.WireOptions);
             Operation<BinaryData> response = await CreateDevBoxAsync(waitUntil, projectName, userId, devBox.Name, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, (Response r) => (DevBox)r, ClientDiagnostics, "DevBoxesClient.CreateDevBox");
         }
@@ -53,7 +53,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(devBox, nameof(devBox));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(devBox, ModelSerializationExtensions.WireOptions);
+            using RequestContent content = ((IPersistableModel<DevBox>)devBox).Write(ModelSerializationExtensions.WireOptions);
             Operation<BinaryData> response = CreateDevBox(waitUntil, projectName, userId, devBox.Name, content, context);
             return ProtocolOperationHelpers.Convert(response, (Response r) => (DevBox)r, ClientDiagnostics, "DevBoxesClient.CreateDevBox");
         }

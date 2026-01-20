@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(environment, nameof(environment));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(environment, ModelSerializationExtensions.WireOptions);
+            using RequestContent content = ((IPersistableModel<DevCenterEnvironment>)environment).Write(ModelSerializationExtensions.WireOptions);
             Operation<BinaryData> response = await CreateOrUpdateEnvironmentAsync(waitUntil, projectName, userId, environment.Name, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, (Response r) => (DevCenterEnvironment)r, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
         }
@@ -51,7 +51,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNull(environment, nameof(environment));
 
             RequestContext context = cancellationToken.ToRequestContext();
-            using RequestContent content = RequestContent.Create(environment, ModelSerializationExtensions.WireOptions);
+            using RequestContent content = ((IPersistableModel<DevCenterEnvironment>)environment).Write(ModelSerializationExtensions.WireOptions);
             Operation<BinaryData> response = CreateOrUpdateEnvironment(waitUntil, projectName, userId, environment.Name, content, context);
             return ProtocolOperationHelpers.Convert(response, (Response r) => (DevCenterEnvironment)r, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
         }
