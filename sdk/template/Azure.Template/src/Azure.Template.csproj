@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Azure Widget Analytics client library for .NET.</Description>
     <AssemblyTitle>Azure Widget Analytics client library for .NET</AssemblyTitle>
-    <Version>1.0.3-beta.20</Version>
+    <Version>1.0.3-beta.21</Version>
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
