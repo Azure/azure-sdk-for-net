@@ -1,4 +1,4 @@
 directory: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/EdgeOrder
-commit: 113b466bf76cd86da547beee5300d2ef5210cfb3
+commit: 483301e475684d809bdc7e81aa786e84cfb4236f
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
