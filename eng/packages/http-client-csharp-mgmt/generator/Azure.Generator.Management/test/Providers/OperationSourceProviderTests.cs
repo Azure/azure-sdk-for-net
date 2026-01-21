@@ -141,7 +141,7 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // Verify that TWO separate OperationSources are created, not just one
             var operationSources = outputLibrary!.OperationSourceDict;
-            Assert.AreEqual(2, operationSources.Count, 
+            Assert.AreEqual(2, operationSources.Count,
                 "Should generate 2 OperationSources for 2 resources sharing the same data model");
 
             // Verify the OperationSource names and types
