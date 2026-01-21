@@ -31,6 +31,7 @@ namespace Azure.Generator.Visitors
         private const string IfNoneMatch = "If-None-Match";
         private const string IfModifiedSince = "If-Modified-Since";
         private const string IfUnmodifiedSince = "If-Unmodified-Since";
+        private readonly HashSet<ScmMethodProvider> _visited = [];
 
         private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -58,7 +59,7 @@ namespace Azure.Generator.Visitors
             RestClientProvider enclosingType,
             ScmMethodProvider? createRequestMethodProvider)
         {
-            if (createRequestMethodProvider != null)
+            if (createRequestMethodProvider != null && _visited.Add(createRequestMethodProvider))
             {
                 UpdateMethod(createRequestMethodProvider);
             }
@@ -66,9 +67,31 @@ namespace Azure.Generator.Visitors
             return createRequestMethodProvider;
         }
 
+        protected override ScmMethodProviderCollection? Visit(
+            InputServiceMethod serviceMethod,
+            ClientProvider enclosingType,
+            ScmMethodProviderCollection? methodProviderCollection)
+        {
+            if (methodProviderCollection != null)
+            {
+                foreach (var method in methodProviderCollection)
+                {
+                    if (_visited.Add(method))
+                    {
+                        UpdateMethod(method);
+                    }
+                }
+            }
+
+            return methodProviderCollection;
+        }
+
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            UpdateMethod(method);
+            if (_visited.Add(method))
+            {
+                UpdateMethod(method);
+            }
 
             return method;
         }
