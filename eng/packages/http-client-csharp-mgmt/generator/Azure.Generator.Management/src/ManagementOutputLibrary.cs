@@ -416,7 +416,6 @@ namespace Azure.Generator.Management
 
                     // Find all resource providers that use this data type
                     var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
-                    
                     if (resourceProviders.Count > 0)
                     {
                         // For each resource provider, create an OperationSource keyed by the resource type
