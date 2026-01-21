@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 Value = data.Value,
                 Source = data.Source
             };
-            return CreateOrUpdateAsync(waitUntil, configurationName, content, cancellationToken).Result;
+            return await CreateOrUpdateAsync(waitUntil, configurationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus , string reason, string name, IEnumerable<string> supportedVersionsToUpgrade)
-            =>PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade, default);
+        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IEnumerable<string> supportedVersionsToUpgrade)
+            => PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade, default);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
