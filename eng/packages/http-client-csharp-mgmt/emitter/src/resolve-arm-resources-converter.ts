@@ -270,7 +270,6 @@ export function resolveArmResources(
   // Post-processing step: Find operations that were not recognized by the ARM library
   // and add them as non-resource methods
   const includedOperationIds = new Set<string>();
-  
   // Track all operations that are already included
   for (const resource of filteredResources) {
     for (const method of resource.metadata.methods) {
