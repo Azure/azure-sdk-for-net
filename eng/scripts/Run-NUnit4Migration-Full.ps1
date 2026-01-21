@@ -23,7 +23,17 @@ $repoRoot = Resolve-Path "$PSScriptRoot/../.."
 # CONFIGURE THESE SERVICES TO MIGRATE
 $serviceDirectories = @(
     "core",
-    "template"
+    "template",
+    "storage",
+    "storagecache",
+    "storageactions",
+    "storagemover",
+    "storagepool",
+    "storagesync",
+    "storagediscovery",
+    "identity",
+    "keyvault",
+    "entra"
 )
 
 Write-Host "========================================" -ForegroundColor Magenta
