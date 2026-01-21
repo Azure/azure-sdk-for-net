@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string recommendedOption = default;
             string selectedOptionValue = default;
             ResponseValidationProperties responseValidationProperties = default;
-            IReadOnlyList<ResponseConfig> responseOptions = default;
+            IList<ResponseConfig> responseOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

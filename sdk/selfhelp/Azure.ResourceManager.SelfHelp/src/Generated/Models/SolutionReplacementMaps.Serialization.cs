@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IReadOnlyList<KBWebResult> webResults = default;
-            IReadOnlyList<SolutionsDiagnostic> diagnostics = default;
-            IReadOnlyList<SolutionsTroubleshooters> troubleshooters = default;
-            IReadOnlyList<MetricsBasedChart> metricsBasedCharts = default;
-            IReadOnlyList<SelfHelpVideo> videos = default;
-            IReadOnlyList<VideoGroupDetail> videoGroups = default;
+            IList<KBWebResult> webResults = default;
+            IList<SolutionsDiagnostic> diagnostics = default;
+            IList<SolutionsTroubleshooters> troubleshooters = default;
+            IList<MetricsBasedChart> metricsBasedCharts = default;
+            IList<SelfHelpVideo> videos = default;
+            IList<VideoGroupDetail> videoGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

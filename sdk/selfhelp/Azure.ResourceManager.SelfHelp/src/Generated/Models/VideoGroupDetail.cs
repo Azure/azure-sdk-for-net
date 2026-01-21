@@ -27,12 +27,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="videos"> List of videos will be shown to customers. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VideoGroupDetail(IReadOnlyList<VideoGroupVideo> videos, string replacementKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VideoGroupDetail(IList<VideoGroupVideo> videos, string replacementKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Videos = videos;
             ReplacementKey = replacementKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> List of videos will be shown to customers. </summary>
+        public IList<VideoGroupVideo> Videos { get; }
 
         /// <summary> Place holder used in HTML Content replace control with the insight content. </summary>
         public string ReplacementKey { get; }

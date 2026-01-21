@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionReplacementMaps(IReadOnlyList<KBWebResult> webResults, IReadOnlyList<SolutionsDiagnostic> diagnostics, IReadOnlyList<SolutionsTroubleshooters> troubleshooters, IReadOnlyList<MetricsBasedChart> metricsBasedCharts, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionReplacementMaps(IList<KBWebResult> webResults, IList<SolutionsDiagnostic> diagnostics, IList<SolutionsTroubleshooters> troubleshooters, IList<MetricsBasedChart> metricsBasedCharts, IList<SelfHelpVideo> videos, IList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebResults = webResults;
             Diagnostics = diagnostics;
@@ -46,5 +46,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
             VideoGroups = videoGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Solution AzureKB results. </summary>
+        public IList<KBWebResult> WebResults { get; }
+
+        /// <summary> Solution diagnostics results. </summary>
+        public IList<SolutionsDiagnostic> Diagnostics { get; }
+
+        /// <summary> Solutions Troubleshooters. </summary>
+        public IList<SolutionsTroubleshooters> Troubleshooters { get; }
+
+        /// <summary> Solution metrics based charts. </summary>
+        public IList<MetricsBasedChart> MetricsBasedCharts { get; }
+
+        /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
+        public IList<SelfHelpVideo> Videos { get; }
+
+        /// <summary> Group of Videos. </summary>
+        public IList<VideoGroupDetail> VideoGroups { get; }
     }
 }

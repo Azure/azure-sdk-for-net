@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IReadOnlyList<VideoGroupVideo> videos = default;
+            IList<VideoGroupVideo> videos = default;
             string replacementKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
