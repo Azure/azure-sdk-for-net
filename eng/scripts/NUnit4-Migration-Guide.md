@@ -4,11 +4,72 @@ This guide provides step-by-step instructions for migrating the entire azure-sdk
 
 ## Prerequisites
 
-- PowerShell installed
+- PowerShell 7+ installed (for parallel processing)
 - Git repository is clean (no uncommitted changes)
 - Working branch created for the migration
 
-## Migration Process (Per PR)
+## Automated Migration with Worktrees (Recommended)
+
+For the fastest workflow, use the `Run-NUnit4Migration-Full.ps1` script with git worktrees:
+
+### Setup
+
+1. **Create a branch with migration scripts** (if not already done):
+   ```powershell
+   git checkout -b nunit4-scripts
+   # Commit all migration scripts
+   ```
+
+2. **Create a worktree for each migration batch**:
+   ```powershell
+   git worktree add ..\azure-sdk-nunit4-batch1 -b nunit4-migration-batch1 nunit4-scripts
+   cd ..\azure-sdk-nunit4-batch1
+   ```
+
+3. **Edit the service list** in `eng/scripts/Run-NUnit4Migration-Full.ps1`:
+   ```powershell
+   $serviceDirectories = @(
+       "core",
+       "template",
+       "storage"
+   )
+   ```
+
+4. **Run the full migration** (in a separate terminal):
+   ```powershell
+   .\eng\scripts\Run-NUnit4Migration-Full.ps1
+   ```
+
+5. **Continue working** in your main workspace while migration runs
+
+6. **Review and finalize** when complete:
+   ```powershell
+   # Review the output and test results
+   git log
+   
+   # Remove migration scripts before PR
+   git rm eng/scripts/Migrate-NUnit4.ps1
+   git rm eng/scripts/Test-NUnit4Migration.ps1
+   git rm eng/scripts/Run-NUnit4Migration-Full.ps1
+   git rm eng/scripts/NUnit4-Migration-Guide.md
+   git commit -m "Remove migration scripts"
+   
+   # Push and create PR
+   git push origin nunit4-migration-batch1
+   ```
+
+7. **Cleanup worktree** after PR is merged:
+   ```powershell
+   git worktree remove ..\azure-sdk-nunit4-batch1
+   ```
+
+### Benefits
+- Run multiple migrations in parallel using different worktrees
+- Continue working on other tasks while migration runs
+- Each migration is isolated in its own directory
+- Easy to create multiple PRs simultaneously
+
+## Manual Migration Process (Per PR)
 
 Each PR should migrate a specific set of packages/services. Follow these steps for each PR:
 
