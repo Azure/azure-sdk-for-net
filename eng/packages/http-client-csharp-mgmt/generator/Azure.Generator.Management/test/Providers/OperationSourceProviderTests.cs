@@ -21,7 +21,6 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             // This test verifies the fix for the issue where multiple resources sharing the same data model
             // only generated one OperationSource, causing compilation errors.
-            // See: https://github.com/Azure/azure-sdk-for-net/issues/...
 
             // Create test data with two resources (Site and SitesBySubscription) sharing the same model (SiteData)
             const string sharedModelName = "SiteData";
