@@ -105,8 +105,11 @@ dotnet_diagnostic.$diagnosticId.severity = warning
 "@
     Set-Content -Path $editorConfigPath -Value $editorConfigContent
     
-    # Run dotnet format for each project
-    foreach ($project in $testProjects) {
+    # Run dotnet format for each project in parallel
+    $testProjects | ForEach-Object -Parallel {
+        $project = $_
+        $diagnosticId = $using:diagnosticId
+        
         $formatArgs = @(
             "format",
             $project.FullName,
@@ -115,8 +118,8 @@ dotnet_diagnostic.$diagnosticId.severity = warning
             "--verbosity", "quiet"
         )
         
-        $output = & dotnet @formatArgs 2>&1 | Out-Null
-    }
+        & dotnet @formatArgs 2>&1 | Out-Null
+    } -ThrottleLimit 15
     
     # Remove .editorconfig
     Remove-Item $editorConfigPath -ErrorAction SilentlyContinue
