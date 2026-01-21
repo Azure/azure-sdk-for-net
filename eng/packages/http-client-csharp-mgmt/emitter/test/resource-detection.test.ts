@@ -1470,18 +1470,40 @@ interface NoGetResources {
     ok(parentResource);
     strictEqual(parentResource.metadata.resourceName, "Parent");
 
+    // Parent should have 5 methods: its own 4 methods (get, createOrUpdate, delete, listByResourceGroup)
+    // plus the listByResourceGroup for NoGetResource children
+    strictEqual(
+      parentResource.metadata.methods.length,
+      5,
+      "Parent should have 5 methods including the list operation from NoGetResource"
+    );
+
+    // Verify the list operation for NoGetResource is in parent's methods
+    const noGetListInParent = parentResource.metadata.methods.find(
+      (m) =>
+        m.kind === "List" && m.operationPath.includes("noGetResources")
+    );
+    ok(
+      noGetListInParent,
+      "Parent resource should have the list operation for NoGetResource"
+    );
+
     // Verify NoGetResource is NOT in resources
     const noGetResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceName === "NoGetResource"
     );
     strictEqual(noGetResource, undefined);
 
-    // Verify NoGetResource operations are in non-resource methods
+    // Verify only non-list NoGetResource operations are in non-resource methods
     ok(armProviderSchema.nonResourceMethods);
     const noGetMethods = armProviderSchema.nonResourceMethods.filter((m) =>
       m.operationPath.includes("noGetResources")
     );
-    // Should have createOrUpdate, delete, and list operations
-    strictEqual(noGetMethods.length, 3);
+    // Should have only createOrUpdate and delete operations (list is now on parent)
+    strictEqual(
+      noGetMethods.length,
+      2,
+      "Should have only createOrUpdate and delete in non-resource methods"
+    );
   });
 });

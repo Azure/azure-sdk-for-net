@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    public partial class ManagedProxyContent : IUtf8JsonSerializable, IJsonModel<ManagedProxyContent>
+    /// <summary> Represent ManageProxy Request object. </summary>
+    public partial class ManagedProxyContent : IJsonModel<ManagedProxyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedProxyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ManagedProxyContent"/> for deserialization. </summary>
+        internal ManagedProxyContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedProxyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedProxyContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("service"u8);
             writer.WriteStringValue(Service);
             if (Optional.IsDefined(Hostname))
@@ -46,15 +52,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +69,27 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
-        ManagedProxyContent IJsonModel<ManagedProxyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedProxyContent IJsonModel<ManagedProxyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedProxyContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedProxyContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedProxyContent(document.RootElement, options);
         }
 
-        internal static ManagedProxyContent DeserializeManagedProxyContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedProxyContent DeserializeManagedProxyContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,42 +97,43 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             string service = default;
             string hostname = default;
             HybridConnectivityServiceName? serviceName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("service"u8))
+                if (prop.NameEquals("service"u8))
                 {
-                    service = property.Value.GetString();
+                    service = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostname"u8))
+                if (prop.NameEquals("hostname"u8))
                 {
-                    hostname = property.Value.GetString();
+                    hostname = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceName"u8))
+                if (prop.NameEquals("serviceName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serviceName = new HybridConnectivityServiceName(property.Value.GetString());
+                    serviceName = new HybridConnectivityServiceName(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedProxyContent(service, hostname, serviceName, serializedAdditionalRawData);
+            return new ManagedProxyContent(service, hostname, serviceName, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ManagedProxyContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedProxyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,15 +143,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
-        ManagedProxyContent IPersistableModel<ManagedProxyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedProxyContent IPersistableModel<ManagedProxyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedProxyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedProxyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedProxyContent(document.RootElement, options);
                     }
                 default:
@@ -147,6 +164,19 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedProxyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="managedProxyContent"> The <see cref="ManagedProxyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManagedProxyContent managedProxyContent)
+        {
+            if (managedProxyContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(managedProxyContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

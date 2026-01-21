@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class VMwareToAzStackHciNicInput : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciNicInput>
+    /// <summary> VMwareToAzStackHCI NIC properties. </summary>
+    public partial class VMwareToAzStackHciNicInput : IJsonModel<VMwareToAzStackHciNicInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciNicInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciNicInput"/> for deserialization. </summary>
+        internal VMwareToAzStackHciNicInput()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMwareToAzStackHciNicInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("label"u8);
@@ -65,15 +70,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("isMacMigrationEnabled"u8);
                 writer.WriteBooleanValue(IsMacMigrationEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +87,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        VMwareToAzStackHciNicInput IJsonModel<VMwareToAzStackHciNicInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareToAzStackHciNicInput IJsonModel<VMwareToAzStackHciNicInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VMwareToAzStackHciNicInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVMwareToAzStackHciNicInput(document.RootElement, options);
         }
 
-        internal static VMwareToAzStackHciNicInput DeserializeVMwareToAzStackHciNicInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VMwareToAzStackHciNicInput DeserializeVMwareToAzStackHciNicInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,64 +120,62 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             VmNicSelection selectionTypeForFailover = default;
             bool? isStaticIPMigrationEnabled = default;
             bool? isMacMigrationEnabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nicId"u8))
+                if (prop.NameEquals("nicId"u8))
                 {
-                    nicId = property.Value.GetString();
+                    nicId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"u8))
+                if (prop.NameEquals("label"u8))
                 {
-                    label = property.Value.GetString();
+                    label = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkName"u8))
+                if (prop.NameEquals("networkName"u8))
                 {
-                    networkName = property.Value.GetString();
+                    networkName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetNetworkId"u8))
+                if (prop.NameEquals("targetNetworkId"u8))
                 {
-                    targetNetworkId = property.Value.GetString();
+                    targetNetworkId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testNetworkId"u8))
+                if (prop.NameEquals("testNetworkId"u8))
                 {
-                    testNetworkId = property.Value.GetString();
+                    testNetworkId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectionTypeForFailover"u8))
+                if (prop.NameEquals("selectionTypeForFailover"u8))
                 {
-                    selectionTypeForFailover = new VmNicSelection(property.Value.GetString());
+                    selectionTypeForFailover = new VmNicSelection(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isStaticIpMigrationEnabled"u8))
+                if (prop.NameEquals("isStaticIpMigrationEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isStaticIPMigrationEnabled = property.Value.GetBoolean();
+                    isStaticIPMigrationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isMacMigrationEnabled"u8))
+                if (prop.NameEquals("isMacMigrationEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isMacMigrationEnabled = property.Value.GetBoolean();
+                    isMacMigrationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareToAzStackHciNicInput(
                 nicId,
                 label,
@@ -177,13 +185,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 selectionTypeForFailover,
                 isStaticIPMigrationEnabled,
                 isMacMigrationEnabled,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<VMwareToAzStackHciNicInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VMwareToAzStackHciNicInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -193,15 +204,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        VMwareToAzStackHciNicInput IPersistableModel<VMwareToAzStackHciNicInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareToAzStackHciNicInput IPersistableModel<VMwareToAzStackHciNicInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VMwareToAzStackHciNicInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVMwareToAzStackHciNicInput(document.RootElement, options);
                     }
                 default:
@@ -209,6 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VMwareToAzStackHciNicInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
