@@ -46,6 +46,12 @@ namespace Azure.Storage.Files.Shares.Models
         public string SignedVersion { get; internal set; }
 
         /// <summary>
+        /// The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified.
+        /// </summary>
+        [CodeGenMember("SignedDelegatedUserTid")]
+        public string SignedDelegatedUserTenantId { get; internal set; }
+
+        /// <summary>
         /// The key as a base64 string.
         /// </summary>
         public string Value { get; internal set; }

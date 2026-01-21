@@ -14,83 +14,41 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.LargeInstance
 {
     /// <summary>
-    /// A class representing the LargeStorageInstance data model.
     /// AzureLargeStorageInstance info on Azure (ARM properties and
     /// AzureLargeStorageInstance properties)
     /// </summary>
-    public partial class LargeStorageInstanceData : ResourceData
+    public partial class LargeStorageInstanceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LargeStorageInstanceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal LargeStorageInstanceData(AzureLocation location)
+        public LargeStorageInstanceData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="LargeStorageInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="azureLargeStorageInstanceUniqueIdentifier"> Specifies the AzureLargeStorageInstance unique ID. </param>
-        /// <param name="storageProperties"> Specifies the storage properties for the AzureLargeStorage instance. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LargeStorageInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azureLargeStorageInstanceUniqueIdentifier, LargeInstanceStorageProperties storageProperties, IReadOnlyDictionary<string, string> tags, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal LargeStorageInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, LargeStorageInstanceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            AzureLargeStorageInstanceUniqueIdentifier = azureLargeStorageInstanceUniqueIdentifier;
-            StorageProperties = storageProperties;
-            Tags = tags;
-            Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LargeStorageInstanceData"/> for deserialization. </summary>
-        internal LargeStorageInstanceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public LargeStorageInstanceProperties Properties { get; set; }
 
-        /// <summary> Specifies the AzureLargeStorageInstance unique ID. </summary>
-        public string AzureLargeStorageInstanceUniqueIdentifier { get; }
-        /// <summary> Specifies the storage properties for the AzureLargeStorage instance. </summary>
-        public LargeInstanceStorageProperties StorageProperties { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation Location { get; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -258,5 +258,37 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 return Properties.FlattenedProperty;
             }
         }
+
+        /// <summary> Specifies the gallery applications that should be made available. </summary>
+        [WirePath("properties.vmProfile.applicationProfile.galleryApplications")]
+        public IList<string> VmGalleryApplications
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.VmGalleryApplications;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        [WirePath("properties.computeFleetVmProfile.capacityReservation.capacityReservationGroup.id")]
+        public ResourceIdentifier ComputeFleetVmCapacityReservationGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeFleetVmCapacityReservationGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ComputeFleetVmCapacityReservationGroupId = value;
+            }
+        }
     }
 }

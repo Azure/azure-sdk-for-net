@@ -14,11 +14,8 @@ namespace Azure.Provisioning.AppConfiguration
         public static Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole AppConfigurationDataOwner { get { throw null; } }
         public static Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole AppConfigurationDataReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole left, Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole (string value) { throw null; }
@@ -143,7 +140,6 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppConfiguration.AppConfigurationReplica FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -220,7 +216,6 @@ namespace Azure.Provisioning.AppConfiguration
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppConfiguration.AppConfigurationStore FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppConfiguration.AppConfigurationStoreApiKey> GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

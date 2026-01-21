@@ -227,7 +227,7 @@ if ($relatedTypeSpecProjectFolder) {
             $serviceType = "resource-manager"
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
-        Write-host "Start to call tsp-client to generate package:$packageName"
+        Write-Host "Start to call tsp-client to generate package: $packageName, serviceType: $serviceType, sdkProjectFolder: $sdkProjectFolder"
         
         # Install tsp-client dependencies from eng/common/tsp-client
         $tspClientDir = Resolve-Path (Join-Path $PSScriptRoot "../common/tsp-client")

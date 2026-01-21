@@ -53,22 +53,6 @@ namespace Azure.Generator.Visitors
             { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
-        protected override ScmMethodProviderCollection? Visit(
-            InputServiceMethod serviceMethod,
-            ClientProvider enclosingType,
-            ScmMethodProviderCollection? methodProviderCollection)
-        {
-            if (methodProviderCollection != null)
-            {
-                foreach (var method in methodProviderCollection)
-                {
-                    UpdateMethod(method);
-                }
-            }
-
-            return methodProviderCollection;
-        }
-
         protected override ScmMethodProvider? VisitCreateRequestMethod(
             InputServiceMethod serviceMethod,
             RestClientProvider enclosingType,
@@ -80,6 +64,13 @@ namespace Azure.Generator.Visitors
             }
 
             return createRequestMethodProvider;
+        }
+
+        protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
+        {
+            UpdateMethod(method);
+
+            return method;
         }
 
         /// <summary>

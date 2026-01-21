@@ -476,10 +476,8 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.CommunicationDomainResourceData CommunicationDomainResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Communication.Models.DomainProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.DomainProvisioningState?), string dataLocation = null, string fromSenderDomain = null, string mailFromSenderDomain = null, Azure.ResourceManager.Communication.Models.DomainManagement? domainManagement = default(Azure.ResourceManager.Communication.Models.DomainManagement?), Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationStates verificationStates = null, Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationRecords verificationRecords = null, Azure.ResourceManager.Communication.Models.UserEngagementTracking? userEngagementTracking = default(Azure.ResourceManager.Communication.Models.UserEngagementTracking?)) { throw null; }
         public static Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityResult CommunicationNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason? reason = default(Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.CommunicationServiceKeys CommunicationServiceKeys(string primaryKey = null, string secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Communication.CommunicationServiceResourceData CommunicationServiceResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, Azure.Core.ResourceIdentifier notificationHubId, string version, System.Guid? immutableResourceId, System.Collections.Generic.IEnumerable<string> linkedDomains) { throw null; }
         public static Azure.ResourceManager.Communication.CommunicationServiceResourceData CommunicationServiceResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState?), string hostName = null, string dataLocation = null, Azure.Core.ResourceIdentifier notificationHubId = null, string version = null, System.Guid? immutableResourceId = default(System.Guid?), System.Collections.Generic.IEnumerable<string> linkedDomains = null, Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess?), bool? isLocalAuthDisabled = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Communication.CommunicationServiceResourceData CommunicationServiceResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, Azure.Core.ResourceIdentifier notificationHubId, string version, System.Guid? immutableResourceId, System.Collections.Generic.IEnumerable<string> linkedDomains) { throw null; }
         public static Azure.ResourceManager.Communication.CommunicationSmtpUsernameData CommunicationSmtpUsernameData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string username = null, string entraApplicationId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationRecords DomainPropertiesVerificationRecords(Azure.ResourceManager.Communication.Models.VerificationDnsRecord domain = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord spf = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord dkim = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord dkim2 = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord dmarc = null) { throw null; }
@@ -535,9 +533,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason left, Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason (string value) { throw null; }
@@ -567,9 +563,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess left, Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess (string value) { throw null; }
@@ -621,9 +615,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState left, Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState (string value) { throw null; }
@@ -660,9 +652,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState left, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState (string value) { throw null; }
@@ -679,9 +669,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.DomainManagement CustomerManaged { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.DomainManagement CustomerManagedInExchangeOnline { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.DomainManagement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.DomainManagement left, Azure.ResourceManager.Communication.Models.DomainManagement right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.DomainManagement (string value) { throw null; }
@@ -734,9 +722,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.DomainProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.DomainProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.DomainProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.DomainProvisioningState left, Azure.ResourceManager.Communication.Models.DomainProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.DomainProvisioningState (string value) { throw null; }
@@ -756,9 +742,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus VerificationRequested { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus Verified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus left, Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus (string value) { throw null; }
@@ -777,9 +761,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.DomainRecordVerificationType Domain { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.DomainRecordVerificationType Spf { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.DomainRecordVerificationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.DomainRecordVerificationType left, Azure.ResourceManager.Communication.Models.DomainRecordVerificationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.DomainRecordVerificationType (string value) { throw null; }
@@ -835,9 +817,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState left, Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState (string value) { throw null; }
@@ -887,9 +867,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.UserEngagementTracking Disabled { get { throw null; } }
         public static Azure.ResourceManager.Communication.Models.UserEngagementTracking Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Communication.Models.UserEngagementTracking other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Communication.Models.UserEngagementTracking left, Azure.ResourceManager.Communication.Models.UserEngagementTracking right) { throw null; }
         public static implicit operator Azure.ResourceManager.Communication.Models.UserEngagementTracking (string value) { throw null; }

@@ -234,9 +234,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState Suspending { get { throw null; } }
         public static Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState left, Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState (string value) { throw null; }
@@ -266,9 +264,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier PbieAzure { get { throw null; } }
         public static Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier Premium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier left, Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier (string value) { throw null; }
@@ -327,9 +323,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static Azure.ResourceManager.PowerBIDedicated.Models.IdentityType ManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.PowerBIDedicated.Models.IdentityType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PowerBIDedicated.Models.IdentityType left, Azure.ResourceManager.PowerBIDedicated.Models.IdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PowerBIDedicated.Models.IdentityType (string value) { throw null; }
@@ -345,9 +339,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static Azure.ResourceManager.PowerBIDedicated.Models.Mode Gen1 { get { throw null; } }
         public static Azure.ResourceManager.PowerBIDedicated.Models.Mode Gen2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.Mode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PowerBIDedicated.Models.Mode left, Azure.ResourceManager.PowerBIDedicated.Models.Mode right) { throw null; }
         public static implicit operator Azure.ResourceManager.PowerBIDedicated.Models.Mode (string value) { throw null; }
@@ -401,9 +393,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static Azure.ResourceManager.PowerBIDedicated.Models.State Suspending { get { throw null; } }
         public static Azure.ResourceManager.PowerBIDedicated.Models.State Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.State other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PowerBIDedicated.Models.State left, Azure.ResourceManager.PowerBIDedicated.Models.State right) { throw null; }
         public static implicit operator Azure.ResourceManager.PowerBIDedicated.Models.State (string value) { throw null; }
@@ -434,9 +424,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public VCoreProvisioningState(string value) { throw null; }
         public static Azure.ResourceManager.PowerBIDedicated.Models.VCoreProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.VCoreProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PowerBIDedicated.Models.VCoreProvisioningState left, Azure.ResourceManager.PowerBIDedicated.Models.VCoreProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PowerBIDedicated.Models.VCoreProvisioningState (string value) { throw null; }
@@ -451,9 +439,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public VCoreSkuTier(string value) { throw null; }
         public static Azure.ResourceManager.PowerBIDedicated.Models.VCoreSkuTier AutoScale { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.VCoreSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PowerBIDedicated.Models.VCoreSkuTier left, Azure.ResourceManager.PowerBIDedicated.Models.VCoreSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.PowerBIDedicated.Models.VCoreSkuTier (string value) { throw null; }

@@ -44,7 +44,6 @@ namespace Azure.Provisioning.Communication
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Communication.CommunicationService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.Communication.CommunicationServiceKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

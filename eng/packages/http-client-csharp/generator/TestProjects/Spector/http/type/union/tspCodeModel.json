@@ -2228,7 +2228,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "177",
@@ -2471,7 +2472,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "191",
@@ -2714,7 +2716,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "205",
@@ -2957,7 +2960,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "219",
@@ -3200,7 +3204,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "233",
@@ -3443,7 +3448,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "247",
@@ -3686,7 +3692,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "261",
@@ -3929,7 +3936,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "275",
@@ -4172,7 +4180,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "289",
@@ -4415,9 +4424,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

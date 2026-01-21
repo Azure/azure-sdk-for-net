@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,22 +15,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public partial class ZoneFaultSimulationContent : FaultSimulationContent
     {
         /// <summary> Initializes a new instance of <see cref="ZoneFaultSimulationContent"/>. </summary>
-        public ZoneFaultSimulationContent()
+        public ZoneFaultSimulationContent() : base(FaultKind.Zone)
         {
             Zones = new ChangeTrackingList<string>();
-            FaultKind = FaultKind.Zone;
         }
 
         /// <summary> Initializes a new instance of <see cref="ZoneFaultSimulationContent"/>. </summary>
         /// <param name="faultKind"> The kind of fault to be simulated. </param>
         /// <param name="isForced"> Force the action to go through without any check on the cluster. </param>
         /// <param name="constraints"> Constraints for Fault Simulation action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="zones"> Indicates the zones of the fault simulation. </param>
-        internal ZoneFaultSimulationContent(FaultKind faultKind, bool? isForced, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones) : base(faultKind, isForced, constraints, serializedAdditionalRawData)
+        internal ZoneFaultSimulationContent(FaultKind faultKind, bool? isForced, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> zones) : base(faultKind, isForced, constraints, additionalBinaryDataProperties)
         {
             Zones = zones;
-            FaultKind = faultKind;
         }
 
         /// <summary> Indicates the zones of the fault simulation. </summary>

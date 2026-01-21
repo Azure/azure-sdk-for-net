@@ -16,25 +16,6 @@ trigger:
     - eng/packages/
     - eng/scripts/typespec/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/core/
-    - sdk/testcommon/
-    - eng/
-    - samples/
-    exclude:
-    - eng/mgmt/
-    - eng/common/
-    - eng/packages/
-    - eng/scripts/typespec/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

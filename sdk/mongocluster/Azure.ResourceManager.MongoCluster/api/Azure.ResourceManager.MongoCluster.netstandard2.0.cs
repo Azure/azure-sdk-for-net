@@ -283,7 +283,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterNameAvailabilityResult MongoClusterNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason? reason = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPatch MongoClusterPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnection MongoClusterPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties MongoClusterPrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties MongoClusterPrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.Resources.Models.SubResource privateEndpoint = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResourceData MongoClusterPrivateEndpointConnectionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties properties = null) { throw null; }
@@ -307,9 +306,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode SameZone { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode ZoneRedundantPreferred { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode left, Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode (string value) { throw null; }
@@ -342,9 +339,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode MicrosoftEntraID { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode NativeAuth { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode (string value) { throw null; }
@@ -408,9 +403,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode PointInTimeRestore { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode Replica { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode (string value) { throw null; }
@@ -427,9 +420,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode Disabled { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode (string value) { throw null; }
@@ -489,9 +480,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType ServicePrincipal { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType (string value) { throw null; }
@@ -551,9 +540,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterKeyEncryptionKeyIdentityType(string value) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType UserAssignedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType (string value) { throw null; }
@@ -601,9 +588,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason left, Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason (string value) { throw null; }
@@ -635,9 +620,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterPreviewFeature(string value) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature GeoReplicas { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature left, Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature (string value) { throw null; }
@@ -687,9 +670,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -707,9 +688,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -771,9 +750,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterPromoteMode(string value) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteMode Switchover { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteMode (string value) { throw null; }
@@ -789,9 +766,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterPromoteOption(string value) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption Forced { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption left, Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption (string value) { throw null; }
@@ -846,9 +821,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState left, Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState (string value) { throw null; }
@@ -865,9 +838,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess left, Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess (string value) { throw null; }
@@ -930,9 +901,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole GeoAsyncReplica { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole Primary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole left, Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole (string value) { throw null; }
@@ -953,9 +922,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState Reconfiguring { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState left, Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState (string value) { throw null; }
@@ -992,9 +959,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus Stopping { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus left, Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus (string value) { throw null; }
@@ -1026,9 +991,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType PremiumSSD { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType PremiumSSDv2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType (string value) { throw null; }
@@ -1085,9 +1048,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterUserRole(string value) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole Root { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole left, Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole (string value) { throw null; }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -19,16 +18,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionProperties"/>. </summary>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageProfile"/> is null. </exception>
-        public HciVmGalleryImageVersionProperties(HciVmGalleryImageVersionStorageProfile storageProfile)
-        {
-            Argument.AssertNotNull(storageProfile, nameof(storageProfile));
-
-            StorageProfile = storageProfile;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionProperties"/>. </summary>
-        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HciVmGalleryImageVersionProperties(HciVmGalleryImageVersionStorageProfile storageProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,6 +26,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-        public HciVmGalleryImageVersionStorageProfile StorageProfile { get; set; }
+        internal HciVmGalleryImageVersionStorageProfile StorageProfile { get; set; }
+
+        /// <summary> This property indicates the size of the VHD to be created. </summary>
+        public long? StorageOSDiskImageSizeInMB
+        {
+            get
+            {
+                return StorageProfile is null ? default : StorageProfile.OSDiskImageSizeInMB;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The updatable properties of the Namespace. </summary>
-    public partial class NamespaceUpdateProperties
+    internal partial class NamespaceUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
