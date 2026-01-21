@@ -41,8 +41,14 @@ import {
   sortResourceMethods
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
-import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
+import {
+  getCrossLanguageDefinitionId,
+  SdkContext,
+  SdkHttpOperation,
+  SdkServiceOperation
+} from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
+import { getAllSdkClients } from "./resource-detection.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -259,6 +265,46 @@ export function resolveArmResources(
       continue;
     }
     filteredResources.push(resource);
+  }
+
+  // Post-processing step: Find operations that were not recognized by the ARM library
+  // and add them as non-resource methods
+  const includedOperationIds = new Set<string>();
+  
+  // Track all operations that are already included
+  for (const resource of filteredResources) {
+    for (const method of resource.metadata.methods) {
+      includedOperationIds.add(method.methodId);
+    }
+  }
+  for (const nonResourceMethod of nonResourceMethods) {
+    includedOperationIds.add(nonResourceMethod.methodId);
+  }
+
+  // Get all SDK operations
+  const allSdkClients = getAllSdkClients(sdkContext as SdkContext<any, SdkHttpOperation>);
+  for (const client of allSdkClients) {
+    for (const method of client.methods) {
+      const methodId = method.crossLanguageDefinitionId;
+      const operation = method.operation;
+      
+      // Skip if already included
+      if (includedOperationIds.has(methodId)) {
+        continue;
+      }
+
+      // Skip if not an HTTP operation with a path
+      if (!operation || operation.kind !== "http" || !operation.path) {
+        continue;
+      }
+
+      // Add this missing operation as a non-resource method
+      nonResourceMethods.push({
+        methodId: methodId,
+        operationPath: operation.path,
+        operationScope: getOperationScopeFromPath(operation.path)
+      });
+    }
   }
 
   return {
