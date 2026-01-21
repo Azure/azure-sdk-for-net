@@ -14,7 +14,7 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Account specific properties. </summary>
-    internal partial class BatchAccountProperties : IJsonModel<BatchAccountProperties>
+    public partial class BatchAccountProperties : IJsonModel<BatchAccountProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

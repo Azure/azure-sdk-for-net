@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary> Contains information about an Azure Batch account. </summary>
-    public partial class BatchAccountData : TrackedResourceData, IJsonModel<BatchAccountData>
+    public partial class BatchAccountData : ResourceData, IJsonModel<BatchAccountData>
     {
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/> for deserialization. </summary>
         internal BatchAccountData()
@@ -52,8 +52,26 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -86,10 +104,10 @@ namespace Azure.ResourceManager.Batch
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             BatchAccountProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            BatchAccountIdentity identity = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            AzureLocation location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -124,6 +142,24 @@ namespace Azure.ResourceManager.Batch
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BatchAccountProperties.DeserializeBatchAccountProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = BatchAccountIdentity.DeserializeBatchAccountIdentity(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -150,24 +186,6 @@ namespace Azure.ResourceManager.Batch
                     location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = BatchAccountProperties.DeserializeBatchAccountProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -179,10 +197,10 @@ namespace Azure.ResourceManager.Batch
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
-                identity);
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
