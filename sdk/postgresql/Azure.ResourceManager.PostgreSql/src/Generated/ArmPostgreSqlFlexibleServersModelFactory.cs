@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new NameProperty(value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerMicrosoftEntraAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -477,10 +477,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerActiveDirectoryAdministratorData PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerPrincipalType? principalType = null, string principalName = null, Guid? objectId = null, Guid? tenantId = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerMicrosoftEntraAdministratorData"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerMicrosoftEntraAdministratorData PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerPrincipalType? principalType = null, string principalName = null, Guid? objectId = null, Guid? tenantId = null)
         {
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(
+            return new PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(
                 id,
                 name,
                 resourceType,

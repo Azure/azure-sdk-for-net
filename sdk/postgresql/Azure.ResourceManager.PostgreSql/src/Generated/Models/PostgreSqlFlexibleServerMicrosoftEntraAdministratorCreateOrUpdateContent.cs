@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Server administrator associated to a Microsoft Entra principal. </summary>
-    public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent
+    public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
-        public PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent"/>. </summary>
+        public PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent"/>. </summary>
         /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
         /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
         /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalType = principalType;
             PrincipalName = principalName;

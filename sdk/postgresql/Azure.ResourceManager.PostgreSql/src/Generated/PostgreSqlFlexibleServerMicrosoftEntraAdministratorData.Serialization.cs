@@ -16,11 +16,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>
+    public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorData : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        PostgreSqlFlexibleServerActiveDirectoryAdministratorData IJsonModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerMicrosoftEntraAdministratorData IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerMicrosoftEntraAdministratorData(document.RootElement, options);
         }
 
-        internal static PostgreSqlFlexibleServerActiveDirectoryAdministratorData DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerMicrosoftEntraAdministratorData DeserializePostgreSqlFlexibleServerMicrosoftEntraAdministratorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(
+            return new PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(
                 id,
                 name,
                 type,
@@ -320,9 +320,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -331,26 +331,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PostgreSqlFlexibleServerActiveDirectoryAdministratorData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerMicrosoftEntraAdministratorData IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerMicrosoftEntraAdministratorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

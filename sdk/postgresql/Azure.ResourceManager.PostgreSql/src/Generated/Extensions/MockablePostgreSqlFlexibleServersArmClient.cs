@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> object. </returns>
-        public virtual PostgreSqlFlexibleServerActiveDirectoryAdministratorResource GetPostgreSqlFlexibleServerActiveDirectoryAdministratorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerActiveDirectoryAdministratorResource.ValidateResourceId(id);
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, id);
+            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, id);
         }
 
         /// <summary>

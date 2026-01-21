@@ -14,10 +14,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the PostgreSqlFlexibleServerActiveDirectoryAdministrator data model.
+    /// A class representing the PostgreSqlFlexibleServerMicrosoftEntraAdministrator data model.
     /// Server administrator associated to a Microsoft Entra principal.
     /// </summary>
-    public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : ResourceData
+    public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
-        public PostgreSqlFlexibleServerActiveDirectoryAdministratorData()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorData"/>. </summary>
+        public PostgreSqlFlexibleServerMicrosoftEntraAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrincipalType = principalType;
             PrincipalName = principalName;

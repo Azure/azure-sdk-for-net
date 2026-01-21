@@ -180,7 +180,7 @@ rename-mapping:
   AdministratorMicrosoftEntra.properties.objectId: -|uuid
   DataEncryption.primaryUserAssignedIdentityId: -|arm-id
   AdvancedThreatProtectionSettingsModel: ServerThreatProtectionSettingsModel
-  AdministratorMicrosoftEntra: PostgreSqlFlexibleServerActiveDirectoryAdministrator
+  AdministratorMicrosoftEntra: PostgreSqlFlexibleServerMicrosoftEntraAdministrator
   LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
   BackupsLongTermRetentionOperation: PostgreSqlLtrServerBackupOperation
   VirtualEndpoint: VirtualEndpointResource

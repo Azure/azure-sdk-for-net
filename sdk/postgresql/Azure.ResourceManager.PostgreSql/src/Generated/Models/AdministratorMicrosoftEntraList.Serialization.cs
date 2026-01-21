@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> array = new List<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>();
+                    List<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> array = new List<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(item, options));
+                        array.Add(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.DeserializePostgreSqlFlexibleServerMicrosoftEntraAdministratorData(item, options));
                     }
                     value = array;
                     continue;

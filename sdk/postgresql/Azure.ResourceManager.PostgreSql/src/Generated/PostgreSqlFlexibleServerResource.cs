@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PostgreSqlFlexibleServerActiveDirectoryAdministratorResources in the PostgreSqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of PostgreSqlFlexibleServerActiveDirectoryAdministratorResources and their operations over a PostgreSqlFlexibleServerActiveDirectoryAdministratorResource. </returns>
-        public virtual PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection GetPostgreSqlFlexibleServerActiveDirectoryAdministrators()
+        /// <summary> Gets a collection of PostgreSqlFlexibleServerMicrosoftEntraAdministratorResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of PostgreSqlFlexibleServerMicrosoftEntraAdministratorResources and their operations over a PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource. </returns>
+        public virtual PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection GetPostgreSqlFlexibleServerMicrosoftEntraAdministrators()
         {
-            return GetCachedClient(client => new PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection(client, Id));
+            return GetCachedClient(client => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection(client, Id));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>> GetPostgreSqlFlexibleServerActiveDirectoryAdministratorAsync(string objectId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>> GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorAsync(string objectId, CancellationToken cancellationToken = default)
         {
-            return await GetPostgreSqlFlexibleServerActiveDirectoryAdministrators().GetAsync(objectId, cancellationToken).ConfigureAwait(false);
+            return await GetPostgreSqlFlexibleServerMicrosoftEntraAdministrators().GetAsync(objectId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> GetPostgreSqlFlexibleServerActiveDirectoryAdministrator(string objectId, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> GetPostgreSqlFlexibleServerMicrosoftEntraAdministrator(string objectId, CancellationToken cancellationToken = default)
         {
-            return GetPostgreSqlFlexibleServerActiveDirectoryAdministrators().Get(objectId, cancellationToken);
+            return GetPostgreSqlFlexibleServerMicrosoftEntraAdministrators().Get(objectId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerThreatProtectionSettingsModelResources in the PostgreSqlFlexibleServer. </summary>
