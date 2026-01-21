@@ -29,7 +29,7 @@
     <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' == 'true'">$(ApiCompatStandardTargetFramework)</ApiCompatBaselineTargetFramework>
     <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
