@@ -415,25 +415,20 @@ namespace Azure.Generator.Management
                     }
 
                     // Find all resource providers that use this data type
-                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
-                    if (resourceProviders.Count > 0)
+                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType));
+
+                    if (resourceProviders.Any())
                     {
                         // For each resource provider, create an OperationSource keyed by the resource type
                         foreach (var resourceProvider in resourceProviders)
                         {
-                            if (!operationSources.ContainsKey(resourceProvider.Type))
-                            {
-                                operationSources.Add(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
-                            }
+                            operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
                         }
                     }
                     else
                     {
                         // This is a non-resource model - use the data type as the key
-                        if (!operationSources.ContainsKey(returnCSharpType))
-                        {
-                            operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                        }
+                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                     }
                 }
             }
