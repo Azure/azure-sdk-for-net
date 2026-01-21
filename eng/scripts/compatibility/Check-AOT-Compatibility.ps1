@@ -36,7 +36,7 @@ $aotOptOut = $output.Trim() -eq "true"
 
 if ($aotOptOut) {
     Write-Host "AOT compatibility is opted out for $PackageNameFromPath. Skipping AOT compatibility check."
-        exit 0
+    exit 0
 }
 
 ### Creating a test app ###
@@ -127,8 +127,9 @@ foreach ($line in $($publishOutput -split "`r`n"))
 
 ### Compare to baselined warnings ###
 
-# Baselining warnings is only allowed for two of the Azure.Core.* packages, hard code the file path to the expected
-# warnings as a backdoor for those packages.
+# NOTE: Baselining AOT warnings is intentionally restricted to a small number of Azure.Core.* packages.
+# This script hardcodes the expected warnings file to live under sdk/core/$PackageNameFromPath.
+# Non-Azure.Core packages are not allowed to baseline AOT warnings.
 
 $expectedWarningsPath = "..\..\..\..\sdk\core\$PackageNameFromPath\tests\compatibility\ExpectedAotWarnings.txt"
 
