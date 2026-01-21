@@ -123,7 +123,7 @@ rename-mapping:
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
   StorageEditionCapability.supportedStorageMb: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
-  MicrosoftEntraAuth: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
+  MicrosoftEntraAuth: PostgreSqlFlexibleServerMicrosoftEntraAuthEnum
   DataEncryptionType: PostgreSqlFlexibleServerKeyType
   AuthConfig: PostgreSqlFlexibleServerAuthConfig
   DataEncryption: PostgreSqlFlexibleServerDataEncryption
