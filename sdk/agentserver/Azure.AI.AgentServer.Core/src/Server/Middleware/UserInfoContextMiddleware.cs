@@ -76,6 +76,8 @@ public static class UserInfoContextMiddlewareExtensions
         this IApplicationBuilder app,
         Func<HttpContext, Task<UserInfo?>>? userResolver = null)
     {
-        return app.UseMiddleware<UserInfoContextMiddleware>(userResolver);
+        return userResolver == null
+            ? app.UseMiddleware<UserInfoContextMiddleware>()
+            : app.UseMiddleware<UserInfoContextMiddleware>(userResolver);
     }
 }

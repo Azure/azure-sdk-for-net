@@ -4,7 +4,6 @@
 using System.Diagnostics;
 using Azure.AI.AgentServer.AgentFramework.Converters;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
-using Azure.AI.AgentServer.Contracts.Generated.Responses;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Azure.AI.AgentServer.Responses.Invocation.Stream;
@@ -21,16 +20,16 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
     /// <summary>
     /// Invokes the agent asynchronously and returns a complete response.
     /// </summary>
-    /// <param name="request">The create response request.</param>
-    /// <param name="context">The agent invocation context.</param>
+    /// <param name="context">The agent run context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The response from the agent.</returns>
-    public override async Task<Contracts.Generated.Responses.Response> InvokeAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
+    public override async Task<Contracts.Generated.Responses.Response> InvokeAsync(
+        AgentRunContext context,
         CancellationToken cancellationToken = default)
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
+        var request = context.Request;
         var messages = request.GetInputMessages();
         var response = await agent.RunAsync(messages, cancellationToken: cancellationToken).ConfigureAwait(false);
         return response.ToResponse(request, context);
@@ -39,17 +38,16 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
     /// <summary>
     /// Executes the agent invocation with streaming support.
     /// </summary>
-    /// <param name="request">The create response request.</param>
-    /// <param name="context">The agent invocation context.</param>
+    /// <param name="context">The agent run context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A stream event generator for the response.</returns>
     protected override INestedStreamEventGenerator<Contracts.Generated.Responses.Response> DoInvokeStreamAsync(
-        CreateResponseRequest request,
-        AgentInvocationContext context,
+        AgentRunContext context,
         CancellationToken cancellationToken)
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
+        var request = context.Request;
         var messages = request.GetInputMessages();
         var updates = agent.RunStreamingAsync(messages, cancellationToken: cancellationToken);
         // TODO refine to multicast event
@@ -59,7 +57,6 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
         return new NestedResponseGenerator()
         {
             Context = context,
-            Request = request,
             Seq = seq,
             CancellationToken = cancellationToken,
             SubscribeUsageUpdate = usageUpdaters.Add,
