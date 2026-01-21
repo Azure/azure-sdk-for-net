@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </summary>
     public partial class BatchImageReference
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchImageReference"/>. </summary>
         public BatchImageReference()
@@ -56,11 +27,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="offer"> For example, UbuntuServer or WindowsServer. </param>
         /// <param name="sku"> For example, 18.04-LTS or 2022-datacenter. </param>
         /// <param name="version"> A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
-        /// <param name="id"> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </param>
+        /// <param name="id"> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://learn.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </param>
         /// <param name="sharedGalleryImageId"> This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchImageReference(string publisher, string offer, string sku, string version, ResourceIdentifier id, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchImageReference(string publisher, string offer, string sku, string version, ResourceIdentifier id, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
             Offer = offer;
@@ -69,21 +40,27 @@ namespace Azure.ResourceManager.Batch.Models
             Id = id;
             SharedGalleryImageId = sharedGalleryImageId;
             CommunityGalleryImageId = communityGalleryImageId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> For example, Canonical or MicrosoftWindowsServer. </summary>
         public string Publisher { get; set; }
+
         /// <summary> For example, UbuntuServer or WindowsServer. </summary>
         public string Offer { get; set; }
+
         /// <summary> For example, 18.04-LTS or 2022-datacenter. </summary>
         public string Sku { get; set; }
+
         /// <summary> A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </summary>
         public string Version { get; set; }
-        /// <summary> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </summary>
+
+        /// <summary> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://learn.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </summary>
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </summary>
         public string SharedGalleryImageId { get; set; }
+
         /// <summary> This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </summary>
         public string CommunityGalleryImageId { get; set; }
     }

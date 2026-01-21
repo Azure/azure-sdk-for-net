@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAccountPoolAllocationModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAccountPoolAllocationMode value) => value switch
         {
             BatchAccountPoolAllocationMode.BatchService => "BatchService",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountPoolAllocationMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchAccountPoolAllocationMode ToBatchAccountPoolAllocationMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchService")) return BatchAccountPoolAllocationMode.BatchService;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserSubscription")) return BatchAccountPoolAllocationMode.UserSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchService"))
+            {
+                return BatchAccountPoolAllocationMode.BatchService;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserSubscription"))
+            {
+                return BatchAccountPoolAllocationMode.UserSubscription;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountPoolAllocationMode value.");
         }
     }

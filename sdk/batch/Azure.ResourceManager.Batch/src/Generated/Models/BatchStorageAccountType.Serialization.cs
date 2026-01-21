@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchStorageAccountTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchStorageAccountType value) => value switch
         {
-            BatchStorageAccountType.StandardLrs => "Standard_LRS",
-            BatchStorageAccountType.PremiumLrs => "Premium_LRS",
+            BatchStorageAccountType.StandardLRS => "Standard_LRS",
+            BatchStorageAccountType.PremiumLRS => "Premium_LRS",
             BatchStorageAccountType.StandardSsdLrs => "StandardSSD_LRS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchStorageAccountType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchStorageAccountType ToBatchStorageAccountType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_LRS")) return BatchStorageAccountType.StandardLrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS")) return BatchStorageAccountType.PremiumLrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardSSD_LRS")) return BatchStorageAccountType.StandardSsdLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_LRS"))
+            {
+                return BatchStorageAccountType.StandardLRS;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS"))
+            {
+                return BatchStorageAccountType.PremiumLRS;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardSSD_LRS"))
+            {
+                return BatchStorageAccountType.StandardSsdLrs;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchStorageAccountType value.");
         }
     }

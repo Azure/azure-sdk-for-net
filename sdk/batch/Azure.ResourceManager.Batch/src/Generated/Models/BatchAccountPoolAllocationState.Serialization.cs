@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAccountPoolAllocationStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAccountPoolAllocationState value) => value switch
         {
             BatchAccountPoolAllocationState.Steady => "Steady",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountPoolAllocationState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchAccountPoolAllocationState ToBatchAccountPoolAllocationState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Steady")) return BatchAccountPoolAllocationState.Steady;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resizing")) return BatchAccountPoolAllocationState.Resizing;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopping")) return BatchAccountPoolAllocationState.Stopping;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Steady"))
+            {
+                return BatchAccountPoolAllocationState.Steady;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resizing"))
+            {
+                return BatchAccountPoolAllocationState.Resizing;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopping"))
+            {
+                return BatchAccountPoolAllocationState.Stopping;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountPoolAllocationState value.");
         }
     }

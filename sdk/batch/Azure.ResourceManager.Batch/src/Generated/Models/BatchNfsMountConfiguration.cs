@@ -7,49 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Information used to connect to an NFS file system. </summary>
-    public partial class BatchNfsMountConfiguration
+    public partial class BatchNFSMountConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNfsMountConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNFSMountConfiguration"/>. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="relativeMountPath"/> is null. </exception>
-        public BatchNfsMountConfiguration(string source, string relativeMountPath)
+        public BatchNFSMountConfiguration(string source, string relativeMountPath)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
@@ -58,28 +30,25 @@ namespace Azure.ResourceManager.Batch.Models
             RelativeMountPath = relativeMountPath;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNfsMountConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNFSMountConfiguration"/>. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> These are 'net use' options in Windows and 'mount' options in Linux. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNfsMountConfiguration(string source, string relativeMountPath, string mountOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNFSMountConfiguration(string source, string relativeMountPath, string mountOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchNfsMountConfiguration"/> for deserialization. </summary>
-        internal BatchNfsMountConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URI of the file system to mount. </summary>
         public string Source { get; set; }
+
         /// <summary> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </summary>
         public string RelativeMountPath { get; set; }
+
         /// <summary> These are 'net use' options in Windows and 'mount' options in Linux. </summary>
         public string MountOptions { get; set; }
     }

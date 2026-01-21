@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchResourceFile : IUtf8JsonSerializable, IJsonModel<BatchResourceFile>
+    /// <summary> A single file or multiple files to be downloaded to a compute node. </summary>
+    public partial class BatchResourceFile : IJsonModel<BatchResourceFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchResourceFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchResourceFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchResourceFile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AutoBlobContainerName))
             {
                 writer.WritePropertyName("autoStorageContainerName"u8);
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("storageContainerUrl"u8);
-                writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
+                writer.WriteStringValue(BlobContainerUri);
             }
             if (Optional.IsDefined(HttpUri))
             {
                 writer.WritePropertyName("httpUrl"u8);
-                writer.WriteStringValue(HttpUri.AbsoluteUri);
+                writer.WriteStringValue(HttpUri);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,105 +86,103 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        BatchResourceFile IJsonModel<BatchResourceFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchResourceFile IJsonModel<BatchResourceFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchResourceFile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchResourceFile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchResourceFile(document.RootElement, options);
         }
 
-        internal static BatchResourceFile DeserializeBatchResourceFile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchResourceFile DeserializeBatchResourceFile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string autoStorageContainerName = default;
-            Uri storageContainerUrl = default;
-            Uri httpUrl = default;
+            string autoBlobContainerName = default;
+            string blobContainerUri = default;
+            string httpUri = default;
             string blobPrefix = default;
             string filePath = default;
             string fileMode = default;
-            ComputeNodeIdentityReference identityReference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ComputeNodeIdentityReference identity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("autoStorageContainerName"u8))
+                if (prop.NameEquals("autoStorageContainerName"u8))
                 {
-                    autoStorageContainerName = property.Value.GetString();
+                    autoBlobContainerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageContainerUrl"u8))
+                if (prop.NameEquals("storageContainerUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    blobContainerUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("httpUrl"u8))
+                {
+                    httpUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("blobPrefix"u8))
+                {
+                    blobPrefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("filePath"u8))
+                {
+                    filePath = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("fileMode"u8))
+                {
+                    fileMode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("identityReference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageContainerUrl = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("httpUrl"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    httpUrl = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("blobPrefix"u8))
-                {
-                    blobPrefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("filePath"u8))
-                {
-                    filePath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("fileMode"u8))
-                {
-                    fileMode = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("identityReference"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
+                    identity = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchResourceFile(
-                autoStorageContainerName,
-                storageContainerUrl,
-                httpUrl,
+                autoBlobContainerName,
+                blobContainerUri,
+                httpUri,
                 blobPrefix,
                 filePath,
                 fileMode,
-                identityReference,
-                serializedAdditionalRawData);
+                identity,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchResourceFile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchResourceFile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -194,15 +192,20 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        BatchResourceFile IPersistableModel<BatchResourceFile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchResourceFile IPersistableModel<BatchResourceFile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchResourceFile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchResourceFile(document.RootElement, options);
                     }
                 default:
@@ -210,6 +213,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchResourceFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
