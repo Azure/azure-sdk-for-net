@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -260,126 +259,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ConfigurationSetting> DeleteConfigurationSetting(string key, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Response result = DeleteConfigurationSetting(key, label, syncToken, ifMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConfigurationSetting)result, result);
-        }
-
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ConfigurationSetting>> DeleteConfigurationSettingAsync(string key, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Response result = await DeleteConfigurationSettingAsync(key, label, syncToken, ifMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConfigurationSetting)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CheckKeyValue(string key, string label, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValue");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateCheckKeyValueRequest(key, label, syncToken, acceptDatetime, matchConditions, @select, tags, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CheckKeyValueAsync(string key, string label, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValue");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateCheckKeyValueRequest(key, label, syncToken, acceptDatetime, matchConditions, @select, tags, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary>
         /// [Protocol Method] Gets a single key-value snapshot.
         /// <list type="bullet">
@@ -440,32 +319,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a single key-value snapshot. </summary>
-        /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ConfigurationSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> @select = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Response result = GetSnapshot(name, @select, syncToken, matchConditions, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConfigurationSnapshot)result, result);
-        }
-
-        /// <summary> Gets a single key-value snapshot. </summary>
-        /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ConfigurationSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> @select = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Response result = await GetSnapshotAsync(name, @select, syncToken, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConfigurationSnapshot)result, result);
         }
 
         /// <summary> Creates a key-value snapshot. </summary>
