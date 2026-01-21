@@ -27,8 +27,8 @@
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260116.3</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20260118.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260120.1</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260120.2</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
     <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
