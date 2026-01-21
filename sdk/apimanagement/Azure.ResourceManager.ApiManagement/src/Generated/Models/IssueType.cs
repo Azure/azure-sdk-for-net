@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The type of issue.
-    /// Serialized Name: IssueType
-    /// </summary>
+    /// <summary> The type of issue. </summary>
     public readonly partial struct IssueType : IEquatable<IssueType>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string PortThrottledValue = "PortThrottled";
         private const string PlatformValue = "Platform";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: IssueType.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static IssueType Unknown { get; } = new IssueType(UnknownValue);
-        /// <summary>
-        /// AgentStopped
-        /// Serialized Name: IssueType.AgentStopped
-        /// </summary>
+        /// <summary> AgentStopped. </summary>
         public static IssueType AgentStopped { get; } = new IssueType(AgentStoppedValue);
-        /// <summary>
-        /// GuestFirewall
-        /// Serialized Name: IssueType.GuestFirewall
-        /// </summary>
+        /// <summary> GuestFirewall. </summary>
         public static IssueType GuestFirewall { get; } = new IssueType(GuestFirewallValue);
-        /// <summary>
-        /// DnsResolution
-        /// Serialized Name: IssueType.DnsResolution
-        /// </summary>
+        /// <summary> DnsResolution. </summary>
         public static IssueType DnsResolution { get; } = new IssueType(DnsResolutionValue);
-        /// <summary>
-        /// SocketBind
-        /// Serialized Name: IssueType.SocketBind
-        /// </summary>
+        /// <summary> SocketBind. </summary>
         public static IssueType SocketBind { get; } = new IssueType(SocketBindValue);
-        /// <summary>
-        /// NetworkSecurityRule
-        /// Serialized Name: IssueType.NetworkSecurityRule
-        /// </summary>
+        /// <summary> NetworkSecurityRule. </summary>
         public static IssueType NetworkSecurityRule { get; } = new IssueType(NetworkSecurityRuleValue);
-        /// <summary>
-        /// UserDefinedRoute
-        /// Serialized Name: IssueType.UserDefinedRoute
-        /// </summary>
+        /// <summary> UserDefinedRoute. </summary>
         public static IssueType UserDefinedRoute { get; } = new IssueType(UserDefinedRouteValue);
-        /// <summary>
-        /// PortThrottled
-        /// Serialized Name: IssueType.PortThrottled
-        /// </summary>
+        /// <summary> PortThrottled. </summary>
         public static IssueType PortThrottled { get; } = new IssueType(PortThrottledValue);
-        /// <summary>
-        /// Platform
-        /// Serialized Name: IssueType.Platform
-        /// </summary>
+        /// <summary> Platform. </summary>
         public static IssueType Platform { get; } = new IssueType(PlatformValue);
         /// <summary> Determines if two <see cref="IssueType"/> values are the same. </summary>
         public static bool operator ==(IssueType left, IssueType right) => left.Equals(right);

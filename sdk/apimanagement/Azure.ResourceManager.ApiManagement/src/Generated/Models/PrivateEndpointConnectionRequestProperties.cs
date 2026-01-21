@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The connection state of the private endpoint connection.
-    /// Serialized Name: PrivateEndpointConnectionRequestProperties
-    /// </summary>
+    /// <summary> The connection state of the private endpoint connection. </summary>
     internal partial class PrivateEndpointConnectionRequestProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestProperties"/>. </summary>
-        /// <param name="privateLinkServiceConnectionState">
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnectionRequestProperties.privateLinkServiceConnectionState
-        /// </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateEndpointConnectionRequestProperties(ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnectionRequestProperties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
     }

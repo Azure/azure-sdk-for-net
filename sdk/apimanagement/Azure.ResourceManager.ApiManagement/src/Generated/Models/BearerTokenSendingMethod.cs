@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Form of an authorization grant, which the client uses to request the access token.
-    /// Serialized Name: BearerTokenSendingMethods
-    /// </summary>
+    /// <summary> Form of an authorization grant, which the client uses to request the access token. </summary>
     public readonly partial struct BearerTokenSendingMethod : IEquatable<BearerTokenSendingMethod>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string AuthorizationHeaderValue = "authorizationHeader";
         private const string QueryValue = "query";
 
-        /// <summary>
-        /// Access token will be transmitted in the Authorization header using Bearer schema
-        /// Serialized Name: BearerTokenSendingMethods.authorizationHeader
-        /// </summary>
+        /// <summary> Access token will be transmitted in the Authorization header using Bearer schema. </summary>
         public static BearerTokenSendingMethod AuthorizationHeader { get; } = new BearerTokenSendingMethod(AuthorizationHeaderValue);
-        /// <summary>
-        /// Access token will be transmitted as query parameters.
-        /// Serialized Name: BearerTokenSendingMethods.query
-        /// </summary>
+        /// <summary> Access token will be transmitted as query parameters. </summary>
         public static BearerTokenSendingMethod Query { get; } = new BearerTokenSendingMethod(QueryValue);
         /// <summary> Determines if two <see cref="BearerTokenSendingMethod"/> values are the same. </summary>
         public static bool operator ==(BearerTokenSendingMethod left, BearerTokenSendingMethod right) => left.Equals(right);

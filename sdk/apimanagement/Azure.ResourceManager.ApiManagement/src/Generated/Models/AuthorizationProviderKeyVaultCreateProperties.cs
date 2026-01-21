@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Authorization Provider KeyVault create contract properties.
-    /// Serialized Name: AuthorizationProviderKeyVaultCreateProperties
-    /// </summary>
+    /// <summary> Authorization Provider KeyVault create contract properties. </summary>
     public partial class AuthorizationProviderKeyVaultCreateProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderKeyVaultCreateProperties"/>. </summary>
-        /// <param name="secretIdentifier">
-        /// Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret.
-        /// Serialized Name: AuthorizationProviderKeyVaultCreateProperties.secretIdentifier
-        /// </param>
+        /// <param name="secretIdentifier"> Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationProviderKeyVaultCreateProperties(string secretIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret.
-        /// Serialized Name: AuthorizationProviderKeyVaultCreateProperties.secretIdentifier
-        /// </summary>
+        /// <summary> Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret. </summary>
         [WirePath("secretIdentifier")]
         public string SecretIdentifier { get; set; }
     }

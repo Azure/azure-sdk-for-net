@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiTagDescription data model.
     /// Contract details.
-    /// Serialized Name: TagDescriptionContract
     /// </summary>
     public partial class ApiTagDescriptionData : ResourceData
     {
@@ -61,26 +60,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// Description of the Tag.
-        /// Serialized Name: TagDescriptionContract.properties.description
-        /// </param>
-        /// <param name="externalDocsUri">
-        /// Absolute URL of external resources describing the tag.
-        /// Serialized Name: TagDescriptionContract.properties.externalDocsUrl
-        /// </param>
-        /// <param name="externalDocsDescription">
-        /// Description of the external resources describing the tag.
-        /// Serialized Name: TagDescriptionContract.properties.externalDocsDescription
-        /// </param>
-        /// <param name="tagId">
-        /// Identifier of the tag in the form of /tags/{tagId}
-        /// Serialized Name: TagDescriptionContract.properties.tagId
-        /// </param>
-        /// <param name="displayName">
-        /// Tag name.
-        /// Serialized Name: TagDescriptionContract.properties.displayName
-        /// </param>
+        /// <param name="description"> Description of the Tag. </param>
+        /// <param name="externalDocsUri"> Absolute URL of external resources describing the tag. </param>
+        /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
+        /// <param name="tagId"> Identifier of the tag in the form of /tags/{tagId}. </param>
+        /// <param name="displayName"> Tag name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiTagDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, Uri externalDocsUri, string externalDocsDescription, string tagId, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -92,34 +76,19 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Description of the Tag.
-        /// Serialized Name: TagDescriptionContract.properties.description
-        /// </summary>
+        /// <summary> Description of the Tag. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Absolute URL of external resources describing the tag.
-        /// Serialized Name: TagDescriptionContract.properties.externalDocsUrl
-        /// </summary>
+        /// <summary> Absolute URL of external resources describing the tag. </summary>
         [WirePath("properties.externalDocsUrl")]
         public Uri ExternalDocsUri { get; set; }
-        /// <summary>
-        /// Description of the external resources describing the tag.
-        /// Serialized Name: TagDescriptionContract.properties.externalDocsDescription
-        /// </summary>
+        /// <summary> Description of the external resources describing the tag. </summary>
         [WirePath("properties.externalDocsDescription")]
         public string ExternalDocsDescription { get; set; }
-        /// <summary>
-        /// Identifier of the tag in the form of /tags/{tagId}
-        /// Serialized Name: TagDescriptionContract.properties.tagId
-        /// </summary>
+        /// <summary> Identifier of the tag in the form of /tags/{tagId}. </summary>
         [WirePath("properties.tagId")]
         public string TagId { get; set; }
-        /// <summary>
-        /// Tag name.
-        /// Serialized Name: TagDescriptionContract.properties.displayName
-        /// </summary>
+        /// <summary> Tag name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
     }

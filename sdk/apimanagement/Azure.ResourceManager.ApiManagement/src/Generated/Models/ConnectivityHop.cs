@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Information about a hop between the source and the destination.
-    /// Serialized Name: ConnectivityHop
-    /// </summary>
+    /// <summary> Information about a hop between the source and the destination. </summary>
     public partial class ConnectivityHop
     {
         /// <summary>
@@ -58,30 +55,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityHop"/>. </summary>
-        /// <param name="connectivityHopType">
-        /// The type of the hop.
-        /// Serialized Name: ConnectivityHop.type
-        /// </param>
-        /// <param name="id">
-        /// The ID of the hop.
-        /// Serialized Name: ConnectivityHop.id
-        /// </param>
-        /// <param name="address">
-        /// The IP address of the hop.
-        /// Serialized Name: ConnectivityHop.address
-        /// </param>
-        /// <param name="resourceId">
-        /// The ID of the resource corresponding to this hop.
-        /// Serialized Name: ConnectivityHop.resourceId
-        /// </param>
-        /// <param name="nextHopIds">
-        /// List of next hop identifiers.
-        /// Serialized Name: ConnectivityHop.nextHopIds
-        /// </param>
-        /// <param name="issues">
-        /// List of issues.
-        /// Serialized Name: ConnectivityHop.issues
-        /// </param>
+        /// <param name="connectivityHopType"> The type of the hop. </param>
+        /// <param name="id"> The ID of the hop. </param>
+        /// <param name="address"> The IP address of the hop. </param>
+        /// <param name="resourceId"> The ID of the resource corresponding to this hop. </param>
+        /// <param name="nextHopIds"> List of next hop identifiers. </param>
+        /// <param name="issues"> List of issues. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityHop(string connectivityHopType, string id, IPAddress address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -94,40 +73,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of the hop.
-        /// Serialized Name: ConnectivityHop.type
-        /// </summary>
+        /// <summary> The type of the hop. </summary>
         [WirePath("type")]
         public string ConnectivityHopType { get; }
-        /// <summary>
-        /// The ID of the hop.
-        /// Serialized Name: ConnectivityHop.id
-        /// </summary>
+        /// <summary> The ID of the hop. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// The IP address of the hop.
-        /// Serialized Name: ConnectivityHop.address
-        /// </summary>
+        /// <summary> The IP address of the hop. </summary>
         [WirePath("address")]
         public IPAddress Address { get; }
-        /// <summary>
-        /// The ID of the resource corresponding to this hop.
-        /// Serialized Name: ConnectivityHop.resourceId
-        /// </summary>
+        /// <summary> The ID of the resource corresponding to this hop. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
-        /// <summary>
-        /// List of next hop identifiers.
-        /// Serialized Name: ConnectivityHop.nextHopIds
-        /// </summary>
+        /// <summary> List of next hop identifiers. </summary>
         [WirePath("nextHopIds")]
         public IReadOnlyList<string> NextHopIds { get; }
-        /// <summary>
-        /// List of issues.
-        /// Serialized Name: ConnectivityHop.issues
-        /// </summary>
+        /// <summary> List of issues. </summary>
         [WirePath("issues")]
         public IReadOnlyList<ConnectivityIssue> Issues { get; }
     }

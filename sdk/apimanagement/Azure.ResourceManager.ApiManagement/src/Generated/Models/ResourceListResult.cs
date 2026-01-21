@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// A collection of resources.
-    /// Serialized Name: ResourceListResult
-    /// </summary>
+    /// <summary> A collection of resources. </summary>
     internal partial class ResourceListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// A collection of resources.
-        /// Serialized Name: ResourceListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number.
-        /// Serialized Name: ResourceListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: ResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> A collection of resources. </param>
+        /// <param name="count"> Total record count number. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceListResult(IReadOnlyList<ResourceCollectionValueItem> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A collection of resources.
-        /// Serialized Name: ResourceListResult.value
-        /// </summary>
+        /// <summary> A collection of resources. </summary>
         [WirePath("value")]
         public IReadOnlyList<ResourceCollectionValueItem> Value { get; }
-        /// <summary>
-        /// Total record count number.
-        /// Serialized Name: ResourceListResult.count
-        /// </summary>
+        /// <summary> Total record count number. </summary>
         [WirePath("count")]
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: ResourceListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         [WirePath("nextLink")]
         public string NextLink { get; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The type of access to be used for the storage account.
-    /// Serialized Name: AccessType
-    /// </summary>
+    /// <summary> The type of access to be used for the storage account. </summary>
     public readonly partial struct StorageAccountAccessType : IEquatable<StorageAccountAccessType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
         private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
-        /// <summary>
-        /// Use access key.
-        /// Serialized Name: AccessType.AccessKey
-        /// </summary>
+        /// <summary> Use access key. </summary>
         public static StorageAccountAccessType AccessKey { get; } = new StorageAccountAccessType(AccessKeyValue);
-        /// <summary>
-        /// Use system assigned managed identity.
-        /// Serialized Name: AccessType.SystemAssignedManagedIdentity
-        /// </summary>
+        /// <summary> Use system assigned managed identity. </summary>
         public static StorageAccountAccessType SystemAssignedManagedIdentity { get; } = new StorageAccountAccessType(SystemAssignedManagedIdentityValue);
-        /// <summary>
-        /// Use user assigned managed identity.
-        /// Serialized Name: AccessType.UserAssignedManagedIdentity
-        /// </summary>
+        /// <summary> Use user assigned managed identity. </summary>
         public static StorageAccountAccessType UserAssignedManagedIdentity { get; } = new StorageAccountAccessType(UserAssignedManagedIdentityValue);
         /// <summary> Determines if two <see cref="StorageAccountAccessType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountAccessType left, StorageAccountAccessType right) => left.Equals(right);

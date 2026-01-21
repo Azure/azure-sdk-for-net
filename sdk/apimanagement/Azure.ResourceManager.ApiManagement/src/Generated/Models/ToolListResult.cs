@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Tool list representation.
-    /// Serialized Name: ToolListResult
-    /// </summary>
+    /// <summary> Paged Tool list representation. </summary>
     internal partial class ToolListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolListResult"/>. </summary>
-        /// <param name="value">
-        /// Page values of Tools contract.
-        /// Serialized Name: ToolListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: ToolListResult.nextLink
-        /// </param>
+        /// <param name="value"> Page values of Tools contract. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ToolListResult(IReadOnlyList<ToolContractData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page values of Tools contract.
-        /// Serialized Name: ToolListResult.value
-        /// </summary>
+        /// <summary> Page values of Tools contract. </summary>
         public IReadOnlyList<ToolContractData> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: ToolListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

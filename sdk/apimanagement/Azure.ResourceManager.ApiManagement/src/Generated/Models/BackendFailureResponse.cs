@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response to be returned when a backend fails to respond
-    /// Serialized Name: BackendFailureResponse
-    /// </summary>
+    /// <summary> The response to be returned when a backend fails to respond. </summary>
     internal partial class BackendFailureResponse
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendFailureResponse"/>. </summary>
-        /// <param name="statusCode">
-        /// The status code of the response.
-        /// Serialized Name: BackendFailureResponse.statusCode
-        /// </param>
+        /// <param name="statusCode"> The status code of the response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendFailureResponse(int? statusCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The status code of the response.
-        /// Serialized Name: BackendFailureResponse.statusCode
-        /// </summary>
+        /// <summary> The status code of the response. </summary>
         [WirePath("statusCode")]
         public int? StatusCode { get; set; }
     }

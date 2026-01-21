@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information.
-    /// Serialized Name: CarbonEmissionCategory
-    /// </summary>
+    /// <summary> Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information. </summary>
     public readonly partial struct CarbonEmissionCategory : IEquatable<CarbonEmissionCategory>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string HighValue = "High";
         private const string VeryHighValue = "VeryHigh";
 
-        /// <summary>
-        /// Carbon intensity of less than or equal to 150 grams CO₂e per KWh
-        /// Serialized Name: CarbonEmissionCategory.VeryLow
-        /// </summary>
+        /// <summary> Carbon intensity of less than or equal to 150 grams CO₂e per KWh. </summary>
         public static CarbonEmissionCategory VeryLow { get; } = new CarbonEmissionCategory(VeryLowValue);
-        /// <summary>
-        /// Carbon intensity between 151 &amp; 300 (incl) grams CO₂e per KWh
-        /// Serialized Name: CarbonEmissionCategory.Low
-        /// </summary>
+        /// <summary> Carbon intensity between 151 &amp; 300 (incl) grams CO₂e per KWh. </summary>
         public static CarbonEmissionCategory Low { get; } = new CarbonEmissionCategory(LowValue);
-        /// <summary>
-        /// Carbon intensity between 301 &amp; 500 (incl) grams CO₂e per KWh
-        /// Serialized Name: CarbonEmissionCategory.Medium
-        /// </summary>
+        /// <summary> Carbon intensity between 301 &amp; 500 (incl) grams CO₂e per KWh. </summary>
         public static CarbonEmissionCategory Medium { get; } = new CarbonEmissionCategory(MediumValue);
-        /// <summary>
-        /// Carbon intensity between 501 &amp; 700 (incl) grams CO₂e per KWh
-        /// Serialized Name: CarbonEmissionCategory.High
-        /// </summary>
+        /// <summary> Carbon intensity between 501 &amp; 700 (incl) grams CO₂e per KWh. </summary>
         public static CarbonEmissionCategory High { get; } = new CarbonEmissionCategory(HighValue);
-        /// <summary>
-        /// Carbon intensity of more than 700 grams CO₂e per KWh
-        /// Serialized Name: CarbonEmissionCategory.VeryHigh
-        /// </summary>
+        /// <summary> Carbon intensity of more than 700 grams CO₂e per KWh. </summary>
         public static CarbonEmissionCategory VeryHigh { get; } = new CarbonEmissionCategory(VeryHighValue);
         /// <summary> Determines if two <see cref="CarbonEmissionCategory"/> values are the same. </summary>
         public static bool operator ==(CarbonEmissionCategory left, CarbonEmissionCategory right) => left.Equals(right);

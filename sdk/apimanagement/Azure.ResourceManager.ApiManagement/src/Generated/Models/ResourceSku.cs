@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Describes an available API Management SKU.
-    /// Serialized Name: ResourceSku
-    /// </summary>
+    /// <summary> Describes an available API Management SKU. </summary>
     internal partial class ResourceSku
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        /// <param name="name">
-        /// Name of the Sku.
-        /// Serialized Name: ResourceSku.name
-        /// </param>
+        /// <param name="name"> Name of the Sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceSku(ApiManagementServiceSkuType? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the Sku.
-        /// Serialized Name: ResourceSku.name
-        /// </summary>
+        /// <summary> Name of the Sku. </summary>
         [WirePath("name")]
         public ApiManagementServiceSkuType? Name { get; }
     }

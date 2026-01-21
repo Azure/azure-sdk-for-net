@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The session stickiness properties of the backend pool.
-    /// Serialized Name: BackendSessionAffinity
-    /// </summary>
+    /// <summary> The session stickiness properties of the backend pool. </summary>
     internal partial class BackendSessionAffinity
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendSessionAffinity"/>. </summary>
-        /// <param name="sessionId">
-        /// The id that identifies the requests belonging to the same session.
-        /// Serialized Name: BackendSessionAffinity.sessionId
-        /// </param>
+        /// <param name="sessionId"> The id that identifies the requests belonging to the same session. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendSessionAffinity(BackendSessionId sessionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The id that identifies the requests belonging to the same session.
-        /// Serialized Name: BackendSessionAffinity.sessionId
-        /// </summary>
+        /// <summary> The id that identifies the requests belonging to the same session. </summary>
         [WirePath("sessionId")]
         public BackendSessionId SessionId { get; set; }
     }

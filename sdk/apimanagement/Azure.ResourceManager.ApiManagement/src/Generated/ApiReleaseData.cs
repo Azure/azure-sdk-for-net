@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiRelease data model.
     /// ApiRelease details.
-    /// Serialized Name: ApiReleaseContract
     /// </summary>
     public partial class ApiReleaseData : ResourceData
     {
@@ -61,22 +60,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="apiId">
-        /// Identifier of the API the release belongs to.
-        /// Serialized Name: ApiReleaseContract.properties.apiId
-        /// </param>
-        /// <param name="createdOn">
-        /// The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
-        /// Serialized Name: ApiReleaseContract.properties.createdDateTime
-        /// </param>
-        /// <param name="updatedOn">
-        /// The time the API release was updated.
-        /// Serialized Name: ApiReleaseContract.properties.updatedDateTime
-        /// </param>
-        /// <param name="notes">
-        /// Release Notes
-        /// Serialized Name: ApiReleaseContract.properties.notes
-        /// </param>
+        /// <param name="apiId"> Identifier of the API the release belongs to. </param>
+        /// <param name="createdOn"> The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="updatedOn"> The time the API release was updated. </param>
+        /// <param name="notes"> Release Notes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiReleaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier apiId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -87,28 +74,16 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Identifier of the API the release belongs to.
-        /// Serialized Name: ApiReleaseContract.properties.apiId
-        /// </summary>
+        /// <summary> Identifier of the API the release belongs to. </summary>
         [WirePath("properties.apiId")]
         public ResourceIdentifier ApiId { get; set; }
-        /// <summary>
-        /// The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
-        /// Serialized Name: ApiReleaseContract.properties.createdDateTime
-        /// </summary>
+        /// <summary> The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The time the API release was updated.
-        /// Serialized Name: ApiReleaseContract.properties.updatedDateTime
-        /// </summary>
+        /// <summary> The time the API release was updated. </summary>
         [WirePath("properties.updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary>
-        /// Release Notes
-        /// Serialized Name: ApiReleaseContract.properties.notes
-        /// </summary>
+        /// <summary> Release Notes. </summary>
         [WirePath("properties.notes")]
         public string Notes { get; set; }
     }

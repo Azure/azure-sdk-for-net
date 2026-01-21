@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Sets correlation protocol to use for Application Insights diagnostics.
-    /// Serialized Name: HttpCorrelationProtocol
-    /// </summary>
+    /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
     public readonly partial struct HttpCorrelationProtocol : IEquatable<HttpCorrelationProtocol>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string LegacyValue = "Legacy";
         private const string W3CValue = "W3C";
 
-        /// <summary>
-        /// Do not read and inject correlation headers.
-        /// Serialized Name: HttpCorrelationProtocol.None
-        /// </summary>
+        /// <summary> Do not read and inject correlation headers. </summary>
         public static HttpCorrelationProtocol None { get; } = new HttpCorrelationProtocol(NoneValue);
-        /// <summary>
-        /// Inject Request-Id and Request-Context headers with request correlation data. See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/HttpCorrelationProtocol.md.
-        /// Serialized Name: HttpCorrelationProtocol.Legacy
-        /// </summary>
+        /// <summary> Inject Request-Id and Request-Context headers with request correlation data. See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/HttpCorrelationProtocol.md. </summary>
         public static HttpCorrelationProtocol Legacy { get; } = new HttpCorrelationProtocol(LegacyValue);
-        /// <summary>
-        /// Inject Trace Context headers. See https://w3c.github.io/trace-context.
-        /// Serialized Name: HttpCorrelationProtocol.W3C
-        /// </summary>
+        /// <summary> Inject Trace Context headers. See https://w3c.github.io/trace-context. </summary>
         public static HttpCorrelationProtocol W3C { get; } = new HttpCorrelationProtocol(W3CValue);
         /// <summary> Determines if two <see cref="HttpCorrelationProtocol"/> values are the same. </summary>
         public static bool operator ==(HttpCorrelationProtocol left, HttpCorrelationProtocol right) => left.Equals(right);

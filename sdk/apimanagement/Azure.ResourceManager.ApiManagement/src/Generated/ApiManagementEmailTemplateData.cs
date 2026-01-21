@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementEmailTemplate data model.
     /// Email Template details.
-    /// Serialized Name: EmailTemplateContract
     /// </summary>
     public partial class ApiManagementEmailTemplateData : ResourceData
     {
@@ -63,30 +62,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="subject">
-        /// Subject of the Template.
-        /// Serialized Name: EmailTemplateContract.properties.subject
-        /// </param>
-        /// <param name="body">
-        /// Email Template Body. This should be a valid XDocument
-        /// Serialized Name: EmailTemplateContract.properties.body
-        /// </param>
-        /// <param name="title">
-        /// Title of the Template.
-        /// Serialized Name: EmailTemplateContract.properties.title
-        /// </param>
-        /// <param name="description">
-        /// Description of the Email Template.
-        /// Serialized Name: EmailTemplateContract.properties.description
-        /// </param>
-        /// <param name="isDefault">
-        /// Whether the template is the default template provided by API Management or has been edited.
-        /// Serialized Name: EmailTemplateContract.properties.isDefault
-        /// </param>
-        /// <param name="parameters">
-        /// Email Template Parameter values.
-        /// Serialized Name: EmailTemplateContract.properties.parameters
-        /// </param>
+        /// <param name="subject"> Subject of the Template. </param>
+        /// <param name="body"> Email Template Body. This should be a valid XDocument. </param>
+        /// <param name="title"> Title of the Template. </param>
+        /// <param name="description"> Description of the Email Template. </param>
+        /// <param name="isDefault"> Whether the template is the default template provided by API Management or has been edited. </param>
+        /// <param name="parameters"> Email Template Parameter values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementEmailTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string body, string title, string description, bool? isDefault, IList<EmailTemplateParametersContractProperties> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -99,40 +80,22 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Subject of the Template.
-        /// Serialized Name: EmailTemplateContract.properties.subject
-        /// </summary>
+        /// <summary> Subject of the Template. </summary>
         [WirePath("properties.subject")]
         public string Subject { get; set; }
-        /// <summary>
-        /// Email Template Body. This should be a valid XDocument
-        /// Serialized Name: EmailTemplateContract.properties.body
-        /// </summary>
+        /// <summary> Email Template Body. This should be a valid XDocument. </summary>
         [WirePath("properties.body")]
         public string Body { get; set; }
-        /// <summary>
-        /// Title of the Template.
-        /// Serialized Name: EmailTemplateContract.properties.title
-        /// </summary>
+        /// <summary> Title of the Template. </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Description of the Email Template.
-        /// Serialized Name: EmailTemplateContract.properties.description
-        /// </summary>
+        /// <summary> Description of the Email Template. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Whether the template is the default template provided by API Management or has been edited.
-        /// Serialized Name: EmailTemplateContract.properties.isDefault
-        /// </summary>
+        /// <summary> Whether the template is the default template provided by API Management or has been edited. </summary>
         [WirePath("properties.isDefault")]
         public bool? IsDefault { get; }
-        /// <summary>
-        /// Email Template Parameter values.
-        /// Serialized Name: EmailTemplateContract.properties.parameters
-        /// </summary>
+        /// <summary> Email Template Parameter values. </summary>
         [WirePath("properties.parameters")]
         public IList<EmailTemplateParametersContractProperties> Parameters { get; }
     }

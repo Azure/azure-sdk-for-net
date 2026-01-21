@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the PolicyFragmentContract data model.
     /// Policy fragment contract details.
-    /// Serialized Name: PolicyFragmentContract
     /// </summary>
     public partial class PolicyFragmentContractData : ResourceData
     {
@@ -62,22 +61,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value">
-        /// Contents of the policy fragment.
-        /// Serialized Name: PolicyFragmentContract.properties.value
-        /// </param>
-        /// <param name="description">
-        /// Policy fragment description.
-        /// Serialized Name: PolicyFragmentContract.properties.description
-        /// </param>
-        /// <param name="format">
-        /// Format of the policy fragment content.
-        /// Serialized Name: PolicyFragmentContract.properties.format
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state
-        /// Serialized Name: PolicyFragmentContract.properties.provisioningState
-        /// </param>
+        /// <param name="value"> Contents of the policy fragment. </param>
+        /// <param name="description"> Policy fragment description. </param>
+        /// <param name="format"> Format of the policy fragment content. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyFragmentContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, PolicyFragmentContentFormat? format, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,28 +75,16 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Contents of the policy fragment.
-        /// Serialized Name: PolicyFragmentContract.properties.value
-        /// </summary>
+        /// <summary> Contents of the policy fragment. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Policy fragment description.
-        /// Serialized Name: PolicyFragmentContract.properties.description
-        /// </summary>
+        /// <summary> Policy fragment description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Format of the policy fragment content.
-        /// Serialized Name: PolicyFragmentContract.properties.format
-        /// </summary>
+        /// <summary> Format of the policy fragment content. </summary>
         [WirePath("properties.format")]
         public PolicyFragmentContentFormat? Format { get; set; }
-        /// <summary>
-        /// The provisioning state
-        /// Serialized Name: PolicyFragmentContract.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The scale type applicable to the sku.
-    /// Serialized Name: ResourceSkuCapacityScaleType
-    /// </summary>
+    /// <summary> The scale type applicable to the sku. </summary>
     public readonly partial struct ApiManagementResourceSkuCapacityScaleType : IEquatable<ApiManagementResourceSkuCapacityScaleType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ManualValue = "manual";
         private const string NoneValue = "none";
 
-        /// <summary>
-        /// Supported scale type automatic.
-        /// Serialized Name: ResourceSkuCapacityScaleType.automatic
-        /// </summary>
+        /// <summary> Supported scale type automatic. </summary>
         public static ApiManagementResourceSkuCapacityScaleType Automatic { get; } = new ApiManagementResourceSkuCapacityScaleType(AutomaticValue);
-        /// <summary>
-        /// Supported scale type manual.
-        /// Serialized Name: ResourceSkuCapacityScaleType.manual
-        /// </summary>
+        /// <summary> Supported scale type manual. </summary>
         public static ApiManagementResourceSkuCapacityScaleType Manual { get; } = new ApiManagementResourceSkuCapacityScaleType(ManualValue);
-        /// <summary>
-        /// Scaling not supported.
-        /// Serialized Name: ResourceSkuCapacityScaleType.none
-        /// </summary>
+        /// <summary> Scaling not supported. </summary>
         public static ApiManagementResourceSkuCapacityScaleType None { get; } = new ApiManagementResourceSkuCapacityScaleType(NoneValue);
         /// <summary> Determines if two <see cref="ApiManagementResourceSkuCapacityScaleType"/> values are the same. </summary>
         public static bool operator ==(ApiManagementResourceSkuCapacityScaleType left, ApiManagementResourceSkuCapacityScaleType right) => left.Equals(right);

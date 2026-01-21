@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The LlmMessageLogType.
-    /// Serialized Name: LlmMessageLogTypes
-    /// </summary>
+    /// <summary> The LlmMessageLogType. </summary>
     public readonly partial struct LlmMessageLogType : IEquatable<LlmMessageLogType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string AllValue = "all";
 
-        /// <summary>
-        /// Log all messages.
-        /// Serialized Name: LlmMessageLogTypes.all
-        /// </summary>
+        /// <summary> Log all messages. </summary>
         public static LlmMessageLogType All { get; } = new LlmMessageLogType(AllValue);
         /// <summary> Determines if two <see cref="LlmMessageLogType"/> values are the same. </summary>
         public static bool operator ==(LlmMessageLogType left, LlmMessageLogType right) => left.Equals(right);

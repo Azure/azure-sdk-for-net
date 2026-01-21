@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Authorization Provider KeyVault contract properties.
-    /// Serialized Name: AuthorizationProviderKeyVaultContract
-    /// </summary>
+    /// <summary> Authorization Provider KeyVault contract properties. </summary>
     public partial class AuthorizationProviderKeyVaultContract : AuthorizationProviderKeyVaultCreateProperties
     {
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderKeyVaultContract"/>. </summary>
@@ -22,35 +19,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderKeyVaultContract"/>. </summary>
-        /// <param name="secretIdentifier">
-        /// Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret.
-        /// Serialized Name: AuthorizationProviderKeyVaultCreateProperties.secretIdentifier
-        /// </param>
+        /// <param name="secretIdentifier"> Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="updated">
-        /// When the secret was last updated in key vault.
-        /// Serialized Name: AuthorizationProviderKeyVaultContract.updated
-        /// </param>
-        /// <param name="lastStatus">
-        /// Last time sync and refresh of secret from key vault.
-        /// Serialized Name: AuthorizationProviderKeyVaultContract.lastStatus
-        /// </param>
+        /// <param name="updated"> When the secret was last updated in key vault. </param>
+        /// <param name="lastStatus"> Last time sync and refresh of secret from key vault. </param>
         internal AuthorizationProviderKeyVaultContract(string secretIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? updated, KeyVaultLastAccessStatusContractProperties lastStatus) : base(secretIdentifier, serializedAdditionalRawData)
         {
             Updated = updated;
             LastStatus = lastStatus;
         }
 
-        /// <summary>
-        /// When the secret was last updated in key vault.
-        /// Serialized Name: AuthorizationProviderKeyVaultContract.updated
-        /// </summary>
+        /// <summary> When the secret was last updated in key vault. </summary>
         [WirePath("updated")]
         public DateTimeOffset? Updated { get; }
-        /// <summary>
-        /// Last time sync and refresh of secret from key vault.
-        /// Serialized Name: AuthorizationProviderKeyVaultContract.lastStatus
-        /// </summary>
+        /// <summary> Last time sync and refresh of secret from key vault. </summary>
         [WirePath("lastStatus")]
         public KeyVaultLastAccessStatusContractProperties LastStatus { get; }
     }

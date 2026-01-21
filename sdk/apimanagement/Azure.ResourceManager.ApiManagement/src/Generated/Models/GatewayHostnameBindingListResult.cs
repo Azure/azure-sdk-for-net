@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of the List API Management gateway hostname binding operation.
-    /// Serialized Name: GatewayHostnameBindingListResult
-    /// </summary>
+    /// <summary> The response of the List API Management gateway hostname binding operation. </summary>
     internal partial class GatewayHostnameBindingListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingListResult"/>. </summary>
-        /// <param name="value">
-        /// Result of the List API Management gateway hostname binding operation.
-        /// Serialized Name: GatewayHostnameBindingListResult.value
-        /// </param>
+        /// <param name="value"> Result of the List API Management gateway hostname binding operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GatewayHostnameBindingListResult(IEnumerable<GatewayHostnameBindingResourceData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingListResult"/>. </summary>
-        /// <param name="value">
-        /// Result of the List API Management gateway hostname binding operation.
-        /// Serialized Name: GatewayHostnameBindingListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management gateway hostname bindings.
-        /// Serialized Name: GatewayHostnameBindingListResult.nextLink
-        /// </param>
+        /// <param name="value"> Result of the List API Management gateway hostname binding operation. </param>
+        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management gateway hostname bindings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayHostnameBindingListResult(IReadOnlyList<GatewayHostnameBindingResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Result of the List API Management gateway hostname binding operation.
-        /// Serialized Name: GatewayHostnameBindingListResult.value
-        /// </summary>
+        /// <summary> Result of the List API Management gateway hostname binding operation. </summary>
         public IReadOnlyList<GatewayHostnameBindingResourceData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management gateway hostname bindings.
-        /// Serialized Name: GatewayHostnameBindingListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management gateway hostname bindings. </summary>
         public string NextLink { get; }
     }
 }

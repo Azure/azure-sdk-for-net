@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Gateway authentication keys.
-    /// Serialized Name: GatewayKeysContract
-    /// </summary>
+    /// <summary> Gateway authentication keys. </summary>
     public partial class GatewayKeysContract
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayKeysContract"/>. </summary>
-        /// <param name="primary">
-        /// Primary gateway key.
-        /// Serialized Name: GatewayKeysContract.primary
-        /// </param>
-        /// <param name="secondary">
-        /// Secondary gateway key.
-        /// Serialized Name: GatewayKeysContract.secondary
-        /// </param>
+        /// <param name="primary"> Primary gateway key. </param>
+        /// <param name="secondary"> Secondary gateway key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayKeysContract(string primary, string secondary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Primary gateway key.
-        /// Serialized Name: GatewayKeysContract.primary
-        /// </summary>
+        /// <summary> Primary gateway key. </summary>
         [WirePath("primary")]
         public string Primary { get; }
-        /// <summary>
-        /// Secondary gateway key.
-        /// Serialized Name: GatewayKeysContract.secondary
-        /// </summary>
+        /// <summary> Secondary gateway key. </summary>
         [WirePath("secondary")]
         public string Secondary { get; }
     }

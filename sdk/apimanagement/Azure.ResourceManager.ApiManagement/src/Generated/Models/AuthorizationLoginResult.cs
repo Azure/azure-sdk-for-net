@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Authorization login response contract.
-    /// Serialized Name: AuthorizationLoginResponseContract
-    /// </summary>
+    /// <summary> Authorization login response contract. </summary>
     public partial class AuthorizationLoginResult
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationLoginResult"/>. </summary>
-        /// <param name="loginLink">
-        /// The login link
-        /// Serialized Name: AuthorizationLoginResponseContract.loginLink
-        /// </param>
+        /// <param name="loginLink"> The login link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationLoginResult(string loginLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The login link
-        /// Serialized Name: AuthorizationLoginResponseContract.loginLink
-        /// </summary>
+        /// <summary> The login link. </summary>
         [WirePath("loginLink")]
         public string LoginLink { get; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The GrantType.
-    /// Serialized Name: GrantType
-    /// </summary>
+    /// <summary> The GrantType. </summary>
     public readonly partial struct GrantType : IEquatable<GrantType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ResourceOwnerPasswordValue = "resourceOwnerPassword";
         private const string ClientCredentialsValue = "clientCredentials";
 
-        /// <summary>
-        /// Authorization Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.1.
-        /// Serialized Name: GrantType.authorizationCode
-        /// </summary>
+        /// <summary> Authorization Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.1. </summary>
         public static GrantType AuthorizationCode { get; } = new GrantType(AuthorizationCodeValue);
-        /// <summary>
-        /// Implicit Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.2.
-        /// Serialized Name: GrantType.implicit
-        /// </summary>
+        /// <summary> Implicit Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.2. </summary>
         public static GrantType Implicit { get; } = new GrantType(ImplicitValue);
-        /// <summary>
-        /// Resource Owner Password Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.3.
-        /// Serialized Name: GrantType.resourceOwnerPassword
-        /// </summary>
+        /// <summary> Resource Owner Password Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.3. </summary>
         public static GrantType ResourceOwnerPassword { get; } = new GrantType(ResourceOwnerPasswordValue);
-        /// <summary>
-        /// Client Credentials Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.4.
-        /// Serialized Name: GrantType.clientCredentials
-        /// </summary>
+        /// <summary> Client Credentials Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.4. </summary>
         public static GrantType ClientCredentials { get; } = new GrantType(ClientCredentialsValue);
         /// <summary> Determines if two <see cref="GrantType"/> values are the same. </summary>
         public static bool operator ==(GrantType left, GrantType right) => left.Equals(right);

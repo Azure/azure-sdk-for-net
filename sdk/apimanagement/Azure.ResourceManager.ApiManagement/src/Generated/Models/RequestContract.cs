@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Operation request details.
-    /// Serialized Name: RequestContract
-    /// </summary>
+    /// <summary> Operation request details. </summary>
     public partial class RequestContract
     {
         /// <summary>
@@ -57,22 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestContract"/>. </summary>
-        /// <param name="description">
-        /// Operation request description.
-        /// Serialized Name: RequestContract.description
-        /// </param>
-        /// <param name="queryParameters">
-        /// Collection of operation request query parameters.
-        /// Serialized Name: RequestContract.queryParameters
-        /// </param>
-        /// <param name="headers">
-        /// Collection of operation request headers.
-        /// Serialized Name: RequestContract.headers
-        /// </param>
-        /// <param name="representations">
-        /// Collection of operation request representations.
-        /// Serialized Name: RequestContract.representations
-        /// </param>
+        /// <param name="description"> Operation request description. </param>
+        /// <param name="queryParameters"> Collection of operation request query parameters. </param>
+        /// <param name="headers"> Collection of operation request headers. </param>
+        /// <param name="representations"> Collection of operation request representations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestContract(string description, IList<ParameterContract> queryParameters, IList<ParameterContract> headers, IList<RepresentationContract> representations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,28 +68,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Operation request description.
-        /// Serialized Name: RequestContract.description
-        /// </summary>
+        /// <summary> Operation request description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Collection of operation request query parameters.
-        /// Serialized Name: RequestContract.queryParameters
-        /// </summary>
+        /// <summary> Collection of operation request query parameters. </summary>
         [WirePath("queryParameters")]
         public IList<ParameterContract> QueryParameters { get; }
-        /// <summary>
-        /// Collection of operation request headers.
-        /// Serialized Name: RequestContract.headers
-        /// </summary>
+        /// <summary> Collection of operation request headers. </summary>
         [WirePath("headers")]
         public IList<ParameterContract> Headers { get; }
-        /// <summary>
-        /// Collection of operation request representations.
-        /// Serialized Name: RequestContract.representations
-        /// </summary>
+        /// <summary> Collection of operation request representations. </summary>
         [WirePath("representations")]
         public IList<RepresentationContract> Representations { get; }
     }

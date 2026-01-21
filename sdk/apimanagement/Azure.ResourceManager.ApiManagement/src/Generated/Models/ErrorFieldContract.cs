@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Error Field contract.
-    /// Serialized Name: ErrorFieldContract
-    /// </summary>
+    /// <summary> Error Field contract. </summary>
     public partial class ErrorFieldContract
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ErrorFieldContract"/>. </summary>
-        /// <param name="code">
-        /// Property level error code.
-        /// Serialized Name: ErrorFieldContract.code
-        /// </param>
-        /// <param name="message">
-        /// Human-readable representation of property-level error.
-        /// Serialized Name: ErrorFieldContract.message
-        /// </param>
-        /// <param name="target">
-        /// Property name.
-        /// Serialized Name: ErrorFieldContract.target
-        /// </param>
+        /// <param name="code"> Property level error code. </param>
+        /// <param name="message"> Human-readable representation of property-level error. </param>
+        /// <param name="target"> Property name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ErrorFieldContract(string code, string message, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Property level error code.
-        /// Serialized Name: ErrorFieldContract.code
-        /// </summary>
+        /// <summary> Property level error code. </summary>
         [WirePath("code")]
         public string Code { get; set; }
-        /// <summary>
-        /// Human-readable representation of property-level error.
-        /// Serialized Name: ErrorFieldContract.message
-        /// </summary>
+        /// <summary> Human-readable representation of property-level error. </summary>
         [WirePath("message")]
         public string Message { get; set; }
-        /// <summary>
-        /// Property name.
-        /// Serialized Name: ErrorFieldContract.target
-        /// </summary>
+        /// <summary> Property name. </summary>
         [WirePath("target")]
         public string Target { get; set; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Email Template Parameter contract.
-    /// Serialized Name: EmailTemplateParametersContractProperties
-    /// </summary>
+    /// <summary> Email Template Parameter contract. </summary>
     public partial class EmailTemplateParametersContractProperties
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EmailTemplateParametersContractProperties"/>. </summary>
-        /// <param name="name">
-        /// Template parameter name.
-        /// Serialized Name: EmailTemplateParametersContractProperties.name
-        /// </param>
-        /// <param name="title">
-        /// Template parameter title.
-        /// Serialized Name: EmailTemplateParametersContractProperties.title
-        /// </param>
-        /// <param name="description">
-        /// Template parameter description.
-        /// Serialized Name: EmailTemplateParametersContractProperties.description
-        /// </param>
+        /// <param name="name"> Template parameter name. </param>
+        /// <param name="title"> Template parameter title. </param>
+        /// <param name="description"> Template parameter description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EmailTemplateParametersContractProperties(string name, string title, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Template parameter name.
-        /// Serialized Name: EmailTemplateParametersContractProperties.name
-        /// </summary>
+        /// <summary> Template parameter name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Template parameter title.
-        /// Serialized Name: EmailTemplateParametersContractProperties.title
-        /// </summary>
+        /// <summary> Template parameter title. </summary>
         [WirePath("title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Template parameter description.
-        /// Serialized Name: EmailTemplateParametersContractProperties.description
-        /// </summary>
+        /// <summary> Template parameter description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// API Management gateway resource SKU properties.
-    /// Serialized Name: ApiManagementGatewaySkuProperties
-    /// </summary>
+    /// <summary> API Management gateway resource SKU properties. </summary>
     public partial class ApiManagementGatewaySkuProperties
     {
         /// <summary>
@@ -49,24 +46,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewaySkuProperties"/>. </summary>
-        /// <param name="name">
-        /// Name of the Sku.
-        /// Serialized Name: ApiManagementGatewaySkuProperties.name
-        /// </param>
+        /// <param name="name"> Name of the Sku. </param>
         public ApiManagementGatewaySkuProperties(ApiGatewaySkuType name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewaySkuProperties"/>. </summary>
-        /// <param name="name">
-        /// Name of the Sku.
-        /// Serialized Name: ApiManagementGatewaySkuProperties.name
-        /// </param>
-        /// <param name="capacity">
-        /// Capacity of the SKU (number of deployed units of the SKU)
-        /// Serialized Name: ApiManagementGatewaySkuProperties.capacity
-        /// </param>
+        /// <param name="name"> Name of the Sku. </param>
+        /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGatewaySkuProperties(ApiGatewaySkuType name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,16 +68,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Name of the Sku.
-        /// Serialized Name: ApiManagementGatewaySkuProperties.name
-        /// </summary>
+        /// <summary> Name of the Sku. </summary>
         [WirePath("name")]
         public ApiGatewaySkuType Name { get; set; }
-        /// <summary>
-        /// Capacity of the SKU (number of deployed units of the SKU)
-        /// Serialized Name: ApiManagementGatewaySkuProperties.capacity
-        /// </summary>
+        /// <summary> Capacity of the SKU (number of deployed units of the SKU). </summary>
         [WirePath("capacity")]
         public int? Capacity { get; set; }
     }

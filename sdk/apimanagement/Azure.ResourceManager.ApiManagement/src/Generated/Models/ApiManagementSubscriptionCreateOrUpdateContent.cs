@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Subscription create details.
-    /// Serialized Name: SubscriptionCreateParameters
-    /// </summary>
+    /// <summary> Subscription create details. </summary>
     public partial class ApiManagementSubscriptionCreateOrUpdateContent
     {
         /// <summary>
@@ -54,34 +51,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
-        /// <param name="ownerId">
-        /// User (user id path) for whom subscription is being created in form /users/{userId}
-        /// Serialized Name: SubscriptionCreateParameters.properties.ownerId
-        /// </param>
-        /// <param name="scope">
-        /// Scope like /products/{productId} or /apis or /apis/{apiId}.
-        /// Serialized Name: SubscriptionCreateParameters.properties.scope
-        /// </param>
-        /// <param name="displayName">
-        /// Subscription name.
-        /// Serialized Name: SubscriptionCreateParameters.properties.displayName
-        /// </param>
-        /// <param name="primaryKey">
-        /// Primary subscription key. If not specified during request key will be generated automatically.
-        /// Serialized Name: SubscriptionCreateParameters.properties.primaryKey
-        /// </param>
-        /// <param name="secondaryKey">
-        /// Secondary subscription key. If not specified during request key will be generated automatically.
-        /// Serialized Name: SubscriptionCreateParameters.properties.secondaryKey
-        /// </param>
-        /// <param name="state">
-        /// Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.
-        /// Serialized Name: SubscriptionCreateParameters.properties.state
-        /// </param>
-        /// <param name="allowTracing">
-        /// Determines whether tracing can be enabled
-        /// Serialized Name: SubscriptionCreateParameters.properties.allowTracing
-        /// </param>
+        /// <param name="ownerId"> User (user id path) for whom subscription is being created in form /users/{userId}. </param>
+        /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
+        /// <param name="displayName"> Subscription name. </param>
+        /// <param name="primaryKey"> Primary subscription key. If not specified during request key will be generated automatically. </param>
+        /// <param name="secondaryKey"> Secondary subscription key. If not specified during request key will be generated automatically. </param>
+        /// <param name="state"> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
+        /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSubscriptionCreateOrUpdateContent(string ownerId, string scope, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,46 +71,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User (user id path) for whom subscription is being created in form /users/{userId}
-        /// Serialized Name: SubscriptionCreateParameters.properties.ownerId
-        /// </summary>
+        /// <summary> User (user id path) for whom subscription is being created in form /users/{userId}. </summary>
         [WirePath("properties.ownerId")]
         public string OwnerId { get; set; }
-        /// <summary>
-        /// Scope like /products/{productId} or /apis or /apis/{apiId}.
-        /// Serialized Name: SubscriptionCreateParameters.properties.scope
-        /// </summary>
+        /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
         [WirePath("properties.scope")]
         public string Scope { get; set; }
-        /// <summary>
-        /// Subscription name.
-        /// Serialized Name: SubscriptionCreateParameters.properties.displayName
-        /// </summary>
+        /// <summary> Subscription name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Primary subscription key. If not specified during request key will be generated automatically.
-        /// Serialized Name: SubscriptionCreateParameters.properties.primaryKey
-        /// </summary>
+        /// <summary> Primary subscription key. If not specified during request key will be generated automatically. </summary>
         [WirePath("properties.primaryKey")]
         public string PrimaryKey { get; set; }
-        /// <summary>
-        /// Secondary subscription key. If not specified during request key will be generated automatically.
-        /// Serialized Name: SubscriptionCreateParameters.properties.secondaryKey
-        /// </summary>
+        /// <summary> Secondary subscription key. If not specified during request key will be generated automatically. </summary>
         [WirePath("properties.secondaryKey")]
         public string SecondaryKey { get; set; }
-        /// <summary>
-        /// Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.
-        /// Serialized Name: SubscriptionCreateParameters.properties.state
-        /// </summary>
+        /// <summary> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
         [WirePath("properties.state")]
         public SubscriptionState? State { get; set; }
-        /// <summary>
-        /// Determines whether tracing can be enabled
-        /// Serialized Name: SubscriptionCreateParameters.properties.allowTracing
-        /// </summary>
+        /// <summary> Determines whether tracing can be enabled. </summary>
         [WirePath("properties.allowTracing")]
         public bool? AllowTracing { get; set; }
     }

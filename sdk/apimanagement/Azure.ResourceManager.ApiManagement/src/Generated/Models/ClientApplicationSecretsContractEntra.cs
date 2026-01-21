@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Microsoft EntraID client application secrets
-    /// Serialized Name: ClientApplicationSecretsContractEntra
-    /// </summary>
+    /// <summary> Microsoft EntraID client application secrets. </summary>
     public partial class ClientApplicationSecretsContractEntra
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientApplicationSecretsContractEntra"/>. </summary>
-        /// <param name="clientSecret">
-        /// EntraID client application secret
-        /// Serialized Name: ClientApplicationSecretsContractEntra.clientSecret
-        /// </param>
-        /// <param name="expiresOn">
-        /// EntraID client application secret expiration date.
-        /// Serialized Name: ClientApplicationSecretsContractEntra.expiresAt
-        /// </param>
+        /// <param name="clientSecret"> EntraID client application secret. </param>
+        /// <param name="expiresOn"> EntraID client application secret expiration date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClientApplicationSecretsContractEntra(string clientSecret, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// EntraID client application secret
-        /// Serialized Name: ClientApplicationSecretsContractEntra.clientSecret
-        /// </summary>
+        /// <summary> EntraID client application secret. </summary>
         [WirePath("clientSecret")]
         public string ClientSecret { get; }
-        /// <summary>
-        /// EntraID client application secret expiration date.
-        /// Serialized Name: ClientApplicationSecretsContractEntra.expiresAt
-        /// </summary>
+        /// <summary> EntraID client application secret expiration date. </summary>
         [WirePath("expiresAt")]
         public DateTimeOffset? ExpiresOn { get; }
     }

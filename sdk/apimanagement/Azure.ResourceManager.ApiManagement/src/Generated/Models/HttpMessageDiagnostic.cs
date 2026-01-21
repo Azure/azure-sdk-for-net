@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Http message diagnostic settings.
-    /// Serialized Name: HttpMessageDiagnostic
-    /// </summary>
+    /// <summary> Http message diagnostic settings. </summary>
     public partial class HttpMessageDiagnostic
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpMessageDiagnostic"/>. </summary>
-        /// <param name="headers">
-        /// Array of HTTP Headers to log.
-        /// Serialized Name: HttpMessageDiagnostic.headers
-        /// </param>
-        /// <param name="body">
-        /// Body logging settings.
-        /// Serialized Name: HttpMessageDiagnostic.body
-        /// </param>
-        /// <param name="dataMasking">
-        /// Data masking settings.
-        /// Serialized Name: HttpMessageDiagnostic.dataMasking
-        /// </param>
+        /// <param name="headers"> Array of HTTP Headers to log. </param>
+        /// <param name="body"> Body logging settings. </param>
+        /// <param name="dataMasking"> Data masking settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HttpMessageDiagnostic(IList<string> headers, BodyDiagnosticSettings body, DataMasking dataMasking, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,21 +64,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Array of HTTP Headers to log.
-        /// Serialized Name: HttpMessageDiagnostic.headers
-        /// </summary>
+        /// <summary> Array of HTTP Headers to log. </summary>
         [WirePath("headers")]
         public IList<string> Headers { get; }
-        /// <summary>
-        /// Body logging settings.
-        /// Serialized Name: HttpMessageDiagnostic.body
-        /// </summary>
+        /// <summary> Body logging settings. </summary>
         internal BodyDiagnosticSettings Body { get; set; }
-        /// <summary>
-        /// Number of request body bytes to log.
-        /// Serialized Name: BodyDiagnosticSettings.bytes
-        /// </summary>
+        /// <summary> Number of request body bytes to log. </summary>
         [WirePath("body.bytes")]
         public int? BodyBytes
         {
@@ -103,10 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        /// <summary>
-        /// Data masking settings.
-        /// Serialized Name: HttpMessageDiagnostic.dataMasking
-        /// </summary>
+        /// <summary> Data masking settings. </summary>
         [WirePath("dataMasking")]
         public DataMasking DataMasking { get; set; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// KeyVault contract details.
-    /// Serialized Name: KeyVaultContractProperties
-    /// </summary>
+    /// <summary> KeyVault contract details. </summary>
     public partial class KeyVaultContractProperties : KeyVaultContractCreateProperties
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultContractProperties"/>. </summary>
@@ -22,28 +19,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultContractProperties"/>. </summary>
-        /// <param name="secretIdentifier">
-        /// Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi
-        /// Serialized Name: KeyVaultContractCreateProperties.secretIdentifier
-        /// </param>
-        /// <param name="identityClientId">
-        /// Null for SystemAssignedIdentity or Client Id for UserAssignedIdentity , which will be used to access key vault secret.
-        /// Serialized Name: KeyVaultContractCreateProperties.identityClientId
-        /// </param>
+        /// <param name="secretIdentifier"> Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi. </param>
+        /// <param name="identityClientId"> Null for SystemAssignedIdentity or Client Id for UserAssignedIdentity , which will be used to access key vault secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="lastStatus">
-        /// Last time sync and refresh status of secret from key vault.
-        /// Serialized Name: KeyVaultContractProperties.lastStatus
-        /// </param>
+        /// <param name="lastStatus"> Last time sync and refresh status of secret from key vault. </param>
         internal KeyVaultContractProperties(string secretIdentifier, string identityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData, KeyVaultLastAccessStatusContractProperties lastStatus) : base(secretIdentifier, identityClientId, serializedAdditionalRawData)
         {
             LastStatus = lastStatus;
         }
 
-        /// <summary>
-        /// Last time sync and refresh status of secret from key vault.
-        /// Serialized Name: KeyVaultContractProperties.lastStatus
-        /// </summary>
+        /// <summary> Last time sync and refresh status of secret from key vault. </summary>
         [WirePath("lastStatus")]
         public KeyVaultLastAccessStatusContractProperties LastStatus { get; set; }
     }

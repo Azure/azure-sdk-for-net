@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// A request to perform the connectivity check operation on a API Management service.
-    /// Serialized Name: ConnectivityCheckRequest
-    /// </summary>
+    /// <summary> A request to perform the connectivity check operation on a API Management service. </summary>
     public partial class ConnectivityCheckContent
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckContent"/>. </summary>
-        /// <param name="source">
-        /// Definitions about the connectivity check origin.
-        /// Serialized Name: ConnectivityCheckRequest.source
-        /// </param>
-        /// <param name="destination">
-        /// The connectivity check operation destination.
-        /// Serialized Name: ConnectivityCheckRequest.destination
-        /// </param>
+        /// <param name="source"> Definitions about the connectivity check origin. </param>
+        /// <param name="destination"> The connectivity check operation destination. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
         public ConnectivityCheckContent(ConnectivityCheckRequestSource source, ConnectivityCheckRequestDestination destination)
         {
@@ -68,26 +59,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckContent"/>. </summary>
-        /// <param name="source">
-        /// Definitions about the connectivity check origin.
-        /// Serialized Name: ConnectivityCheckRequest.source
-        /// </param>
-        /// <param name="destination">
-        /// The connectivity check operation destination.
-        /// Serialized Name: ConnectivityCheckRequest.destination
-        /// </param>
-        /// <param name="preferredIPVersion">
-        /// The IP version to be used. Only IPv4 is supported for now.
-        /// Serialized Name: ConnectivityCheckRequest.preferredIPVersion
-        /// </param>
-        /// <param name="protocol">
-        /// The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value.
-        /// Serialized Name: ConnectivityCheckRequest.protocol
-        /// </param>
-        /// <param name="protocolConfiguration">
-        /// Protocol-specific configuration.
-        /// Serialized Name: ConnectivityCheckRequest.protocolConfiguration
-        /// </param>
+        /// <param name="source"> Definitions about the connectivity check origin. </param>
+        /// <param name="destination"> The connectivity check operation destination. </param>
+        /// <param name="preferredIPVersion"> The IP version to be used. Only IPv4 is supported for now. </param>
+        /// <param name="protocol"> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </param>
+        /// <param name="protocolConfiguration"> Protocol-specific configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCheckContent(ConnectivityCheckRequestSource source, ConnectivityCheckRequestDestination destination, PreferredIPVersion? preferredIPVersion, ConnectivityCheckProtocol? protocol, ConnectivityCheckRequestProtocolConfiguration protocolConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -104,39 +80,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Definitions about the connectivity check origin.
-        /// Serialized Name: ConnectivityCheckRequest.source
-        /// </summary>
+        /// <summary> Definitions about the connectivity check origin. </summary>
         [WirePath("source")]
         public ConnectivityCheckRequestSource Source { get; }
-        /// <summary>
-        /// The connectivity check operation destination.
-        /// Serialized Name: ConnectivityCheckRequest.destination
-        /// </summary>
+        /// <summary> The connectivity check operation destination. </summary>
         [WirePath("destination")]
         public ConnectivityCheckRequestDestination Destination { get; }
-        /// <summary>
-        /// The IP version to be used. Only IPv4 is supported for now.
-        /// Serialized Name: ConnectivityCheckRequest.preferredIPVersion
-        /// </summary>
+        /// <summary> The IP version to be used. Only IPv4 is supported for now. </summary>
         [WirePath("preferredIPVersion")]
         public PreferredIPVersion? PreferredIPVersion { get; set; }
-        /// <summary>
-        /// The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value.
-        /// Serialized Name: ConnectivityCheckRequest.protocol
-        /// </summary>
+        /// <summary> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
         [WirePath("protocol")]
         public ConnectivityCheckProtocol? Protocol { get; set; }
-        /// <summary>
-        /// Protocol-specific configuration.
-        /// Serialized Name: ConnectivityCheckRequest.protocolConfiguration
-        /// </summary>
+        /// <summary> Protocol-specific configuration. </summary>
         internal ConnectivityCheckRequestProtocolConfiguration ProtocolConfiguration { get; set; }
-        /// <summary>
-        /// Configuration for HTTP or HTTPS requests.
-        /// Serialized Name: ConnectivityCheckRequestProtocolConfiguration.HTTPConfiguration
-        /// </summary>
+        /// <summary> Configuration for HTTP or HTTPS requests. </summary>
         [WirePath("protocolConfiguration.HTTPConfiguration")]
         public ConnectivityCheckRequestHttpConfiguration ProtocolHttpConfiguration
         {

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Body logging settings.
-    /// Serialized Name: BodyDiagnosticSettings
-    /// </summary>
+    /// <summary> Body logging settings. </summary>
     internal partial class BodyDiagnosticSettings
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BodyDiagnosticSettings"/>. </summary>
-        /// <param name="bytes">
-        /// Number of request body bytes to log.
-        /// Serialized Name: BodyDiagnosticSettings.bytes
-        /// </param>
+        /// <param name="bytes"> Number of request body bytes to log. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BodyDiagnosticSettings(int? bytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Number of request body bytes to log.
-        /// Serialized Name: BodyDiagnosticSettings.bytes
-        /// </summary>
+        /// <summary> Number of request body bytes to log. </summary>
         [WirePath("bytes")]
         public int? Bytes { get; set; }
     }

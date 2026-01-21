@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Rule configuration to trip the backend.
-    /// Serialized Name: CircuitBreakerRule
-    /// </summary>
+    /// <summary> Rule configuration to trip the backend. </summary>
     public partial class CircuitBreakerRule
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CircuitBreakerRule"/>. </summary>
-        /// <param name="name">
-        /// The rule name.
-        /// Serialized Name: CircuitBreakerRule.name
-        /// </param>
-        /// <param name="failureCondition">
-        /// The conditions for tripping the circuit breaker.
-        /// Serialized Name: CircuitBreakerRule.failureCondition
-        /// </param>
-        /// <param name="tripDuration">
-        /// The duration for which the circuit will be tripped.
-        /// Serialized Name: CircuitBreakerRule.tripDuration
-        /// </param>
-        /// <param name="acceptRetryAfter">
-        /// flag to accept Retry-After header from the backend.
-        /// Serialized Name: CircuitBreakerRule.acceptRetryAfter
-        /// </param>
-        /// <param name="failureResponse">
-        /// The response of the backend when the circuit breaker gets open.
-        /// Serialized Name: CircuitBreakerRule.failureResponse
-        /// </param>
+        /// <param name="name"> The rule name. </param>
+        /// <param name="failureCondition"> The conditions for tripping the circuit breaker. </param>
+        /// <param name="tripDuration"> The duration for which the circuit will be tripped. </param>
+        /// <param name="acceptRetryAfter"> flag to accept Retry-After header from the backend. </param>
+        /// <param name="failureResponse"> The response of the backend when the circuit breaker gets open. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CircuitBreakerRule(string name, CircuitBreakerFailureCondition failureCondition, TimeSpan? tripDuration, bool? acceptRetryAfter, BackendFailureResponse failureResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,39 +67,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The rule name.
-        /// Serialized Name: CircuitBreakerRule.name
-        /// </summary>
+        /// <summary> The rule name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The conditions for tripping the circuit breaker.
-        /// Serialized Name: CircuitBreakerRule.failureCondition
-        /// </summary>
+        /// <summary> The conditions for tripping the circuit breaker. </summary>
         [WirePath("failureCondition")]
         public CircuitBreakerFailureCondition FailureCondition { get; set; }
-        /// <summary>
-        /// The duration for which the circuit will be tripped.
-        /// Serialized Name: CircuitBreakerRule.tripDuration
-        /// </summary>
+        /// <summary> The duration for which the circuit will be tripped. </summary>
         [WirePath("tripDuration")]
         public TimeSpan? TripDuration { get; set; }
-        /// <summary>
-        /// flag to accept Retry-After header from the backend.
-        /// Serialized Name: CircuitBreakerRule.acceptRetryAfter
-        /// </summary>
+        /// <summary> flag to accept Retry-After header from the backend. </summary>
         [WirePath("acceptRetryAfter")]
         public bool? AcceptRetryAfter { get; set; }
-        /// <summary>
-        /// The response of the backend when the circuit breaker gets open.
-        /// Serialized Name: CircuitBreakerRule.failureResponse
-        /// </summary>
+        /// <summary> The response of the backend when the circuit breaker gets open. </summary>
         internal BackendFailureResponse FailureResponse { get; set; }
-        /// <summary>
-        /// The status code of the response.
-        /// Serialized Name: BackendFailureResponse.statusCode
-        /// </summary>
+        /// <summary> The status code of the response. </summary>
         [WirePath("failureResponse.statusCode")]
         public int? FailureResponseStatusCode
         {

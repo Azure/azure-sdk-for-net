@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// List of Users Identity list representation.
-    /// Serialized Name: UserIdentityListResult
-    /// </summary>
+    /// <summary> List of Users Identity list representation. </summary>
     internal partial class UserIdentityListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserIdentityListResult"/>. </summary>
-        /// <param name="value">
-        /// User Identity values.
-        /// Serialized Name: UserIdentityListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number across all pages.
-        /// Serialized Name: UserIdentityListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: UserIdentityListResult.nextLink
-        /// </param>
+        /// <param name="value"> User Identity values. </param>
+        /// <param name="count"> Total record count number across all pages. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserIdentityListResult(IReadOnlyList<UserIdentityContract> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User Identity values.
-        /// Serialized Name: UserIdentityListResult.value
-        /// </summary>
+        /// <summary> User Identity values. </summary>
         public IReadOnlyList<UserIdentityContract> Value { get; }
-        /// <summary>
-        /// Total record count number across all pages.
-        /// Serialized Name: UserIdentityListResult.count
-        /// </summary>
+        /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: UserIdentityListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

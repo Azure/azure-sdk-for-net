@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The GatewayHostnameBindingKeyVault.
-    /// Serialized Name: GatewayHostnameBindingKeyVault
-    /// </summary>
+    /// <summary> The GatewayHostnameBindingKeyVault. </summary>
     public partial class GatewayHostnameBindingKeyVault
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingKeyVault"/>. </summary>
-        /// <param name="secretId">
-        /// The current provisioning state of the API Management gateway hostname binding.
-        /// Serialized Name: GatewayHostnameBindingKeyVault.secretId
-        /// </param>
+        /// <param name="secretId"> The current provisioning state of the API Management gateway hostname binding. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
         public GatewayHostnameBindingKeyVault(string secretId)
         {
@@ -62,18 +56,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingKeyVault"/>. </summary>
-        /// <param name="secretId">
-        /// The current provisioning state of the API Management gateway hostname binding.
-        /// Serialized Name: GatewayHostnameBindingKeyVault.secretId
-        /// </param>
-        /// <param name="identityClientId">
-        /// The default hostname of the data-plane gateway.
-        /// Serialized Name: GatewayHostnameBindingKeyVault.identityClientId
-        /// </param>
-        /// <param name="lastStatus">
-        /// The last status of the Key Vault certificate fetch process.
-        /// Serialized Name: GatewayHostnameBindingKeyVault.lastStatus
-        /// </param>
+        /// <param name="secretId"> The current provisioning state of the API Management gateway hostname binding. </param>
+        /// <param name="identityClientId"> The default hostname of the data-plane gateway. </param>
+        /// <param name="lastStatus"> The last status of the Key Vault certificate fetch process. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayHostnameBindingKeyVault(string secretId, string identityClientId, GatewayHostnameBindingKeyVaultLastStatus lastStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,22 +73,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// The current provisioning state of the API Management gateway hostname binding.
-        /// Serialized Name: GatewayHostnameBindingKeyVault.secretId
-        /// </summary>
+        /// <summary> The current provisioning state of the API Management gateway hostname binding. </summary>
         [WirePath("secretId")]
         public string SecretId { get; set; }
-        /// <summary>
-        /// The default hostname of the data-plane gateway.
-        /// Serialized Name: GatewayHostnameBindingKeyVault.identityClientId
-        /// </summary>
+        /// <summary> The default hostname of the data-plane gateway. </summary>
         [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
-        /// <summary>
-        /// The last status of the Key Vault certificate fetch process.
-        /// Serialized Name: GatewayHostnameBindingKeyVault.lastStatus
-        /// </summary>
+        /// <summary> The last status of the Key Vault certificate fetch process. </summary>
         [WirePath("lastStatus")]
         public GatewayHostnameBindingKeyVaultLastStatus LastStatus { get; set; }
     }

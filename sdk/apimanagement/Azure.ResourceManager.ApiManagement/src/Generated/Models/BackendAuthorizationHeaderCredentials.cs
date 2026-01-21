@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Authorization header information.
-    /// Serialized Name: BackendAuthorizationHeaderCredentials
-    /// </summary>
+    /// <summary> Authorization header information. </summary>
     public partial class BackendAuthorizationHeaderCredentials
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
-        /// <param name="scheme">
-        /// Authentication Scheme name.
-        /// Serialized Name: BackendAuthorizationHeaderCredentials.scheme
-        /// </param>
-        /// <param name="parameter">
-        /// Authentication Parameter value.
-        /// Serialized Name: BackendAuthorizationHeaderCredentials.parameter
-        /// </param>
+        /// <param name="scheme"> Authentication Scheme name. </param>
+        /// <param name="parameter"> Authentication Parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheme"/> or <paramref name="parameter"/> is null. </exception>
         public BackendAuthorizationHeaderCredentials(string scheme, string parameter)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
-        /// <param name="scheme">
-        /// Authentication Scheme name.
-        /// Serialized Name: BackendAuthorizationHeaderCredentials.scheme
-        /// </param>
-        /// <param name="parameter">
-        /// Authentication Parameter value.
-        /// Serialized Name: BackendAuthorizationHeaderCredentials.parameter
-        /// </param>
+        /// <param name="scheme"> Authentication Scheme name. </param>
+        /// <param name="parameter"> Authentication Parameter value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendAuthorizationHeaderCredentials(string scheme, string parameter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,16 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Authentication Scheme name.
-        /// Serialized Name: BackendAuthorizationHeaderCredentials.scheme
-        /// </summary>
+        /// <summary> Authentication Scheme name. </summary>
         [WirePath("scheme")]
         public string Scheme { get; set; }
-        /// <summary>
-        /// Authentication Parameter value.
-        /// Serialized Name: BackendAuthorizationHeaderCredentials.parameter
-        /// </summary>
+        /// <summary> Authentication Parameter value. </summary>
         [WirePath("parameter")]
         public string Parameter { get; set; }
     }

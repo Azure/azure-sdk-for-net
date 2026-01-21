@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Backup/Restore of an API Management service operation.
-    /// Serialized Name: ApiManagementServiceBackupRestoreParameters
-    /// </summary>
+    /// <summary> Parameters supplied to the Backup/Restore of an API Management service operation. </summary>
     public partial class ApiManagementServiceBackupRestoreContent
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
-        /// <param name="storageAccount">
-        /// The name of the Azure storage account (used to place/retrieve the backup).
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.storageAccount
-        /// </param>
-        /// <param name="containerName">
-        /// The name of the blob container (used to place/retrieve the backup).
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.containerName
-        /// </param>
-        /// <param name="backupName">
-        /// The name of the backup file to create/retrieve.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.backupName
-        /// </param>
+        /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
+        /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
+        /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccount"/>, <paramref name="containerName"/> or <paramref name="backupName"/> is null. </exception>
         public ApiManagementServiceBackupRestoreContent(string storageAccount, string containerName, string backupName)
         {
@@ -74,30 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
-        /// <param name="storageAccount">
-        /// The name of the Azure storage account (used to place/retrieve the backup).
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.storageAccount
-        /// </param>
-        /// <param name="containerName">
-        /// The name of the blob container (used to place/retrieve the backup).
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.containerName
-        /// </param>
-        /// <param name="backupName">
-        /// The name of the backup file to create/retrieve.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.backupName
-        /// </param>
-        /// <param name="accessType">
-        /// The type of access to be used for the storage account.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.accessType
-        /// </param>
-        /// <param name="accessKey">
-        /// Storage account access key. Required only if `accessType` is set to `AccessKey`.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.accessKey
-        /// </param>
-        /// <param name="clientId">
-        /// The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.clientId
-        /// </param>
+        /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
+        /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
+        /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
+        /// <param name="accessType"> The type of access to be used for the storage account. </param>
+        /// <param name="accessKey"> Storage account access key. Required only if `accessType` is set to `AccessKey`. </param>
+        /// <param name="clientId"> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceBackupRestoreContent(string storageAccount, string containerName, string backupName, StorageAccountAccessType? accessType, string accessKey, string clientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -115,40 +85,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// The name of the Azure storage account (used to place/retrieve the backup).
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.storageAccount
-        /// </summary>
+        /// <summary> The name of the Azure storage account (used to place/retrieve the backup). </summary>
         [WirePath("storageAccount")]
         public string StorageAccount { get; }
-        /// <summary>
-        /// The name of the blob container (used to place/retrieve the backup).
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.containerName
-        /// </summary>
+        /// <summary> The name of the blob container (used to place/retrieve the backup). </summary>
         [WirePath("containerName")]
         public string ContainerName { get; }
-        /// <summary>
-        /// The name of the backup file to create/retrieve.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.backupName
-        /// </summary>
+        /// <summary> The name of the backup file to create/retrieve. </summary>
         [WirePath("backupName")]
         public string BackupName { get; }
-        /// <summary>
-        /// The type of access to be used for the storage account.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.accessType
-        /// </summary>
+        /// <summary> The type of access to be used for the storage account. </summary>
         [WirePath("accessType")]
         public StorageAccountAccessType? AccessType { get; set; }
-        /// <summary>
-        /// Storage account access key. Required only if `accessType` is set to `AccessKey`.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.accessKey
-        /// </summary>
+        /// <summary> Storage account access key. Required only if `accessType` is set to `AccessKey`. </summary>
         [WirePath("accessKey")]
         public string AccessKey { get; set; }
-        /// <summary>
-        /// The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`.
-        /// Serialized Name: ApiManagementServiceBackupRestoreParameters.clientId
-        /// </summary>
+        /// <summary> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </summary>
         [WirePath("clientId")]
         public string ClientId { get; set; }
     }

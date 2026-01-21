@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Resource location data properties.
-    /// Serialized Name: ResourceLocationDataContract
-    /// </summary>
+    /// <summary> Resource location data properties. </summary>
     public partial class ResourceLocationDataContract
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceLocationDataContract"/>. </summary>
-        /// <param name="name">
-        /// A canonical name for the geographic or physical location.
-        /// Serialized Name: ResourceLocationDataContract.name
-        /// </param>
+        /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceLocationDataContract(string name)
         {
@@ -62,22 +56,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceLocationDataContract"/>. </summary>
-        /// <param name="name">
-        /// A canonical name for the geographic or physical location.
-        /// Serialized Name: ResourceLocationDataContract.name
-        /// </param>
-        /// <param name="city">
-        /// The city or locality where the resource is located.
-        /// Serialized Name: ResourceLocationDataContract.city
-        /// </param>
-        /// <param name="district">
-        /// The district, state, or province where the resource is located.
-        /// Serialized Name: ResourceLocationDataContract.district
-        /// </param>
-        /// <param name="countryOrRegion">
-        /// The country or region where the resource is located.
-        /// Serialized Name: ResourceLocationDataContract.countryOrRegion
-        /// </param>
+        /// <param name="name"> A canonical name for the geographic or physical location. </param>
+        /// <param name="city"> The city or locality where the resource is located. </param>
+        /// <param name="district"> The district, state, or province where the resource is located. </param>
+        /// <param name="countryOrRegion"> The country or region where the resource is located. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceLocationDataContract(string name, string city, string district, string countryOrRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -93,28 +75,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// A canonical name for the geographic or physical location.
-        /// Serialized Name: ResourceLocationDataContract.name
-        /// </summary>
+        /// <summary> A canonical name for the geographic or physical location. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The city or locality where the resource is located.
-        /// Serialized Name: ResourceLocationDataContract.city
-        /// </summary>
+        /// <summary> The city or locality where the resource is located. </summary>
         [WirePath("city")]
         public string City { get; set; }
-        /// <summary>
-        /// The district, state, or province where the resource is located.
-        /// Serialized Name: ResourceLocationDataContract.district
-        /// </summary>
+        /// <summary> The district, state, or province where the resource is located. </summary>
         [WirePath("district")]
         public string District { get; set; }
-        /// <summary>
-        /// The country or region where the resource is located.
-        /// Serialized Name: ResourceLocationDataContract.countryOrRegion
-        /// </summary>
+        /// <summary> The country or region where the resource is located. </summary>
         [WirePath("countryOrRegion")]
         public string CountryOrRegion { get; set; }
     }

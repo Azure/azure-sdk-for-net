@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Specifies identity provider settings needed to authorize applications API calls.
-    /// Serialized Name: ProductEntityBaseParametersApplication
-    /// </summary>
+    /// <summary> Specifies identity provider settings needed to authorize applications API calls. </summary>
     internal partial class ProductEntityBaseParametersApplication : ProductApplicationContract
     {
         /// <summary> Initializes a new instance of <see cref="ProductEntityBaseParametersApplication"/>. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductEntityBaseParametersApplication"/>. </summary>
-        /// <param name="entra">
-        /// Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token.
-        /// Serialized Name: ProductApplicationContract.entra
-        /// </param>
+        /// <param name="entra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductEntityBaseParametersApplication(ProductApplicationContractEntra entra, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(entra, serializedAdditionalRawData)
         {

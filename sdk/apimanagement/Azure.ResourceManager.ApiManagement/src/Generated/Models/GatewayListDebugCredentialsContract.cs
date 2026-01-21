@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// List debug credentials properties.
-    /// Serialized Name: GatewayListDebugCredentialsContract
-    /// </summary>
+    /// <summary> List debug credentials properties. </summary>
     public partial class GatewayListDebugCredentialsContract
     {
         /// <summary>
@@ -51,14 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GatewayListDebugCredentialsContract"/>. </summary>
-        /// <param name="purposes">
-        /// Purposes of debug credential.
-        /// Serialized Name: GatewayListDebugCredentialsContract.purposes
-        /// </param>
-        /// <param name="apiId">
-        /// Full resource Id of an API.
-        /// Serialized Name: GatewayListDebugCredentialsContract.apiId
-        /// </param>
+        /// <param name="purposes"> Purposes of debug credential. </param>
+        /// <param name="apiId"> Full resource Id of an API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="purposes"/> or <paramref name="apiId"/> is null. </exception>
         public GatewayListDebugCredentialsContract(IEnumerable<GatewayListDebugCredentialsContractPurpose> purposes, ResourceIdentifier apiId)
         {
@@ -70,18 +61,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayListDebugCredentialsContract"/>. </summary>
-        /// <param name="credentialsExpireAfter">
-        /// Credentials expiration in ISO8601 format. Maximum duration of the credentials is PT1H. When property is not specified, them value PT1H is used.
-        /// Serialized Name: GatewayListDebugCredentialsContract.credentialsExpireAfter
-        /// </param>
-        /// <param name="purposes">
-        /// Purposes of debug credential.
-        /// Serialized Name: GatewayListDebugCredentialsContract.purposes
-        /// </param>
-        /// <param name="apiId">
-        /// Full resource Id of an API.
-        /// Serialized Name: GatewayListDebugCredentialsContract.apiId
-        /// </param>
+        /// <param name="credentialsExpireAfter"> Credentials expiration in ISO8601 format. Maximum duration of the credentials is PT1H. When property is not specified, them value PT1H is used. </param>
+        /// <param name="purposes"> Purposes of debug credential. </param>
+        /// <param name="apiId"> Full resource Id of an API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayListDebugCredentialsContract(TimeSpan? credentialsExpireAfter, IList<GatewayListDebugCredentialsContractPurpose> purposes, ResourceIdentifier apiId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,22 +78,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Credentials expiration in ISO8601 format. Maximum duration of the credentials is PT1H. When property is not specified, them value PT1H is used.
-        /// Serialized Name: GatewayListDebugCredentialsContract.credentialsExpireAfter
-        /// </summary>
+        /// <summary> Credentials expiration in ISO8601 format. Maximum duration of the credentials is PT1H. When property is not specified, them value PT1H is used. </summary>
         [WirePath("credentialsExpireAfter")]
         public TimeSpan? CredentialsExpireAfter { get; set; }
-        /// <summary>
-        /// Purposes of debug credential.
-        /// Serialized Name: GatewayListDebugCredentialsContract.purposes
-        /// </summary>
+        /// <summary> Purposes of debug credential. </summary>
         [WirePath("purposes")]
         public IList<GatewayListDebugCredentialsContractPurpose> Purposes { get; }
-        /// <summary>
-        /// Full resource Id of an API.
-        /// Serialized Name: GatewayListDebugCredentialsContract.apiId
-        /// </summary>
+        /// <summary> Full resource Id of an API. </summary>
         [WirePath("apiId")]
         public ResourceIdentifier ApiId { get; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU.
-    /// Serialized Name: GatewayConfigurationApi
-    /// </summary>
+    /// <summary> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </summary>
     internal partial class GatewayConfigurationApi
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayConfigurationApi"/>. </summary>
-        /// <param name="hostname">
-        /// Hostname to which the agent connects to propagate configuration to the cloud.
-        /// Serialized Name: GatewayConfigurationApi.hostname
-        /// </param>
+        /// <param name="hostname"> Hostname to which the agent connects to propagate configuration to the cloud. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayConfigurationApi(string hostname, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Hostname to which the agent connects to propagate configuration to the cloud.
-        /// Serialized Name: GatewayConfigurationApi.hostname
-        /// </summary>
+        /// <summary> Hostname to which the agent connects to propagate configuration to the cloud. </summary>
         [WirePath("hostname")]
         public string Hostname { get; }
     }

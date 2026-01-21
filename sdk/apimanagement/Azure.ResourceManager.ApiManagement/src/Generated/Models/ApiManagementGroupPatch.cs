@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Update Group operation.
-    /// Serialized Name: GroupUpdateParameters
-    /// </summary>
+    /// <summary> Parameters supplied to the Update Group operation. </summary>
     public partial class ApiManagementGroupPatch
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGroupPatch"/>. </summary>
-        /// <param name="displayName">
-        /// Group name.
-        /// Serialized Name: GroupUpdateParameters.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Group description.
-        /// Serialized Name: GroupUpdateParameters.properties.description
-        /// </param>
-        /// <param name="apiManagementGroupType">
-        /// Group type.
-        /// Serialized Name: GroupUpdateParameters.properties.type
-        /// </param>
-        /// <param name="externalId">
-        /// Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null.
-        /// Serialized Name: GroupUpdateParameters.properties.externalId
-        /// </param>
+        /// <param name="displayName"> Group name. </param>
+        /// <param name="description"> Group description. </param>
+        /// <param name="apiManagementGroupType"> Group type. </param>
+        /// <param name="externalId"> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGroupPatch(string displayName, string description, ApiManagementGroupType? apiManagementGroupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Group name.
-        /// Serialized Name: GroupUpdateParameters.properties.displayName
-        /// </summary>
+        /// <summary> Group name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Group description.
-        /// Serialized Name: GroupUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Group description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Group type.
-        /// Serialized Name: GroupUpdateParameters.properties.type
-        /// </summary>
+        /// <summary> Group type. </summary>
         [WirePath("properties.type")]
         public ApiManagementGroupType? ApiManagementGroupType { get; set; }
-        /// <summary>
-        /// Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null.
-        /// Serialized Name: GroupUpdateParameters.properties.externalId
-        /// </summary>
+        /// <summary> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("properties.externalId")]
         public string ExternalId { get; set; }
     }

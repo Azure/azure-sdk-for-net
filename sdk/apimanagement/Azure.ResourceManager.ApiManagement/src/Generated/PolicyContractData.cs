@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the PolicyContract data model.
     /// Policy Contract details.
-    /// Serialized Name: PolicyContract
     /// </summary>
     public partial class PolicyContractData : ResourceData
     {
@@ -62,14 +61,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value">
-        /// Contents of the Policy as defined by the format.
-        /// Serialized Name: PolicyContract.properties.value
-        /// </param>
-        /// <param name="format">
-        /// Format of the policyContent.
-        /// Serialized Name: PolicyContract.properties.format
-        /// </param>
+        /// <param name="value"> Contents of the Policy as defined by the format. </param>
+        /// <param name="format"> Format of the policyContent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, PolicyContentFormat? format, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,16 +71,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Contents of the Policy as defined by the format.
-        /// Serialized Name: PolicyContract.properties.value
-        /// </summary>
+        /// <summary> Contents of the Policy as defined by the format. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Format of the policyContent.
-        /// Serialized Name: PolicyContract.properties.format
-        /// </summary>
+        /// <summary> Format of the policyContent. </summary>
         [WirePath("properties.format")]
         public PolicyContentFormat? Format { get; set; }
     }

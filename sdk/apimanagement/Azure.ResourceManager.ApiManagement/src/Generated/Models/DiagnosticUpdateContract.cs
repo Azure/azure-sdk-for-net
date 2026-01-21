@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Diagnostic details.
-    /// Serialized Name: DiagnosticUpdateContract
-    /// </summary>
+    /// <summary> Diagnostic details. </summary>
     public partial class DiagnosticUpdateContract : ResourceData
     {
         /// <summary>
@@ -60,46 +57,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alwaysLog">
-        /// Specifies for what type of messages sampling settings should not apply.
-        /// Serialized Name: DiagnosticUpdateContract.properties.alwaysLog
-        /// </param>
-        /// <param name="loggerId">
-        /// Resource Id of a target logger.
-        /// Serialized Name: DiagnosticUpdateContract.properties.loggerId
-        /// </param>
-        /// <param name="sampling">
-        /// Sampling settings for Diagnostic.
-        /// Serialized Name: DiagnosticUpdateContract.properties.sampling
-        /// </param>
-        /// <param name="frontend">
-        /// Diagnostic settings for incoming/outgoing HTTP messages to the Gateway.
-        /// Serialized Name: DiagnosticUpdateContract.properties.frontend
-        /// </param>
-        /// <param name="backend">
-        /// Diagnostic settings for incoming/outgoing HTTP messages to the Backend
-        /// Serialized Name: DiagnosticUpdateContract.properties.backend
-        /// </param>
-        /// <param name="isLogClientIPEnabled">
-        /// Log the ClientIP. Default is false.
-        /// Serialized Name: DiagnosticUpdateContract.properties.logClientIp
-        /// </param>
-        /// <param name="httpCorrelationProtocol">
-        /// Sets correlation protocol to use for Application Insights diagnostics.
-        /// Serialized Name: DiagnosticUpdateContract.properties.httpCorrelationProtocol
-        /// </param>
-        /// <param name="verbosity">
-        /// The verbosity level applied to traces emitted by trace policies.
-        /// Serialized Name: DiagnosticUpdateContract.properties.verbosity
-        /// </param>
-        /// <param name="operationNameFormat">
-        /// The format of the Operation Name for Application Insights telemetries. Default is Name.
-        /// Serialized Name: DiagnosticUpdateContract.properties.operationNameFormat
-        /// </param>
-        /// <param name="metrics">
-        /// Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings.
-        /// Serialized Name: DiagnosticUpdateContract.properties.metrics
-        /// </param>
+        /// <param name="alwaysLog"> Specifies for what type of messages sampling settings should not apply. </param>
+        /// <param name="loggerId"> Resource Id of a target logger. </param>
+        /// <param name="sampling"> Sampling settings for Diagnostic. </param>
+        /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
+        /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
+        /// <param name="isLogClientIPEnabled"> Log the ClientIP. Default is false. </param>
+        /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
+        /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
+        /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
+        /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiagnosticUpdateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -116,64 +83,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifies for what type of messages sampling settings should not apply.
-        /// Serialized Name: DiagnosticUpdateContract.properties.alwaysLog
-        /// </summary>
+        /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>
         [WirePath("properties.alwaysLog")]
         public AlwaysLog? AlwaysLog { get; set; }
-        /// <summary>
-        /// Resource Id of a target logger.
-        /// Serialized Name: DiagnosticUpdateContract.properties.loggerId
-        /// </summary>
+        /// <summary> Resource Id of a target logger. </summary>
         [WirePath("properties.loggerId")]
         public string LoggerId { get; set; }
-        /// <summary>
-        /// Sampling settings for Diagnostic.
-        /// Serialized Name: DiagnosticUpdateContract.properties.sampling
-        /// </summary>
+        /// <summary> Sampling settings for Diagnostic. </summary>
         [WirePath("properties.sampling")]
         public SamplingSettings Sampling { get; set; }
-        /// <summary>
-        /// Diagnostic settings for incoming/outgoing HTTP messages to the Gateway.
-        /// Serialized Name: DiagnosticUpdateContract.properties.frontend
-        /// </summary>
+        /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </summary>
         [WirePath("properties.frontend")]
         public PipelineDiagnosticSettings Frontend { get; set; }
-        /// <summary>
-        /// Diagnostic settings for incoming/outgoing HTTP messages to the Backend
-        /// Serialized Name: DiagnosticUpdateContract.properties.backend
-        /// </summary>
+        /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </summary>
         [WirePath("properties.backend")]
         public PipelineDiagnosticSettings Backend { get; set; }
-        /// <summary>
-        /// Log the ClientIP. Default is false.
-        /// Serialized Name: DiagnosticUpdateContract.properties.logClientIp
-        /// </summary>
+        /// <summary> Log the ClientIP. Default is false. </summary>
         [WirePath("properties.logClientIp")]
         public bool? IsLogClientIPEnabled { get; set; }
-        /// <summary>
-        /// Sets correlation protocol to use for Application Insights diagnostics.
-        /// Serialized Name: DiagnosticUpdateContract.properties.httpCorrelationProtocol
-        /// </summary>
+        /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
         [WirePath("properties.httpCorrelationProtocol")]
         public HttpCorrelationProtocol? HttpCorrelationProtocol { get; set; }
-        /// <summary>
-        /// The verbosity level applied to traces emitted by trace policies.
-        /// Serialized Name: DiagnosticUpdateContract.properties.verbosity
-        /// </summary>
+        /// <summary> The verbosity level applied to traces emitted by trace policies. </summary>
         [WirePath("properties.verbosity")]
         public TraceVerbosityLevel? Verbosity { get; set; }
-        /// <summary>
-        /// The format of the Operation Name for Application Insights telemetries. Default is Name.
-        /// Serialized Name: DiagnosticUpdateContract.properties.operationNameFormat
-        /// </summary>
+        /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
         [WirePath("properties.operationNameFormat")]
         public OperationNameFormat? OperationNameFormat { get; set; }
-        /// <summary>
-        /// Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings.
-        /// Serialized Name: DiagnosticUpdateContract.properties.metrics
-        /// </summary>
+        /// <summary> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </summary>
         [WirePath("properties.metrics")]
         public bool? Metrics { get; set; }
     }

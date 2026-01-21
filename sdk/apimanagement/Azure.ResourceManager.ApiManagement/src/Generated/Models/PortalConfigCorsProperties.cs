@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The developer portal Cross-Origin Resource Sharing (CORS) settings.
-    /// Serialized Name: PortalConfigCorsProperties
-    /// </summary>
+    /// <summary> The developer portal Cross-Origin Resource Sharing (CORS) settings. </summary>
     internal partial class PortalConfigCorsProperties
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigCorsProperties"/>. </summary>
-        /// <param name="allowedOrigins">
-        /// Allowed origins, e.g. `https://trusted.com`.
-        /// Serialized Name: PortalConfigCorsProperties.allowedOrigins
-        /// </param>
+        /// <param name="allowedOrigins"> Allowed origins, e.g. `https://trusted.com`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigCorsProperties(IList<string> allowedOrigins, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Allowed origins, e.g. `https://trusted.com`.
-        /// Serialized Name: PortalConfigCorsProperties.allowedOrigins
-        /// </summary>
+        /// <summary> Allowed origins, e.g. `https://trusted.com`. </summary>
         [WirePath("allowedOrigins")]
         public IList<string> AllowedOrigins { get; }
     }

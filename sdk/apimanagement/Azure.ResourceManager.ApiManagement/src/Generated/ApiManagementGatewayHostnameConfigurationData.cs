@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementGatewayHostnameConfiguration data model.
     /// Gateway hostname configuration details.
-    /// Serialized Name: GatewayHostnameConfigurationContract
     /// </summary>
     public partial class ApiManagementGatewayHostnameConfigurationData : ResourceData
     {
@@ -61,30 +60,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="hostname">
-        /// Hostname value. Supports valid domain name, partial or full wildcard
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.hostname
-        /// </param>
-        /// <param name="certificateId">
-        /// Identifier of Certificate entity that will be used for TLS connection establishment
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.certificateId
-        /// </param>
-        /// <param name="isClientCertificateRequired">
-        /// Determines whether gateway requests client certificate
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.negotiateClientCertificate
-        /// </param>
-        /// <param name="isTls10Enabled">
-        /// Specifies if TLS 1.0 is supported
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.tls10Enabled
-        /// </param>
-        /// <param name="isTls11Enabled">
-        /// Specifies if TLS 1.1 is supported
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.tls11Enabled
-        /// </param>
-        /// <param name="isHttp20Enabled">
-        /// Specifies if HTTP/2.0 is supported
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.http2Enabled
-        /// </param>
+        /// <param name="hostname"> Hostname value. Supports valid domain name, partial or full wildcard. </param>
+        /// <param name="certificateId"> Identifier of Certificate entity that will be used for TLS connection establishment. </param>
+        /// <param name="isClientCertificateRequired"> Determines whether gateway requests client certificate. </param>
+        /// <param name="isTls10Enabled"> Specifies if TLS 1.0 is supported. </param>
+        /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
+        /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? isClientCertificateRequired, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -97,22 +78,13 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Hostname value. Supports valid domain name, partial or full wildcard
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.hostname
-        /// </summary>
+        /// <summary> Hostname value. Supports valid domain name, partial or full wildcard. </summary>
         [WirePath("properties.hostname")]
         public string Hostname { get; set; }
-        /// <summary>
-        /// Identifier of Certificate entity that will be used for TLS connection establishment
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.certificateId
-        /// </summary>
+        /// <summary> Identifier of Certificate entity that will be used for TLS connection establishment. </summary>
         [WirePath("properties.certificateId")]
         public string CertificateId { get; set; }
-        /// <summary>
-        /// Determines whether gateway requests client certificate
-        /// Serialized Name: GatewayHostnameConfigurationContract.properties.negotiateClientCertificate
-        /// </summary>
+        /// <summary> Determines whether gateway requests client certificate. </summary>
         [WirePath("properties.negotiateClientCertificate")]
         public bool? IsClientCertificateRequired { get; set; }
     }

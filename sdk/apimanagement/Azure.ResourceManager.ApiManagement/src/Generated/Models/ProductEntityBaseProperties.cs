@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Product Entity Base Parameters
-    /// Serialized Name: ProductEntityBaseParameters
-    /// </summary>
+    /// <summary> Product Entity Base Parameters. </summary>
     public partial class ProductEntityBaseProperties
     {
         /// <summary>
@@ -55,38 +52,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductEntityBaseProperties"/>. </summary>
-        /// <param name="description">
-        /// Product description. May include HTML formatting tags.
-        /// Serialized Name: ProductEntityBaseParameters.description
-        /// </param>
-        /// <param name="terms">
-        /// Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process.
-        /// Serialized Name: ProductEntityBaseParameters.terms
-        /// </param>
-        /// <param name="isSubscriptionRequired">
-        /// Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true.
-        /// Serialized Name: ProductEntityBaseParameters.subscriptionRequired
-        /// </param>
-        /// <param name="isApprovalRequired">
-        /// whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false.
-        /// Serialized Name: ProductEntityBaseParameters.approvalRequired
-        /// </param>
-        /// <param name="subscriptionsLimit">
-        /// Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false.
-        /// Serialized Name: ProductEntityBaseParameters.subscriptionsLimit
-        /// </param>
-        /// <param name="authenticationType">
-        /// Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used.
-        /// Serialized Name: ProductEntityBaseParameters.authenticationType
-        /// </param>
-        /// <param name="application">
-        /// Specifies identity provider settings needed to authorize applications API calls.
-        /// Serialized Name: ProductEntityBaseParameters.application
-        /// </param>
-        /// <param name="state">
-        /// whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished.
-        /// Serialized Name: ProductEntityBaseParameters.state
-        /// </param>
+        /// <param name="description"> Product description. May include HTML formatting tags. </param>
+        /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
+        /// <param name="application"> Specifies identity provider settings needed to authorize applications API calls. </param>
+        /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductEntityBaseProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, IReadOnlyList<ProductAuthType> authenticationType, ProductEntityBaseParametersApplication application, ApiManagementProductState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -101,61 +74,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Product description. May include HTML formatting tags.
-        /// Serialized Name: ProductEntityBaseParameters.description
-        /// </summary>
+        /// <summary> Product description. May include HTML formatting tags. </summary>
         [WirePath("description")]
         public string Description { get; }
-        /// <summary>
-        /// Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process.
-        /// Serialized Name: ProductEntityBaseParameters.terms
-        /// </summary>
+        /// <summary> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </summary>
         [WirePath("terms")]
         public string Terms { get; }
-        /// <summary>
-        /// Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true.
-        /// Serialized Name: ProductEntityBaseParameters.subscriptionRequired
-        /// </summary>
+        /// <summary> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </summary>
         [WirePath("subscriptionRequired")]
         public bool? IsSubscriptionRequired { get; }
-        /// <summary>
-        /// whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false.
-        /// Serialized Name: ProductEntityBaseParameters.approvalRequired
-        /// </summary>
+        /// <summary> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </summary>
         [WirePath("approvalRequired")]
         public bool? IsApprovalRequired { get; }
-        /// <summary>
-        /// Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false.
-        /// Serialized Name: ProductEntityBaseParameters.subscriptionsLimit
-        /// </summary>
+        /// <summary> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </summary>
         [WirePath("subscriptionsLimit")]
         public int? SubscriptionsLimit { get; }
-        /// <summary>
-        /// Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used.
-        /// Serialized Name: ProductEntityBaseParameters.authenticationType
-        /// </summary>
+        /// <summary> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </summary>
         [WirePath("authenticationType")]
         public IReadOnlyList<ProductAuthType> AuthenticationType { get; }
-        /// <summary>
-        /// Specifies identity provider settings needed to authorize applications API calls.
-        /// Serialized Name: ProductEntityBaseParameters.application
-        /// </summary>
+        /// <summary> Specifies identity provider settings needed to authorize applications API calls. </summary>
         internal ProductEntityBaseParametersApplication Application { get; }
-        /// <summary>
-        /// Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token.
-        /// Serialized Name: ProductApplicationContract.entra
-        /// </summary>
+        /// <summary> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </summary>
         [WirePath("application.entra")]
         public ProductApplicationContractEntra ApplicationEntra
         {
             get => Application?.Entra;
         }
 
-        /// <summary>
-        /// whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished.
-        /// Serialized Name: ProductEntityBaseParameters.state
-        /// </summary>
+        /// <summary> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </summary>
         [WirePath("state")]
         public ApiManagementProductState? State { get; }
     }

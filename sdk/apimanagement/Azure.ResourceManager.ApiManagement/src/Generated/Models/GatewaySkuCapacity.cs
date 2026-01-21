@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Describes scaling information of a SKU.
-    /// Serialized Name: GatewaySkuCapacity
-    /// </summary>
+    /// <summary> Describes scaling information of a SKU. </summary>
     public partial class GatewaySkuCapacity
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewaySkuCapacity"/>. </summary>
-        /// <param name="minimum">
-        /// The minimum capacity.
-        /// Serialized Name: GatewaySkuCapacity.minimum
-        /// </param>
-        /// <param name="maximum">
-        /// The maximum capacity that can be set.
-        /// Serialized Name: GatewaySkuCapacity.maximum
-        /// </param>
-        /// <param name="default">
-        /// The default capacity.
-        /// Serialized Name: GatewaySkuCapacity.default
-        /// </param>
-        /// <param name="scaleType">
-        /// The scale type applicable to the sku.
-        /// Serialized Name: GatewaySkuCapacity.scaleType
-        /// </param>
+        /// <param name="minimum"> The minimum capacity. </param>
+        /// <param name="maximum"> The maximum capacity that can be set. </param>
+        /// <param name="default"> The default capacity. </param>
+        /// <param name="scaleType"> The scale type applicable to the sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewaySkuCapacity(int? minimum, int? maximum, int? @default, GatewaySkuCapacityScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The minimum capacity.
-        /// Serialized Name: GatewaySkuCapacity.minimum
-        /// </summary>
+        /// <summary> The minimum capacity. </summary>
         [WirePath("minimum")]
         public int? Minimum { get; }
-        /// <summary>
-        /// The maximum capacity that can be set.
-        /// Serialized Name: GatewaySkuCapacity.maximum
-        /// </summary>
+        /// <summary> The maximum capacity that can be set. </summary>
         [WirePath("maximum")]
         public int? Maximum { get; }
-        /// <summary>
-        /// The default capacity.
-        /// Serialized Name: GatewaySkuCapacity.default
-        /// </summary>
+        /// <summary> The default capacity. </summary>
         [WirePath("default")]
         public int? Default { get; }
-        /// <summary>
-        /// The scale type applicable to the sku.
-        /// Serialized Name: GatewaySkuCapacity.scaleType
-        /// </summary>
+        /// <summary> The scale type applicable to the sku. </summary>
         [WirePath("scaleType")]
         public GatewaySkuCapacityScaleType? ScaleType { get; }
     }

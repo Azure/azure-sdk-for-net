@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
-    /// Serialized Name: PortalSettingValidationKeyContract
-    /// </summary>
+    /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
     public partial class PortalSettingValidationKeyContract
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalSettingValidationKeyContract"/>. </summary>
-        /// <param name="validationKey">
-        /// This is secret value of the validation key in portal settings.
-        /// Serialized Name: PortalSettingValidationKeyContract.validationKey
-        /// </param>
+        /// <param name="validationKey"> This is secret value of the validation key in portal settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalSettingValidationKeyContract(string validationKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// This is secret value of the validation key in portal settings.
-        /// Serialized Name: PortalSettingValidationKeyContract.validationKey
-        /// </summary>
+        /// <summary> This is secret value of the validation key in portal settings. </summary>
         [WirePath("validationKey")]
         public string ValidationKey { get; }
     }

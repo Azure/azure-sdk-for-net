@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Describes an available API Management SKU.
-    /// Serialized Name: MigrateToStv2Contract
-    /// </summary>
+    /// <summary> Describes an available API Management SKU. </summary>
     public partial class MigrateToStv2Contract
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateToStv2Contract"/>. </summary>
-        /// <param name="mode">
-        /// Mode of Migration to stv2. Default is PreserveIp.
-        /// Serialized Name: MigrateToStv2Contract.mode
-        /// </param>
+        /// <param name="mode"> Mode of Migration to stv2. Default is PreserveIp. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrateToStv2Contract(MigrateToStv2Mode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Mode of Migration to stv2. Default is PreserveIp.
-        /// Serialized Name: MigrateToStv2Contract.mode
-        /// </summary>
+        /// <summary> Mode of Migration to stv2. Default is PreserveIp. </summary>
         [WirePath("mode")]
         public MigrateToStv2Mode? Mode { get; set; }
     }

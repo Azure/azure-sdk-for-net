@@ -13,10 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Parameter supplied to Update Api Management Service.
-    /// Serialized Name: ApiManagementServiceUpdateParameters
-    /// </summary>
+    /// <summary> Parameter supplied to Update Api Management Service. </summary>
     public partial class ApiManagementServicePatch : ResourceData
     {
         /// <summary>
@@ -71,166 +68,46 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku">
-        /// SKU properties of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.sku
-        /// </param>
-        /// <param name="identity">
-        /// Managed service identity of the Api Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.identity
-        /// </param>
-        /// <param name="etag">
-        /// ETag of the resource.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.etag
-        /// </param>
-        /// <param name="zones">
-        /// A list of availability zones denoting where the resource needs to come from.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.zones
-        /// </param>
-        /// <param name="notificationSenderEmail">
-        /// Email address from which the notification will be sent.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.notificationSenderEmail
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.provisioningState
-        /// </param>
-        /// <param name="targetProvisioningState">
-        /// The provisioning state of the API Management service, which is targeted by the long running operation started on the service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.targetProvisioningState
-        /// </param>
-        /// <param name="createdAtUtc">
-        /// Creation UTC date of the API Management service.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.createdAtUtc
-        /// </param>
-        /// <param name="gatewayUri">
-        /// Gateway URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.gatewayUrl
-        /// </param>
-        /// <param name="gatewayRegionalUri">
-        /// Gateway URL of the API Management service in the Default Region.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.gatewayRegionalUrl
-        /// </param>
-        /// <param name="portalUri">
-        /// Publisher portal endpoint Url of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.portalUrl
-        /// </param>
-        /// <param name="managementApiUri">
-        /// Management API endpoint URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.managementApiUrl
-        /// </param>
-        /// <param name="scmUri">
-        /// SCM endpoint URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.scmUrl
-        /// </param>
-        /// <param name="developerPortalUri">
-        /// DEveloper Portal endpoint URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.developerPortalUrl
-        /// </param>
-        /// <param name="hostnameConfigurations">
-        /// Custom hostname configuration of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.hostnameConfigurations
-        /// </param>
-        /// <param name="publicIPAddresses">
-        /// Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publicIPAddresses
-        /// </param>
-        /// <param name="privateIPAddresses">
-        /// Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.privateIPAddresses
-        /// </param>
-        /// <param name="publicIPAddressId">
-        /// Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publicIpAddressId
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="configurationApi">
-        /// Configuration API configuration of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.configurationApi
-        /// </param>
-        /// <param name="virtualNetworkConfiguration">
-        /// Virtual network configuration of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.virtualNetworkConfiguration
-        /// </param>
-        /// <param name="additionalLocations">
-        /// Additional datacenter locations of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.additionalLocations
-        /// </param>
-        /// <param name="customProperties">
-        /// Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1, 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of the following ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.&lt;/br&gt; Note: The following ciphers can't be disabled since they are required by internal platform components: TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.customProperties
-        /// </param>
-        /// <param name="certificates">
-        /// List of Certificates that need to be installed in the API Management service. Max supported certificates that can be installed is 10.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.certificates
-        /// </param>
-        /// <param name="enableClientCertificate">
-        /// Property only meant to be used for Consumption SKU Service. This enforces a client certificate to be presented on each request to the gateway. This also enables the ability to authenticate the certificate in the policy on the gateway.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.enableClientCertificate
-        /// </param>
-        /// <param name="natGatewayState">
-        /// Property can be used to enable NAT Gateway for this API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.natGatewayState
-        /// </param>
-        /// <param name="outboundPublicIPAddresses">
-        /// Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.outboundPublicIPAddresses
-        /// </param>
-        /// <param name="disableGateway">
-        /// Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in master region.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.disableGateway
-        /// </param>
-        /// <param name="virtualNetworkType">
-        /// The type of VPN in which API Management service needs to be configured in. None (Default Value) means the API Management service is not part of any Virtual Network, External means the API Management deployment is set up inside a Virtual Network having an Internet Facing Endpoint, and Internal means that API Management deployment is setup inside a Virtual Network having an Intranet Facing Endpoint only.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.virtualNetworkType
-        /// </param>
-        /// <param name="apiVersionConstraint">
-        /// Control Plane Apis version constraint for the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.apiVersionConstraint
-        /// </param>
-        /// <param name="restore">
-        /// Undelete Api Management Service if it was previously soft-deleted. If this flag is specified and set to True all other properties will be ignored.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.restore
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// List of Private Endpoint Connections of this service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.privateEndpointConnections
-        /// </param>
-        /// <param name="platformVersion">
-        /// Compute Platform Version running the service in this location.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.platformVersion
-        /// </param>
-        /// <param name="legacyPortalStatus">
-        /// Status of legacy portal in the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.legacyPortalStatus
-        /// </param>
-        /// <param name="developerPortalStatus">
-        /// Status of developer portal in this API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.developerPortalStatus
-        /// </param>
-        /// <param name="releaseChannel">
-        /// Release Channel of this API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.releaseChannel
-        /// </param>
-        /// <param name="zoneRedundant">
-        /// Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.zoneRedundant
-        /// </param>
-        /// <param name="publisherEmail">
-        /// Publisher email.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publisherEmail
-        /// </param>
-        /// <param name="publisherName">
-        /// Publisher name.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publisherName
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: ApimResource.tags
-        /// </param>
+        /// <param name="sku"> SKU properties of the API Management service. </param>
+        /// <param name="identity"> Managed service identity of the Api Management service. </param>
+        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="notificationSenderEmail"> Email address from which the notification will be sent. </param>
+        /// <param name="provisioningState"> The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </param>
+        /// <param name="targetProvisioningState"> The provisioning state of the API Management service, which is targeted by the long running operation started on the service. </param>
+        /// <param name="createdAtUtc"> Creation UTC date of the API Management service.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="gatewayUri"> Gateway URL of the API Management service. </param>
+        /// <param name="gatewayRegionalUri"> Gateway URL of the API Management service in the Default Region. </param>
+        /// <param name="portalUri"> Publisher portal endpoint Url of the API Management service. </param>
+        /// <param name="managementApiUri"> Management API endpoint URL of the API Management service. </param>
+        /// <param name="scmUri"> SCM endpoint URL of the API Management service. </param>
+        /// <param name="developerPortalUri"> DEveloper Portal endpoint URL of the API Management service. </param>
+        /// <param name="hostnameConfigurations"> Custom hostname configuration of the API Management service. </param>
+        /// <param name="publicIPAddresses"> Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU. </param>
+        /// <param name="privateIPAddresses"> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </param>
+        /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
+        /// <param name="configurationApi"> Configuration API configuration of the API Management service. </param>
+        /// <param name="virtualNetworkConfiguration"> Virtual network configuration of the API Management service. </param>
+        /// <param name="additionalLocations"> Additional datacenter locations of the API Management service. </param>
+        /// <param name="customProperties"> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1, 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of the following ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.&lt;/br&gt; Note: The following ciphers can't be disabled since they are required by internal platform components: TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </param>
+        /// <param name="certificates"> List of Certificates that need to be installed in the API Management service. Max supported certificates that can be installed is 10. </param>
+        /// <param name="enableClientCertificate"> Property only meant to be used for Consumption SKU Service. This enforces a client certificate to be presented on each request to the gateway. This also enables the ability to authenticate the certificate in the policy on the gateway. </param>
+        /// <param name="natGatewayState"> Property can be used to enable NAT Gateway for this API Management service. </param>
+        /// <param name="outboundPublicIPAddresses"> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </param>
+        /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in master region. </param>
+        /// <param name="virtualNetworkType"> The type of VPN in which API Management service needs to be configured in. None (Default Value) means the API Management service is not part of any Virtual Network, External means the API Management deployment is set up inside a Virtual Network having an Internet Facing Endpoint, and Internal means that API Management deployment is setup inside a Virtual Network having an Intranet Facing Endpoint only. </param>
+        /// <param name="apiVersionConstraint"> Control Plane Apis version constraint for the API Management service. </param>
+        /// <param name="restore"> Undelete Api Management Service if it was previously soft-deleted. If this flag is specified and set to True all other properties will be ignored. </param>
+        /// <param name="privateEndpointConnections"> List of Private Endpoint Connections of this service. </param>
+        /// <param name="platformVersion"> Compute Platform Version running the service in this location. </param>
+        /// <param name="legacyPortalStatus"> Status of legacy portal in the API Management service. </param>
+        /// <param name="developerPortalStatus"> Status of developer portal in this API Management service. </param>
+        /// <param name="releaseChannel"> Release Channel of this API Management service. </param>
+        /// <param name="zoneRedundant"> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </param>
+        /// <param name="publisherEmail"> Publisher email. </param>
+        /// <param name="publisherName"> Publisher name. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IList<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, ConfigurationApi configurationApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, ReleaseChannel? releaseChannel, bool? zoneRedundant, string publisherEmail, string publisherName, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -277,129 +154,66 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// SKU properties of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.sku
-        /// </summary>
+        /// <summary> SKU properties of the API Management service. </summary>
         [WirePath("sku")]
         public ApiManagementServiceSkuProperties Sku { get; set; }
-        /// <summary>
-        /// Managed service identity of the Api Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.identity
-        /// </summary>
+        /// <summary> Managed service identity of the Api Management service. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// ETag of the resource.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.etag
-        /// </summary>
+        /// <summary> ETag of the resource. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary>
-        /// A list of availability zones denoting where the resource needs to come from.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.zones
-        /// </summary>
+        /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
-        /// <summary>
-        /// Email address from which the notification will be sent.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.notificationSenderEmail
-        /// </summary>
+        /// <summary> Email address from which the notification will be sent. </summary>
         [WirePath("properties.notificationSenderEmail")]
         public string NotificationSenderEmail { get; set; }
-        /// <summary>
-        /// The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.provisioningState
-        /// </summary>
+        /// <summary> The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The provisioning state of the API Management service, which is targeted by the long running operation started on the service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.targetProvisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the API Management service, which is targeted by the long running operation started on the service. </summary>
         [WirePath("properties.targetProvisioningState")]
         public string TargetProvisioningState { get; }
-        /// <summary>
-        /// Creation UTC date of the API Management service.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.createdAtUtc
-        /// </summary>
+        /// <summary> Creation UTC date of the API Management service.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc { get; }
-        /// <summary>
-        /// Gateway URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.gatewayUrl
-        /// </summary>
+        /// <summary> Gateway URL of the API Management service. </summary>
         [WirePath("properties.gatewayUrl")]
         public Uri GatewayUri { get; }
-        /// <summary>
-        /// Gateway URL of the API Management service in the Default Region.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.gatewayRegionalUrl
-        /// </summary>
+        /// <summary> Gateway URL of the API Management service in the Default Region. </summary>
         [WirePath("properties.gatewayRegionalUrl")]
         public Uri GatewayRegionalUri { get; }
-        /// <summary>
-        /// Publisher portal endpoint Url of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.portalUrl
-        /// </summary>
+        /// <summary> Publisher portal endpoint Url of the API Management service. </summary>
         [WirePath("properties.portalUrl")]
         public Uri PortalUri { get; }
-        /// <summary>
-        /// Management API endpoint URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.managementApiUrl
-        /// </summary>
+        /// <summary> Management API endpoint URL of the API Management service. </summary>
         [WirePath("properties.managementApiUrl")]
         public Uri ManagementApiUri { get; }
-        /// <summary>
-        /// SCM endpoint URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.scmUrl
-        /// </summary>
+        /// <summary> SCM endpoint URL of the API Management service. </summary>
         [WirePath("properties.scmUrl")]
         public Uri ScmUri { get; }
-        /// <summary>
-        /// DEveloper Portal endpoint URL of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.developerPortalUrl
-        /// </summary>
+        /// <summary> DEveloper Portal endpoint URL of the API Management service. </summary>
         [WirePath("properties.developerPortalUrl")]
         public Uri DeveloperPortalUri { get; }
-        /// <summary>
-        /// Custom hostname configuration of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.hostnameConfigurations
-        /// </summary>
+        /// <summary> Custom hostname configuration of the API Management service. </summary>
         [WirePath("properties.hostnameConfigurations")]
         public IList<HostnameConfiguration> HostnameConfigurations { get; }
-        /// <summary>
-        /// Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publicIPAddresses
-        /// </summary>
+        /// <summary> Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
         [WirePath("properties.publicIPAddresses")]
         public IReadOnlyList<IPAddress> PublicIPAddresses { get; }
-        /// <summary>
-        /// Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.privateIPAddresses
-        /// </summary>
+        /// <summary> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
         [WirePath("properties.privateIPAddresses")]
         public IReadOnlyList<IPAddress> PrivateIPAddresses { get; }
-        /// <summary>
-        /// Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publicIpAddressId
-        /// </summary>
+        /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </summary>
         [WirePath("properties.publicIpAddressId")]
         public ResourceIdentifier PublicIPAddressId { get; set; }
-        /// <summary>
-        /// Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// Configuration API configuration of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.configurationApi
-        /// </summary>
+        /// <summary> Configuration API configuration of the API Management service. </summary>
         internal ConfigurationApi ConfigurationApi { get; set; }
-        /// <summary>
-        /// Indication whether or not the legacy Configuration API (v1) should be exposed on the API Management service. Value is optional but must be 'Enabled' or 'Disabled'. If 'Disabled', legacy Configuration API (v1) will not be available for self-hosted gateways. Default value is 'Enabled'
-        /// Serialized Name: ConfigurationApi.legacyApi
-        /// </summary>
+        /// <summary> Indication whether or not the legacy Configuration API (v1) should be exposed on the API Management service. Value is optional but must be 'Enabled' or 'Disabled'. If 'Disabled', legacy Configuration API (v1) will not be available for self-hosted gateways. Default value is 'Enabled'. </summary>
         [WirePath("properties.configurationApi.legacyApi")]
         public LegacyApiState? LegacyApi
         {
@@ -412,69 +226,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        /// <summary>
-        /// Virtual network configuration of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.virtualNetworkConfiguration
-        /// </summary>
+        /// <summary> Virtual network configuration of the API Management service. </summary>
         [WirePath("properties.virtualNetworkConfiguration")]
         public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
-        /// <summary>
-        /// Additional datacenter locations of the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.additionalLocations
-        /// </summary>
+        /// <summary> Additional datacenter locations of the API Management service. </summary>
         [WirePath("properties.additionalLocations")]
         public IList<AdditionalLocation> AdditionalLocations { get; }
-        /// <summary>
-        /// Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1, 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of the following ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.&lt;/br&gt; Note: The following ciphers can't be disabled since they are required by internal platform components: TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.customProperties
-        /// </summary>
+        /// <summary> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1, 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of the following ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.&lt;/br&gt; Note: The following ciphers can't be disabled since they are required by internal platform components: TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
         [WirePath("properties.customProperties")]
         public IDictionary<string, string> CustomProperties { get; }
-        /// <summary>
-        /// List of Certificates that need to be installed in the API Management service. Max supported certificates that can be installed is 10.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.certificates
-        /// </summary>
+        /// <summary> List of Certificates that need to be installed in the API Management service. Max supported certificates that can be installed is 10. </summary>
         [WirePath("properties.certificates")]
         public IList<CertificateConfiguration> Certificates { get; }
-        /// <summary>
-        /// Property only meant to be used for Consumption SKU Service. This enforces a client certificate to be presented on each request to the gateway. This also enables the ability to authenticate the certificate in the policy on the gateway.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.enableClientCertificate
-        /// </summary>
+        /// <summary> Property only meant to be used for Consumption SKU Service. This enforces a client certificate to be presented on each request to the gateway. This also enables the ability to authenticate the certificate in the policy on the gateway. </summary>
         [WirePath("properties.enableClientCertificate")]
         public bool? EnableClientCertificate { get; set; }
-        /// <summary>
-        /// Property can be used to enable NAT Gateway for this API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.natGatewayState
-        /// </summary>
+        /// <summary> Property can be used to enable NAT Gateway for this API Management service. </summary>
         [WirePath("properties.natGatewayState")]
         public ApiManagementNatGatewayState? NatGatewayState { get; set; }
-        /// <summary>
-        /// Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.outboundPublicIPAddresses
-        /// </summary>
+        /// <summary> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </summary>
         [WirePath("properties.outboundPublicIPAddresses")]
         public IReadOnlyList<string> OutboundPublicIPAddresses { get; }
-        /// <summary>
-        /// Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in master region.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.disableGateway
-        /// </summary>
+        /// <summary> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in master region. </summary>
         [WirePath("properties.disableGateway")]
         public bool? DisableGateway { get; set; }
-        /// <summary>
-        /// The type of VPN in which API Management service needs to be configured in. None (Default Value) means the API Management service is not part of any Virtual Network, External means the API Management deployment is set up inside a Virtual Network having an Internet Facing Endpoint, and Internal means that API Management deployment is setup inside a Virtual Network having an Intranet Facing Endpoint only.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.virtualNetworkType
-        /// </summary>
+        /// <summary> The type of VPN in which API Management service needs to be configured in. None (Default Value) means the API Management service is not part of any Virtual Network, External means the API Management deployment is set up inside a Virtual Network having an Internet Facing Endpoint, and Internal means that API Management deployment is setup inside a Virtual Network having an Intranet Facing Endpoint only. </summary>
         [WirePath("properties.virtualNetworkType")]
         public VirtualNetworkType? VirtualNetworkType { get; set; }
-        /// <summary>
-        /// Control Plane Apis version constraint for the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.apiVersionConstraint
-        /// </summary>
+        /// <summary> Control Plane Apis version constraint for the API Management service. </summary>
         internal ApiVersionConstraint ApiVersionConstraint { get; set; }
-        /// <summary>
-        /// Limit control plane API calls to API Management service with version equal to or newer than this value.
-        /// Serialized Name: ApiVersionConstraint.minApiVersion
-        /// </summary>
+        /// <summary> Limit control plane API calls to API Management service with version equal to or newer than this value. </summary>
         [WirePath("properties.apiVersionConstraint.minApiVersion")]
         public string MinApiVersion
         {
@@ -487,64 +268,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        /// <summary>
-        /// Undelete Api Management Service if it was previously soft-deleted. If this flag is specified and set to True all other properties will be ignored.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.restore
-        /// </summary>
+        /// <summary> Undelete Api Management Service if it was previously soft-deleted. If this flag is specified and set to True all other properties will be ignored. </summary>
         [WirePath("properties.restore")]
         public bool? Restore { get; set; }
-        /// <summary>
-        /// List of Private Endpoint Connections of this service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.privateEndpointConnections
-        /// </summary>
+        /// <summary> List of Private Endpoint Connections of this service. </summary>
         [WirePath("properties.privateEndpointConnections")]
         public IList<RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections { get; }
-        /// <summary>
-        /// Compute Platform Version running the service in this location.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.platformVersion
-        /// </summary>
+        /// <summary> Compute Platform Version running the service in this location. </summary>
         [WirePath("properties.platformVersion")]
         public PlatformVersion? PlatformVersion { get; }
-        /// <summary>
-        /// Status of legacy portal in the API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.legacyPortalStatus
-        /// </summary>
+        /// <summary> Status of legacy portal in the API Management service. </summary>
         [WirePath("properties.legacyPortalStatus")]
         public LegacyPortalStatus? LegacyPortalStatus { get; set; }
-        /// <summary>
-        /// Status of developer portal in this API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.developerPortalStatus
-        /// </summary>
+        /// <summary> Status of developer portal in this API Management service. </summary>
         [WirePath("properties.developerPortalStatus")]
         public DeveloperPortalStatus? DeveloperPortalStatus { get; set; }
-        /// <summary>
-        /// Release Channel of this API Management service.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.releaseChannel
-        /// </summary>
+        /// <summary> Release Channel of this API Management service. </summary>
         [WirePath("properties.releaseChannel")]
         public ReleaseChannel? ReleaseChannel { get; set; }
-        /// <summary>
-        /// Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.zoneRedundant
-        /// </summary>
+        /// <summary> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </summary>
         [WirePath("properties.zoneRedundant")]
         public bool? ZoneRedundant { get; set; }
-        /// <summary>
-        /// Publisher email.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publisherEmail
-        /// </summary>
+        /// <summary> Publisher email. </summary>
         [WirePath("properties.publisherEmail")]
         public string PublisherEmail { get; set; }
-        /// <summary>
-        /// Publisher name.
-        /// Serialized Name: ApiManagementServiceUpdateParameters.properties.publisherName
-        /// </summary>
+        /// <summary> Publisher name. </summary>
         [WirePath("properties.publisherName")]
         public string PublisherName { get; set; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: ApimResource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }

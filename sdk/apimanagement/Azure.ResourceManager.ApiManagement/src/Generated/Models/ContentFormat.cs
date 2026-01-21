@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Format of the Content in which the API is getting imported. New formats can be added in the future
-    /// Serialized Name: ContentFormat
-    /// </summary>
+    /// <summary> Format of the Content in which the API is getting imported. New formats can be added in the future. </summary>
     public readonly partial struct ContentFormat : IEquatable<ContentFormat>
     {
         private readonly string _value;
@@ -41,80 +38,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string GrpcValue = "grpc";
         private const string GrpcLinkValue = "grpc-link";
 
-        /// <summary>
-        /// The contents are inline and Content type is a WADL document.
-        /// Serialized Name: ContentFormat.wadl-xml
-        /// </summary>
+        /// <summary> The contents are inline and Content type is a WADL document. </summary>
         public static ContentFormat WadlXml { get; } = new ContentFormat(WadlXmlValue);
-        /// <summary>
-        /// The WADL document is hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.wadl-link-json
-        /// </summary>
+        /// <summary> The WADL document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat WadlLinkJson { get; } = new ContentFormat(WadlLinkJsonValue);
-        /// <summary>
-        /// The contents are inline and Content Type is a OpenAPI 2.0 JSON Document.
-        /// Serialized Name: ContentFormat.swagger-json
-        /// </summary>
+        /// <summary> The contents are inline and Content Type is a OpenAPI 2.0 JSON Document. </summary>
         public static ContentFormat SwaggerJson { get; } = new ContentFormat(SwaggerJsonValue);
-        /// <summary>
-        /// The OpenAPI 2.0 JSON document is hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.swagger-link-json
-        /// </summary>
+        /// <summary> The OpenAPI 2.0 JSON document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat SwaggerLinkJson { get; } = new ContentFormat(SwaggerLinkJsonValue);
-        /// <summary>
-        /// The contents are inline and the document is a WSDL/Soap document.
-        /// Serialized Name: ContentFormat.wsdl
-        /// </summary>
+        /// <summary> The contents are inline and the document is a WSDL/Soap document. </summary>
         public static ContentFormat Wsdl { get; } = new ContentFormat(WsdlValue);
-        /// <summary>
-        /// The WSDL document is hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.wsdl-link
-        /// </summary>
+        /// <summary> The WSDL document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat WsdlLink { get; } = new ContentFormat(WsdlLinkValue);
-        /// <summary>
-        /// The contents are inline and Content Type is a OpenAPI 3.0 YAML Document.
-        /// Serialized Name: ContentFormat.openapi
-        /// </summary>
+        /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 YAML Document. </summary>
         public static ContentFormat OpenApi { get; } = new ContentFormat(OpenApiValue);
-        /// <summary>
-        /// The contents are inline and Content Type is a OpenAPI 3.0 JSON Document.
-        /// Serialized Name: ContentFormat.openapi+json
-        /// </summary>
+        /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 JSON Document. </summary>
         public static ContentFormat OpenApiJson { get; } = new ContentFormat(OpenApiJsonValue);
-        /// <summary>
-        /// The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.openapi-link
-        /// </summary>
+        /// <summary> The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat OpenApiLink { get; } = new ContentFormat(OpenApiLinkValue);
-        /// <summary>
-        /// The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.openapi+json-link
-        /// </summary>
+        /// <summary> The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat OpenApiJsonLink { get; } = new ContentFormat(OpenApiJsonLinkValue);
-        /// <summary>
-        /// The GraphQL API endpoint hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.graphql-link
-        /// </summary>
+        /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
         public static ContentFormat GraphQLLink { get; } = new ContentFormat(GraphQLLinkValue);
-        /// <summary>
-        /// The contents are inline and Content Type is a OData XML Document.
-        /// Serialized Name: ContentFormat.odata
-        /// </summary>
+        /// <summary> The contents are inline and Content Type is a OData XML Document. </summary>
         public static ContentFormat Odata { get; } = new ContentFormat(OdataValue);
-        /// <summary>
-        /// The OData metadata document hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.odata-link
-        /// </summary>
+        /// <summary> The OData metadata document hosted on a publicly accessible internet address. </summary>
         public static ContentFormat OdataLink { get; } = new ContentFormat(OdataLinkValue);
-        /// <summary>
-        /// The contents are inline and Content Type is a gRPC protobuf file.
-        /// Serialized Name: ContentFormat.grpc
-        /// </summary>
+        /// <summary> The contents are inline and Content Type is a gRPC protobuf file. </summary>
         public static ContentFormat Grpc { get; } = new ContentFormat(GrpcValue);
-        /// <summary>
-        /// The gRPC protobuf file is hosted on a publicly accessible internet address.
-        /// Serialized Name: ContentFormat.grpc-link
-        /// </summary>
+        /// <summary> The gRPC protobuf file is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat GrpcLink { get; } = new ContentFormat(GrpcLinkValue);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are the same. </summary>
         public static bool operator ==(ContentFormat left, ContentFormat right) => left.Equals(right);

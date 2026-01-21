@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Group type.
-    /// Serialized Name: GroupType
-    /// </summary>
+    /// <summary> Group type. </summary>
     public enum ApiManagementGroupType
     {
-        /// <summary>
-        /// custom
-        /// Serialized Name: GroupType.custom
-        /// </summary>
+        /// <summary> custom. </summary>
         Custom,
-        /// <summary>
-        /// system
-        /// Serialized Name: GroupType.system
-        /// </summary>
+        /// <summary> system. </summary>
         System,
-        /// <summary>
-        /// external
-        /// Serialized Name: GroupType.external
-        /// </summary>
+        /// <summary> external. </summary>
         External
     }
 }

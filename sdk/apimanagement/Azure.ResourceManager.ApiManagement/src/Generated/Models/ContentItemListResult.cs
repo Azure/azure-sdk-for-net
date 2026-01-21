@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged list of content items.
-    /// Serialized Name: ContentItemListResult
-    /// </summary>
+    /// <summary> Paged list of content items. </summary>
     internal partial class ContentItemListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentItemListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of content items.
-        /// Serialized Name: ContentItemListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: ContentItemListResult.nextLink
-        /// </param>
+        /// <param name="value"> Collection of content items. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContentItemListResult(IReadOnlyList<ApiManagementContentItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Collection of content items.
-        /// Serialized Name: ContentItemListResult.value
-        /// </summary>
+        /// <summary> Collection of content items. </summary>
         public IReadOnlyList<ApiManagementContentItem> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: ContentItemListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

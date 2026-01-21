@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged list of portal revisions.
-    /// Serialized Name: PortalRevisionListResult
-    /// </summary>
+    /// <summary> Paged list of portal revisions. </summary>
     internal partial class PortalRevisionListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalRevisionListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of portal revisions.
-        /// Serialized Name: PortalRevisionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link, if any.
-        /// Serialized Name: PortalRevisionListResult.nextLink
-        /// </param>
+        /// <param name="value"> Collection of portal revisions. </param>
+        /// <param name="nextLink"> Next page link, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalRevisionListResult(IReadOnlyList<ApiManagementPortalRevisionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Collection of portal revisions.
-        /// Serialized Name: PortalRevisionListResult.value
-        /// </summary>
+        /// <summary> Collection of portal revisions. </summary>
         public IReadOnlyList<ApiManagementPortalRevisionData> Value { get; }
-        /// <summary>
-        /// Next page link, if any.
-        /// Serialized Name: PortalRevisionListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link, if any. </summary>
         public string NextLink { get; }
     }
 }

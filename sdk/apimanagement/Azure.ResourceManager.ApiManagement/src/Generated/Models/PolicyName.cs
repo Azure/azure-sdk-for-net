@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The PolicyName.
-    /// Serialized Name: PolicyIdName
-    /// </summary>
+    /// <summary> The PolicyName. </summary>
     public readonly partial struct PolicyName : IEquatable<PolicyName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string PolicyValue = "policy";
 
-        /// <summary>
-        /// policy
-        /// Serialized Name: PolicyIdName.policy
-        /// </summary>
+        /// <summary> policy. </summary>
         public static PolicyName Policy { get; } = new PolicyName(PolicyValue);
         /// <summary> Determines if two <see cref="PolicyName"/> values are the same. </summary>
         public static bool operator ==(PolicyName left, PolicyName right) => left.Equals(right);

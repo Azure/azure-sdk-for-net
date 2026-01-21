@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// OAuth Server Secrets Contract.
-    /// Serialized Name: AuthorizationServerSecretsContract
-    /// </summary>
+    /// <summary> OAuth Server Secrets Contract. </summary>
     public partial class AuthorizationServerSecretsContract
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
-        /// <param name="clientSecret">
-        /// oAuth Authorization Server Secrets.
-        /// Serialized Name: AuthorizationServerSecretsContract.clientSecret
-        /// </param>
-        /// <param name="resourceOwnerUsername">
-        /// Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username.
-        /// Serialized Name: AuthorizationServerSecretsContract.resourceOwnerUsername
-        /// </param>
-        /// <param name="resourceOwnerPassword">
-        /// Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password.
-        /// Serialized Name: AuthorizationServerSecretsContract.resourceOwnerPassword
-        /// </param>
+        /// <param name="clientSecret"> oAuth Authorization Server Secrets. </param>
+        /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
+        /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationServerSecretsContract(string clientSecret, string resourceOwnerUsername, string resourceOwnerPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// oAuth Authorization Server Secrets.
-        /// Serialized Name: AuthorizationServerSecretsContract.clientSecret
-        /// </summary>
+        /// <summary> oAuth Authorization Server Secrets. </summary>
         [WirePath("clientSecret")]
         public string ClientSecret { get; }
-        /// <summary>
-        /// Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username.
-        /// Serialized Name: AuthorizationServerSecretsContract.resourceOwnerUsername
-        /// </summary>
+        /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </summary>
         [WirePath("resourceOwnerUsername")]
         public string ResourceOwnerUsername { get; }
-        /// <summary>
-        /// Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password.
-        /// Serialized Name: AuthorizationServerSecretsContract.resourceOwnerPassword
-        /// </summary>
+        /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </summary>
         [WirePath("resourceOwnerPassword")]
         public string ResourceOwnerPassword { get; }
     }

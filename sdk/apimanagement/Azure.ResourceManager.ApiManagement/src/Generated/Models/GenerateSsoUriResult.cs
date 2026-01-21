@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Generate SSO Url operations response details.
-    /// Serialized Name: GenerateSsoUrlResult
-    /// </summary>
+    /// <summary> Generate SSO Url operations response details. </summary>
     public partial class GenerateSsoUriResult
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GenerateSsoUriResult"/>. </summary>
-        /// <param name="value">
-        /// Redirect Url containing the SSO URL value.
-        /// Serialized Name: GenerateSsoUrlResult.value
-        /// </param>
+        /// <param name="value"> Redirect Url containing the SSO URL value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GenerateSsoUriResult(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Redirect Url containing the SSO URL value.
-        /// Serialized Name: GenerateSsoUrlResult.value
-        /// </summary>
+        /// <summary> Redirect Url containing the SSO URL value. </summary>
         [WirePath("value")]
         public string Value { get; }
     }

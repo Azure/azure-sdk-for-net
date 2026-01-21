@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Update OpenID Connect Provider operation.
-    /// Serialized Name: OpenidConnectProviderUpdateContract
-    /// </summary>
+    /// <summary> Parameters supplied to the Update OpenID Connect Provider operation. </summary>
     public partial class ApiManagementOpenIdConnectProviderPatch
     {
         /// <summary>
@@ -54,34 +51,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderPatch"/>. </summary>
-        /// <param name="displayName">
-        /// User-friendly OpenID Connect Provider name.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// User-friendly description of OpenID Connect Provider.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.description
-        /// </param>
-        /// <param name="metadataEndpoint">
-        /// Metadata endpoint URI.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.metadataEndpoint
-        /// </param>
-        /// <param name="clientId">
-        /// Client ID of developer console which is the client application.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.clientId
-        /// </param>
-        /// <param name="clientSecret">
-        /// Client Secret of developer console which is the client application.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.clientSecret
-        /// </param>
-        /// <param name="useInTestConsole">
-        /// If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.useInTestConsole
-        /// </param>
-        /// <param name="useInApiDocumentation">
-        /// If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.useInApiDocumentation
-        /// </param>
+        /// <param name="displayName"> User-friendly OpenID Connect Provider name. </param>
+        /// <param name="description"> User-friendly description of OpenID Connect Provider. </param>
+        /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
+        /// <param name="clientId"> Client ID of developer console which is the client application. </param>
+        /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
+        /// <param name="useInTestConsole"> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </param>
+        /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementOpenIdConnectProviderPatch(string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, bool? useInTestConsole, bool? useInApiDocumentation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,46 +71,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User-friendly OpenID Connect Provider name.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.displayName
-        /// </summary>
+        /// <summary> User-friendly OpenID Connect Provider name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// User-friendly description of OpenID Connect Provider.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.description
-        /// </summary>
+        /// <summary> User-friendly description of OpenID Connect Provider. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Metadata endpoint URI.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.metadataEndpoint
-        /// </summary>
+        /// <summary> Metadata endpoint URI. </summary>
         [WirePath("properties.metadataEndpoint")]
         public string MetadataEndpoint { get; set; }
-        /// <summary>
-        /// Client ID of developer console which is the client application.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.clientId
-        /// </summary>
+        /// <summary> Client ID of developer console which is the client application. </summary>
         [WirePath("properties.clientId")]
         public string ClientId { get; set; }
-        /// <summary>
-        /// Client Secret of developer console which is the client application.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.clientSecret
-        /// </summary>
+        /// <summary> Client Secret of developer console which is the client application. </summary>
         [WirePath("properties.clientSecret")]
         public string ClientSecret { get; set; }
-        /// <summary>
-        /// If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.useInTestConsole
-        /// </summary>
+        /// <summary> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </summary>
         [WirePath("properties.useInTestConsole")]
         public bool? UseInTestConsole { get; set; }
-        /// <summary>
-        /// If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided.
-        /// Serialized Name: OpenidConnectProviderUpdateContract.properties.useInApiDocumentation
-        /// </summary>
+        /// <summary> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
         [WirePath("properties.useInApiDocumentation")]
         public bool? UseInApiDocumentation { get; set; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Property can be used to enable NAT Gateway for this API Management service.
-    /// Serialized Name: NatGatewayState
-    /// </summary>
+    /// <summary> Property can be used to enable NAT Gateway for this API Management service. </summary>
     public readonly partial struct ApiManagementNatGatewayState : IEquatable<ApiManagementNatGatewayState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Nat Gateway is enabled for the service.
-        /// Serialized Name: NatGatewayState.Enabled
-        /// </summary>
+        /// <summary> Nat Gateway is enabled for the service. </summary>
         public static ApiManagementNatGatewayState Enabled { get; } = new ApiManagementNatGatewayState(EnabledValue);
-        /// <summary>
-        /// Nat Gateway is disabled for the service.
-        /// Serialized Name: NatGatewayState.Disabled
-        /// </summary>
+        /// <summary> Nat Gateway is disabled for the service. </summary>
         public static ApiManagementNatGatewayState Disabled { get; } = new ApiManagementNatGatewayState(DisabledValue);
         /// <summary> Determines if two <see cref="ApiManagementNatGatewayState"/> values are the same. </summary>
         public static bool operator ==(ApiManagementNatGatewayState left, ApiManagementNatGatewayState right) => left.Equals(right);

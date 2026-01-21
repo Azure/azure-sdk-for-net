@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The DataMaskingEntity.
-    /// Serialized Name: DataMaskingEntity
-    /// </summary>
+    /// <summary> The DataMaskingEntity. </summary>
     public partial class DataMaskingEntity
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMaskingEntity"/>. </summary>
-        /// <param name="value">
-        /// The name of an entity to mask (e.g. a name of a header or a query parameter).
-        /// Serialized Name: DataMaskingEntity.value
-        /// </param>
-        /// <param name="mode">
-        /// Data masking mode.
-        /// Serialized Name: DataMaskingEntity.mode
-        /// </param>
+        /// <param name="value"> The name of an entity to mask (e.g. a name of a header or a query parameter). </param>
+        /// <param name="mode"> Data masking mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataMaskingEntity(string value, DataMaskingMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of an entity to mask (e.g. a name of a header or a query parameter).
-        /// Serialized Name: DataMaskingEntity.value
-        /// </summary>
+        /// <summary> The name of an entity to mask (e.g. a name of a header or a query parameter). </summary>
         [WirePath("value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Data masking mode.
-        /// Serialized Name: DataMaskingEntity.mode
-        /// </summary>
+        /// <summary> Data masking mode. </summary>
         [WirePath("mode")]
         public DataMaskingMode? Mode { get; set; }
     }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// A request to approve or reject a private endpoint connection
-    /// Serialized Name: PrivateEndpointConnectionRequest
-    /// </summary>
+    /// <summary> A request to approve or reject a private endpoint connection. </summary>
     public partial class ApiManagementPrivateEndpointConnectionCreateOrUpdateContent
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
-        /// <param name="id">
-        /// Private Endpoint Connection Resource Id.
-        /// Serialized Name: PrivateEndpointConnectionRequest.id
-        /// </param>
-        /// <param name="properties">
-        /// The connection state of the private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnectionRequest.properties
-        /// </param>
+        /// <param name="id"> Private Endpoint Connection Resource Id. </param>
+        /// <param name="properties"> The connection state of the private endpoint connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, PrivateEndpointConnectionRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,21 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Private Endpoint Connection Resource Id.
-        /// Serialized Name: PrivateEndpointConnectionRequest.id
-        /// </summary>
+        /// <summary> Private Endpoint Connection Resource Id. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
-        /// <summary>
-        /// The connection state of the private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnectionRequest.properties
-        /// </summary>
+        /// <summary> The connection state of the private endpoint connection. </summary>
         internal PrivateEndpointConnectionRequestProperties Properties { get; set; }
-        /// <summary>
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnectionRequestProperties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {

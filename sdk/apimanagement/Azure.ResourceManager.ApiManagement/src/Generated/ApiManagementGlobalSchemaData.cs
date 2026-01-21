@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementGlobalSchema data model.
     /// Global Schema Contract details.
-    /// Serialized Name: GlobalSchemaContract
     /// </summary>
     public partial class ApiManagementGlobalSchemaData : ResourceData
     {
@@ -62,26 +61,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="schemaType">
-        /// Schema Type. Immutable.
-        /// Serialized Name: GlobalSchemaContract.properties.schemaType
-        /// </param>
-        /// <param name="description">
-        /// Free-form schema entity description.
-        /// Serialized Name: GlobalSchemaContract.properties.description
-        /// </param>
-        /// <param name="value">
-        /// Json-encoded string for non json-based schema.
-        /// Serialized Name: GlobalSchemaContract.properties.value
-        /// </param>
-        /// <param name="document">
-        /// Global Schema document object for json-based schema formats(e.g. json schema).
-        /// Serialized Name: GlobalSchemaContract.properties.document
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state
-        /// Serialized Name: GlobalSchemaContract.properties.provisioningState
-        /// </param>
+        /// <param name="schemaType"> Schema Type. Immutable. </param>
+        /// <param name="description"> Free-form schema entity description. </param>
+        /// <param name="value"> Json-encoded string for non json-based schema. </param>
+        /// <param name="document"> Global Schema document object for json-based schema formats(e.g. json schema). </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -93,21 +77,14 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Schema Type. Immutable.
-        /// Serialized Name: GlobalSchemaContract.properties.schemaType
-        /// </summary>
+        /// <summary> Schema Type. Immutable. </summary>
         [WirePath("properties.schemaType")]
         public ApiSchemaType? SchemaType { get; set; }
-        /// <summary>
-        /// Free-form schema entity description.
-        /// Serialized Name: GlobalSchemaContract.properties.description
-        /// </summary>
+        /// <summary> Free-form schema entity description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// Json-encoded string for non json-based schema.
-        /// Serialized Name: GlobalSchemaContract.properties.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -140,7 +117,6 @@ namespace Azure.ResourceManager.ApiManagement
         public BinaryData Value { get; set; }
         /// <summary>
         /// Global Schema document object for json-based schema formats(e.g. json schema).
-        /// Serialized Name: GlobalSchemaContract.properties.document
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -171,10 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         [WirePath("properties.document")]
         public BinaryData Document { get; set; }
-        /// <summary>
-        /// The provisioning state
-        /// Serialized Name: GlobalSchemaContract.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }

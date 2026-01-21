@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The scale type applicable to the sku.
-    /// Serialized Name: ApiManagementSkuCapacityScaleType
-    /// </summary>
+    /// <summary> The scale type applicable to the sku. </summary>
     public enum ApiManagementSkuCapacityScaleType
     {
-        /// <summary>
-        /// None
-        /// Serialized Name: ApiManagementSkuCapacityScaleType.None
-        /// </summary>
+        /// <summary> None. </summary>
         None,
-        /// <summary>
-        /// Automatic
-        /// Serialized Name: ApiManagementSkuCapacityScaleType.Automatic
-        /// </summary>
+        /// <summary> Automatic. </summary>
         Automatic,
-        /// <summary>
-        /// Manual
-        /// Serialized Name: ApiManagementSkuCapacityScaleType.Manual
-        /// </summary>
+        /// <summary> Manual. </summary>
         Manual
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ToolContract data model.
     /// Tool details.
-    /// Serialized Name: ToolContract
     /// </summary>
     public partial class ToolContractData : ResourceData
     {
@@ -61,18 +60,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// Tool Name. MCP tool name must contain only letters, numbers, underscores, and hyphens.
-        /// Serialized Name: ToolContract.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Description of the tool.
-        /// Serialized Name: ToolContract.properties.description
-        /// </param>
-        /// <param name="operationId">
-        /// Identifier of the operation this MCP tool is associated with in the form of /apis/{apiId}/operations/{operationId}.
-        /// Serialized Name: ToolContract.properties.operationId
-        /// </param>
+        /// <param name="displayName"> Tool Name. MCP tool name must contain only letters, numbers, underscores, and hyphens. </param>
+        /// <param name="description"> Description of the tool. </param>
+        /// <param name="operationId"> Identifier of the operation this MCP tool is associated with in the form of /apis/{apiId}/operations/{operationId}. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ToolContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string operationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -82,22 +72,13 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Tool Name. MCP tool name must contain only letters, numbers, underscores, and hyphens.
-        /// Serialized Name: ToolContract.properties.displayName
-        /// </summary>
+        /// <summary> Tool Name. MCP tool name must contain only letters, numbers, underscores, and hyphens. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Description of the tool.
-        /// Serialized Name: ToolContract.properties.description
-        /// </summary>
+        /// <summary> Description of the tool. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Identifier of the operation this MCP tool is associated with in the form of /apis/{apiId}/operations/{operationId}.
-        /// Serialized Name: ToolContract.properties.operationId
-        /// </summary>
+        /// <summary> Identifier of the operation this MCP tool is associated with in the form of /apis/{apiId}/operations/{operationId}. </summary>
         [WirePath("properties.operationId")]
         public string OperationId { get; set; }
     }

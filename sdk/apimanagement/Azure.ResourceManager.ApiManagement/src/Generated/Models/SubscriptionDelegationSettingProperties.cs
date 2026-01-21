@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Subscriptions delegation settings properties.
-    /// Serialized Name: SubscriptionsDelegationSettingsProperties
-    /// </summary>
+    /// <summary> Subscriptions delegation settings properties. </summary>
     internal partial class SubscriptionDelegationSettingProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionDelegationSettingProperties"/>. </summary>
-        /// <param name="isSubscriptionDelegationEnabled">
-        /// Enable or disable delegation for subscriptions.
-        /// Serialized Name: SubscriptionsDelegationSettingsProperties.enabled
-        /// </param>
+        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionDelegationSettingProperties(bool? isSubscriptionDelegationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enable or disable delegation for subscriptions.
-        /// Serialized Name: SubscriptionsDelegationSettingsProperties.enabled
-        /// </summary>
+        /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("enabled")]
         public bool? IsSubscriptionDelegationEnabled { get; set; }
     }

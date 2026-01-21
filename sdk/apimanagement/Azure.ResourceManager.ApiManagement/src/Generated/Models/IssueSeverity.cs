@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The severity of the issue.
-    /// Serialized Name: Severity
-    /// </summary>
+    /// <summary> The severity of the issue. </summary>
     public readonly partial struct IssueSeverity : IEquatable<IssueSeverity>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ErrorValue = "Error";
         private const string WarningValue = "Warning";
 
-        /// <summary>
-        /// Error
-        /// Serialized Name: Severity.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static IssueSeverity Error { get; } = new IssueSeverity(ErrorValue);
-        /// <summary>
-        /// Warning
-        /// Serialized Name: Severity.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         public static IssueSeverity Warning { get; } = new IssueSeverity(WarningValue);
         /// <summary> Determines if two <see cref="IssueSeverity"/> values are the same. </summary>
         public static bool operator ==(IssueSeverity left, IssueSeverity right) => left.Equals(right);

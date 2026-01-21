@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Source from where the session id is extracted.
-    /// Serialized Name: BackendSessionIdSource
-    /// </summary>
+    /// <summary> Source from where the session id is extracted. </summary>
     public readonly partial struct BackendSessionIdSource : IEquatable<BackendSessionIdSource>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string CookieValue = "cookie";
 
-        /// <summary>
-        /// The session id is set by APIM gateway in a cookie and is extracted from the cookies in client requests.
-        /// Serialized Name: BackendSessionIdSource.cookie
-        /// </summary>
+        /// <summary> The session id is set by APIM gateway in a cookie and is extracted from the cookies in client requests. </summary>
         public static BackendSessionIdSource Cookie { get; } = new BackendSessionIdSource(CookieValue);
         /// <summary> Determines if two <see cref="BackendSessionIdSource"/> values are the same. </summary>
         public static bool operator ==(BackendSessionIdSource left, BackendSessionIdSource right) => left.Equals(right);

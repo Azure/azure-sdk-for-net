@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// OAuth acquire token request body parameter (www-url-form-encoded).
-    /// Serialized Name: TokenBodyParameterContract
-    /// </summary>
+    /// <summary> OAuth acquire token request body parameter (www-url-form-encoded). </summary>
     public partial class TokenBodyParameterContract
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TokenBodyParameterContract"/>. </summary>
-        /// <param name="name">
-        /// body parameter name.
-        /// Serialized Name: TokenBodyParameterContract.name
-        /// </param>
-        /// <param name="value">
-        /// body parameter value.
-        /// Serialized Name: TokenBodyParameterContract.value
-        /// </param>
+        /// <param name="name"> body parameter name. </param>
+        /// <param name="value"> body parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public TokenBodyParameterContract(string name, string value)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TokenBodyParameterContract"/>. </summary>
-        /// <param name="name">
-        /// body parameter name.
-        /// Serialized Name: TokenBodyParameterContract.name
-        /// </param>
-        /// <param name="value">
-        /// body parameter value.
-        /// Serialized Name: TokenBodyParameterContract.value
-        /// </param>
+        /// <param name="name"> body parameter name. </param>
+        /// <param name="value"> body parameter value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TokenBodyParameterContract(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,16 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// body parameter name.
-        /// Serialized Name: TokenBodyParameterContract.name
-        /// </summary>
+        /// <summary> body parameter name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// body parameter value.
-        /// Serialized Name: TokenBodyParameterContract.value
-        /// </summary>
+        /// <summary> body parameter value. </summary>
         [WirePath("value")]
         public string Value { get; set; }
     }

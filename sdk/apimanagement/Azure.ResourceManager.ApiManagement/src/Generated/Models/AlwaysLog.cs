@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Specifies for what type of messages sampling settings should not apply.
-    /// Serialized Name: AlwaysLog
-    /// </summary>
+    /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>
     public readonly partial struct AlwaysLog : IEquatable<AlwaysLog>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string AllErrorsValue = "allErrors";
 
-        /// <summary>
-        /// Always log all erroneous request regardless of sampling settings.
-        /// Serialized Name: AlwaysLog.allErrors
-        /// </summary>
+        /// <summary> Always log all erroneous request regardless of sampling settings. </summary>
         public static AlwaysLog AllErrors { get; } = new AlwaysLog(AllErrorsValue);
         /// <summary> Determines if two <see cref="AlwaysLog"/> values are the same. </summary>
         public static bool operator ==(AlwaysLog left, AlwaysLog right) => left.Equals(right);

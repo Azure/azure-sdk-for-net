@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// User registration delegation settings properties.
-    /// Serialized Name: RegistrationDelegationSettingsProperties
-    /// </summary>
+    /// <summary> User registration delegation settings properties. </summary>
     internal partial class RegistrationDelegationSettingProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistrationDelegationSettingProperties"/>. </summary>
-        /// <param name="isUserRegistrationDelegationEnabled">
-        /// Enable or disable delegation for user registration.
-        /// Serialized Name: RegistrationDelegationSettingsProperties.enabled
-        /// </param>
+        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegistrationDelegationSettingProperties(bool? isUserRegistrationDelegationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enable or disable delegation for user registration.
-        /// Serialized Name: RegistrationDelegationSettingsProperties.enabled
-        /// </summary>
+        /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("enabled")]
         public bool? IsUserRegistrationDelegationEnabled { get; set; }
     }

@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished.
-    /// Serialized Name: ProductState
-    /// </summary>
+    /// <summary> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </summary>
     public enum ApiManagementProductState
     {
-        /// <summary>
-        /// notPublished
-        /// Serialized Name: ProductState.notPublished
-        /// </summary>
+        /// <summary> notPublished. </summary>
         NotPublished,
-        /// <summary>
-        /// published
-        /// Serialized Name: ProductState.published
-        /// </summary>
+        /// <summary> published. </summary>
         Published
     }
 }

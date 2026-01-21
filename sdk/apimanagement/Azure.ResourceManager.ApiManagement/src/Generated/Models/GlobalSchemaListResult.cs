@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of the list schema operation.
-    /// Serialized Name: GlobalSchemaListResult
-    /// </summary>
+    /// <summary> The response of the list schema operation. </summary>
     internal partial class GlobalSchemaListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GlobalSchemaListResult"/>. </summary>
-        /// <param name="value">
-        /// Global Schema Contract value.
-        /// Serialized Name: GlobalSchemaListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number.
-        /// Serialized Name: GlobalSchemaListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: GlobalSchemaListResult.nextLink
-        /// </param>
+        /// <param name="value"> Global Schema Contract value. </param>
+        /// <param name="count"> Total record count number. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GlobalSchemaListResult(IReadOnlyList<ApiManagementGlobalSchemaData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Global Schema Contract value.
-        /// Serialized Name: GlobalSchemaListResult.value
-        /// </summary>
+        /// <summary> Global Schema Contract value. </summary>
         public IReadOnlyList<ApiManagementGlobalSchemaData> Value { get; }
-        /// <summary>
-        /// Total record count number.
-        /// Serialized Name: GlobalSchemaListResult.count
-        /// </summary>
+        /// <summary> Total record count number. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: GlobalSchemaListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

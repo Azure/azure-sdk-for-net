@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// * `websocket` creates websocket API
     /// * `graphql` creates GraphQL API.
     /// New types can be added in the future.
-    /// Serialized Name: SoapApiType
     /// </summary>
     public readonly partial struct SoapApiType : IEquatable<SoapApiType>
     {
@@ -37,35 +36,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ODataValue = "odata";
         private const string GrpcValue = "grpc";
 
-        /// <summary>
-        /// Imports a SOAP API having a RESTful front end.
-        /// Serialized Name: SoapApiType.http
-        /// </summary>
+        /// <summary> Imports a SOAP API having a RESTful front end. </summary>
         public static SoapApiType SoapToRest { get; } = new SoapApiType(SoapToRestValue);
-        /// <summary>
-        /// Imports the SOAP API having a SOAP front end.
-        /// Serialized Name: SoapApiType.soap
-        /// </summary>
+        /// <summary> Imports the SOAP API having a SOAP front end. </summary>
         public static SoapApiType SoapPassThrough { get; } = new SoapApiType(SoapPassThroughValue);
-        /// <summary>
-        /// Imports the API having a Websocket front end.
-        /// Serialized Name: SoapApiType.websocket
-        /// </summary>
+        /// <summary> Imports the API having a Websocket front end. </summary>
         public static SoapApiType WebSocket { get; } = new SoapApiType(WebSocketValue);
-        /// <summary>
-        /// Imports the API having a GraphQL front end.
-        /// Serialized Name: SoapApiType.graphql
-        /// </summary>
+        /// <summary> Imports the API having a GraphQL front end. </summary>
         public static SoapApiType GraphQL { get; } = new SoapApiType(GraphQLValue);
-        /// <summary>
-        /// Imports the API having a OData front end.
-        /// Serialized Name: SoapApiType.odata
-        /// </summary>
+        /// <summary> Imports the API having a OData front end. </summary>
         public static SoapApiType OData { get; } = new SoapApiType(ODataValue);
-        /// <summary>
-        /// Imports the API having a gRPC front end.
-        /// Serialized Name: SoapApiType.grpc
-        /// </summary>
+        /// <summary> Imports the API having a gRPC front end. </summary>
         public static SoapApiType Grpc { get; } = new SoapApiType(GrpcValue);
         /// <summary> Determines if two <see cref="SoapApiType"/> values are the same. </summary>
         public static bool operator ==(SoapApiType left, SoapApiType right) => left.Equals(right);

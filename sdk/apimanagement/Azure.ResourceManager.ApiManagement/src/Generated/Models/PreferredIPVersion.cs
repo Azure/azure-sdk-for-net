@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The IP version to be used. Only IPv4 is supported for now.
-    /// Serialized Name: PreferredIPVersion
-    /// </summary>
+    /// <summary> The IP version to be used. Only IPv4 is supported for now. </summary>
     public readonly partial struct PreferredIPVersion : IEquatable<PreferredIPVersion>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string IPv4Value = "IPv4";
 
-        /// <summary>
-        /// IPv4
-        /// Serialized Name: PreferredIPVersion.IPv4
-        /// </summary>
+        /// <summary> IPv4. </summary>
         public static PreferredIPVersion IPv4 { get; } = new PreferredIPVersion(IPv4Value);
         /// <summary> Determines if two <see cref="PreferredIPVersion"/> values are the same. </summary>
         public static bool operator ==(PreferredIPVersion left, PreferredIPVersion right) => left.Equals(right);

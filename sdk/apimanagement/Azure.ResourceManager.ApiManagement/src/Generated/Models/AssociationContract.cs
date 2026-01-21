@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Association entity details.
-    /// Serialized Name: AssociationContract
-    /// </summary>
+    /// <summary> Association entity details. </summary>
     public partial class AssociationContract : ResourceData
     {
         /// <summary>
@@ -60,10 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// Provisioning state.
-        /// Serialized Name: AssociationContract.properties.provisioningState
-        /// </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AssociationContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssociationEntityProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,10 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Provisioning state.
-        /// Serialized Name: AssociationContract.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public AssociationEntityProvisioningState? ProvisioningState { get; set; }
     }

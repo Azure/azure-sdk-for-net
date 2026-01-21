@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Certificate create or update details.
-    /// Serialized Name: CertificateCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> Certificate create or update details. </summary>
     public partial class ApiManagementCertificateCreateOrUpdateContent
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContent"/>. </summary>
-        /// <param name="data">
-        /// Base 64 encoded certificate using the application/x-pkcs12 representation.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.data
-        /// </param>
-        /// <param name="password">
-        /// Password for the Certificate
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.password
-        /// </param>
-        /// <param name="keyVaultDetails">
-        /// KeyVault location details of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.keyVault
-        /// </param>
+        /// <param name="data"> Base 64 encoded certificate using the application/x-pkcs12 representation. </param>
+        /// <param name="password"> Password for the Certificate. </param>
+        /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementCertificateCreateOrUpdateContent(string data, string password, KeyVaultContractCreateProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Base 64 encoded certificate using the application/x-pkcs12 representation.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.data
-        /// </summary>
+        /// <summary> Base 64 encoded certificate using the application/x-pkcs12 representation. </summary>
         [WirePath("properties.data")]
         public string Data { get; set; }
-        /// <summary>
-        /// Password for the Certificate
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.password
-        /// </summary>
+        /// <summary> Password for the Certificate. </summary>
         [WirePath("properties.password")]
         public string Password { get; set; }
-        /// <summary>
-        /// KeyVault location details of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.keyVault
-        /// </summary>
+        /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("properties.keyVault")]
         public KeyVaultContractCreateProperties KeyVaultDetails { get; set; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Mode of Migration to stv2. Default is PreserveIp.
-    /// Serialized Name: MigrateToStv2Mode
-    /// </summary>
+    /// <summary> Mode of Migration to stv2. Default is PreserveIp. </summary>
     public readonly partial struct MigrateToStv2Mode : IEquatable<MigrateToStv2Mode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string PreserveIPValue = "PreserveIp";
         private const string NewIPValue = "NewIP";
 
-        /// <summary>
-        /// Migrate API Management service to stv2 from stv1, by reserving the IP Address of the service. This will have a downtime of upto 15 minutes, while the IP address is getting migrate to new infrastructure.
-        /// Serialized Name: MigrateToStv2Mode.PreserveIp
-        /// </summary>
+        /// <summary> Migrate API Management service to stv2 from stv1, by reserving the IP Address of the service. This will have a downtime of upto 15 minutes, while the IP address is getting migrate to new infrastructure. </summary>
         public static MigrateToStv2Mode PreserveIP { get; } = new MigrateToStv2Mode(PreserveIPValue);
-        /// <summary>
-        /// Migrate API Management service to stv2 from stv1. This will have no downtime as the service configuration will be migrated to new infrastructure, but the IP address will changed.
-        /// Serialized Name: MigrateToStv2Mode.NewIP
-        /// </summary>
+        /// <summary> Migrate API Management service to stv2 from stv1. This will have no downtime as the service configuration will be migrated to new infrastructure, but the IP address will changed. </summary>
         public static MigrateToStv2Mode NewIP { get; } = new MigrateToStv2Mode(NewIPValue);
         /// <summary> Determines if two <see cref="MigrateToStv2Mode"/> values are the same. </summary>
         public static bool operator ==(MigrateToStv2Mode left, MigrateToStv2Mode right) => left.Equals(right);

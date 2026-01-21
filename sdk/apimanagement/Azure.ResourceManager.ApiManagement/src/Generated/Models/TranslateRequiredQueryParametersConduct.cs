@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'
-    /// Serialized Name: TranslateRequiredQueryParametersConduct
-    /// </summary>
+    /// <summary> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </summary>
     public readonly partial struct TranslateRequiredQueryParametersConduct : IEquatable<TranslateRequiredQueryParametersConduct>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string TemplateValue = "template";
         private const string QueryValue = "query";
 
-        /// <summary>
-        /// Translates required query parameters to template ones. Is a default value
-        /// Serialized Name: TranslateRequiredQueryParametersConduct.template
-        /// </summary>
+        /// <summary> Translates required query parameters to template ones. Is a default value. </summary>
         public static TranslateRequiredQueryParametersConduct Template { get; } = new TranslateRequiredQueryParametersConduct(TemplateValue);
-        /// <summary>
-        /// Leaves required query parameters as they are (no translation done).
-        /// Serialized Name: TranslateRequiredQueryParametersConduct.query
-        /// </summary>
+        /// <summary> Leaves required query parameters as they are (no translation done). </summary>
         public static TranslateRequiredQueryParametersConduct Query { get; } = new TranslateRequiredQueryParametersConduct(QueryValue);
         /// <summary> Determines if two <see cref="TranslateRequiredQueryParametersConduct"/> values are the same. </summary>
         public static bool operator ==(TranslateRequiredQueryParametersConduct left, TranslateRequiredQueryParametersConduct right) => left.Equals(right);

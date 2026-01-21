@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Tenant access information update parameters.
-    /// Serialized Name: AccessInformationUpdateParameters
-    /// </summary>
+    /// <summary> Tenant access information update parameters. </summary>
     public partial class TenantAccessInfoPatch
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
-        /// <param name="isDirectAccessEnabled">
-        /// Determines whether direct access is enabled.
-        /// Serialized Name: AccessInformationUpdateParameters.properties.enabled
-        /// </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TenantAccessInfoPatch(bool? isDirectAccessEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Determines whether direct access is enabled.
-        /// Serialized Name: AccessInformationUpdateParameters.properties.enabled
-        /// </summary>
+        /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("properties.enabled")]
         public bool? IsDirectAccessEnabled { get; set; }
     }

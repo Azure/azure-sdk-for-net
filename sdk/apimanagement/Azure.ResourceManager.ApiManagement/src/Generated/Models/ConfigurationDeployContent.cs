@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Deploy Tenant Configuration Contract.
-    /// Serialized Name: DeployConfigurationParameters
-    /// </summary>
+    /// <summary> Deploy Tenant Configuration Contract. </summary>
     public partial class ConfigurationDeployContent
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationDeployContent"/>. </summary>
-        /// <param name="branch">
-        /// The name of the Git branch from which the configuration is to be deployed to the configuration database.
-        /// Serialized Name: DeployConfigurationParameters.properties.branch
-        /// </param>
-        /// <param name="forceDelete">
-        /// The value enforcing deleting subscriptions to products that are deleted in this update.
-        /// Serialized Name: DeployConfigurationParameters.properties.force
-        /// </param>
+        /// <param name="branch"> The name of the Git branch from which the configuration is to be deployed to the configuration database. </param>
+        /// <param name="forceDelete"> The value enforcing deleting subscriptions to products that are deleted in this update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationDeployContent(string branch, bool? forceDelete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the Git branch from which the configuration is to be deployed to the configuration database.
-        /// Serialized Name: DeployConfigurationParameters.properties.branch
-        /// </summary>
+        /// <summary> The name of the Git branch from which the configuration is to be deployed to the configuration database. </summary>
         [WirePath("properties.branch")]
         public string Branch { get; set; }
-        /// <summary>
-        /// The value enforcing deleting subscriptions to products that are deleted in this update.
-        /// Serialized Name: DeployConfigurationParameters.properties.force
-        /// </summary>
+        /// <summary> The value enforcing deleting subscriptions to products that are deleted in this update. </summary>
         [WirePath("properties.force")]
         public bool? ForceDelete { get; set; }
     }

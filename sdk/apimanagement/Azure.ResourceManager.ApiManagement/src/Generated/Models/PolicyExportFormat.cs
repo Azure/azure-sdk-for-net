@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The PolicyExportFormat.
-    /// Serialized Name: PolicyExportFormat
-    /// </summary>
+    /// <summary> The PolicyExportFormat. </summary>
     public readonly partial struct PolicyExportFormat : IEquatable<PolicyExportFormat>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string XmlValue = "xml";
         private const string RawXmlValue = "rawxml";
 
-        /// <summary>
-        /// The contents are inline and Content type is an XML document.
-        /// Serialized Name: PolicyExportFormat.xml
-        /// </summary>
+        /// <summary> The contents are inline and Content type is an XML document. </summary>
         public static PolicyExportFormat Xml { get; } = new PolicyExportFormat(XmlValue);
-        /// <summary>
-        /// The contents are inline and Content type is a non XML encoded policy document.
-        /// Serialized Name: PolicyExportFormat.rawxml
-        /// </summary>
+        /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
         public static PolicyExportFormat RawXml { get; } = new PolicyExportFormat(RawXmlValue);
         /// <summary> Determines if two <see cref="PolicyExportFormat"/> values are the same. </summary>
         public static bool operator ==(PolicyExportFormat left, PolicyExportFormat right) => left.Equals(right);

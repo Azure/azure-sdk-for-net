@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Quota counter value details.
-    /// Serialized Name: QuotaCounterValueContractProperties
-    /// </summary>
+    /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueContractProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaCounterValueContractProperties"/>. </summary>
-        /// <param name="callsCount">
-        /// Number of times Counter was called.
-        /// Serialized Name: QuotaCounterValueContractProperties.callsCount
-        /// </param>
-        /// <param name="kbTransferred">
-        /// Data Transferred in KiloBytes.
-        /// Serialized Name: QuotaCounterValueContractProperties.kbTransferred
-        /// </param>
+        /// <param name="callsCount"> Number of times Counter was called. </param>
+        /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaCounterValueContractProperties(int? callsCount, double? kbTransferred, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Number of times Counter was called.
-        /// Serialized Name: QuotaCounterValueContractProperties.callsCount
-        /// </summary>
+        /// <summary> Number of times Counter was called. </summary>
         [WirePath("callsCount")]
         public int? CallsCount { get; }
-        /// <summary>
-        /// Data Transferred in KiloBytes.
-        /// Serialized Name: QuotaCounterValueContractProperties.kbTransferred
-        /// </summary>
+        /// <summary> Data Transferred in KiloBytes. </summary>
         [WirePath("kbTransferred")]
         public double? KbTransferred { get; }
     }

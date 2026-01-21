@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged AccessInformation list representation.
-    /// Serialized Name: TenantSettingsListResult
-    /// </summary>
+    /// <summary> Paged AccessInformation list representation. </summary>
     internal partial class TenantSettingsListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TenantSettingsListResult"/>. </summary>
-        /// <param name="value">
-        /// Page values.
-        /// Serialized Name: TenantSettingsListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: TenantSettingsListResult.nextLink
-        /// </param>
+        /// <param name="value"> Page values. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TenantSettingsListResult(IReadOnlyList<ApiManagementTenantSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page values.
-        /// Serialized Name: TenantSettingsListResult.value
-        /// </summary>
+        /// <summary> Page values. </summary>
         public IReadOnlyList<ApiManagementTenantSettingData> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: TenantSettingsListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

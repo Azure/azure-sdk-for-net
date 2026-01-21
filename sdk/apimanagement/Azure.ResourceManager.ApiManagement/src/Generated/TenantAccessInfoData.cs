@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the TenantAccessInfo data model.
     /// Tenant Settings.
-    /// Serialized Name: AccessInformationContract
     /// </summary>
     public partial class TenantAccessInfoData : ResourceData
     {
@@ -61,18 +60,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="accessInfoType">
-        /// Access Information type ('access' or 'gitAccess')
-        /// Serialized Name: AccessInformationContract.properties.id
-        /// </param>
-        /// <param name="principalId">
-        /// Principal (User) Identifier.
-        /// Serialized Name: AccessInformationContract.properties.principalId
-        /// </param>
-        /// <param name="isDirectAccessEnabled">
-        /// Determines whether direct access is enabled.
-        /// Serialized Name: AccessInformationContract.properties.enabled
-        /// </param>
+        /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
+        /// <param name="principalId"> Principal (User) Identifier. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TenantAccessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessInfoType, string principalId, bool? isDirectAccessEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -82,22 +72,13 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Access Information type ('access' or 'gitAccess')
-        /// Serialized Name: AccessInformationContract.properties.id
-        /// </summary>
+        /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
         [WirePath("properties.id")]
         public string AccessInfoType { get; set; }
-        /// <summary>
-        /// Principal (User) Identifier.
-        /// Serialized Name: AccessInformationContract.properties.principalId
-        /// </summary>
+        /// <summary> Principal (User) Identifier. </summary>
         [WirePath("properties.principalId")]
         public string PrincipalId { get; set; }
-        /// <summary>
-        /// Determines whether direct access is enabled.
-        /// Serialized Name: AccessInformationContract.properties.enabled
-        /// </summary>
+        /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("properties.enabled")]
         public bool? IsDirectAccessEnabled { get; set; }
     }

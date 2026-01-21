@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementCache data model.
     /// Cache details.
-    /// Serialized Name: CacheContract
     /// </summary>
     public partial class ApiManagementCacheData : ResourceData
     {
@@ -61,22 +60,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// Cache description
-        /// Serialized Name: CacheContract.properties.description
-        /// </param>
-        /// <param name="connectionString">
-        /// Runtime connection string to cache
-        /// Serialized Name: CacheContract.properties.connectionString
-        /// </param>
-        /// <param name="useFromLocation">
-        /// Location identifier to use cache from (should be either 'default' or valid Azure region identifier)
-        /// Serialized Name: CacheContract.properties.useFromLocation
-        /// </param>
-        /// <param name="resourceUri">
-        /// Original uri of entity in external system cache points to
-        /// Serialized Name: CacheContract.properties.resourceId
-        /// </param>
+        /// <param name="description"> Cache description. </param>
+        /// <param name="connectionString"> Runtime connection string to cache. </param>
+        /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
+        /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string connectionString, string useFromLocation, Uri resourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -87,28 +74,16 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Cache description
-        /// Serialized Name: CacheContract.properties.description
-        /// </summary>
+        /// <summary> Cache description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Runtime connection string to cache
-        /// Serialized Name: CacheContract.properties.connectionString
-        /// </summary>
+        /// <summary> Runtime connection string to cache. </summary>
         [WirePath("properties.connectionString")]
         public string ConnectionString { get; set; }
-        /// <summary>
-        /// Location identifier to use cache from (should be either 'default' or valid Azure region identifier)
-        /// Serialized Name: CacheContract.properties.useFromLocation
-        /// </summary>
+        /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
         [WirePath("properties.useFromLocation")]
         public string UseFromLocation { get; set; }
-        /// <summary>
-        /// Original uri of entity in external system cache points to
-        /// Serialized Name: CacheContract.properties.resourceId
-        /// </summary>
+        /// <summary> Original uri of entity in external system cache points to. </summary>
         [WirePath("properties.resourceId")]
         public Uri ResourceUri { get; set; }
     }

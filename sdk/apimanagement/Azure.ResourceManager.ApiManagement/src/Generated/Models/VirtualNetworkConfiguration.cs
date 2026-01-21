@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Configuration of a virtual network to which API Management service is deployed.
-    /// Serialized Name: VirtualNetworkConfiguration
-    /// </summary>
+    /// <summary> Configuration of a virtual network to which API Management service is deployed. </summary>
     public partial class VirtualNetworkConfiguration
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkConfiguration"/>. </summary>
-        /// <param name="vnetId">
-        /// The virtual network ID. This is typically a GUID. Expect a null GUID by default.
-        /// Serialized Name: VirtualNetworkConfiguration.vnetid
-        /// </param>
-        /// <param name="subnetname">
-        /// The name of the subnet.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetname
-        /// </param>
-        /// <param name="subnetResourceId">
-        /// The full resource ID of a subnet in a virtual network to deploy the API Management service in.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetResourceId
-        /// </param>
+        /// <param name="vnetId"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
+        /// <param name="subnetname"> The name of the subnet. </param>
+        /// <param name="subnetResourceId"> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkConfiguration(Guid? vnetId, string subnetname, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The virtual network ID. This is typically a GUID. Expect a null GUID by default.
-        /// Serialized Name: VirtualNetworkConfiguration.vnetid
-        /// </summary>
+        /// <summary> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </summary>
         [WirePath("vnetid")]
         public Guid? VnetId { get; }
-        /// <summary>
-        /// The name of the subnet.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetname
-        /// </summary>
+        /// <summary> The name of the subnet. </summary>
         [WirePath("subnetname")]
         public string Subnetname { get; }
-        /// <summary>
-        /// The full resource ID of a subnet in a virtual network to deploy the API Management service in.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetResourceId
-        /// </summary>
+        /// <summary> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </summary>
         [WirePath("subnetResourceId")]
         public ResourceIdentifier SubnetResourceId { get; set; }
     }

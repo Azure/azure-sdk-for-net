@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ClientApplicationContract data model.
     /// Client application details.
-    /// Serialized Name: ClientApplicationContract
     /// </summary>
     public partial class ClientApplicationContractData : ResourceData
     {
@@ -62,30 +61,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// Client application name.
-        /// Serialized Name: ClientApplicationContract.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Client application description.
-        /// Serialized Name: ClientApplicationContract.properties.description
-        /// </param>
-        /// <param name="ownerId">
-        /// A resource identifier for the user who owns the application.
-        /// Serialized Name: ClientApplicationContract.properties.ownerId
-        /// </param>
-        /// <param name="entraApplicationId">
-        /// Microsoft EntraID Application ID (Client ID). This is the value that is used to identify the application when it is requesting access tokens from Microsoft EntraID. This property is read-only and will be set by the system when the application is created.
-        /// Serialized Name: ClientApplicationContract.properties.entraApplicationId
-        /// </param>
-        /// <param name="entraTenantId">
-        /// Tenant ID is a unique identifier (a GUID) for an organization directory in Microsoft’s cloud. It’s used to identify tenants across Microsoft services.
-        /// Serialized Name: ClientApplicationContract.properties.entraTenantId
-        /// </param>
-        /// <param name="state">
-        /// Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks.
-        /// Serialized Name: ClientApplicationContract.properties.state
-        /// </param>
+        /// <param name="displayName"> Client application name. </param>
+        /// <param name="description"> Client application description. </param>
+        /// <param name="ownerId"> A resource identifier for the user who owns the application. </param>
+        /// <param name="entraApplicationId"> Microsoft EntraID Application ID (Client ID). This is the value that is used to identify the application when it is requesting access tokens from Microsoft EntraID. This property is read-only and will be set by the system when the application is created. </param>
+        /// <param name="entraTenantId"> Tenant ID is a unique identifier (a GUID) for an organization directory in Microsoft’s cloud. It’s used to identify tenants across Microsoft services. </param>
+        /// <param name="state"> Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClientApplicationContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string ownerId, string entraApplicationId, string entraTenantId, ClientApplicationState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -98,40 +79,22 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Client application name.
-        /// Serialized Name: ClientApplicationContract.properties.displayName
-        /// </summary>
+        /// <summary> Client application name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Client application description.
-        /// Serialized Name: ClientApplicationContract.properties.description
-        /// </summary>
+        /// <summary> Client application description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// A resource identifier for the user who owns the application.
-        /// Serialized Name: ClientApplicationContract.properties.ownerId
-        /// </summary>
+        /// <summary> A resource identifier for the user who owns the application. </summary>
         [WirePath("properties.ownerId")]
         public string OwnerId { get; set; }
-        /// <summary>
-        /// Microsoft EntraID Application ID (Client ID). This is the value that is used to identify the application when it is requesting access tokens from Microsoft EntraID. This property is read-only and will be set by the system when the application is created.
-        /// Serialized Name: ClientApplicationContract.properties.entraApplicationId
-        /// </summary>
+        /// <summary> Microsoft EntraID Application ID (Client ID). This is the value that is used to identify the application when it is requesting access tokens from Microsoft EntraID. This property is read-only and will be set by the system when the application is created. </summary>
         [WirePath("properties.entraApplicationId")]
         public string EntraApplicationId { get; }
-        /// <summary>
-        /// Tenant ID is a unique identifier (a GUID) for an organization directory in Microsoft’s cloud. It’s used to identify tenants across Microsoft services.
-        /// Serialized Name: ClientApplicationContract.properties.entraTenantId
-        /// </summary>
+        /// <summary> Tenant ID is a unique identifier (a GUID) for an organization directory in Microsoft’s cloud. It’s used to identify tenants across Microsoft services. </summary>
         [WirePath("properties.entraTenantId")]
         public string EntraTenantId { get; }
-        /// <summary>
-        /// Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks.
-        /// Serialized Name: ClientApplicationContract.properties.state
-        /// </summary>
+        /// <summary> Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks. </summary>
         [WirePath("properties.state")]
         public ClientApplicationState? State { get; }
     }

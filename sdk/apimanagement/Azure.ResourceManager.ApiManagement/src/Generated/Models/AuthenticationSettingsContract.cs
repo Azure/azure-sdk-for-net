@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// API Authentication Settings.
-    /// Serialized Name: AuthenticationSettingsContract
-    /// </summary>
+    /// <summary> API Authentication Settings. </summary>
     public partial class AuthenticationSettingsContract
     {
         /// <summary>
@@ -56,22 +53,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
-        /// <param name="oAuth2">
-        /// OAuth2 Authentication settings
-        /// Serialized Name: AuthenticationSettingsContract.oAuth2
-        /// </param>
-        /// <param name="openId">
-        /// OpenID Connect Authentication Settings
-        /// Serialized Name: AuthenticationSettingsContract.openid
-        /// </param>
-        /// <param name="oAuth2AuthenticationSettings">
-        /// Collection of OAuth2 authentication settings included into this API.
-        /// Serialized Name: AuthenticationSettingsContract.oAuth2AuthenticationSettings
-        /// </param>
-        /// <param name="openidAuthenticationSettings">
-        /// Collection of Open ID Connect authentication settings included into this API.
-        /// Serialized Name: AuthenticationSettingsContract.openidAuthenticationSettings
-        /// </param>
+        /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
+        /// <param name="openId"> OpenID Connect Authentication Settings. </param>
+        /// <param name="oAuth2AuthenticationSettings"> Collection of OAuth2 authentication settings included into this API. </param>
+        /// <param name="openidAuthenticationSettings"> Collection of Open ID Connect authentication settings included into this API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings, IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,28 +67,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// OAuth2 Authentication settings
-        /// Serialized Name: AuthenticationSettingsContract.oAuth2
-        /// </summary>
+        /// <summary> OAuth2 Authentication settings. </summary>
         [WirePath("oAuth2")]
         public OAuth2AuthenticationSettingsContract OAuth2 { get; set; }
-        /// <summary>
-        /// OpenID Connect Authentication Settings
-        /// Serialized Name: AuthenticationSettingsContract.openid
-        /// </summary>
+        /// <summary> OpenID Connect Authentication Settings. </summary>
         [WirePath("openid")]
         public OpenIdAuthenticationSettingsContract OpenId { get; set; }
-        /// <summary>
-        /// Collection of OAuth2 authentication settings included into this API.
-        /// Serialized Name: AuthenticationSettingsContract.oAuth2AuthenticationSettings
-        /// </summary>
+        /// <summary> Collection of OAuth2 authentication settings included into this API. </summary>
         [WirePath("oAuth2AuthenticationSettings")]
         public IList<OAuth2AuthenticationSettingsContract> OAuth2AuthenticationSettings { get; }
-        /// <summary>
-        /// Collection of Open ID Connect authentication settings included into this API.
-        /// Serialized Name: AuthenticationSettingsContract.openidAuthenticationSettings
-        /// </summary>
+        /// <summary> Collection of Open ID Connect authentication settings included into this API. </summary>
         [WirePath("openidAuthenticationSettings")]
         public IList<OpenIdAuthenticationSettingsContract> OpenidAuthenticationSettings { get; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Gateway hostname configuration list representation.
-    /// Serialized Name: GatewayHostnameConfigurationListResult
-    /// </summary>
+    /// <summary> Paged Gateway hostname configuration list representation. </summary>
     internal partial class GatewayHostnameConfigurationListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameConfigurationListResult"/>. </summary>
-        /// <param name="value">
-        /// Page values.
-        /// Serialized Name: GatewayHostnameConfigurationListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: GatewayHostnameConfigurationListResult.nextLink
-        /// </param>
+        /// <param name="value"> Page values. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayHostnameConfigurationListResult(IReadOnlyList<ApiManagementGatewayHostnameConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page values.
-        /// Serialized Name: GatewayHostnameConfigurationListResult.value
-        /// </summary>
+        /// <summary> Page values. </summary>
         public IReadOnlyList<ApiManagementGatewayHostnameConfigurationData> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: GatewayHostnameConfigurationListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

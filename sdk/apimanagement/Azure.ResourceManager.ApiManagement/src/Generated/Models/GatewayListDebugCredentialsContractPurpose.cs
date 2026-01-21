@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Purpose of debug credential.
-    /// Serialized Name: GatewayListDebugCredentialsContractPurpose
-    /// </summary>
+    /// <summary> Purpose of debug credential. </summary>
     public readonly partial struct GatewayListDebugCredentialsContractPurpose : IEquatable<GatewayListDebugCredentialsContractPurpose>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string TracingValue = "tracing";
 
-        /// <summary>
-        /// The tracing purpose.
-        /// Serialized Name: GatewayListDebugCredentialsContractPurpose.tracing
-        /// </summary>
+        /// <summary> The tracing purpose. </summary>
         public static GatewayListDebugCredentialsContractPurpose Tracing { get; } = new GatewayListDebugCredentialsContractPurpose(TracingValue);
         /// <summary> Determines if two <see cref="GatewayListDebugCredentialsContractPurpose"/> values are the same. </summary>
         public static bool operator ==(GatewayListDebugCredentialsContractPurpose left, GatewayListDebugCredentialsContractPurpose right) => left.Equals(right);

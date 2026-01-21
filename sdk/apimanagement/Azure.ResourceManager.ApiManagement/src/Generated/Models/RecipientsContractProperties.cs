@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Notification Parameter contract.
-    /// Serialized Name: RecipientsContractProperties
-    /// </summary>
+    /// <summary> Notification Parameter contract. </summary>
     public partial class RecipientsContractProperties
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecipientsContractProperties"/>. </summary>
-        /// <param name="emails">
-        /// List of Emails subscribed for the notification.
-        /// Serialized Name: RecipientsContractProperties.emails
-        /// </param>
-        /// <param name="users">
-        /// List of Users subscribed for the notification.
-        /// Serialized Name: RecipientsContractProperties.users
-        /// </param>
+        /// <param name="emails"> List of Emails subscribed for the notification. </param>
+        /// <param name="users"> List of Users subscribed for the notification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecipientsContractProperties(IList<string> emails, IList<string> users, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,16 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Emails subscribed for the notification.
-        /// Serialized Name: RecipientsContractProperties.emails
-        /// </summary>
+        /// <summary> List of Emails subscribed for the notification. </summary>
         [WirePath("emails")]
         public IList<string> Emails { get; }
-        /// <summary>
-        /// List of Users subscribed for the notification.
-        /// Serialized Name: RecipientsContractProperties.users
-        /// </summary>
+        /// <summary> List of Users subscribed for the notification. </summary>
         [WirePath("users")]
         public IList<string> Users { get; }
     }

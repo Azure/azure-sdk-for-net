@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the WikiContract data model.
     /// Wiki properties
-    /// Serialized Name: WikiContract
     /// </summary>
     public partial class WikiContractData : ResourceData
     {
@@ -63,10 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="documents">
-        /// Collection wiki documents included into this wiki.
-        /// Serialized Name: WikiContract.properties.documents
-        /// </param>
+        /// <param name="documents"> Collection wiki documents included into this wiki. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WikiContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WikiDocumentationContract> documents, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,10 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Collection wiki documents included into this wiki.
-        /// Serialized Name: WikiContract.properties.documents
-        /// </summary>
+        /// <summary> Collection wiki documents included into this wiki. </summary>
         [WirePath("properties.documents")]
         public IList<WikiDocumentationContract> Documents { get; }
     }

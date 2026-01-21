@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// TagResource contract properties.
-    /// Serialized Name: TagResourceContract
-    /// </summary>
+    /// <summary> TagResource contract properties. </summary>
     public partial class TagResourceContractDetails
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TagResourceContractDetails"/>. </summary>
-        /// <param name="tag">
-        /// Tag associated with the resource.
-        /// Serialized Name: TagResourceContract.tag
-        /// </param>
+        /// <param name="tag"> Tag associated with the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
         internal TagResourceContractDetails(AssociatedTagProperties tag)
         {
@@ -62,22 +56,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TagResourceContractDetails"/>. </summary>
-        /// <param name="tag">
-        /// Tag associated with the resource.
-        /// Serialized Name: TagResourceContract.tag
-        /// </param>
-        /// <param name="api">
-        /// API associated with the tag.
-        /// Serialized Name: TagResourceContract.api
-        /// </param>
-        /// <param name="operation">
-        /// Operation associated with the tag.
-        /// Serialized Name: TagResourceContract.operation
-        /// </param>
-        /// <param name="product">
-        /// Product associated with the tag.
-        /// Serialized Name: TagResourceContract.product
-        /// </param>
+        /// <param name="tag"> Tag associated with the resource. </param>
+        /// <param name="api"> API associated with the tag. </param>
+        /// <param name="operation"> Operation associated with the tag. </param>
+        /// <param name="product"> Product associated with the tag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TagResourceContractDetails(AssociatedTagProperties tag, AssociatedApiProperties api, AssociatedOperationProperties operation, AssociatedProductProperties product, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -93,28 +75,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Tag associated with the resource.
-        /// Serialized Name: TagResourceContract.tag
-        /// </summary>
+        /// <summary> Tag associated with the resource. </summary>
         [WirePath("tag")]
         public AssociatedTagProperties Tag { get; }
-        /// <summary>
-        /// API associated with the tag.
-        /// Serialized Name: TagResourceContract.api
-        /// </summary>
+        /// <summary> API associated with the tag. </summary>
         [WirePath("api")]
         public AssociatedApiProperties Api { get; }
-        /// <summary>
-        /// Operation associated with the tag.
-        /// Serialized Name: TagResourceContract.operation
-        /// </summary>
+        /// <summary> Operation associated with the tag. </summary>
         [WirePath("operation")]
         public AssociatedOperationProperties Operation { get; }
-        /// <summary>
-        /// Product associated with the tag.
-        /// Serialized Name: TagResourceContract.product
-        /// </summary>
+        /// <summary> Product associated with the tag. </summary>
         [WirePath("product")]
         public AssociatedProductProperties Product { get; }
     }

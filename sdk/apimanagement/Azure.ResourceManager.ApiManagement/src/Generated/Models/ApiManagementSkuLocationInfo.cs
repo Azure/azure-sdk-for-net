@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The ApiManagementSkuLocationInfo.
-    /// Serialized Name: ApiManagementSkuLocationInfo
-    /// </summary>
+    /// <summary> The ApiManagementSkuLocationInfo. </summary>
     public partial class ApiManagementSkuLocationInfo
     {
         /// <summary>
@@ -57,18 +54,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuLocationInfo"/>. </summary>
-        /// <param name="location">
-        /// Location of the SKU
-        /// Serialized Name: ApiManagementSkuLocationInfo.location
-        /// </param>
-        /// <param name="zones">
-        /// List of availability zones where the SKU is supported.
-        /// Serialized Name: ApiManagementSkuLocationInfo.zones
-        /// </param>
-        /// <param name="zoneDetails">
-        /// Details of capabilities available to a SKU in specific zones.
-        /// Serialized Name: ApiManagementSkuLocationInfo.zoneDetails
-        /// </param>
+        /// <param name="location"> Location of the SKU. </param>
+        /// <param name="zones"> List of availability zones where the SKU is supported. </param>
+        /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ApiManagementSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,22 +66,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Location of the SKU
-        /// Serialized Name: ApiManagementSkuLocationInfo.location
-        /// </summary>
+        /// <summary> Location of the SKU. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// List of availability zones where the SKU is supported.
-        /// Serialized Name: ApiManagementSkuLocationInfo.zones
-        /// </summary>
+        /// <summary> List of availability zones where the SKU is supported. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
-        /// <summary>
-        /// Details of capabilities available to a SKU in specific zones.
-        /// Serialized Name: ApiManagementSkuLocationInfo.zoneDetails
-        /// </summary>
+        /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
         [WirePath("zoneDetails")]
         public IReadOnlyList<ApiManagementSkuZoneDetails> ZoneDetails { get; }
     }

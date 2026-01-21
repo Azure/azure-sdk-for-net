@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Request Report data.
-    /// Serialized Name: RequestReportRecordContract
-    /// </summary>
+    /// <summary> Request Report data. </summary>
     public partial class RequestReportRecordContract
     {
         /// <summary>
@@ -56,78 +53,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestReportRecordContract"/>. </summary>
-        /// <param name="apiId">
-        /// API identifier path. /apis/{apiId}
-        /// Serialized Name: RequestReportRecordContract.apiId
-        /// </param>
-        /// <param name="operationId">
-        /// Operation identifier path. /apis/{apiId}/operations/{operationId}
-        /// Serialized Name: RequestReportRecordContract.operationId
-        /// </param>
-        /// <param name="productId">
-        /// Product identifier path. /products/{productId}
-        /// Serialized Name: RequestReportRecordContract.productId
-        /// </param>
-        /// <param name="userId">
-        /// User identifier path. /users/{userId}
-        /// Serialized Name: RequestReportRecordContract.userId
-        /// </param>
-        /// <param name="method">
-        /// The HTTP method associated with this request..
-        /// Serialized Name: RequestReportRecordContract.method
-        /// </param>
-        /// <param name="uri">
-        /// The full URL associated with this request.
-        /// Serialized Name: RequestReportRecordContract.url
-        /// </param>
-        /// <param name="ipAddress">
-        /// The client IP address associated with this request.
-        /// Serialized Name: RequestReportRecordContract.ipAddress
-        /// </param>
-        /// <param name="backendResponseCode">
-        /// The HTTP status code received by the gateway as a result of forwarding this request to the backend.
-        /// Serialized Name: RequestReportRecordContract.backendResponseCode
-        /// </param>
-        /// <param name="responseCode">
-        /// The HTTP status code returned by the gateway.
-        /// Serialized Name: RequestReportRecordContract.responseCode
-        /// </param>
-        /// <param name="responseSize">
-        /// The size of the response returned by the gateway.
-        /// Serialized Name: RequestReportRecordContract.responseSize
-        /// </param>
-        /// <param name="timestamp">
-        /// The date and time when this request was received by the gateway in ISO 8601 format.
-        /// Serialized Name: RequestReportRecordContract.timestamp
-        /// </param>
-        /// <param name="cache">
-        /// Specifies if response cache was involved in generating the response. If the value is none, the cache was not used. If the value is hit, cached response was returned. If the value is miss, the cache was used but lookup resulted in a miss and request was fulfilled by the backend.
-        /// Serialized Name: RequestReportRecordContract.cache
-        /// </param>
-        /// <param name="apiTime">
-        /// The total time it took to process this request.
-        /// Serialized Name: RequestReportRecordContract.apiTime
-        /// </param>
-        /// <param name="serviceTime">
-        /// he time it took to forward this request to the backend and get the response back.
-        /// Serialized Name: RequestReportRecordContract.serviceTime
-        /// </param>
-        /// <param name="apiRegion">
-        /// Azure region where the gateway that processed this request is located.
-        /// Serialized Name: RequestReportRecordContract.apiRegion
-        /// </param>
-        /// <param name="subscriptionResourceId">
-        /// Subscription identifier path. /subscriptions/{subscriptionId}
-        /// Serialized Name: RequestReportRecordContract.subscriptionId
-        /// </param>
-        /// <param name="requestId">
-        /// Request Identifier.
-        /// Serialized Name: RequestReportRecordContract.requestId
-        /// </param>
-        /// <param name="requestSize">
-        /// The size of this request..
-        /// Serialized Name: RequestReportRecordContract.requestSize
-        /// </param>
+        /// <param name="apiId"> API identifier path. /apis/{apiId}. </param>
+        /// <param name="operationId"> Operation identifier path. /apis/{apiId}/operations/{operationId}. </param>
+        /// <param name="productId"> Product identifier path. /products/{productId}. </param>
+        /// <param name="userId"> User identifier path. /users/{userId}. </param>
+        /// <param name="method"> The HTTP method associated with this request.. </param>
+        /// <param name="uri"> The full URL associated with this request. </param>
+        /// <param name="ipAddress"> The client IP address associated with this request. </param>
+        /// <param name="backendResponseCode"> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </param>
+        /// <param name="responseCode"> The HTTP status code returned by the gateway. </param>
+        /// <param name="responseSize"> The size of the response returned by the gateway. </param>
+        /// <param name="timestamp"> The date and time when this request was received by the gateway in ISO 8601 format. </param>
+        /// <param name="cache"> Specifies if response cache was involved in generating the response. If the value is none, the cache was not used. If the value is hit, cached response was returned. If the value is miss, the cache was used but lookup resulted in a miss and request was fulfilled by the backend. </param>
+        /// <param name="apiTime"> The total time it took to process this request. </param>
+        /// <param name="serviceTime"> he time it took to forward this request to the backend and get the response back. </param>
+        /// <param name="apiRegion"> Azure region where the gateway that processed this request is located. </param>
+        /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
+        /// <param name="requestId"> Request Identifier. </param>
+        /// <param name="requestSize"> The size of this request.. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, RequestMethod? method, Uri uri, IPAddress ipAddress, string backendResponseCode, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -152,112 +95,58 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// API identifier path. /apis/{apiId}
-        /// Serialized Name: RequestReportRecordContract.apiId
-        /// </summary>
+        /// <summary> API identifier path. /apis/{apiId}. </summary>
         [WirePath("apiId")]
         public string ApiId { get; }
-        /// <summary>
-        /// Operation identifier path. /apis/{apiId}/operations/{operationId}
-        /// Serialized Name: RequestReportRecordContract.operationId
-        /// </summary>
+        /// <summary> Operation identifier path. /apis/{apiId}/operations/{operationId}. </summary>
         [WirePath("operationId")]
         public string OperationId { get; }
-        /// <summary>
-        /// Product identifier path. /products/{productId}
-        /// Serialized Name: RequestReportRecordContract.productId
-        /// </summary>
+        /// <summary> Product identifier path. /products/{productId}. </summary>
         [WirePath("productId")]
         public string ProductId { get; }
-        /// <summary>
-        /// User identifier path. /users/{userId}
-        /// Serialized Name: RequestReportRecordContract.userId
-        /// </summary>
+        /// <summary> User identifier path. /users/{userId}. </summary>
         [WirePath("userId")]
         public string UserId { get; }
-        /// <summary>
-        /// The HTTP method associated with this request..
-        /// Serialized Name: RequestReportRecordContract.method
-        /// </summary>
+        /// <summary> The HTTP method associated with this request.. </summary>
         [WirePath("method")]
         public RequestMethod? Method { get; }
-        /// <summary>
-        /// The full URL associated with this request.
-        /// Serialized Name: RequestReportRecordContract.url
-        /// </summary>
+        /// <summary> The full URL associated with this request. </summary>
         [WirePath("url")]
         public Uri Uri { get; }
-        /// <summary>
-        /// The client IP address associated with this request.
-        /// Serialized Name: RequestReportRecordContract.ipAddress
-        /// </summary>
+        /// <summary> The client IP address associated with this request. </summary>
         [WirePath("ipAddress")]
         public IPAddress IPAddress { get; }
-        /// <summary>
-        /// The HTTP status code received by the gateway as a result of forwarding this request to the backend.
-        /// Serialized Name: RequestReportRecordContract.backendResponseCode
-        /// </summary>
+        /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
         [WirePath("backendResponseCode")]
         public string BackendResponseCode { get; }
-        /// <summary>
-        /// The HTTP status code returned by the gateway.
-        /// Serialized Name: RequestReportRecordContract.responseCode
-        /// </summary>
+        /// <summary> The HTTP status code returned by the gateway. </summary>
         [WirePath("responseCode")]
         public int? ResponseCode { get; }
-        /// <summary>
-        /// The size of the response returned by the gateway.
-        /// Serialized Name: RequestReportRecordContract.responseSize
-        /// </summary>
+        /// <summary> The size of the response returned by the gateway. </summary>
         [WirePath("responseSize")]
         public int? ResponseSize { get; }
-        /// <summary>
-        /// The date and time when this request was received by the gateway in ISO 8601 format.
-        /// Serialized Name: RequestReportRecordContract.timestamp
-        /// </summary>
+        /// <summary> The date and time when this request was received by the gateway in ISO 8601 format. </summary>
         [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
-        /// <summary>
-        /// Specifies if response cache was involved in generating the response. If the value is none, the cache was not used. If the value is hit, cached response was returned. If the value is miss, the cache was used but lookup resulted in a miss and request was fulfilled by the backend.
-        /// Serialized Name: RequestReportRecordContract.cache
-        /// </summary>
+        /// <summary> Specifies if response cache was involved in generating the response. If the value is none, the cache was not used. If the value is hit, cached response was returned. If the value is miss, the cache was used but lookup resulted in a miss and request was fulfilled by the backend. </summary>
         [WirePath("cache")]
         public string Cache { get; }
-        /// <summary>
-        /// The total time it took to process this request.
-        /// Serialized Name: RequestReportRecordContract.apiTime
-        /// </summary>
+        /// <summary> The total time it took to process this request. </summary>
         [WirePath("apiTime")]
         public double? ApiTime { get; }
-        /// <summary>
-        /// he time it took to forward this request to the backend and get the response back.
-        /// Serialized Name: RequestReportRecordContract.serviceTime
-        /// </summary>
+        /// <summary> he time it took to forward this request to the backend and get the response back. </summary>
         [WirePath("serviceTime")]
         public double? ServiceTime { get; }
-        /// <summary>
-        /// Azure region where the gateway that processed this request is located.
-        /// Serialized Name: RequestReportRecordContract.apiRegion
-        /// </summary>
+        /// <summary> Azure region where the gateway that processed this request is located. </summary>
         [WirePath("apiRegion")]
         public string ApiRegion { get; }
-        /// <summary>
-        /// Subscription identifier path. /subscriptions/{subscriptionId}
-        /// Serialized Name: RequestReportRecordContract.subscriptionId
-        /// </summary>
+        /// <summary> Subscription identifier path. /subscriptions/{subscriptionId}. </summary>
         [WirePath("subscriptionId")]
         public ResourceIdentifier SubscriptionResourceId { get; }
-        /// <summary>
-        /// Request Identifier.
-        /// Serialized Name: RequestReportRecordContract.requestId
-        /// </summary>
+        /// <summary> Request Identifier. </summary>
         [WirePath("requestId")]
         public string RequestId { get; }
-        /// <summary>
-        /// The size of this request..
-        /// Serialized Name: RequestReportRecordContract.requestSize
-        /// </summary>
+        /// <summary> The size of this request.. </summary>
         [WirePath("requestSize")]
         public int? RequestSize { get; }
     }

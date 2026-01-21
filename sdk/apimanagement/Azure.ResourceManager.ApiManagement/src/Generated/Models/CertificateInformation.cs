@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// SSL certificate information.
-    /// Serialized Name: CertificateInformation
-    /// </summary>
+    /// <summary> SSL certificate information. </summary>
     public partial class CertificateInformation
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CertificateInformation"/>. </summary>
-        /// <param name="expireOn">
-        /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: CertificateInformation.expiry
-        /// </param>
-        /// <param name="thumbprint">
-        /// Thumbprint of the certificate.
-        /// Serialized Name: CertificateInformation.thumbprint
-        /// </param>
-        /// <param name="subject">
-        /// Subject of the certificate.
-        /// Serialized Name: CertificateInformation.subject
-        /// </param>
+        /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="thumbprint"> Thumbprint of the certificate. </param>
+        /// <param name="subject"> Subject of the certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> or <paramref name="subject"/> is null. </exception>
         public CertificateInformation(DateTimeOffset expireOn, string thumbprint, string subject)
         {
@@ -73,18 +61,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateInformation"/>. </summary>
-        /// <param name="expireOn">
-        /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: CertificateInformation.expiry
-        /// </param>
-        /// <param name="thumbprint">
-        /// Thumbprint of the certificate.
-        /// Serialized Name: CertificateInformation.thumbprint
-        /// </param>
-        /// <param name="subject">
-        /// Subject of the certificate.
-        /// Serialized Name: CertificateInformation.subject
-        /// </param>
+        /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="thumbprint"> Thumbprint of the certificate. </param>
+        /// <param name="subject"> Subject of the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CertificateInformation(DateTimeOffset expireOn, string thumbprint, string subject, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -99,22 +78,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: CertificateInformation.expiry
-        /// </summary>
+        /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expiry")]
         public DateTimeOffset ExpireOn { get; set; }
-        /// <summary>
-        /// Thumbprint of the certificate.
-        /// Serialized Name: CertificateInformation.thumbprint
-        /// </summary>
+        /// <summary> Thumbprint of the certificate. </summary>
         [WirePath("thumbprint")]
         public string Thumbprint { get; set; }
-        /// <summary>
-        /// Subject of the certificate.
-        /// Serialized Name: CertificateInformation.subject
-        /// </summary>
+        /// <summary> Subject of the certificate. </summary>
         [WirePath("subject")]
         public string Subject { get; set; }
     }

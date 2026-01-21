@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The AccessName.
-    /// Serialized Name: AccessIdName
-    /// </summary>
+    /// <summary> The AccessName. </summary>
     public readonly partial struct AccessName : IEquatable<AccessName>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string TenantAccessValue = "access";
         private const string TenantGitAccessValue = "gitAccess";
 
-        /// <summary>
-        /// access
-        /// Serialized Name: AccessIdName.access
-        /// </summary>
+        /// <summary> access. </summary>
         public static AccessName TenantAccess { get; } = new AccessName(TenantAccessValue);
-        /// <summary>
-        /// gitAccess
-        /// Serialized Name: AccessIdName.gitAccess
-        /// </summary>
+        /// <summary> gitAccess. </summary>
         public static AccessName TenantGitAccess { get; } = new AccessName(TenantGitAccessValue);
         /// <summary> Determines if two <see cref="AccessName"/> values are the same. </summary>
         public static bool operator ==(AccessName left, AccessName right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Subscription keys.
-    /// Serialized Name: SubscriptionKeysContract
-    /// </summary>
+    /// <summary> Subscription keys. </summary>
     public partial class SubscriptionKeysContract
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionKeysContract"/>. </summary>
-        /// <param name="primaryKey">
-        /// Subscription primary key.
-        /// Serialized Name: SubscriptionKeysContract.primaryKey
-        /// </param>
-        /// <param name="secondaryKey">
-        /// Subscription secondary key.
-        /// Serialized Name: SubscriptionKeysContract.secondaryKey
-        /// </param>
+        /// <param name="primaryKey"> Subscription primary key. </param>
+        /// <param name="secondaryKey"> Subscription secondary key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionKeysContract(string primaryKey, string secondaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Subscription primary key.
-        /// Serialized Name: SubscriptionKeysContract.primaryKey
-        /// </summary>
+        /// <summary> Subscription primary key. </summary>
         [WirePath("primaryKey")]
         public string PrimaryKey { get; }
-        /// <summary>
-        /// Subscription secondary key.
-        /// Serialized Name: SubscriptionKeysContract.secondaryKey
-        /// </summary>
+        /// <summary> Subscription secondary key. </summary>
         [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
     }

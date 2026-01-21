@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the GatewayHostnameBindingResource data model.
     /// A single API Management gateway hostname binding resource in List or Get response.
-    /// Serialized Name: GatewayHostnameBindingResource
     /// </summary>
     public partial class GatewayHostnameBindingResourceData : ResourceData
     {
@@ -53,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingResourceData"/>. </summary>
-        /// <param name="hostname">
-        /// The default hostname of the data-plane gateway.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.hostname
-        /// </param>
-        /// <param name="keyVault">
-        /// The link to the API Management service workspace.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.keyVault
-        /// </param>
+        /// <param name="hostname"> The default hostname of the data-plane gateway. </param>
+        /// <param name="keyVault"> The link to the API Management service workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostname"/> or <paramref name="keyVault"/> is null. </exception>
         public GatewayHostnameBindingResourceData(string hostname, GatewayHostnameBindingKeyVault keyVault)
         {
@@ -76,26 +69,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag">
-        /// If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
-        /// Serialized Name: GatewayHostnameBindingResource.etag
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the API Management gateway hostname binding.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.provisioningState
-        /// </param>
-        /// <param name="hostname">
-        /// The default hostname of the data-plane gateway.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.hostname
-        /// </param>
-        /// <param name="keyVault">
-        /// The link to the API Management service workspace.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.keyVault
-        /// </param>
-        /// <param name="certificate">
-        /// The hostnames of the data-plane gateway to which requests can be sent.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.certificate
-        /// </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="provisioningState"> The current provisioning state of the API Management gateway hostname binding. </param>
+        /// <param name="hostname"> The default hostname of the data-plane gateway. </param>
+        /// <param name="keyVault"> The link to the API Management service workspace. </param>
+        /// <param name="certificate"> The hostnames of the data-plane gateway to which requests can be sent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayHostnameBindingResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string provisioningState, string hostname, GatewayHostnameBindingKeyVault keyVault, GatewayHostnameBindingCertificate certificate, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -112,34 +90,19 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary>
-        /// If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
-        /// Serialized Name: GatewayHostnameBindingResource.etag
-        /// </summary>
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary>
-        /// The current provisioning state of the API Management gateway hostname binding.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.provisioningState
-        /// </summary>
+        /// <summary> The current provisioning state of the API Management gateway hostname binding. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The default hostname of the data-plane gateway.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.hostname
-        /// </summary>
+        /// <summary> The default hostname of the data-plane gateway. </summary>
         [WirePath("properties.hostname")]
         public string Hostname { get; set; }
-        /// <summary>
-        /// The link to the API Management service workspace.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.keyVault
-        /// </summary>
+        /// <summary> The link to the API Management service workspace. </summary>
         [WirePath("properties.keyVault")]
         public GatewayHostnameBindingKeyVault KeyVault { get; set; }
-        /// <summary>
-        /// The hostnames of the data-plane gateway to which requests can be sent.
-        /// Serialized Name: GatewayHostnameBindingResource.properties.certificate
-        /// </summary>
+        /// <summary> The hostnames of the data-plane gateway to which requests can be sent. </summary>
         [WirePath("properties.certificate")]
         public GatewayHostnameBindingCertificate Certificate { get; }
     }

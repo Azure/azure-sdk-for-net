@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Details about connectivity to a resource.
-    /// Serialized Name: ConnectivityStatusContract
-    /// </summary>
+    /// <summary> Details about connectivity to a resource. </summary>
     public partial class ConnectivityStatusContract
     {
         /// <summary>
@@ -49,30 +46,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityStatusContract"/>. </summary>
-        /// <param name="name">
-        /// The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon.
-        /// Serialized Name: ConnectivityStatusContract.name
-        /// </param>
-        /// <param name="status">
-        /// Resource Connectivity Status Type identifier.
-        /// Serialized Name: ConnectivityStatusContract.status
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ConnectivityStatusContract.lastUpdated
-        /// </param>
-        /// <param name="lastStatusChangedOn">
-        /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ConnectivityStatusContract.lastStatusChange
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource Type.
-        /// Serialized Name: ConnectivityStatusContract.resourceType
-        /// </param>
-        /// <param name="isOptional">
-        /// Whether this is optional.
-        /// Serialized Name: ConnectivityStatusContract.isOptional
-        /// </param>
+        /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
+        /// <param name="status"> Resource Connectivity Status Type identifier. </param>
+        /// <param name="lastUpdatedOn"> The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastStatusChangedOn"> The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="resourceType"> Resource Type. </param>
+        /// <param name="isOptional"> Whether this is optional. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>
         internal ConnectivityStatusContract(string name, ConnectivityStatusType status, DateTimeOffset lastUpdatedOn, DateTimeOffset lastStatusChangedOn, string resourceType, bool isOptional)
         {
@@ -88,34 +67,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityStatusContract"/>. </summary>
-        /// <param name="name">
-        /// The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon.
-        /// Serialized Name: ConnectivityStatusContract.name
-        /// </param>
-        /// <param name="status">
-        /// Resource Connectivity Status Type identifier.
-        /// Serialized Name: ConnectivityStatusContract.status
-        /// </param>
-        /// <param name="error">
-        /// Error details of the connectivity to the resource.
-        /// Serialized Name: ConnectivityStatusContract.error
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ConnectivityStatusContract.lastUpdated
-        /// </param>
-        /// <param name="lastStatusChangedOn">
-        /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ConnectivityStatusContract.lastStatusChange
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource Type.
-        /// Serialized Name: ConnectivityStatusContract.resourceType
-        /// </param>
-        /// <param name="isOptional">
-        /// Whether this is optional.
-        /// Serialized Name: ConnectivityStatusContract.isOptional
-        /// </param>
+        /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
+        /// <param name="status"> Resource Connectivity Status Type identifier. </param>
+        /// <param name="error"> Error details of the connectivity to the resource. </param>
+        /// <param name="lastUpdatedOn"> The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastStatusChangedOn"> The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="resourceType"> Resource Type. </param>
+        /// <param name="isOptional"> Whether this is optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityStatusContract(string name, ConnectivityStatusType status, string error, DateTimeOffset lastUpdatedOn, DateTimeOffset lastStatusChangedOn, string resourceType, bool isOptional, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -134,46 +92,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon.
-        /// Serialized Name: ConnectivityStatusContract.name
-        /// </summary>
+        /// <summary> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Resource Connectivity Status Type identifier.
-        /// Serialized Name: ConnectivityStatusContract.status
-        /// </summary>
+        /// <summary> Resource Connectivity Status Type identifier. </summary>
         [WirePath("status")]
         public ConnectivityStatusType Status { get; }
-        /// <summary>
-        /// Error details of the connectivity to the resource.
-        /// Serialized Name: ConnectivityStatusContract.error
-        /// </summary>
+        /// <summary> Error details of the connectivity to the resource. </summary>
         [WirePath("error")]
         public string Error { get; }
-        /// <summary>
-        /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ConnectivityStatusContract.lastUpdated
-        /// </summary>
+        /// <summary> The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("lastUpdated")]
         public DateTimeOffset LastUpdatedOn { get; }
-        /// <summary>
-        /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ConnectivityStatusContract.lastStatusChange
-        /// </summary>
+        /// <summary> The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("lastStatusChange")]
         public DateTimeOffset LastStatusChangedOn { get; }
-        /// <summary>
-        /// Resource Type.
-        /// Serialized Name: ConnectivityStatusContract.resourceType
-        /// </summary>
+        /// <summary> Resource Type. </summary>
         [WirePath("resourceType")]
         public string ResourceType { get; }
-        /// <summary>
-        /// Whether this is optional.
-        /// Serialized Name: ConnectivityStatusContract.isOptional
-        /// </summary>
+        /// <summary> Whether this is optional. </summary>
         [WirePath("isOptional")]
         public bool IsOptional { get; }
     }

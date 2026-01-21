@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Authorization login request contract.
-    /// Serialized Name: AuthorizationLoginRequestContract
-    /// </summary>
+    /// <summary> Authorization login request contract. </summary>
     public partial class AuthorizationLoginContent
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationLoginContent"/>. </summary>
-        /// <param name="postLoginRedirectUri">
-        /// The redirect URL after login has completed.
-        /// Serialized Name: AuthorizationLoginRequestContract.postLoginRedirectUrl
-        /// </param>
+        /// <param name="postLoginRedirectUri"> The redirect URL after login has completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationLoginContent(Uri postLoginRedirectUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The redirect URL after login has completed.
-        /// Serialized Name: AuthorizationLoginRequestContract.postLoginRedirectUrl
-        /// </summary>
+        /// <summary> The redirect URL after login has completed. </summary>
         [WirePath("postLoginRedirectUrl")]
         public Uri PostLoginRedirectUri { get; set; }
     }

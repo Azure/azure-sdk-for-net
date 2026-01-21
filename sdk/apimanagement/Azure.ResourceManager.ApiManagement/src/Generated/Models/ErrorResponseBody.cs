@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Error Body contract.
-    /// Serialized Name: ErrorResponseBody
-    /// </summary>
+    /// <summary> Error Body contract. </summary>
     public partial class ErrorResponseBody
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ErrorResponseBody"/>. </summary>
-        /// <param name="code">
-        /// Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response.
-        /// Serialized Name: ErrorResponseBody.code
-        /// </param>
-        /// <param name="message">
-        /// Human-readable representation of the error.
-        /// Serialized Name: ErrorResponseBody.message
-        /// </param>
-        /// <param name="details">
-        /// The list of invalid fields send in request, in case of validation error.
-        /// Serialized Name: ErrorResponseBody.details
-        /// </param>
+        /// <param name="code"> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </param>
+        /// <param name="message"> Human-readable representation of the error. </param>
+        /// <param name="details"> The list of invalid fields send in request, in case of validation error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ErrorResponseBody(string code, string message, IList<ErrorFieldContract> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response.
-        /// Serialized Name: ErrorResponseBody.code
-        /// </summary>
+        /// <summary> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </summary>
         [WirePath("code")]
         public string Code { get; set; }
-        /// <summary>
-        /// Human-readable representation of the error.
-        /// Serialized Name: ErrorResponseBody.message
-        /// </summary>
+        /// <summary> Human-readable representation of the error. </summary>
         [WirePath("message")]
         public string Message { get; set; }
-        /// <summary>
-        /// The list of invalid fields send in request, in case of validation error.
-        /// Serialized Name: ErrorResponseBody.details
-        /// </summary>
+        /// <summary> The list of invalid fields send in request, in case of validation error. </summary>
         [WirePath("details")]
         public IList<ErrorFieldContract> Details { get; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Endpoints accessed for a common purpose that the Api Management Service requires outbound network access to.
-    /// Serialized Name: OutboundEnvironmentEndpoint
-    /// </summary>
+    /// <summary> Endpoints accessed for a common purpose that the Api Management Service requires outbound network access to. </summary>
     public partial class OutboundEnvironmentEndpoint
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
-        /// <param name="category">
-        /// The type of service accessed by the Api Management Service, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory.
-        /// Serialized Name: OutboundEnvironmentEndpoint.category
-        /// </param>
-        /// <param name="endpoints">
-        /// The endpoints that the Api Management Service reaches the service at.
-        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
-        /// </param>
+        /// <param name="category"> The type of service accessed by the Api Management Service, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
+        /// <param name="endpoints"> The endpoints that the Api Management Service reaches the service at. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<EndpointDependency> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of service accessed by the Api Management Service, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory.
-        /// Serialized Name: OutboundEnvironmentEndpoint.category
-        /// </summary>
+        /// <summary> The type of service accessed by the Api Management Service, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
         [WirePath("category")]
         public string Category { get; }
-        /// <summary>
-        /// The endpoints that the Api Management Service reaches the service at.
-        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
-        /// </summary>
+        /// <summary> The endpoints that the Api Management Service reaches the service at. </summary>
         [WirePath("endpoints")]
         public IReadOnlyList<EndpointDependency> Endpoints { get; }
     }

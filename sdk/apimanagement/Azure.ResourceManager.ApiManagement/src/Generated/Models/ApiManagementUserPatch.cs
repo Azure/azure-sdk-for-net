@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// User update parameters.
-    /// Serialized Name: UserUpdateParameters
-    /// </summary>
+    /// <summary> User update parameters. </summary>
     public partial class ApiManagementUserPatch
     {
         /// <summary>
@@ -55,34 +52,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserPatch"/>. </summary>
-        /// <param name="state">
-        /// Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active.
-        /// Serialized Name: UserUpdateParameters.properties.state
-        /// </param>
-        /// <param name="note">
-        /// Optional note about a user set by the administrator.
-        /// Serialized Name: UserUpdateParameters.properties.note
-        /// </param>
-        /// <param name="identities">
-        /// Collection of user identities.
-        /// Serialized Name: UserUpdateParameters.properties.identities
-        /// </param>
-        /// <param name="email">
-        /// Email address. Must not be empty and must be unique within the service instance.
-        /// Serialized Name: UserUpdateParameters.properties.email
-        /// </param>
-        /// <param name="password">
-        /// User Password.
-        /// Serialized Name: UserUpdateParameters.properties.password
-        /// </param>
-        /// <param name="firstName">
-        /// First name.
-        /// Serialized Name: UserUpdateParameters.properties.firstName
-        /// </param>
-        /// <param name="lastName">
-        /// Last name.
-        /// Serialized Name: UserUpdateParameters.properties.lastName
-        /// </param>
+        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
+        /// <param name="note"> Optional note about a user set by the administrator. </param>
+        /// <param name="identities"> Collection of user identities. </param>
+        /// <param name="email"> Email address. Must not be empty and must be unique within the service instance. </param>
+        /// <param name="password"> User Password. </param>
+        /// <param name="firstName"> First name. </param>
+        /// <param name="lastName"> Last name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementUserPatch(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string email, string password, string firstName, string lastName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,46 +72,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active.
-        /// Serialized Name: UserUpdateParameters.properties.state
-        /// </summary>
+        /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
         [WirePath("properties.state")]
         public ApiManagementUserState? State { get; set; }
-        /// <summary>
-        /// Optional note about a user set by the administrator.
-        /// Serialized Name: UserUpdateParameters.properties.note
-        /// </summary>
+        /// <summary> Optional note about a user set by the administrator. </summary>
         [WirePath("properties.note")]
         public string Note { get; set; }
-        /// <summary>
-        /// Collection of user identities.
-        /// Serialized Name: UserUpdateParameters.properties.identities
-        /// </summary>
+        /// <summary> Collection of user identities. </summary>
         [WirePath("properties.identities")]
         public IList<UserIdentityContract> Identities { get; }
-        /// <summary>
-        /// Email address. Must not be empty and must be unique within the service instance.
-        /// Serialized Name: UserUpdateParameters.properties.email
-        /// </summary>
+        /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
         [WirePath("properties.email")]
         public string Email { get; set; }
-        /// <summary>
-        /// User Password.
-        /// Serialized Name: UserUpdateParameters.properties.password
-        /// </summary>
+        /// <summary> User Password. </summary>
         [WirePath("properties.password")]
         public string Password { get; set; }
-        /// <summary>
-        /// First name.
-        /// Serialized Name: UserUpdateParameters.properties.firstName
-        /// </summary>
+        /// <summary> First name. </summary>
         [WirePath("properties.firstName")]
         public string FirstName { get; set; }
-        /// <summary>
-        /// Last name.
-        /// Serialized Name: UserUpdateParameters.properties.lastName
-        /// </summary>
+        /// <summary> Last name. </summary>
         [WirePath("properties.lastName")]
         public string LastName { get; set; }
     }

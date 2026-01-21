@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Diagnostic settings for Large Language Models Messages
-    /// Serialized Name: LLMMessageDiagnosticSettings
-    /// </summary>
+    /// <summary> Diagnostic settings for Large Language Models Messages. </summary>
     public partial class LLMMessageDiagnosticSettings
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LLMMessageDiagnosticSettings"/>. </summary>
-        /// <param name="messages">
-        /// Specifies which message should be logged. Currently there is only 'all' option.
-        /// Serialized Name: LLMMessageDiagnosticSettings.messages
-        /// </param>
-        /// <param name="maxSizeInBytes">
-        /// Maximum size of message to logs in bytes. The default size is 32KB.
-        /// Serialized Name: LLMMessageDiagnosticSettings.maxSizeInBytes
-        /// </param>
+        /// <param name="messages"> Specifies which message should be logged. Currently there is only 'all' option. </param>
+        /// <param name="maxSizeInBytes"> Maximum size of message to logs in bytes. The default size is 32KB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LLMMessageDiagnosticSettings(LlmMessageLogType? messages, int? maxSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifies which message should be logged. Currently there is only 'all' option.
-        /// Serialized Name: LLMMessageDiagnosticSettings.messages
-        /// </summary>
+        /// <summary> Specifies which message should be logged. Currently there is only 'all' option. </summary>
         [WirePath("messages")]
         public LlmMessageLogType? Messages { get; set; }
-        /// <summary>
-        /// Maximum size of message to logs in bytes. The default size is 32KB.
-        /// Serialized Name: LLMMessageDiagnosticSettings.maxSizeInBytes
-        /// </summary>
+        /// <summary> Maximum size of message to logs in bytes. The default size is 32KB. </summary>
         [WirePath("maxSizeInBytes")]
         public int? MaxSizeInBytes { get; set; }
     }

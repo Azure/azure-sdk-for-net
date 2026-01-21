@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// List trace properties.
-    /// Serialized Name: GatewayListTraceContract
-    /// </summary>
+    /// <summary> List trace properties. </summary>
     public partial class GatewayListTraceContract
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayListTraceContract"/>. </summary>
-        /// <param name="traceId">
-        /// Trace id.
-        /// Serialized Name: GatewayListTraceContract.traceId
-        /// </param>
+        /// <param name="traceId"> Trace id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayListTraceContract(string traceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Trace id.
-        /// Serialized Name: GatewayListTraceContract.traceId
-        /// </summary>
+        /// <summary> Trace id. </summary>
         [WirePath("traceId")]
         public string TraceId { get; set; }
     }

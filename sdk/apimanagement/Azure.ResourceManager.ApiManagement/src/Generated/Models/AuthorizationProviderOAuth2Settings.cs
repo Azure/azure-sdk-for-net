@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// OAuth2 settings details
-    /// Serialized Name: AuthorizationProviderOAuth2Settings
-    /// </summary>
+    /// <summary> OAuth2 settings details. </summary>
     public partial class AuthorizationProviderOAuth2Settings
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2Settings"/>. </summary>
-        /// <param name="redirectUri">
-        /// Redirect URL to be set in the OAuth application.
-        /// Serialized Name: AuthorizationProviderOAuth2Settings.redirectUrl
-        /// </param>
-        /// <param name="grantTypes">
-        /// OAuth2 settings
-        /// Serialized Name: AuthorizationProviderOAuth2Settings.grantTypes
-        /// </param>
-        /// <param name="keyVault">
-        /// Key Vault reference for client secret storage
-        /// Serialized Name: AuthorizationProviderOAuth2Settings.keyVault
-        /// </param>
+        /// <param name="redirectUri"> Redirect URL to be set in the OAuth application. </param>
+        /// <param name="grantTypes"> OAuth2 settings. </param>
+        /// <param name="keyVault"> Key Vault reference for client secret storage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationProviderOAuth2Settings(Uri redirectUri, AuthorizationProviderOAuth2GrantTypes grantTypes, AuthorizationProviderKeyVaultContract keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Redirect URL to be set in the OAuth application.
-        /// Serialized Name: AuthorizationProviderOAuth2Settings.redirectUrl
-        /// </summary>
+        /// <summary> Redirect URL to be set in the OAuth application. </summary>
         [WirePath("redirectUrl")]
         public Uri RedirectUri { get; set; }
-        /// <summary>
-        /// OAuth2 settings
-        /// Serialized Name: AuthorizationProviderOAuth2Settings.grantTypes
-        /// </summary>
+        /// <summary> OAuth2 settings. </summary>
         [WirePath("grantTypes")]
         public AuthorizationProviderOAuth2GrantTypes GrantTypes { get; set; }
-        /// <summary>
-        /// Key Vault reference for client secret storage
-        /// Serialized Name: AuthorizationProviderOAuth2Settings.keyVault
-        /// </summary>
+        /// <summary> Key Vault reference for client secret storage. </summary>
         [WirePath("keyVault")]
         public AuthorizationProviderKeyVaultContract KeyVault { get; set; }
     }

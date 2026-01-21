@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged ClientApplication list representation.
-    /// Serialized Name: ClientApplicationListResult
-    /// </summary>
+    /// <summary> Paged ClientApplication list representation. </summary>
     internal partial class ClientApplicationListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientApplicationListResult"/>. </summary>
-        /// <param name="value">
-        /// Page values.
-        /// Serialized Name: ClientApplicationListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: ClientApplicationListResult.nextLink
-        /// </param>
+        /// <param name="value"> Page values. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClientApplicationListResult(IReadOnlyList<ClientApplicationContractData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page values.
-        /// Serialized Name: ClientApplicationListResult.value
-        /// </summary>
+        /// <summary> Page values. </summary>
         public IReadOnlyList<ClientApplicationContractData> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: ClientApplicationListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

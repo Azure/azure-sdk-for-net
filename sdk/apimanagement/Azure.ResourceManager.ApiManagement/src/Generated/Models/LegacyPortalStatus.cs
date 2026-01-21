@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Status of legacy portal in the API Management service.
-    /// Serialized Name: LegacyPortalStatus
-    /// </summary>
+    /// <summary> Status of legacy portal in the API Management service. </summary>
     public readonly partial struct LegacyPortalStatus : IEquatable<LegacyPortalStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Legacy Portal is enabled for the service.
-        /// Serialized Name: LegacyPortalStatus.Enabled
-        /// </summary>
+        /// <summary> Legacy Portal is enabled for the service. </summary>
         public static LegacyPortalStatus Enabled { get; } = new LegacyPortalStatus(EnabledValue);
-        /// <summary>
-        /// Legacy Portal is disabled for the service.
-        /// Serialized Name: LegacyPortalStatus.Disabled
-        /// </summary>
+        /// <summary> Legacy Portal is disabled for the service. </summary>
         public static LegacyPortalStatus Disabled { get; } = new LegacyPortalStatus(DisabledValue);
         /// <summary> Determines if two <see cref="LegacyPortalStatus"/> values are the same. </summary>
         public static bool operator ==(LegacyPortalStatus left, LegacyPortalStatus right) => left.Equals(right);

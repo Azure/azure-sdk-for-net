@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The LlmDiagnosticSetting.
-    /// Serialized Name: LlmDiagnosticSettings
-    /// </summary>
+    /// <summary> The LlmDiagnosticSetting. </summary>
     public readonly partial struct LlmDiagnosticSetting : IEquatable<LlmDiagnosticSetting>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string EnabledValue = "enabled";
         private const string DisabledValue = "disabled";
 
-        /// <summary>
-        /// Default LLM logs are enabled.
-        /// Serialized Name: LlmDiagnosticSettings.enabled
-        /// </summary>
+        /// <summary> Default LLM logs are enabled. </summary>
         public static LlmDiagnosticSetting Enabled { get; } = new LlmDiagnosticSetting(EnabledValue);
-        /// <summary>
-        /// Default LLM logs are disabled.
-        /// Serialized Name: LlmDiagnosticSettings.disabled
-        /// </summary>
+        /// <summary> Default LLM logs are disabled. </summary>
         public static LlmDiagnosticSetting Disabled { get; } = new LlmDiagnosticSetting(DisabledValue);
         /// <summary> Determines if two <see cref="LlmDiagnosticSetting"/> values are the same. </summary>
         public static bool operator ==(LlmDiagnosticSetting left, LlmDiagnosticSetting right) => left.Equals(right);

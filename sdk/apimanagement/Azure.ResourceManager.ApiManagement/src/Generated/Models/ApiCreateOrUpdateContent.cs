@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// API Create or Update Parameters.
-    /// Serialized Name: ApiCreateOrUpdateParameter
-    /// </summary>
+    /// <summary> API Create or Update Parameters. </summary>
     public partial class ApiCreateOrUpdateContent
     {
         /// <summary>
@@ -56,106 +53,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiCreateOrUpdateContent"/>. </summary>
-        /// <param name="description">
-        /// Description of the API. May include HTML formatting tags.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.description
-        /// </param>
-        /// <param name="authenticationSettings">
-        /// Collection of authentication settings included into this API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.authenticationSettings
-        /// </param>
-        /// <param name="subscriptionKeyParameterNames">
-        /// Protocols over which API is made available.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.subscriptionKeyParameterNames
-        /// </param>
-        /// <param name="apiType">
-        /// Type of API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.type
-        /// </param>
-        /// <param name="apiRevision">
-        /// Describes the revision of the API. If no value is provided, default revision 1 is created
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiRevision
-        /// </param>
-        /// <param name="apiVersion">
-        /// Indicates the version identifier of the API if the API is versioned
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersion
-        /// </param>
-        /// <param name="isCurrent">
-        /// Indicates if API revision is current api revision.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.isCurrent
-        /// </param>
-        /// <param name="isOnline">
-        /// Indicates if API revision is accessible via the gateway.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.isOnline
-        /// </param>
-        /// <param name="apiRevisionDescription">
-        /// Description of the API Revision.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiRevisionDescription
-        /// </param>
-        /// <param name="apiVersionDescription">
-        /// Description of the API Version.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersionDescription
-        /// </param>
-        /// <param name="apiVersionSetId">
-        /// A resource identifier for the related ApiVersionSet.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersionSetId
-        /// </param>
-        /// <param name="isSubscriptionRequired">
-        /// Specifies whether an API or Product subscription is required for accessing the API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.subscriptionRequired
-        /// </param>
-        /// <param name="termsOfServiceLink">
-        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.termsOfServiceUrl
-        /// </param>
-        /// <param name="contact">
-        /// Contact information for the API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.contact
-        /// </param>
-        /// <param name="license">
-        /// License information for the API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.license
-        /// </param>
-        /// <param name="sourceApiId">
-        /// API identifier of the source API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.sourceApiId
-        /// </param>
-        /// <param name="displayName">
-        /// API name. Must be 1 to 300 characters long.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.displayName
-        /// </param>
-        /// <param name="serviceLink">
-        /// Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.serviceUrl
-        /// </param>
-        /// <param name="path">
-        /// Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.path
-        /// </param>
-        /// <param name="protocols">
-        /// Describes on which protocols the operations in this API can be invoked.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.protocols
-        /// </param>
-        /// <param name="apiVersionSet">
-        /// Version set details
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersionSet
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.provisioningState
-        /// </param>
-        /// <param name="value">
-        /// Content value when Importing an API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.value
-        /// </param>
-        /// <param name="format">
-        /// Format of the Content in which the API is getting imported. New formats can be added in the future
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.format
-        /// </param>
-        /// <param name="wsdlSelector">
-        /// Criteria to limit import of WSDL to a subset of the document.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.wsdlSelector
-        /// </param>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="value"> Content value when Importing an API. </param>
+        /// <param name="format"> Format of the Content in which the API is getting imported. New formats can be added in the future. </param>
+        /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
         /// <param name="soapApiType">
         /// Type of API to create.
         /// * `http` creates a REST API
@@ -163,12 +85,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// * `websocket` creates websocket API
         /// * `graphql` creates GraphQL API.
         /// New types can be added in the future.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiType
         /// </param>
-        /// <param name="translateRequiredQueryParametersConduct">
-        /// Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.translateRequiredQueryParameters
-        /// </param>
+        /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -202,154 +120,79 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Description of the API. May include HTML formatting tags.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.description
-        /// </summary>
+        /// <summary> Description of the API. May include HTML formatting tags. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Collection of authentication settings included into this API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.authenticationSettings
-        /// </summary>
+        /// <summary> Collection of authentication settings included into this API. </summary>
         [WirePath("properties.authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; set; }
-        /// <summary>
-        /// Protocols over which API is made available.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.subscriptionKeyParameterNames
-        /// </summary>
+        /// <summary> Protocols over which API is made available. </summary>
         [WirePath("properties.subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
-        /// <summary>
-        /// Type of API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.type
-        /// </summary>
+        /// <summary> Type of API. </summary>
         [WirePath("properties.type")]
         public ApiType? ApiType { get; set; }
-        /// <summary>
-        /// Describes the revision of the API. If no value is provided, default revision 1 is created
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiRevision
-        /// </summary>
+        /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
         [WirePath("properties.apiRevision")]
         public string ApiRevision { get; set; }
-        /// <summary>
-        /// Indicates the version identifier of the API if the API is versioned
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersion
-        /// </summary>
+        /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
         [WirePath("properties.apiVersion")]
         public string ApiVersion { get; set; }
-        /// <summary>
-        /// Indicates if API revision is current api revision.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.isCurrent
-        /// </summary>
+        /// <summary> Indicates if API revision is current api revision. </summary>
         [WirePath("properties.isCurrent")]
         public bool? IsCurrent { get; set; }
-        /// <summary>
-        /// Indicates if API revision is accessible via the gateway.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.isOnline
-        /// </summary>
+        /// <summary> Indicates if API revision is accessible via the gateway. </summary>
         [WirePath("properties.isOnline")]
         public bool? IsOnline { get; }
-        /// <summary>
-        /// Description of the API Revision.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiRevisionDescription
-        /// </summary>
+        /// <summary> Description of the API Revision. </summary>
         [WirePath("properties.apiRevisionDescription")]
         public string ApiRevisionDescription { get; set; }
-        /// <summary>
-        /// Description of the API Version.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersionDescription
-        /// </summary>
+        /// <summary> Description of the API Version. </summary>
         [WirePath("properties.apiVersionDescription")]
         public string ApiVersionDescription { get; set; }
-        /// <summary>
-        /// A resource identifier for the related ApiVersionSet.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersionSetId
-        /// </summary>
+        /// <summary> A resource identifier for the related ApiVersionSet. </summary>
         [WirePath("properties.apiVersionSetId")]
         public ResourceIdentifier ApiVersionSetId { get; set; }
-        /// <summary>
-        /// Specifies whether an API or Product subscription is required for accessing the API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.subscriptionRequired
-        /// </summary>
+        /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
         [WirePath("properties.subscriptionRequired")]
         public bool? IsSubscriptionRequired { get; set; }
-        /// <summary>
-        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.termsOfServiceUrl
-        /// </summary>
+        /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         [WirePath("properties.termsOfServiceUrl")]
         public string TermsOfServiceLink { get; set; }
-        /// <summary>
-        /// Contact information for the API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.contact
-        /// </summary>
+        /// <summary> Contact information for the API. </summary>
         [WirePath("properties.contact")]
         public ApiContactInformation Contact { get; set; }
-        /// <summary>
-        /// License information for the API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.license
-        /// </summary>
+        /// <summary> License information for the API. </summary>
         [WirePath("properties.license")]
         public ApiLicenseInformation License { get; set; }
-        /// <summary>
-        /// API identifier of the source API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.sourceApiId
-        /// </summary>
+        /// <summary> API identifier of the source API. </summary>
         [WirePath("properties.sourceApiId")]
         public ResourceIdentifier SourceApiId { get; set; }
-        /// <summary>
-        /// API name. Must be 1 to 300 characters long.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.displayName
-        /// </summary>
+        /// <summary> API name. Must be 1 to 300 characters long. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.serviceUrl
-        /// </summary>
+        /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
         [WirePath("properties.serviceUrl")]
         public string ServiceLink { get; set; }
-        /// <summary>
-        /// Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.path
-        /// </summary>
+        /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
         [WirePath("properties.path")]
         public string Path { get; set; }
-        /// <summary>
-        /// Describes on which protocols the operations in this API can be invoked.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.protocols
-        /// </summary>
+        /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
         [WirePath("properties.protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols { get; }
-        /// <summary>
-        /// Version set details
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiVersionSet
-        /// </summary>
+        /// <summary> Version set details. </summary>
         [WirePath("properties.apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }
-        /// <summary>
-        /// The provisioning state
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Content value when Importing an API.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.value
-        /// </summary>
+        /// <summary> Content value when Importing an API. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Format of the Content in which the API is getting imported. New formats can be added in the future
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.format
-        /// </summary>
+        /// <summary> Format of the Content in which the API is getting imported. New formats can be added in the future. </summary>
         [WirePath("properties.format")]
         public ContentFormat? Format { get; set; }
-        /// <summary>
-        /// Criteria to limit import of WSDL to a subset of the document.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.wsdlSelector
-        /// </summary>
+        /// <summary> Criteria to limit import of WSDL to a subset of the document. </summary>
         [WirePath("properties.wsdlSelector")]
         public ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get; set; }
         /// <summary>
@@ -359,14 +202,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// * `websocket` creates websocket API
         /// * `graphql` creates GraphQL API.
         /// New types can be added in the future.
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.apiType
         /// </summary>
         [WirePath("properties.apiType")]
         public SoapApiType? SoapApiType { get; set; }
-        /// <summary>
-        /// Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'
-        /// Serialized Name: ApiCreateOrUpdateParameter.properties.translateRequiredQueryParameters
-        /// </summary>
+        /// <summary> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </summary>
         [WirePath("properties.translateRequiredQueryParameters")]
         public TranslateRequiredQueryParametersConduct? TranslateRequiredQueryParametersConduct { get; set; }
     }

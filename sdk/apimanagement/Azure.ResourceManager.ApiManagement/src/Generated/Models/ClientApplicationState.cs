@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks.
-    /// Serialized Name: ClientApplicationState
-    /// </summary>
+    /// <summary> Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks. </summary>
     public readonly partial struct ClientApplicationState : IEquatable<ClientApplicationState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string RejectedValue = "rejected";
         private const string ApprovedValue = "approved";
 
-        /// <summary>
-        /// If there are no associated ClientApplicationLinks or all ClientApplicationLinks are in a state that doesn't meet the criteria for the states: active, rejected, approved (e.g., a mix of active and rejected without any approved).
-        /// Serialized Name: ClientApplicationState.pending
-        /// </summary>
+        /// <summary> If there are no associated ClientApplicationLinks or all ClientApplicationLinks are in a state that doesn't meet the criteria for the states: active, rejected, approved (e.g., a mix of active and rejected without any approved). </summary>
         public static ClientApplicationState Pending { get; } = new ClientApplicationState(PendingValue);
-        /// <summary>
-        /// If there are no approved ClientApplicationLink, but at least one ClientApplicationLink is active, the Application is considered active
-        /// Serialized Name: ClientApplicationState.active
-        /// </summary>
+        /// <summary> If there are no approved ClientApplicationLink, but at least one ClientApplicationLink is active, the Application is considered active. </summary>
         public static ClientApplicationState Active { get; } = new ClientApplicationState(ActiveValue);
-        /// <summary>
-        /// If all ClientApplicationLinks are rejected, the Application is considered rejected
-        /// Serialized Name: ClientApplicationState.rejected
-        /// </summary>
+        /// <summary> If all ClientApplicationLinks are rejected, the Application is considered rejected. </summary>
         public static ClientApplicationState Rejected { get; } = new ClientApplicationState(RejectedValue);
-        /// <summary>
-        /// If at least one ClientApplicationLink is approved, the Application is considered approved
-        /// Serialized Name: ClientApplicationState.approved
-        /// </summary>
+        /// <summary> If at least one ClientApplicationLink is approved, the Application is considered approved. </summary>
         public static ClientApplicationState Approved { get; } = new ClientApplicationState(ApprovedValue);
         /// <summary> Determines if two <see cref="ClientApplicationState"/> values are the same. </summary>
         public static bool operator ==(ClientApplicationState left, ClientApplicationState right) => left.Equals(right);

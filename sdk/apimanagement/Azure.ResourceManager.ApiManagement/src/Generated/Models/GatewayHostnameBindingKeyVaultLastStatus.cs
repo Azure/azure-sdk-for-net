@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The GatewayHostnameBindingKeyVaultLastStatus.
-    /// Serialized Name: GatewayHostnameBindingKeyVaultLastStatus
-    /// </summary>
+    /// <summary> The GatewayHostnameBindingKeyVaultLastStatus. </summary>
     public partial class GatewayHostnameBindingKeyVaultLastStatus
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingKeyVaultLastStatus"/>. </summary>
-        /// <param name="code">
-        /// The last status of the Key Vault certificate fetch process.
-        /// Serialized Name: GatewayHostnameBindingKeyVaultLastStatus.code
-        /// </param>
-        /// <param name="timeStampUtc">
-        /// The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: GatewayHostnameBindingKeyVaultLastStatus.timeStampUtc
-        /// </param>
-        /// <param name="lastSuccessTimeStampUtc">
-        /// The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: GatewayHostnameBindingKeyVaultLastStatus.lastSuccessTimeStampUtc
-        /// </param>
+        /// <param name="code"> The last status of the Key Vault certificate fetch process. </param>
+        /// <param name="timeStampUtc"> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastSuccessTimeStampUtc"> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayHostnameBindingKeyVaultLastStatus(KeyVaultFetchCode? code, DateTimeOffset? timeStampUtc, DateTimeOffset? lastSuccessTimeStampUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The last status of the Key Vault certificate fetch process.
-        /// Serialized Name: GatewayHostnameBindingKeyVaultLastStatus.code
-        /// </summary>
+        /// <summary> The last status of the Key Vault certificate fetch process. </summary>
         [WirePath("code")]
         public KeyVaultFetchCode? Code { get; }
-        /// <summary>
-        /// The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: GatewayHostnameBindingKeyVaultLastStatus.timeStampUtc
-        /// </summary>
+        /// <summary> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("timeStampUtc")]
         public DateTimeOffset? TimeStampUtc { get; }
-        /// <summary>
-        /// The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: GatewayHostnameBindingKeyVaultLastStatus.lastSuccessTimeStampUtc
-        /// </summary>
+        /// <summary> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("lastSuccessTimeStampUtc")]
         public DateTimeOffset? LastSuccessTimeStampUtc { get; }
     }

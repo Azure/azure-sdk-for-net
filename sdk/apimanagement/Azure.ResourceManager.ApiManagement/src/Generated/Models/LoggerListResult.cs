@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Logger list representation.
-    /// Serialized Name: LoggerListResult
-    /// </summary>
+    /// <summary> Paged Logger list representation. </summary>
     internal partial class LoggerListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoggerListResult"/>. </summary>
-        /// <param name="value">
-        /// Logger values.
-        /// Serialized Name: LoggerListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number across all pages.
-        /// Serialized Name: LoggerListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: LoggerListResult.nextLink
-        /// </param>
+        /// <param name="value"> Logger values. </param>
+        /// <param name="count"> Total record count number across all pages. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LoggerListResult(IReadOnlyList<ApiManagementLoggerData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Logger values.
-        /// Serialized Name: LoggerListResult.value
-        /// </summary>
+        /// <summary> Logger values. </summary>
         public IReadOnlyList<ApiManagementLoggerData> Value { get; }
-        /// <summary>
-        /// Total record count number across all pages.
-        /// Serialized Name: LoggerListResult.count
-        /// </summary>
+        /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: LoggerListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Describes scaling information of a SKU.
-    /// Serialized Name: ApiManagementSkuRestrictions
-    /// </summary>
+    /// <summary> Describes scaling information of a SKU. </summary>
     public partial class ApiManagementSkuRestrictions
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictions"/>. </summary>
-        /// <param name="restrictionsType">
-        /// The type of restrictions.
-        /// Serialized Name: ApiManagementSkuRestrictions.type
-        /// </param>
-        /// <param name="values">
-        /// The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.
-        /// Serialized Name: ApiManagementSkuRestrictions.values
-        /// </param>
-        /// <param name="restrictionInfo">
-        /// The information about the restriction where the SKU cannot be used.
-        /// Serialized Name: ApiManagementSkuRestrictions.restrictionInfo
-        /// </param>
-        /// <param name="reasonCode">
-        /// The reason for restriction.
-        /// Serialized Name: ApiManagementSkuRestrictions.reasonCode
-        /// </param>
+        /// <param name="restrictionsType"> The type of restrictions. </param>
+        /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
+        /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
+        /// <param name="reasonCode"> The reason for restriction. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSkuRestrictions(ApiManagementSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ApiManagementSkuRestrictionInfo restrictionInfo, ApiManagementSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,28 +66,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of restrictions.
-        /// Serialized Name: ApiManagementSkuRestrictions.type
-        /// </summary>
+        /// <summary> The type of restrictions. </summary>
         [WirePath("type")]
         public ApiManagementSkuRestrictionsType? RestrictionsType { get; }
-        /// <summary>
-        /// The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.
-        /// Serialized Name: ApiManagementSkuRestrictions.values
-        /// </summary>
+        /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         [WirePath("values")]
         public IReadOnlyList<string> Values { get; }
-        /// <summary>
-        /// The information about the restriction where the SKU cannot be used.
-        /// Serialized Name: ApiManagementSkuRestrictions.restrictionInfo
-        /// </summary>
+        /// <summary> The information about the restriction where the SKU cannot be used. </summary>
         [WirePath("restrictionInfo")]
         public ApiManagementSkuRestrictionInfo RestrictionInfo { get; }
-        /// <summary>
-        /// The reason for restriction.
-        /// Serialized Name: ApiManagementSkuRestrictions.reasonCode
-        /// </summary>
+        /// <summary> The reason for restriction. </summary>
         [WirePath("reasonCode")]
         public ApiManagementSkuRestrictionsReasonCode? ReasonCode { get; }
     }

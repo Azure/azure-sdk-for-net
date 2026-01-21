@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The ApiManagementSkuRestrictionInfo.
-    /// Serialized Name: ApiManagementSkuRestrictionInfo
-    /// </summary>
+    /// <summary> The ApiManagementSkuRestrictionInfo. </summary>
     public partial class ApiManagementSkuRestrictionInfo
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictionInfo"/>. </summary>
-        /// <param name="locations">
-        /// Locations where the SKU is restricted
-        /// Serialized Name: ApiManagementSkuRestrictionInfo.locations
-        /// </param>
-        /// <param name="zones">
-        /// List of availability zones where the SKU is restricted.
-        /// Serialized Name: ApiManagementSkuRestrictionInfo.zones
-        /// </param>
+        /// <param name="locations"> Locations where the SKU is restricted. </param>
+        /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,16 +64,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Locations where the SKU is restricted
-        /// Serialized Name: ApiManagementSkuRestrictionInfo.locations
-        /// </summary>
+        /// <summary> Locations where the SKU is restricted. </summary>
         [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
-        /// <summary>
-        /// List of availability zones where the SKU is restricted.
-        /// Serialized Name: ApiManagementSkuRestrictionInfo.zones
-        /// </summary>
+        /// <summary> List of availability zones where the SKU is restricted. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }

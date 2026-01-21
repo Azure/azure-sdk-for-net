@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the TagProductLinkContract data model.
     /// Tag-product link details.
-    /// Serialized Name: TagProductLinkContract
     /// </summary>
     public partial class TagProductLinkContractData : ResourceData
     {
@@ -61,10 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="productId">
-        /// Full resource Id of a product.
-        /// Serialized Name: TagProductLinkContract.properties.productId
-        /// </param>
+        /// <param name="productId"> Full resource Id of a product. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TagProductLinkContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string productId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,10 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Full resource Id of a product.
-        /// Serialized Name: TagProductLinkContract.properties.productId
-        /// </summary>
+        /// <summary> Full resource Id of a product. </summary>
         [WirePath("properties.productId")]
         public string ProductId { get; set; }
     }

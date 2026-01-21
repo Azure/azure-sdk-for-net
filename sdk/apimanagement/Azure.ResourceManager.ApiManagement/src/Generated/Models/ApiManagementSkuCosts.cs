@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Describes metadata for retrieving price info.
-    /// Serialized Name: ApiManagementSkuCosts
-    /// </summary>
+    /// <summary> Describes metadata for retrieving price info. </summary>
     public partial class ApiManagementSkuCosts
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuCosts"/>. </summary>
-        /// <param name="meterId">
-        /// Used for querying price from commerce.
-        /// Serialized Name: ApiManagementSkuCosts.meterID
-        /// </param>
-        /// <param name="quantity">
-        /// The multiplier is needed to extend the base metered cost.
-        /// Serialized Name: ApiManagementSkuCosts.quantity
-        /// </param>
-        /// <param name="extendedUnit">
-        /// An invariant to show the extended unit.
-        /// Serialized Name: ApiManagementSkuCosts.extendedUnit
-        /// </param>
+        /// <param name="meterId"> Used for querying price from commerce. </param>
+        /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
+        /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSkuCosts(string meterId, long? quantity, string extendedUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Used for querying price from commerce.
-        /// Serialized Name: ApiManagementSkuCosts.meterID
-        /// </summary>
+        /// <summary> Used for querying price from commerce. </summary>
         [WirePath("meterID")]
         public string MeterId { get; }
-        /// <summary>
-        /// The multiplier is needed to extend the base metered cost.
-        /// Serialized Name: ApiManagementSkuCosts.quantity
-        /// </summary>
+        /// <summary> The multiplier is needed to extend the base metered cost. </summary>
         [WirePath("quantity")]
         public long? Quantity { get; }
-        /// <summary>
-        /// An invariant to show the extended unit.
-        /// Serialized Name: ApiManagementSkuCosts.extendedUnit
-        /// </summary>
+        /// <summary> An invariant to show the extended unit. </summary>
         [WirePath("extendedUnit")]
         public string ExtendedUnit { get; }
     }

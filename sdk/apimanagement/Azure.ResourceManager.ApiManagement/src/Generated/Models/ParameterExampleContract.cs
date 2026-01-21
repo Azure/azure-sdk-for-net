@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Parameter example.
-    /// Serialized Name: ParameterExampleContract
-    /// </summary>
+    /// <summary> Parameter example. </summary>
     public partial class ParameterExampleContract
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ParameterExampleContract"/>. </summary>
-        /// <param name="summary">
-        /// Short description for the example
-        /// Serialized Name: ParameterExampleContract.summary
-        /// </param>
-        /// <param name="description">
-        /// Long description for the example
-        /// Serialized Name: ParameterExampleContract.description
-        /// </param>
-        /// <param name="value">
-        /// Example value. May be a primitive value, or an object.
-        /// Serialized Name: ParameterExampleContract.value
-        /// </param>
-        /// <param name="externalValue">
-        /// A URL that points to the literal example
-        /// Serialized Name: ParameterExampleContract.externalValue
-        /// </param>
+        /// <param name="summary"> Short description for the example. </param>
+        /// <param name="description"> Long description for the example. </param>
+        /// <param name="value"> Example value. May be a primitive value, or an object. </param>
+        /// <param name="externalValue"> A URL that points to the literal example. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ParameterExampleContract(string summary, string description, BinaryData value, string externalValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,21 +65,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Short description for the example
-        /// Serialized Name: ParameterExampleContract.summary
-        /// </summary>
+        /// <summary> Short description for the example. </summary>
         [WirePath("summary")]
         public string Summary { get; set; }
-        /// <summary>
-        /// Long description for the example
-        /// Serialized Name: ParameterExampleContract.description
-        /// </summary>
+        /// <summary> Long description for the example. </summary>
         [WirePath("description")]
         public string Description { get; set; }
         /// <summary>
         /// Example value. May be a primitive value, or an object.
-        /// Serialized Name: ParameterExampleContract.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -125,10 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         [WirePath("value")]
         public BinaryData Value { get; set; }
-        /// <summary>
-        /// A URL that points to the literal example
-        /// Serialized Name: ParameterExampleContract.externalValue
-        /// </summary>
+        /// <summary> A URL that points to the literal example. </summary>
         [WirePath("externalValue")]
         public string ExternalValue { get; set; }
     }

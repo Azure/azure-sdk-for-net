@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Backend pool service information
-    /// Serialized Name: BackendPoolItem
-    /// </summary>
+    /// <summary> Backend pool service information. </summary>
     public partial class BackendPoolItem
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackendPoolItem"/>. </summary>
-        /// <param name="id">
-        /// The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity.
-        /// Serialized Name: BackendPoolItem.id
-        /// </param>
+        /// <param name="id"> The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public BackendPoolItem(ResourceIdentifier id)
         {
@@ -63,22 +57,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendPoolItem"/>. </summary>
-        /// <param name="id">
-        /// The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity.
-        /// Serialized Name: BackendPoolItem.id
-        /// </param>
-        /// <param name="weight">
-        /// The weight of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified.
-        /// Serialized Name: BackendPoolItem.weight
-        /// </param>
-        /// <param name="priority">
-        /// The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified.
-        /// Serialized Name: BackendPoolItem.priority
-        /// </param>
-        /// <param name="preferredCarbonEmission">
-        /// Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information.
-        /// Serialized Name: BackendPoolItem.preferredCarbonEmission
-        /// </param>
+        /// <param name="id"> The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity. </param>
+        /// <param name="weight"> The weight of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </param>
+        /// <param name="priority"> The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </param>
+        /// <param name="preferredCarbonEmission"> Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendPoolItem(ResourceIdentifier id, int? weight, int? priority, CarbonEmissionCategory? preferredCarbonEmission, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -94,28 +76,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity.
-        /// Serialized Name: BackendPoolItem.id
-        /// </summary>
+        /// <summary> The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
-        /// <summary>
-        /// The weight of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified.
-        /// Serialized Name: BackendPoolItem.weight
-        /// </summary>
+        /// <summary> The weight of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </summary>
         [WirePath("weight")]
         public int? Weight { get; set; }
-        /// <summary>
-        /// The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified.
-        /// Serialized Name: BackendPoolItem.priority
-        /// </summary>
+        /// <summary> The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </summary>
         [WirePath("priority")]
         public int? Priority { get; set; }
-        /// <summary>
-        /// Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information.
-        /// Serialized Name: BackendPoolItem.preferredCarbonEmission
-        /// </summary>
+        /// <summary> Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information. </summary>
         [WirePath("preferredCarbonEmission")]
         public CarbonEmissionCategory? PreferredCarbonEmission { get; set; }
     }

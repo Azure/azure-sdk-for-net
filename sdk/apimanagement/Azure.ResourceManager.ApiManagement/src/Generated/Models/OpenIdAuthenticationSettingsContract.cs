@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// API OAuth2 Authentication settings details.
-    /// Serialized Name: OpenIdAuthenticationSettingsContract
-    /// </summary>
+    /// <summary> API OAuth2 Authentication settings details. </summary>
     public partial class OpenIdAuthenticationSettingsContract
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenIdAuthenticationSettingsContract"/>. </summary>
-        /// <param name="openIdProviderId">
-        /// OAuth authorization server identifier.
-        /// Serialized Name: OpenIdAuthenticationSettingsContract.openidProviderId
-        /// </param>
-        /// <param name="bearerTokenSendingMethods">
-        /// How to send token to the server.
-        /// Serialized Name: OpenIdAuthenticationSettingsContract.bearerTokenSendingMethods
-        /// </param>
+        /// <param name="openIdProviderId"> OAuth authorization server identifier. </param>
+        /// <param name="bearerTokenSendingMethods"> How to send token to the server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OpenIdAuthenticationSettingsContract(string openIdProviderId, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// OAuth authorization server identifier.
-        /// Serialized Name: OpenIdAuthenticationSettingsContract.openidProviderId
-        /// </summary>
+        /// <summary> OAuth authorization server identifier. </summary>
         [WirePath("openidProviderId")]
         public string OpenIdProviderId { get; set; }
-        /// <summary>
-        /// How to send token to the server.
-        /// Serialized Name: OpenIdAuthenticationSettingsContract.bearerTokenSendingMethods
-        /// </summary>
+        /// <summary> How to send token to the server. </summary>
         [WirePath("bearerTokenSendingMethods")]
         public IList<BearerTokenSendingMethod> BearerTokenSendingMethods { get; }
     }

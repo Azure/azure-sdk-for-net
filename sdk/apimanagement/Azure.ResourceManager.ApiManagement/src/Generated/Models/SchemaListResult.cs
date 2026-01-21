@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of the list schema operation.
-    /// Serialized Name: SchemaListResult
-    /// </summary>
+    /// <summary> The response of the list schema operation. </summary>
     internal partial class SchemaListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SchemaListResult"/>. </summary>
-        /// <param name="value">
-        /// API Schema Contract value.
-        /// Serialized Name: SchemaListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number.
-        /// Serialized Name: SchemaListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: SchemaListResult.nextLink
-        /// </param>
+        /// <param name="value"> API Schema Contract value. </param>
+        /// <param name="count"> Total record count number. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SchemaListResult(IReadOnlyList<ApiSchemaData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// API Schema Contract value.
-        /// Serialized Name: SchemaListResult.value
-        /// </summary>
+        /// <summary> API Schema Contract value. </summary>
         public IReadOnlyList<ApiSchemaData> Value { get; }
-        /// <summary>
-        /// Total record count number.
-        /// Serialized Name: SchemaListResult.count
-        /// </summary>
+        /// <summary> Total record count number. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: SchemaListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

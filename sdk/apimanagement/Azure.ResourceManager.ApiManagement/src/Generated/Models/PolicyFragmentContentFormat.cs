@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The PolicyFragmentContentFormat.
-    /// Serialized Name: PolicyFragmentContentFormat
-    /// </summary>
+    /// <summary> The PolicyFragmentContentFormat. </summary>
     public readonly partial struct PolicyFragmentContentFormat : IEquatable<PolicyFragmentContentFormat>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string XmlValue = "xml";
         private const string RawxmlValue = "rawxml";
 
-        /// <summary>
-        /// The contents are inline and Content type is an XML document.
-        /// Serialized Name: PolicyFragmentContentFormat.xml
-        /// </summary>
+        /// <summary> The contents are inline and Content type is an XML document. </summary>
         public static PolicyFragmentContentFormat Xml { get; } = new PolicyFragmentContentFormat(XmlValue);
-        /// <summary>
-        /// The contents are inline and Content type is a non XML encoded policy document.
-        /// Serialized Name: PolicyFragmentContentFormat.rawxml
-        /// </summary>
+        /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
         public static PolicyFragmentContentFormat Rawxml { get; } = new PolicyFragmentContentFormat(RawxmlValue);
         /// <summary> Determines if two <see cref="PolicyFragmentContentFormat"/> values are the same. </summary>
         public static bool operator ==(PolicyFragmentContentFormat left, PolicyFragmentContentFormat right) => left.Equals(right);

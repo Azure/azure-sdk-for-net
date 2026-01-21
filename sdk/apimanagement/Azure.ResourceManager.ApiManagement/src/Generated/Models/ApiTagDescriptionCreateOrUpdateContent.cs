@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Create TagDescription operation.
-    /// Serialized Name: TagDescriptionCreateParameters
-    /// </summary>
+    /// <summary> Parameters supplied to the Create TagDescription operation. </summary>
     public partial class ApiTagDescriptionCreateOrUpdateContent
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
-        /// <param name="description">
-        /// Description of the Tag.
-        /// Serialized Name: TagDescriptionCreateParameters.properties.description
-        /// </param>
-        /// <param name="externalDocsUri">
-        /// Absolute URL of external resources describing the tag.
-        /// Serialized Name: TagDescriptionCreateParameters.properties.externalDocsUrl
-        /// </param>
-        /// <param name="externalDocsDescription">
-        /// Description of the external resources describing the tag.
-        /// Serialized Name: TagDescriptionCreateParameters.properties.externalDocsDescription
-        /// </param>
+        /// <param name="description"> Description of the Tag. </param>
+        /// <param name="externalDocsUri"> Absolute URL of external resources describing the tag. </param>
+        /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiTagDescriptionCreateOrUpdateContent(string description, Uri externalDocsUri, string externalDocsDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Description of the Tag.
-        /// Serialized Name: TagDescriptionCreateParameters.properties.description
-        /// </summary>
+        /// <summary> Description of the Tag. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Absolute URL of external resources describing the tag.
-        /// Serialized Name: TagDescriptionCreateParameters.properties.externalDocsUrl
-        /// </summary>
+        /// <summary> Absolute URL of external resources describing the tag. </summary>
         [WirePath("properties.externalDocsUrl")]
         public Uri ExternalDocsUri { get; set; }
-        /// <summary>
-        /// Description of the external resources describing the tag.
-        /// Serialized Name: TagDescriptionCreateParameters.properties.externalDocsDescription
-        /// </summary>
+        /// <summary> Description of the external resources describing the tag. </summary>
         [WirePath("properties.externalDocsDescription")]
         public string ExternalDocsDescription { get; set; }
     }

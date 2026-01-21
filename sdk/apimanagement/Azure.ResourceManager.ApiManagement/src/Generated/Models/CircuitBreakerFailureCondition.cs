@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The trip conditions of the circuit breaker
-    /// Serialized Name: CircuitBreakerFailureCondition
-    /// </summary>
+    /// <summary> The trip conditions of the circuit breaker. </summary>
     public partial class CircuitBreakerFailureCondition
     {
         /// <summary>
@@ -56,26 +53,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CircuitBreakerFailureCondition"/>. </summary>
-        /// <param name="count">
-        /// The threshold for opening the circuit.
-        /// Serialized Name: CircuitBreakerFailureCondition.count
-        /// </param>
-        /// <param name="percentage">
-        /// The threshold for opening the circuit.
-        /// Serialized Name: CircuitBreakerFailureCondition.percentage
-        /// </param>
-        /// <param name="interval">
-        /// The interval during which the failures are counted.
-        /// Serialized Name: CircuitBreakerFailureCondition.interval
-        /// </param>
-        /// <param name="statusCodeRanges">
-        /// The status code ranges which are considered as failure.
-        /// Serialized Name: CircuitBreakerFailureCondition.statusCodeRanges
-        /// </param>
-        /// <param name="errorReasons">
-        /// The error reasons which are considered as failure.
-        /// Serialized Name: CircuitBreakerFailureCondition.errorReasons
-        /// </param>
+        /// <param name="count"> The threshold for opening the circuit. </param>
+        /// <param name="percentage"> The threshold for opening the circuit. </param>
+        /// <param name="interval"> The interval during which the failures are counted. </param>
+        /// <param name="statusCodeRanges"> The status code ranges which are considered as failure. </param>
+        /// <param name="errorReasons"> The error reasons which are considered as failure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CircuitBreakerFailureCondition(long? count, long? percentage, TimeSpan? interval, IList<FailureStatusCodeRange> statusCodeRanges, IList<string> errorReasons, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,34 +69,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The threshold for opening the circuit.
-        /// Serialized Name: CircuitBreakerFailureCondition.count
-        /// </summary>
+        /// <summary> The threshold for opening the circuit. </summary>
         [WirePath("count")]
         public long? Count { get; set; }
-        /// <summary>
-        /// The threshold for opening the circuit.
-        /// Serialized Name: CircuitBreakerFailureCondition.percentage
-        /// </summary>
+        /// <summary> The threshold for opening the circuit. </summary>
         [WirePath("percentage")]
         public long? Percentage { get; set; }
-        /// <summary>
-        /// The interval during which the failures are counted.
-        /// Serialized Name: CircuitBreakerFailureCondition.interval
-        /// </summary>
+        /// <summary> The interval during which the failures are counted. </summary>
         [WirePath("interval")]
         public TimeSpan? Interval { get; set; }
-        /// <summary>
-        /// The status code ranges which are considered as failure.
-        /// Serialized Name: CircuitBreakerFailureCondition.statusCodeRanges
-        /// </summary>
+        /// <summary> The status code ranges which are considered as failure. </summary>
         [WirePath("statusCodeRanges")]
         public IList<FailureStatusCodeRange> StatusCodeRanges { get; }
-        /// <summary>
-        /// The error reasons which are considered as failure.
-        /// Serialized Name: CircuitBreakerFailureCondition.errorReasons
-        /// </summary>
+        /// <summary> The error reasons which are considered as failure. </summary>
         [WirePath("errorReasons")]
         public IList<string> ErrorReasons { get; }
     }

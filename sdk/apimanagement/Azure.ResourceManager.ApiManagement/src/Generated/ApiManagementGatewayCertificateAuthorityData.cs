@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementGatewayCertificateAuthority data model.
     /// Gateway certificate authority details.
-    /// Serialized Name: GatewayCertificateAuthorityContract
     /// </summary>
     public partial class ApiManagementGatewayCertificateAuthorityData : ResourceData
     {
@@ -61,10 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isTrusted">
-        /// Determines whether certificate authority is trusted.
-        /// Serialized Name: GatewayCertificateAuthorityContract.properties.isTrusted
-        /// </param>
+        /// <param name="isTrusted"> Determines whether certificate authority is trusted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGatewayCertificateAuthorityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isTrusted, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,10 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Determines whether certificate authority is trusted.
-        /// Serialized Name: GatewayCertificateAuthorityContract.properties.isTrusted
-        /// </summary>
+        /// <summary> Determines whether certificate authority is trusted. </summary>
         [WirePath("properties.isTrusted")]
         public bool? IsTrusted { get; set; }
     }

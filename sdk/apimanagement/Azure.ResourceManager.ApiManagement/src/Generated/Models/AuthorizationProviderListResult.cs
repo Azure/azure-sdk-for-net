@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Authorization Provider list representation.
-    /// Serialized Name: AuthorizationProviderListResult
-    /// </summary>
+    /// <summary> Paged Authorization Provider list representation. </summary>
     internal partial class AuthorizationProviderListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderListResult"/>. </summary>
-        /// <param name="value">
-        /// Page values.
-        /// Serialized Name: AuthorizationProviderListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: AuthorizationProviderListResult.nextLink
-        /// </param>
+        /// <param name="value"> Page values. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationProviderListResult(IReadOnlyList<AuthorizationProviderContractData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page values.
-        /// Serialized Name: AuthorizationProviderListResult.value
-        /// </summary>
+        /// <summary> Page values. </summary>
         public IReadOnlyList<AuthorizationProviderContractData> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: AuthorizationProviderListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

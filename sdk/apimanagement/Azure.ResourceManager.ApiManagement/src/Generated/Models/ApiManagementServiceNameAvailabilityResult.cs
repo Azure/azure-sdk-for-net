@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Response of the CheckNameAvailability operation.
-    /// Serialized Name: ApiManagementServiceNameAvailabilityResult
-    /// </summary>
+    /// <summary> Response of the CheckNameAvailability operation. </summary>
     public partial class ApiManagementServiceNameAvailabilityResult
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable">
-        /// True if the name is available and can be used to create a new API Management service; otherwise false.
-        /// Serialized Name: ApiManagementServiceNameAvailabilityResult.nameAvailable
-        /// </param>
-        /// <param name="message">
-        /// If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name.
-        /// Serialized Name: ApiManagementServiceNameAvailabilityResult.message
-        /// </param>
-        /// <param name="reason">
-        /// Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable.
-        /// Serialized Name: ApiManagementServiceNameAvailabilityResult.reason
-        /// </param>
+        /// <param name="isNameAvailable"> True if the name is available and can be used to create a new API Management service; otherwise false. </param>
+        /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </param>
+        /// <param name="reason"> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceNameAvailabilityResult(bool? isNameAvailable, string message, ApiManagementServiceNameUnavailableReason? reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// True if the name is available and can be used to create a new API Management service; otherwise false.
-        /// Serialized Name: ApiManagementServiceNameAvailabilityResult.nameAvailable
-        /// </summary>
+        /// <summary> True if the name is available and can be used to create a new API Management service; otherwise false. </summary>
         [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
-        /// <summary>
-        /// If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name.
-        /// Serialized Name: ApiManagementServiceNameAvailabilityResult.message
-        /// </summary>
+        /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </summary>
         [WirePath("message")]
         public string Message { get; }
-        /// <summary>
-        /// Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable.
-        /// Serialized Name: ApiManagementServiceNameAvailabilityResult.reason
-        /// </summary>
+        /// <summary> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
         [WirePath("reason")]
         public ApiManagementServiceNameUnavailableReason? Reason { get; }
     }

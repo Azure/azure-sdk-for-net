@@ -27,8 +27,8 @@ use-model-reader-writer: true
 skip-serialization-format-xml: true
 enable-bicep-serialization: true
 
-mgmt-debug:
- show-serialized-names: true
+# mgmt-debug:
+#  show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}

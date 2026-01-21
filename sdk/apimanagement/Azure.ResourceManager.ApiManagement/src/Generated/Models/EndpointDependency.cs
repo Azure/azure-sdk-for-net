@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// A domain name that a service is reached at.
-    /// Serialized Name: EndpointDependency
-    /// </summary>
+    /// <summary> A domain name that a service is reached at. </summary>
     public partial class EndpointDependency
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
-        /// <param name="domainName">
-        /// The domain name of the dependency.
-        /// Serialized Name: EndpointDependency.domainName
-        /// </param>
-        /// <param name="endpointDetails">
-        /// The Ports used when connecting to DomainName.
-        /// Serialized Name: EndpointDependency.endpointDetails
-        /// </param>
+        /// <param name="domainName"> The domain name of the dependency. </param>
+        /// <param name="endpointDetails"> The Ports used when connecting to DomainName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EndpointDependency(string domainName, IReadOnlyList<EndpointDetail> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The domain name of the dependency.
-        /// Serialized Name: EndpointDependency.domainName
-        /// </summary>
+        /// <summary> The domain name of the dependency. </summary>
         [WirePath("domainName")]
         public string DomainName { get; }
-        /// <summary>
-        /// The Ports used when connecting to DomainName.
-        /// Serialized Name: EndpointDependency.endpointDetails
-        /// </summary>
+        /// <summary> The Ports used when connecting to DomainName. </summary>
         [WirePath("endpointDetails")]
         public IReadOnlyList<EndpointDetail> EndpointDetails { get; }
     }

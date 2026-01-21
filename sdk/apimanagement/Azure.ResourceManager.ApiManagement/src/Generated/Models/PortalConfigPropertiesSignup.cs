@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The PortalConfigPropertiesSignup.
-    /// Serialized Name: PortalConfigPropertiesSignup
-    /// </summary>
+    /// <summary> The PortalConfigPropertiesSignup. </summary>
     internal partial class PortalConfigPropertiesSignup
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigPropertiesSignup"/>. </summary>
-        /// <param name="termsOfService">
-        /// Terms of service settings.
-        /// Serialized Name: PortalConfigPropertiesSignup.termsOfService
-        /// </param>
+        /// <param name="termsOfService"> Terms of service settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigPropertiesSignup(PortalConfigTermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Terms of service settings.
-        /// Serialized Name: PortalConfigPropertiesSignup.termsOfService
-        /// </summary>
+        /// <summary> Terms of service settings. </summary>
         [WirePath("termsOfService")]
         public PortalConfigTermsOfServiceProperties TermsOfService { get; set; }
     }

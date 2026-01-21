@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The ClientAuthenticationMethod.
-    /// Serialized Name: ClientAuthenticationMethod
-    /// </summary>
+    /// <summary> The ClientAuthenticationMethod. </summary>
     public readonly partial struct ClientAuthenticationMethod : IEquatable<ClientAuthenticationMethod>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string BasicValue = "Basic";
         private const string BodyValue = "Body";
 
-        /// <summary>
-        /// Basic Client Authentication method.
-        /// Serialized Name: ClientAuthenticationMethod.Basic
-        /// </summary>
+        /// <summary> Basic Client Authentication method. </summary>
         public static ClientAuthenticationMethod Basic { get; } = new ClientAuthenticationMethod(BasicValue);
-        /// <summary>
-        /// Body based Authentication method.
-        /// Serialized Name: ClientAuthenticationMethod.Body
-        /// </summary>
+        /// <summary> Body based Authentication method. </summary>
         public static ClientAuthenticationMethod Body { get; } = new ClientAuthenticationMethod(BodyValue);
         /// <summary> Determines if two <see cref="ClientAuthenticationMethod"/> values are the same. </summary>
         public static bool operator ==(ClientAuthenticationMethod left, ClientAuthenticationMethod right) => left.Equals(right);

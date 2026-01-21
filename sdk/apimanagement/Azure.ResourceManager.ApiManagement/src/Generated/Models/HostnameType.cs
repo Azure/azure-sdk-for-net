@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Hostname type.
-    /// Serialized Name: HostnameType
-    /// </summary>
+    /// <summary> Hostname type. </summary>
     public readonly partial struct HostnameType : IEquatable<HostnameType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string DeveloperPortalValue = "DeveloperPortal";
         private const string ConfigurationApiValue = "ConfigurationApi";
 
-        /// <summary>
-        /// Proxy
-        /// Serialized Name: HostnameType.Proxy
-        /// </summary>
+        /// <summary> Proxy. </summary>
         public static HostnameType Proxy { get; } = new HostnameType(ProxyValue);
-        /// <summary>
-        /// Portal
-        /// Serialized Name: HostnameType.Portal
-        /// </summary>
+        /// <summary> Portal. </summary>
         public static HostnameType Portal { get; } = new HostnameType(PortalValue);
-        /// <summary>
-        /// Management
-        /// Serialized Name: HostnameType.Management
-        /// </summary>
+        /// <summary> Management. </summary>
         public static HostnameType Management { get; } = new HostnameType(ManagementValue);
-        /// <summary>
-        /// Scm
-        /// Serialized Name: HostnameType.Scm
-        /// </summary>
+        /// <summary> Scm. </summary>
         public static HostnameType Scm { get; } = new HostnameType(ScmValue);
-        /// <summary>
-        /// DeveloperPortal
-        /// Serialized Name: HostnameType.DeveloperPortal
-        /// </summary>
+        /// <summary> DeveloperPortal. </summary>
         public static HostnameType DeveloperPortal { get; } = new HostnameType(DeveloperPortalValue);
-        /// <summary>
-        /// ConfigurationApi
-        /// Serialized Name: HostnameType.ConfigurationApi
-        /// </summary>
+        /// <summary> ConfigurationApi. </summary>
         public static HostnameType ConfigurationApi { get; } = new HostnameType(ConfigurationApiValue);
         /// <summary> Determines if two <see cref="HostnameType"/> values are the same. </summary>
         public static bool operator ==(HostnameType left, HostnameType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Definitions about the connectivity check origin.
-    /// Serialized Name: ConnectivityCheckRequestSource
-    /// </summary>
+    /// <summary> Definitions about the connectivity check origin. </summary>
     public partial class ConnectivityCheckRequestSource
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestSource"/>. </summary>
-        /// <param name="region">
-        /// The API Management service region from where to start the connectivity check operation.
-        /// Serialized Name: ConnectivityCheckRequestSource.region
-        /// </param>
+        /// <param name="region"> The API Management service region from where to start the connectivity check operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         public ConnectivityCheckRequestSource(string region)
         {
@@ -62,14 +56,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestSource"/>. </summary>
-        /// <param name="region">
-        /// The API Management service region from where to start the connectivity check operation.
-        /// Serialized Name: ConnectivityCheckRequestSource.region
-        /// </param>
-        /// <param name="instance">
-        /// The particular VMSS instance from which to fire the request.
-        /// Serialized Name: ConnectivityCheckRequestSource.instance
-        /// </param>
+        /// <param name="region"> The API Management service region from where to start the connectivity check operation. </param>
+        /// <param name="instance"> The particular VMSS instance from which to fire the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCheckRequestSource(string region, long? instance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,16 +71,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// The API Management service region from where to start the connectivity check operation.
-        /// Serialized Name: ConnectivityCheckRequestSource.region
-        /// </summary>
+        /// <summary> The API Management service region from where to start the connectivity check operation. </summary>
         [WirePath("region")]
         public string Region { get; }
-        /// <summary>
-        /// The particular VMSS instance from which to fire the request.
-        /// Serialized Name: ConnectivityCheckRequestSource.instance
-        /// </summary>
+        /// <summary> The particular VMSS instance from which to fire the request. </summary>
         [WirePath("instance")]
         public long? Instance { get; set; }
     }

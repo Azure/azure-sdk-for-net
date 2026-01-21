@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Contract defining the Tag property in the Tag Resource Contract
-    /// Serialized Name: TagResourceContractProperties
-    /// </summary>
+    /// <summary> Contract defining the Tag property in the Tag Resource Contract. </summary>
     public partial class AssociatedTagProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AssociatedTagProperties"/>. </summary>
-        /// <param name="id">
-        /// Tag identifier
-        /// Serialized Name: TagResourceContractProperties.id
-        /// </param>
-        /// <param name="name">
-        /// Tag Name
-        /// Serialized Name: TagResourceContractProperties.name
-        /// </param>
+        /// <param name="id"> Tag identifier. </param>
+        /// <param name="name"> Tag Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AssociatedTagProperties(string id, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Tag identifier
-        /// Serialized Name: TagResourceContractProperties.id
-        /// </summary>
+        /// <summary> Tag identifier. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// Tag Name
-        /// Serialized Name: TagResourceContractProperties.name
-        /// </summary>
+        /// <summary> Tag Name. </summary>
         [WirePath("name")]
         public string Name { get; }
     }

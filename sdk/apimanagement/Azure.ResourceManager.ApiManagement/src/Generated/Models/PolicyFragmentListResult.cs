@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of the get policy fragments operation.
-    /// Serialized Name: PolicyFragmentListResult
-    /// </summary>
+    /// <summary> The response of the get policy fragments operation. </summary>
     internal partial class PolicyFragmentListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyFragmentListResult"/>. </summary>
-        /// <param name="value">
-        /// Policy fragment contract value.
-        /// Serialized Name: PolicyFragmentListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number.
-        /// Serialized Name: PolicyFragmentListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: PolicyFragmentListResult.nextLink
-        /// </param>
+        /// <param name="value"> Policy fragment contract value. </param>
+        /// <param name="count"> Total record count number. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyFragmentListResult(IReadOnlyList<PolicyFragmentContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Policy fragment contract value.
-        /// Serialized Name: PolicyFragmentListResult.value
-        /// </summary>
+        /// <summary> Policy fragment contract value. </summary>
         public IReadOnlyList<PolicyFragmentContractData> Value { get; }
-        /// <summary>
-        /// Total record count number.
-        /// Serialized Name: PolicyFragmentListResult.count
-        /// </summary>
+        /// <summary> Total record count number. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: PolicyFragmentListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The reason for restriction.
-    /// Serialized Name: ApiManagementSkuRestrictionsReasonCode
-    /// </summary>
+    /// <summary> The reason for restriction. </summary>
     public enum ApiManagementSkuRestrictionsReasonCode
     {
-        /// <summary>
-        /// QuotaId
-        /// Serialized Name: ApiManagementSkuRestrictionsReasonCode.QuotaId
-        /// </summary>
+        /// <summary> QuotaId. </summary>
         QuotaId,
-        /// <summary>
-        /// NotAvailableForSubscription
-        /// Serialized Name: ApiManagementSkuRestrictionsReasonCode.NotAvailableForSubscription
-        /// </summary>
+        /// <summary> NotAvailableForSubscription. </summary>
         NotAvailableForSubscription
     }
 }

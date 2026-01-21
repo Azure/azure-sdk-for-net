@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementPortalRevision data model.
     /// Portal Revision's contract details.
-    /// Serialized Name: PortalRevisionContract
     /// </summary>
     public partial class ApiManagementPortalRevisionData : ResourceData
     {
@@ -62,34 +61,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// Portal revision description.
-        /// Serialized Name: PortalRevisionContract.properties.description
-        /// </param>
-        /// <param name="statusDetails">
-        /// Portal revision publishing status details.
-        /// Serialized Name: PortalRevisionContract.properties.statusDetails
-        /// </param>
-        /// <param name="status">
-        /// Status of the portal's revision.
-        /// Serialized Name: PortalRevisionContract.properties.status
-        /// </param>
-        /// <param name="isCurrent">
-        /// Indicates if the portal's revision is public.
-        /// Serialized Name: PortalRevisionContract.properties.isCurrent
-        /// </param>
-        /// <param name="createdOn">
-        /// Portal's revision creation date and time.
-        /// Serialized Name: PortalRevisionContract.properties.createdDateTime
-        /// </param>
-        /// <param name="updatedOn">
-        /// Last updated date and time.
-        /// Serialized Name: PortalRevisionContract.properties.updatedDateTime
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state
-        /// Serialized Name: PortalRevisionContract.properties.provisioningState
-        /// </param>
+        /// <param name="description"> Portal revision description. </param>
+        /// <param name="statusDetails"> Portal revision publishing status details. </param>
+        /// <param name="status"> Status of the portal's revision. </param>
+        /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
+        /// <param name="createdOn"> Portal's revision creation date and time. </param>
+        /// <param name="updatedOn"> Last updated date and time. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -103,46 +81,25 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Portal revision description.
-        /// Serialized Name: PortalRevisionContract.properties.description
-        /// </summary>
+        /// <summary> Portal revision description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Portal revision publishing status details.
-        /// Serialized Name: PortalRevisionContract.properties.statusDetails
-        /// </summary>
+        /// <summary> Portal revision publishing status details. </summary>
         [WirePath("properties.statusDetails")]
         public string StatusDetails { get; }
-        /// <summary>
-        /// Status of the portal's revision.
-        /// Serialized Name: PortalRevisionContract.properties.status
-        /// </summary>
+        /// <summary> Status of the portal's revision. </summary>
         [WirePath("properties.status")]
         public PortalRevisionStatus? Status { get; }
-        /// <summary>
-        /// Indicates if the portal's revision is public.
-        /// Serialized Name: PortalRevisionContract.properties.isCurrent
-        /// </summary>
+        /// <summary> Indicates if the portal's revision is public. </summary>
         [WirePath("properties.isCurrent")]
         public bool? IsCurrent { get; set; }
-        /// <summary>
-        /// Portal's revision creation date and time.
-        /// Serialized Name: PortalRevisionContract.properties.createdDateTime
-        /// </summary>
+        /// <summary> Portal's revision creation date and time. </summary>
         [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Last updated date and time.
-        /// Serialized Name: PortalRevisionContract.properties.updatedDateTime
-        /// </summary>
+        /// <summary> Last updated date and time. </summary>
         [WirePath("properties.updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary>
-        /// The provisioning state
-        /// Serialized Name: PortalRevisionContract.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }

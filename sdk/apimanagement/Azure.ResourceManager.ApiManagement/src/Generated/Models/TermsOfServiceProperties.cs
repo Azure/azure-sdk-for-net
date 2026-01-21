@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Terms of service contract properties.
-    /// Serialized Name: TermsOfServiceProperties
-    /// </summary>
+    /// <summary> Terms of service contract properties. </summary>
     public partial class TermsOfServiceProperties
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
-        /// <param name="text">
-        /// A terms of service text.
-        /// Serialized Name: TermsOfServiceProperties.text
-        /// </param>
-        /// <param name="isDisplayEnabled">
-        /// Display terms of service during a sign-up process.
-        /// Serialized Name: TermsOfServiceProperties.enabled
-        /// </param>
-        /// <param name="isConsentRequired">
-        /// Ask user for consent to the terms of service.
-        /// Serialized Name: TermsOfServiceProperties.consentRequired
-        /// </param>
+        /// <param name="text"> A terms of service text. </param>
+        /// <param name="isDisplayEnabled"> Display terms of service during a sign-up process. </param>
+        /// <param name="isConsentRequired"> Ask user for consent to the terms of service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A terms of service text.
-        /// Serialized Name: TermsOfServiceProperties.text
-        /// </summary>
+        /// <summary> A terms of service text. </summary>
         [WirePath("text")]
         public string Text { get; set; }
-        /// <summary>
-        /// Display terms of service during a sign-up process.
-        /// Serialized Name: TermsOfServiceProperties.enabled
-        /// </summary>
+        /// <summary> Display terms of service during a sign-up process. </summary>
         [WirePath("enabled")]
         public bool? IsDisplayEnabled { get; set; }
-        /// <summary>
-        /// Ask user for consent to the terms of service.
-        /// Serialized Name: TermsOfServiceProperties.consentRequired
-        /// </summary>
+        /// <summary> Ask user for consent to the terms of service. </summary>
         [WirePath("consentRequired")]
         public bool? IsConsentRequired { get; set; }
     }

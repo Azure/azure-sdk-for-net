@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Response of the GetDomainOwnershipIdentifier operation.
-    /// Serialized Name: ApiManagementServiceGetDomainOwnershipIdentifierResult
-    /// </summary>
+    /// <summary> Response of the GetDomainOwnershipIdentifier operation. </summary>
     public partial class ApiManagementServiceGetDomainOwnershipIdentifierResult
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetDomainOwnershipIdentifierResult"/>. </summary>
-        /// <param name="domainOwnershipIdentifier">
-        /// The domain ownership identifier value.
-        /// Serialized Name: ApiManagementServiceGetDomainOwnershipIdentifierResult.domainOwnershipIdentifier
-        /// </param>
+        /// <param name="domainOwnershipIdentifier"> The domain ownership identifier value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceGetDomainOwnershipIdentifierResult(string domainOwnershipIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The domain ownership identifier value.
-        /// Serialized Name: ApiManagementServiceGetDomainOwnershipIdentifierResult.domainOwnershipIdentifier
-        /// </summary>
+        /// <summary> The domain ownership identifier value. </summary>
         [WirePath("domainOwnershipIdentifier")]
         public string DomainOwnershipIdentifier { get; }
     }

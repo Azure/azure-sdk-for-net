@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Diagnostic settings for Large Language Models
-    /// Serialized Name: LLMDiagnosticSettings
-    /// </summary>
+    /// <summary> Diagnostic settings for Large Language Models. </summary>
     public partial class LLMDiagnosticSettings
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LLMDiagnosticSettings"/>. </summary>
-        /// <param name="logs">
-        /// Specifies whether default diagnostic should be enabled for Large Language Models or not.
-        /// Serialized Name: LLMDiagnosticSettings.logs
-        /// </param>
-        /// <param name="requests">
-        /// Diagnostic settings for Large Language Models requests.
-        /// Serialized Name: LLMDiagnosticSettings.requests
-        /// </param>
-        /// <param name="responses">
-        /// Diagnostic settings for Large Language Models responses.
-        /// Serialized Name: LLMDiagnosticSettings.responses
-        /// </param>
+        /// <param name="logs"> Specifies whether default diagnostic should be enabled for Large Language Models or not. </param>
+        /// <param name="requests"> Diagnostic settings for Large Language Models requests. </param>
+        /// <param name="responses"> Diagnostic settings for Large Language Models responses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LLMDiagnosticSettings(LlmDiagnosticSetting? logs, LLMMessageDiagnosticSettings requests, LLMMessageDiagnosticSettings responses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifies whether default diagnostic should be enabled for Large Language Models or not.
-        /// Serialized Name: LLMDiagnosticSettings.logs
-        /// </summary>
+        /// <summary> Specifies whether default diagnostic should be enabled for Large Language Models or not. </summary>
         [WirePath("logs")]
         public LlmDiagnosticSetting? Logs { get; set; }
-        /// <summary>
-        /// Diagnostic settings for Large Language Models requests.
-        /// Serialized Name: LLMDiagnosticSettings.requests
-        /// </summary>
+        /// <summary> Diagnostic settings for Large Language Models requests. </summary>
         [WirePath("requests")]
         public LLMMessageDiagnosticSettings Requests { get; set; }
-        /// <summary>
-        /// Diagnostic settings for Large Language Models responses.
-        /// Serialized Name: LLMDiagnosticSettings.responses
-        /// </summary>
+        /// <summary> Diagnostic settings for Large Language Models responses. </summary>
         [WirePath("responses")]
         public LLMMessageDiagnosticSettings Responses { get; set; }
     }

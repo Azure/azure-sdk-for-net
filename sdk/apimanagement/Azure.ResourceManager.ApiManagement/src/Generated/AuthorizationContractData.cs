@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the AuthorizationContract data model.
     /// Authorization contract.
-    /// Serialized Name: AuthorizationContract
     /// </summary>
     public partial class AuthorizationContractData : ResourceData
     {
@@ -63,26 +62,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="authorizationType">
-        /// Authorization type options
-        /// Serialized Name: AuthorizationContract.properties.authorizationType
-        /// </param>
-        /// <param name="oAuth2GrantType">
-        /// OAuth2 grant type options
-        /// Serialized Name: AuthorizationContract.properties.oauth2grantType
-        /// </param>
-        /// <param name="parameters">
-        /// Authorization parameters
-        /// Serialized Name: AuthorizationContract.properties.parameters
-        /// </param>
-        /// <param name="error">
-        /// Authorization error details.
-        /// Serialized Name: AuthorizationContract.properties.error
-        /// </param>
-        /// <param name="status">
-        /// Status of the Authorization
-        /// Serialized Name: AuthorizationContract.properties.status
-        /// </param>
+        /// <param name="authorizationType"> Authorization type options. </param>
+        /// <param name="oAuth2GrantType"> OAuth2 grant type options. </param>
+        /// <param name="parameters"> Authorization parameters. </param>
+        /// <param name="error"> Authorization error details. </param>
+        /// <param name="status"> Status of the Authorization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementAuthorizationType? authorizationType, OAuth2GrantType? oAuth2GrantType, IDictionary<string, string> parameters, ApiManagementAuthorizationError error, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -94,34 +78,19 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Authorization type options
-        /// Serialized Name: AuthorizationContract.properties.authorizationType
-        /// </summary>
+        /// <summary> Authorization type options. </summary>
         [WirePath("properties.authorizationType")]
         public ApiManagementAuthorizationType? AuthorizationType { get; set; }
-        /// <summary>
-        /// OAuth2 grant type options
-        /// Serialized Name: AuthorizationContract.properties.oauth2grantType
-        /// </summary>
+        /// <summary> OAuth2 grant type options. </summary>
         [WirePath("properties.oauth2grantType")]
         public OAuth2GrantType? OAuth2GrantType { get; set; }
-        /// <summary>
-        /// Authorization parameters
-        /// Serialized Name: AuthorizationContract.properties.parameters
-        /// </summary>
+        /// <summary> Authorization parameters. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Authorization error details.
-        /// Serialized Name: AuthorizationContract.properties.error
-        /// </summary>
+        /// <summary> Authorization error details. </summary>
         [WirePath("properties.error")]
         public ApiManagementAuthorizationError Error { get; set; }
-        /// <summary>
-        /// Status of the Authorization
-        /// Serialized Name: AuthorizationContract.properties.status
-        /// </summary>
+        /// <summary> Status of the Authorization. </summary>
         [WirePath("properties.status")]
         public string Status { get; set; }
     }

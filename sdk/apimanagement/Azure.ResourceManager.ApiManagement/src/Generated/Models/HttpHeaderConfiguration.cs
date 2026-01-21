@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// HTTP header and it's value.
-    /// Serialized Name: HttpHeader
-    /// </summary>
+    /// <summary> HTTP header and it's value. </summary>
     public partial class HttpHeaderConfiguration
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HttpHeaderConfiguration"/>. </summary>
-        /// <param name="name">
-        /// Header name.
-        /// Serialized Name: HttpHeader.name
-        /// </param>
-        /// <param name="value">
-        /// Header value.
-        /// Serialized Name: HttpHeader.value
-        /// </param>
+        /// <param name="name"> Header name. </param>
+        /// <param name="value"> Header value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public HttpHeaderConfiguration(string name, string value)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpHeaderConfiguration"/>. </summary>
-        /// <param name="name">
-        /// Header name.
-        /// Serialized Name: HttpHeader.name
-        /// </param>
-        /// <param name="value">
-        /// Header value.
-        /// Serialized Name: HttpHeader.value
-        /// </param>
+        /// <param name="name"> Header name. </param>
+        /// <param name="value"> Header value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HttpHeaderConfiguration(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,16 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Header name.
-        /// Serialized Name: HttpHeader.name
-        /// </summary>
+        /// <summary> Header name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Header value.
-        /// Serialized Name: HttpHeader.value
-        /// </summary>
+        /// <summary> Header value. </summary>
         [WirePath("value")]
         public string Value { get; }
     }

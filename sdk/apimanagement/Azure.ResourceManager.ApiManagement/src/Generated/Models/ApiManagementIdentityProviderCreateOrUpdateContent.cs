@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Identity Provider details.
-    /// Serialized Name: IdentityProviderCreateContract
-    /// </summary>
+    /// <summary> Identity Provider details. </summary>
     public partial class ApiManagementIdentityProviderCreateOrUpdateContent : ResourceData
     {
         /// <summary>
@@ -61,54 +58,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identityProviderType">
-        /// Identity Provider Type identifier.
-        /// Serialized Name: IdentityProviderCreateContract.properties.type
-        /// </param>
-        /// <param name="signInTenant">
-        /// The TenantId to use instead of Common when logging into Active Directory
-        /// Serialized Name: IdentityProviderCreateContract.properties.signinTenant
-        /// </param>
-        /// <param name="allowedTenants">
-        /// List of Allowed Tenants when configuring Azure Active Directory login.
-        /// Serialized Name: IdentityProviderCreateContract.properties.allowedTenants
-        /// </param>
-        /// <param name="authority">
-        /// OpenID Connect discovery endpoint hostname for AAD or AAD B2C.
-        /// Serialized Name: IdentityProviderCreateContract.properties.authority
-        /// </param>
-        /// <param name="signUpPolicyName">
-        /// Signup Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.signupPolicyName
-        /// </param>
-        /// <param name="signInPolicyName">
-        /// Signin Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.signinPolicyName
-        /// </param>
-        /// <param name="profileEditingPolicyName">
-        /// Profile Editing Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.profileEditingPolicyName
-        /// </param>
-        /// <param name="passwordResetPolicyName">
-        /// Password Reset Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.passwordResetPolicyName
-        /// </param>
-        /// <param name="clientLibrary">
-        /// The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.clientLibrary
-        /// </param>
-        /// <param name="clientId">
-        /// Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft.
-        /// Serialized Name: IdentityProviderCreateContract.properties.clientId
-        /// </param>
-        /// <param name="clientSecret">
-        /// Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
-        /// Serialized Name: IdentityProviderCreateContract.properties.clientSecret
-        /// </param>
-        /// <param name="certificateId">
-        /// Certificate full resource ID used in external Identity Provider
-        /// Serialized Name: IdentityProviderCreateContract.properties.certificateId
-        /// </param>
+        /// <param name="identityProviderType"> Identity Provider Type identifier. </param>
+        /// <param name="signInTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
+        /// <param name="allowedTenants"> List of Allowed Tenants when configuring Azure Active Directory login. </param>
+        /// <param name="authority"> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </param>
+        /// <param name="signUpPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signInPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="clientLibrary"> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </param>
+        /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
+        /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="certificateId"> Certificate full resource ID used in external Identity Provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret, ResourceIdentifier certificateId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -127,76 +88,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Identity Provider Type identifier.
-        /// Serialized Name: IdentityProviderCreateContract.properties.type
-        /// </summary>
+        /// <summary> Identity Provider Type identifier. </summary>
         [WirePath("properties.type")]
         public IdentityProviderType? IdentityProviderType { get; set; }
-        /// <summary>
-        /// The TenantId to use instead of Common when logging into Active Directory
-        /// Serialized Name: IdentityProviderCreateContract.properties.signinTenant
-        /// </summary>
+        /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
         [WirePath("properties.signinTenant")]
         public string SignInTenant { get; set; }
-        /// <summary>
-        /// List of Allowed Tenants when configuring Azure Active Directory login.
-        /// Serialized Name: IdentityProviderCreateContract.properties.allowedTenants
-        /// </summary>
+        /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
         [WirePath("properties.allowedTenants")]
         public IList<string> AllowedTenants { get; }
-        /// <summary>
-        /// OpenID Connect discovery endpoint hostname for AAD or AAD B2C.
-        /// Serialized Name: IdentityProviderCreateContract.properties.authority
-        /// </summary>
+        /// <summary> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </summary>
         [WirePath("properties.authority")]
         public string Authority { get; set; }
-        /// <summary>
-        /// Signup Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.signupPolicyName
-        /// </summary>
+        /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.signupPolicyName")]
         public string SignUpPolicyName { get; set; }
-        /// <summary>
-        /// Signin Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.signinPolicyName
-        /// </summary>
+        /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.signinPolicyName")]
         public string SignInPolicyName { get; set; }
-        /// <summary>
-        /// Profile Editing Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.profileEditingPolicyName
-        /// </summary>
+        /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.profileEditingPolicyName")]
         public string ProfileEditingPolicyName { get; set; }
-        /// <summary>
-        /// Password Reset Policy Name. Only applies to AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.passwordResetPolicyName
-        /// </summary>
+        /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.passwordResetPolicyName")]
         public string PasswordResetPolicyName { get; set; }
-        /// <summary>
-        /// The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider.
-        /// Serialized Name: IdentityProviderCreateContract.properties.clientLibrary
-        /// </summary>
+        /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
         [WirePath("properties.clientLibrary")]
         public string ClientLibrary { get; set; }
-        /// <summary>
-        /// Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft.
-        /// Serialized Name: IdentityProviderCreateContract.properties.clientId
-        /// </summary>
+        /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
         [WirePath("properties.clientId")]
         public string ClientId { get; set; }
-        /// <summary>
-        /// Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
-        /// Serialized Name: IdentityProviderCreateContract.properties.clientSecret
-        /// </summary>
+        /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("properties.clientSecret")]
         public string ClientSecret { get; set; }
-        /// <summary>
-        /// Certificate full resource ID used in external Identity Provider
-        /// Serialized Name: IdentityProviderCreateContract.properties.certificateId
-        /// </summary>
+        /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
         [WirePath("properties.certificateId")]
         public ResourceIdentifier CertificateId { get; set; }
     }

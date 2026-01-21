@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Region profile.
-    /// Serialized Name: RegionContract
-    /// </summary>
+    /// <summary> Region profile. </summary>
     public partial class RegionContract
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegionContract"/>. </summary>
-        /// <param name="name">
-        /// Region name.
-        /// Serialized Name: RegionContract.name
-        /// </param>
-        /// <param name="isMasterRegion">
-        /// whether Region is the master region.
-        /// Serialized Name: RegionContract.isMasterRegion
-        /// </param>
-        /// <param name="isDeleted">
-        /// whether Region is deleted.
-        /// Serialized Name: RegionContract.isDeleted
-        /// </param>
+        /// <param name="name"> Region name. </param>
+        /// <param name="isMasterRegion"> whether Region is the master region. </param>
+        /// <param name="isDeleted"> whether Region is deleted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegionContract(string name, bool? isMasterRegion, bool? isDeleted, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Region name.
-        /// Serialized Name: RegionContract.name
-        /// </summary>
+        /// <summary> Region name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// whether Region is the master region.
-        /// Serialized Name: RegionContract.isMasterRegion
-        /// </summary>
+        /// <summary> whether Region is the master region. </summary>
         [WirePath("isMasterRegion")]
         public bool? IsMasterRegion { get; }
-        /// <summary>
-        /// whether Region is deleted.
-        /// Serialized Name: RegionContract.isDeleted
-        /// </summary>
+        /// <summary> whether Region is deleted. </summary>
         [WirePath("isDeleted")]
         public bool? IsDeleted { get; }
     }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Report data.
-    /// Serialized Name: ReportRecordContract
-    /// </summary>
+    /// <summary> Report data. </summary>
     public partial class ReportRecordContract
     {
         /// <summary>
@@ -55,110 +52,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReportRecordContract"/>. </summary>
-        /// <param name="name">
-        /// Name depending on report endpoint specifies product, API, operation or developer name.
-        /// Serialized Name: ReportRecordContract.name
-        /// </param>
-        /// <param name="timestamp">
-        /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ReportRecordContract.timestamp
-        /// </param>
-        /// <param name="interval">
-        /// Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).
-        /// Serialized Name: ReportRecordContract.interval
-        /// </param>
-        /// <param name="country">
-        /// Country to which this record data is related.
-        /// Serialized Name: ReportRecordContract.country
-        /// </param>
-        /// <param name="region">
-        /// Country region to which this record data is related.
-        /// Serialized Name: ReportRecordContract.region
-        /// </param>
-        /// <param name="zip">
-        /// Zip code to which this record data is related.
-        /// Serialized Name: ReportRecordContract.zip
-        /// </param>
-        /// <param name="userId">
-        /// User identifier path. /users/{userId}
-        /// Serialized Name: ReportRecordContract.userId
-        /// </param>
-        /// <param name="productId">
-        /// Product identifier path. /products/{productId}
-        /// Serialized Name: ReportRecordContract.productId
-        /// </param>
-        /// <param name="apiId">
-        /// API identifier path. /apis/{apiId}
-        /// Serialized Name: ReportRecordContract.apiId
-        /// </param>
-        /// <param name="operationId">
-        /// Operation identifier path. /apis/{apiId}/operations/{operationId}
-        /// Serialized Name: ReportRecordContract.operationId
-        /// </param>
-        /// <param name="apiRegion">
-        /// API region identifier.
-        /// Serialized Name: ReportRecordContract.apiRegion
-        /// </param>
-        /// <param name="subscriptionResourceId">
-        /// Subscription identifier path. /subscriptions/{subscriptionId}
-        /// Serialized Name: ReportRecordContract.subscriptionId
-        /// </param>
-        /// <param name="callCountSuccess">
-        /// Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect
-        /// Serialized Name: ReportRecordContract.callCountSuccess
-        /// </param>
-        /// <param name="callCountBlocked">
-        /// Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests
-        /// Serialized Name: ReportRecordContract.callCountBlocked
-        /// </param>
-        /// <param name="callCountFailed">
-        /// Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600
-        /// Serialized Name: ReportRecordContract.callCountFailed
-        /// </param>
-        /// <param name="callCountOther">
-        /// Number of other calls.
-        /// Serialized Name: ReportRecordContract.callCountOther
-        /// </param>
-        /// <param name="callCountTotal">
-        /// Total number of calls.
-        /// Serialized Name: ReportRecordContract.callCountTotal
-        /// </param>
-        /// <param name="bandwidth">
-        /// Bandwidth consumed.
-        /// Serialized Name: ReportRecordContract.bandwidth
-        /// </param>
-        /// <param name="cacheHitCount">
-        /// Number of times when content was served from cache policy.
-        /// Serialized Name: ReportRecordContract.cacheHitCount
-        /// </param>
-        /// <param name="cacheMissCount">
-        /// Number of times content was fetched from backend.
-        /// Serialized Name: ReportRecordContract.cacheMissCount
-        /// </param>
-        /// <param name="apiTimeAvg">
-        /// Average time it took to process request.
-        /// Serialized Name: ReportRecordContract.apiTimeAvg
-        /// </param>
-        /// <param name="apiTimeMin">
-        /// Minimum time it took to process request.
-        /// Serialized Name: ReportRecordContract.apiTimeMin
-        /// </param>
-        /// <param name="apiTimeMax">
-        /// Maximum time it took to process request.
-        /// Serialized Name: ReportRecordContract.apiTimeMax
-        /// </param>
-        /// <param name="serviceTimeAvg">
-        /// Average time it took to process request on backend.
-        /// Serialized Name: ReportRecordContract.serviceTimeAvg
-        /// </param>
-        /// <param name="serviceTimeMin">
-        /// Minimum time it took to process request on backend.
-        /// Serialized Name: ReportRecordContract.serviceTimeMin
-        /// </param>
-        /// <param name="serviceTimeMax">
-        /// Maximum time it took to process request on backend.
-        /// Serialized Name: ReportRecordContract.serviceTimeMax
-        /// </param>
+        /// <param name="name"> Name depending on report endpoint specifies product, API, operation or developer name. </param>
+        /// <param name="timestamp"> Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="interval"> Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
+        /// <param name="country"> Country to which this record data is related. </param>
+        /// <param name="region"> Country region to which this record data is related. </param>
+        /// <param name="zip"> Zip code to which this record data is related. </param>
+        /// <param name="userId"> User identifier path. /users/{userId}. </param>
+        /// <param name="productId"> Product identifier path. /products/{productId}. </param>
+        /// <param name="apiId"> API identifier path. /apis/{apiId}. </param>
+        /// <param name="operationId"> Operation identifier path. /apis/{apiId}/operations/{operationId}. </param>
+        /// <param name="apiRegion"> API region identifier. </param>
+        /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
+        /// <param name="callCountSuccess"> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </param>
+        /// <param name="callCountBlocked"> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </param>
+        /// <param name="callCountFailed"> Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </param>
+        /// <param name="callCountOther"> Number of other calls. </param>
+        /// <param name="callCountTotal"> Total number of calls. </param>
+        /// <param name="bandwidth"> Bandwidth consumed. </param>
+        /// <param name="cacheHitCount"> Number of times when content was served from cache policy. </param>
+        /// <param name="cacheMissCount"> Number of times content was fetched from backend. </param>
+        /// <param name="apiTimeAvg"> Average time it took to process request. </param>
+        /// <param name="apiTimeMin"> Minimum time it took to process request. </param>
+        /// <param name="apiTimeMax"> Maximum time it took to process request. </param>
+        /// <param name="serviceTimeAvg"> Average time it took to process request on backend. </param>
+        /// <param name="serviceTimeMin"> Minimum time it took to process request on backend. </param>
+        /// <param name="serviceTimeMax"> Maximum time it took to process request on backend. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReportRecordContract(string name, DateTimeOffset? timestamp, string interval, string country, string region, string zip, string userId, string productId, string apiId, string operationId, string apiRegion, ResourceIdentifier subscriptionResourceId, int? callCountSuccess, int? callCountBlocked, int? callCountFailed, int? callCountOther, int? callCountTotal, long? bandwidth, int? cacheHitCount, int? cacheMissCount, double? apiTimeAvg, double? apiTimeMin, double? apiTimeMax, double? serviceTimeAvg, double? serviceTimeMin, double? serviceTimeMax, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -191,160 +110,82 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name depending on report endpoint specifies product, API, operation or developer name.
-        /// Serialized Name: ReportRecordContract.name
-        /// </summary>
+        /// <summary> Name depending on report endpoint specifies product, API, operation or developer name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: ReportRecordContract.timestamp
-        /// </summary>
+        /// <summary> Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
-        /// <summary>
-        /// Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).
-        /// Serialized Name: ReportRecordContract.interval
-        /// </summary>
+        /// <summary> Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). </summary>
         [WirePath("interval")]
         public string Interval { get; }
-        /// <summary>
-        /// Country to which this record data is related.
-        /// Serialized Name: ReportRecordContract.country
-        /// </summary>
+        /// <summary> Country to which this record data is related. </summary>
         [WirePath("country")]
         public string Country { get; }
-        /// <summary>
-        /// Country region to which this record data is related.
-        /// Serialized Name: ReportRecordContract.region
-        /// </summary>
+        /// <summary> Country region to which this record data is related. </summary>
         [WirePath("region")]
         public string Region { get; }
-        /// <summary>
-        /// Zip code to which this record data is related.
-        /// Serialized Name: ReportRecordContract.zip
-        /// </summary>
+        /// <summary> Zip code to which this record data is related. </summary>
         [WirePath("zip")]
         public string Zip { get; }
-        /// <summary>
-        /// User identifier path. /users/{userId}
-        /// Serialized Name: ReportRecordContract.userId
-        /// </summary>
+        /// <summary> User identifier path. /users/{userId}. </summary>
         [WirePath("userId")]
         public string UserId { get; }
-        /// <summary>
-        /// Product identifier path. /products/{productId}
-        /// Serialized Name: ReportRecordContract.productId
-        /// </summary>
+        /// <summary> Product identifier path. /products/{productId}. </summary>
         [WirePath("productId")]
         public string ProductId { get; }
-        /// <summary>
-        /// API identifier path. /apis/{apiId}
-        /// Serialized Name: ReportRecordContract.apiId
-        /// </summary>
+        /// <summary> API identifier path. /apis/{apiId}. </summary>
         [WirePath("apiId")]
         public string ApiId { get; }
-        /// <summary>
-        /// Operation identifier path. /apis/{apiId}/operations/{operationId}
-        /// Serialized Name: ReportRecordContract.operationId
-        /// </summary>
+        /// <summary> Operation identifier path. /apis/{apiId}/operations/{operationId}. </summary>
         [WirePath("operationId")]
         public string OperationId { get; }
-        /// <summary>
-        /// API region identifier.
-        /// Serialized Name: ReportRecordContract.apiRegion
-        /// </summary>
+        /// <summary> API region identifier. </summary>
         [WirePath("apiRegion")]
         public string ApiRegion { get; }
-        /// <summary>
-        /// Subscription identifier path. /subscriptions/{subscriptionId}
-        /// Serialized Name: ReportRecordContract.subscriptionId
-        /// </summary>
+        /// <summary> Subscription identifier path. /subscriptions/{subscriptionId}. </summary>
         [WirePath("subscriptionId")]
         public ResourceIdentifier SubscriptionResourceId { get; }
-        /// <summary>
-        /// Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect
-        /// Serialized Name: ReportRecordContract.callCountSuccess
-        /// </summary>
+        /// <summary> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </summary>
         [WirePath("callCountSuccess")]
         public int? CallCountSuccess { get; }
-        /// <summary>
-        /// Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests
-        /// Serialized Name: ReportRecordContract.callCountBlocked
-        /// </summary>
+        /// <summary> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </summary>
         [WirePath("callCountBlocked")]
         public int? CallCountBlocked { get; }
-        /// <summary>
-        /// Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600
-        /// Serialized Name: ReportRecordContract.callCountFailed
-        /// </summary>
+        /// <summary> Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </summary>
         [WirePath("callCountFailed")]
         public int? CallCountFailed { get; }
-        /// <summary>
-        /// Number of other calls.
-        /// Serialized Name: ReportRecordContract.callCountOther
-        /// </summary>
+        /// <summary> Number of other calls. </summary>
         [WirePath("callCountOther")]
         public int? CallCountOther { get; }
-        /// <summary>
-        /// Total number of calls.
-        /// Serialized Name: ReportRecordContract.callCountTotal
-        /// </summary>
+        /// <summary> Total number of calls. </summary>
         [WirePath("callCountTotal")]
         public int? CallCountTotal { get; }
-        /// <summary>
-        /// Bandwidth consumed.
-        /// Serialized Name: ReportRecordContract.bandwidth
-        /// </summary>
+        /// <summary> Bandwidth consumed. </summary>
         [WirePath("bandwidth")]
         public long? Bandwidth { get; }
-        /// <summary>
-        /// Number of times when content was served from cache policy.
-        /// Serialized Name: ReportRecordContract.cacheHitCount
-        /// </summary>
+        /// <summary> Number of times when content was served from cache policy. </summary>
         [WirePath("cacheHitCount")]
         public int? CacheHitCount { get; }
-        /// <summary>
-        /// Number of times content was fetched from backend.
-        /// Serialized Name: ReportRecordContract.cacheMissCount
-        /// </summary>
+        /// <summary> Number of times content was fetched from backend. </summary>
         [WirePath("cacheMissCount")]
         public int? CacheMissCount { get; }
-        /// <summary>
-        /// Average time it took to process request.
-        /// Serialized Name: ReportRecordContract.apiTimeAvg
-        /// </summary>
+        /// <summary> Average time it took to process request. </summary>
         [WirePath("apiTimeAvg")]
         public double? ApiTimeAvg { get; }
-        /// <summary>
-        /// Minimum time it took to process request.
-        /// Serialized Name: ReportRecordContract.apiTimeMin
-        /// </summary>
+        /// <summary> Minimum time it took to process request. </summary>
         [WirePath("apiTimeMin")]
         public double? ApiTimeMin { get; }
-        /// <summary>
-        /// Maximum time it took to process request.
-        /// Serialized Name: ReportRecordContract.apiTimeMax
-        /// </summary>
+        /// <summary> Maximum time it took to process request. </summary>
         [WirePath("apiTimeMax")]
         public double? ApiTimeMax { get; }
-        /// <summary>
-        /// Average time it took to process request on backend.
-        /// Serialized Name: ReportRecordContract.serviceTimeAvg
-        /// </summary>
+        /// <summary> Average time it took to process request on backend. </summary>
         [WirePath("serviceTimeAvg")]
         public double? ServiceTimeAvg { get; }
-        /// <summary>
-        /// Minimum time it took to process request on backend.
-        /// Serialized Name: ReportRecordContract.serviceTimeMin
-        /// </summary>
+        /// <summary> Minimum time it took to process request on backend. </summary>
         [WirePath("serviceTimeMin")]
         public double? ServiceTimeMin { get; }
-        /// <summary>
-        /// Maximum time it took to process request on backend.
-        /// Serialized Name: ReportRecordContract.serviceTimeMax
-        /// </summary>
+        /// <summary> Maximum time it took to process request on backend. </summary>
         [WirePath("serviceTimeMax")]
         public double? ServiceTimeMax { get; }
     }

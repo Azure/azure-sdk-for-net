@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Group contract Properties.
-    /// Serialized Name: GroupContractProperties
-    /// </summary>
+    /// <summary> Group contract Properties. </summary>
     public partial class GroupContractProperties
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
-        /// <param name="displayName">
-        /// Group name.
-        /// Serialized Name: GroupContractProperties.displayName
-        /// </param>
+        /// <param name="displayName"> Group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         internal GroupContractProperties(string displayName)
         {
@@ -62,26 +56,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
-        /// <param name="displayName">
-        /// Group name.
-        /// Serialized Name: GroupContractProperties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Group description. Can contain HTML formatting tags.
-        /// Serialized Name: GroupContractProperties.description
-        /// </param>
-        /// <param name="isBuiltIn">
-        /// true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.
-        /// Serialized Name: GroupContractProperties.builtIn
-        /// </param>
-        /// <param name="apiManagementGroupType">
-        /// Group type.
-        /// Serialized Name: GroupContractProperties.type
-        /// </param>
-        /// <param name="externalId">
-        /// For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null.
-        /// Serialized Name: GroupContractProperties.externalId
-        /// </param>
+        /// <param name="displayName"> Group name. </param>
+        /// <param name="description"> Group description. Can contain HTML formatting tags. </param>
+        /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
+        /// <param name="apiManagementGroupType"> Group type. </param>
+        /// <param name="externalId"> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GroupContractProperties(string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? apiManagementGroupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -98,34 +77,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Group name.
-        /// Serialized Name: GroupContractProperties.displayName
-        /// </summary>
+        /// <summary> Group name. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary>
-        /// Group description. Can contain HTML formatting tags.
-        /// Serialized Name: GroupContractProperties.description
-        /// </summary>
+        /// <summary> Group description. Can contain HTML formatting tags. </summary>
         [WirePath("description")]
         public string Description { get; }
-        /// <summary>
-        /// true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.
-        /// Serialized Name: GroupContractProperties.builtIn
-        /// </summary>
+        /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
         [WirePath("builtIn")]
         public bool? IsBuiltIn { get; }
-        /// <summary>
-        /// Group type.
-        /// Serialized Name: GroupContractProperties.type
-        /// </summary>
+        /// <summary> Group type. </summary>
         [WirePath("type")]
         public ApiManagementGroupType? ApiManagementGroupType { get; }
-        /// <summary>
-        /// For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null.
-        /// Serialized Name: GroupContractProperties.externalId
-        /// </summary>
+        /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("externalId")]
         public string ExternalId { get; }
     }

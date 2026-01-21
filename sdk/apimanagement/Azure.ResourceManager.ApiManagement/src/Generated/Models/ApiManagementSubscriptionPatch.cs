@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Subscription update details.
-    /// Serialized Name: SubscriptionUpdateParameters
-    /// </summary>
+    /// <summary> Subscription update details. </summary>
     public partial class ApiManagementSubscriptionPatch
     {
         /// <summary>
@@ -54,42 +51,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
-        /// <param name="ownerId">
-        /// User identifier path: /users/{userId}
-        /// Serialized Name: SubscriptionUpdateParameters.properties.ownerId
-        /// </param>
-        /// <param name="scope">
-        /// Scope like /products/{productId} or /apis or /apis/{apiId}
-        /// Serialized Name: SubscriptionUpdateParameters.properties.scope
-        /// </param>
-        /// <param name="expireOn">
-        /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.expirationDate
-        /// </param>
-        /// <param name="displayName">
-        /// Subscription name.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.displayName
-        /// </param>
-        /// <param name="primaryKey">
-        /// Primary subscription key.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.primaryKey
-        /// </param>
-        /// <param name="secondaryKey">
-        /// Secondary subscription key.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.secondaryKey
-        /// </param>
-        /// <param name="state">
-        /// Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.state
-        /// </param>
-        /// <param name="stateComment">
-        /// Comments describing subscription state change by the administrator when the state is changed to the 'rejected'.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.stateComment
-        /// </param>
-        /// <param name="allowTracing">
-        /// Determines whether tracing can be enabled
-        /// Serialized Name: SubscriptionUpdateParameters.properties.allowTracing
-        /// </param>
+        /// <param name="ownerId"> User identifier path: /users/{userId}. </param>
+        /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
+        /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="displayName"> Subscription name. </param>
+        /// <param name="primaryKey"> Primary subscription key. </param>
+        /// <param name="secondaryKey"> Secondary subscription key. </param>
+        /// <param name="state"> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
+        /// <param name="stateComment"> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </param>
+        /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSubscriptionPatch(string ownerId, string scope, DateTimeOffset? expireOn, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -105,58 +75,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User identifier path: /users/{userId}
-        /// Serialized Name: SubscriptionUpdateParameters.properties.ownerId
-        /// </summary>
+        /// <summary> User identifier path: /users/{userId}. </summary>
         [WirePath("properties.ownerId")]
         public string OwnerId { get; set; }
-        /// <summary>
-        /// Scope like /products/{productId} or /apis or /apis/{apiId}
-        /// Serialized Name: SubscriptionUpdateParameters.properties.scope
-        /// </summary>
+        /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
         [WirePath("properties.scope")]
         public string Scope { get; set; }
-        /// <summary>
-        /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.expirationDate
-        /// </summary>
+        /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.expirationDate")]
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary>
-        /// Subscription name.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.displayName
-        /// </summary>
+        /// <summary> Subscription name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Primary subscription key.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.primaryKey
-        /// </summary>
+        /// <summary> Primary subscription key. </summary>
         [WirePath("properties.primaryKey")]
         public string PrimaryKey { get; set; }
-        /// <summary>
-        /// Secondary subscription key.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.secondaryKey
-        /// </summary>
+        /// <summary> Secondary subscription key. </summary>
         [WirePath("properties.secondaryKey")]
         public string SecondaryKey { get; set; }
-        /// <summary>
-        /// Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.state
-        /// </summary>
+        /// <summary> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
         [WirePath("properties.state")]
         public SubscriptionState? State { get; set; }
-        /// <summary>
-        /// Comments describing subscription state change by the administrator when the state is changed to the 'rejected'.
-        /// Serialized Name: SubscriptionUpdateParameters.properties.stateComment
-        /// </summary>
+        /// <summary> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </summary>
         [WirePath("properties.stateComment")]
         public string StateComment { get; set; }
-        /// <summary>
-        /// Determines whether tracing can be enabled
-        /// Serialized Name: SubscriptionUpdateParameters.properties.allowTracing
-        /// </summary>
+        /// <summary> Determines whether tracing can be enabled. </summary>
         [WirePath("properties.allowTracing")]
         public bool? AllowTracing { get; set; }
     }

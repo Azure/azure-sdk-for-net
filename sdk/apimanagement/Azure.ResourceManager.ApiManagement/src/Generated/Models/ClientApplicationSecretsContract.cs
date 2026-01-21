@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Specifies client application secrets needed to authorize applications API calls
-    /// Serialized Name: ClientApplicationSecretsContract
-    /// </summary>
+    /// <summary> Specifies client application secrets needed to authorize applications API calls. </summary>
     public partial class ClientApplicationSecretsContract
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientApplicationSecretsContract"/>. </summary>
-        /// <param name="entra">
-        /// Microsoft EntraID client application secrets
-        /// Serialized Name: ClientApplicationSecretsContract.entra
-        /// </param>
+        /// <param name="entra"> Microsoft EntraID client application secrets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClientApplicationSecretsContract(ClientApplicationSecretsContractEntra entra, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Microsoft EntraID client application secrets
-        /// Serialized Name: ClientApplicationSecretsContract.entra
-        /// </summary>
+        /// <summary> Microsoft EntraID client application secrets. </summary>
         [WirePath("entra")]
         public ClientApplicationSecretsContractEntra Entra { get; }
     }

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the SubscriptionContract data model.
     /// Subscription details.
-    /// Serialized Name: SubscriptionContract
     /// </summary>
     public partial class SubscriptionContractData : ResourceData
     {
@@ -62,58 +61,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ownerId">
-        /// The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier.
-        /// Serialized Name: SubscriptionContract.properties.ownerId
-        /// </param>
-        /// <param name="scope">
-        /// Scope like /products/{productId} or /apis or /apis/{apiId}.
-        /// Serialized Name: SubscriptionContract.properties.scope
-        /// </param>
-        /// <param name="displayName">
-        /// The name of the subscription, or null if the subscription has no name.
-        /// Serialized Name: SubscriptionContract.properties.displayName
-        /// </param>
-        /// <param name="state">
-        /// Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.
-        /// Serialized Name: SubscriptionContract.properties.state
-        /// </param>
-        /// <param name="createdOn">
-        /// Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.createdDate
-        /// </param>
-        /// <param name="startOn">
-        /// Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.startDate
-        /// </param>
-        /// <param name="expireOn">
-        /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.expirationDate
-        /// </param>
-        /// <param name="endOn">
-        /// Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.endDate
-        /// </param>
-        /// <param name="notifiesOn">
-        /// Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.notificationDate
-        /// </param>
-        /// <param name="primaryKey">
-        /// Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
-        /// Serialized Name: SubscriptionContract.properties.primaryKey
-        /// </param>
-        /// <param name="secondaryKey">
-        /// Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
-        /// Serialized Name: SubscriptionContract.properties.secondaryKey
-        /// </param>
-        /// <param name="stateComment">
-        /// Optional subscription comment added by an administrator when the state is changed to the 'rejected'.
-        /// Serialized Name: SubscriptionContract.properties.stateComment
-        /// </param>
-        /// <param name="allowTracing">
-        /// Determines whether tracing is enabled
-        /// Serialized Name: SubscriptionContract.properties.allowTracing
-        /// </param>
+        /// <param name="ownerId"> The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier. </param>
+        /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
+        /// <param name="displayName"> The name of the subscription, or null if the subscription has no name. </param>
+        /// <param name="state"> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
+        /// <param name="createdOn"> Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="startOn"> Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="endOn"> Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="notifiesOn"> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="primaryKey"> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="secondaryKey"> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="stateComment"> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </param>
+        /// <param name="allowTracing"> Determines whether tracing is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ownerId, string scope, string displayName, SubscriptionState? state, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? expireOn, DateTimeOffset? endOn, DateTimeOffset? notifiesOn, string primaryKey, string secondaryKey, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -133,82 +93,43 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier.
-        /// Serialized Name: SubscriptionContract.properties.ownerId
-        /// </summary>
+        /// <summary> The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier. </summary>
         [WirePath("properties.ownerId")]
         public string OwnerId { get; set; }
-        /// <summary>
-        /// Scope like /products/{productId} or /apis or /apis/{apiId}.
-        /// Serialized Name: SubscriptionContract.properties.scope
-        /// </summary>
+        /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
         [WirePath("properties.scope")]
         public string Scope { get; set; }
-        /// <summary>
-        /// The name of the subscription, or null if the subscription has no name.
-        /// Serialized Name: SubscriptionContract.properties.displayName
-        /// </summary>
+        /// <summary> The name of the subscription, or null if the subscription has no name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.
-        /// Serialized Name: SubscriptionContract.properties.state
-        /// </summary>
+        /// <summary> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
         [WirePath("properties.state")]
         public SubscriptionState? State { get; set; }
-        /// <summary>
-        /// Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.createdDate
-        /// </summary>
+        /// <summary> Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.startDate
-        /// </summary>
+        /// <summary> Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.startDate")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.expirationDate
-        /// </summary>
+        /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.expirationDate")]
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary>
-        /// Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.endDate
-        /// </summary>
+        /// <summary> Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.endDate")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: SubscriptionContract.properties.notificationDate
-        /// </summary>
+        /// <summary> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.notificationDate")]
         public DateTimeOffset? NotifiesOn { get; set; }
-        /// <summary>
-        /// Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
-        /// Serialized Name: SubscriptionContract.properties.primaryKey
-        /// </summary>
+        /// <summary> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("properties.primaryKey")]
         public string PrimaryKey { get; set; }
-        /// <summary>
-        /// Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
-        /// Serialized Name: SubscriptionContract.properties.secondaryKey
-        /// </summary>
+        /// <summary> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("properties.secondaryKey")]
         public string SecondaryKey { get; set; }
-        /// <summary>
-        /// Optional subscription comment added by an administrator when the state is changed to the 'rejected'.
-        /// Serialized Name: SubscriptionContract.properties.stateComment
-        /// </summary>
+        /// <summary> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </summary>
         [WirePath("properties.stateComment")]
         public string StateComment { get; set; }
-        /// <summary>
-        /// Determines whether tracing is enabled
-        /// Serialized Name: SubscriptionContract.properties.allowTracing
-        /// </summary>
+        /// <summary> Determines whether tracing is enabled. </summary>
         [WirePath("properties.allowTracing")]
         public bool? AllowTracing { get; set; }
     }

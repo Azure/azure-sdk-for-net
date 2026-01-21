@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiOperation data model.
     /// API Operation details.
-    /// Serialized Name: OperationContract
     /// </summary>
     public partial class ApiOperationData : ResourceData
     {
@@ -64,38 +63,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="templateParameters">
-        /// Collection of URL template parameters.
-        /// Serialized Name: OperationContract.properties.templateParameters
-        /// </param>
-        /// <param name="description">
-        /// Description of the operation. May include HTML formatting tags.
-        /// Serialized Name: OperationContract.properties.description
-        /// </param>
-        /// <param name="request">
-        /// An entity containing request details.
-        /// Serialized Name: OperationContract.properties.request
-        /// </param>
-        /// <param name="responses">
-        /// Array of Operation responses.
-        /// Serialized Name: OperationContract.properties.responses
-        /// </param>
-        /// <param name="policies">
-        /// Operation Policies
-        /// Serialized Name: OperationContract.properties.policies
-        /// </param>
-        /// <param name="displayName">
-        /// Operation Name.
-        /// Serialized Name: OperationContract.properties.displayName
-        /// </param>
-        /// <param name="method">
-        /// A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them.
-        /// Serialized Name: OperationContract.properties.method
-        /// </param>
-        /// <param name="uriTemplate">
-        /// Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
-        /// Serialized Name: OperationContract.properties.urlTemplate
-        /// </param>
+        /// <param name="templateParameters"> Collection of URL template parameters. </param>
+        /// <param name="description"> Description of the operation. May include HTML formatting tags. </param>
+        /// <param name="request"> An entity containing request details. </param>
+        /// <param name="responses"> Array of Operation responses. </param>
+        /// <param name="policies"> Operation Policies. </param>
+        /// <param name="displayName"> Operation Name. </param>
+        /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
+        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, string displayName, string method, string uriTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -110,52 +85,28 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Collection of URL template parameters.
-        /// Serialized Name: OperationContract.properties.templateParameters
-        /// </summary>
+        /// <summary> Collection of URL template parameters. </summary>
         [WirePath("properties.templateParameters")]
         public IList<ParameterContract> TemplateParameters { get; }
-        /// <summary>
-        /// Description of the operation. May include HTML formatting tags.
-        /// Serialized Name: OperationContract.properties.description
-        /// </summary>
+        /// <summary> Description of the operation. May include HTML formatting tags. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// An entity containing request details.
-        /// Serialized Name: OperationContract.properties.request
-        /// </summary>
+        /// <summary> An entity containing request details. </summary>
         [WirePath("properties.request")]
         public RequestContract Request { get; set; }
-        /// <summary>
-        /// Array of Operation responses.
-        /// Serialized Name: OperationContract.properties.responses
-        /// </summary>
+        /// <summary> Array of Operation responses. </summary>
         [WirePath("properties.responses")]
         public IList<ResponseContract> Responses { get; }
-        /// <summary>
-        /// Operation Policies
-        /// Serialized Name: OperationContract.properties.policies
-        /// </summary>
+        /// <summary> Operation Policies. </summary>
         [WirePath("properties.policies")]
         public string Policies { get; set; }
-        /// <summary>
-        /// Operation Name.
-        /// Serialized Name: OperationContract.properties.displayName
-        /// </summary>
+        /// <summary> Operation Name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them.
-        /// Serialized Name: OperationContract.properties.method
-        /// </summary>
+        /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
         [WirePath("properties.method")]
         public string Method { get; set; }
-        /// <summary>
-        /// Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
-        /// Serialized Name: OperationContract.properties.urlTemplate
-        /// </summary>
+        /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
         [WirePath("properties.urlTemplate")]
         public string UriTemplate { get; set; }
     }

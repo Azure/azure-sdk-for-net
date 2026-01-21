@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Control Plane Apis version constraint for the API Management service.
-    /// Serialized Name: ApiVersionConstraint
-    /// </summary>
+    /// <summary> Control Plane Apis version constraint for the API Management service. </summary>
     internal partial class ApiVersionConstraint
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiVersionConstraint"/>. </summary>
-        /// <param name="minApiVersion">
-        /// Limit control plane API calls to API Management service with version equal to or newer than this value.
-        /// Serialized Name: ApiVersionConstraint.minApiVersion
-        /// </param>
+        /// <param name="minApiVersion"> Limit control plane API calls to API Management service with version equal to or newer than this value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiVersionConstraint(string minApiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Limit control plane API calls to API Management service with version equal to or newer than this value.
-        /// Serialized Name: ApiVersionConstraint.minApiVersion
-        /// </summary>
+        /// <summary> Limit control plane API calls to API Management service with version equal to or newer than this value. </summary>
         [WirePath("minApiVersion")]
         public string MinApiVersion { get; set; }
     }

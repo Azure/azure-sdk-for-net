@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// API Management service resource SKU properties.
-    /// Serialized Name: ApiManagementServiceSkuProperties
-    /// </summary>
+    /// <summary> API Management service resource SKU properties. </summary>
     public partial class ApiManagementServiceSkuProperties
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuProperties"/>. </summary>
-        /// <param name="name">
-        /// Name of the Sku.
-        /// Serialized Name: ApiManagementServiceSkuProperties.name
-        /// </param>
-        /// <param name="capacity">
-        /// Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0.
-        /// Serialized Name: ApiManagementServiceSkuProperties.capacity
-        /// </param>
+        /// <param name="name"> Name of the Sku. </param>
+        /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
         public ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity)
         {
             Name = name;
@@ -64,14 +55,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuProperties"/>. </summary>
-        /// <param name="name">
-        /// Name of the Sku.
-        /// Serialized Name: ApiManagementServiceSkuProperties.name
-        /// </param>
-        /// <param name="capacity">
-        /// Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0.
-        /// Serialized Name: ApiManagementServiceSkuProperties.capacity
-        /// </param>
+        /// <param name="name"> Name of the Sku. </param>
+        /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,16 +70,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Name of the Sku.
-        /// Serialized Name: ApiManagementServiceSkuProperties.name
-        /// </summary>
+        /// <summary> Name of the Sku. </summary>
         [WirePath("name")]
         public ApiManagementServiceSkuType Name { get; set; }
-        /// <summary>
-        /// Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0.
-        /// Serialized Name: ApiManagementServiceSkuProperties.capacity
-        /// </summary>
+        /// <summary> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </summary>
         [WirePath("capacity")]
         public int Capacity { get; set; }
     }

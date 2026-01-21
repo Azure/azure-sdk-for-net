@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of All Policies.
-    /// Serialized Name: AllPoliciesListResult
-    /// </summary>
+    /// <summary> The response of All Policies. </summary>
     internal partial class AllPoliciesListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AllPoliciesListResult"/>. </summary>
-        /// <param name="value">
-        /// AllPolicies Contract value.
-        /// Serialized Name: AllPoliciesListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: AllPoliciesListResult.nextLink
-        /// </param>
+        /// <param name="value"> AllPolicies Contract value. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AllPoliciesListResult(IReadOnlyList<AllPoliciesContract> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// AllPolicies Contract value.
-        /// Serialized Name: AllPoliciesListResult.value
-        /// </summary>
+        /// <summary> AllPolicies Contract value. </summary>
         public IReadOnlyList<AllPoliciesContract> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: AllPoliciesListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token.
-    /// Serialized Name: ProductApplicationContractEntra
-    /// </summary>
+    /// <summary> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </summary>
     public partial class ProductApplicationContractEntra
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductApplicationContractEntra"/>. </summary>
-        /// <param name="applicationId">
-        /// Product facing EntraID application client ID.
-        /// Serialized Name: ProductApplicationContractEntra.applicationId
-        /// </param>
-        /// <param name="audience">
-        /// The EntraID application audience claim. The audience claim is used to validate the token.
-        /// Serialized Name: ProductApplicationContractEntra.audience
-        /// </param>
+        /// <param name="applicationId"> Product facing EntraID application client ID. </param>
+        /// <param name="audience"> The EntraID application audience claim. The audience claim is used to validate the token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductApplicationContractEntra(string applicationId, string audience, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Product facing EntraID application client ID.
-        /// Serialized Name: ProductApplicationContractEntra.applicationId
-        /// </summary>
+        /// <summary> Product facing EntraID application client ID. </summary>
         [WirePath("applicationId")]
         public string ApplicationId { get; set; }
-        /// <summary>
-        /// The EntraID application audience claim. The audience claim is used to validate the token.
-        /// Serialized Name: ProductApplicationContractEntra.audience
-        /// </summary>
+        /// <summary> The EntraID application audience claim. The audience claim is used to validate the token. </summary>
         [WirePath("audience")]
         public string Audience { get; set; }
     }

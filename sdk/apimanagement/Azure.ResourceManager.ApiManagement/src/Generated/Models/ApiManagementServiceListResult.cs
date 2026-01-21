@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of the List API Management services operation.
-    /// Serialized Name: ApiManagementServiceListResult
-    /// </summary>
+    /// <summary> The response of the List API Management services operation. </summary>
     internal partial class ApiManagementServiceListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceListResult"/>. </summary>
-        /// <param name="value">
-        /// Result of the List API Management services operation.
-        /// Serialized Name: ApiManagementServiceListResult.value
-        /// </param>
+        /// <param name="value"> Result of the List API Management services operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiManagementServiceListResult(IEnumerable<ApiManagementServiceData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceListResult"/>. </summary>
-        /// <param name="value">
-        /// Result of the List API Management services operation.
-        /// Serialized Name: ApiManagementServiceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management services.
-        /// Serialized Name: ApiManagementServiceListResult.nextLink
-        /// </param>
+        /// <param name="value"> Result of the List API Management services operation. </param>
+        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceListResult(IReadOnlyList<ApiManagementServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// Result of the List API Management services operation.
-        /// Serialized Name: ApiManagementServiceListResult.value
-        /// </summary>
+        /// <summary> Result of the List API Management services operation. </summary>
         public IReadOnlyList<ApiManagementServiceData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management services.
-        /// Serialized Name: ApiManagementServiceListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
         public string NextLink { get; }
     }
 }

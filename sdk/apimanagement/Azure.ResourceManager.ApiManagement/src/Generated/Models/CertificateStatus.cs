@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Certificate Status.
-    /// Serialized Name: CertificateStatus
-    /// </summary>
+    /// <summary> Certificate Status. </summary>
     public readonly partial struct CertificateStatus : IEquatable<CertificateStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string FailedValue = "Failed";
         private const string InProgressValue = "InProgress";
 
-        /// <summary>
-        /// Completed
-        /// Serialized Name: CertificateStatus.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static CertificateStatus Completed { get; } = new CertificateStatus(CompletedValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: CertificateStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static CertificateStatus Failed { get; } = new CertificateStatus(FailedValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: CertificateStatus.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static CertificateStatus InProgress { get; } = new CertificateStatus(InProgressValue);
         /// <summary> Determines if two <see cref="CertificateStatus"/> values are the same. </summary>
         public static bool operator ==(CertificateStatus left, CertificateStatus right) => left.Equals(right);

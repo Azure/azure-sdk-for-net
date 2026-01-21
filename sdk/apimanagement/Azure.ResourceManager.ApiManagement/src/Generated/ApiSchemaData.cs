@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiSchema data model.
     /// API Schema Contract details.
-    /// Serialized Name: SchemaContract
     /// </summary>
     public partial class ApiSchemaData : ResourceData
     {
@@ -61,26 +60,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="contentType">
-        /// Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml` &lt;/br&gt; - `OData Schema` use `application/vnd.ms-azure-apim.odata.schema` &lt;/br&gt; - `gRPC Schema` use `text/protobuf`.
-        /// Serialized Name: SchemaContract.properties.contentType
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state
-        /// Serialized Name: SchemaContract.properties.provisioningState
-        /// </param>
-        /// <param name="value">
-        /// Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI.
-        /// Serialized Name: SchemaContract.properties.document.value
-        /// </param>
-        /// <param name="definitions">
-        /// Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise.
-        /// Serialized Name: SchemaContract.properties.document.definitions
-        /// </param>
-        /// <param name="components">
-        /// Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise.
-        /// Serialized Name: SchemaContract.properties.document.components
-        /// </param>
+        /// <param name="contentType"> Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml` &lt;/br&gt; - `OData Schema` use `application/vnd.ms-azure-apim.odata.schema` &lt;/br&gt; - `gRPC Schema` use `text/protobuf`. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="value"> Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI. </param>
+        /// <param name="definitions"> Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise. </param>
+        /// <param name="components"> Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentType, string provisioningState, string value, BinaryData definitions, BinaryData components, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -92,27 +76,17 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml` &lt;/br&gt; - `OData Schema` use `application/vnd.ms-azure-apim.odata.schema` &lt;/br&gt; - `gRPC Schema` use `text/protobuf`.
-        /// Serialized Name: SchemaContract.properties.contentType
-        /// </summary>
+        /// <summary> Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml` &lt;/br&gt; - `OData Schema` use `application/vnd.ms-azure-apim.odata.schema` &lt;/br&gt; - `gRPC Schema` use `text/protobuf`. </summary>
         [WirePath("properties.contentType")]
         public string ContentType { get; set; }
-        /// <summary>
-        /// The provisioning state
-        /// Serialized Name: SchemaContract.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI.
-        /// Serialized Name: SchemaContract.properties.document.value
-        /// </summary>
+        /// <summary> Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary>
         /// Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise.
-        /// Serialized Name: SchemaContract.properties.document.definitions
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -145,7 +119,6 @@ namespace Azure.ResourceManager.ApiManagement
         public BinaryData Definitions { get; set; }
         /// <summary>
         /// Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise.
-        /// Serialized Name: SchemaContract.properties.document.components
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

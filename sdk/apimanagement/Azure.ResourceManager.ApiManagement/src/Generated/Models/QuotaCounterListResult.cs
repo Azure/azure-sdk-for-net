@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Quota Counter list representation.
-    /// Serialized Name: QuotaCounterListResult
-    /// </summary>
+    /// <summary> Paged Quota Counter list representation. </summary>
     internal partial class QuotaCounterListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaCounterListResult"/>. </summary>
-        /// <param name="value">
-        /// Quota counter values.
-        /// Serialized Name: QuotaCounterListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number across all pages.
-        /// Serialized Name: QuotaCounterListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: QuotaCounterListResult.nextLink
-        /// </param>
+        /// <param name="value"> Quota counter values. </param>
+        /// <param name="count"> Total record count number across all pages. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaCounterListResult(IReadOnlyList<QuotaCounterContract> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Quota counter values.
-        /// Serialized Name: QuotaCounterListResult.value
-        /// </summary>
+        /// <summary> Quota counter values. </summary>
         [WirePath("value")]
         public IReadOnlyList<QuotaCounterContract> Value { get; }
-        /// <summary>
-        /// Total record count number across all pages.
-        /// Serialized Name: QuotaCounterListResult.count
-        /// </summary>
+        /// <summary> Total record count number across all pages. </summary>
         [WirePath("count")]
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: QuotaCounterListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         [WirePath("nextLink")]
         public string NextLink { get; }
     }

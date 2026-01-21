@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The GatewayHostnameBindingCertificate.
-    /// Serialized Name: GatewayHostnameBindingCertificate
-    /// </summary>
+    /// <summary> The GatewayHostnameBindingCertificate. </summary>
     public partial class GatewayHostnameBindingCertificate
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingCertificate"/>. </summary>
-        /// <param name="thumbprint">
-        /// The thumbprint of the certificate.
-        /// Serialized Name: GatewayHostnameBindingCertificate.thumbprint
-        /// </param>
-        /// <param name="subject">
-        /// The subject of the certificate.
-        /// Serialized Name: GatewayHostnameBindingCertificate.subject
-        /// </param>
-        /// <param name="expiry">
-        /// The expiration date of the certificate.
-        /// Serialized Name: GatewayHostnameBindingCertificate.expiry
-        /// </param>
+        /// <param name="thumbprint"> The thumbprint of the certificate. </param>
+        /// <param name="subject"> The subject of the certificate. </param>
+        /// <param name="expiry"> The expiration date of the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayHostnameBindingCertificate(string thumbprint, string subject, DateTimeOffset? expiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The thumbprint of the certificate.
-        /// Serialized Name: GatewayHostnameBindingCertificate.thumbprint
-        /// </summary>
+        /// <summary> The thumbprint of the certificate. </summary>
         [WirePath("thumbprint")]
         public string Thumbprint { get; }
-        /// <summary>
-        /// The subject of the certificate.
-        /// Serialized Name: GatewayHostnameBindingCertificate.subject
-        /// </summary>
+        /// <summary> The subject of the certificate. </summary>
         [WirePath("subject")]
         public string Subject { get; }
-        /// <summary>
-        /// The expiration date of the certificate.
-        /// Serialized Name: GatewayHostnameBindingCertificate.expiry
-        /// </summary>
+        /// <summary> The expiration date of the certificate. </summary>
         [WirePath("expiry")]
         public DateTimeOffset? Expiry { get; }
     }

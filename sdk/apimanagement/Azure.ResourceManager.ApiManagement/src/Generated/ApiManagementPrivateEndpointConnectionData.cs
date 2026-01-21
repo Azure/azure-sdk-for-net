@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementPrivateEndpointConnection data model.
     /// The private endpoint connection resource.
-    /// Serialized Name: PrivateEndpointConnection
     /// </summary>
     public partial class ApiManagementPrivateEndpointConnectionData : ResourceData
     {
@@ -64,22 +63,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupIds">
-        /// The group ids for the private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.groupIds
-        /// </param>
-        /// <param name="privateEndpoint">
-        /// The private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
-        /// </param>
-        /// <param name="connectionState">
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
-        /// </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpoint"> The private endpoint resource. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState connectionState, ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -90,16 +77,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The group ids for the private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.groupIds
-        /// </summary>
+        /// <summary> The group ids for the private endpoint resource. </summary>
         [WirePath("properties.groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
-        /// <summary>
-        /// The private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
-        /// </summary>
+        /// <summary> The private endpoint resource. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         [WirePath("properties.privateEndpoint.id")]
@@ -108,16 +89,10 @@ namespace Azure.ResourceManager.ApiManagement
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
-        /// <summary>
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary>
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         [WirePath("properties.provisioningState")]
         public ApiManagementPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

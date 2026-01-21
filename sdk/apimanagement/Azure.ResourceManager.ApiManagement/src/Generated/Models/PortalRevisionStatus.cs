@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Status of the portal's revision.
-    /// Serialized Name: PortalRevisionStatus
-    /// </summary>
+    /// <summary> Status of the portal's revision. </summary>
     public readonly partial struct PortalRevisionStatus : IEquatable<PortalRevisionStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string CompletedValue = "completed";
         private const string FailedValue = "failed";
 
-        /// <summary>
-        /// Portal's revision has been queued.
-        /// Serialized Name: PortalRevisionStatus.pending
-        /// </summary>
+        /// <summary> Portal's revision has been queued. </summary>
         public static PortalRevisionStatus Pending { get; } = new PortalRevisionStatus(PendingValue);
-        /// <summary>
-        /// Portal's revision is being published.
-        /// Serialized Name: PortalRevisionStatus.publishing
-        /// </summary>
+        /// <summary> Portal's revision is being published. </summary>
         public static PortalRevisionStatus Publishing { get; } = new PortalRevisionStatus(PublishingValue);
-        /// <summary>
-        /// Portal's revision publishing completed.
-        /// Serialized Name: PortalRevisionStatus.completed
-        /// </summary>
+        /// <summary> Portal's revision publishing completed. </summary>
         public static PortalRevisionStatus Completed { get; } = new PortalRevisionStatus(CompletedValue);
-        /// <summary>
-        /// Portal's revision publishing failed.
-        /// Serialized Name: PortalRevisionStatus.failed
-        /// </summary>
+        /// <summary> Portal's revision publishing failed. </summary>
         public static PortalRevisionStatus Failed { get; } = new PortalRevisionStatus(FailedValue);
         /// <summary> Determines if two <see cref="PortalRevisionStatus"/> values are the same. </summary>
         public static bool operator ==(PortalRevisionStatus left, PortalRevisionStatus right) => left.Equals(right);

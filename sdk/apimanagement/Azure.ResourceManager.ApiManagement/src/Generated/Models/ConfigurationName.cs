@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The ConfigurationName.
-    /// Serialized Name: ConfigurationIdName
-    /// </summary>
+    /// <summary> The ConfigurationName. </summary>
     public readonly partial struct ConfigurationName : IEquatable<ConfigurationName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string ConfigurationValue = "configuration";
 
-        /// <summary>
-        /// configuration
-        /// Serialized Name: ConfigurationIdName.configuration
-        /// </summary>
+        /// <summary> configuration. </summary>
         public static ConfigurationName Configuration { get; } = new ConfigurationName(ConfigurationValue);
         /// <summary> Determines if two <see cref="ConfigurationName"/> values are the same. </summary>
         public static bool operator ==(ConfigurationName left, ConfigurationName right) => left.Equals(right);

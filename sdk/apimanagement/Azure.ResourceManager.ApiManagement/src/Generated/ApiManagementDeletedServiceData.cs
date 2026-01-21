@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementDeletedService data model.
     /// Deleted API Management Service information.
-    /// Serialized Name: DeletedServiceContract
     /// </summary>
     public partial class ApiManagementDeletedServiceData : ResourceData
     {
@@ -61,22 +60,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// API Management Service Master Location.
-        /// Serialized Name: DeletedServiceContract.location
-        /// </param>
-        /// <param name="serviceId">
-        /// Fully-qualified API Management Service Resource ID
-        /// Serialized Name: DeletedServiceContract.properties.serviceId
-        /// </param>
-        /// <param name="scheduledPurgeOn">
-        /// UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
-        /// Serialized Name: DeletedServiceContract.properties.scheduledPurgeDate
-        /// </param>
-        /// <param name="deletedOn">
-        /// UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
-        /// Serialized Name: DeletedServiceContract.properties.deletionDate
-        /// </param>
+        /// <param name="location"> API Management Service Master Location. </param>
+        /// <param name="serviceId"> Fully-qualified API Management Service Resource ID. </param>
+        /// <param name="scheduledPurgeOn"> UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="deletedOn"> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementDeletedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier serviceId, DateTimeOffset? scheduledPurgeOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -87,28 +74,16 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// API Management Service Master Location.
-        /// Serialized Name: DeletedServiceContract.location
-        /// </summary>
+        /// <summary> API Management Service Master Location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// Fully-qualified API Management Service Resource ID
-        /// Serialized Name: DeletedServiceContract.properties.serviceId
-        /// </summary>
+        /// <summary> Fully-qualified API Management Service Resource ID. </summary>
         [WirePath("properties.serviceId")]
         public ResourceIdentifier ServiceId { get; set; }
-        /// <summary>
-        /// UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
-        /// Serialized Name: DeletedServiceContract.properties.scheduledPurgeDate
-        /// </summary>
+        /// <summary> UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; set; }
-        /// <summary>
-        /// UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
-        /// Serialized Name: DeletedServiceContract.properties.deletionDate
-        /// </summary>
+        /// <summary> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn { get; set; }
     }

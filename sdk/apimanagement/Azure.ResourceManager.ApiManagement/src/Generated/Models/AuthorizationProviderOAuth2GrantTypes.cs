@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Authorization Provider oauth2 grant types settings
-    /// Serialized Name: AuthorizationProviderOAuth2GrantTypes
-    /// </summary>
+    /// <summary> Authorization Provider oauth2 grant types settings. </summary>
     public partial class AuthorizationProviderOAuth2GrantTypes
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2GrantTypes"/>. </summary>
-        /// <param name="authorizationCode">
-        /// OAuth2 authorization code grant parameters
-        /// Serialized Name: AuthorizationProviderOAuth2GrantTypes.authorizationCode
-        /// </param>
-        /// <param name="clientCredentials">
-        /// OAuth2 client credential grant parameters
-        /// Serialized Name: AuthorizationProviderOAuth2GrantTypes.clientCredentials
-        /// </param>
+        /// <param name="authorizationCode"> OAuth2 authorization code grant parameters. </param>
+        /// <param name="clientCredentials"> OAuth2 client credential grant parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationProviderOAuth2GrantTypes(IDictionary<string, string> authorizationCode, IDictionary<string, string> clientCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,16 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// OAuth2 authorization code grant parameters
-        /// Serialized Name: AuthorizationProviderOAuth2GrantTypes.authorizationCode
-        /// </summary>
+        /// <summary> OAuth2 authorization code grant parameters. </summary>
         [WirePath("authorizationCode")]
         public IDictionary<string, string> AuthorizationCode { get; }
-        /// <summary>
-        /// OAuth2 client credential grant parameters
-        /// Serialized Name: AuthorizationProviderOAuth2GrantTypes.clientCredentials
-        /// </summary>
+        /// <summary> OAuth2 client credential grant parameters. </summary>
         [WirePath("clientCredentials")]
         public IDictionary<string, string> ClientCredentials { get; }
     }

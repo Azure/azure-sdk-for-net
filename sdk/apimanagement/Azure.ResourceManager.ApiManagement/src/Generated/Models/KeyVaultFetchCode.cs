@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The last status of the Key Vault certificate fetch process.
-    /// Serialized Name: KeyVaultFetchCode
-    /// </summary>
+    /// <summary> The last status of the Key Vault certificate fetch process. </summary>
     public enum KeyVaultFetchCode
     {
-        /// <summary>
-        /// Success
-        /// Serialized Name: KeyVaultFetchCode.Success
-        /// </summary>
+        /// <summary> Success. </summary>
         Success,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: KeyVaultFetchCode.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed
     }
 }

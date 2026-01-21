@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Issue update Parameters.
-    /// Serialized Name: IssueUpdateContract
-    /// </summary>
+    /// <summary> Issue update Parameters. </summary>
     public partial class ApiIssuePatch
     {
         /// <summary>
@@ -55,30 +52,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiIssuePatch"/>. </summary>
-        /// <param name="createdOn">
-        /// Date and time when the issue was created.
-        /// Serialized Name: IssueUpdateContract.properties.createdDate
-        /// </param>
-        /// <param name="state">
-        /// Status of the issue.
-        /// Serialized Name: IssueUpdateContract.properties.state
-        /// </param>
-        /// <param name="apiId">
-        /// A resource identifier for the API the issue was created for.
-        /// Serialized Name: IssueUpdateContract.properties.apiId
-        /// </param>
-        /// <param name="title">
-        /// The issue title.
-        /// Serialized Name: IssueUpdateContract.properties.title
-        /// </param>
-        /// <param name="description">
-        /// Text describing the issue.
-        /// Serialized Name: IssueUpdateContract.properties.description
-        /// </param>
-        /// <param name="userId">
-        /// A resource identifier for the user created the issue.
-        /// Serialized Name: IssueUpdateContract.properties.userId
-        /// </param>
+        /// <param name="createdOn"> Date and time when the issue was created. </param>
+        /// <param name="state"> Status of the issue. </param>
+        /// <param name="apiId"> A resource identifier for the API the issue was created for. </param>
+        /// <param name="title"> The issue title. </param>
+        /// <param name="description"> Text describing the issue. </param>
+        /// <param name="userId"> A resource identifier for the user created the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiIssuePatch(DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,40 +70,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Date and time when the issue was created.
-        /// Serialized Name: IssueUpdateContract.properties.createdDate
-        /// </summary>
+        /// <summary> Date and time when the issue was created. </summary>
         [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Status of the issue.
-        /// Serialized Name: IssueUpdateContract.properties.state
-        /// </summary>
+        /// <summary> Status of the issue. </summary>
         [WirePath("properties.state")]
         public IssueState? State { get; set; }
-        /// <summary>
-        /// A resource identifier for the API the issue was created for.
-        /// Serialized Name: IssueUpdateContract.properties.apiId
-        /// </summary>
+        /// <summary> A resource identifier for the API the issue was created for. </summary>
         [WirePath("properties.apiId")]
         public ResourceIdentifier ApiId { get; set; }
-        /// <summary>
-        /// The issue title.
-        /// Serialized Name: IssueUpdateContract.properties.title
-        /// </summary>
+        /// <summary> The issue title. </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Text describing the issue.
-        /// Serialized Name: IssueUpdateContract.properties.description
-        /// </summary>
+        /// <summary> Text describing the issue. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// A resource identifier for the user created the issue.
-        /// Serialized Name: IssueUpdateContract.properties.userId
-        /// </summary>
+        /// <summary> A resource identifier for the user created the issue. </summary>
         [WirePath("properties.userId")]
         public string UserId { get; set; }
     }

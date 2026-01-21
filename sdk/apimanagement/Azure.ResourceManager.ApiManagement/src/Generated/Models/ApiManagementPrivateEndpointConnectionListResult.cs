@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of a PrivateEndpointConnection list operation.
-    /// Serialized Name: PrivateEndpointConnectionListResult
-    /// </summary>
+    /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
     internal partial class ApiManagementPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value">
-        /// The PrivateEndpointConnection items on this page
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </param>
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiManagementPrivateEndpointConnectionListResult(IEnumerable<ApiManagementPrivateEndpointConnectionData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value">
-        /// The PrivateEndpointConnection items on this page
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
-        /// </param>
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPrivateEndpointConnectionListResult(IReadOnlyList<ApiManagementPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary>
-        /// The PrivateEndpointConnection items on this page
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </summary>
+        /// <summary> The PrivateEndpointConnection items on this page. </summary>
         public IReadOnlyList<ApiManagementPrivateEndpointConnectionData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

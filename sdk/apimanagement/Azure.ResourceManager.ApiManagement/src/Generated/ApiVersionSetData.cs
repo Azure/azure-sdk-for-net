@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiVersionSet data model.
     /// API Version Set Contract details.
-    /// Serialized Name: ApiVersionSetContract
     /// </summary>
     public partial class ApiVersionSetData : ResourceData
     {
@@ -62,26 +61,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// Description of API Version Set.
-        /// Serialized Name: ApiVersionSetContract.properties.description
-        /// </param>
-        /// <param name="versionQueryName">
-        /// Name of query parameter that indicates the API Version if versioningScheme is set to `query`.
-        /// Serialized Name: ApiVersionSetContract.properties.versionQueryName
-        /// </param>
-        /// <param name="versionHeaderName">
-        /// Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`.
-        /// Serialized Name: ApiVersionSetContract.properties.versionHeaderName
-        /// </param>
-        /// <param name="displayName">
-        /// Name of API Version Set
-        /// Serialized Name: ApiVersionSetContract.properties.displayName
-        /// </param>
-        /// <param name="versioningScheme">
-        /// An value that determines where the API Version identifier will be located in a HTTP request.
-        /// Serialized Name: ApiVersionSetContract.properties.versioningScheme
-        /// </param>
+        /// <param name="description"> Description of API Version Set. </param>
+        /// <param name="versionQueryName"> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </param>
+        /// <param name="versionHeaderName"> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </param>
+        /// <param name="displayName"> Name of API Version Set. </param>
+        /// <param name="versioningScheme"> An value that determines where the API Version identifier will be located in a HTTP request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiVersionSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string versionQueryName, string versionHeaderName, string displayName, VersioningScheme? versioningScheme, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -93,34 +77,19 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Description of API Version Set.
-        /// Serialized Name: ApiVersionSetContract.properties.description
-        /// </summary>
+        /// <summary> Description of API Version Set. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Name of query parameter that indicates the API Version if versioningScheme is set to `query`.
-        /// Serialized Name: ApiVersionSetContract.properties.versionQueryName
-        /// </summary>
+        /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
         [WirePath("properties.versionQueryName")]
         public string VersionQueryName { get; set; }
-        /// <summary>
-        /// Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`.
-        /// Serialized Name: ApiVersionSetContract.properties.versionHeaderName
-        /// </summary>
+        /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>
         [WirePath("properties.versionHeaderName")]
         public string VersionHeaderName { get; set; }
-        /// <summary>
-        /// Name of API Version Set
-        /// Serialized Name: ApiVersionSetContract.properties.displayName
-        /// </summary>
+        /// <summary> Name of API Version Set. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// An value that determines where the API Version identifier will be located in a HTTP request.
-        /// Serialized Name: ApiVersionSetContract.properties.versioningScheme
-        /// </summary>
+        /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
         [WirePath("properties.versioningScheme")]
         public VersioningScheme? VersioningScheme { get; set; }
     }

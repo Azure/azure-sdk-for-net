@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Terms of service contract properties.
-    /// Serialized Name: PortalConfigTermsOfServiceProperties
-    /// </summary>
+    /// <summary> Terms of service contract properties. </summary>
     public partial class PortalConfigTermsOfServiceProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigTermsOfServiceProperties"/>. </summary>
-        /// <param name="text">
-        /// A terms of service text.
-        /// Serialized Name: PortalConfigTermsOfServiceProperties.text
-        /// </param>
-        /// <param name="requireConsent">
-        /// Ask user for consent to the terms of service.
-        /// Serialized Name: PortalConfigTermsOfServiceProperties.requireConsent
-        /// </param>
+        /// <param name="text"> A terms of service text. </param>
+        /// <param name="requireConsent"> Ask user for consent to the terms of service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigTermsOfServiceProperties(string text, bool? requireConsent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A terms of service text.
-        /// Serialized Name: PortalConfigTermsOfServiceProperties.text
-        /// </summary>
+        /// <summary> A terms of service text. </summary>
         [WirePath("text")]
         public string Text { get; set; }
-        /// <summary>
-        /// Ask user for consent to the terms of service.
-        /// Serialized Name: PortalConfigTermsOfServiceProperties.requireConsent
-        /// </summary>
+        /// <summary> Ask user for consent to the terms of service. </summary>
         [WirePath("requireConsent")]
         public bool? RequireConsent { get; set; }
     }

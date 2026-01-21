@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Issue contract Update Properties.
-    /// Serialized Name: KeyVaultLastAccessStatusContractProperties
-    /// </summary>
+    /// <summary> Issue contract Update Properties. </summary>
     public partial class KeyVaultLastAccessStatusContractProperties
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultLastAccessStatusContractProperties"/>. </summary>
-        /// <param name="code">
-        /// Last status code for sync and refresh of secret from key vault.
-        /// Serialized Name: KeyVaultLastAccessStatusContractProperties.code
-        /// </param>
-        /// <param name="message">
-        /// Details of the error else empty.
-        /// Serialized Name: KeyVaultLastAccessStatusContractProperties.message
-        /// </param>
-        /// <param name="timeStampUtc">
-        /// Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: KeyVaultLastAccessStatusContractProperties.timeStampUtc
-        /// </param>
+        /// <param name="code"> Last status code for sync and refresh of secret from key vault. </param>
+        /// <param name="message"> Details of the error else empty. </param>
+        /// <param name="timeStampUtc"> Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KeyVaultLastAccessStatusContractProperties(string code, string message, DateTimeOffset? timeStampUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Last status code for sync and refresh of secret from key vault.
-        /// Serialized Name: KeyVaultLastAccessStatusContractProperties.code
-        /// </summary>
+        /// <summary> Last status code for sync and refresh of secret from key vault. </summary>
         [WirePath("code")]
         public string Code { get; set; }
-        /// <summary>
-        /// Details of the error else empty.
-        /// Serialized Name: KeyVaultLastAccessStatusContractProperties.message
-        /// </summary>
+        /// <summary> Details of the error else empty. </summary>
         [WirePath("message")]
         public string Message { get; set; }
-        /// <summary>
-        /// Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: KeyVaultLastAccessStatusContractProperties.timeStampUtc
-        /// </summary>
+        /// <summary> Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("timeStampUtc")]
         public DateTimeOffset? TimeStampUtc { get; set; }
     }

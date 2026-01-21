@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The ProductAuthType.
-    /// Serialized Name: ProductAuthType
-    /// </summary>
+    /// <summary> The ProductAuthType. </summary>
     public readonly partial struct ProductAuthType : IEquatable<ProductAuthType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string SubscriptionKeyValue = "subscription-key";
         private const string ApplicationTokenValue = "application-token";
 
-        /// <summary>
-        /// subscription-key
-        /// Serialized Name: ProductAuthType.subscription-key
-        /// </summary>
+        /// <summary> subscription-key. </summary>
         public static ProductAuthType SubscriptionKey { get; } = new ProductAuthType(SubscriptionKeyValue);
-        /// <summary>
-        /// application-token
-        /// Serialized Name: ProductAuthType.application-token
-        /// </summary>
+        /// <summary> application-token. </summary>
         public static ProductAuthType ApplicationToken { get; } = new ProductAuthType(ApplicationTokenValue);
         /// <summary> Determines if two <see cref="ProductAuthType"/> values are the same. </summary>
         public static bool operator ==(ProductAuthType left, ProductAuthType right) => left.Equals(right);

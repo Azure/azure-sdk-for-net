@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The response of the list policy operation.
-    /// Serialized Name: PolicyListResult
-    /// </summary>
+    /// <summary> The response of the list policy operation. </summary>
     internal partial class PolicyListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyListResult"/>. </summary>
-        /// <param name="value">
-        /// Policy Contract value.
-        /// Serialized Name: PolicyListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number.
-        /// Serialized Name: PolicyListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: PolicyListResult.nextLink
-        /// </param>
+        /// <param name="value"> Policy Contract value. </param>
+        /// <param name="count"> Total record count number. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyListResult(IReadOnlyList<PolicyContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Policy Contract value.
-        /// Serialized Name: PolicyListResult.value
-        /// </summary>
+        /// <summary> Policy Contract value. </summary>
         [WirePath("value")]
         public IReadOnlyList<PolicyContractData> Value { get; }
-        /// <summary>
-        /// Total record count number.
-        /// Serialized Name: PolicyListResult.count
-        /// </summary>
+        /// <summary> Total record count number. </summary>
         [WirePath("count")]
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: PolicyListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         [WirePath("nextLink")]
         public string NextLink { get; }
     }

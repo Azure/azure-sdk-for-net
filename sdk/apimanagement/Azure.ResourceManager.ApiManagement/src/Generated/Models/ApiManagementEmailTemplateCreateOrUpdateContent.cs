@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Email Template update Parameters.
-    /// Serialized Name: EmailTemplateUpdateParameters
-    /// </summary>
+    /// <summary> Email Template update Parameters. </summary>
     public partial class ApiManagementEmailTemplateCreateOrUpdateContent
     {
         /// <summary>
@@ -55,26 +52,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateCreateOrUpdateContent"/>. </summary>
-        /// <param name="subject">
-        /// Subject of the Template.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.subject
-        /// </param>
-        /// <param name="title">
-        /// Title of the Template.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.title
-        /// </param>
-        /// <param name="description">
-        /// Description of the Email Template.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.description
-        /// </param>
-        /// <param name="body">
-        /// Email Template Body. This should be a valid XDocument
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.body
-        /// </param>
-        /// <param name="parameters">
-        /// Email Template Parameter values.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.parameters
-        /// </param>
+        /// <param name="subject"> Subject of the Template. </param>
+        /// <param name="title"> Title of the Template. </param>
+        /// <param name="description"> Description of the Email Template. </param>
+        /// <param name="body"> Email Template Body. This should be a valid XDocument. </param>
+        /// <param name="parameters"> Email Template Parameter values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementEmailTemplateCreateOrUpdateContent(string subject, string title, string description, string body, IList<EmailTemplateParametersContractProperties> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,34 +68,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Subject of the Template.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.subject
-        /// </summary>
+        /// <summary> Subject of the Template. </summary>
         [WirePath("properties.subject")]
         public string Subject { get; set; }
-        /// <summary>
-        /// Title of the Template.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.title
-        /// </summary>
+        /// <summary> Title of the Template. </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Description of the Email Template.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Description of the Email Template. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Email Template Body. This should be a valid XDocument
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.body
-        /// </summary>
+        /// <summary> Email Template Body. This should be a valid XDocument. </summary>
         [WirePath("properties.body")]
         public string Body { get; set; }
-        /// <summary>
-        /// Email Template Parameter values.
-        /// Serialized Name: EmailTemplateUpdateParameters.properties.parameters
-        /// </summary>
+        /// <summary> Email Template Parameter values. </summary>
         [WirePath("properties.parameters")]
         public IList<EmailTemplateParametersContractProperties> Parameters { get; }
     }

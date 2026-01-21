@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Long Running Git Operation Results.
-    /// Serialized Name: OperationResultContract
-    /// </summary>
+    /// <summary> Long Running Git Operation Results. </summary>
     public partial class GitOperationResultContractData : ResourceData
     {
         /// <summary>
@@ -61,34 +58,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationResultIdentifier">
-        /// Operation result identifier.
-        /// Serialized Name: OperationResultContract.properties.id
-        /// </param>
-        /// <param name="status">
-        /// Status of an async operation.
-        /// Serialized Name: OperationResultContract.properties.status
-        /// </param>
-        /// <param name="startedOn">
-        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: OperationResultContract.properties.started
-        /// </param>
-        /// <param name="updatedOn">
-        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: OperationResultContract.properties.updated
-        /// </param>
-        /// <param name="resultInfo">
-        /// Optional result info.
-        /// Serialized Name: OperationResultContract.properties.resultInfo
-        /// </param>
-        /// <param name="error">
-        /// Error Body Contract
-        /// Serialized Name: OperationResultContract.properties.error
-        /// </param>
-        /// <param name="actionLog">
-        /// This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation.
-        /// Serialized Name: OperationResultContract.properties.actionLog
-        /// </param>
+        /// <param name="operationResultIdentifier"> Operation result identifier. </param>
+        /// <param name="status"> Status of an async operation. </param>
+        /// <param name="startedOn"> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="updatedOn"> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="resultInfo"> Optional result info. </param>
+        /// <param name="error"> Error Body Contract. </param>
+        /// <param name="actionLog"> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GitOperationResultContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operationResultIdentifier, AsyncOperationStatus? status, DateTimeOffset? startedOn, DateTimeOffset? updatedOn, string resultInfo, ErrorResponseBody error, IReadOnlyList<OperationResultLogItemContract> actionLog, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -102,46 +78,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Operation result identifier.
-        /// Serialized Name: OperationResultContract.properties.id
-        /// </summary>
+        /// <summary> Operation result identifier. </summary>
         [WirePath("properties.id")]
         public string OperationResultIdentifier { get; set; }
-        /// <summary>
-        /// Status of an async operation.
-        /// Serialized Name: OperationResultContract.properties.status
-        /// </summary>
+        /// <summary> Status of an async operation. </summary>
         [WirePath("properties.status")]
         public AsyncOperationStatus? Status { get; set; }
-        /// <summary>
-        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: OperationResultContract.properties.started
-        /// </summary>
+        /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.started")]
         public DateTimeOffset? StartedOn { get; set; }
-        /// <summary>
-        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: OperationResultContract.properties.updated
-        /// </summary>
+        /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.updated")]
         public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary>
-        /// Optional result info.
-        /// Serialized Name: OperationResultContract.properties.resultInfo
-        /// </summary>
+        /// <summary> Optional result info. </summary>
         [WirePath("properties.resultInfo")]
         public string ResultInfo { get; set; }
-        /// <summary>
-        /// Error Body Contract
-        /// Serialized Name: OperationResultContract.properties.error
-        /// </summary>
+        /// <summary> Error Body Contract. </summary>
         [WirePath("properties.error")]
         public ErrorResponseBody Error { get; set; }
-        /// <summary>
-        /// This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation.
-        /// Serialized Name: OperationResultContract.properties.actionLog
-        /// </summary>
+        /// <summary> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </summary>
         [WirePath("properties.actionLog")]
         public IReadOnlyList<OperationResultLogItemContract> ActionLog { get; }
     }

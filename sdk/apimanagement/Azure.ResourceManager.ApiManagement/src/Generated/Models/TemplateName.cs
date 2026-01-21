@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The TemplateName.
-    /// Serialized Name: TemplateName
-    /// </summary>
+    /// <summary> The TemplateName. </summary>
     public readonly partial struct TemplateName : IEquatable<TemplateName>
     {
         private readonly string _value;
@@ -40,75 +37,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string RejectDeveloperNotificationMessageValue = "rejectDeveloperNotificationMessage";
         private const string RequestDeveloperNotificationMessageValue = "requestDeveloperNotificationMessage";
 
-        /// <summary>
-        /// applicationApprovedNotificationMessage
-        /// Serialized Name: TemplateName.applicationApprovedNotificationMessage
-        /// </summary>
+        /// <summary> applicationApprovedNotificationMessage. </summary>
         public static TemplateName ApplicationApprovedNotificationMessage { get; } = new TemplateName(ApplicationApprovedNotificationMessageValue);
-        /// <summary>
-        /// accountClosedDeveloper
-        /// Serialized Name: TemplateName.accountClosedDeveloper
-        /// </summary>
+        /// <summary> accountClosedDeveloper. </summary>
         public static TemplateName AccountClosedDeveloper { get; } = new TemplateName(AccountClosedDeveloperValue);
-        /// <summary>
-        /// quotaLimitApproachingDeveloperNotificationMessage
-        /// Serialized Name: TemplateName.quotaLimitApproachingDeveloperNotificationMessage
-        /// </summary>
+        /// <summary> quotaLimitApproachingDeveloperNotificationMessage. </summary>
         public static TemplateName QuotaLimitApproachingDeveloperNotificationMessage { get; } = new TemplateName(QuotaLimitApproachingDeveloperNotificationMessageValue);
-        /// <summary>
-        /// newDeveloperNotificationMessage
-        /// Serialized Name: TemplateName.newDeveloperNotificationMessage
-        /// </summary>
+        /// <summary> newDeveloperNotificationMessage. </summary>
         public static TemplateName NewDeveloperNotificationMessage { get; } = new TemplateName(NewDeveloperNotificationMessageValue);
-        /// <summary>
-        /// emailChangeIdentityDefault
-        /// Serialized Name: TemplateName.emailChangeIdentityDefault
-        /// </summary>
+        /// <summary> emailChangeIdentityDefault. </summary>
         public static TemplateName EmailChangeIdentityDefault { get; } = new TemplateName(EmailChangeIdentityDefaultValue);
-        /// <summary>
-        /// inviteUserNotificationMessage
-        /// Serialized Name: TemplateName.inviteUserNotificationMessage
-        /// </summary>
+        /// <summary> inviteUserNotificationMessage. </summary>
         public static TemplateName InviteUserNotificationMessage { get; } = new TemplateName(InviteUserNotificationMessageValue);
-        /// <summary>
-        /// newCommentNotificationMessage
-        /// Serialized Name: TemplateName.newCommentNotificationMessage
-        /// </summary>
+        /// <summary> newCommentNotificationMessage. </summary>
         public static TemplateName NewCommentNotificationMessage { get; } = new TemplateName(NewCommentNotificationMessageValue);
-        /// <summary>
-        /// confirmSignUpIdentityDefault
-        /// Serialized Name: TemplateName.confirmSignUpIdentityDefault
-        /// </summary>
+        /// <summary> confirmSignUpIdentityDefault. </summary>
         public static TemplateName ConfirmSignUpIdentityDefault { get; } = new TemplateName(ConfirmSignUpIdentityDefaultValue);
-        /// <summary>
-        /// newIssueNotificationMessage
-        /// Serialized Name: TemplateName.newIssueNotificationMessage
-        /// </summary>
+        /// <summary> newIssueNotificationMessage. </summary>
         public static TemplateName NewIssueNotificationMessage { get; } = new TemplateName(NewIssueNotificationMessageValue);
-        /// <summary>
-        /// purchaseDeveloperNotificationMessage
-        /// Serialized Name: TemplateName.purchaseDeveloperNotificationMessage
-        /// </summary>
+        /// <summary> purchaseDeveloperNotificationMessage. </summary>
         public static TemplateName PurchaseDeveloperNotificationMessage { get; } = new TemplateName(PurchaseDeveloperNotificationMessageValue);
-        /// <summary>
-        /// passwordResetIdentityDefault
-        /// Serialized Name: TemplateName.passwordResetIdentityDefault
-        /// </summary>
+        /// <summary> passwordResetIdentityDefault. </summary>
         public static TemplateName PasswordResetIdentityDefault { get; } = new TemplateName(PasswordResetIdentityDefaultValue);
-        /// <summary>
-        /// passwordResetByAdminNotificationMessage
-        /// Serialized Name: TemplateName.passwordResetByAdminNotificationMessage
-        /// </summary>
+        /// <summary> passwordResetByAdminNotificationMessage. </summary>
         public static TemplateName PasswordResetByAdminNotificationMessage { get; } = new TemplateName(PasswordResetByAdminNotificationMessageValue);
-        /// <summary>
-        /// rejectDeveloperNotificationMessage
-        /// Serialized Name: TemplateName.rejectDeveloperNotificationMessage
-        /// </summary>
+        /// <summary> rejectDeveloperNotificationMessage. </summary>
         public static TemplateName RejectDeveloperNotificationMessage { get; } = new TemplateName(RejectDeveloperNotificationMessageValue);
-        /// <summary>
-        /// requestDeveloperNotificationMessage
-        /// Serialized Name: TemplateName.requestDeveloperNotificationMessage
-        /// </summary>
+        /// <summary> requestDeveloperNotificationMessage. </summary>
         public static TemplateName RequestDeveloperNotificationMessage { get; } = new TemplateName(RequestDeveloperNotificationMessageValue);
         /// <summary> Determines if two <see cref="TemplateName"/> values are the same. </summary>
         public static bool operator ==(TemplateName left, TemplateName right) => left.Equals(right);

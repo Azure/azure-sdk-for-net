@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// User create details.
-    /// Serialized Name: UserCreateParameters
-    /// </summary>
+    /// <summary> User create details. </summary>
     public partial class ApiManagementUserCreateOrUpdateContent
     {
         /// <summary>
@@ -55,42 +52,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserCreateOrUpdateContent"/>. </summary>
-        /// <param name="state">
-        /// Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active.
-        /// Serialized Name: UserCreateParameters.properties.state
-        /// </param>
-        /// <param name="note">
-        /// Optional note about a user set by the administrator.
-        /// Serialized Name: UserCreateParameters.properties.note
-        /// </param>
-        /// <param name="identities">
-        /// Collection of user identities.
-        /// Serialized Name: UserCreateParameters.properties.identities
-        /// </param>
-        /// <param name="email">
-        /// Email address. Must not be empty and must be unique within the service instance.
-        /// Serialized Name: UserCreateParameters.properties.email
-        /// </param>
-        /// <param name="firstName">
-        /// First name.
-        /// Serialized Name: UserCreateParameters.properties.firstName
-        /// </param>
-        /// <param name="lastName">
-        /// Last name.
-        /// Serialized Name: UserCreateParameters.properties.lastName
-        /// </param>
-        /// <param name="password">
-        /// User Password. If no value is provided, a default password is generated.
-        /// Serialized Name: UserCreateParameters.properties.password
-        /// </param>
-        /// <param name="appType">
-        /// Determines the type of application which send the create user request. Default is legacy portal.
-        /// Serialized Name: UserCreateParameters.properties.appType
-        /// </param>
-        /// <param name="confirmation">
-        /// Determines the type of confirmation e-mail that will be sent to the newly created user.
-        /// Serialized Name: UserCreateParameters.properties.confirmation
-        /// </param>
+        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
+        /// <param name="note"> Optional note about a user set by the administrator. </param>
+        /// <param name="identities"> Collection of user identities. </param>
+        /// <param name="email"> Email address. Must not be empty and must be unique within the service instance. </param>
+        /// <param name="firstName"> First name. </param>
+        /// <param name="lastName"> Last name. </param>
+        /// <param name="password"> User Password. If no value is provided, a default password is generated. </param>
+        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy portal. </param>
+        /// <param name="confirmation"> Determines the type of confirmation e-mail that will be sent to the newly created user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementUserCreateOrUpdateContent(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string email, string firstName, string lastName, string password, AppType? appType, ConfirmationEmailType? confirmation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -106,58 +76,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active.
-        /// Serialized Name: UserCreateParameters.properties.state
-        /// </summary>
+        /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
         [WirePath("properties.state")]
         public ApiManagementUserState? State { get; set; }
-        /// <summary>
-        /// Optional note about a user set by the administrator.
-        /// Serialized Name: UserCreateParameters.properties.note
-        /// </summary>
+        /// <summary> Optional note about a user set by the administrator. </summary>
         [WirePath("properties.note")]
         public string Note { get; set; }
-        /// <summary>
-        /// Collection of user identities.
-        /// Serialized Name: UserCreateParameters.properties.identities
-        /// </summary>
+        /// <summary> Collection of user identities. </summary>
         [WirePath("properties.identities")]
         public IList<UserIdentityContract> Identities { get; }
-        /// <summary>
-        /// Email address. Must not be empty and must be unique within the service instance.
-        /// Serialized Name: UserCreateParameters.properties.email
-        /// </summary>
+        /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
         [WirePath("properties.email")]
         public string Email { get; set; }
-        /// <summary>
-        /// First name.
-        /// Serialized Name: UserCreateParameters.properties.firstName
-        /// </summary>
+        /// <summary> First name. </summary>
         [WirePath("properties.firstName")]
         public string FirstName { get; set; }
-        /// <summary>
-        /// Last name.
-        /// Serialized Name: UserCreateParameters.properties.lastName
-        /// </summary>
+        /// <summary> Last name. </summary>
         [WirePath("properties.lastName")]
         public string LastName { get; set; }
-        /// <summary>
-        /// User Password. If no value is provided, a default password is generated.
-        /// Serialized Name: UserCreateParameters.properties.password
-        /// </summary>
+        /// <summary> User Password. If no value is provided, a default password is generated. </summary>
         [WirePath("properties.password")]
         public string Password { get; set; }
-        /// <summary>
-        /// Determines the type of application which send the create user request. Default is legacy portal.
-        /// Serialized Name: UserCreateParameters.properties.appType
-        /// </summary>
+        /// <summary> Determines the type of application which send the create user request. Default is legacy portal. </summary>
         [WirePath("properties.appType")]
         public AppType? AppType { get; set; }
-        /// <summary>
-        /// Determines the type of confirmation e-mail that will be sent to the newly created user.
-        /// Serialized Name: UserCreateParameters.properties.confirmation
-        /// </summary>
+        /// <summary> Determines the type of confirmation e-mail that will be sent to the newly created user. </summary>
         [WirePath("properties.confirmation")]
         public ConfirmationEmailType? Confirmation { get; set; }
     }

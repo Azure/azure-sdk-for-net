@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementTenantSetting data model.
     /// Tenant Settings.
-    /// Serialized Name: TenantSettingsContract
     /// </summary>
     public partial class ApiManagementTenantSettingData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="settings">
-        /// Tenant settings
-        /// Serialized Name: TenantSettingsContract.properties.settings
-        /// </param>
+        /// <param name="settings"> Tenant settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementTenantSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Tenant settings
-        /// Serialized Name: TenantSettingsContract.properties.settings
-        /// </summary>
+        /// <summary> Tenant settings. </summary>
         [WirePath("properties.settings")]
         public IDictionary<string, string> Settings { get; }
     }

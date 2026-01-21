@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Describes an available ApiManagement SKU.
-    /// Serialized Name: ApiManagementSku
-    /// </summary>
+    /// <summary> Describes an available ApiManagement SKU. </summary>
     public partial class ApiManagementSku
     {
         /// <summary>
@@ -61,58 +58,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSku"/>. </summary>
-        /// <param name="resourceType">
-        /// The type of resource the SKU applies to.
-        /// Serialized Name: ApiManagementSku.resourceType
-        /// </param>
-        /// <param name="name">
-        /// The name of SKU.
-        /// Serialized Name: ApiManagementSku.name
-        /// </param>
-        /// <param name="tier">
-        /// Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**
-        /// Serialized Name: ApiManagementSku.tier
-        /// </param>
-        /// <param name="size">
-        /// The Size of the SKU.
-        /// Serialized Name: ApiManagementSku.size
-        /// </param>
-        /// <param name="family">
-        /// The Family of this particular SKU.
-        /// Serialized Name: ApiManagementSku.family
-        /// </param>
-        /// <param name="kind">
-        /// The Kind of resources that are supported in this SKU.
-        /// Serialized Name: ApiManagementSku.kind
-        /// </param>
-        /// <param name="capacity">
-        /// Specifies the number of virtual machines in the scale set.
-        /// Serialized Name: ApiManagementSku.capacity
-        /// </param>
-        /// <param name="locations">
-        /// The set of locations that the SKU is available.
-        /// Serialized Name: ApiManagementSku.locations
-        /// </param>
-        /// <param name="locationInfo">
-        /// A list of locations and availability zones in those locations where the SKU is available.
-        /// Serialized Name: ApiManagementSku.locationInfo
-        /// </param>
-        /// <param name="apiVersions">
-        /// The api versions that support this SKU.
-        /// Serialized Name: ApiManagementSku.apiVersions
-        /// </param>
-        /// <param name="costs">
-        /// Metadata for retrieving price info.
-        /// Serialized Name: ApiManagementSku.costs
-        /// </param>
-        /// <param name="capabilities">
-        /// A name value pair to describe the capability.
-        /// Serialized Name: ApiManagementSku.capabilities
-        /// </param>
-        /// <param name="restrictions">
-        /// The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.
-        /// Serialized Name: ApiManagementSku.restrictions
-        /// </param>
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="name"> The name of SKU. </param>
+        /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>
+        /// <param name="size"> The Size of the SKU. </param>
+        /// <param name="family"> The Family of this particular SKU. </param>
+        /// <param name="kind"> The Kind of resources that are supported in this SKU. </param>
+        /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
+        /// <param name="locations"> The set of locations that the SKU is available. </param>
+        /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
+        /// <param name="apiVersions"> The api versions that support this SKU. </param>
+        /// <param name="costs"> Metadata for retrieving price info. </param>
+        /// <param name="capabilities"> A name value pair to describe the capability. </param>
+        /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSku(string resourceType, string name, string tier, string size, string family, string kind, ApiManagementSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ApiManagementSkuCosts> costs, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IReadOnlyList<ApiManagementSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -132,82 +90,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of resource the SKU applies to.
-        /// Serialized Name: ApiManagementSku.resourceType
-        /// </summary>
+        /// <summary> The type of resource the SKU applies to. </summary>
         [WirePath("resourceType")]
         public string ResourceType { get; }
-        /// <summary>
-        /// The name of SKU.
-        /// Serialized Name: ApiManagementSku.name
-        /// </summary>
+        /// <summary> The name of SKU. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**
-        /// Serialized Name: ApiManagementSku.tier
-        /// </summary>
+        /// <summary> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </summary>
         [WirePath("tier")]
         public string Tier { get; }
-        /// <summary>
-        /// The Size of the SKU.
-        /// Serialized Name: ApiManagementSku.size
-        /// </summary>
+        /// <summary> The Size of the SKU. </summary>
         [WirePath("size")]
         public string Size { get; }
-        /// <summary>
-        /// The Family of this particular SKU.
-        /// Serialized Name: ApiManagementSku.family
-        /// </summary>
+        /// <summary> The Family of this particular SKU. </summary>
         [WirePath("family")]
         public string Family { get; }
-        /// <summary>
-        /// The Kind of resources that are supported in this SKU.
-        /// Serialized Name: ApiManagementSku.kind
-        /// </summary>
+        /// <summary> The Kind of resources that are supported in this SKU. </summary>
         [WirePath("kind")]
         public string Kind { get; }
-        /// <summary>
-        /// Specifies the number of virtual machines in the scale set.
-        /// Serialized Name: ApiManagementSku.capacity
-        /// </summary>
+        /// <summary> Specifies the number of virtual machines in the scale set. </summary>
         [WirePath("capacity")]
         public ApiManagementSkuCapacity Capacity { get; }
-        /// <summary>
-        /// The set of locations that the SKU is available.
-        /// Serialized Name: ApiManagementSku.locations
-        /// </summary>
+        /// <summary> The set of locations that the SKU is available. </summary>
         [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
-        /// <summary>
-        /// A list of locations and availability zones in those locations where the SKU is available.
-        /// Serialized Name: ApiManagementSku.locationInfo
-        /// </summary>
+        /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
         [WirePath("locationInfo")]
         public IReadOnlyList<ApiManagementSkuLocationInfo> LocationInfo { get; }
-        /// <summary>
-        /// The api versions that support this SKU.
-        /// Serialized Name: ApiManagementSku.apiVersions
-        /// </summary>
+        /// <summary> The api versions that support this SKU. </summary>
         [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
-        /// <summary>
-        /// Metadata for retrieving price info.
-        /// Serialized Name: ApiManagementSku.costs
-        /// </summary>
+        /// <summary> Metadata for retrieving price info. </summary>
         [WirePath("costs")]
         public IReadOnlyList<ApiManagementSkuCosts> Costs { get; }
-        /// <summary>
-        /// A name value pair to describe the capability.
-        /// Serialized Name: ApiManagementSku.capabilities
-        /// </summary>
+        /// <summary> A name value pair to describe the capability. </summary>
         [WirePath("capabilities")]
         public IReadOnlyList<ApiManagementSkuCapabilities> Capabilities { get; }
-        /// <summary>
-        /// The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.
-        /// Serialized Name: ApiManagementSku.restrictions
-        /// </summary>
+        /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
         [WirePath("restrictions")]
         public IReadOnlyList<ApiManagementSkuRestrictions> Restrictions { get; }
     }

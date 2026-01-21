@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The properties of the id that identifies the requests belonging to the same session.
-    /// Serialized Name: BackendSessionId
-    /// </summary>
+    /// <summary> The properties of the id that identifies the requests belonging to the same session. </summary>
     public partial class BackendSessionId
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendSessionId"/>. </summary>
-        /// <param name="source">
-        /// Source from where the session id is extracted.
-        /// Serialized Name: BackendSessionId.source
-        /// </param>
-        /// <param name="name">
-        /// Name of the variable that refers to the session id.
-        /// Serialized Name: BackendSessionId.name
-        /// </param>
+        /// <param name="source"> Source from where the session id is extracted. </param>
+        /// <param name="name"> Name of the variable that refers to the session id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendSessionId(BackendSessionIdSource? source, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Source from where the session id is extracted.
-        /// Serialized Name: BackendSessionId.source
-        /// </summary>
+        /// <summary> Source from where the session id is extracted. </summary>
         [WirePath("source")]
         public BackendSessionIdSource? Source { get; set; }
-        /// <summary>
-        /// Name of the variable that refers to the session id.
-        /// Serialized Name: BackendSessionId.name
-        /// </summary>
+        /// <summary> Name of the variable that refers to the session id. </summary>
         [WirePath("name")]
         public string Name { get; set; }
     }

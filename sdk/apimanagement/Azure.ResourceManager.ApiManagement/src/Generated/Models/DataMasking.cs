@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The DataMasking.
-    /// Serialized Name: DataMasking
-    /// </summary>
+    /// <summary> The DataMasking. </summary>
     public partial class DataMasking
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMasking"/>. </summary>
-        /// <param name="queryParams">
-        /// Masking settings for Url query parameters
-        /// Serialized Name: DataMasking.queryParams
-        /// </param>
-        /// <param name="headers">
-        /// Masking settings for headers
-        /// Serialized Name: DataMasking.headers
-        /// </param>
+        /// <param name="queryParams"> Masking settings for Url query parameters. </param>
+        /// <param name="headers"> Masking settings for headers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataMasking(IList<DataMaskingEntity> queryParams, IList<DataMaskingEntity> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,16 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Masking settings for Url query parameters
-        /// Serialized Name: DataMasking.queryParams
-        /// </summary>
+        /// <summary> Masking settings for Url query parameters. </summary>
         [WirePath("queryParams")]
         public IList<DataMaskingEntity> QueryParams { get; }
-        /// <summary>
-        /// Masking settings for headers
-        /// Serialized Name: DataMasking.headers
-        /// </summary>
+        /// <summary> Masking settings for headers. </summary>
         [WirePath("headers")]
         public IList<DataMaskingEntity> Headers { get; }
     }

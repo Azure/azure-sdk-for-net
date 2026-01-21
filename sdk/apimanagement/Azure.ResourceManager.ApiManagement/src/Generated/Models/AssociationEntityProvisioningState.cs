@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Provisioning state.
-    /// Serialized Name: AssociationContractPropertiesProvisioningState
-    /// </summary>
+    /// <summary> Provisioning state. </summary>
     public readonly partial struct AssociationEntityProvisioningState : IEquatable<AssociationEntityProvisioningState>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string CreatedValue = "created";
 
-        /// <summary>
-        /// created
-        /// Serialized Name: AssociationContractPropertiesProvisioningState.created
-        /// </summary>
+        /// <summary> created. </summary>
         public static AssociationEntityProvisioningState Created { get; } = new AssociationEntityProvisioningState(CreatedValue);
         /// <summary> Determines if two <see cref="AssociationEntityProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AssociationEntityProvisioningState left, AssociationEntityProvisioningState right) => left.Equals(right);

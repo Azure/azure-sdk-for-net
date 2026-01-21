@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// OAuth2 grant type options
-    /// Serialized Name: OAuth2GrantType
-    /// </summary>
+    /// <summary> OAuth2 grant type options. </summary>
     public readonly partial struct OAuth2GrantType : IEquatable<OAuth2GrantType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string AuthorizationCodeValue = "AuthorizationCode";
         private const string ClientCredentialsValue = "ClientCredentials";
 
-        /// <summary>
-        /// Authorization Code grant
-        /// Serialized Name: OAuth2GrantType.AuthorizationCode
-        /// </summary>
+        /// <summary> Authorization Code grant. </summary>
         public static OAuth2GrantType AuthorizationCode { get; } = new OAuth2GrantType(AuthorizationCodeValue);
-        /// <summary>
-        /// Client Credential grant
-        /// Serialized Name: OAuth2GrantType.ClientCredentials
-        /// </summary>
+        /// <summary> Client Credential grant. </summary>
         public static OAuth2GrantType ClientCredentials { get; } = new OAuth2GrantType(ClientCredentialsValue);
         /// <summary> Determines if two <see cref="OAuth2GrantType"/> values are the same. </summary>
         public static bool operator ==(OAuth2GrantType left, OAuth2GrantType right) => left.Equals(right);

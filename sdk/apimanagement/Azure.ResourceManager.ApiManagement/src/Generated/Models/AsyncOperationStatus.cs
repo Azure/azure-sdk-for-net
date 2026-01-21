@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Status of an async operation.
-    /// Serialized Name: AsyncOperationStatus
-    /// </summary>
+    /// <summary> Status of an async operation. </summary>
     public enum AsyncOperationStatus
     {
-        /// <summary>
-        /// Started
-        /// Serialized Name: AsyncOperationStatus.Started
-        /// </summary>
+        /// <summary> Started. </summary>
         Started,
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: AsyncOperationStatus.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         InProgress,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: AsyncOperationStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: AsyncOperationStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed
     }
 }

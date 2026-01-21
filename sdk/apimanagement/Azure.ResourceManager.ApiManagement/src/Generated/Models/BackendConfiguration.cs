@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Information regarding how the gateway should integrate with backend systems.
-    /// Serialized Name: BackendConfiguration
-    /// </summary>
+    /// <summary> Information regarding how the gateway should integrate with backend systems. </summary>
     internal partial class BackendConfiguration
     {
         /// <summary>
@@ -56,10 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendConfiguration"/>. </summary>
-        /// <param name="subnet">
-        /// The default hostname of the data-plane gateway to which requests can be sent.
-        /// Serialized Name: BackendConfiguration.subnet
-        /// </param>
+        /// <param name="subnet"> The default hostname of the data-plane gateway to which requests can be sent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendConfiguration(WritableSubResource subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The default hostname of the data-plane gateway to which requests can be sent.
-        /// Serialized Name: BackendConfiguration.subnet
-        /// </summary>
+        /// <summary> The default hostname of the data-plane gateway to which requests can be sent. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("subnet.id")]

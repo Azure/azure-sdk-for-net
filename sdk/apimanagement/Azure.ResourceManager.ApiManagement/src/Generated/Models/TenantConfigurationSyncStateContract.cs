@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Result of Tenant Configuration Sync State.
-    /// Serialized Name: TenantConfigurationSyncStateContract
-    /// </summary>
+    /// <summary> Result of Tenant Configuration Sync State. </summary>
     public partial class TenantConfigurationSyncStateContract : ResourceData
     {
         /// <summary>
@@ -60,38 +57,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="branch">
-        /// The name of Git branch.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.branch
-        /// </param>
-        /// <param name="commitId">
-        /// The latest commit Id.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.commitId
-        /// </param>
-        /// <param name="isExported">
-        /// value indicating if last sync was save (true) or deploy (false) operation.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.isExport
-        /// </param>
-        /// <param name="isSynced">
-        /// value indicating if last synchronization was later than the configuration change.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.isSynced
-        /// </param>
-        /// <param name="isGitEnabled">
-        /// value indicating whether Git configuration access is enabled.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.isGitEnabled
-        /// </param>
-        /// <param name="syncOn">
-        /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.syncDate
-        /// </param>
-        /// <param name="configurationChangeOn">
-        /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.configurationChangeDate
-        /// </param>
-        /// <param name="lastOperationId">
-        /// Most recent tenant configuration operation identifier
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.lastOperationId
-        /// </param>
+        /// <param name="branch"> The name of Git branch. </param>
+        /// <param name="commitId"> The latest commit Id. </param>
+        /// <param name="isExported"> value indicating if last sync was save (true) or deploy (false) operation. </param>
+        /// <param name="isSynced"> value indicating if last synchronization was later than the configuration change. </param>
+        /// <param name="isGitEnabled"> value indicating whether Git configuration access is enabled. </param>
+        /// <param name="syncOn"> The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="configurationChangeOn"> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -106,52 +79,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of Git branch.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.branch
-        /// </summary>
+        /// <summary> The name of Git branch. </summary>
         [WirePath("properties.branch")]
         public string Branch { get; set; }
-        /// <summary>
-        /// The latest commit Id.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.commitId
-        /// </summary>
+        /// <summary> The latest commit Id. </summary>
         [WirePath("properties.commitId")]
         public string CommitId { get; set; }
-        /// <summary>
-        /// value indicating if last sync was save (true) or deploy (false) operation.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.isExport
-        /// </summary>
+        /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
         [WirePath("properties.isExport")]
         public bool? IsExported { get; set; }
-        /// <summary>
-        /// value indicating if last synchronization was later than the configuration change.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.isSynced
-        /// </summary>
+        /// <summary> value indicating if last synchronization was later than the configuration change. </summary>
         [WirePath("properties.isSynced")]
         public bool? IsSynced { get; set; }
-        /// <summary>
-        /// value indicating whether Git configuration access is enabled.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.isGitEnabled
-        /// </summary>
+        /// <summary> value indicating whether Git configuration access is enabled. </summary>
         [WirePath("properties.isGitEnabled")]
         public bool? IsGitEnabled { get; set; }
-        /// <summary>
-        /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.syncDate
-        /// </summary>
+        /// <summary> The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.syncDate")]
         public DateTimeOffset? SyncOn { get; set; }
-        /// <summary>
-        /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.configurationChangeDate
-        /// </summary>
+        /// <summary> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.configurationChangeDate")]
         public DateTimeOffset? ConfigurationChangeOn { get; set; }
-        /// <summary>
-        /// Most recent tenant configuration operation identifier
-        /// Serialized Name: TenantConfigurationSyncStateContract.properties.lastOperationId
-        /// </summary>
+        /// <summary> Most recent tenant configuration operation identifier. </summary>
         [WirePath("properties.lastOperationId")]
         public string LastOperationId { get; set; }
     }

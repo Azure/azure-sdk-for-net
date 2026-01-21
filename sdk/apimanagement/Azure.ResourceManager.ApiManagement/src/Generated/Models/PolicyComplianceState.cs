@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Policy Restriction Compliance State
-    /// Serialized Name: PolicyComplianceState
-    /// </summary>
+    /// <summary> Policy Restriction Compliance State. </summary>
     public readonly partial struct PolicyComplianceState : IEquatable<PolicyComplianceState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string NonCompliantValue = "NonCompliant";
         private const string CompliantValue = "Compliant";
 
-        /// <summary>
-        /// The policy restriction compliance state has not yet been determined.
-        /// Serialized Name: PolicyComplianceState.Pending
-        /// </summary>
+        /// <summary> The policy restriction compliance state has not yet been determined. </summary>
         public static PolicyComplianceState Pending { get; } = new PolicyComplianceState(PendingValue);
-        /// <summary>
-        /// The scope in restriction is out of compliance.
-        /// Serialized Name: PolicyComplianceState.NonCompliant
-        /// </summary>
+        /// <summary> The scope in restriction is out of compliance. </summary>
         public static PolicyComplianceState NonCompliant { get; } = new PolicyComplianceState(NonCompliantValue);
-        /// <summary>
-        /// The scope in restriction is in compliance.
-        /// Serialized Name: PolicyComplianceState.Compliant
-        /// </summary>
+        /// <summary> The scope in restriction is in compliance. </summary>
         public static PolicyComplianceState Compliant { get; } = new PolicyComplianceState(CompliantValue);
         /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are the same. </summary>
         public static bool operator ==(PolicyComplianceState left, PolicyComplianceState right) => left.Equals(right);

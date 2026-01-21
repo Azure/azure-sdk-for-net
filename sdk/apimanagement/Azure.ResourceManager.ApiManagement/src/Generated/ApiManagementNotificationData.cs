@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementNotification data model.
     /// Notification details.
-    /// Serialized Name: NotificationContract
     /// </summary>
     public partial class ApiManagementNotificationData : ResourceData
     {
@@ -62,18 +61,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="title">
-        /// Title of the Notification.
-        /// Serialized Name: NotificationContract.properties.title
-        /// </param>
-        /// <param name="description">
-        /// Description of the Notification.
-        /// Serialized Name: NotificationContract.properties.description
-        /// </param>
-        /// <param name="recipients">
-        /// Recipient Parameter values.
-        /// Serialized Name: NotificationContract.properties.recipients
-        /// </param>
+        /// <param name="title"> Title of the Notification. </param>
+        /// <param name="description"> Description of the Notification. </param>
+        /// <param name="recipients"> Recipient Parameter values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementNotificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, RecipientsContractProperties recipients, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -83,22 +73,13 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Title of the Notification.
-        /// Serialized Name: NotificationContract.properties.title
-        /// </summary>
+        /// <summary> Title of the Notification. </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Description of the Notification.
-        /// Serialized Name: NotificationContract.properties.description
-        /// </summary>
+        /// <summary> Description of the Notification. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Recipient Parameter values.
-        /// Serialized Name: NotificationContract.properties.recipients
-        /// </summary>
+        /// <summary> Recipient Parameter values. </summary>
         [WirePath("properties.recipients")]
         public RecipientsContractProperties Recipients { get; set; }
     }

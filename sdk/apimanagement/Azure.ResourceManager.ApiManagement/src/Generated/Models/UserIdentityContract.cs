@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// User identity details.
-    /// Serialized Name: UserIdentityContract
-    /// </summary>
+    /// <summary> User identity details. </summary>
     public partial class UserIdentityContract
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserIdentityContract"/>. </summary>
-        /// <param name="provider">
-        /// Identity provider name.
-        /// Serialized Name: UserIdentityContract.provider
-        /// </param>
-        /// <param name="id">
-        /// Identifier value within provider.
-        /// Serialized Name: UserIdentityContract.id
-        /// </param>
+        /// <param name="provider"> Identity provider name. </param>
+        /// <param name="id"> Identifier value within provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserIdentityContract(string provider, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Identity provider name.
-        /// Serialized Name: UserIdentityContract.provider
-        /// </summary>
+        /// <summary> Identity provider name. </summary>
         [WirePath("provider")]
         public string Provider { get; set; }
-        /// <summary>
-        /// Identifier value within provider.
-        /// Serialized Name: UserIdentityContract.id
-        /// </summary>
+        /// <summary> Identifier value within provider. </summary>
         [WirePath("id")]
         public string Id { get; set; }
     }

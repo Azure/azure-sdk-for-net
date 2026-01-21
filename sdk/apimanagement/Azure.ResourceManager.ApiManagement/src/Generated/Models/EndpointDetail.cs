@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Current TCP connectivity information from the Api Management Service to a single endpoint.
-    /// Serialized Name: EndpointDetail
-    /// </summary>
+    /// <summary> Current TCP connectivity information from the Api Management Service to a single endpoint. </summary>
     public partial class EndpointDetail
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
-        /// <param name="port">
-        /// The port an endpoint is connected to.
-        /// Serialized Name: EndpointDetail.port
-        /// </param>
-        /// <param name="region">
-        /// The region of the dependency.
-        /// Serialized Name: EndpointDetail.region
-        /// </param>
+        /// <param name="port"> The port an endpoint is connected to. </param>
+        /// <param name="region"> The region of the dependency. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EndpointDetail(int? port, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The port an endpoint is connected to.
-        /// Serialized Name: EndpointDetail.port
-        /// </summary>
+        /// <summary> The port an endpoint is connected to. </summary>
         [WirePath("port")]
         public int? Port { get; }
-        /// <summary>
-        /// The region of the dependency.
-        /// Serialized Name: EndpointDetail.region
-        /// </summary>
+        /// <summary> The region of the dependency. </summary>
         [WirePath("region")]
         public string Region { get; }
     }

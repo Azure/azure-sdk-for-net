@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiIssueAttachment data model.
     /// Issue Attachment Contract details.
-    /// Serialized Name: IssueAttachmentContract
     /// </summary>
     public partial class ApiIssueAttachmentData : ResourceData
     {
@@ -61,18 +60,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="title">
-        /// Filename by which the binary data will be saved.
-        /// Serialized Name: IssueAttachmentContract.properties.title
-        /// </param>
-        /// <param name="contentFormat">
-        /// Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property.
-        /// Serialized Name: IssueAttachmentContract.properties.contentFormat
-        /// </param>
-        /// <param name="content">
-        /// An HTTP link or Base64-encoded binary data.
-        /// Serialized Name: IssueAttachmentContract.properties.content
-        /// </param>
+        /// <param name="title"> Filename by which the binary data will be saved. </param>
+        /// <param name="contentFormat"> Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property. </param>
+        /// <param name="content"> An HTTP link or Base64-encoded binary data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiIssueAttachmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string contentFormat, string content, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -82,22 +72,13 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Filename by which the binary data will be saved.
-        /// Serialized Name: IssueAttachmentContract.properties.title
-        /// </summary>
+        /// <summary> Filename by which the binary data will be saved. </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property.
-        /// Serialized Name: IssueAttachmentContract.properties.contentFormat
-        /// </summary>
+        /// <summary> Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property. </summary>
         [WirePath("properties.contentFormat")]
         public string ContentFormat { get; set; }
-        /// <summary>
-        /// An HTTP link or Base64-encoded binary data.
-        /// Serialized Name: IssueAttachmentContract.properties.content
-        /// </summary>
+        /// <summary> An HTTP link or Base64-encoded binary data. </summary>
         [WirePath("properties.content")]
         public string Content { get; set; }
     }

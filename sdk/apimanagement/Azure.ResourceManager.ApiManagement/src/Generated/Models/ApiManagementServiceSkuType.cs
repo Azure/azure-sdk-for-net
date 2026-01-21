@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Name of the Sku.
-    /// Serialized Name: SkuType
-    /// </summary>
+    /// <summary> Name of the Sku. </summary>
     public readonly partial struct ApiManagementServiceSkuType : IEquatable<ApiManagementServiceSkuType>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string StandardV2Value = "StandardV2";
         private const string PremiumV2Value = "PremiumV2";
 
-        /// <summary>
-        /// Developer SKU of Api Management.
-        /// Serialized Name: SkuType.Developer
-        /// </summary>
+        /// <summary> Developer SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Developer { get; } = new ApiManagementServiceSkuType(DeveloperValue);
-        /// <summary>
-        /// Standard SKU of Api Management.
-        /// Serialized Name: SkuType.Standard
-        /// </summary>
+        /// <summary> Standard SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Standard { get; } = new ApiManagementServiceSkuType(StandardValue);
-        /// <summary>
-        /// Premium SKU of Api Management.
-        /// Serialized Name: SkuType.Premium
-        /// </summary>
+        /// <summary> Premium SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Premium { get; } = new ApiManagementServiceSkuType(PremiumValue);
-        /// <summary>
-        /// Basic SKU of Api Management.
-        /// Serialized Name: SkuType.Basic
-        /// </summary>
+        /// <summary> Basic SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Basic { get; } = new ApiManagementServiceSkuType(BasicValue);
-        /// <summary>
-        /// Consumption SKU of Api Management.
-        /// Serialized Name: SkuType.Consumption
-        /// </summary>
+        /// <summary> Consumption SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Consumption { get; } = new ApiManagementServiceSkuType(ConsumptionValue);
-        /// <summary>
-        /// Isolated SKU of Api Management.
-        /// Serialized Name: SkuType.Isolated
-        /// </summary>
+        /// <summary> Isolated SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Isolated { get; } = new ApiManagementServiceSkuType(IsolatedValue);
-        /// <summary>
-        /// BasicV2 SKU of Api Management.
-        /// Serialized Name: SkuType.BasicV2
-        /// </summary>
+        /// <summary> BasicV2 SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType BasicV2 { get; } = new ApiManagementServiceSkuType(BasicV2Value);
-        /// <summary>
-        /// StandardV2 SKU of Api Management.
-        /// Serialized Name: SkuType.StandardV2
-        /// </summary>
+        /// <summary> StandardV2 SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType StandardV2 { get; } = new ApiManagementServiceSkuType(StandardV2Value);
-        /// <summary>
-        /// PremiumV2 SKU of Api Management.
-        /// Serialized Name: SkuType.PremiumV2
-        /// </summary>
+        /// <summary> PremiumV2 SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType PremiumV2 { get; } = new ApiManagementServiceSkuType(PremiumV2Value);
         /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are the same. </summary>
         public static bool operator ==(ApiManagementServiceSkuType left, ApiManagementServiceSkuType right) => left.Equals(right);

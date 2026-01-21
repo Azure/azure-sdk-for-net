@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The AppType.
-    /// Serialized Name: AppType
-    /// </summary>
+    /// <summary> The AppType. </summary>
     public readonly partial struct AppType : IEquatable<AppType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string PortalValue = "portal";
         private const string DeveloperPortalValue = "developerPortal";
 
-        /// <summary>
-        /// User create request was sent by legacy developer portal.
-        /// Serialized Name: AppType.portal
-        /// </summary>
+        /// <summary> User create request was sent by legacy developer portal. </summary>
         public static AppType Portal { get; } = new AppType(PortalValue);
-        /// <summary>
-        /// User create request was sent by new developer portal.
-        /// Serialized Name: AppType.developerPortal
-        /// </summary>
+        /// <summary> User create request was sent by new developer portal. </summary>
         public static AppType DeveloperPortal { get; } = new AppType(DeveloperPortalValue);
         /// <summary> Determines if two <see cref="AppType"/> values are the same. </summary>
         public static bool operator ==(AppType left, AppType right) => left.Equals(right);

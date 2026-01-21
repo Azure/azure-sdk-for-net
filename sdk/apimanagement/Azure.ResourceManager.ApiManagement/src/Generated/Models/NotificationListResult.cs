@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Notification list representation.
-    /// Serialized Name: NotificationListResult
-    /// </summary>
+    /// <summary> Paged Notification list representation. </summary>
     internal partial class NotificationListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationListResult"/>. </summary>
-        /// <param name="value">
-        /// Page values.
-        /// Serialized Name: NotificationListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number across all pages.
-        /// Serialized Name: NotificationListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: NotificationListResult.nextLink
-        /// </param>
+        /// <param name="value"> Page values. </param>
+        /// <param name="count"> Total record count number across all pages. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationListResult(IReadOnlyList<ApiManagementNotificationData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page values.
-        /// Serialized Name: NotificationListResult.value
-        /// </summary>
+        /// <summary> Page values. </summary>
         public IReadOnlyList<ApiManagementNotificationData> Value { get; }
-        /// <summary>
-        /// Total record count number across all pages.
-        /// Serialized Name: NotificationListResult.count
-        /// </summary>
+        /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: NotificationListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

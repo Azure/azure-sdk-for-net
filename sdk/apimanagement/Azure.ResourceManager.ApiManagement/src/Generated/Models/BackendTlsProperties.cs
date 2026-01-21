@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Properties controlling TLS Certificate Validation.
-    /// Serialized Name: BackendTlsProperties
-    /// </summary>
+    /// <summary> Properties controlling TLS Certificate Validation. </summary>
     public partial class BackendTlsProperties
     {
         /// <summary>
@@ -56,22 +53,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendTlsProperties"/>. </summary>
-        /// <param name="shouldValidateCertificateChain">
-        /// Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host.
-        /// Serialized Name: BackendTlsProperties.validateCertificateChain
-        /// </param>
-        /// <param name="shouldValidateCertificateName">
-        /// Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host.
-        /// Serialized Name: BackendTlsProperties.validateCertificateName
-        /// </param>
-        /// <param name="serverCertificateThumbprints">
-        /// Thumbprints of certificates used by the backend host for TLS communication.
-        /// Serialized Name: BackendTlsProperties.serverCertificateThumbprints
-        /// </param>
-        /// <param name="serverX509Names">
-        /// Server X509 Certificate Names of the Backend Host.
-        /// Serialized Name: BackendTlsProperties.serverX509Names
-        /// </param>
+        /// <param name="shouldValidateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="shouldValidateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="serverCertificateThumbprints"> Thumbprints of certificates used by the backend host for TLS communication. </param>
+        /// <param name="serverX509Names"> Server X509 Certificate Names of the Backend Host. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendTlsProperties(bool? shouldValidateCertificateChain, bool? shouldValidateCertificateName, IList<string> serverCertificateThumbprints, IList<X509CertificateName> serverX509Names, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,28 +67,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host.
-        /// Serialized Name: BackendTlsProperties.validateCertificateChain
-        /// </summary>
+        /// <summary> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </summary>
         [WirePath("validateCertificateChain")]
         public bool? ShouldValidateCertificateChain { get; set; }
-        /// <summary>
-        /// Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host.
-        /// Serialized Name: BackendTlsProperties.validateCertificateName
-        /// </summary>
+        /// <summary> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </summary>
         [WirePath("validateCertificateName")]
         public bool? ShouldValidateCertificateName { get; set; }
-        /// <summary>
-        /// Thumbprints of certificates used by the backend host for TLS communication.
-        /// Serialized Name: BackendTlsProperties.serverCertificateThumbprints
-        /// </summary>
+        /// <summary> Thumbprints of certificates used by the backend host for TLS communication. </summary>
         [WirePath("serverCertificateThumbprints")]
         public IList<string> ServerCertificateThumbprints { get; }
-        /// <summary>
-        /// Server X509 Certificate Names of the Backend Host.
-        /// Serialized Name: BackendTlsProperties.serverX509Names
-        /// </summary>
+        /// <summary> Server X509 Certificate Names of the Backend Host. </summary>
         [WirePath("serverX509Names")]
         public IList<X509CertificateName> ServerX509Names { get; }
     }

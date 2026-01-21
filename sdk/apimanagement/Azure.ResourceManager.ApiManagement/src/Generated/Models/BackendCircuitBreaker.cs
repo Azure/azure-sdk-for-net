@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The configuration of the backend circuit breaker
-    /// Serialized Name: BackendCircuitBreaker
-    /// </summary>
+    /// <summary> The configuration of the backend circuit breaker. </summary>
     internal partial class BackendCircuitBreaker
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendCircuitBreaker"/>. </summary>
-        /// <param name="rules">
-        /// The rules for tripping the backend.
-        /// Serialized Name: BackendCircuitBreaker.rules
-        /// </param>
+        /// <param name="rules"> The rules for tripping the backend. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendCircuitBreaker(IList<CircuitBreakerRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The rules for tripping the backend.
-        /// Serialized Name: BackendCircuitBreaker.rules
-        /// </summary>
+        /// <summary> The rules for tripping the backend. </summary>
         [WirePath("rules")]
         public IList<CircuitBreakerRule> Rules { get; }
     }

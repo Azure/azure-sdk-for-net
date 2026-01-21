@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Release Channel of this API Management service.
-    /// Serialized Name: ReleaseChannel
-    /// </summary>
+    /// <summary> Release Channel of this API Management service. </summary>
     public readonly partial struct ReleaseChannel : IEquatable<ReleaseChannel>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string DefaultValue = "Default";
         private const string StableValue = "Stable";
 
-        /// <summary>
-        /// Preview Channel of the service.
-        /// Serialized Name: ReleaseChannel.Preview
-        /// </summary>
+        /// <summary> Preview Channel of the service. </summary>
         public static ReleaseChannel Preview { get; } = new ReleaseChannel(PreviewValue);
-        /// <summary>
-        /// Default Channel of the service.
-        /// Serialized Name: ReleaseChannel.Default
-        /// </summary>
+        /// <summary> Default Channel of the service. </summary>
         public static ReleaseChannel Default { get; } = new ReleaseChannel(DefaultValue);
-        /// <summary>
-        /// Stable Channel of the service.
-        /// Serialized Name: ReleaseChannel.Stable
-        /// </summary>
+        /// <summary> Stable Channel of the service. </summary>
         public static ReleaseChannel Stable { get; } = new ReleaseChannel(StableValue);
         /// <summary> Determines if two <see cref="ReleaseChannel"/> values are the same. </summary>
         public static bool operator ==(ReleaseChannel left, ReleaseChannel right) => left.Equals(right);

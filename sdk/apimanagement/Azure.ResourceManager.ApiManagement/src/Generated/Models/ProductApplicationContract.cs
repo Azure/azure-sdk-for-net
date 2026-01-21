@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Specifies Microsoft Entra settings needed to authorize product API calls using client applications.
-    /// Serialized Name: ProductApplicationContract
-    /// </summary>
+    /// <summary> Specifies Microsoft Entra settings needed to authorize product API calls using client applications. </summary>
     internal partial class ProductApplicationContract
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductApplicationContract"/>. </summary>
-        /// <param name="entra">
-        /// Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token.
-        /// Serialized Name: ProductApplicationContract.entra
-        /// </param>
+        /// <param name="entra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductApplicationContract(ProductApplicationContractEntra entra, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token.
-        /// Serialized Name: ProductApplicationContract.entra
-        /// </summary>
+        /// <summary> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </summary>
         [WirePath("entra")]
         public ProductApplicationContractEntra Entra { get; set; }
     }

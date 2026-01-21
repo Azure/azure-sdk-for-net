@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Recipient User list representation.
-    /// Serialized Name: RecipientUserListResult
-    /// </summary>
+    /// <summary> Paged Recipient User list representation. </summary>
     internal partial class RecipientUserListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecipientUserListResult"/>. </summary>
-        /// <param name="value">
-        /// Page values.
-        /// Serialized Name: RecipientUserListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number across all pages.
-        /// Serialized Name: RecipientUserListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: RecipientUserListResult.nextLink
-        /// </param>
+        /// <param name="value"> Page values. </param>
+        /// <param name="count"> Total record count number across all pages. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecipientUserListResult(IReadOnlyList<RecipientUserContract> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page values.
-        /// Serialized Name: RecipientUserListResult.value
-        /// </summary>
+        /// <summary> Page values. </summary>
         [WirePath("value")]
         public IReadOnlyList<RecipientUserContract> Value { get; }
-        /// <summary>
-        /// Total record count number across all pages.
-        /// Serialized Name: RecipientUserListResult.count
-        /// </summary>
+        /// <summary> Total record count number across all pages. </summary>
         [WirePath("count")]
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: RecipientUserListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         [WirePath("nextLink")]
         public string NextLink { get; }
     }

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementPortalDelegationSetting data model.
     /// Delegation settings for a developer portal.
-    /// Serialized Name: PortalDelegationSettings
     /// </summary>
     public partial class ApiManagementPortalDelegationSettingData : ResourceData
     {
@@ -62,22 +61,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="uri">
-        /// A delegation Url.
-        /// Serialized Name: PortalDelegationSettings.properties.url
-        /// </param>
-        /// <param name="validationKey">
-        /// A base64-encoded validation key to validate, that a request is coming from Azure API Management.
-        /// Serialized Name: PortalDelegationSettings.properties.validationKey
-        /// </param>
-        /// <param name="subscriptions">
-        /// Subscriptions delegation settings.
-        /// Serialized Name: PortalDelegationSettings.properties.subscriptions
-        /// </param>
-        /// <param name="userRegistration">
-        /// User registration delegation settings.
-        /// Serialized Name: PortalDelegationSettings.properties.userRegistration
-        /// </param>
+        /// <param name="uri"> A delegation Url. </param>
+        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
+        /// <param name="subscriptions"> Subscriptions delegation settings. </param>
+        /// <param name="userRegistration"> User registration delegation settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties subscriptions, RegistrationDelegationSettingProperties userRegistration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,27 +75,15 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A delegation Url.
-        /// Serialized Name: PortalDelegationSettings.properties.url
-        /// </summary>
+        /// <summary> A delegation Url. </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }
-        /// <summary>
-        /// A base64-encoded validation key to validate, that a request is coming from Azure API Management.
-        /// Serialized Name: PortalDelegationSettings.properties.validationKey
-        /// </summary>
+        /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
         [WirePath("properties.validationKey")]
         public string ValidationKey { get; set; }
-        /// <summary>
-        /// Subscriptions delegation settings.
-        /// Serialized Name: PortalDelegationSettings.properties.subscriptions
-        /// </summary>
+        /// <summary> Subscriptions delegation settings. </summary>
         internal SubscriptionDelegationSettingProperties Subscriptions { get; set; }
-        /// <summary>
-        /// Enable or disable delegation for subscriptions.
-        /// Serialized Name: SubscriptionsDelegationSettingsProperties.enabled
-        /// </summary>
+        /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("properties.subscriptions.enabled")]
         public bool? IsSubscriptionDelegationEnabled
         {
@@ -121,15 +96,9 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary>
-        /// User registration delegation settings.
-        /// Serialized Name: PortalDelegationSettings.properties.userRegistration
-        /// </summary>
+        /// <summary> User registration delegation settings. </summary>
         internal RegistrationDelegationSettingProperties UserRegistration { get; set; }
-        /// <summary>
-        /// Enable or disable delegation for user registration.
-        /// Serialized Name: RegistrationDelegationSettingsProperties.enabled
-        /// </summary>
+        /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("properties.userRegistration.enabled")]
         public bool? IsUserRegistrationDelegationEnabled
         {

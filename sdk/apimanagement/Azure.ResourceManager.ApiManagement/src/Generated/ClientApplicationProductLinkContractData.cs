@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ClientApplicationProductLinkContract data model.
     /// Specifies Client Application - Product link assignment
-    /// Serialized Name: ClientApplicationProductLinkContract
     /// </summary>
     public partial class ClientApplicationProductLinkContractData : ResourceData
     {
@@ -61,10 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="productId">
-        /// The unique resource identifier of the Product.
-        /// Serialized Name: ClientApplicationProductLinkContract.properties.productId
-        /// </param>
+        /// <param name="productId"> The unique resource identifier of the Product. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClientApplicationProductLinkContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string productId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,10 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The unique resource identifier of the Product.
-        /// Serialized Name: ClientApplicationProductLinkContract.properties.productId
-        /// </summary>
+        /// <summary> The unique resource identifier of the Product. </summary>
         [WirePath("properties.productId")]
         public string ProductId { get; set; }
     }

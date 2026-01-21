@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// The collection of the developer portal configurations.
-    /// Serialized Name: PortalConfigListResult
-    /// </summary>
+    /// <summary> The collection of the developer portal configurations. </summary>
     internal partial class PortalConfigListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigListResult"/>. </summary>
-        /// <param name="value">
-        /// The developer portal configurations.
-        /// Serialized Name: PortalConfigListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: PortalConfigListResult.nextLink
-        /// </param>
+        /// <param name="value"> The developer portal configurations. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigListResult(IReadOnlyList<PortalConfigContractData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The developer portal configurations.
-        /// Serialized Name: PortalConfigListResult.value
-        /// </summary>
+        /// <summary> The developer portal configurations. </summary>
         public IReadOnlyList<PortalConfigContractData> Value { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: PortalConfigListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

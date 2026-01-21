@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Issue Comment list representation.
-    /// Serialized Name: IssueCommentListResult
-    /// </summary>
+    /// <summary> Paged Issue Comment list representation. </summary>
     internal partial class IssueCommentListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IssueCommentListResult"/>. </summary>
-        /// <param name="value">
-        /// Issue Comment values.
-        /// Serialized Name: IssueCommentListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number across all pages.
-        /// Serialized Name: IssueCommentListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: IssueCommentListResult.nextLink
-        /// </param>
+        /// <param name="value"> Issue Comment values. </param>
+        /// <param name="count"> Total record count number across all pages. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IssueCommentListResult(IReadOnlyList<ApiIssueCommentData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Issue Comment values.
-        /// Serialized Name: IssueCommentListResult.value
-        /// </summary>
+        /// <summary> Issue Comment values. </summary>
         public IReadOnlyList<ApiIssueCommentData> Value { get; }
-        /// <summary>
-        /// Total record count number across all pages.
-        /// Serialized Name: IssueCommentListResult.count
-        /// </summary>
+        /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: IssueCommentListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }

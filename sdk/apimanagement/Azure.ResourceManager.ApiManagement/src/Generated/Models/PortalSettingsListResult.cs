@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Descriptions of API Management policies.
-    /// Serialized Name: PortalSettingsListResult
-    /// </summary>
+    /// <summary> Descriptions of API Management policies. </summary>
     internal partial class PortalSettingsListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalSettingsListResult"/>. </summary>
-        /// <param name="value">
-        /// Descriptions of API Management policies.
-        /// Serialized Name: PortalSettingsListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number.
-        /// Serialized Name: PortalSettingsListResult.count
-        /// </param>
+        /// <param name="value"> Descriptions of API Management policies. </param>
+        /// <param name="count"> Total record count number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalSettingsListResult(IReadOnlyList<PortalSettingsContractData> value, long? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Descriptions of API Management policies.
-        /// Serialized Name: PortalSettingsListResult.value
-        /// </summary>
+        /// <summary> Descriptions of API Management policies. </summary>
         [WirePath("value")]
         public IReadOnlyList<PortalSettingsContractData> Value { get; }
-        /// <summary>
-        /// Total record count number.
-        /// Serialized Name: PortalSettingsListResult.count
-        /// </summary>
+        /// <summary> Total record count number. </summary>
         [WirePath("count")]
         public long? Count { get; }
     }

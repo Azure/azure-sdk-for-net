@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Network Status in the Location
-    /// Serialized Name: NetworkStatusContractByLocation
-    /// </summary>
+    /// <summary> Network Status in the Location. </summary>
     public partial class NetworkStatusContractWithLocation
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkStatusContractWithLocation"/>. </summary>
-        /// <param name="location">
-        /// Location of service
-        /// Serialized Name: NetworkStatusContractByLocation.location
-        /// </param>
-        /// <param name="networkStatus">
-        /// Network status in Location
-        /// Serialized Name: NetworkStatusContractByLocation.networkStatus
-        /// </param>
+        /// <param name="location"> Location of service. </param>
+        /// <param name="networkStatus"> Network status in Location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkStatusContractWithLocation(AzureLocation? location, NetworkStatusContract networkStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Location of service
-        /// Serialized Name: NetworkStatusContractByLocation.location
-        /// </summary>
+        /// <summary> Location of service. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// Network status in Location
-        /// Serialized Name: NetworkStatusContractByLocation.networkStatus
-        /// </summary>
+        /// <summary> Network status in Location. </summary>
         [WirePath("networkStatus")]
         public NetworkStatusContract NetworkStatus { get; }
     }

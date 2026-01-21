@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary>
-    /// Paged Issue Attachment list representation.
-    /// Serialized Name: IssueAttachmentListResult
-    /// </summary>
+    /// <summary> Paged Issue Attachment list representation. </summary>
     internal partial class IssueAttachmentListResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IssueAttachmentListResult"/>. </summary>
-        /// <param name="value">
-        /// Issue Attachment values.
-        /// Serialized Name: IssueAttachmentListResult.value
-        /// </param>
-        /// <param name="count">
-        /// Total record count number across all pages.
-        /// Serialized Name: IssueAttachmentListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// Next page link if any.
-        /// Serialized Name: IssueAttachmentListResult.nextLink
-        /// </param>
+        /// <param name="value"> Issue Attachment values. </param>
+        /// <param name="count"> Total record count number across all pages. </param>
+        /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IssueAttachmentListResult(IReadOnlyList<ApiIssueAttachmentData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Issue Attachment values.
-        /// Serialized Name: IssueAttachmentListResult.value
-        /// </summary>
+        /// <summary> Issue Attachment values. </summary>
         public IReadOnlyList<ApiIssueAttachmentData> Value { get; }
-        /// <summary>
-        /// Total record count number across all pages.
-        /// Serialized Name: IssueAttachmentListResult.count
-        /// </summary>
+        /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Next page link if any.
-        /// Serialized Name: IssueAttachmentListResult.nextLink
-        /// </summary>
+        /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }
 }
