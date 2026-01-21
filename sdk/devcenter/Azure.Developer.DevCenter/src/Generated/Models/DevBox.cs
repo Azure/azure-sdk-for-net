@@ -124,8 +124,5 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Creation time of this Dev Box, in RFC3339 format. </summary>
         public DateTimeOffset? CreatedTime { get; }
-
-        /// <summary> Indicates whether the owner of the Dev Box is a local administrator. </summary>
-        public LocalAdministratorStatus? LocalAdministratorStatus { get; }
     }
 }
