@@ -14,37 +14,8 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> A pool of Dev Boxes. </summary>
     public partial class DevBoxPool
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
@@ -75,8 +46,8 @@ namespace Azure.Developer.DevCenter.Models
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
@@ -88,35 +59,39 @@ namespace Azure.Developer.DevCenter.Models
             LocalAdministratorStatus = localAdministratorStatus;
             StopOnDisconnect = stopOnDisconnect;
             HealthStatus = healthStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/> for deserialization. </summary>
-        internal DevBoxPool()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Pool name. </summary>
         public string Name { get; }
+
         /// <summary> Azure region where Dev Boxes in the pool are located. </summary>
         public AzureLocation Location { get; }
+
         /// <summary> The operating system type of Dev Boxes in this pool. </summary>
         public DevBoxOSType? OSType { get; }
+
         /// <summary> Hardware settings for the Dev Boxes created in this pool. </summary>
         public DevBoxHardwareProfile HardwareProfile { get; }
+
         /// <summary> Indicates whether hibernate is enabled/disabled or unknown. </summary>
         public HibernateSupport? HibernateSupport { get; }
+
         /// <summary> Storage settings for Dev Box created in this pool. </summary>
         public DevBoxStorageProfile StorageProfile { get; }
+
         /// <summary> Image settings for Dev Boxes create in this pool. </summary>
         public DevBoxImageReference ImageReference { get; }
+
         /// <summary>
         /// Indicates whether owners of Dev Boxes in this pool are local administrators on
         /// the Dev Boxes.
         /// </summary>
         public LocalAdministratorStatus? LocalAdministratorStatus { get; }
+
         /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
         public StopOnDisconnectConfiguration StopOnDisconnect { get; }
+
         /// <summary>
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
