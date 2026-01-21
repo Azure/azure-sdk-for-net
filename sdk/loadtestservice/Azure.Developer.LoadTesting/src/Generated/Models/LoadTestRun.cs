@@ -72,12 +72,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
         /// <param name="createdByUri"> The URI pointing to the entity that created the test run. </param>
         /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test run. </param>
+        /// <param name="executionStartDateTime"> The test run execution start DateTime(RFC 3339 literal format). </param>
+        /// <param name="executionEndDateTime"> The test run execution end DateTime(RFC 3339 literal format). </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, Uri createdByUri, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, Uri createdByUri, double? estimatedVirtualUserHours, DateTimeOffset? executionStartDateTime, DateTimeOffset? executionEndDateTime, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TestRunId = testRunId;
             PassFailCriteria = passFailCriteria;
@@ -110,6 +112,8 @@ namespace Azure.Developer.LoadTesting
             CreatedByType = createdByType;
             CreatedByUri = createdByUri;
             EstimatedVirtualUserHours = estimatedVirtualUserHours;
+            ExecutionStartDateTime = executionStartDateTime;
+            ExecutionEndDateTime = executionEndDateTime;
             CreatedDateTime = createdDateTime;
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
@@ -223,6 +227,12 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Estimated virtual user hours for the test run. </summary>
         public double? EstimatedVirtualUserHours { get; }
+
+        /// <summary> The test run execution start DateTime(RFC 3339 literal format). </summary>
+        public DateTimeOffset? ExecutionStartDateTime { get; }
+
+        /// <summary> The test run execution end DateTime(RFC 3339 literal format). </summary>
+        public DateTimeOffset? ExecutionEndDateTime { get; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }

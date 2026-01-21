@@ -52,12 +52,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="engineBuiltInIdentityType"> Type of the managed identity built in load test engines. </param>
         /// <param name="engineBuiltInIdentityIds"> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </param>
         /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test. </param>
+        /// <param name="preferences"> Preferences for the test. </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, double? estimatedVirtualUserHours, TestPreferences preferences, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PassFailCriteria = passFailCriteria;
             AutoStopCriteria = autoStopCriteria;
@@ -80,6 +81,7 @@ namespace Azure.Developer.LoadTesting
             EngineBuiltInIdentityType = engineBuiltInIdentityType;
             EngineBuiltInIdentityIds = engineBuiltInIdentityIds;
             EstimatedVirtualUserHours = estimatedVirtualUserHours;
+            Preferences = preferences;
             CreatedDateTime = createdDateTime;
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
@@ -155,6 +157,9 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Estimated virtual user hours for the test. </summary>
         public double? EstimatedVirtualUserHours { get; }
+
+        /// <summary> Preferences for the test. </summary>
+        public TestPreferences Preferences { get; set; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }
