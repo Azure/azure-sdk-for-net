@@ -12,7 +12,7 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class ManagedHsmPrivateLinkResourceListResult
+    internal partial class ManagedHsmPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

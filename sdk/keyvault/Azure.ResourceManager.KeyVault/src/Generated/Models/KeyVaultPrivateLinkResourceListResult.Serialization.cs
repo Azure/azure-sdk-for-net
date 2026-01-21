@@ -15,7 +15,7 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class KeyVaultPrivateLinkResourceListResult : IJsonModel<KeyVaultPrivateLinkResourceListResult>
+    internal partial class KeyVaultPrivateLinkResourceListResult : IJsonModel<KeyVaultPrivateLinkResourceListResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

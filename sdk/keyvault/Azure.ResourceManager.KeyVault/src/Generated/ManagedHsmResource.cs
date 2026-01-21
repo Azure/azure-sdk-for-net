@@ -427,30 +427,14 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedHsmPrivateLinkResourceListResult>> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedHsmsClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedHsmsRestClient.CreateGetMHSMPrivateLinkResourcesByManagedHsmResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedHsmPrivateLinkResourceListResult> response = Response.FromValue(ManagedHsmPrivateLinkResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceAsyncCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -475,30 +459,14 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedHsmPrivateLinkResourceListResult> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedHsmsClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedHsmsRestClient.CreateGetMHSMPrivateLinkResourcesByManagedHsmResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedHsmPrivateLinkResourceListResult> response = Response.FromValue(ManagedHsmPrivateLinkResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -524,13 +492,13 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmGeoReplicatedRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedHsmGeoReplicatedRegion> GetRegionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedHsmGeoReplicatedRegion> GetMHSMRegionsByResourceAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetRegionsAsyncCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -556,13 +524,13 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmGeoReplicatedRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedHsmGeoReplicatedRegion> GetRegions(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedHsmGeoReplicatedRegion> GetMHSMRegionsByResource(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetRegionsCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ManagedHsmsGetMHSMRegionsByResourceCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>

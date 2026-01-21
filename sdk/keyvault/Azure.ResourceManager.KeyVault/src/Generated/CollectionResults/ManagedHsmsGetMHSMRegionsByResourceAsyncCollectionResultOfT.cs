@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal partial class ManagedHsmsGetRegionsCollectionResultOfT : Pageable<ManagedHsmGeoReplicatedRegion>
+    internal partial class ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT : AsyncPageable<ManagedHsmGeoReplicatedRegion>
     {
         private readonly ManagedHsms _client;
         private readonly Guid _subscriptionId;
@@ -22,13 +23,13 @@ namespace Azure.ResourceManager.KeyVault
         private readonly string _name;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ManagedHsmsGetRegionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ManagedHsms client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ManagedHsmsGetRegionsCollectionResultOfT(ManagedHsms client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT(ManagedHsms client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,16 +38,16 @@ namespace Azure.ResourceManager.KeyVault
             _context = context;
         }
 
-        /// <summary> Gets the pages of ManagedHsmsGetRegionsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedHsmsGetRegionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedHsmGeoReplicatedRegion>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ManagedHsmGeoReplicatedRegion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRegionsRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetRegionsRequest(_subscriptionId, _resourceGroupName, _name, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ManagedHsmResource.GetRegions");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetMHSMRegionsByResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetMHSMRegionsByResourceRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMRegionsByResource");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -216,16 +216,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultAccessPolicyProperties(accessPolicies.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A list of private link resources. </summary>
-        /// <param name="value"> Array of private link resources. </param>
-        /// <returns> A new <see cref="Models.KeyVaultPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static KeyVaultPrivateLinkResourceListResult KeyVaultPrivateLinkResourceListResult(IEnumerable<KeyVaultPrivateLinkResourceData> value = default)
-        {
-            value ??= new ChangeTrackingList<KeyVaultPrivateLinkResourceData>();
-
-            return new KeyVaultPrivateLinkResourceListResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -438,16 +428,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHSMSecurityDomainProperties ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus = default, string activationStatusMessage = default)
         {
             return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A list of private link resources. </summary>
-        /// <param name="value"> Array of private link resources. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkResourceListResult ManagedHsmPrivateLinkResourceListResult(IEnumerable<ManagedHsmPrivateLinkResourceData> value = default)
-        {
-            value ??= new ChangeTrackingList<ManagedHsmPrivateLinkResourceData>();
-
-            return new ManagedHsmPrivateLinkResourceListResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

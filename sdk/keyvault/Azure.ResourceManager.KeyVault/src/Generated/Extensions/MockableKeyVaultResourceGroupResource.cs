@@ -170,7 +170,23 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return GetManagedHsms().Get(name, cancellationToken);
         }
 
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <summary>
+        /// Update access policies in a key vault in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_UpdateAccessPolicy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="operationKind"> Name of the operation. </param>
         /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
@@ -206,7 +222,23 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             }
         }
 
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <summary>
+        /// Update access policies in a key vault in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_UpdateAccessPolicy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="operationKind"> Name of the operation. </param>
         /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>

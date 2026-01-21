@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="content"> Access policy to merge into the vault. </param>
+        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(this ResourceGroupResource resourceGroupResource, string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters content, CancellationToken cancellationToken = default)
+        public static async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(this ResourceGroupResource resourceGroupResource, string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableKeyVaultResourceGroupResource(resourceGroupResource).UpdateAccessPolicyAsync(vaultName, operationKind, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKeyVaultResourceGroupResource(resourceGroupResource).UpdateAccessPolicyAsync(vaultName, operationKind, keyVaultAccessPolicyParameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -304,14 +304,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="content"> Access policy to merge into the vault. </param>
+        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(this ResourceGroupResource resourceGroupResource, string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters content, CancellationToken cancellationToken = default)
+        public static Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(this ResourceGroupResource resourceGroupResource, string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).UpdateAccessPolicy(vaultName, operationKind, content, cancellationToken);
+            return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).UpdateAccessPolicy(vaultName, operationKind, keyVaultAccessPolicyParameters, cancellationToken);
         }
 
         /// <summary>
