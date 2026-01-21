@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,50 +15,82 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct ProductLinkType : IEquatable<ProductLinkType>
     {
         private readonly string _value;
+        /// <summary> Generic link. </summary>
+        private const string GenericValue = "Generic";
+        /// <summary> Terms and conditions link. </summary>
+        private const string TermsAndConditionsValue = "TermsAndConditions";
+        /// <summary> Link to product specification. </summary>
+        private const string SpecificationValue = "Specification";
+        /// <summary> Link to product documentation. </summary>
+        private const string DocumentationValue = "Documentation";
+        /// <summary> Link to know more. </summary>
+        private const string KnowMoreValue = "KnowMore";
+        /// <summary> Link to sign up for products. </summary>
+        private const string SignUpValue = "SignUp";
+        /// <summary> Link to order the product from another source and not from Azure Edge Hardware Center. </summary>
+        private const string DiscoverableValue = "Discoverable";
 
         /// <summary> Initializes a new instance of <see cref="ProductLinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProductLinkType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GenericValue = "Generic";
-        private const string TermsAndConditionsValue = "TermsAndConditions";
-        private const string SpecificationValue = "Specification";
-        private const string DocumentationValue = "Documentation";
-        private const string KnowMoreValue = "KnowMore";
-        private const string SignUpValue = "SignUp";
+            _value = value;
+        }
 
         /// <summary> Generic link. </summary>
         public static ProductLinkType Generic { get; } = new ProductLinkType(GenericValue);
+
         /// <summary> Terms and conditions link. </summary>
         public static ProductLinkType TermsAndConditions { get; } = new ProductLinkType(TermsAndConditionsValue);
+
         /// <summary> Link to product specification. </summary>
         public static ProductLinkType Specification { get; } = new ProductLinkType(SpecificationValue);
+
         /// <summary> Link to product documentation. </summary>
         public static ProductLinkType Documentation { get; } = new ProductLinkType(DocumentationValue);
+
         /// <summary> Link to know more. </summary>
         public static ProductLinkType KnowMore { get; } = new ProductLinkType(KnowMoreValue);
+
         /// <summary> Link to sign up for products. </summary>
         public static ProductLinkType SignUp { get; } = new ProductLinkType(SignUpValue);
+
+        /// <summary> Link to order the product from another source and not from Azure Edge Hardware Center. </summary>
+        public static ProductLinkType Discoverable { get; } = new ProductLinkType(DiscoverableValue);
+
         /// <summary> Determines if two <see cref="ProductLinkType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProductLinkType left, ProductLinkType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProductLinkType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProductLinkType left, ProductLinkType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductLinkType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProductLinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProductLinkType(string value) => new ProductLinkType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProductLinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProductLinkType?(string value) => value == null ? null : new ProductLinkType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProductLinkType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProductLinkType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,73 +7,106 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Updates order item parameters. </summary>
     public partial class EdgeOrderItemPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemPatch"/>. </summary>
         public EdgeOrderItemPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            NotificationEmailList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemPatch"/>. </summary>
+        /// <param name="properties"> Order item update properties. </param>
         /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
-        /// <param name="forwardAddress"> Updates forward shipping address and contact details. </param>
-        /// <param name="preferences"> Customer preference. </param>
-        /// <param name="notificationEmailList"> Additional notification email list. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemPatch(IDictionary<string, string> tags, EdgeOrderItemAddressProperties forwardAddress, OrderItemPreferences preferences, IList<string> notificationEmailList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderItemPatch(OrderItemUpdateProperties properties, IDictionary<string, string> tags, EdgeOrderResourceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            ForwardAddress = forwardAddress;
-            Preferences = preferences;
-            NotificationEmailList = notificationEmailList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Order item update properties. </summary>
+        internal OrderItemUpdateProperties Properties { get; set; }
 
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Msi identity of the resource. </summary>
+        public EdgeOrderResourceIdentity Identity { get; set; }
+
         /// <summary> Updates forward shipping address and contact details. </summary>
-        public EdgeOrderItemAddressProperties ForwardAddress { get; set; }
+        public EdgeOrderItemAddressProperties ForwardAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForwardAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrderItemUpdateProperties();
+                }
+                Properties.ForwardAddress = value;
+            }
+        }
+
         /// <summary> Customer preference. </summary>
-        public OrderItemPreferences Preferences { get; set; }
+        public OrderItemPreferences Preferences
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Preferences;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrderItemUpdateProperties();
+                }
+                Properties.Preferences = value;
+            }
+        }
+
         /// <summary> Additional notification email list. </summary>
-        public IList<string> NotificationEmailList { get; }
+        public IList<string> NotificationEmailList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrderItemUpdateProperties();
+                }
+                return Properties.NotificationEmailList;
+            }
+        }
+
+        /// <summary> Represents order item details. </summary>
+        public EdgeOrderItemDetailsPatch OrderItemDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OrderItemDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrderItemUpdateProperties();
+                }
+                Properties.OrderItemDetails = value;
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             string resourceName = "appliance01";
             ResourceConnectorApplianceData data = new ResourceConnectorApplianceData(new AzureLocation("West US"))
             {
-                Distro = ResourceConnectorDistro.AksEdge,
+                Distro = ApplianceDistro.AksEdge,
                 InfrastructureConfigProvider = ApplianceProvider.VMware,
             };
             ArmOperation<ResourceConnectorApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);

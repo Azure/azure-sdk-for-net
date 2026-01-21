@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <summary> Initializes a new instance of <see cref="ApplianceProperties"/>. </summary>
         public ApplianceProperties()
         {
-            Events = new ChangeTrackingList<ResourceConnectorEvent>();
+            Events = new ChangeTrackingList<ApplianceEvent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplianceProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="events"> A list of events that occurred on the Appliance to relay information to the user. </param>
         /// <param name="networkProfile"> Contains network information about the Appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplianceProperties(ResourceConnectorDistro? distro, AppliancePropertiesInfrastructureConfig infrastructureConfig, string provisioningState, string publicKey, ResourceConnectorStatus? status, string version, IReadOnlyList<ResourceConnectorEvent> events, ResourceConnectorNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplianceProperties(ApplianceDistro? distro, AppliancePropertiesInfrastructureConfig infrastructureConfig, string provisioningState, string publicKey, ApplianceStatus? status, string version, IReadOnlyList<ApplianceEvent> events, ApplianceNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Distro = distro;
             InfrastructureConfig = infrastructureConfig;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         }
 
         /// <summary> Represents a supported Fabric/Infra. (AKSEdge etc...). </summary>
-        public ResourceConnectorDistro? Distro { get; set; }
+        public ApplianceDistro? Distro { get; set; }
 
         /// <summary> Contains infrastructure information about the Appliance. </summary>
         internal AppliancePropertiesInfrastructureConfig InfrastructureConfig { get; set; }
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public string PublicKey { get; set; }
 
         /// <summary> Appliance’s health and state of connection to on-prem. This list of values is not exhaustive. </summary>
-        public ResourceConnectorStatus? Status { get; }
+        public ApplianceStatus? Status { get; }
 
         /// <summary> Version of the Appliance. </summary>
         public string Version { get; set; }
 
         /// <summary> A list of events that occurred on the Appliance to relay information to the user. </summary>
-        public IReadOnlyList<ResourceConnectorEvent> Events { get; } = new ChangeTrackingList<ResourceConnectorEvent>();
+        public IReadOnlyList<ApplianceEvent> Events { get; } = new ChangeTrackingList<ApplianceEvent>();
 
         /// <summary> Contains network information about the Appliance. </summary>
-        public ResourceConnectorNetworkProfile NetworkProfile { get; set; }
+        public ApplianceNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Information about the connected appliance. </summary>
         public ApplianceProvider? InfrastructureConfigProvider

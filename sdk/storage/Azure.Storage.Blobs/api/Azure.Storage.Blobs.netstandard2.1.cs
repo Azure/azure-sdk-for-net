@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_02_06) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_04_06) { }
         public Azure.Storage.Blobs.Models.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
@@ -88,6 +88,7 @@ namespace Azure.Storage.Blobs
             V2025_07_05 = 27,
             V2025_11_05 = 28,
             V2026_02_06 = 29,
+            V2026_04_06 = 30,
         }
     }
     public partial class BlobContainerClient
@@ -203,8 +204,10 @@ namespace Azure.Storage.Blobs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> GetStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKey(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKey(Azure.Storage.Blobs.Models.BlobGetUserDelegationKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKey(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(Azure.Storage.Blobs.Models.BlobGetUserDelegationKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response SetProperties(Azure.Storage.Blobs.Models.BlobServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Storage.Blobs.Models.BlobServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.BlobContainerClient> UndeleteBlobContainer(string deletedContainerName, string deletedContainerVersion, string destinationContainerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -285,6 +288,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
@@ -503,6 +507,7 @@ namespace Azure.Storage.Blobs.Models
         public long BlobSequenceNumber { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
         public string CacheControl { get { throw null; } }
+        public byte[] ContentCrc { get { throw null; } }
         public string ContentDisposition { get { throw null; } }
         public string ContentEncoding { get { throw null; } }
         public byte[] ContentHash { get { throw null; } }
@@ -544,6 +549,7 @@ namespace Azure.Storage.Blobs.Models
         public long ContentLength { get { throw null; } }
         public string ContentType { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobDownloadDetails Details { get { throw null; } }
+        public bool ExpectTrailingDetails { get { throw null; } }
         public void Dispose() { }
     }
     public partial class BlobDownloadOptions
@@ -565,6 +571,7 @@ namespace Azure.Storage.Blobs.Models
         internal BlobDownloadStreamingResult() { }
         public System.IO.Stream Content { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobDownloadDetails Details { get { throw null; } }
+        public bool ExpectTrailingDetails { get { throw null; } }
         public void Dispose() { }
     }
     public partial class BlobDownloadToOptions
@@ -618,6 +625,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierSnapshotNotAllowed { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierVersionSnapshotNotAllowed { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopySourceMustBeSnapshot { get { throw null; } }
@@ -721,6 +729,13 @@ namespace Azure.Storage.Blobs.Models
         Live = 0,
         Bootstrap = 1,
         Unavailable = 2,
+    }
+    public partial class BlobGetUserDelegationKeyOptions
+    {
+        public BlobGetUserDelegationKeyOptions(System.DateTimeOffset expiresOn) { }
+        public string DelegatedUserTenantId { get { throw null; } set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
     }
     public partial class BlobHierarchyItem
     {
@@ -978,6 +993,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobRequestConditions : Azure.Storage.Blobs.Models.BlobLeaseRequestConditions
     {
         public BlobRequestConditions() { }
+        public System.DateTimeOffset? AccessTierIfModifiedSince { get { throw null; } set { } }
+        public System.DateTimeOffset? AccessTierIfUnmodifiedSince { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
@@ -1074,8 +1091,10 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.PageRangesInfo PageRangesInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long blobContentLength, System.Collections.Generic.IEnumerable<Azure.HttpRange> pageRanges, System.Collections.Generic.IEnumerable<Azure.HttpRange> clearRanges) { throw null; }
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null) { throw null; }
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStartsOn = default(System.DateTimeOffset), System.DateTimeOffset signedExpiresOn = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string value = null) { throw null; }
+        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStartsOn, System.DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStartsOn = default(System.DateTimeOffset), System.DateTimeOffset signedExpiresOn = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string signedDelegatedUserTenantId = null, string value = null) { throw null; }
         public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, string signedService, string signedVersion, string value, System.DateTimeOffset signedExpiresOn, System.DateTimeOffset signedStartsOn) { throw null; }
+        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, string signedService = null, string signedVersion = null, string value = null, System.DateTimeOffset signedExpiresOn = default(System.DateTimeOffset), System.DateTimeOffset signedStartsOn = default(System.DateTimeOffset), string signedDelegatedUserTenantId = null) { throw null; }
     }
     public partial class BlobSnapshotInfo
     {
@@ -1117,6 +1136,7 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
@@ -1383,6 +1403,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
     public partial class PageBlobUploadPagesOptions
@@ -1481,6 +1502,9 @@ namespace Azure.Storage.Blobs.Models
         StandardRagrs = 2,
         StandardZrs = 3,
         PremiumLrs = 4,
+        StandardGzrs = 5,
+        PremiumZrs = 6,
+        StandardRagzrs = 7,
     }
     public partial class StageBlockFromUriOptions
     {
@@ -1489,6 +1513,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.RequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
@@ -1502,6 +1527,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
+        public string SignedDelegatedUserTenantId { get { throw null; } }
         public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
         public string SignedObjectId { get { throw null; } }
         public string SignedService { get { throw null; } }
@@ -1788,7 +1814,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_02_06) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_04_06) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions
@@ -1858,6 +1884,8 @@ namespace Azure.Storage.Sas
         public string Permissions { get { throw null; } }
         public string PreauthorizedAgentObjectId { get { throw null; } set { } }
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
+        public System.Collections.Generic.Dictionary<string, string> RequestHeaders { get { throw null; } set { } }
+        public System.Collections.Generic.Dictionary<string, string> RequestQueryParameters { get { throw null; } set { } }
         public string Resource { get { throw null; } set { } }
         public string Snapshot { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
@@ -1898,6 +1926,7 @@ namespace Azure.Storage.Sas
     {
         internal BlobSasQueryParameters() { }
         public static new Azure.Storage.Sas.BlobSasQueryParameters Empty { get { throw null; } }
+        public string KeyDelegatedUserTenantId { get { throw null; } }
         public System.DateTimeOffset KeyExpiresOn { get { throw null; } }
         public string KeyObjectId { get { throw null; } }
         public string KeyService { get { throw null; } }

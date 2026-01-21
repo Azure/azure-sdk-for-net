@@ -16,37 +16,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// </summary>
     public partial class ComputeFleetUefiSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetUefiSettings"/>. </summary>
         public ComputeFleetUefiSettings()
@@ -62,12 +33,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies whether vTPM should be enabled on the virtual machine. Minimum
         /// api-version: 2020-12-01.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetUefiSettings(bool? isSecureBootEnabled, bool? isVTpmEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetUefiSettings(bool? isSecureBootEnabled, bool? isVTpmEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSecureBootEnabled = isSecureBootEnabled;
             IsVTpmEnabled = isVTpmEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -75,6 +46,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// api-version: 2020-12-01.
         /// </summary>
         public bool? IsSecureBootEnabled { get; set; }
+
         /// <summary>
         /// Specifies whether vTPM should be enabled on the virtual machine. Minimum
         /// api-version: 2020-12-01.

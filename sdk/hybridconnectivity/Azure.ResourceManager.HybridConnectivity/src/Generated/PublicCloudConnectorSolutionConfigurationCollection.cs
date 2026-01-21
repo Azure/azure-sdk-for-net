@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
@@ -23,42 +24,38 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// </summary>
     public partial class PublicCloudConnectorSolutionConfigurationCollection : ArmCollection, IEnumerable<PublicCloudConnectorSolutionConfigurationResource>, IAsyncEnumerable<PublicCloudConnectorSolutionConfigurationResource>
     {
-        private readonly ClientDiagnostics _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics;
-        private readonly SolutionConfigurationsRestOperations _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient;
+        private readonly ClientDiagnostics _solutionConfigurationsClientDiagnostics;
+        private readonly SolutionConfigurations _solutionConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PublicCloudConnectorSolutionConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PublicCloudConnectorSolutionConfigurationCollection for mocking. </summary>
         protected PublicCloudConnectorSolutionConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublicCloudConnectorSolutionConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorSolutionConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicCloudConnectorSolutionConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorSolutionConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PublicCloudConnectorSolutionConfigurationResource.ResourceType, out string publicCloudConnectorSolutionConfigurationSolutionConfigurationsApiVersion);
-            _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient = new SolutionConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorSolutionConfigurationSolutionConfigurationsApiVersion);
+            TryGetApiVersion(PublicCloudConnectorSolutionConfigurationResource.ResourceType, out string publicCloudConnectorSolutionConfigurationApiVersion);
+            _solutionConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorSolutionConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _solutionConfigurationsRestClient = new SolutionConfigurations(_solutionConfigurationsClientDiagnostics, Pipeline, Endpoint, publicCloudConnectorSolutionConfigurationApiVersion ?? "2024-12-01");
         }
 
         /// <summary>
         /// Create a SolutionConfiguration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,23 +63,31 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PublicCloudConnectorSolutionConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionConfiguration, PublicCloudConnectorSolutionConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateOrUpdateAsync(Id, solutionConfiguration, data, cancellationToken).ConfigureAwait(false);
-                var uri = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id, solutionConfiguration, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HybridConnectivityArmOperation<PublicCloudConnectorSolutionConfigurationResource>(Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateCreateOrUpdateRequest(Id, solutionConfiguration, PublicCloudConnectorSolutionConfigurationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HybridConnectivityArmOperation<PublicCloudConnectorSolutionConfigurationResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorSolutionConfigurationResource>(Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -96,20 +101,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Create a SolutionConfiguration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,23 +118,31 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PublicCloudConnectorSolutionConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string solutionConfiguration, PublicCloudConnectorSolutionConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateOrUpdate(Id, solutionConfiguration, data, cancellationToken);
-                var uri = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id, solutionConfiguration, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HybridConnectivityArmOperation<PublicCloudConnectorSolutionConfigurationResource>(Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateCreateOrUpdateRequest(Id, solutionConfiguration, PublicCloudConnectorSolutionConfigurationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HybridConnectivityArmOperation<PublicCloudConnectorSolutionConfigurationResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorSolutionConfigurationResource>(Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -147,38 +156,42 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Get a SolutionConfiguration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PublicCloudConnectorSolutionConfigurationResource>> GetAsync(string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Get");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.GetAsync(Id, solutionConfiguration, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id, solutionConfiguration, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,38 +205,42 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Get a SolutionConfiguration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PublicCloudConnectorSolutionConfigurationResource> Get(string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Get");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.Get(Id, solutionConfiguration, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id, solutionConfiguration, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,50 +254,44 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// List SolutionConfiguration resources by parent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicCloudConnectorSolutionConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublicCloudConnectorSolutionConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicCloudConnectorSolutionConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicCloudConnectorSolutionConfigurationResource(Client, PublicCloudConnectorSolutionConfigurationData.DeserializePublicCloudConnectorSolutionConfigurationData(e)), _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics, Pipeline, "PublicCloudConnectorSolutionConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PublicCloudConnectorSolutionConfigurationData, PublicCloudConnectorSolutionConfigurationResource>(new SolutionConfigurationsGetAllAsyncCollectionResultOfT(_solutionConfigurationsRestClient, Id, context), data => new PublicCloudConnectorSolutionConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// List SolutionConfiguration resources by parent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,45 +299,61 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> A collection of <see cref="PublicCloudConnectorSolutionConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicCloudConnectorSolutionConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicCloudConnectorSolutionConfigurationResource(Client, PublicCloudConnectorSolutionConfigurationData.DeserializePublicCloudConnectorSolutionConfigurationData(e)), _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics, Pipeline, "PublicCloudConnectorSolutionConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PublicCloudConnectorSolutionConfigurationData, PublicCloudConnectorSolutionConfigurationResource>(new SolutionConfigurationsGetAllCollectionResultOfT(_solutionConfigurationsRestClient, Id, context), data => new PublicCloudConnectorSolutionConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Exists");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.GetAsync(Id, solutionConfiguration, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id, solutionConfiguration, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,36 +367,50 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Exists");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.Get(Id, solutionConfiguration, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id, solutionConfiguration, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,38 +424,54 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PublicCloudConnectorSolutionConfigurationResource>> GetIfExistsAsync(string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.GetAsync(Id, solutionConfiguration, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id, solutionConfiguration, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublicCloudConnectorSolutionConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -428,38 +485,54 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PublicCloudConnectorSolutionConfigurationResource> GetIfExists(string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
 
-            using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _solutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.Get(Id, solutionConfiguration, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id, solutionConfiguration, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublicCloudConnectorSolutionConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -479,6 +552,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PublicCloudConnectorSolutionConfigurationResource> IAsyncEnumerable<PublicCloudConnectorSolutionConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

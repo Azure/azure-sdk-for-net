@@ -8,114 +8,429 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Advisor.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Advisor.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableAdvisorSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _advisorClientClientDiagnostics;
+        private AdvisorClient _advisorClientRestClient;
         private ClientDiagnostics _configurationsClientDiagnostics;
-        private ConfigurationsRestOperations _configurationsRestClient;
-        private ClientDiagnostics _resourceRecommendationBaseRecommendationsClientDiagnostics;
-        private RecommendationsRestOperations _resourceRecommendationBaseRecommendationsRestClient;
-        private ClientDiagnostics _suppressionContractSuppressionsClientDiagnostics;
-        private SuppressionsRestOperations _suppressionContractSuppressionsRestClient;
+        private Configurations _configurationsRestClient;
+        private ClientDiagnostics _recommendationsOperationGroupClientDiagnostics;
+        private RecommendationsOperationGroup _recommendationsOperationGroupRestClient;
+        private ClientDiagnostics _suppressionsOperationGroupClientDiagnostics;
+        private SuppressionsOperationGroup _suppressionsOperationGroupRestClient;
+        private ClientDiagnostics _assessmentTypesOperationGroupClientDiagnostics;
+        private AssessmentTypesOperationGroup _assessmentTypesOperationGroupRestClient;
+        private ClientDiagnostics _workloadsOperationGroupClientDiagnostics;
+        private WorkloadsOperationGroup _workloadsOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAdvisorSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAdvisorSubscriptionResource for mocking. </summary>
         protected MockableAdvisorSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAdvisorSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAdvisorSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAdvisorSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ConfigurationsRestOperations ConfigurationsRestClient => _configurationsRestClient ??= new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ResourceRecommendationBaseRecommendationsClientDiagnostics => _resourceRecommendationBaseRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceRecommendationBaseResource.ResourceType.Namespace, Diagnostics);
-        private RecommendationsRestOperations ResourceRecommendationBaseRecommendationsRestClient => _resourceRecommendationBaseRecommendationsRestClient ??= new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceRecommendationBaseResource.ResourceType));
-        private ClientDiagnostics SuppressionContractSuppressionsClientDiagnostics => _suppressionContractSuppressionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", SuppressionContractResource.ResourceType.Namespace, Diagnostics);
-        private SuppressionsRestOperations SuppressionContractSuppressionsRestClient => _suppressionContractSuppressionsRestClient ??= new SuppressionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SuppressionContractResource.ResourceType));
+        private ClientDiagnostics AdvisorClientClientDiagnostics => _advisorClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private AdvisorClient AdvisorClientRestClient => _advisorClientRestClient ??= new AdvisorClient(AdvisorClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Configurations ConfigurationsRestClient => _configurationsRestClient ??= new Configurations(ConfigurationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics RecommendationsOperationGroupClientDiagnostics => _recommendationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics SuppressionsOperationGroupClientDiagnostics => _suppressionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SuppressionsOperationGroup SuppressionsOperationGroupRestClient => _suppressionsOperationGroupRestClient ??= new SuppressionsOperationGroup(SuppressionsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics AssessmentTypesOperationGroupClientDiagnostics => _assessmentTypesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AssessmentTypesOperationGroup AssessmentTypesOperationGroupRestClient => _assessmentTypesOperationGroupRestClient ??= new AssessmentTypesOperationGroup(AssessmentTypesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics WorkloadsOperationGroupClientDiagnostics => _workloadsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private WorkloadsOperationGroup WorkloadsOperationGroupRestClient => _workloadsOperationGroupRestClient ??= new WorkloadsOperationGroup(WorkloadsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        /// <summary> Gets a collection of AdvisorScoreEntities in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of AdvisorScoreEntities and their operations over a AdvisorScoreEntityResource. </returns>
+        public virtual AdvisorScoreEntityCollection GetAdvisorScoreEntities()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new AdvisorScoreEntityCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the advisor score.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/advisorScore/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AdvisorScoreEntities_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The scope of Advisor score entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AdvisorScoreEntityResource>> GetAdvisorScoreEntityAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetAdvisorScoreEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the advisor score.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/advisorScore/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AdvisorScoreEntities_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The scope of Advisor score entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AdvisorScoreEntityResource> GetAdvisorScoreEntity(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetAdvisorScoreEntities().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AdvisorAssessments in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of AdvisorAssessments and their operations over a AdvisorAssessmentResource. </returns>
+        public virtual AdvisorAssessmentCollection GetAdvisorAssessments()
+        {
+            return GetCachedClient(client => new AdvisorAssessmentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get an existing Azure Advisor assessment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assessmentName"> Advisor assessment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AdvisorAssessmentResource>> GetAdvisorAssessmentAsync(string assessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+
+            return await GetAdvisorAssessments().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an existing Azure Advisor assessment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assessmentName"> Advisor assessment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AdvisorAssessmentResource> GetAdvisorAssessment(string assessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+
+            return GetAdvisorAssessments().Get(assessmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AdvisorResiliencyReviews in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of AdvisorResiliencyReviews and their operations over a AdvisorResiliencyReviewResource. </returns>
+        public virtual AdvisorResiliencyReviewCollection GetAdvisorResiliencyReviews()
+        {
+            return GetCachedClient(client => new AdvisorResiliencyReviewCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get existing Azure Advisor resiliency review by id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResiliencyReviews_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AdvisorResiliencyReviewResource>> GetAdvisorResiliencyReviewAsync(string reviewId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+
+            return await GetAdvisorResiliencyReviews().GetAsync(reviewId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get existing Azure Advisor resiliency review by id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResiliencyReviews_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AdvisorResiliencyReviewResource> GetAdvisorResiliencyReview(string reviewId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+
+            return GetAdvisorResiliencyReviews().Get(reviewId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Predicts a recommendation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Advisor_Predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AdvisorPredictionResult>> AdvisorPredictAsync(AdvisorPredictionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = AdvisorClientClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.AdvisorPredict");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AdvisorClientRestClient.CreateAdvisorPredictRequest(Guid.Parse(Id.SubscriptionId), AdvisorPredictionContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvisorPredictionResult> response = Response.FromValue(AdvisorPredictionResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Predicts a recommendation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Advisor_Predict. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AdvisorPredictionResult> AdvisorPredict(AdvisorPredictionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = AdvisorClientClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.AdvisorPredict");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AdvisorClientRestClient.CreateAdvisorPredictRequest(Guid.Parse(Id.SubscriptionId), AdvisorPredictionContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvisorPredictionResult> response = Response.FromValue(AdvisorPredictionResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorConfigurationData> GetAdvisorConfigurationsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationsGetAdvisorConfigurationsBySubscriptionAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorConfigurationData> GetAdvisorConfigurationsBySubscription(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationsGetAdvisorConfigurationsBySubscriptionCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_CreateInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,15 +438,25 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorConfigurationData>> CreateAdvisorConfigurationInSubscriptionAsync(AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.CreateConfiguration");
+            using DiagnosticScope scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.CreateAdvisorConfigurationInSubscription");
             scope.Start();
             try
             {
-                var response = await ConfigurationsRestClient.CreateInSubscriptionAsync(Id.SubscriptionId, configurationName, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), AdvisorConfigurationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -145,16 +470,16 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationsOperationGroup_CreateInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,15 +487,25 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisorConfigurationData> CreateAdvisorConfigurationInSubscription(AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.CreateConfiguration");
+            using DiagnosticScope scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.CreateAdvisorConfigurationInSubscription");
             scope.Start();
             try
             {
-                var response = ConfigurationsRestClient.CreateInSubscription(Id.SubscriptionId, configurationName, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), AdvisorConfigurationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -184,31 +519,32 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Generate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationsOperationGroup_Generate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> GenerateRecommendationAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GenerateRecommendation");
+            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GenerateRecommendation");
             scope.Start();
             try
             {
-                var response = await ResourceRecommendationBaseRecommendationsRestClient.GenerateAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGenerateRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -222,31 +558,32 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Generate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationsOperationGroup_Generate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response GenerateRecommendation(CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GenerateRecommendation");
+            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GenerateRecommendation");
             scope.Start();
             try
             {
-                var response = ResourceRecommendationBaseRecommendationsRestClient.Generate(Id.SubscriptionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGenerateRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -260,20 +597,16 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetGenerateStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationsOperationGroup_GetGenerateStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,11 +614,16 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> GetGenerateStatusRecommendationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendation");
+            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendation");
             scope.Start();
             try
             {
-                var response = await ResourceRecommendationBaseRecommendationsRestClient.GetGenerateStatusAsync(Id.SubscriptionId, operationId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGetGenerateStatusRecommendationRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -299,20 +637,16 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetGenerateStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationsOperationGroup_GetGenerateStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,11 +654,16 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response GetGenerateStatusRecommendation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendation");
+            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendation");
             scope.Start();
             try
             {
-                var response = ResourceRecommendationBaseRecommendationsRestClient.GetGenerateStatus(Id.SubscriptionId, operationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGetGenerateStatusRecommendationRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -338,64 +677,172 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Suppressions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SuppressionsOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SuppressionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SuppressionContractResource> GetSuppressionContractsAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContractsAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetSuppressionContracts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsAsyncCollectionResultOfT(SuppressionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new AdvisorSuppressionContractResource(Client, data));
         }
 
         /// <summary>
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Suppressions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SuppressionsOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SuppressionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SuppressionContractResource> GetSuppressionContracts(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContracts(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetSuppressionContracts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsCollectionResultOfT(SuppressionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new AdvisorSuppressionContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get list of Azure Advisor assessment types.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessmentTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentTypesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AdvisorAssessmentType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorAssessmentType> GetAdvisorAssessmentTypesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AssessmentTypesOperationGroupGetAdvisorAssessmentTypesAsyncCollectionResultOfT(AssessmentTypesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context);
+        }
+
+        /// <summary>
+        /// Get list of Azure Advisor assessment types.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessmentTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentTypesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AdvisorAssessmentType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorAssessmentType> GetAdvisorAssessmentTypes(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AssessmentTypesOperationGroupGetAdvisorAssessmentTypesCollectionResultOfT(AssessmentTypesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context);
+        }
+
+        /// <summary>
+        /// Get list of Workloads.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/workloads. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AdvisorWorkload"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorWorkload> GetAdvisorWorkloadsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new WorkloadsOperationGroupGetAdvisorWorkloadsAsyncCollectionResultOfT(WorkloadsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context);
+        }
+
+        /// <summary>
+        /// Get list of Workloads.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/workloads. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AdvisorWorkload"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorWorkload> GetAdvisorWorkloads(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new WorkloadsOperationGroupGetAdvisorWorkloadsCollectionResultOfT(WorkloadsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
     }
 }
