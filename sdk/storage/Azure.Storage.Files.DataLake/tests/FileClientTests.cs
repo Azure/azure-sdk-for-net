@@ -170,6 +170,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await connStringFile.GetPropertiesAsync();
             await connStringFile.GetAccessControlAsync();
+            await connStringFile.GetSystemPropertiesAsync();
             Assert.IsNotNull(connStringFile.ClientConfiguration.SharedKeyCredential);
         }
 
@@ -543,7 +544,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Response<PathSystemProperties> response2 = await file.GetSystemPropertiesAsync();
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
+            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response2.Value.Permissions);
         }
 
         [RecordedTest]
@@ -578,7 +581,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Response<PathSystemProperties> response2 = await file.GetSystemPropertiesAsync();
             Assert.AreEqual(owner, response.Value.Owner);
+            Assert.AreEqual(owner, response2.Value.Owner);
         }
 
         [RecordedTest]
@@ -613,7 +618,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Response<PathSystemProperties> response2 = await file.GetSystemPropertiesAsync();
             Assert.AreEqual(group, response.Value.Group);
+            Assert.AreEqual(group, response2.Value.Group);
         }
 
         [RecordedTest]
@@ -1580,6 +1587,175 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task GetSystemPropertiesAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            // Act
+            PathSystemProperties systemProperties = await file.GetSystemPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(systemProperties.CreationTime);
+            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.ETag);
+            Assert.IsNotNull(systemProperties.ContentLength);
+            Assert.IsNotNull(systemProperties.IsDirectory);
+            Assert.IsNotNull(systemProperties.IsServerEncrypted);
+            Assert.IsNotNull(systemProperties.Owner);
+            Assert.IsNotNull(systemProperties.Group);
+            Assert.IsNotNull(systemProperties.Permissions);
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_Oauth()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string directoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+
+            // Arrange
+            DataLakeFileClient file = await directory.CreateFileAsync(fileName);
+            DataLakeFileClient oauthFile = oauthService
+                .GetFileSystemClient(fileSystemName)
+                .GetDirectoryClient(directoryName)
+                .GetFileClient(fileName);
+
+            // Act
+            PathSystemProperties systemProperties = await oauthFile.GetSystemPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(systemProperties.CreationTime);
+            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.ETag);
+            Assert.IsNotNull(systemProperties.ContentLength);
+            Assert.IsNotNull(systemProperties.IsDirectory);
+            Assert.IsNotNull(systemProperties.IsServerEncrypted);
+            Assert.IsNotNull(systemProperties.Owner);
+            Assert.IsNotNull(systemProperties.Group);
+            Assert.IsNotNull(systemProperties.Permissions);
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_Error()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetSystemPropertiesAsync(),
+                e => Assert.AreEqual("PathNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_Conditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                // Arrange
+                DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+                parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
+                parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                PathGetSystemPropertiesOptions options = new PathGetSystemPropertiesOptions
+                {
+                    RequestConditions = conditions
+                };
+                await file.GetSystemPropertiesAsync(options: options);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                // Arrange
+                DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+                parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                // Act
+                PathGetSystemPropertiesOptions options = new PathGetSystemPropertiesOptions
+                {
+                    RequestConditions = conditions
+                };
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.GetSystemPropertiesAsync(options: options),
+                    e => { });
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetSystemPropertiesAsync_InvalidLease()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions()
+            {
+                LeaseId = GetGarbageLeaseId()
+            };
+
+            // Act
+            PathGetSystemPropertiesOptions options = new PathGetSystemPropertiesOptions
+            {
+                RequestConditions = conditions
+            };
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetSystemPropertiesAsync(options: options),
+                e => Assert.AreEqual("LeaseNotPresent", e.ErrorCode));
+        }
+
+        // Note that FileClient.GetAccessControl() does not need to pass CPK request headers.
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetSystemPropertiesAsync_CPK()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
+            await file.CreateAsync();
+
+            // Act
+            PathSystemProperties systemProperties = await file.GetSystemPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(systemProperties.EncryptionKeySha256);
+            Assert.IsNotNull(systemProperties.CreationTime);
+            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.ETag);
+            Assert.IsNotNull(systemProperties.ContentLength);
+            Assert.IsNotNull(systemProperties.IsDirectory);
+            Assert.IsNotNull(systemProperties.IsServerEncrypted);
+            Assert.IsNotNull(systemProperties.Owner);
+            Assert.IsNotNull(systemProperties.Group);
+            Assert.IsNotNull(systemProperties.Permissions);
+        }
+
+        [RecordedTest]
         public async Task GetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2092,6 +2268,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(permissionsStickyBit.Owner, response2.Value.Permissions.Owner);
             Assert.AreEqual(permissionsStickyBit.Group, response2.Value.Permissions.Group);
             Assert.AreEqual(permissionsStickyBit.Other, response2.Value.Permissions.Other);
+
+            Response<PathSystemProperties> response3 = await file.GetSystemPropertiesAsync();
+            Assert.AreEqual(octalPermissions, response3.Value.Permissions.ToOctalPermissions());
+            Assert.AreEqual(permissionsStickyBit.Owner, response3.Value.Permissions.Owner);
+            Assert.AreEqual(permissionsStickyBit.Group, response3.Value.Permissions.Group);
+            Assert.AreEqual(permissionsStickyBit.Other, response3.Value.Permissions.Other);
         }
 
         [RecordedTest]
@@ -2115,6 +2297,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(permissionsStickyBit.Owner, response2.Value.Permissions.Owner);
             Assert.AreEqual(permissionsStickyBit.Group, response2.Value.Permissions.Group);
             Assert.AreEqual(permissionsStickyBit.Other, response2.Value.Permissions.Other);
+
+            Response<PathSystemProperties> response3 = await file.GetSystemPropertiesAsync();
+            Assert.AreEqual(symbolicPermissions, response3.Value.Permissions.ToSymbolicPermissions());
+            Assert.AreEqual(permissionsStickyBit.Owner, response3.Value.Permissions.Owner);
+            Assert.AreEqual(permissionsStickyBit.Group, response3.Value.Permissions.Group);
+            Assert.AreEqual(permissionsStickyBit.Other, response3.Value.Permissions.Other);
         }
 
         [RecordedTest]
@@ -2138,6 +2326,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(permissionsStickyBit.Owner, response2.Value.Permissions.Owner);
             Assert.AreEqual(permissionsStickyBit.Group, response2.Value.Permissions.Group);
             Assert.AreEqual(permissionsStickyBit.Other, response2.Value.Permissions.Other);
+
+            Response<PathSystemProperties> response3 = await file.GetSystemPropertiesAsync();
+            Assert.AreEqual(symbolicPermissions, response3.Value.Permissions.ToSymbolicPermissions());
+            Assert.AreEqual(permissionsStickyBit.Owner, response3.Value.Permissions.Owner);
+            Assert.AreEqual(permissionsStickyBit.Group, response3.Value.Permissions.Group);
+            Assert.AreEqual(permissionsStickyBit.Other, response3.Value.Permissions.Other);
         }
 
         [RecordedTest]
@@ -4646,9 +4840,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await file.UploadAsync(stream, options);
             }
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Response<PathSystemProperties> response2 = await file.GetSystemPropertiesAsync();
 
             // Assert
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
+            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response2.Value.Permissions);
         }
 
         [RecordedTest]
@@ -4989,9 +5185,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 }
             }
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Response<PathSystemProperties> response2 = await file.GetSystemPropertiesAsync();
 
             // Assert
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
+            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response2.Value.Permissions);
         }
 
         [RecordedTest]

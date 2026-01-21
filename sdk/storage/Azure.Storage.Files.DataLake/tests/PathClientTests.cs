@@ -106,6 +106,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await connStringDirectory.GetPropertiesAsync();
             await connStringDirectory.GetAccessControlAsync();
+            await connStringDirectory.GetSystemPropertiesAsync();
         }
 
         [RecordedTest]
@@ -181,6 +182,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await pathClient.GetPropertiesAsync();
             await pathClient.GetAccessControlAsync();
+            await pathClient.GetSystemPropertiesAsync();
         }
 
         [RecordedTest]
