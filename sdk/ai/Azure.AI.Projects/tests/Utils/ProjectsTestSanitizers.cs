@@ -267,6 +267,13 @@ namespace Azure.AI.Projects.Tests.Utils
                 Value = AZURE_PROJECT_NAME_PATTERN.Value
             }));
 
+            // Sanitize the pass_threshold to avoid issues with float representation
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..initialization_parameters.pass_threshold")
+            {
+                Regex = @"\d+[.]\d+",
+                Value = "[Sanitized]"
+            }));
+
             // Sanitize UUIDs in request IDs and operation IDs
             testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("apim-request-id")
             {
