@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-/*
+
 namespace Azure.ResourceManager.MySql
 {
     internal static class Optional
@@ -46,4 +46,4 @@ namespace Azure.ResourceManager.MySql
             return value != null;
         }
     }
-}*/
+}

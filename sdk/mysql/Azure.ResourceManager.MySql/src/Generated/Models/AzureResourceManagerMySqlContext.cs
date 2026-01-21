@@ -6,31 +6,44 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AdministratorProperties))]
     [ModelReaderWriterBuildable(typeof(AdvancedThreatProtectionData))]
     [ModelReaderWriterBuildable(typeof(AdvancedThreatProtectionListResult))]
     [ModelReaderWriterBuildable(typeof(AdvancedThreatProtectionPatch))]
+    [ModelReaderWriterBuildable(typeof(AdvancedThreatProtectionProperties))]
     [ModelReaderWriterBuildable(typeof(AdvancedThreatProtectionResource))]
-    [ModelReaderWriterBuildable(typeof(CapabilitySetsList))]
+    [ModelReaderWriterBuildable(typeof(AdvancedThreatProtectionUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ArmOperationStatusResourceProvisioningState))]
+    [ModelReaderWriterBuildable(typeof(BackupAndExportResponseProperties))]
+    [ModelReaderWriterBuildable(typeof(BackupStoreDetails))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationForBatchUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(DatabaseProperties))]
+    [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(FirewallRuleProperties))]
     [ModelReaderWriterBuildable(typeof(HighAvailabilityValidationEstimation))]
     [ModelReaderWriterBuildable(typeof(ImportSourceProperties))]
+    [ModelReaderWriterBuildable(typeof(LogFileProperties))]
     [ModelReaderWriterBuildable(typeof(MaintenanceListResult))]
     [ModelReaderWriterBuildable(typeof(MaintenancePolicy))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceProperties))]
+    [ModelReaderWriterBuildable(typeof(MaintenancePropertiesForUpdate))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerAadAdministratorData))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerAadAdministratorListResult))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerAadAdministratorResource))]
-    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupAndExportContent))]
+    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupAndExportRequest))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupAndExportResult))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupContentBase))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupData))]
@@ -38,7 +51,6 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupProperties))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupResource))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupSettings))]
-    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupStoreDetails))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupV2Data))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerBackupV2Resource))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerCapabilitiesListResult))]
@@ -56,7 +68,6 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerDelegatedSubnetUsage))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerDetachVnetContent))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerEditionCapability))]
-    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerFeatureProperty))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerFirewallRuleData))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerFirewallRuleListResult))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerFirewallRuleResource))]
@@ -77,29 +88,31 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerPrivateDnsZoneSuffixResponse))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerResource))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerRestartParameter))]
-    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServersCapabilityData))]
-    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServersCapabilityResource))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerServerVersionCapability))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerSku))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerSkuCapability))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServersPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServersPrivateEndpointConnectionListResult))]
-    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServersPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServersPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerStorage))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerStorageEditionCapability))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerValidateBackupResult))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerVirtualNetworkSubnetUsageParameter))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult))]
+    [ModelReaderWriterBuildable(typeof(MySQLServerIdentity))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ServerBackupProperties))]
+    [ModelReaderWriterBuildable(typeof(ServerBackupPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(ServerBackupV2ListResult))]
-    [ModelReaderWriterBuildable(typeof(ServerEditionCapabilityV2))]
-    [ModelReaderWriterBuildable(typeof(ServerVersionCapabilityV2))]
-    [ModelReaderWriterBuildable(typeof(SkuCapabilityV2))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(ServerProperties))]
+    [ModelReaderWriterBuildable(typeof(ServerPropertiesForUpdate))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownBackupStoreDetails))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(FlexibleServers.Models.UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(ValidateBackupResponseProperties))]
     public partial class AzureResourceManagerMySqlContext : ModelReaderWriterContext
     {
     }

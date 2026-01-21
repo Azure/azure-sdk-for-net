@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-/*
+
 namespace Azure.ResourceManager.MySql
 {
     internal class Utf8JsonRequestContent : RequestContent
@@ -50,4 +50,4 @@ namespace Azure.ResourceManager.MySql
             _stream.Dispose();
         }
     }
-}*/
+}

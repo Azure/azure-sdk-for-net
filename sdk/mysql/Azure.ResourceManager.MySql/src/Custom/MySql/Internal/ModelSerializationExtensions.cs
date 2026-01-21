@@ -11,7 +11,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Xml;
 using Azure.Core;
-/*
+
 namespace Azure.ResourceManager.MySql
 {
     internal static class ModelSerializationExtensions
@@ -404,4 +404,4 @@ namespace Azure.ResourceManager.MySql
             };
         }
     }
-}*/
+}

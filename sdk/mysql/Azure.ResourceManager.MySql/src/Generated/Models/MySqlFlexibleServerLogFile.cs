@@ -15,73 +15,73 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents a logFile. </summary>
     public partial class MySqlFlexibleServerLogFile : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFile"/>. </summary>
-        public MySqlFlexibleServerLogFile()
+        internal MySqlFlexibleServerLogFile()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFile"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sizeInKB"> The size in kb of the logFile. </param>
-        /// <param name="createdOn"> Creation timestamp of the log file. </param>
-        /// <param name="typePropertiesType"> Type of the log file. </param>
-        /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
-        /// <param name="uri"> The url to download the log file from. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, string typePropertiesType, DateTimeOffset? lastModifiedOn, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a logFile. </param>
+        internal MySqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LogFileProperties properties) : base(id, name, resourceType, systemData)
         {
-            SizeInKB = sizeInKB;
-            CreatedOn = createdOn;
-            TypePropertiesType = typePropertiesType;
-            LastModifiedOn = lastModifiedOn;
-            Uri = uri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of a logFile. </summary>
+        internal LogFileProperties Properties { get; }
 
         /// <summary> The size in kb of the logFile. </summary>
-        public long? SizeInKB { get; set; }
+        public long? SizeInKB
+        {
+            get
+            {
+                return Properties.SizeInKB;
+            }
+        }
+
         /// <summary> Creation timestamp of the log file. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Type of the log file. </summary>
-        public string TypePropertiesType { get; set; }
+        public string TypePropertiesType
+        {
+            get
+            {
+                return Properties.TypePropertiesType;
+            }
+        }
+
         /// <summary> Last modified timestamp of the log file. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> The url to download the log file from. </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri
+        {
+            get
+            {
+                return Properties.Uri;
+            }
+        }
     }
 }

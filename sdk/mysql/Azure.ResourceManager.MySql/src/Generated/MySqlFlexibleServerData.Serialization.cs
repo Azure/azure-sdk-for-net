@@ -10,16 +10,24 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MySqlFlexibleServerData : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerData>
+    /// <summary> Represents a server. </summary>
+    public partial class MySqlFlexibleServerData : TrackedResourceData, IJsonModel<MySqlFlexibleServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/> for deserialization. </summary>
+        internal MySqlFlexibleServerData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,497 +39,176 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorLogin))
-            {
-                writer.WritePropertyName("administratorLogin"u8);
-                writer.WriteStringValue(AdministratorLogin);
-            }
-            if (Optional.IsDefined(AdministratorLoginPassword))
-            {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(FullVersion))
-            {
-                writer.WritePropertyName("fullVersion"u8);
-                writer.WriteStringValue(FullVersion);
-            }
-            if (Optional.IsDefined(AvailabilityZone))
-            {
-                writer.WritePropertyName("availabilityZone"u8);
-                writer.WriteStringValue(AvailabilityZone);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceServerResourceId))
-            {
-                writer.WritePropertyName("sourceServerResourceId"u8);
-                writer.WriteStringValue(SourceServerResourceId);
-            }
-            if (Optional.IsDefined(RestorePointInOn))
-            {
-                writer.WritePropertyName("restorePointInTime"u8);
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
-            }
-            if (Optional.IsDefined(ReplicationRole))
-            {
-                writer.WritePropertyName("replicationRole"u8);
-                writer.WriteStringValue(ReplicationRole.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReplicaCapacity))
-            {
-                writer.WritePropertyName("replicaCapacity"u8);
-                writer.WriteNumberValue(ReplicaCapacity.Value);
-            }
-            if (Optional.IsDefined(DataEncryption))
-            {
-                writer.WritePropertyName("dataEncryption"u8);
-                writer.WriteObjectValue(DataEncryption, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
-            {
-                writer.WritePropertyName("fullyQualifiedDomainName"u8);
-                writer.WriteStringValue(FullyQualifiedDomainName);
-            }
-            if (Optional.IsDefined(DatabasePort))
-            {
-                writer.WritePropertyName("databasePort"u8);
-                writer.WriteNumberValue(DatabasePort.Value);
-            }
-            if (Optional.IsDefined(Storage))
-            {
-                writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage, options);
-            }
-            if (Optional.IsDefined(Backup))
-            {
-                writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup, options);
-            }
-            if (Optional.IsDefined(HighAvailability))
-            {
-                writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue(HighAvailability, options);
-            }
-            if (Optional.IsDefined(Network))
-            {
-                writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServerPrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in ServerPrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MaintenancePolicy))
-            {
-                writer.WritePropertyName("maintenancePolicy"u8);
-                writer.WriteObjectValue(MaintenancePolicy, options);
-            }
-            if (Optional.IsDefined(MaintenanceWindow))
-            {
-                writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
-            }
-            if (Optional.IsDefined(ImportSourceProperties))
-            {
-                writer.WritePropertyName("importSourceProperties"u8);
-                writer.WriteObjectValue(ImportSourceProperties, options);
-            }
-            writer.WriteEndObject();
         }
 
-        MySqlFlexibleServerData IJsonModel<MySqlFlexibleServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerData IJsonModel<MySqlFlexibleServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MySqlFlexibleServerData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMySqlFlexibleServerData(document.RootElement, options);
         }
 
-        internal static MySqlFlexibleServerData DeserializeMySqlFlexibleServerData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MySqlFlexibleServerData DeserializeMySqlFlexibleServerData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            MySqlFlexibleServerSku sku = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string administratorLogin = default;
-            string administratorLoginPassword = default;
-            MySqlFlexibleServerVersion? version = default;
-            string fullVersion = default;
-            string availabilityZone = default;
-            MySqlFlexibleServerCreateMode? createMode = default;
-            ResourceIdentifier sourceServerResourceId = default;
-            DateTimeOffset? restorePointInTime = default;
-            MySqlFlexibleServerReplicationRole? replicationRole = default;
-            int? replicaCapacity = default;
-            MySqlFlexibleServerDataEncryption dataEncryption = default;
-            MySqlFlexibleServerState? state = default;
-            string fullyQualifiedDomainName = default;
-            int? databasePort = default;
-            MySqlFlexibleServerStorage storage = default;
-            MySqlFlexibleServerBackupProperties backup = default;
-            MySqlFlexibleServerHighAvailability highAvailability = default;
-            MySqlFlexibleServerNetwork network = default;
-            IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default;
-            MaintenancePolicy maintenancePolicy = default;
-            MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
-            ImportSourceProperties importSourceProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ServerProperties properties = default;
+            MySQLServerIdentity identity = default;
+            MySqlFlexibleServerSku sku = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(property.Value, options);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    properties = ServerProperties.DeserializeServerProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    identity = MySQLServerIdentity.DeserializeMySQLServerIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("administratorLogin"u8))
-                        {
-                            administratorLogin = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("administratorLoginPassword"u8))
-                        {
-                            administratorLoginPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            version = new MySqlFlexibleServerVersion(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("fullVersion"u8))
-                        {
-                            fullVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("availabilityZone"u8))
-                        {
-                            availabilityZone = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createMode = new MySqlFlexibleServerCreateMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceServerResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceServerResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("restorePointInTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            restorePointInTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("replicationRole"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicationRole = new MySqlFlexibleServerReplicationRole(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("replicaCapacity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicaCapacity = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataEncryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataEncryption = MySqlFlexibleServerDataEncryption.DeserializeMySqlFlexibleServerDataEncryption(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = new MySqlFlexibleServerState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("fullyQualifiedDomainName"u8))
-                        {
-                            fullyQualifiedDomainName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("databasePort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            databasePort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("storage"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storage = MySqlFlexibleServerStorage.DeserializeMySqlFlexibleServerStorage(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("backup"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            backup = MySqlFlexibleServerBackupProperties.DeserializeMySqlFlexibleServerBackupProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("highAvailability"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            highAvailability = MySqlFlexibleServerHighAvailability.DeserializeMySqlFlexibleServerHighAvailability(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("network"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            network = MySqlFlexibleServerNetwork.DeserializeMySqlFlexibleServerNetwork(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<MySqlFlexibleServersPrivateEndpointConnectionData> array = new List<MySqlFlexibleServersPrivateEndpointConnectionData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(MySqlFlexibleServersPrivateEndpointConnectionData.DeserializeMySqlFlexibleServersPrivateEndpointConnectionData(item, options));
-                            }
-                            privateEndpointConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenancePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenancePolicy = MaintenancePolicy.DeserializeMaintenancePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceWindow"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceWindow = MySqlFlexibleServerMaintenanceWindow.DeserializeMySqlFlexibleServerMaintenanceWindow(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("importSourceProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            importSourceProperties = ImportSourceProperties.DeserializeImportSourceProperties(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                administratorLogin,
-                administratorLoginPassword,
-                version,
-                fullVersion,
-                availabilityZone,
-                createMode,
-                sourceServerResourceId,
-                restorePointInTime,
-                replicationRole,
-                replicaCapacity,
-                dataEncryption,
-                state,
-                fullyQualifiedDomainName,
-                databasePort,
-                storage,
-                backup,
-                highAvailability,
-                network,
-                privateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>(),
-                maintenancePolicy,
-                maintenanceWindow,
-                importSourceProperties,
+                properties,
                 identity,
-                sku,
-                serializedAdditionalRawData);
+                sku);
         }
 
-        BinaryData IPersistableModel<MySqlFlexibleServerData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MySqlFlexibleServerData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -531,15 +218,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
-        MySqlFlexibleServerData IPersistableModel<MySqlFlexibleServerData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerData IPersistableModel<MySqlFlexibleServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServerData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlFlexibleServerData(document.RootElement, options);
                     }
                 default:
@@ -547,6 +239,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="mySqlFlexibleServerData"> The <see cref="MySqlFlexibleServerData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MySqlFlexibleServerData mySqlFlexibleServerData)
+        {
+            if (mySqlFlexibleServerData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerData"/> from. </param>
+        internal static MySqlFlexibleServerData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMySqlFlexibleServerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

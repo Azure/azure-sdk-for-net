@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-/*
+
 namespace Azure.ResourceManager.MySql
 {
     internal static class Argument
@@ -125,4 +125,3 @@ namespace Azure.ResourceManager.MySql
         }
     }
 }
-*/

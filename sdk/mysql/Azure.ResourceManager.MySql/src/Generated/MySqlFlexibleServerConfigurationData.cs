@@ -13,43 +13,11 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the MySqlFlexibleServerConfiguration data model.
-    /// Represents a Configuration.
-    /// </summary>
+    /// <summary> Represents a Configuration. </summary>
     public partial class MySqlFlexibleServerConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationData"/>. </summary>
         public MySqlFlexibleServerConfigurationData()
@@ -57,59 +25,142 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> Value of the configuration. </param>
-        /// <param name="currentValue"> Current value of the configuration. </param>
-        /// <param name="description"> Description of the configuration. </param>
-        /// <param name="documentationLink"> The link used to get the document from community or Azure site. </param>
-        /// <param name="defaultValue"> Default value of the configuration. </param>
-        /// <param name="dataType"> Data type of the configuration. </param>
-        /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="source"> Source of the configuration. </param>
-        /// <param name="isReadOnly"> If is the configuration read only. </param>
-        /// <param name="isConfigPendingRestart"> If is the configuration pending restart or not. </param>
-        /// <param name="isDynamicConfig"> If is the configuration dynamic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string currentValue, string description, string documentationLink, string defaultValue, string dataType, string allowedValues, MySqlFlexibleServerConfigurationSource? source, MySqlFlexibleServerConfigReadOnlyState? isReadOnly, MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart, MySqlFlexibleServerConfigDynamicState? isDynamicConfig, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a configuration. </param>
+        internal MySqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            CurrentValue = currentValue;
-            Description = description;
-            DocumentationLink = documentationLink;
-            DefaultValue = defaultValue;
-            DataType = dataType;
-            AllowedValues = allowedValues;
-            Source = source;
-            IsReadOnly = isReadOnly;
-            IsConfigPendingRestart = isConfigPendingRestart;
-            IsDynamicConfig = isDynamicConfig;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of a configuration. </summary>
+        internal ConfigurationProperties Properties { get; set; }
+
         /// <summary> Value of the configuration. </summary>
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
         /// <summary> Current value of the configuration. </summary>
-        public string CurrentValue { get; set; }
+        public string CurrentValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationProperties();
+                }
+                Properties.CurrentValue = value;
+            }
+        }
+
         /// <summary> Description of the configuration. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> The link used to get the document from community or Azure site. </summary>
-        public string DocumentationLink { get; }
+        public string DocumentationLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DocumentationLink;
+            }
+        }
+
         /// <summary> Default value of the configuration. </summary>
-        public string DefaultValue { get; }
+        public string DefaultValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultValue;
+            }
+        }
+
         /// <summary> Data type of the configuration. </summary>
-        public string DataType { get; }
+        public string DataType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataType;
+            }
+        }
+
         /// <summary> Allowed values of the configuration. </summary>
-        public string AllowedValues { get; }
+        public string AllowedValues
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowedValues;
+            }
+        }
+
         /// <summary> Source of the configuration. </summary>
-        public MySqlFlexibleServerConfigurationSource? Source { get; set; }
+        public MySqlFlexibleServerConfigurationSource? Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationProperties();
+                }
+                Properties.Source = value.Value;
+            }
+        }
+
         /// <summary> If is the configuration read only. </summary>
-        public MySqlFlexibleServerConfigReadOnlyState? IsReadOnly { get; }
+        public MySqlFlexibleServerConfigReadOnlyState? IsReadOnly
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsReadOnly;
+            }
+        }
+
         /// <summary> If is the configuration pending restart or not. </summary>
-        public MySqlFlexibleServerConfigPendingRestartState? IsConfigPendingRestart { get; }
+        public MySqlFlexibleServerConfigPendingRestartState? IsConfigPendingRestart
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsConfigPendingRestart;
+            }
+        }
+
         /// <summary> If is the configuration dynamic. </summary>
-        public MySqlFlexibleServerConfigDynamicState? IsDynamicConfig { get; }
+        public MySqlFlexibleServerConfigDynamicState? IsDynamicConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDynamicConfig;
+            }
+        }
     }
 }

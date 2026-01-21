@@ -13,176 +13,365 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the MySqlFlexibleServer data model.
-    /// Represents a server.
-    /// </summary>
+    /// <summary> Represents a server. </summary>
     public partial class MySqlFlexibleServerData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public MySqlFlexibleServerData(AzureLocation location) : base(location)
         {
-            ServerPrivateEndpointConnections = new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
-        /// <param name="administratorLoginPassword"> The password of the administrator login (required for server creation). </param>
-        /// <param name="version"> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </param>
-        /// <param name="fullVersion"> Major version and actual engine version. </param>
-        /// <param name="availabilityZone"> availability Zone information of the server. </param>
-        /// <param name="createMode"> The mode to create a new MySQL server. </param>
-        /// <param name="sourceServerResourceId"> The source MySQL server id. </param>
-        /// <param name="restorePointInOn"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
-        /// <param name="replicationRole"> The replication role. </param>
-        /// <param name="replicaCapacity"> The maximum number of replicas that a primary server can have. </param>
-        /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
-        /// <param name="state"> The state of a server. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
-        /// <param name="databasePort"> The server database port. Can only be specified when the server is being created. </param>
-        /// <param name="storage"> Storage related properties of a server. </param>
-        /// <param name="backup"> Backup related properties of a server. </param>
-        /// <param name="highAvailability"> High availability related properties of a server. </param>
-        /// <param name="network"> Network related properties of a server. </param>
-        /// <param name="serverPrivateEndpointConnections"> PrivateEndpointConnections related properties of a server. </param>
-        /// <param name="maintenancePolicy"> Maintenance policy of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </param>
-        /// <param name="importSourceProperties"> Source properties for import from storage. </param>
-        /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the server. </param>
+        /// <param name="identity"> The cmk identity for the server. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string fullVersion, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInOn, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, int? databasePort, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ServerProperties properties, MySQLServerIdentity identity, MySqlFlexibleServerSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
-            Version = version;
-            FullVersion = fullVersion;
-            AvailabilityZone = availabilityZone;
-            CreateMode = createMode;
-            SourceServerResourceId = sourceServerResourceId;
-            RestorePointInOn = restorePointInOn;
-            ReplicationRole = replicationRole;
-            ReplicaCapacity = replicaCapacity;
-            DataEncryption = dataEncryption;
-            State = state;
-            FullyQualifiedDomainName = fullyQualifiedDomainName;
-            DatabasePort = databasePort;
-            Storage = storage;
-            Backup = backup;
-            HighAvailability = highAvailability;
-            Network = network;
-            ServerPrivateEndpointConnections = serverPrivateEndpointConnections;
-            MaintenancePolicy = maintenancePolicy;
-            MaintenanceWindow = maintenanceWindow;
-            ImportSourceProperties = importSourceProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
             Sku = sku;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/> for deserialization. </summary>
-        internal MySqlFlexibleServerData()
-        {
-        }
+        /// <summary> Properties of the server. </summary>
+        internal ServerProperties Properties { get; set; }
+
+        /// <summary> The cmk identity for the server. </summary>
+        public MySQLServerIdentity Identity { get; set; }
+
+        /// <summary> The SKU (pricing tier) of the server. </summary>
+        public MySqlFlexibleServerSku Sku { get; set; }
 
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
-        public string AdministratorLogin { get; set; }
-        /// <summary> The password of the administrator login (required for server creation). </summary>
-        public string AdministratorLoginPassword { get; set; }
-        /// <summary> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </summary>
-        public MySqlFlexibleServerVersion? Version { get; set; }
-        /// <summary> Major version and actual engine version. </summary>
-        public string FullVersion { get; }
-        /// <summary> availability Zone information of the server. </summary>
-        public string AvailabilityZone { get; set; }
-        /// <summary> The mode to create a new MySQL server. </summary>
-        public MySqlFlexibleServerCreateMode? CreateMode { get; set; }
-        /// <summary> The source MySQL server id. </summary>
-        public ResourceIdentifier SourceServerResourceId { get; set; }
-        /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
-        /// <summary> The replication role. </summary>
-        public MySqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
-        /// <summary> The maximum number of replicas that a primary server can have. </summary>
-        public int? ReplicaCapacity { get; }
-        /// <summary> The Data Encryption for CMK. </summary>
-        public MySqlFlexibleServerDataEncryption DataEncryption { get; set; }
-        /// <summary> The state of a server. </summary>
-        public MySqlFlexibleServerState? State { get; }
-        /// <summary> The fully qualified domain name of a server. </summary>
-        public string FullyQualifiedDomainName { get; }
-        /// <summary> The server database port. Can only be specified when the server is being created. </summary>
-        public int? DatabasePort { get; set; }
-        /// <summary> Storage related properties of a server. </summary>
-        public MySqlFlexibleServerStorage Storage { get; set; }
-        /// <summary> Backup related properties of a server. </summary>
-        public MySqlFlexibleServerBackupProperties Backup { get; set; }
-        /// <summary> High availability related properties of a server. </summary>
-        public MySqlFlexibleServerHighAvailability HighAvailability { get; set; }
-        /// <summary> Network related properties of a server. </summary>
-        public MySqlFlexibleServerNetwork Network { get; set; }
-        /// <summary> PrivateEndpointConnections related properties of a server. </summary>
-        public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> ServerPrivateEndpointConnections { get; }
-        /// <summary> Maintenance policy of a server. </summary>
-        internal MaintenancePolicy MaintenancePolicy { get; set; }
-        /// <summary> The patch strategy of this server. </summary>
-        public MySqlFlexibleServerPatchStrategy? MaintenancePatchStrategy
+        public string AdministratorLogin
         {
-            get => MaintenancePolicy is null ? default : MaintenancePolicy.PatchStrategy;
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLogin;
+            }
             set
             {
-                if (MaintenancePolicy is null)
-                    MaintenancePolicy = new MaintenancePolicy();
-                MaintenancePolicy.PatchStrategy = value;
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.AdministratorLogin = value;
+            }
+        }
+
+        /// <summary> The password of the administrator login (required for server creation). </summary>
+        public string AdministratorLoginPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLoginPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.AdministratorLoginPassword = value;
+            }
+        }
+
+        /// <summary> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </summary>
+        public MySqlFlexibleServerVersion? Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Version = value.Value;
+            }
+        }
+
+        /// <summary> Major version and actual engine version. </summary>
+        public string FullVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FullVersion;
+            }
+        }
+
+        /// <summary> availability Zone information of the server. </summary>
+        public string AvailabilityZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.AvailabilityZone = value;
+            }
+        }
+
+        /// <summary> The mode to create a new MySQL server. </summary>
+        public MySqlFlexibleServerCreateMode? CreateMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.CreateMode = value.Value;
+            }
+        }
+
+        /// <summary> The source MySQL server id. </summary>
+        public ResourceIdentifier SourceServerResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceServerResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.SourceServerResourceId = value;
+            }
+        }
+
+        /// <summary> The replication role. </summary>
+        public MySqlFlexibleServerReplicationRole? ReplicationRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationRole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.ReplicationRole = value.Value;
+            }
+        }
+
+        /// <summary> The maximum number of replicas that a primary server can have. </summary>
+        public int? ReplicaCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicaCapacity;
+            }
+        }
+
+        /// <summary> The Data Encryption for CMK. </summary>
+        public MySqlFlexibleServerDataEncryption DataEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.DataEncryption = value;
+            }
+        }
+
+        /// <summary> The state of a server. </summary>
+        public MySqlFlexibleServerState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
+        /// <summary> The fully qualified domain name of a server. </summary>
+        public string FullyQualifiedDomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FullyQualifiedDomainName;
+            }
+        }
+
+        /// <summary> The server database port. Can only be specified when the server is being created. </summary>
+        public int? DatabasePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabasePort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.DatabasePort = value.Value;
+            }
+        }
+
+        /// <summary> Storage related properties of a server. </summary>
+        public MySqlFlexibleServerStorage Storage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Storage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Storage = value;
+            }
+        }
+
+        /// <summary> Backup related properties of a server. </summary>
+        public MySqlFlexibleServerBackupProperties Backup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Backup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Backup = value;
+            }
+        }
+
+        /// <summary> High availability related properties of a server. </summary>
+        public MySqlFlexibleServerHighAvailability HighAvailability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HighAvailability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.HighAvailability = value;
+            }
+        }
+
+        /// <summary> Network related properties of a server. </summary>
+        public MySqlFlexibleServerNetwork Network
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Network;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Network = value;
+            }
+        }
+
+        /// <summary> PrivateEndpointConnections related properties of a server. </summary>
+        public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> ServerPrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                return Properties.ServerPrivateEndpointConnections;
             }
         }
 
         /// <summary> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </summary>
-        public MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
+        public MySqlFlexibleServerMaintenanceWindow MaintenanceWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.MaintenanceWindow = value;
+            }
+        }
+
         /// <summary> Source properties for import from storage. </summary>
-        public ImportSourceProperties ImportSourceProperties { get; set; }
-        /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The SKU (pricing tier) of the server. </summary>
-        public MySqlFlexibleServerSku Sku { get; set; }
+        public ImportSourceProperties ImportSourceProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportSourceProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.ImportSourceProperties = value;
+            }
+        }
+
+        /// <summary> The patch strategy of this server. </summary>
+        public MySqlFlexibleServerPatchStrategy? MaintenancePatchStrategy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenancePatchStrategy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.MaintenancePatchStrategy = value.Value;
+            }
+        }
     }
 }

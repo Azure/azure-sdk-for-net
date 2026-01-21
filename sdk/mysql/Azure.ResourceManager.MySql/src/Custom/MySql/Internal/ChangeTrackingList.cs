@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-/*
+
 namespace Azure.ResourceManager.MySql
 {
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
@@ -148,4 +148,4 @@ namespace Azure.ResourceManager.MySql
             return _innerList ??= new List<T>();
         }
     }
-}*/
+}

@@ -8,176 +8,104 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMySqlFlexibleServersSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _mySqlFlexibleServerServersClientDiagnostics;
-        private ServersRestOperations _mySqlFlexibleServerServersRestClient;
+        private ClientDiagnostics _serversClientDiagnostics;
+        private Servers _serversRestClient;
         private ClientDiagnostics _locationBasedCapabilitiesClientDiagnostics;
-        private LocationBasedCapabilitiesRestOperations _locationBasedCapabilitiesRestClient;
+        private LocationBasedCapabilities _locationBasedCapabilitiesRestClient;
         private ClientDiagnostics _checkVirtualNetworkSubnetUsageClientDiagnostics;
-        private CheckVirtualNetworkSubnetUsageRestOperations _checkVirtualNetworkSubnetUsageRestClient;
+        private CheckVirtualNetworkSubnetUsage _checkVirtualNetworkSubnetUsageRestClient;
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
-        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
+        private CheckNameAvailability _checkNameAvailabilityRestClient;
         private ClientDiagnostics _checkNameAvailabilityWithoutLocationClientDiagnostics;
-        private CheckNameAvailabilityWithoutLocationRestOperations _checkNameAvailabilityWithoutLocationRestClient;
+        private CheckNameAvailabilityWithoutLocation _checkNameAvailabilityWithoutLocationRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMySqlFlexibleServersSubscriptionResource for mocking. </summary>
         protected MockableMySqlFlexibleServersSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMySqlFlexibleServersSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMySqlFlexibleServersSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics MySqlFlexibleServerServersClientDiagnostics => _mySqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations MySqlFlexibleServerServersRestClient => _mySqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MySqlFlexibleServerResource.ResourceType));
-        private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private LocationBasedCapabilitiesRestOperations LocationBasedCapabilitiesRestClient => _locationBasedCapabilitiesRestClient ??= new LocationBasedCapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CheckVirtualNetworkSubnetUsageClientDiagnostics => _checkVirtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CheckVirtualNetworkSubnetUsageRestOperations CheckVirtualNetworkSubnetUsageRestClient => _checkVirtualNetworkSubnetUsageRestClient ??= new CheckVirtualNetworkSubnetUsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CheckNameAvailabilityWithoutLocationClientDiagnostics => _checkNameAvailabilityWithoutLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CheckNameAvailabilityWithoutLocationRestOperations CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ServersClientDiagnostics => _serversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
 
-        /// <summary> Gets a collection of MySqlFlexibleServersCapabilityResources in the SubscriptionResource. </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <returns> An object representing collection of MySqlFlexibleServersCapabilityResources and their operations over a MySqlFlexibleServersCapabilityResource. </returns>
-        public virtual MySqlFlexibleServersCapabilityCollection GetMySqlFlexibleServersCapabilities(AzureLocation locationName)
-        {
-            return new MySqlFlexibleServersCapabilityCollection(Client, Id, locationName);
-        }
+        private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Get capabilities at specified location in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersCapabilityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="capabilitySetName"> Name of capability set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MySqlFlexibleServersCapabilityResource>> GetMySqlFlexibleServersCapabilityAsync(AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
-        {
-            return await GetMySqlFlexibleServersCapabilities(locationName).GetAsync(capabilitySetName, cancellationToken).ConfigureAwait(false);
-        }
+        private LocationBasedCapabilities LocationBasedCapabilitiesRestClient => _locationBasedCapabilitiesRestClient ??= new LocationBasedCapabilities(LocationBasedCapabilitiesClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
 
-        /// <summary>
-        /// Get capabilities at specified location in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersCapabilityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="capabilitySetName"> Name of capability set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MySqlFlexibleServersCapabilityResource> GetMySqlFlexibleServersCapability(AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
-        {
-            return GetMySqlFlexibleServersCapabilities(locationName).Get(capabilitySetName, cancellationToken);
-        }
+        private ClientDiagnostics CheckVirtualNetworkSubnetUsageClientDiagnostics => _checkVirtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CheckVirtualNetworkSubnetUsage CheckVirtualNetworkSubnetUsageRestClient => _checkVirtualNetworkSubnetUsageRestClient ??= new CheckVirtualNetworkSubnetUsage(CheckVirtualNetworkSubnetUsageClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+
+        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+
+        private ClientDiagnostics CheckNameAvailabilityWithoutLocationClientDiagnostics => _checkNameAvailabilityWithoutLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CheckNameAvailabilityWithoutLocation CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocation(CheckNameAvailabilityWithoutLocationClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
 
         /// <summary>
         /// List all the servers in a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/flexibleServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/flexibleServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Server_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Servers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerResource> GetMySqlFlexibleServersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetAllAsyncCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MySqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
         /// List all the servers in a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/flexibleServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/flexibleServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Server_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Servers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,79 +113,85 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerResource> GetMySqlFlexibleServers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetAllCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MySqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
         /// Get capabilities at specified location in a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocationBasedCapabilities_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationBasedCapabilities_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationBasedCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MySqlFlexibleServerCapabilityProperties.DeserializeMySqlFlexibleServerCapabilityProperties(e), LocationBasedCapabilitiesClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetLocationBasedCapabilities", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get capabilities at specified location in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocationBasedCapabilities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MySqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetAllAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationBasedCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MySqlFlexibleServerCapabilityProperties.DeserializeMySqlFlexibleServerCapabilityProperties(e), LocationBasedCapabilitiesClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetLocationBasedCapabilities", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new LocationBasedCapabilitiesGetAllAsyncCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+        }
+
+        /// <summary>
+        /// Get capabilities at specified location in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocationBasedCapabilities_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlFlexibleServerCapabilityProperties> GetAll(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new LocationBasedCapabilitiesGetAllCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
         /// Get virtual network subnet usage for a given vNet resource id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkVirtualNetworkSubnetUsage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkVirtualNetworkSubnetUsage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckVirtualNetworkSubnetUsage_Execute</description>
+        /// <term> Operation Id. </term>
+        /// <description> CheckVirtualNetworkSubnetUsage_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,15 +199,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteAsync(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using var scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.ExecuteCheckVirtualNetworkSubnetUsage");
+            using DiagnosticScope scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.Execute");
             scope.Start();
             try
             {
-                var response = await CheckVirtualNetworkSubnetUsageRestClient.ExecuteAsync(Id.SubscriptionId, locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(MySqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -287,16 +231,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Get virtual network subnet usage for a given vNet resource id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkVirtualNetworkSubnetUsage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkVirtualNetworkSubnetUsage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckVirtualNetworkSubnetUsage_Execute</description>
+        /// <term> Operation Id. </term>
+        /// <description> CheckVirtualNetworkSubnetUsage_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,15 +248,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> Execute(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using var scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.ExecuteCheckVirtualNetworkSubnetUsage");
+            using DiagnosticScope scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.Execute");
             scope.Start();
             try
             {
-                var response = CheckVirtualNetworkSubnetUsageRestClient.Execute(Id.SubscriptionId, locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(MySqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -326,16 +280,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Check the availability of name for server
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_CheckMySqlFlexibleServerNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailability_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,11 +301,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailability");
+            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
-                var response = await CheckNameAvailabilityRestClient.CheckMySqlFlexibleServerNameAvailabilityAsync(Id.SubscriptionId, locationName, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -365,16 +329,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Check the availability of name for server
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_CheckMySqlFlexibleServerNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailability_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -386,11 +350,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailability");
+            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
-                var response = CheckNameAvailabilityRestClient.CheckMySqlFlexibleServerNameAvailability(Id.SubscriptionId, locationName, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -404,16 +378,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Check the availability of name for server
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityWithoutLocation_CheckMySqlFlexibleServerNameAvailabilityWithoutLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailabilityWithoutLocation_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -424,11 +398,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
+            using DiagnosticScope scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
             scope.Start();
             try
             {
-                var response = await CheckNameAvailabilityWithoutLocationRestClient.CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityWithoutLocationRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityWithoutLocationRequest(Guid.Parse(Id.SubscriptionId), MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -442,16 +426,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Check the availability of name for server
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityWithoutLocation_CheckMySqlFlexibleServerNameAvailabilityWithoutLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailabilityWithoutLocation_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,11 +446,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
+            using DiagnosticScope scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
             scope.Start();
             try
             {
-                var response = CheckNameAvailabilityWithoutLocationRestClient.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityWithoutLocationRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityWithoutLocationRequest(Guid.Parse(Id.SubscriptionId), MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

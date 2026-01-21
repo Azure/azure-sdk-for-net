@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The date encryption for cmk. </summary>
     public partial class MySqlFlexibleServerDataEncryption
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDataEncryption"/>. </summary>
         public MySqlFlexibleServerDataEncryption()
@@ -53,29 +24,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDataEncryption"/>. </summary>
         /// <param name="primaryUserAssignedIdentityId"> Primary user identity resource id. </param>
-        /// <param name="primaryKeyUri"> Primary key uri. </param>
+        /// <param name="primaryKeyURI"> Primary key uri. </param>
         /// <param name="geoBackupUserAssignedIdentityId"> Geo backup user identity resource id as identity can't cross region, need identity in same region as geo backup. </param>
-        /// <param name="geoBackupKeyUri"> Geo backup key uri as key vault can't cross region, need cmk in same region as geo backup. </param>
+        /// <param name="geoBackupKeyURI"> Geo backup key uri as key vault can't cross region, need cmk in same region as geo backup. </param>
         /// <param name="encryptionType"> The key type, AzureKeyVault for enable cmk, SystemManaged for disable cmk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerDataEncryption(ResourceIdentifier primaryUserAssignedIdentityId, Uri primaryKeyUri, ResourceIdentifier geoBackupUserAssignedIdentityId, Uri geoBackupKeyUri, MySqlFlexibleServerDataEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerDataEncryption(ResourceIdentifier primaryUserAssignedIdentityId, Uri primaryKeyURI, ResourceIdentifier geoBackupUserAssignedIdentityId, Uri geoBackupKeyURI, MySqlFlexibleServerDataEncryptionType? encryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
-            PrimaryKeyUri = primaryKeyUri;
+            PrimaryKeyURI = primaryKeyURI;
             GeoBackupUserAssignedIdentityId = geoBackupUserAssignedIdentityId;
-            GeoBackupKeyUri = geoBackupKeyUri;
+            GeoBackupKeyURI = geoBackupKeyURI;
             EncryptionType = encryptionType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Primary user identity resource id. </summary>
         public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
+
         /// <summary> Primary key uri. </summary>
-        public Uri PrimaryKeyUri { get; set; }
+        public Uri PrimaryKeyURI { get; set; }
+
         /// <summary> Geo backup user identity resource id as identity can't cross region, need identity in same region as geo backup. </summary>
         public ResourceIdentifier GeoBackupUserAssignedIdentityId { get; set; }
+
         /// <summary> Geo backup key uri as key vault can't cross region, need cmk in same region as geo backup. </summary>
-        public Uri GeoBackupKeyUri { get; set; }
+        public Uri GeoBackupKeyURI { get; set; }
+
         /// <summary> The key type, AzureKeyVault for enable cmk, SystemManaged for disable cmk. </summary>
         public MySqlFlexibleServerDataEncryptionType? EncryptionType { get; set; }
     }
