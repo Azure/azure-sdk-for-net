@@ -275,46 +275,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary>
-        /// Update access policies in a key vault in the specified subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.UpdateAccessPolicyAsync(string, AccessPolicyUpdateKind, KeyVaultAccessPolicyParameters, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(this ResourceGroupResource resourceGroupResource, string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableKeyVaultResourceGroupResource(resourceGroupResource).UpdateAccessPolicyAsync(vaultName, operationKind, keyVaultAccessPolicyParameters, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Update access policies in a key vault in the specified subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.UpdateAccessPolicy(string, AccessPolicyUpdateKind, KeyVaultAccessPolicyParameters, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(this ResourceGroupResource resourceGroupResource, string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).UpdateAccessPolicy(vaultName, operationKind, keyVaultAccessPolicyParameters, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a collection of DeletedKeyVaults in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
