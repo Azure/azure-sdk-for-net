@@ -261,6 +261,44 @@ string runStatus = fields["status"];
 Console.WriteLine($"Evaluation run created (id: {runId})");
 ```
 
+9. Define the method to get the error message and code from the response if any.
+
+```C# Snippet:Sampple_GetError_EvaluationsCatalogPromptBased
+private static string GetErrorMessageOrEmpty(ClientResult result)
+{
+    string error = "";
+    Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
+    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    string code = default;
+    string message = default;
+    foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+    {
+        if (prop.NameEquals("error"u8) && prop.Value.ValueKind != JsonValueKind.Null && prop.Value.ValueKind != JsonValueKind.Null && prop.Value is JsonElement countsElement)
+        {
+            foreach (JsonProperty errorNode in countsElement.EnumerateObject())
+            {
+                if (errorNode.Value.ValueKind == JsonValueKind.String)
+                {
+                    if (errorNode.NameEquals("code"u8))
+                    {
+                        code = errorNode.Value.GetString();
+                    }
+                    else if (errorNode.NameEquals("message"u8))
+                    {
+                        message = errorNode.Value.GetString();
+                    }
+                }
+            }
+        }
+    }
+    if (!string.IsNullOrEmpty(message))
+    {
+        error = $"Message: {message}, Code: {code ?? "<None>"}";
+    }
+    return error;
+}
+```
+
 9. Wait for evaluation run to arrive at the terminal state.
 
 Synchronous sample:
@@ -274,7 +312,7 @@ while (runStatus != "failed" && runStatus != "completed")
 }
 if (runStatus == "failed")
 {
-    throw new InvalidOperationException("Evaluation run failed.");
+    throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
 }
 ```
 
@@ -289,7 +327,7 @@ while (runStatus != "failed" && runStatus != "completed")
 }
 if (runStatus == "failed")
 {
-    throw new InvalidOperationException("Evaluation run failed.");
+    throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
 }
 ```
 
