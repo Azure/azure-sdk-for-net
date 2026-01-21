@@ -3,6 +3,7 @@
 
 using Microsoft.ClientModel.TestFramework;
 using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
+using static System.Net.WebRequestMethods;
 
 namespace Azure.AI.Projects.Tests.Utils
 {
@@ -283,6 +284,16 @@ namespace Azure.AI.Projects.Tests.Utils
             {
                 Regex = UUID_PATTERN,
                 Value = "00000000-0000-0000-0000-000000000000"
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("model-api-key")
+            {
+                Regex = @"\w+",
+                Value = "Sanitized"
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("model-endpoint")
+            {
+                Regex = @"(?<=https://)([^/]+)(?=[.]openai[.]azure[.]com/|$)",
+                Value = "sanitized"
             }));
         }
 
