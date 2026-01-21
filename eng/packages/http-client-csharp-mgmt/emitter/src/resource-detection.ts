@@ -139,10 +139,12 @@ export function buildArmProviderSchema(
     if (modelId && kind && resourceModelIds.has(modelId)) {
       // Determine the resource path from the CRUD operation
       let resourcePath = "";
+      let foundMatchingResource = false;
       if (isCRUDKind(kind)) {
         resourcePath = method.operation.path;
+        foundMatchingResource = true;
       } else {
-        // For non-CRUD operations like List, try to match with existing resource paths for the same model
+        // For non-CRUD operations like List or Action, try to match with existing resource paths for the same model
         const operationPath = method.operation.path;
         for (const [existingKey] of resourcePathToMetadataMap) {
           const [existingModelId, existingPath] = existingKey.split("|");
@@ -166,6 +168,7 @@ export function buildArmProviderSchema(
               operationResourceType === existingResourceType
             ) {
               resourcePath = existingPath;
+              foundMatchingResource = true;
               break;
             }
 
@@ -179,11 +182,35 @@ export function buildArmProviderSchema(
               if (isPrefix(existingParentPath, operationPath)) {
                 // Store this as a potential match, but continue looking for exact matches
                 resourcePath = existingPath;
+                foundMatchingResource = true;
               }
             }
           }
         }
+        // If no match found for Action operations that don't have a resource instance in their path,
+        // treat them as non-resource methods (provider operations).
+        // List operations are kept because they'll be handled later when moved to parent resources.
+        if (!foundMatchingResource && kind === ResourceOperationKind.Action) {
+          // Check if the operation path contains the resource type segment
+          // by looking for the resource model name in the path
+          const model = resourceModelMap.get(modelId);
+          const resourceTypeName = model?.name?.toLowerCase();
+          const pathLower = operationPath.toLowerCase();
+          
+          // If the path doesn't include the resource type segment (e.g., "scheduledactions"),
+          // it's a provider operation, not a resource action
+          if (resourceTypeName && !pathLower.includes(resourceTypeName)) {
+            nonResourceMethods.set(method.crossLanguageDefinitionId, {
+              methodId: method.crossLanguageDefinitionId,
+              operationPath: method.operation.path,
+              operationScope: getOperationScopeFromPath(method.operation.path)
+            });
+            return;
+          }
+        }
         // If no match found, use the operation path
+        // This is used for List operations on resources without CRUD ops,
+        // which will be handled later in buildArmProviderSchemaFromDetectedResources
         if (!resourcePath) {
           resourcePath = operationPath;
         }
@@ -948,19 +975,43 @@ function buildArmProviderSchemaFromDetectedResources(
           (m) => m.kind === ResourceOperationKind.Read
         );
         if (!hasReadOperation && !metadata.singletonResourceName) {
-          // Move all methods to non-resource methods since there's no Get operation
+          // For resources without Get operation, List operations should belong to the parent resource
+          // Other operations (Create, Update, Delete) should be treated as non-resource methods
+          
+          // Iterate through all methods and handle List operations separately
           for (const method of metadata.methods) {
+            if (method.kind === ResourceOperationKind.List) {
+              // Move List operations to parent resource if parent exists
+              let parentMetadata: ResourceMetadata | undefined;
+              if (metadata.parentResourceModelId) {
+                for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
+                  const parentModelId = parentKey.split("|")[0];
+                  if (parentModelId === metadata.parentResourceModelId) {
+                    parentMetadata = parentMeta;
+                    break;
+                  }
+                }
+              }
+
+              if (parentMetadata) {
+                parentMetadata.methods.push(method);
+                continue; // Skip to next method, don't add to nonResourceMethods
+              }
+            }
+
+            // Move methods to non-resource methods if not added to parent
             nonResourceMethods.set(method.methodId, {
               methodId: method.methodId,
               operationPath: method.operationPath,
               operationScope: method.operationScope
             });
           }
+
           sdkContext.logger.reportDiagnostic({
             code: "general-warning",
             messageId: "default",
             format: {
-              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be treated as non-resource methods.`
+              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. List operations will be added to parent resource, other operations will be treated as non-resource methods.`
             },
             target: NoTarget
           });
