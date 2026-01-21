@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.5.1 (2025-08-23)
+
+### Features Added
+
+- Support for MicrosoftTeamsAppIdentifier CommunicationIdentifier
+
 ## 1.5.0 (2025-08-25)
 
 ### Features Added
