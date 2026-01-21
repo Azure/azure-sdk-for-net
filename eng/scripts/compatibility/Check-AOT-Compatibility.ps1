@@ -184,10 +184,9 @@ Remove-Item -Path "./$folderPath" -Recurse -Force
 if ($numExpectedWarnings -ne $actualWarningCount) {
   Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
   Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
-  Write-Host "To run locally, run eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath"
+  Write-Host "To run locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath'"
   exit 2
 }
-  
 Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
 Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath'"
 exit $warnings.Count
