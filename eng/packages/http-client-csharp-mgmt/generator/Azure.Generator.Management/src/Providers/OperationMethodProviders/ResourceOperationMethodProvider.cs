@@ -418,7 +418,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             if (_returnBodyResourceClient != null)
             {
                 // Resource type - pass client to operation source constructor
-                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.ResourceData.Type].Type;
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.Type].Type;
                 operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
             }
             else if (_originalBodyType != null)
