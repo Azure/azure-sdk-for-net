@@ -611,9 +611,11 @@
           ],
           "parent": {
             "$ref": "16"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

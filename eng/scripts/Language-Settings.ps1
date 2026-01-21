@@ -8,7 +8,6 @@ $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
-
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -585,6 +584,15 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 }
 
 function Get-dotnet-ApiviewStatusCheckRequirement($packageInfo) {
+  $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
+  if ($null -eq $version) {
+    return $false
+  }
+  # Do not check APIView status for prerelease mgmt plane packages
+  if ($packageInfo.SdkType -eq "mgmt" -and $version.IsPrerelease) {
+    return $false
+  }
+
   if ($packageInfo.IsNewSdk -and ($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "mgmt")) {
     return $true
   }

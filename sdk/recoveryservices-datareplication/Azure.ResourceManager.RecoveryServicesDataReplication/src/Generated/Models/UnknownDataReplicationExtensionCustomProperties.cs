@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Unknown version of DataReplicationExtensionCustomProperties. </summary>
     internal partial class UnknownDataReplicationExtensionCustomProperties : DataReplicationExtensionCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataReplicationExtensionCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationExtensionCustomProperties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataReplicationExtensionCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDataReplicationExtensionCustomProperties"/> for deserialization. </summary>
-        internal UnknownDataReplicationExtensionCustomProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataReplicationExtensionCustomProperties(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

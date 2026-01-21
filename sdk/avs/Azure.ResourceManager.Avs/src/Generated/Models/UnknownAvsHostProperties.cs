@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Unknown version of AvsHostProperties. </summary>
     internal partial class UnknownAvsHostProperties : AvsHostProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAvsHostProperties"/>. </summary>
@@ -21,14 +20,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, provisioningState, displayName, moRefId, fqdn, maintenance, faultDomain, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAvsHostProperties"/> for deserialization. </summary>
-        internal UnknownAvsHostProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", provisioningState, displayName, moRefId, fqdn, maintenance, faultDomain, additionalBinaryDataProperties)
         {
         }
     }

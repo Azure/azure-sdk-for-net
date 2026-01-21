@@ -12,19 +12,6 @@ trigger:
     - sdk/face/ci.yml
     - sdk/face/Azure.AI.Vision.Face
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/face
-    - sdk/face/ci.yml
-    - sdk/face/Azure.AI.Vision.Face
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

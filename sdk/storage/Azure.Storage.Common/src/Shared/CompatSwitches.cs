@@ -16,5 +16,10 @@ namespace Azure.Storage
 
         public static bool DisableExpectContinueHeader => _disableExpectContinueHeader
             ??= AppContextSwitchHelper.GetConfigValue(Constants.DisableExpectContinueHeaderSwitchName, Constants.DisableExpectContinueHeaderEnvVar);
+
+        private static bool? _useLegacyDefaultConcurrency;
+
+        public static bool UseLegacyDefaultConcurrency => _useLegacyDefaultConcurrency
+            ??= AppContextSwitchHelper.GetConfigValue(Constants.UseLegacyDefaultConcurrencySwitchName, Constants.UseLegacyDefaultConcurrencyEnvVar);
     }
 }

@@ -734,9 +734,11 @@
           ],
           "parent": {
             "$ref": "24"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }
