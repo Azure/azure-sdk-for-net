@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NeonPostgres
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetEndpointsRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetEndpointsRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetEndpoints");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NeonBranchResource.GetEndpoints");
             scope.Start();
             try
             {

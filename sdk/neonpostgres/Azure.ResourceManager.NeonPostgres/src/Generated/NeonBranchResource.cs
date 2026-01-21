@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.NeonPostgres
         private readonly Branches _branchesRestClient;
         private readonly ClientDiagnostics _computesClientDiagnostics;
         private readonly Computes _computesRestClient;
+        private readonly ClientDiagnostics _neonDatabasesClientDiagnostics;
+        private readonly NeonDatabases _neonDatabasesRestClient;
+        private readonly ClientDiagnostics _neonRolesClientDiagnostics;
+        private readonly NeonRoles _neonRolesRestClient;
+        private readonly ClientDiagnostics _endpointsClientDiagnostics;
+        private readonly Endpoints _endpointsRestClient;
         private readonly NeonBranchData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Neon.Postgres/organizations/projects/branches";
@@ -56,6 +62,12 @@ namespace Azure.ResourceManager.NeonPostgres
             _branchesRestClient = new Branches(_branchesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
             _computesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
             _computesRestClient = new Computes(_computesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
+            _neonDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
+            _neonDatabasesRestClient = new NeonDatabases(_neonDatabasesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
+            _neonRolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
+            _neonRolesRestClient = new NeonRoles(_neonRolesClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
+            _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, neonBranchApiVersion ?? "2025-06-23-preview");
             ValidateResourceId(id);
         }
 
@@ -365,6 +377,344 @@ namespace Azure.ResourceManager.NeonPostgres
             };
             return new ComputesGetComputesCollectionResultOfT(
                 _computesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Branches_Preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="preflightCheckContent"/> is null. </exception>
+        public virtual async Task<Response<PreflightCheckResult>> PreflightAsync(PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
+
+            using DiagnosticScope scope = _branchesClientDiagnostics.CreateScope("NeonBranchResource.Preflight");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _branchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Branches_Preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="preflightCheckContent"/> is null. </exception>
+        public virtual Response<PreflightCheckResult> Preflight(PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
+
+            using DiagnosticScope scope = _branchesClientDiagnostics.CreateScope("NeonBranchResource.Preflight");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _branchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonDatabase> GetNeonDatabasesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonDatabasesGetNeonDatabasesAsyncCollectionResultOfT(
+                _neonDatabasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonDatabase> GetNeonDatabases(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonDatabasesGetNeonDatabasesCollectionResultOfT(
+                _neonDatabasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonRole> GetNeonRolesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonRolesGetNeonRolesAsyncCollectionResultOfT(
+                _neonRolesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonRole> GetNeonRoles(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonRolesGetNeonRolesCollectionResultOfT(
+                _neonRolesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonEndpoint> GetEndpointsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EndpointsGetEndpointsAsyncCollectionResultOfT(
+                _endpointsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonEndpoint> GetEndpoints(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EndpointsGetEndpointsCollectionResultOfT(
+                _endpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,

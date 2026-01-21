@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NeonPostgres
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetNeonRolesRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetNeonRolesRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetNeonRoles");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NeonBranchResource.GetNeonRoles");
             scope.Start();
             try
             {

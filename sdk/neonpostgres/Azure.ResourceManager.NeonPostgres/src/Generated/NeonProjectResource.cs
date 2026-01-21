@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
@@ -281,6 +282,110 @@ namespace Azure.ResourceManager.NeonPostgres
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to retrieve the connection URI for the Neon Database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/getConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_GetConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionUriParameters"> Additional parameters for retrieving the database connection URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionUriParameters"/> is null. </exception>
+        public virtual async Task<Response<ConnectionUriProperties>> GetConnectionUriAsync(ConnectionUriProperties connectionUriParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(connectionUriParameters, nameof(connectionUriParameters));
+
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("NeonProjectResource.GetConnectionUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetConnectionUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ConnectionUriProperties.ToRequestContent(connectionUriParameters), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectionUriProperties> response = Response.FromValue(ConnectionUriProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to retrieve the connection URI for the Neon Database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/getConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_GetConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionUriParameters"> Additional parameters for retrieving the database connection URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionUriParameters"/> is null. </exception>
+        public virtual Response<ConnectionUriProperties> GetConnectionUri(ConnectionUriProperties connectionUriParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(connectionUriParameters, nameof(connectionUriParameters));
+
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("NeonProjectResource.GetConnectionUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetConnectionUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ConnectionUriProperties.ToRequestContent(connectionUriParameters), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectionUriProperties> response = Response.FromValue(ConnectionUriProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

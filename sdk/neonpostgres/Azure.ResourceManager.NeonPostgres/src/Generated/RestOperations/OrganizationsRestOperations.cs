@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return message;
         }
 
-        internal HttpMessage CreateGetPostgresVersionsRequest(Guid subscriptionId, string resourceGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetPostgresVersionsOrganizationRequest(Guid subscriptionId, string resourceGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

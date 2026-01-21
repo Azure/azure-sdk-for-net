@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
+        internal HttpMessage CreateGetNeonDatabasesRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
+        internal HttpMessage CreateNextGetNeonDatabasesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -101,6 +101,30 @@ namespace Azure.ResourceManager.NeonPostgres
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string neonDatabaseName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Neon.Postgres/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/branches/", false);
+            uri.AppendPath(branchName, true);
+            uri.AppendPath("/neonDatabases/", false);
+            uri.AppendPath(neonDatabaseName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Delete;
             return message;
         }
     }
