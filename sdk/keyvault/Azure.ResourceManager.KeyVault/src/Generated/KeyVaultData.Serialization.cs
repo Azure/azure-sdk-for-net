@@ -44,8 +44,11 @@ namespace Azure.ResourceManager.KeyVault
                 throw new FormatException($"The model {nameof(KeyVaultData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -138,6 +141,10 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 if (prop.NameEquals("properties"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     properties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(prop.Value, options);
                     continue;
                 }
