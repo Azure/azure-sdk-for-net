@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             BatchAccountProperties properties = default;
-            BatchAccountIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    identity = BatchAccountIdentity.DeserializeBatchAccountIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

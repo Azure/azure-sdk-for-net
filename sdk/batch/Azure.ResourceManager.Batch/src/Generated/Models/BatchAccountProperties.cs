@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountProperties"/>. </summary>
-        internal BatchAccountProperties()
+        public BatchAccountProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
             DedicatedCoreQuotaPerVMFamily = new ChangeTrackingList<BatchVmFamilyCoreQuota>();
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchKeyVaultReference KeyVaultReference { get; }
 
         /// <summary> The network access type for operating on the resources in the Batch account. </summary>
-        public BatchPublicNetworkAccess? PublicNetworkAccess { get; }
+        public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
-        public BatchNetworkProfile NetworkProfile { get; }
+        public BatchNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> List of private endpoint connections associated with the Batch account. </summary>
         public IReadOnlyList<BatchPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();

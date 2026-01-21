@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BatchAccountData(AzureLocation location) : base(location)
+        public BatchAccountData(AzureLocation location) : base(location)
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties associated with the account. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BatchAccountProperties properties, BatchAccountIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BatchAccountProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The properties associated with the account. </summary>
-        internal BatchAccountProperties Properties { get; }
+        internal BatchAccountProperties Properties { get; set; }
 
         /// <summary> The identity of the Batch account. </summary>
-        public BatchAccountIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The account endpoint used to interact with the Batch service. </summary>
         public string AccountEndpoint
         {
             get
             {
-                return Properties.AccountEndpoint;
+                return Properties is null ? default : Properties.AccountEndpoint;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.NodeManagementEndpoint;
+                return Properties is null ? default : Properties.NodeManagementEndpoint;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.PoolAllocationMode;
+                return Properties is null ? default : Properties.PoolAllocationMode;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.KeyVaultReference;
+                return Properties is null ? default : Properties.KeyVaultReference;
             }
         }
 
@@ -98,7 +98,15 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.PublicNetworkAccess;
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
             }
         }
 
@@ -107,7 +115,15 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.NetworkProfile;
+                return Properties is null ? default : Properties.NetworkProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.NetworkProfile = value;
             }
         }
 
@@ -116,6 +132,10 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
                 return Properties.PrivateEndpointConnections;
             }
         }
@@ -125,7 +145,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.AutoStorage;
+                return Properties is null ? default : Properties.AutoStorage;
             }
         }
 
@@ -134,7 +154,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.Encryption;
+                return Properties is null ? default : Properties.Encryption;
             }
         }
 
@@ -143,7 +163,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.DedicatedCoreQuota;
+                return Properties is null ? default : Properties.DedicatedCoreQuota;
             }
         }
 
@@ -152,7 +172,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.LowPriorityCoreQuota;
+                return Properties is null ? default : Properties.LowPriorityCoreQuota;
             }
         }
 
@@ -161,6 +181,10 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
                 return Properties.DedicatedCoreQuotaPerVMFamily;
             }
         }
@@ -170,7 +194,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.IsDedicatedCoreQuotaPerVmFamilyEnforced;
+                return Properties is null ? default : Properties.IsDedicatedCoreQuotaPerVmFamilyEnforced;
             }
         }
 
@@ -179,7 +203,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.PoolQuota;
+                return Properties is null ? default : Properties.PoolQuota;
             }
         }
 
@@ -188,7 +212,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties.ActiveJobAndJobScheduleQuota;
+                return Properties is null ? default : Properties.ActiveJobAndJobScheduleQuota;
             }
         }
 
@@ -197,6 +221,10 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
                 return Properties.AllowedAuthenticationModes;
             }
         }
