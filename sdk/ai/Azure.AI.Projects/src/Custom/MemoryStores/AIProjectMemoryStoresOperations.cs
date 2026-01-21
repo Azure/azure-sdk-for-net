@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects;
 
@@ -142,12 +143,27 @@ public partial class AIProjectMemoryStoresOperations
         return ClientResult.FromValue((MemoryUpdateResult)protocolResult, protocolResult.GetRawResponse());
     }
 
+    private static void ValidateMemoryStoreItems(MemoryUpdateOptions options)
+    {
+        if (options != null)
+        {
+            foreach (ResponseItem item in options.Items)
+            {
+                if ((item is not MessageResponseItem) || (item is MessageResponseItem messageItem) && (messageItem.Role != MessageRole.System) && (messageItem.Role != MessageRole.User) && (messageItem.Role != MessageRole.Developer))
+                {
+                    throw new InvalidOperationException("Only system, user and developer messages are allowed to be used as memories.");
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Wait for memories to update.
     /// </summary>
     /// <returns>The MemoryUpdateResult in final state</returns>
     public async virtual Task<MemoryUpdateResult> WaitForMemoriesUpdateAsync(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
+        ValidateMemoryStoreItems(options);
         MemoryUpdateResult updateResult = await UpdateMemoriesAsync(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken).ConfigureAwait(false);
         while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
         {
@@ -163,6 +179,7 @@ public partial class AIProjectMemoryStoresOperations
     /// <returns>The MemoryUpdateResult in final state</returns>
     public virtual MemoryUpdateResult WaitForMemoriesUpdate(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
+        ValidateMemoryStoreItems(options);
         MemoryUpdateResult updateResult = UpdateMemories(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken);
         while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
         {

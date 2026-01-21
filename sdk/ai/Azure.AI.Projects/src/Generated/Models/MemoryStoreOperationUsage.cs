@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
         /// <param name="outputTokens"> The number of output tokens. </param>
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
-        internal MemoryStoreOperationUsage(int embeddingTokens, int inputTokens, MemoryStoreOperationUsageInputTokensDetails inputTokensDetails, int outputTokens, MemoryStoreOperationUsageOutputTokensDetails outputTokensDetails, int totalTokens)
+        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens)
         {
             EmbeddingTokens = embeddingTokens;
             InputTokens = inputTokens;
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreOperationUsage(int embeddingTokens, int inputTokens, MemoryStoreOperationUsageInputTokensDetails inputTokensDetails, int outputTokens, MemoryStoreOperationUsageOutputTokensDetails outputTokensDetails, int totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EmbeddingTokens = embeddingTokens;
             InputTokens = inputTokens;
@@ -53,18 +53,18 @@ namespace Azure.AI.Projects
         public int EmbeddingTokens { get; }
 
         /// <summary> The number of input tokens. </summary>
-        public int InputTokens { get; }
+        public long InputTokens { get; }
 
         /// <summary> A detailed breakdown of the input tokens. </summary>
-        public MemoryStoreOperationUsageInputTokensDetails InputTokensDetails { get; }
+        public ResponseUsageInputTokensDetails InputTokensDetails { get; }
 
         /// <summary> The number of output tokens. </summary>
-        public int OutputTokens { get; }
+        public long OutputTokens { get; }
 
         /// <summary> A detailed breakdown of the output tokens. </summary>
-        public MemoryStoreOperationUsageOutputTokensDetails OutputTokensDetails { get; }
+        public ResponseUsageOutputTokensDetails OutputTokensDetails { get; }
 
         /// <summary> The total number of tokens used. </summary>
-        public int TotalTokens { get; }
+        public long TotalTokens { get; }
     }
 }

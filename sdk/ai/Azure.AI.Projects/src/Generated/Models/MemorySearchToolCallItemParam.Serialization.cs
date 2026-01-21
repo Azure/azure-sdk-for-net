@@ -6,12 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The MemorySearchToolCallItemParam. </summary>
-    internal partial class MemorySearchToolCallItemParam : InternalItemParam, IJsonModel<MemorySearchToolCallItemParam>
+    internal partial class MemorySearchToolCallItemParam : Item, IJsonModel<MemorySearchToolCallItemParam>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -50,7 +49,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalItemParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchToolCallItemParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -123,7 +122,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalItemParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchToolCallItemParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

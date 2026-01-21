@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects
 {
     internal partial class UnknownAnnotation : InternalAnnotation, IJsonModel<InternalAnnotation>
     {

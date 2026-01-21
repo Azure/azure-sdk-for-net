@@ -6,6 +6,9 @@
 
 - Updated for full `net10` framework compatibility, including removal of `<EnablePreviewFeatures>` flagging.
 
+### Sample Updates
+- Added Evaluation sample.
+
 ## 1.2.0-beta.5 (2025-12-12)
 
 ### Features Added

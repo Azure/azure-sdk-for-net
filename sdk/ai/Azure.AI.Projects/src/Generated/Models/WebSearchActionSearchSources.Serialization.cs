@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects;
 
-namespace OpenAI
+namespace Azure.AI.Projects
 {
     /// <summary> The WebSearchActionSearchSources. </summary>
     internal partial class WebSearchActionSearchSources : IJsonModel<WebSearchActionSearchSources>

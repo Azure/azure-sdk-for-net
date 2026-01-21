@@ -7,7 +7,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -42,7 +41,7 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
-                foreach (InternalItemParam item in Items)
+                foreach (Item item in Items)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -101,7 +100,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string scope = default;
-            IList<InternalItemParam> items = default;
+            IList<Item> items = default;
             string previousSearchId = default;
             MemorySearchResultOptions options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -118,10 +117,10 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    List<InternalItemParam> array = new List<InternalItemParam>();
+                    List<Item> array = new List<Item>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalItemParam.DeserializeInternalItemParam(item, options));
+                        array.Add(Item.DeserializeItem(item, options));
                     }
                     items = array;
                     continue;
@@ -145,7 +144,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalMemorySearchOptions(scope, items ?? new ChangeTrackingList<InternalItemParam>(), previousSearchId, options0, additionalBinaryDataProperties);
+            return new InternalMemorySearchOptions(scope, items ?? new ChangeTrackingList<Item>(), previousSearchId, options0, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

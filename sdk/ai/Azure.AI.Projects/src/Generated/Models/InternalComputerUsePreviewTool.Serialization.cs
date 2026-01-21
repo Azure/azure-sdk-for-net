@@ -37,7 +37,7 @@ namespace OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("environment"u8);
-            writer.WriteStringValue(Environment.ToString());
+            writer.WriteStringValue(Environment.ToSerialString());
             writer.WritePropertyName("display_width"u8);
             writer.WriteNumberValue(DisplayWidth);
             writer.WritePropertyName("display_height"u8);
@@ -71,9 +71,9 @@ namespace OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ComputerUsePreviewToolEnvironment environment = default;
-            int displayWidth = default;
-            int displayHeight = default;
+            ComputerEnvironment environment = default;
+            long displayWidth = default;
+            long displayHeight = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -83,17 +83,17 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("environment"u8))
                 {
-                    environment = new ComputerUsePreviewToolEnvironment(prop.Value.GetString());
+                    environment = prop.Value.GetString().ToComputerEnvironment();
                     continue;
                 }
                 if (prop.NameEquals("display_width"u8))
                 {
-                    displayWidth = prop.Value.GetInt32();
+                    displayWidth = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("display_height"u8))
                 {
-                    displayHeight = prop.Value.GetInt32();
+                    displayHeight = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")

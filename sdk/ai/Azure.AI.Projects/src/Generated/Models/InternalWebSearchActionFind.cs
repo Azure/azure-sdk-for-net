@@ -7,27 +7,35 @@ using System.Collections.Generic;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchActionFind : InternalWebSearchAction
+    internal partial class InternalWebSearchActionFind
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionFind"/>. </summary>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
-        public InternalWebSearchActionFind(Uri url, string pattern) : base(WebSearchActionType.Find)
+        public InternalWebSearchActionFind(Uri url, string pattern)
         {
             Url = url;
             Pattern = pattern;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionFind"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The action type. </param>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
-        internal InternalWebSearchActionFind(WebSearchActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url, string pattern) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalWebSearchActionFind(string @type, Uri url, string pattern, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Type = @type;
             Url = url;
             Pattern = pattern;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The action type. </summary>
+        internal string Type { get; } = "find";
 
         /// <summary> The URL of the page searched for the pattern. </summary>
         public Uri Url { get; }

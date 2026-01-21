@@ -562,7 +562,7 @@ public class AgentsTests : AgentsTestBase
         string scope = MEMORY_STORE_SCOPE;
         MemorySearchOptions opts = new(scope)
         {
-            Items = { ResponseItem.CreateUserMessageItem("Name assistamt's favorite animal") },
+            Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
             ResultOptions = new MemorySearchResultOptions()
             {
                 MaxMemories = 1,
@@ -574,19 +574,37 @@ public class AgentsTests : AgentsTestBase
         );
         Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {(resp.Memories.Any() ? resp.Memories.First().MemoryItem.Content : "")}");
         // Populate the scope and make sure, we can get the result.
-        ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
-        ResponseItem agentItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
+        ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
         int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
         MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
             memoryStoreName: store.Name,
             options: new MemoryUpdateOptions(scope)
             {
-                Items = { userItem, agentItem },
+                Items = { userItem },
                 UpdateDelay = 0,
             },
             pollingInterval: pollingInterval);
         Assert.That(updateResult.Status == MemoryStoreUpdateStatus.Completed, $"Unexpected status {updateResult.Status}");
         Assert.That(updateResult.Details.MemoryOperations.Count, Is.GreaterThan(0));
+        // Test that the attempt to create invalid item in memory store fails.
+        ResponseItem assistantItem = ResponseItem.CreateAssistantMessageItem("Should not be here.");
+        string error = default;
+        try
+        {
+            await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
+                memoryStoreName: store.Name,
+                options: new MemoryUpdateOptions(scope)
+                {
+                    Items = { assistantItem },
+                    UpdateDelay = 0,
+                },
+                pollingInterval: pollingInterval);
+        }
+        catch (InvalidOperationException e)
+        {
+            error = e.Message;
+        }
+        Assert.That(error, Is.EqualTo("Only system, user and developer messages are allowed to be used as memories."));
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
             options: opts
@@ -1315,6 +1333,36 @@ public class AgentsTests : AgentsTestBase
         Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
     }
 
+    [RecordedTest]
+    public async Task TestHostedAgentCreation()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        Uri uriEndpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
+        string projectName = pathParts[pathParts.Length - 1];
+        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
+        ImageBasedHostedAgentDefinition agentDefinition = new(
+            containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
+            cpu: "1",
+            memory: "2Gi",
+            image: TestEnvironment.AGENT_DOCKER_IMAGE
+        )
+        {
+            EnvironmentVariables = {
+                { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
+                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.MODELDEPLOYMENTNAME },
+                // Optional variables, used for logging
+                { "APPLICATIONINSIGHTS_CONNECTION_STRING", TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING },
+                { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.PROJECT_ENDPOINT },
+            }
+        };
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: AGENT_NAME2,
+            options: new(agentDefinition));
+        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("UnknownHostedAgentDefinition"));
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.Agents.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version));
+    }
     private bool ContainsAnnotation(ResponseItem item, ToolType type)
     {
         bool isUriCitationFound = false;

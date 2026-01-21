@@ -4,31 +4,37 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Projects;
 
-namespace OpenAI
+namespace Azure.AI.Projects
 {
     /// <summary></summary>
     internal readonly partial struct ItemType : IEquatable<ItemType>
     {
         private readonly string _value;
         private const string MessageValue = "message";
+        private const string OutputMessageValue = "output_message";
         private const string FileSearchCallValue = "file_search_call";
-        private const string FunctionCallValue = "function_call";
-        private const string FunctionCallOutputValue = "function_call_output";
         private const string ComputerCallValue = "computer_call";
         private const string ComputerCallOutputValue = "computer_call_output";
         private const string WebSearchCallValue = "web_search_call";
+        private const string FunctionCallValue = "function_call";
+        private const string FunctionCallOutputValue = "function_call_output";
         private const string ReasoningValue = "reasoning";
-        private const string ItemReferenceValue = "item_reference";
+        private const string CompactionValue = "compaction";
         private const string ImageGenerationCallValue = "image_generation_call";
         private const string CodeInterpreterCallValue = "code_interpreter_call";
         private const string LocalShellCallValue = "local_shell_call";
         private const string LocalShellCallOutputValue = "local_shell_call_output";
+        private const string ShellCallValue = "shell_call";
+        private const string ShellCallOutputValue = "shell_call_output";
+        private const string ApplyPatchCallValue = "apply_patch_call";
+        private const string ApplyPatchCallOutputValue = "apply_patch_call_output";
         private const string McpListToolsValue = "mcp_list_tools";
         private const string McpApprovalRequestValue = "mcp_approval_request";
         private const string McpApprovalResponseValue = "mcp_approval_response";
         private const string McpCallValue = "mcp_call";
+        private const string CustomToolCallOutputValue = "custom_tool_call_output";
+        private const string CustomToolCallValue = "custom_tool_call";
         private const string StructuredOutputsValue = "structured_outputs";
         private const string WorkflowActionValue = "workflow_action";
         private const string MemorySearchCallValue = "memory_search_call";
@@ -47,14 +53,11 @@ namespace OpenAI
         /// <summary> Gets the Message. </summary>
         public static ItemType Message { get; } = new ItemType(MessageValue);
 
+        /// <summary> Gets the OutputMessage. </summary>
+        public static ItemType OutputMessage { get; } = new ItemType(OutputMessageValue);
+
         /// <summary> Gets the FileSearchCall. </summary>
         public static ItemType FileSearchCall { get; } = new ItemType(FileSearchCallValue);
-
-        /// <summary> Gets the FunctionCall. </summary>
-        public static ItemType FunctionCall { get; } = new ItemType(FunctionCallValue);
-
-        /// <summary> Gets the FunctionCallOutput. </summary>
-        public static ItemType FunctionCallOutput { get; } = new ItemType(FunctionCallOutputValue);
 
         /// <summary> Gets the ComputerCall. </summary>
         public static ItemType ComputerCall { get; } = new ItemType(ComputerCallValue);
@@ -65,11 +68,17 @@ namespace OpenAI
         /// <summary> Gets the WebSearchCall. </summary>
         public static ItemType WebSearchCall { get; } = new ItemType(WebSearchCallValue);
 
+        /// <summary> Gets the FunctionCall. </summary>
+        public static ItemType FunctionCall { get; } = new ItemType(FunctionCallValue);
+
+        /// <summary> Gets the FunctionCallOutput. </summary>
+        public static ItemType FunctionCallOutput { get; } = new ItemType(FunctionCallOutputValue);
+
         /// <summary> Gets the Reasoning. </summary>
         public static ItemType Reasoning { get; } = new ItemType(ReasoningValue);
 
-        /// <summary> Gets the ItemReference. </summary>
-        public static ItemType ItemReference { get; } = new ItemType(ItemReferenceValue);
+        /// <summary> Gets the Compaction. </summary>
+        public static ItemType Compaction { get; } = new ItemType(CompactionValue);
 
         /// <summary> Gets the ImageGenerationCall. </summary>
         public static ItemType ImageGenerationCall { get; } = new ItemType(ImageGenerationCallValue);
@@ -83,6 +92,18 @@ namespace OpenAI
         /// <summary> Gets the LocalShellCallOutput. </summary>
         public static ItemType LocalShellCallOutput { get; } = new ItemType(LocalShellCallOutputValue);
 
+        /// <summary> Gets the ShellCall. </summary>
+        public static ItemType ShellCall { get; } = new ItemType(ShellCallValue);
+
+        /// <summary> Gets the ShellCallOutput. </summary>
+        public static ItemType ShellCallOutput { get; } = new ItemType(ShellCallOutputValue);
+
+        /// <summary> Gets the ApplyPatchCall. </summary>
+        public static ItemType ApplyPatchCall { get; } = new ItemType(ApplyPatchCallValue);
+
+        /// <summary> Gets the ApplyPatchCallOutput. </summary>
+        public static ItemType ApplyPatchCallOutput { get; } = new ItemType(ApplyPatchCallOutputValue);
+
         /// <summary> Gets the McpListTools. </summary>
         public static ItemType McpListTools { get; } = new ItemType(McpListToolsValue);
 
@@ -94,6 +115,12 @@ namespace OpenAI
 
         /// <summary> Gets the McpCall. </summary>
         public static ItemType McpCall { get; } = new ItemType(McpCallValue);
+
+        /// <summary> Gets the CustomToolCallOutput. </summary>
+        public static ItemType CustomToolCallOutput { get; } = new ItemType(CustomToolCallOutputValue);
+
+        /// <summary> Gets the CustomToolCall. </summary>
+        public static ItemType CustomToolCall { get; } = new ItemType(CustomToolCallValue);
 
         /// <summary> Gets the StructuredOutputs. </summary>
         public static ItemType StructuredOutputs { get; } = new ItemType(StructuredOutputsValue);

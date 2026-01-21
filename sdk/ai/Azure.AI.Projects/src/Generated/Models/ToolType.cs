@@ -4,22 +4,25 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Projects;
 
-namespace OpenAI
+namespace Azure.AI.Projects
 {
-    /// <summary> A tool that can be used to generate a response. </summary>
+    /// <summary></summary>
     internal readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;
-        private const string FileSearchValue = "file_search";
         private const string FunctionValue = "function";
+        private const string FileSearchValue = "file_search";
         private const string ComputerUsePreviewValue = "computer_use_preview";
-        private const string WebSearchPreviewValue = "web_search_preview";
+        private const string WebSearchValue = "web_search";
         private const string McpValue = "mcp";
         private const string CodeInterpreterValue = "code_interpreter";
         private const string ImageGenerationValue = "image_generation";
         private const string LocalShellValue = "local_shell";
+        private const string ShellValue = "shell";
+        private const string CustomValue = "custom";
+        private const string WebSearchPreviewValue = "web_search_preview";
+        private const string ApplyPatchValue = "apply_patch";
         private const string BingGroundingValue = "bing_grounding";
         private const string BrowserAutomationPreviewValue = "browser_automation_preview";
         private const string FabricDataagentPreviewValue = "fabric_dataagent_preview";
@@ -42,17 +45,17 @@ namespace OpenAI
             _value = value;
         }
 
-        /// <summary> Gets the FileSearch. </summary>
-        public static ToolType FileSearch { get; } = new ToolType(FileSearchValue);
-
         /// <summary> Gets the Function. </summary>
         public static ToolType Function { get; } = new ToolType(FunctionValue);
+
+        /// <summary> Gets the FileSearch. </summary>
+        public static ToolType FileSearch { get; } = new ToolType(FileSearchValue);
 
         /// <summary> Gets the ComputerUsePreview. </summary>
         public static ToolType ComputerUsePreview { get; } = new ToolType(ComputerUsePreviewValue);
 
-        /// <summary> Gets the WebSearchPreview. </summary>
-        public static ToolType WebSearchPreview { get; } = new ToolType(WebSearchPreviewValue);
+        /// <summary> Gets the WebSearch. </summary>
+        public static ToolType WebSearch { get; } = new ToolType(WebSearchValue);
 
         /// <summary> Gets the Mcp. </summary>
         public static ToolType Mcp { get; } = new ToolType(McpValue);
@@ -65,6 +68,18 @@ namespace OpenAI
 
         /// <summary> Gets the LocalShell. </summary>
         public static ToolType LocalShell { get; } = new ToolType(LocalShellValue);
+
+        /// <summary> Gets the Shell. </summary>
+        public static ToolType Shell { get; } = new ToolType(ShellValue);
+
+        /// <summary> Gets the Custom. </summary>
+        public static ToolType Custom { get; } = new ToolType(CustomValue);
+
+        /// <summary> Gets the WebSearchPreview. </summary>
+        public static ToolType WebSearchPreview { get; } = new ToolType(WebSearchPreviewValue);
+
+        /// <summary> Gets the ApplyPatch. </summary>
+        public static ToolType ApplyPatch { get; } = new ToolType(ApplyPatchValue);
 
         /// <summary> Gets the BingGrounding. </summary>
         public static ToolType BingGrounding { get; } = new ToolType(BingGroundingValue);

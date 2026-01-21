@@ -17,7 +17,7 @@ namespace OpenAI
         /// <param name="token"></param>
         /// <param name="logprob"></param>
         /// <param name="bytes"></param>
-        public InternalTopLogProb(string token, float logprob, IEnumerable<int> bytes)
+        public InternalTopLogProb(string token, double logprob, IEnumerable<long> bytes)
         {
             Token = token;
             Logprob = logprob;
@@ -29,7 +29,7 @@ namespace OpenAI
         /// <param name="logprob"></param>
         /// <param name="bytes"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalTopLogProb(string token, float logprob, IList<int> bytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalTopLogProb(string token, double logprob, IList<long> bytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             Logprob = logprob;
@@ -41,9 +41,9 @@ namespace OpenAI
         public string Token { get; }
 
         /// <summary> Gets the Logprob. </summary>
-        public float Logprob { get; }
+        public double Logprob { get; }
 
         /// <summary> Gets the Bytes. </summary>
-        public IList<int> Bytes { get; }
+        public IList<long> Bytes { get; }
     }
 }

@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalCodeInterpreterOutputLogs : InternalCodeInterpreterOutput, IJsonModel<InternalCodeInterpreterOutputLogs>
+    internal partial class InternalCodeInterpreterOutputLogs : IJsonModel<InternalCodeInterpreterOutputLogs>
     {
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/> for deserialization. </summary>
         internal InternalCodeInterpreterOutputLogs()
@@ -28,25 +28,41 @@ namespace OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalCodeInterpreterOutputLogs)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             writer.WritePropertyName("logs"u8);
             writer.WriteStringValue(Logs);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCodeInterpreterOutputLogs IJsonModel<InternalCodeInterpreterOutputLogs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalCodeInterpreterOutputLogs)JsonModelCreateCore(ref reader, options);
+        InternalCodeInterpreterOutputLogs IJsonModel<InternalCodeInterpreterOutputLogs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalCodeInterpreterOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InternalCodeInterpreterOutputLogs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -65,14 +81,14 @@ namespace OpenAI
             {
                 return null;
             }
-            CodeInterpreterOutputType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             string logs = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToCodeInterpreterOutputType();
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("logs"u8))
@@ -85,14 +101,14 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalCodeInterpreterOutputLogs(@type, additionalBinaryDataProperties, logs);
+            return new InternalCodeInterpreterOutputLogs(@type, logs, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalCodeInterpreterOutputLogs>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -106,11 +122,11 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCodeInterpreterOutputLogs IPersistableModel<InternalCodeInterpreterOutputLogs>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalCodeInterpreterOutputLogs)PersistableModelCreateCore(data, options);
+        InternalCodeInterpreterOutputLogs IPersistableModel<InternalCodeInterpreterOutputLogs>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalCodeInterpreterOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InternalCodeInterpreterOutputLogs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

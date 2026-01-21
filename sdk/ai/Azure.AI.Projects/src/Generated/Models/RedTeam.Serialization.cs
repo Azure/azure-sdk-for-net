@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(NumTurns))
             {
                 writer.WritePropertyName("numTurns"u8);
-                writer.WriteStringValue(NumTurns);
+                writer.WriteNumberValue(NumTurns.Value);
             }
             if (Optional.IsCollectionDefined(AttackStrategies))
             {
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects
             }
             string name = default;
             string displayName = default;
-            string numTurns = default;
+            int? numTurns = default;
             IList<AttackStrategy> attackStrategies = default;
             bool? simulationOnly = default;
             IList<RiskCategory> riskCategories = default;
@@ -188,7 +188,11 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("numTurns"u8))
                 {
-                    numTurns = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numTurns = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("attackStrategies"u8))

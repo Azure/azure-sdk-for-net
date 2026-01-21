@@ -1,0 +1,24 @@
+repo: Azure/azure-rest-api-specs
+commit: f8842dfcfbe82644b00f6a4b3b4e8f4d94dc9ebb
+directory: specification/ai-foundry/data-plane/Foundry/src/sdk-projects-openai
+entrypointFile: client.tsp
+additionalDirectories:
+  - specification/ai-foundry/data-plane/Foundry/src/.external-readonly
+  - specification/ai-foundry/data-plane/Foundry/src/agents
+  - specification/ai-foundry/data-plane/Foundry/src/common
+  - specification/ai-foundry/data-plane/Foundry/src/connections
+  - specification/ai-foundry/data-plane/Foundry/src/datasets
+  - specification/ai-foundry/data-plane/Foundry/src/indexes
+  - specification/ai-foundry/data-plane/Foundry/src/deployments
+  - specification/ai-foundry/data-plane/Foundry/src/red-teams
+  - specification/ai-foundry/data-plane/Foundry/src/evaluationrules
+  - specification/ai-foundry/data-plane/Foundry/src/openai-evaluations
+  - specification/ai-foundry/data-plane/Foundry/src/evaluation_taxonomies
+  - specification/ai-foundry/data-plane/Foundry/src/evaluators
+  - specification/ai-foundry/data-plane/Foundry/src/insights
+  - specification/ai-foundry/data-plane/Foundry/src/schedules
+  - specification/ai-foundry/data-plane/Foundry/src/memory_stores
+  - specification/ai-foundry/data-plane/Foundry/src/conversations
+  - specification/ai-foundry/data-plane/Foundry/src/responses
+  - specification/ai-foundry/data-plane/Foundry/src/tools
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

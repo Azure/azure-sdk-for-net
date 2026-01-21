@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects;
 
-namespace OpenAI
+namespace Azure.AI.Projects
 {
     internal partial class UnknownTool : InternalTool
     {

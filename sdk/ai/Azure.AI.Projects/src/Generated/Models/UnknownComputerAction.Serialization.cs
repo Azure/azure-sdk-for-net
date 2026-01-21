@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects
 {
     internal partial class UnknownComputerAction : InternalComputerAction, IJsonModel<InternalComputerAction>
     {
@@ -69,7 +69,7 @@ namespace OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToComputerActionType();
+                    @type = new ComputerActionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

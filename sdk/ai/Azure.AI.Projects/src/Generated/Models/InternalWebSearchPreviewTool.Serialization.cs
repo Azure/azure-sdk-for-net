@@ -39,12 +39,7 @@ namespace OpenAI
             if (Optional.IsDefined(SearchContextSize))
             {
                 writer.WritePropertyName("search_context_size"u8);
-                writer.WriteStringValue(SearchContextSize.Value.ToString());
-            }
-            if (Optional.IsDefined(CustomSearchConfiguration))
-            {
-                writer.WritePropertyName("custom_search_configuration"u8);
-                writer.WriteObjectValue(CustomSearchConfiguration, options);
+                writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
             }
         }
 
@@ -75,9 +70,8 @@ namespace OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            InternalLocation userLocation = default;
-            WebSearchPreviewToolSearchContextSize? searchContextSize = default;
-            WebSearchConfiguration customSearchConfiguration = default;
+            InternalApproximateLocation userLocation = default;
+            SearchContextSize? searchContextSize = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -92,7 +86,7 @@ namespace OpenAI
                         userLocation = null;
                         continue;
                     }
-                    userLocation = InternalLocation.DeserializeInternalLocation(prop.Value, options);
+                    userLocation = InternalApproximateLocation.DeserializeInternalApproximateLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
@@ -101,16 +95,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    searchContextSize = new WebSearchPreviewToolSearchContextSize(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("custom_search_configuration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    customSearchConfiguration = WebSearchConfiguration.DeserializeWebSearchConfiguration(prop.Value, options);
+                    searchContextSize = prop.Value.GetString().ToSearchContextSize();
                     continue;
                 }
                 if (options.Format != "W")
@@ -118,7 +103,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalWebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize, customSearchConfiguration);
+            return new InternalWebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

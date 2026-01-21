@@ -29,7 +29,7 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 
     private InternalMemorySearchOptions GetInternalCopy()
     {
-        return new InternalMemorySearchOptions(Scope, ResponseItemHelpers.ConvertItemsTo<InternalItemParam, ResponseItem>(Items), PreviousSearchId, ResultOptions, additionalBinaryDataProperties: null);
+        return new InternalMemorySearchOptions(Scope, ResponseItemHelpers.ConvertItemsTo<Item, ResponseItem>(Items), PreviousSearchId, ResultOptions, additionalBinaryDataProperties: null);
     }
 
     private static MemorySearchOptions CreateFromInternalOptions(InternalMemorySearchOptions internalOptions)
@@ -37,7 +37,7 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
         return new(internalOptions.Scope)
         {
             PreviousSearchId = internalOptions.PreviousSearchId,
-            Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem, InternalItemParam>(internalOptions.Items),
+            Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem, Item>(internalOptions.Items),
             ResultOptions = internalOptions.Options,
         };
     }

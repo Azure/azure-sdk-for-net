@@ -35,20 +35,15 @@ namespace OpenAI
                 writer.WritePropertyName(item.Key);
                 writer.WriteStringValue(item.Value);
             }
+            foreach (var item in AdditionalDoubleProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteNumberValue(item.Value);
+            }
             foreach (var item in AdditionalBooleanProperties)
             {
                 writer.WritePropertyName(item.Key);
                 writer.WriteBooleanValue(item.Value);
-            }
-            foreach (var item in AdditionalInt32Properties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
-            }
-            foreach (var item in AdditionalSingleProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -93,9 +88,8 @@ namespace OpenAI
                 return null;
             }
             IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, double> additionalDoubleProperties = new ChangeTrackingDictionary<string, double>();
             IDictionary<string, bool> additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>();
-            IDictionary<string, int> additionalInt32Properties = new ChangeTrackingDictionary<string, int>();
-            IDictionary<string, float> additionalSingleProperties = new ChangeTrackingDictionary<string, float>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -104,28 +98,23 @@ namespace OpenAI
                     case JsonValueKind.String:
                         additionalProperties.Add(prop.Name, prop.Value.GetString());
                         continue;
-                    case JsonValueKind.True or JsonValueKind.False:
-                        additionalBooleanProperties.Add(prop.Name, prop.Value.GetBoolean());
-                        continue;
                     case JsonValueKind.Number:
-                        if (prop.Value.TryGetInt32(out int intValue))
+                        if (prop.Value.TryGetDouble(out double doubleValue))
                         {
-                            additionalInt32Properties.Add(prop.Name, intValue);
-                            continue;
-                        }
-                        if (prop.Value.TryGetSingle(out float floatValue))
-                        {
-                            additionalSingleProperties.Add(prop.Name, floatValue);
+                            additionalDoubleProperties.Add(prop.Name, doubleValue);
                             continue;
                         }
                         break;
+                    case JsonValueKind.True or JsonValueKind.False:
+                        additionalBooleanProperties.Add(prop.Name, prop.Value.GetBoolean());
+                        continue;
                 }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalVectorStoreFileAttributes(additionalProperties, additionalBooleanProperties, additionalInt32Properties, additionalSingleProperties, additionalBinaryDataProperties);
+            return new InternalVectorStoreFileAttributes(additionalProperties, additionalDoubleProperties, additionalBooleanProperties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

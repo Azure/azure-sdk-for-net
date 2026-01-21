@@ -101,36 +101,6 @@ namespace Azure.AI.Projects.Tests
             TestTimeoutInSeconds = 20;
         }
 
-        /// <summary>
-        /// Creates a test client with recording capabilities.
-        /// We manually configure the transport for recording/playback since AIProjectClientOptions
-        /// uses System.ClientModel.ClientPipelineOptions rather than Azure.Core.ClientOptions.
-        /// </summary>
-        //protected AIProjectClient GetTestClient(AIProjectClientOptions options = null)
-        //{
-        //    options ??= new AIProjectClientOptions();
-
-        //    // Configure the options for recording if not in live mode
-        //    if (Mode != RecordedTestMode.Live && Recording != null)
-        //    {
-        //        // Set up proxy transport for recording/playback
-        //        options.Transport = new ProjectsProxyTransport(Recording);
-
-        //        // Configure retry policy for faster playback
-        //        if (Mode == RecordedTestMode.Playback)
-        //        {
-        //            options.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
-        //        }
-        //    }
-        //    options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-        //    var endpoint = TestEnvironment.PROJECTENDPOINT;
-        //    var credential = TestEnvironment.Credential;
-
-        //    var client = new AIProjectClient(new Uri(endpoint), credential, options);
-
-        //    // Instrument the client for sync/async testing
-        //    return client; // InstrumentClient(client);
-        //}
         protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, Dictionary<string, string> headers = null)
         => GetConfiguredOptions(new AIProjectClientOptions(), instrument, headers);
 

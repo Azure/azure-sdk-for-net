@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalApproximateLocation : InternalLocation, IJsonModel<InternalApproximateLocation>
+    internal partial class InternalApproximateLocation : IJsonModel<InternalApproximateLocation>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -23,14 +23,15 @@ namespace OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalApproximateLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalApproximateLocation)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
@@ -51,15 +52,30 @@ namespace OpenAI
                 writer.WritePropertyName("timezone"u8);
                 writer.WriteStringValue(Timezone);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalApproximateLocation IJsonModel<InternalApproximateLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalApproximateLocation)JsonModelCreateCore(ref reader, options);
+        InternalApproximateLocation IJsonModel<InternalApproximateLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalLocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InternalApproximateLocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalApproximateLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -78,17 +94,17 @@ namespace OpenAI
             {
                 return null;
             }
-            LocationType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             string country = default;
             string region = default;
             string city = default;
             string timezone = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new LocationType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("country"u8))
@@ -138,18 +154,18 @@ namespace OpenAI
             }
             return new InternalApproximateLocation(
                 @type,
-                additionalBinaryDataProperties,
                 country,
                 region,
                 city,
-                timezone);
+                timezone,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalApproximateLocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalApproximateLocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -163,11 +179,11 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalApproximateLocation IPersistableModel<InternalApproximateLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalApproximateLocation)PersistableModelCreateCore(data, options);
+        InternalApproximateLocation IPersistableModel<InternalApproximateLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InternalApproximateLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalApproximateLocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

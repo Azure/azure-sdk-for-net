@@ -33,7 +33,7 @@ namespace OpenAI
             if (Optional.IsDefined(Effort))
             {
                 writer.WritePropertyName("effort"u8);
-                writer.WriteStringValue(Effort.Value.ToString());
+                writer.WriteStringValue(Effort.Value.ToSerialString());
             }
             if (Optional.IsDefined(Summary))
             {
@@ -87,7 +87,7 @@ namespace OpenAI
             {
                 return null;
             }
-            ReasoningEffort? effort = default;
+            EvalGraderScoreModelSamplingParamsReasoningEffort? effort = default;
             ReasoningSummary? summary = default;
             ReasoningGenerateSummary? generateSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -100,7 +100,7 @@ namespace OpenAI
                         effort = null;
                         continue;
                     }
-                    effort = new ReasoningEffort(prop.Value.GetString());
+                    effort = prop.Value.GetString().ToEvalGraderScoreModelSamplingParamsReasoningEffort();
                     continue;
                 }
                 if (prop.NameEquals("summary"u8))

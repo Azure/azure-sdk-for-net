@@ -57,7 +57,8 @@ namespace Azure.AI.Projects.Tests
         public string COMPUTER_SCREENSHOTS => GetRecordedVariable(nameof(COMPUTER_SCREENSHOTS));
         public string CONTAINER_APP_RESOURCE_ID => GetRecordedVariable(nameof(CONTAINER_APP_RESOURCE_ID));
         public string INGRESS_SUBDOMAIN_SUFFIX => GetRecordedVariable(nameof(INGRESS_SUBDOMAIN_SUFFIX));
-
+        public string APPLICATIONINSIGHTS_CONNECTION_STRING => GetRecordedVariable(nameof(APPLICATIONINSIGHTS_CONNECTION_STRING), options => options.IsSecret("Sanitized"));
+        public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }

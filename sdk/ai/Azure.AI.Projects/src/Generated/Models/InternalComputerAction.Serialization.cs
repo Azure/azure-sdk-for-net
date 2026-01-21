@@ -36,7 +36,7 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalComputerAction)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -84,23 +84,23 @@ namespace OpenAI
                 switch (discriminator.GetString())
                 {
                     case "click":
-                        return InternalComputerActionClick.DeserializeInternalComputerActionClick(element, options);
+                        return ClickParam.DeserializeClickParam(element, options);
                     case "double_click":
-                        return InternalComputerActionDoubleClick.DeserializeInternalComputerActionDoubleClick(element, options);
+                        return DoubleClickAction.DeserializeDoubleClickAction(element, options);
                     case "drag":
-                        return InternalComputerActionDrag.DeserializeInternalComputerActionDrag(element, options);
-                    case "move":
-                        return InternalComputerActionMove.DeserializeInternalComputerActionMove(element, options);
-                    case "screenshot":
-                        return InternalComputerActionScreenshot.DeserializeInternalComputerActionScreenshot(element, options);
-                    case "scroll":
-                        return InternalComputerActionScroll.DeserializeInternalComputerActionScroll(element, options);
-                    case "type":
-                        return InternalComputerActionTypeKeys.DeserializeInternalComputerActionTypeKeys(element, options);
-                    case "wait":
-                        return InternalComputerActionWait.DeserializeInternalComputerActionWait(element, options);
+                        return Drag.DeserializeDrag(element, options);
                     case "keypress":
-                        return InternalComputerActionKeyPress.DeserializeInternalComputerActionKeyPress(element, options);
+                        return KeyPressAction.DeserializeKeyPressAction(element, options);
+                    case "move":
+                        return Move.DeserializeMove(element, options);
+                    case "screenshot":
+                        return Screenshot.DeserializeScreenshot(element, options);
+                    case "scroll":
+                        return Scroll.DeserializeScroll(element, options);
+                    case "type":
+                        return Azure.AI.Projects.Type.DeserializeType(element, options);
+                    case "wait":
+                        return Wait.DeserializeWait(element, options);
                 }
             }
             return UnknownComputerAction.DeserializeUnknownComputerAction(element, options);

@@ -83,22 +83,30 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
+                    case "code_interpreter":
+                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
                         return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
                         return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "computer_use_preview":
                         return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
-                    case "web_search_preview":
-                        return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
-                    case "code_interpreter":
-                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
+                    case "web_search":
+                        return WebSearchTool.DeserializeWebSearchTool(element, options);
+                    case "mcp":
+                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "image_generation":
                         return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
-                        return InternalLocalShellTool.DeserializeInternalLocalShellTool(element, options);
-                    case "mcp":
-                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                        return LocalShellToolParam.DeserializeLocalShellToolParam(element, options);
+                    case "shell":
+                        return FunctionShellToolParam.DeserializeFunctionShellToolParam(element, options);
+                    case "custom":
+                        return CustomToolParam.DeserializeCustomToolParam(element, options);
+                    case "web_search_preview":
+                        return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
+                    case "apply_patch":
+                        return ApplyPatchToolParam.DeserializeApplyPatchToolParam(element, options);
                     case "bing_grounding":
                         return BingGroundingAgentTool.DeserializeBingGroundingAgentTool(element, options);
                     case "fabric_dataagent_preview":

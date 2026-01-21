@@ -13,11 +13,9 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUrl"> The URL for the MCP server. </param>
-        public InternalMCPTool(string serverLabel, string serverUrl) : base(ToolType.Mcp)
+        public InternalMCPTool(string serverLabel) : base(ToolType.Mcp)
         {
             ServerLabel = serverLabel;
-            ServerUrl = serverUrl;
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -25,18 +23,41 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUrl"> The URL for the MCP server. </param>
-        /// <param name="headers">
-        /// Optional HTTP headers to send to the MCP server. Use for authentication
-        /// or other purposes.
+        /// <param name="serverUrl">
+        /// The URL for the MCP server. One of `server_url` or `connector_id` must be
+        ///   provided.
         /// </param>
-        /// <param name="allowedTools"> List of allowed tool names or a filter object. </param>
-        /// <param name="requireApproval"> Specify which of the MCP server's tools require approval. </param>
+        /// <param name="connectorId">
+        /// Identifier for service connectors, like those available in ChatGPT. One of
+        ///   `server_url` or `connector_id` must be provided. Learn more about service
+        ///   connectors [here](https://platform.openai.com/docs/guides/tools-remote-mcp#connectors).
+        ///   Currently supported `connector_id` values are:
+        ///   - Dropbox: `connector_dropbox`
+        ///   - Gmail: `connector_gmail`
+        ///   - Google Calendar: `connector_googlecalendar`
+        ///   - Google Drive: `connector_googledrive`
+        ///   - Microsoft Teams: `connector_microsoftteams`
+        ///   - Outlook Calendar: `connector_outlookcalendar`
+        ///   - Outlook Email: `connector_outlookemail`
+        ///   - SharePoint: `connector_sharepoint`
+        /// </param>
+        /// <param name="authorization">
+        /// An OAuth access token that can be used with a remote MCP server, either
+        ///   with a custom MCP server URL or a service connector. Your application
+        ///   must handle the OAuth authorization flow and provide the token here.
+        /// </param>
+        /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
+        /// <param name="headers"></param>
+        /// <param name="allowedTools"></param>
+        /// <param name="requireApproval"></param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
+            ConnectorId = connectorId;
+            Authorization = authorization;
+            ServerDescription = serverDescription;
             Headers = headers;
             AllowedTools = allowedTools;
             RequireApproval = requireApproval;
@@ -46,17 +67,43 @@ namespace OpenAI
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
         public string ServerLabel { get; set; }
 
-        /// <summary> The URL for the MCP server. </summary>
+        /// <summary>
+        /// The URL for the MCP server. One of `server_url` or `connector_id` must be
+        ///   provided.
+        /// </summary>
         public string ServerUrl { get; set; }
 
         /// <summary>
-        /// Optional HTTP headers to send to the MCP server. Use for authentication
-        /// or other purposes.
+        /// Identifier for service connectors, like those available in ChatGPT. One of
+        ///   `server_url` or `connector_id` must be provided. Learn more about service
+        ///   connectors [here](https://platform.openai.com/docs/guides/tools-remote-mcp#connectors).
+        ///   Currently supported `connector_id` values are:
+        ///   - Dropbox: `connector_dropbox`
+        ///   - Gmail: `connector_gmail`
+        ///   - Google Calendar: `connector_googlecalendar`
+        ///   - Google Drive: `connector_googledrive`
+        ///   - Microsoft Teams: `connector_microsoftteams`
+        ///   - Outlook Calendar: `connector_outlookcalendar`
+        ///   - Outlook Email: `connector_outlookemail`
+        ///   - SharePoint: `connector_sharepoint`
         /// </summary>
+        public MCPToolConnectorId? ConnectorId { get; set; }
+
+        /// <summary>
+        /// An OAuth access token that can be used with a remote MCP server, either
+        ///   with a custom MCP server URL or a service connector. Your application
+        ///   must handle the OAuth authorization flow and provide the token here.
+        /// </summary>
+        public string Authorization { get; set; }
+
+        /// <summary> Optional description of the MCP server, used to provide more context. </summary>
+        public string ServerDescription { get; set; }
+
+        /// <summary> Gets or sets the Headers. </summary>
         public IDictionary<string, string> Headers { get; set; }
 
         /// <summary>
-        /// List of allowed tool names or a filter object.
+        /// Gets or sets the AllowedTools.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -67,7 +114,7 @@ namespace OpenAI
         /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalMCPToolAllowedTools1"/>. </description>
+        /// <description> <see cref="MCPToolFilter"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -97,7 +144,7 @@ namespace OpenAI
         public BinaryData AllowedTools { get; set; }
 
         /// <summary>
-        /// Specify which of the MCP server's tools require approval.
+        /// Gets or sets the RequireApproval.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -105,7 +152,7 @@ namespace OpenAI
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalMCPToolRequireApproval1"/>. </description>
+        /// <description> <see cref="MCPToolRequireApproval"/>. </description>
         /// </item>
         /// <item>
         /// <description> "always". </description>

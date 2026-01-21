@@ -7,23 +7,31 @@ using System.Collections.Generic;
 
 namespace OpenAI
 {
-    internal partial class InternalCodeInterpreterOutputLogs : InternalCodeInterpreterOutput
+    internal partial class InternalCodeInterpreterOutputLogs
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
         /// <param name="logs"> The logs output from the code interpreter. </param>
-        public InternalCodeInterpreterOutputLogs(string logs) : base(CodeInterpreterOutputType.Logs)
+        public InternalCodeInterpreterOutputLogs(string logs)
         {
             Logs = logs;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The type of the output. Always `logs`. </param>
         /// <param name="logs"> The logs output from the code interpreter. </param>
-        internal InternalCodeInterpreterOutputLogs(CodeInterpreterOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string logs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalCodeInterpreterOutputLogs(string @type, string logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Type = @type;
             Logs = logs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The type of the output. Always `logs`. </summary>
+        internal string Type { get; } = "logs";
 
         /// <summary> The logs output from the code interpreter. </summary>
         public string Logs { get; }

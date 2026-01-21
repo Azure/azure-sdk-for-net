@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using Azure.AI.Projects;
 
 namespace OpenAI
 {
@@ -16,7 +16,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalMCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
-        public InternalMCPListToolsTool(string name, BinaryData inputSchema)
+        public InternalMCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
         {
             Name = name;
             InputSchema = inputSchema;
@@ -24,11 +24,11 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalMCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
-        /// <param name="description"> The description of the tool. </param>
+        /// <param name="description"></param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
-        /// <param name="annotations"> Additional annotations about the tool. </param>
+        /// <param name="annotations"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMCPListToolsTool(string name, string description, BinaryData inputSchema, BinaryData annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMCPListToolsTool(string name, string description, MCPListToolsToolInputSchema inputSchema, MCPListToolsToolAnnotations annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -40,63 +40,13 @@ namespace OpenAI
         /// <summary> The name of the tool. </summary>
         public string Name { get; }
 
-        /// <summary> The description of the tool. </summary>
+        /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// The JSON schema describing the tool's input.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData InputSchema { get; }
+        /// <summary> The JSON schema describing the tool's input. </summary>
+        public MCPListToolsToolInputSchema InputSchema { get; }
 
-        /// <summary>
-        /// Additional annotations about the tool.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Annotations { get; set; }
+        /// <summary> Gets or sets the Annotations. </summary>
+        public MCPListToolsToolAnnotations Annotations { get; set; }
     }
 }

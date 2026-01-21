@@ -3,7 +3,7 @@
 
 namespace Azure.AI.Projects;
 
-[CodeGenType("ListAgentsRequestOrder")]
+[CodeGenType("PageOrder")]
 public readonly partial struct AgentListOrder
 {
     [CodeGenMember("Asc")]

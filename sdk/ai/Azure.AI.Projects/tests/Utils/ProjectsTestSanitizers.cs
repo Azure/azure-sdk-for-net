@@ -22,6 +22,7 @@ namespace Azure.AI.Projects.Tests.Utils
         public const string SANITIZED_RESOURCE_GROUP = "sanitized-rg";
         public const string SANITIZED_CONTAINER = "sanitized-container";
         public const string SANITIZED_CONNECTION = "sanitizedconnection";
+        public const string SANITIZED_AZURE_OPENAI_ENDPOINT = "sanitized";
 
         // Common patterns for sanitization
         public static readonly UriRegexSanitizerBody AZURE_SUBSCRIPTION_PATTERN = BodySanitizer(@"(?<=/subscriptions/)([^/]+)(?=/)", SANITIZED_SUBSCRIPTION);
@@ -35,6 +36,7 @@ namespace Azure.AI.Projects.Tests.Utils
         public static readonly UriRegexSanitizerBody AZURE_CONTAINER_NAME_PATTERN = BodySanitizer(@"\d+dp[^/\s]*container", SANITIZED_CONTAINER);
         public static readonly UriRegexSanitizerBody AZURE_CONNECTION_PATTERN = BodySanitizer(@"(?<=/connections/)([^/]+)$", SANITIZED_CONNECTION);
         public static readonly UriRegexSanitizerBody AZURE_CONNECTION_PATTERN_URI = BodySanitizer(@"(?<=/connections/)([^?]+)(?=[?])", SANITIZED_CONNECTION);
+        public static readonly UriRegexSanitizerBody AZURE_OPENAI_ENDPOINT = BodySanitizer(@"(?<=https://)([^/]+)(?=\.cognitiveservices\.azure.com\/)", SANITIZED_AZURE_OPENAI_ENDPOINT);
 
         // UUID pattern for various IDs
         public const string UUID_PATTERN = @"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
@@ -219,6 +221,8 @@ namespace Azure.AI.Projects.Tests.Utils
             testBase.JsonPathSanitizers.Add("$..apiKey");
             testBase.JsonPathSanitizers.Add("$..api_key");
             testBase.JsonPathSanitizers.Add("$..connectionString");
+            testBase.JsonPathSanitizers.Add("$..APPLICATIONINSIGHTS_CONNECTION_STRING");
+            testBase.JsonPathSanitizers.Add("$.definition.image");
 
             // Sanitize base64 encoded images
             testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..url")
@@ -234,6 +238,21 @@ namespace Azure.AI.Projects.Tests.Utils
             {
                 Regex = BASE64_IMAGE_PATTERN,
                 Value = SMALL_1x1_PNG
+            }));
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..AZURE_OPENAI_ENDPOINT")
+            {
+                Regex = AZURE_OPENAI_ENDPOINT.Regex,
+                Value = AZURE_OPENAI_ENDPOINT.Value
+            }));
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..AGENT_PROJECT_RESOURCE_ID")
+            {
+                Regex = HOST_SUBDOMAIN_PATTERN.Regex,
+                Value = HOST_SUBDOMAIN_PATTERN.Value
+            }));
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..AGENT_PROJECT_RESOURCE_ID")
+            {
+                Regex = AZURE_PROJECT_NAME_PATTERN.Regex,
+                Value = AZURE_PROJECT_NAME_PATTERN.Value
             }));
 
             // Sanitize Variables section PROJECT_ENDPOINT

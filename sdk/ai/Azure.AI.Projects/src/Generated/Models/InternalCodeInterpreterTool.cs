@@ -14,7 +14,8 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
         /// <param name="container">
         /// The code interpreter container. Can be a container ID or an object that
-        /// specifies uploaded file IDs to make available to your code.
+        ///   specifies uploaded file IDs to make available to your code, along with an
+        ///   optional `memory_limit` setting.
         /// </param>
         public InternalCodeInterpreterTool(BinaryData container) : base(ToolType.CodeInterpreter)
         {
@@ -26,7 +27,8 @@ namespace OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="container">
         /// The code interpreter container. Can be a container ID or an object that
-        /// specifies uploaded file IDs to make available to your code.
+        ///   specifies uploaded file IDs to make available to your code, along with an
+        ///   optional `memory_limit` setting.
         /// </param>
         internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData container) : base(@type, additionalBinaryDataProperties)
         {
@@ -35,7 +37,8 @@ namespace OpenAI
 
         /// <summary>
         /// The code interpreter container. Can be a container ID or an object that
-        /// specifies uploaded file IDs to make available to your code.
+        ///   specifies uploaded file IDs to make available to your code, along with an
+        ///   optional `memory_limit` setting.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -46,7 +49,7 @@ namespace OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCodeInterpreterToolAuto"/>. </description>
+        /// <description> <see cref="CodeInterpreterContainerAuto"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

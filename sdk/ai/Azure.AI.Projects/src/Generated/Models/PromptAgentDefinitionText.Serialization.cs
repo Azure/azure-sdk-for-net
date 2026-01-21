@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -78,7 +77,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            InternalResponseTextFormatConfiguration format = default;
+            TextResponseFormatConfiguration format = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -88,7 +87,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    format = InternalResponseTextFormatConfiguration.DeserializeInternalResponseTextFormatConfiguration(prop.Value, options);
+                    format = TextResponseFormatConfiguration.DeserializeTextResponseFormatConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

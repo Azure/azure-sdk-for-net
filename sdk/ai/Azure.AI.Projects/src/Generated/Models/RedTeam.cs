@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <param name="target"> Target configuration for the red-team run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedTeam(string name, string displayName, string numTurns, IList<AttackStrategy> attackStrategies, bool? simulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, TargetConfig target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedTeam(string name, string displayName, int? numTurns, IList<AttackStrategy> attackStrategies, bool? simulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, TargetConfig target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
         public string DisplayName { get; set; }
 
         /// <summary> Number of simulation rounds. </summary>
-        public string NumTurns { get; set; }
+        public int? NumTurns { get; set; }
 
         /// <summary> List of attack strategies or nested lists of attack strategies. </summary>
         public IList<AttackStrategy> AttackStrategies { get; }

@@ -84,11 +84,13 @@ namespace OpenAI
                 switch (discriminator.GetString())
                 {
                     case "file_citation":
-                        return InternalAnnotationFileCitation.DeserializeInternalAnnotationFileCitation(element, options);
+                        return FileCitationBody.DeserializeFileCitationBody(element, options);
                     case "url_citation":
-                        return InternalAnnotationUrlCitation.DeserializeInternalAnnotationUrlCitation(element, options);
+                        return UrlCitationBody.DeserializeUrlCitationBody(element, options);
+                    case "container_file_citation":
+                        return ContainerFileCitationBody.DeserializeContainerFileCitationBody(element, options);
                     case "file_path":
-                        return InternalAnnotationFilePath.DeserializeInternalAnnotationFilePath(element, options);
+                        return FilePath.DeserializeFilePath(element, options);
                 }
             }
             return UnknownAnnotation.DeserializeUnknownAnnotation(element, options);

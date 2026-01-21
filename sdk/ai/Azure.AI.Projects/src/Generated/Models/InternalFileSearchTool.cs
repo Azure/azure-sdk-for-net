@@ -25,8 +25,8 @@ namespace OpenAI
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
         /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
         /// <param name="rankingOptions"> Ranking options for search. </param>
-        /// <param name="filters"> A filter to apply. </param>
-        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, int? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters) : base(@type, additionalBinaryDataProperties)
+        /// <param name="filters"></param>
+        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters) : base(@type, additionalBinaryDataProperties)
         {
             VectorStoreIds = vectorStoreIds;
             MaxNumResults = maxNumResults;
@@ -38,13 +38,13 @@ namespace OpenAI
         public IList<string> VectorStoreIds { get; }
 
         /// <summary> The maximum number of results to return. This number should be between 1 and 50 inclusive. </summary>
-        public int? MaxNumResults { get; set; }
+        public long? MaxNumResults { get; set; }
 
         /// <summary> Ranking options for search. </summary>
         public InternalRankingOptions RankingOptions { get; set; }
 
         /// <summary>
-        /// A filter to apply.
+        /// Gets or sets the Filters.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

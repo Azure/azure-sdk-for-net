@@ -7,25 +7,33 @@ using System.Collections.Generic;
 
 namespace OpenAI
 {
-    internal partial class InternalCodeInterpreterOutputImage : InternalCodeInterpreterOutput
+    internal partial class InternalCodeInterpreterOutputImage
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        public InternalCodeInterpreterOutputImage(Uri url) : base(CodeInterpreterOutputType.Image)
+        public InternalCodeInterpreterOutputImage(string url)
         {
             Url = url;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The type of the output. Always `image`. </param>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        internal InternalCodeInterpreterOutputImage(CodeInterpreterOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalCodeInterpreterOutputImage(string @type, string url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Type = @type;
             Url = url;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The type of the output. Always `image`. </summary>
+        internal string Type { get; } = "image";
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
-        public Uri Url { get; }
+        public string Url { get; }
     }
 }

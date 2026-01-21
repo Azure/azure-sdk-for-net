@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.Projects
         internal InternalMemoryUpdateOptions(string scope)
         {
             Scope = scope;
-            Items = new ChangeTrackingList<InternalItemParam>();
+            Items = new ChangeTrackingList<Item>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalMemoryUpdateOptions"/>. </summary>
@@ -32,7 +31,7 @@ namespace Azure.AI.Projects
         /// Defaults to 300 (5 minutes).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMemoryUpdateOptions(string scope, IList<InternalItemParam> items, string previousUpdateId, int? updateDelay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMemoryUpdateOptions(string scope, IList<Item> items, string previousUpdateId, int? updateDelay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Items = items;
@@ -45,7 +44,7 @@ namespace Azure.AI.Projects
         public string Scope { get; }
 
         /// <summary> Conversation items from which to extract memories. </summary>
-        public IList<InternalItemParam> Items { get; }
+        public IList<Item> Items { get; }
 
         /// <summary> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </summary>
         public string PreviousUpdateId { get; }

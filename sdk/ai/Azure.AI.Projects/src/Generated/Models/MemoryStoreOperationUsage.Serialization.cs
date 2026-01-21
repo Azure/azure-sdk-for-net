@@ -90,11 +90,11 @@ namespace Azure.AI.Projects
                 return null;
             }
             int embeddingTokens = default;
-            int inputTokens = default;
-            MemoryStoreOperationUsageInputTokensDetails inputTokensDetails = default;
-            int outputTokens = default;
-            MemoryStoreOperationUsageOutputTokensDetails outputTokensDetails = default;
-            int totalTokens = default;
+            long inputTokens = default;
+            ResponseUsageInputTokensDetails inputTokensDetails = default;
+            long outputTokens = default;
+            ResponseUsageOutputTokensDetails outputTokensDetails = default;
+            long totalTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -105,27 +105,27 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("input_tokens"u8))
                 {
-                    inputTokens = prop.Value.GetInt32();
+                    inputTokens = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("input_tokens_details"u8))
                 {
-                    inputTokensDetails = MemoryStoreOperationUsageInputTokensDetails.DeserializeMemoryStoreOperationUsageInputTokensDetails(prop.Value, options);
+                    inputTokensDetails = ResponseUsageInputTokensDetails.DeserializeResponseUsageInputTokensDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_tokens"u8))
                 {
-                    outputTokens = prop.Value.GetInt32();
+                    outputTokens = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("output_tokens_details"u8))
                 {
-                    outputTokensDetails = MemoryStoreOperationUsageOutputTokensDetails.DeserializeMemoryStoreOperationUsageOutputTokensDetails(prop.Value, options);
+                    outputTokensDetails = ResponseUsageOutputTokensDetails.DeserializeResponseUsageOutputTokensDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("total_tokens"u8))
                 {
-                    totalTokens = prop.Value.GetInt32();
+                    totalTokens = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")

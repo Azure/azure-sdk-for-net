@@ -14,7 +14,7 @@ namespace OpenAI
         /// <param name="environment"> The type of computer environment to control. </param>
         /// <param name="displayWidth"> The width of the computer display. </param>
         /// <param name="displayHeight"> The height of the computer display. </param>
-        public InternalComputerUsePreviewTool(ComputerUsePreviewToolEnvironment environment, int displayWidth, int displayHeight) : base(ToolType.ComputerUsePreview)
+        public InternalComputerUsePreviewTool(ComputerEnvironment environment, long displayWidth, long displayHeight) : base(ToolType.ComputerUsePreview)
         {
             Environment = environment;
             DisplayWidth = displayWidth;
@@ -27,7 +27,7 @@ namespace OpenAI
         /// <param name="environment"> The type of computer environment to control. </param>
         /// <param name="displayWidth"> The width of the computer display. </param>
         /// <param name="displayHeight"> The height of the computer display. </param>
-        internal InternalComputerUsePreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerUsePreviewToolEnvironment environment, int displayWidth, int displayHeight) : base(@type, additionalBinaryDataProperties)
+        internal InternalComputerUsePreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerEnvironment environment, long displayWidth, long displayHeight) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
             DisplayWidth = displayWidth;
@@ -35,12 +35,12 @@ namespace OpenAI
         }
 
         /// <summary> The type of computer environment to control. </summary>
-        public ComputerUsePreviewToolEnvironment Environment { get; set; }
+        public ComputerEnvironment Environment { get; set; }
 
         /// <summary> The width of the computer display. </summary>
-        public int DisplayWidth { get; set; }
+        public long DisplayWidth { get; set; }
 
         /// <summary> The height of the computer display. </summary>
-        public int DisplayHeight { get; set; }
+        public long DisplayHeight { get; set; }
     }
 }

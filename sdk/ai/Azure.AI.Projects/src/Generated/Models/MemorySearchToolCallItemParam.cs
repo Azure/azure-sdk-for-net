@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The MemorySearchToolCallItemParam. </summary>
-    internal partial class MemorySearchToolCallItemParam : InternalItemParam
+    internal partial class MemorySearchToolCallItemParam : Item
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCallItemParam"/>. </summary>
         public MemorySearchToolCallItemParam() : base(ItemType.MemorySearchCall)

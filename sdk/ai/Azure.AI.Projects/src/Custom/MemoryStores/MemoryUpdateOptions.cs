@@ -24,7 +24,7 @@ public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
 
     private InternalMemoryUpdateOptions GetInternalCopy()
     {
-        return new InternalMemoryUpdateOptions(Scope, ResponseItemHelpers.ConvertItemsTo<InternalItemParam,ResponseItem>(Items), PreviousUpdateId, UpdateDelay, additionalBinaryDataProperties: null);
+        return new InternalMemoryUpdateOptions(Scope, ResponseItemHelpers.ConvertItemsTo<Item, ResponseItem>(Items), PreviousUpdateId, UpdateDelay, additionalBinaryDataProperties: null);
     }
 
     private static MemoryUpdateOptions CreateFromInternalOptions(InternalMemoryUpdateOptions internalOptions)
@@ -33,7 +33,7 @@ public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
         {
             PreviousUpdateId = internalOptions.PreviousUpdateId,
             UpdateDelay = internalOptions.UpdateDelay,
-            Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem,InternalItemParam>(internalOptions.Items),
+            Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem,Item>(internalOptions.Items),
         };
     }
 

@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.Projects
         internal InternalMemorySearchOptions(string scope)
         {
             Scope = scope;
-            Items = new ChangeTrackingList<InternalItemParam>();
+            Items = new ChangeTrackingList<Item>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalMemorySearchOptions"/>. </summary>
@@ -27,7 +26,7 @@ namespace Azure.AI.Projects
         /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
         /// <param name="options"> Memory search options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMemorySearchOptions(string scope, IList<InternalItemParam> items, string previousSearchId, MemorySearchResultOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMemorySearchOptions(string scope, IList<Item> items, string previousSearchId, MemorySearchResultOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Items = items;
@@ -40,7 +39,7 @@ namespace Azure.AI.Projects
         public string Scope { get; }
 
         /// <summary> Items for which to search for relevant memories. </summary>
-        public IList<InternalItemParam> Items { get; }
+        public IList<Item> Items { get; }
 
         /// <summary> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </summary>
         public string PreviousSearchId { get; }

@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchActionFind : InternalWebSearchAction, IJsonModel<InternalWebSearchActionFind>
+    internal partial class InternalWebSearchActionFind : IJsonModel<InternalWebSearchActionFind>
     {
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionFind"/> for deserialization. </summary>
         internal InternalWebSearchActionFind()
@@ -28,27 +28,43 @@ namespace OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchActionFind>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalWebSearchActionFind)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url.AbsoluteUri);
             writer.WritePropertyName("pattern"u8);
             writer.WriteStringValue(Pattern);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalWebSearchActionFind IJsonModel<InternalWebSearchActionFind>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalWebSearchActionFind)JsonModelCreateCore(ref reader, options);
+        InternalWebSearchActionFind IJsonModel<InternalWebSearchActionFind>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalWebSearchAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InternalWebSearchActionFind JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchActionFind>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -67,15 +83,15 @@ namespace OpenAI
             {
                 return null;
             }
-            WebSearchActionType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             Uri url = default;
             string pattern = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToWebSearchActionType();
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("url"u8))
@@ -93,14 +109,14 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalWebSearchActionFind(@type, additionalBinaryDataProperties, url, pattern);
+            return new InternalWebSearchActionFind(@type, url, pattern, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalWebSearchActionFind>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchActionFind>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -114,11 +130,11 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalWebSearchActionFind IPersistableModel<InternalWebSearchActionFind>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalWebSearchActionFind)PersistableModelCreateCore(data, options);
+        InternalWebSearchActionFind IPersistableModel<InternalWebSearchActionFind>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalWebSearchAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InternalWebSearchActionFind PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchActionFind>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

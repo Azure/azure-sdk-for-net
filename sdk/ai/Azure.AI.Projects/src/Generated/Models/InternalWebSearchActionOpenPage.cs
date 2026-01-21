@@ -7,23 +7,31 @@ using System.Collections.Generic;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchActionOpenPage : InternalWebSearchAction
+    internal partial class InternalWebSearchActionOpenPage
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
         /// <param name="url"> The URL opened by the model. </param>
-        public InternalWebSearchActionOpenPage(Uri url) : base(WebSearchActionType.OpenPage)
+        public InternalWebSearchActionOpenPage(Uri url)
         {
             Url = url;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The action type. </param>
         /// <param name="url"> The URL opened by the model. </param>
-        internal InternalWebSearchActionOpenPage(WebSearchActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalWebSearchActionOpenPage(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Type = @type;
             Url = url;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The action type. </summary>
+        internal string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
         public Uri Url { get; }

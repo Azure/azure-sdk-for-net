@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <summary> Injects specially crafted prompts to bypass AI safeguards, known as User Injected Prompt Attacks (UPIA). </summary>
         private const string JailbreakValue = "jailbreak";
         /// <summary> Utilizes ANSI escape sequences to manipulate text appearance and behavior. </summary>
-        private const string AnsiiAttackValue = "ansii_attack";
+        private const string AnsiAttackValue = "ansi_attack";
         /// <summary> Swaps characters within text to create variations or obfuscate the original content. </summary>
         private const string CharacterSwapValue = "character_swap";
         /// <summary> Appends an adversarial suffix to the prompt. </summary>
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects
         public static AttackStrategy Jailbreak { get; } = new AttackStrategy(JailbreakValue);
 
         /// <summary> Utilizes ANSI escape sequences to manipulate text appearance and behavior. </summary>
-        public static AttackStrategy AnsiiAttack { get; } = new AttackStrategy(AnsiiAttackValue);
+        public static AttackStrategy AnsiAttack { get; } = new AttackStrategy(AnsiAttackValue);
 
         /// <summary> Swaps characters within text to create variations or obfuscate the original content. </summary>
         public static AttackStrategy CharacterSwap { get; } = new AttackStrategy(CharacterSwapValue);

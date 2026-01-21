@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
@@ -38,5 +38,8 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Custom\NewFolder\" />
   </ItemGroup>
 </Project>

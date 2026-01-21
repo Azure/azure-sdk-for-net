@@ -4,9 +4,8 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Projects;
 
-namespace OpenAI
+namespace Azure.AI.Projects
 {
     /// <summary></summary>
     internal readonly partial struct AnnotationType : IEquatable<AnnotationType>
@@ -14,8 +13,8 @@ namespace OpenAI
         private readonly string _value;
         private const string FileCitationValue = "file_citation";
         private const string UrlCitationValue = "url_citation";
-        private const string FilePathValue = "file_path";
         private const string ContainerFileCitationValue = "container_file_citation";
+        private const string FilePathValue = "file_path";
 
         /// <summary> Initializes a new instance of <see cref="AnnotationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,11 +32,11 @@ namespace OpenAI
         /// <summary> Gets the UrlCitation. </summary>
         public static AnnotationType UrlCitation { get; } = new AnnotationType(UrlCitationValue);
 
-        /// <summary> Gets the FilePath. </summary>
-        public static AnnotationType FilePath { get; } = new AnnotationType(FilePathValue);
-
         /// <summary> Gets the ContainerFileCitation. </summary>
         public static AnnotationType ContainerFileCitation { get; } = new AnnotationType(ContainerFileCitationValue);
+
+        /// <summary> Gets the FilePath. </summary>
+        public static AnnotationType FilePath { get; } = new AnnotationType(FilePathValue);
 
         /// <summary> Determines if two <see cref="AnnotationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
