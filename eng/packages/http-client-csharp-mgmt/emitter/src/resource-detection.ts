@@ -975,43 +975,41 @@ function buildArmProviderSchemaFromDetectedResources(
           (m) => m.kind === ResourceOperationKind.Read
         );
         if (!hasReadOperation && !metadata.singletonResourceName) {
-          // For resources without Get operation, List operations should belong to the parent resource
-          // Other operations (Create, Update, Delete) should be treated as non-resource methods
+          // For resources without Get operation, all operations should belong to the parent resource
+          // If no parent exists, they should be treated as non-resource methods
           
-          // Iterate through all methods and handle List operations separately
-          for (const method of metadata.methods) {
-            if (method.kind === ResourceOperationKind.List) {
-              // Move List operations to parent resource if parent exists
-              let parentMetadata: ResourceMetadata | undefined;
-              if (metadata.parentResourceModelId) {
-                for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
-                  const parentModelId = parentKey.split("|")[0];
-                  if (parentModelId === metadata.parentResourceModelId) {
-                    parentMetadata = parentMeta;
-                    break;
-                  }
-                }
-              }
-
-              if (parentMetadata) {
-                parentMetadata.methods.push(method);
-                continue; // Skip to next method, don't add to nonResourceMethods
+          // Find parent resource if exists
+          let parentMetadata: ResourceMetadata | undefined;
+          if (metadata.parentResourceModelId) {
+            for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
+              const parentModelId = parentKey.split("|")[0];
+              if (parentModelId === metadata.parentResourceModelId) {
+                parentMetadata = parentMeta;
+                break;
               }
             }
+          }
 
-            // Move methods to non-resource methods if not added to parent
-            nonResourceMethods.set(method.methodId, {
-              methodId: method.methodId,
-              operationPath: method.operationPath,
-              operationScope: method.operationScope
-            });
+          // Iterate through all methods and move them to parent or non-resource methods
+          for (const method of metadata.methods) {
+            if (parentMetadata) {
+              // Move all operations to parent resource
+              parentMetadata.methods.push(method);
+            } else {
+              // No parent - move to non-resource methods
+              nonResourceMethods.set(method.methodId, {
+                methodId: method.methodId,
+                operationPath: method.operationPath,
+                operationScope: method.operationScope
+              });
+            }
           }
 
           sdkContext.logger.reportDiagnostic({
             code: "general-warning",
             messageId: "default",
             format: {
-              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. List operations will be added to parent resource, other operations will be treated as non-resource methods.`
+              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`
             },
             target: NoTarget
           });

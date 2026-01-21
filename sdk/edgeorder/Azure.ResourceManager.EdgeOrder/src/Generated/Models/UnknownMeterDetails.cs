@@ -7,24 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EdgeOrder.Models;
 
-namespace Azure.ResourceManager.EdgeOrder.Models
+namespace Azure.ResourceManager.EdgeOrder.Custom.Models
 {
-    /// <summary> Unknown version of MeterDetails. </summary>
     internal partial class UnknownMeterDetails : EdgeOrderProductMeterDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMeterDetails"/>. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(billingType, multiplier, chargingType, serializedAdditionalRawData)
-        {
-            BillingType = billingType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMeterDetails"/> for deserialization. </summary>
-        internal UnknownMeterDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(billingType != default ? billingType : "unknown", multiplier, chargingType, additionalBinaryDataProperties)
         {
         }
     }
