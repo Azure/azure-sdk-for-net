@@ -8,86 +8,56 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes a reference to Key Vault Secret. </summary>
     public partial class ComputeFleetKeyVaultSecretReference
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetKeyVaultSecretReference"/>. </summary>
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
-        /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> or <paramref name="sourceVault"/> is null. </exception>
-        public ComputeFleetKeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault)
+        /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> is null. </exception>
+        public ComputeFleetKeyVaultSecretReference(Uri secretUri)
         {
             Argument.AssertNotNull(secretUri, nameof(secretUri));
-            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
 
             SecretUri = secretUri;
-            SourceVault = sourceVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetKeyVaultSecretReference"/>. </summary>
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetKeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetKeyVaultSecretReference(Uri secretUri, SubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretUri = secretUri;
             SourceVault = sourceVault;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetKeyVaultSecretReference"/> for deserialization. </summary>
-        internal ComputeFleetKeyVaultSecretReference()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL referencing a secret in a Key Vault. </summary>
         public Uri SecretUri { get; set; }
+
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
-        internal WritableSubResource SourceVault { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        internal SubResource SourceVault { get; set; }
+
+        /// <summary> Resource Id. </summary>
         public ResourceIdentifier SourceVaultId
         {
-            get => SourceVault is null ? default : SourceVault.Id;
+            get
+            {
+                return SourceVault is null ? default : SourceVault.Id;
+            }
             set
             {
                 if (SourceVault is null)
-                    SourceVault = new WritableSubResource();
+                {
+                    SourceVault = new SubResource();
+                }
                 SourceVault.Id = value;
             }
         }

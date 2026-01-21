@@ -8,17 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetVmssIPConfigurationProperties : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmssIPConfigurationProperties>
+    /// <summary>
+    /// Describes a virtual machine scale set network profile's IP configuration
+    /// properties.
+    /// </summary>
+    public partial class ComputeFleetVmssIPConfigurationProperties : IJsonModel<ComputeFleetVmssIPConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmssIPConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmssIPConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +33,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssIPConfigurationProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsDefined(IsPrimary))
             {
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApplicationGatewayBackendAddressPools)
+                foreach (WritableSubResource item in ApplicationGatewayBackendAddressPools)
                 {
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApplicationSecurityGroups)
+                foreach (WritableSubResource item in ApplicationSecurityGroups)
                 {
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in LoadBalancerBackendAddressPools)
+                foreach (WritableSubResource item in LoadBalancerBackendAddressPools)
                 {
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
@@ -90,21 +92,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("loadBalancerInboundNatPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in LoadBalancerInboundNatPools)
+                foreach (WritableSubResource item in LoadBalancerInboundNatPools)
                 {
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,152 +115,122 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmssIPConfigurationProperties IJsonModel<ComputeFleetVmssIPConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmssIPConfigurationProperties IJsonModel<ComputeFleetVmssIPConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmssIPConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssIPConfigurationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmssIPConfigurationProperties(document.RootElement, options);
         }
 
-        internal static ComputeFleetVmssIPConfigurationProperties DeserializeComputeFleetVmssIPConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeFleetVmssIPConfigurationProperties DeserializeComputeFleetVmssIPConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WritableSubResource subnet = default;
-            bool? primary = default;
+            ApiEntityReference subnet = default;
+            bool? isPrimary = default;
             ComputeFleetVmssPublicIPAddressConfiguration publicIPAddressConfiguration = default;
             ComputeFleetIPVersion? privateIPAddressVersion = default;
             IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
             IList<WritableSubResource> applicationSecurityGroups = default;
             IList<WritableSubResource> loadBalancerBackendAddressPools = default;
             IList<WritableSubResource> loadBalancerInboundNatPools = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subnet"u8))
+                if (prop.NameEquals("subnet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default);
+                    subnet = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("primary"u8))
+                if (prop.NameEquals("primary"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primary = property.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publicIPAddressConfiguration"u8))
+                if (prop.NameEquals("publicIPAddressConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicIPAddressConfiguration = ComputeFleetVmssPublicIPAddressConfiguration.DeserializeComputeFleetVmssPublicIPAddressConfiguration(property.Value, options);
+                    publicIPAddressConfiguration = ComputeFleetVmssPublicIPAddressConfiguration.DeserializeComputeFleetVmssPublicIPAddressConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("privateIPAddressVersion"u8))
+                if (prop.NameEquals("privateIPAddressVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateIPAddressVersion = new ComputeFleetIPVersion(property.Value.GetString());
+                    privateIPAddressVersion = new ComputeFleetIPVersion(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicationGatewayBackendAddressPools"u8))
+                if (prop.NameEquals("applicationGatewayBackendAddressPools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    applicationGatewayBackendAddressPools = array;
+                    DeserializeApplicationGatewayBackendAddressPools(prop, ref applicationGatewayBackendAddressPools);
                     continue;
                 }
-                if (property.NameEquals("applicationSecurityGroups"u8))
+                if (prop.NameEquals("applicationSecurityGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    applicationSecurityGroups = array;
+                    DeserializeApplicationSecurityGroups(prop, ref applicationSecurityGroups);
                     continue;
                 }
-                if (property.NameEquals("loadBalancerBackendAddressPools"u8))
+                if (prop.NameEquals("loadBalancerBackendAddressPools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    loadBalancerBackendAddressPools = array;
+                    DeserializeLoadBalancerBackendAddressPools(prop, ref loadBalancerBackendAddressPools);
                     continue;
                 }
-                if (property.NameEquals("loadBalancerInboundNatPools"u8))
+                if (prop.NameEquals("loadBalancerInboundNatPools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    loadBalancerInboundNatPools = array;
+                    DeserializeLoadBalancerInboundNatPools(prop, ref loadBalancerInboundNatPools);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmssIPConfigurationProperties(
                 subnet,
-                primary,
+                isPrimary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
                 applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
                 applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(),
                 loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
                 loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeFleetVmssIPConfigurationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetVmssIPConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -268,15 +240,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmssIPConfigurationProperties IPersistableModel<ComputeFleetVmssIPConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmssIPConfigurationProperties IPersistableModel<ComputeFleetVmssIPConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmssIPConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssIPConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetVmssIPConfigurationProperties(document.RootElement, options);
                     }
                 default:
@@ -284,6 +261,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetVmssIPConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

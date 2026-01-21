@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes a virtual machine scale set network profile. </summary>
     public partial class ComputeFleetVmssNetworkProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssNetworkProfile"/>. </summary>
         public ComputeFleetVmssNetworkProfile()
@@ -65,13 +36,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// resources in the Network Interface Configurations for Virtual Machine Scale Set
         /// with orchestration mode 'Flexible'
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssNetworkProfile(WritableSubResource healthProbe, IList<ComputeFleetVmssNetworkConfiguration> networkInterfaceConfigurations, ComputeFleetNetworkApiVersion? networkApiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssNetworkProfile(ApiEntityReference healthProbe, IList<ComputeFleetVmssNetworkConfiguration> networkInterfaceConfigurations, ComputeFleetNetworkApiVersion? networkApiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthProbe = healthProbe;
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
             NetworkApiVersion = networkApiVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -79,26 +50,36 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// instance in the virtual machine scale set. The reference will be in the form:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.
         /// </summary>
-        internal WritableSubResource HealthProbe { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier HealthProbeId
-        {
-            get => HealthProbe is null ? default : HealthProbe.Id;
-            set
-            {
-                if (HealthProbe is null)
-                    HealthProbe = new WritableSubResource();
-                HealthProbe.Id = value;
-            }
-        }
+        internal ApiEntityReference HealthProbe { get; set; }
 
         /// <summary> The list of network configurations. </summary>
         public IList<ComputeFleetVmssNetworkConfiguration> NetworkInterfaceConfigurations { get; }
+
         /// <summary>
         /// specifies the Microsoft.Network API version used when creating networking
         /// resources in the Network Interface Configurations for Virtual Machine Scale Set
         /// with orchestration mode 'Flexible'
         /// </summary>
         public ComputeFleetNetworkApiVersion? NetworkApiVersion { get; set; }
+
+        /// <summary>
+        /// The ARM resource id in the form of
+        /// /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
+        /// </summary>
+        public ResourceIdentifier HealthProbeId
+        {
+            get
+            {
+                return HealthProbe is null ? default : HealthProbe.Id;
+            }
+            set
+            {
+                if (HealthProbe is null)
+                {
+                    HealthProbe = new ApiEntityReference();
+                }
+                HealthProbe.Id = value;
+            }
+        }
     }
 }
