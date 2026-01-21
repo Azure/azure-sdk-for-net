@@ -7,83 +7,107 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters for updating a connected registry. </summary>
     public partial class ConnectedRegistryPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryPatch"/>. </summary>
         public ConnectedRegistryPatch()
         {
-            ClientTokenIds = new ChangeTrackingList<ResourceIdentifier>();
-            NotificationsList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryPatch"/>. </summary>
-        /// <param name="syncProperties"> The sync properties of the connected registry with its parent. </param>
-        /// <param name="logging"> The logging properties of the connected registry. </param>
-        /// <param name="clientTokenIds"> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </param>
-        /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
-        /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryPatch(ConnectedRegistrySyncUpdateProperties syncProperties, ConnectedRegistryLogging logging, IList<ResourceIdentifier> clientTokenIds, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of the connected registry update parameters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedRegistryPatch(ConnectedRegistryUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SyncProperties = syncProperties;
-            Logging = logging;
-            ClientTokenIds = clientTokenIds;
-            NotificationsList = notificationsList;
-            GarbageCollection = garbageCollection;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The properties of the connected registry update parameters. </summary>
+        internal ConnectedRegistryUpdateProperties Properties { get; set; }
+
         /// <summary> The sync properties of the connected registry with its parent. </summary>
-        [WirePath("properties.syncProperties")]
-        public ConnectedRegistrySyncUpdateProperties SyncProperties { get; set; }
+        public SyncUpdateProperties SyncProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedRegistryUpdateProperties();
+                }
+                Properties.SyncProperties = value;
+            }
+        }
+
         /// <summary> The logging properties of the connected registry. </summary>
-        [WirePath("properties.logging")]
-        public ConnectedRegistryLogging Logging { get; set; }
+        public LoggingProperties Logging
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Logging;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedRegistryUpdateProperties();
+                }
+                Properties.Logging = value;
+            }
+        }
+
         /// <summary> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </summary>
-        [WirePath("properties.clientTokenIds")]
-        public IList<ResourceIdentifier> ClientTokenIds { get; }
+        public IList<string> ClientTokenIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedRegistryUpdateProperties();
+                }
+                return Properties.ClientTokenIds;
+            }
+        }
+
         /// <summary> The list of notifications subscription information for the connected registry. </summary>
-        [WirePath("properties.notificationsList")]
-        public IList<string> NotificationsList { get; }
+        public IList<string> NotificationsList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedRegistryUpdateProperties();
+                }
+                return Properties.NotificationsList;
+            }
+        }
+
         /// <summary> The garbage collection properties of the connected registry. </summary>
-        [WirePath("properties.garbageCollection")]
-        public GarbageCollectionProperties GarbageCollection { get; set; }
+        public GarbageCollectionProperties GarbageCollection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GarbageCollection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedRegistryUpdateProperties();
+                }
+                Properties.GarbageCollection = value;
+            }
+        }
     }
 }
