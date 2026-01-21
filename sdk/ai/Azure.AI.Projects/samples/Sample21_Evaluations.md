@@ -88,7 +88,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 );
 ```
 
-4. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
+4. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
 ```C# Snippet:Sampple_GetStringValues_Evaluations
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
@@ -146,7 +146,7 @@ string evaluationId = fields["id"];
 Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
 ```
 
-6. Create the `runData` object. It contains name and ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent.
+6. Create the `runData` object. It contains name and ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent. The target type `azure_ai_agent` informs the service that we are evaluating Agent.
 
 
 ```C# Snippet:Sample_CreateDataSource_Evaluations
