@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -11,13 +10,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary>
     /// Hand-authored extensions for <see cref="QuestionAnsweringAuthoringClient"/>.
     /// </summary>
-    [CodeGenSuppress("QuestionAnsweringAuthoringClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenSuppress(
-        "QuestionAnsweringAuthoringClient",
-        typeof(Uri),
-        typeof(TokenCredential),
-        typeof(QuestionAnsweringAuthoringClientOptions)
-    )]
     public partial class QuestionAnsweringAuthoringClient
     {
         /// <summary>
@@ -52,7 +44,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[]

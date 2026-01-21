@@ -251,9 +251,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType Opaque { get { throw null; } }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType Tls { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType left, Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType (string value) { throw null; }
@@ -271,9 +269,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState left, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState (string value) { throw null; }
@@ -310,9 +306,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType True { get { throw null; } }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType left, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType (string value) { throw null; }

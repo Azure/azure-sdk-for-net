@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HealthBot;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthBot.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHealthBotResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHealthBotResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHealthBotResourceGroupResource for mocking. </summary>
         protected MockableHealthBotResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHealthBotResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHealthBotResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHealthBotResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of HealthBotResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HealthBotResources and their operations over a HealthBotResource. </returns>
+        /// <summary> Gets a collection of HealthBots in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HealthBots and their operations over a HealthBotResource. </returns>
         public virtual HealthBotCollection GetHealthBots()
         {
             return GetCachedClient(client => new HealthBotCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// Get a HealthBot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthBots_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthBotResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthBotResource>> GetHealthBotAsync(string botName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
+
             return await GetHealthBots().GetAsync(botName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// Get a HealthBot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthBots_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthBotResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         [ForwardsClientCalls]
         public virtual Response<HealthBotResource> GetHealthBot(string botName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
+
             return GetHealthBots().Get(botName, cancellationToken);
         }
     }

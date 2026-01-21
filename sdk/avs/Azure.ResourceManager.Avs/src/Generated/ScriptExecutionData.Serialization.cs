@@ -10,16 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class ScriptExecutionData : IUtf8JsonSerializable, IJsonModel<ScriptExecutionData>
+    /// <summary> An instance of a script executed by a user - custom or AVS. </summary>
+    public partial class ScriptExecutionData : ResourceData, IJsonModel<ScriptExecutionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScriptExecutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,395 +33,114 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ScriptCmdletId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("scriptCmdletId"u8);
-                writer.WriteStringValue(ScriptCmdletId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartArray();
-                foreach (var item in Parameters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(HiddenParameters))
-            {
-                writer.WritePropertyName("hiddenParameters"u8);
-                writer.WriteStartArray();
-                foreach (var item in HiddenParameters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(FailureReason))
-            {
-                writer.WritePropertyName("failureReason"u8);
-                writer.WriteStringValue(FailureReason);
-            }
-            if (Optional.IsDefined(Timeout))
-            {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout);
-            }
-            if (Optional.IsDefined(Retention))
-            {
-                writer.WritePropertyName("retention"u8);
-                writer.WriteStringValue(Retention);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SubmittedOn))
-            {
-                writer.WritePropertyName("submittedAt"u8);
-                writer.WriteStringValue(SubmittedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
-            {
-                writer.WritePropertyName("startedAt"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
-            {
-                writer.WritePropertyName("finishedAt"u8);
-                writer.WriteStringValue(FinishedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Output))
-            {
-                writer.WritePropertyName("output"u8);
-                writer.WriteStartArray();
-                foreach (var item in Output)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NamedOutputs))
-            {
-                writer.WritePropertyName("namedOutputs"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NamedOutputs);
-#else
-                using (JsonDocument document = JsonDocument.Parse(NamedOutputs, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Information))
-            {
-                writer.WritePropertyName("information"u8);
-                writer.WriteStartArray();
-                foreach (var item in Information)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
-            {
-                writer.WritePropertyName("warnings"u8);
-                writer.WriteStartArray();
-                foreach (var item in Warnings)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
-            {
-                writer.WritePropertyName("errors"u8);
-                writer.WriteStartArray();
-                foreach (var item in Errors)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        ScriptExecutionData IJsonModel<ScriptExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScriptExecutionData IJsonModel<ScriptExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ScriptExecutionData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScriptExecutionData(document.RootElement, options);
         }
 
-        internal static ScriptExecutionData DeserializeScriptExecutionData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScriptExecutionData DeserializeScriptExecutionData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ResourceIdentifier scriptCmdletId = default;
-            IList<ScriptExecutionParameterDetails> parameters = default;
-            IList<ScriptExecutionParameterDetails> hiddenParameters = default;
-            string failureReason = default;
-            string timeout = default;
-            string retention = default;
-            DateTimeOffset? submittedAt = default;
-            DateTimeOffset? startedAt = default;
-            DateTimeOffset? finishedAt = default;
-            ScriptExecutionProvisioningState? provisioningState = default;
-            IList<string> output = default;
-            BinaryData namedOutputs = default;
-            IReadOnlyList<string> information = default;
-            IReadOnlyList<string> warnings = default;
-            IReadOnlyList<string> errors = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ScriptExecutionProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("scriptCmdletId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scriptCmdletId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("parameters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item, options));
-                            }
-                            parameters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("hiddenParameters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item, options));
-                            }
-                            hiddenParameters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("failureReason"u8))
-                        {
-                            failureReason = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeout"u8))
-                        {
-                            timeout = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("retention"u8))
-                        {
-                            retention = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("submittedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            submittedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("startedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            startedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("finishedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            finishedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ScriptExecutionProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("output"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            output = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("namedOutputs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            namedOutputs = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("information"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            information = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("warnings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            warnings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("errors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            errors = array;
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ScriptExecutionProperties.DeserializeScriptExecutionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ScriptExecutionData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                scriptCmdletId,
-                parameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(),
-                hiddenParameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(),
-                failureReason,
-                timeout,
-                retention,
-                submittedAt,
-                startedAt,
-                finishedAt,
-                provisioningState,
-                output ?? new ChangeTrackingList<string>(),
-                namedOutputs,
-                information ?? new ChangeTrackingList<string>(),
-                warnings ?? new ChangeTrackingList<string>(),
-                errors ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<ScriptExecutionData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScriptExecutionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -429,15 +150,20 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        ScriptExecutionData IPersistableModel<ScriptExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScriptExecutionData IPersistableModel<ScriptExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ScriptExecutionData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScriptExecutionData(document.RootElement, options);
                     }
                 default:
@@ -445,6 +171,26 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScriptExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="scriptExecutionData"> The <see cref="ScriptExecutionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ScriptExecutionData scriptExecutionData)
+        {
+            if (scriptExecutionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(scriptExecutionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ScriptExecutionData"/> from. </param>
+        internal static ScriptExecutionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeScriptExecutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

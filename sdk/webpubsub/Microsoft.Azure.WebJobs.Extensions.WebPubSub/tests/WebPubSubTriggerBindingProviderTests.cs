@@ -28,8 +28,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             _configuration["testhub"] = TestHub;
             var resolver = new DefaultNameResolver(_configuration);
             var mockDispater = new Mock<IWebPubSubTriggerDispatcher>(MockBehavior.Strict);
-            var config = new WebPubSubFunctionsOptions();
-            _provider = new WebPubSubTriggerBindingProvider(mockDispater.Object, resolver, config, null);
+            var options = new WebPubSubServiceAccessOptions();
+            var accessFactory = new WebPubSubServiceAccessFactory(_configuration, TestAzureComponentFactory.Instance);
+            _provider = new WebPubSubTriggerBindingProvider(mockDispater.Object, resolver, options, null, accessFactory);
         }
 
         [TestCase]

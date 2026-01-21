@@ -14,7 +14,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The updatable properties of the Namespace. </summary>
-    public partial class NamespaceUpdateProperties : IJsonModel<NamespaceUpdateProperties>
+    internal partial class NamespaceUpdateProperties : IJsonModel<NamespaceUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

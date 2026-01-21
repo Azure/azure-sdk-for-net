@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-    public partial class HciVmGalleryImageVersionStorageProfile
+    internal partial class HciVmGalleryImageVersionStorageProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

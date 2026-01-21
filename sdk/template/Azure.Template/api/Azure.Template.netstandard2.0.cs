@@ -56,9 +56,7 @@ namespace Azure.Template
         public static Azure.Template.OperationState Running { get { throw null; } }
         public static Azure.Template.OperationState Succeeded { get { throw null; } }
         public bool Equals(Azure.Template.OperationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Template.OperationState left, Azure.Template.OperationState right) { throw null; }
         public static implicit operator Azure.Template.OperationState (string value) { throw null; }

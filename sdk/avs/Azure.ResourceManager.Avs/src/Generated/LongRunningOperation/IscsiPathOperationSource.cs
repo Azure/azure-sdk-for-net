@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class IscsiPathOperationSource : IOperationSource<IscsiPathResource>
+    /// <summary></summary>
+    internal partial class IscsiPathOperationSource : IOperationSource<IscsiPathResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal IscsiPathOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         IscsiPathResource IOperationSource<IscsiPathResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IscsiPathData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            IscsiPathData data = IscsiPathData.DeserializeIscsiPathData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new IscsiPathResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<IscsiPathResource> IOperationSource<IscsiPathResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IscsiPathData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
-            return await Task.FromResult(new IscsiPathResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            IscsiPathData data = IscsiPathData.DeserializeIscsiPathData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IscsiPathResource(_client, data);
         }
     }
 }

@@ -53,14 +53,34 @@ namespace Azure.Generator.Visitors
             { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
-        /// <summary>
-        /// Visits a method and modifies it to handle request condition headers.
-        /// </summary>
+        protected override ScmMethodProvider? VisitCreateRequestMethod(
+            InputServiceMethod serviceMethod,
+            RestClientProvider enclosingType,
+            ScmMethodProvider? createRequestMethodProvider)
+        {
+            if (createRequestMethodProvider != null)
+            {
+                UpdateMethod(createRequestMethodProvider);
+            }
+
+            return createRequestMethodProvider;
+        }
+
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
+        {
+            UpdateMethod(method);
+
+            return method;
+        }
+
+        /// <summary>
+        /// Modifies a method to handle request condition headers.
+        /// </summary>
+        private void UpdateMethod(ScmMethodProvider method)
         {
             if (!TryGetMethodRequestConditionInfo(method, out var headerFlags, out var matchConditionParams))
             {
-                return base.VisitMethod(method);
+                return;
             }
 
             // Update method parameters
@@ -75,8 +95,6 @@ namespace Azure.Generator.Visitors
             {
                 UpdateClientMethodBody(method, headerFlags, matchConditionParams);
             }
-
-            return method;
         }
 
         protected override TypeProvider? VisitType(TypeProvider type)
@@ -359,6 +377,9 @@ namespace Azure.Generator.Visitors
                     expr.Update(expression: keyword);
                     break;
                 case ExpressionStatement { Expression: AssignmentExpression { Value: ClientResponseApi { Original: InvokeMethodExpression invoke } } }:
+                    UpdateInvokeMethodArguments(invoke, replacementParameter);
+                    break;
+                case ExpressionStatement { Expression: AssignmentExpression { Value: InvokeMethodExpression invoke } }:
                     UpdateInvokeMethodArguments(invoke, replacementParameter);
                     break;
                 case ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } keyword } expr:

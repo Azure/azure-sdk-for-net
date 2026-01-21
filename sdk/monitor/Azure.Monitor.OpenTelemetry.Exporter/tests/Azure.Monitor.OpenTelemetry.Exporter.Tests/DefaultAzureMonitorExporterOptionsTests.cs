@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
                 // Assert - defaults unchanged
                 Assert.Equal(1.0f, options.SamplingRatio);
-                Assert.Null(options.TracesPerSecond);
+                Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
 
                 // Now test invalid negative rate_limited
                 configValues = new List<KeyValuePair<string, string?>>
@@ -126,7 +126,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 defaultConfigurator.Configure(options);
 
                 // Assert
-                Assert.Null(options.TracesPerSecond);
+                Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
                 Assert.Equal(1.0f, options.SamplingRatio);
             }
             finally
@@ -202,6 +202,56 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", prevSampler);
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", prevSamplerArg);
             }
+        }
+
+        [Fact]
+        public void Configure_SamplingRatio_ViaJson_WithoutTracesPerSecond_SetsTracesPerSecondToNull_And_SetsSamplingRatio()
+        {
+            // Arrange - simulate appsettings.json with only SamplingRatio set (using InMemoryCollection with section key format)
+            var configValues = new List<KeyValuePair<string, string?>>
+            {
+                new("AzureMonitorExporter:ConnectionString", "testConnectionString"),
+                new("AzureMonitorExporter:SamplingRatio", "0.5"),
+            };
+
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(configValues)
+                .Build();
+
+            var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
+            var options = new AzureMonitorExporterOptions();
+
+            // Act
+            defaultConfigurator.Configure(options);
+
+            // Assert
+            Assert.Equal(0.5f, options.SamplingRatio);
+            Assert.Null(options.TracesPerSecond);
+        }
+
+        [Fact]
+        public void Configure_TracesPerSecond_ViaJson_WithoutSamplingRatio_SetsTracesPerSecond()
+        {
+            // Arrange - simulate appsettings.json with only TracesPerSecond set (using InMemoryCollection with section key format)
+            var configValues = new List<KeyValuePair<string, string?>>
+            {
+                new("AzureMonitorExporter:ConnectionString", "testConnectionString"),
+                new("AzureMonitorExporter:TracesPerSecond", "10"),
+            };
+
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(configValues)
+                .Build();
+
+            var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
+            var options = new AzureMonitorExporterOptions();
+
+            // Act
+            defaultConfigurator.Configure(options);
+
+            // Assert
+            Assert.Equal(1.0f, options.SamplingRatio); // default unchanged
+            Assert.Equal(10d, options.TracesPerSecond);
         }
     }
 }

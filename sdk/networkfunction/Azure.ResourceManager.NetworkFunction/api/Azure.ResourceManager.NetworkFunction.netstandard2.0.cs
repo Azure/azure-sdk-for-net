@@ -172,9 +172,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState left, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState (string value) { throw null; }
@@ -189,9 +187,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public EmissionDestinationType(string value) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType AzureMonitor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType left, Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType (string value) { throw null; }
@@ -229,9 +225,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public EmissionType(string value) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.Models.EmissionType Ipfix { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkFunction.Models.EmissionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.EmissionType left, Azure.ResourceManager.NetworkFunction.Models.EmissionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.EmissionType (string value) { throw null; }
@@ -270,9 +264,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public IngestionSourceType(string value) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType Resource { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType left, Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType (string value) { throw null; }
@@ -287,9 +279,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public IngestionType(string value) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.Models.IngestionType Ipfix { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkFunction.Models.IngestionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.IngestionType left, Azure.ResourceManager.NetworkFunction.Models.IngestionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.IngestionType (string value) { throw null; }

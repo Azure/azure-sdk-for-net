@@ -79,7 +79,6 @@ namespace Azure.ResourceManager.Nginx
     public partial class NginxConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxConfigurationData>
     {
         public NginxConfigurationData() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -685,13 +684,11 @@ namespace Azure.ResourceManager.Nginx.Models
         public bool? EnableDiagnosticsSupport { get { throw null; } set { } }
         public string IPAddress { get { throw null; } }
         public Azure.ResourceManager.Nginx.Models.NginxStorageAccount LoggingStorageAccount { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ManagedResourceGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect NginxAppProtect { get { throw null; } set { } }
         public string NginxVersion { get { throw null; } }
         public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? ScalingCapacity { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxDeploymentScalingProperties ScalingProperties { get { throw null; } set { } }
         public string UpgradeChannel { get { throw null; } set { } }
@@ -742,7 +739,6 @@ namespace Azure.ResourceManager.Nginx.Models
         public bool? EnableDiagnosticsSupport { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxStorageAccount LoggingStorageAccount { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxNetworkProfile NetworkProfile { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? ScalingCapacity { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxDeploymentScalingProperties ScalingProperties { get { throw null; } set { } }
         public string UpgradeChannel { get { throw null; } set { } }
@@ -786,9 +782,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode Removing { get { throw null; } }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode left, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode (string value) { throw null; }
@@ -823,9 +817,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode NotStarted { get { throw null; } }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode left, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode (string value) { throw null; }
@@ -917,9 +909,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel Info { get { throw null; } }
         public static Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel left, Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel (string value) { throw null; }
@@ -982,9 +972,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod Dynamic { get { throw null; } }
         public static Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod left, Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod (string value) { throw null; }
@@ -1008,9 +996,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Nginx.Models.NginxProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxProvisioningState left, Azure.ResourceManager.Nginx.Models.NginxProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Nginx.Models.NginxProvisioningState (string value) { throw null; }
@@ -1072,9 +1058,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState left, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState (string value) { throw null; }

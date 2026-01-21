@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthBot
 {
-    public partial class HealthBotResource : IJsonModel<HealthBotData>
+    /// <summary></summary>
+    public partial class HealthBotResource : ArmResource, IJsonModel<HealthBotData>
     {
-        private static HealthBotData s_dataDeserializationInstance;
-        private static HealthBotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HealthBotData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HealthBotData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HealthBotData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthBotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthBotData>)Data).Write(writer, options);
 
-        HealthBotData IJsonModel<HealthBotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthBotData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthBotData IJsonModel<HealthBotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HealthBotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthBotData>(Data, options, AzureResourceManagerHealthBotContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HealthBotData IPersistableModel<HealthBotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthBotData>(data, options, AzureResourceManagerHealthBotContext.Default);
 
-        string IPersistableModel<HealthBotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthBotData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthBotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -1,18 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Generator.Management.Snippets;
-using Azure.Generator.Management.Utilities;
-using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -81,25 +73,9 @@ namespace Azure.Generator.Management.Models
         /// <returns></returns>
         public bool IsAncestorOf(RequestPathPattern other)
         {
-            // Ancestor detection: compare only constant segments, skip variable segments.
-            // To be the parent of other, you must at least be shorter than other.
-            if (other.Count <= Count)
-                return false;
-            for (int i = 0; i < Count; i++)
-            {
-                if (this[i].IsConstant)
-                {
-                    if (!this[i].Equals(other[i]))
-                        return false;
-                }
-                else // variable segment
-                {
-                    if (!other[i].IsConstant)
-                        continue;
-                    return false;
-                }
-            }
-            return true;
+            // To be the ancestor of other, you must be shorter than other,
+            // and all segments of this must match the beginning of other.
+            return other.Count > Count && GetMaximumSharingSegmentsCount(this, other) == Count;
         }
 
         /// <summary>
@@ -138,6 +114,46 @@ namespace Azure.Generator.Management.Models
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Returns the number of shared segments between two <see cref="RequestPathPattern"/> instances,
+        /// starting from the beginning of the paths. Segments are considered shared if both are variable segments,
+        /// or if both are constant segments with equal values. The comparison stops at the first non-matching segment.
+        /// </summary>
+        /// <param name="left">The first <see cref="RequestPathPattern"/> to compare.</param>
+        /// <param name="right">The second <see cref="RequestPathPattern"/> to compare.</param>
+        /// <returns>
+        /// The count of shared segments between the two paths.
+        /// </returns>
+        public static int GetMaximumSharingSegmentsCount(RequestPathPattern left, RequestPathPattern right)
+        {
+            var minCount = Math.Min(left.Count, right.Count);
+            var count = 0;
+            for (int i = 0; i < minCount; i++)
+            {
+                // if both of them are variable segments, we consider them as a match
+                if (!left[i].IsConstant && !right[i].IsConstant)
+                {
+                    count++;
+                    continue;
+                }
+                // if not both of them are constant, they do not match, we stop
+                if (left[i].IsConstant != right[i].IsConstant)
+                {
+                    break;
+                }
+                // now both of them are constant segments, we compare their values
+                if (left[i].Equals(right[i]))
+                {
+                    count++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return count;
         }
 
         public RequestPathPattern GetParent()
@@ -182,12 +198,16 @@ namespace Azure.Generator.Management.Models
 
         IEnumerator IEnumerable.GetEnumerator() => _segments.GetEnumerator();
 
-        public static bool operator ==(RequestPathPattern left, RequestPathPattern right)
+        public static bool operator ==(RequestPathPattern? left, RequestPathPattern? right)
         {
+            if (ReferenceEquals(left, right))
+                return true;
+            if (left is null || right is null)
+                return false;
             return left.Equals(right);
         }
 
-        public static bool operator !=(RequestPathPattern left, RequestPathPattern right)
+        public static bool operator !=(RequestPathPattern? left, RequestPathPattern? right)
         {
             return !(left == right);
         }
@@ -195,27 +215,6 @@ namespace Azure.Generator.Management.Models
         public static implicit operator string(RequestPathPattern requestPath)
         {
             return requestPath._path;
-        }
-
-        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
-
-        /// <summary>
-        /// Get the corresponding contextual parameter in this request path for a provided parameter.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <param name="contextualParameter"></param>
-        /// <returns></returns>
-        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
-        {
-            contextualParameter = null;
-            if (parameter.Location != ParameterLocation.Path)
-            {
-                return false;
-            }
-
-            _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
-
-            return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
         }
     }
 }

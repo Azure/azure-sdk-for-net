@@ -72,9 +72,7 @@ namespace Azure.AI.Translation.Document
         public static Azure.AI.Translation.Document.DocumentTranslationAudience AzureGovernment { get { throw null; } }
         public static Azure.AI.Translation.Document.DocumentTranslationAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.AI.Translation.Document.DocumentTranslationAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Translation.Document.DocumentTranslationAudience left, Azure.AI.Translation.Document.DocumentTranslationAudience right) { throw null; }
         public static implicit operator Azure.AI.Translation.Document.DocumentTranslationAudience (string value) { throw null; }
@@ -101,17 +99,13 @@ namespace Azure.AI.Translation.Document
         public virtual Azure.Response<Azure.AI.Translation.Document.DocumentStatusResult> GetDocumentStatus(System.Guid translationId, System.Guid documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDocumentStatusAsync(System.Guid translationId, System.Guid documentId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.DocumentStatusResult>> GetDocumentStatusAsync(System.Guid translationId, System.Guid documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats> GetSupportedDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats>> GetSupportedDocumentFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats> GetSupportedFormats(Azure.AI.Translation.Document.FileFormatType? type = default(Azure.AI.Translation.Document.FileFormatType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSupportedFormats(string type, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats>> GetSupportedFormatsAsync(Azure.AI.Translation.Document.FileFormatType? type = default(Azure.AI.Translation.Document.FileFormatType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSupportedFormatsAsync(string type, Azure.RequestContext context) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats> GetSupportedGlossaryFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats>> GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetTranslationsStatus(int? maxCount, int? skip, int? maxpagesize, System.Collections.Generic.IEnumerable<System.Guid> ids, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? createdDateTimeUtcStart, System.DateTimeOffset? createdDateTimeUtcEnd, System.Collections.Generic.IEnumerable<string> orderBy, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.AI.Translation.Document.TranslationStatusResult> GetTranslationsStatus(int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Collections.Generic.IEnumerable<System.Guid> ids = null, System.Collections.Generic.IEnumerable<string> statuses = null, System.DateTimeOffset? createdDateTimeUtcStart = default(System.DateTimeOffset?), System.DateTimeOffset? createdDateTimeUtcEnd = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> orderBy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -201,7 +195,6 @@ namespace Azure.AI.Translation.Document
         public override string Id { get { throw null; } }
         public virtual System.DateTimeOffset LastModified { get { throw null; } }
         public virtual Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatusResult> Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -231,9 +224,7 @@ namespace Azure.AI.Translation.Document
         public static Azure.AI.Translation.Document.DocumentTranslationStatus Succeeded { get { throw null; } }
         public static Azure.AI.Translation.Document.DocumentTranslationStatus ValidationFailed { get { throw null; } }
         public bool Equals(Azure.AI.Translation.Document.DocumentTranslationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Translation.Document.DocumentTranslationStatus left, Azure.AI.Translation.Document.DocumentTranslationStatus right) { throw null; }
         public static implicit operator Azure.AI.Translation.Document.DocumentTranslationStatus (string value) { throw null; }
@@ -249,9 +240,7 @@ namespace Azure.AI.Translation.Document
         public static Azure.AI.Translation.Document.FileFormatType Document { get { throw null; } }
         public static Azure.AI.Translation.Document.FileFormatType Glossary { get { throw null; } }
         public bool Equals(Azure.AI.Translation.Document.FileFormatType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Translation.Document.FileFormatType left, Azure.AI.Translation.Document.FileFormatType right) { throw null; }
         public static implicit operator Azure.AI.Translation.Document.FileFormatType (string value) { throw null; }
@@ -296,15 +285,11 @@ namespace Azure.AI.Translation.Document
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<System.BinaryData> Translate(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<System.BinaryData> Translate(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response Translate(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response Translate(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> TranslateAsync(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> TranslateAsync(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
     }
@@ -406,9 +391,7 @@ namespace Azure.AI.Translation.Document
         public TranslationStorageSource(string value) { throw null; }
         public static Azure.AI.Translation.Document.TranslationStorageSource AzureBlob { get { throw null; } }
         public bool Equals(Azure.AI.Translation.Document.TranslationStorageSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Translation.Document.TranslationStorageSource left, Azure.AI.Translation.Document.TranslationStorageSource right) { throw null; }
         public static implicit operator Azure.AI.Translation.Document.TranslationStorageSource (string value) { throw null; }

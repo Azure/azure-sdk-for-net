@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterDataApiMode : IEquatable<MongoClusterDataApiMode>
     {
         private readonly string _value;
+        /// <summary> Mongo Data API is enabled for the cluster. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Mongo Data API is disabled for the cluster. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterDataApiMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterDataApiMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Mongo Data API is enabled for the cluster. </summary>
         public static MongoClusterDataApiMode Enabled { get; } = new MongoClusterDataApiMode(EnabledValue);
+
         /// <summary> Mongo Data API is disabled for the cluster. </summary>
         public static MongoClusterDataApiMode Disabled { get; } = new MongoClusterDataApiMode(DisabledValue);
+
         /// <summary> Determines if two <see cref="MongoClusterDataApiMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterDataApiMode left, MongoClusterDataApiMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterDataApiMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterDataApiMode left, MongoClusterDataApiMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterDataApiMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterDataApiMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterDataApiMode(string value) => new MongoClusterDataApiMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterDataApiMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterDataApiMode?(string value) => value == null ? null : new MongoClusterDataApiMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterDataApiMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterDataApiMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

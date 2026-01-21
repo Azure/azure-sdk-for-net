@@ -14,47 +14,14 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     /// <summary> The response of the decompileBicep operation. </summary>
     public partial class DecompileOperationSuccessResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DecompileOperationSuccessResult"/>. </summary>
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="files"/> or <paramref name="entryPoint"/> is null. </exception>
         internal DecompileOperationSuccessResult(IEnumerable<DecompiledFileDefinition> files, string entryPoint)
         {
-            Argument.AssertNotNull(files, nameof(files));
-            Argument.AssertNotNull(entryPoint, nameof(entryPoint));
-
             Files = files.ToList();
             EntryPoint = entryPoint;
         }
@@ -62,21 +29,17 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <summary> Initializes a new instance of <see cref="DecompileOperationSuccessResult"/>. </summary>
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DecompileOperationSuccessResult(IReadOnlyList<DecompiledFileDefinition> files, string entryPoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DecompileOperationSuccessResult(IList<DecompiledFileDefinition> files, string entryPoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Files = files;
             EntryPoint = entryPoint;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DecompileOperationSuccessResult"/> for deserialization. </summary>
-        internal DecompileOperationSuccessResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </summary>
-        public IReadOnlyList<DecompiledFileDefinition> Files { get; }
+        public IList<DecompiledFileDefinition> Files { get; }
+
         /// <summary> The file path to the main Bicep file generated from the decompiled ARM json template. </summary>
         public string EntryPoint { get; }
     }
