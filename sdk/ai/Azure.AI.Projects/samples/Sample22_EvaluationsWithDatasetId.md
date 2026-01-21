@@ -204,7 +204,45 @@ string runStatus = fields["status"];
 Console.WriteLine($"Evaluation run created (id: {runId})");
 ```
 
-9. Wait for evaluation run to arrive at the terminal state.
+9. Define the method to get the error message and code from the response if any.
+
+```C# Snippet:Sampple_GetError_EvaluationsWithDataSetID
+private static string GetErrorMessageOrEmpty(ClientResult result)
+{
+    string error = "";
+    Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
+    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    string code = default;
+    string message = default;
+    foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+    {
+        if (prop.NameEquals("error"u8) && prop.Value is JsonElement countsElement)
+        {
+            foreach (JsonProperty errorNode in countsElement.EnumerateObject())
+            {
+                if (errorNode.Value.ValueKind == JsonValueKind.String)
+                {
+                    if (errorNode.NameEquals("code"u8))
+                    {
+                        code = errorNode.Value.GetString();
+                    }
+                    else if (errorNode.NameEquals("message"u8))
+                    {
+                        message = errorNode.Value.GetString();
+                    }
+                }
+            }
+        }
+    }
+    if (!string.IsNullOrEmpty(message))
+    {
+        error = $"Message: {message}, Code: {code ?? "<None>"}";
+    }
+    return error;
+}
+```
+
+10. Wait for evaluation run to arrive at the terminal state.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForRun_EvaluationsWithDataSetID_Sync
@@ -217,7 +255,7 @@ while (runStatus != "failed" && runStatus != "completed")
 }
 if (runStatus == "failed")
 {
-    throw new InvalidOperationException("Evaluation run failed.");
+    throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
 }
 ```
 
@@ -232,11 +270,11 @@ while (runStatus != "failed" && runStatus != "completed")
 }
 if (runStatus == "failed")
 {
-    throw new InvalidOperationException("Evaluation run failed.");
+    throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
 }
 ```
 
-10. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
+11. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
 ```C# Snippet:Sampple_GetResultCounts_EvaluationsWithDataSetID
 private static string GetResultsCounts(ClientResult result)
@@ -266,7 +304,7 @@ private static string GetResultsCounts(ClientResult result)
 }
 ```
 
-11. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
+12. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
 ```C# Snippet:Sampple_GetResultsList_EvaluationsWithDataSetID_Sync
@@ -337,7 +375,7 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 }
 ```
 
-12. Output the results.
+13. Output the results.
 
 Synchronous sample:
 ```C# Snippet:Sample_ParseEvaluations_EvaluationsWithDataSetID_Sync
@@ -367,7 +405,7 @@ foreach (string result in evaluationResults)
 Console.WriteLine($"------------------------------------------------------------");
 ```
 
-13. Finally, delete evaluation and Agent used in this sample.
+14. Finally, delete evaluation and Agent used in this sample.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_EvaluationsWithDataSetID_Sync

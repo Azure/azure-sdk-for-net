@@ -22,6 +22,42 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluationsWithDataSetID: SamplesBase
 {
+    #region Snippet:Sampple_GetError_EvaluationsWithDataSetID
+    private static string GetErrorMessageOrEmpty(ClientResult result)
+    {
+        string error = "";
+        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
+        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        string code = default;
+        string message = default;
+        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+        {
+            if (prop.NameEquals("error"u8) && prop.Value is JsonElement countsElement)
+            {
+                foreach (JsonProperty errorNode in countsElement.EnumerateObject())
+                {
+                    if (errorNode.Value.ValueKind == JsonValueKind.String)
+                    {
+                        if (errorNode.NameEquals("code"u8))
+                        {
+                            code = errorNode.Value.GetString();
+                        }
+                        else if (errorNode.NameEquals("message"u8))
+                        {
+                            message = errorNode.Value.GetString();
+                        }
+                    }
+                }
+            }
+        }
+        if (!string.IsNullOrEmpty(message))
+        {
+            error = $"Message: {message}, Code: {code ?? "<None>"}";
+        }
+        return error;
+    }
+    #endregion
+
     #region Snippet:Sampple_GetFile_EvaluationsWithDataSetID
     private static string GetFile([CallerFilePath] string pth = "")
     {
@@ -280,7 +316,7 @@ public class Sample_EvaluationsWithDataSetID: SamplesBase
         }
         if (runStatus == "failed")
         {
-            throw new InvalidOperationException("Evaluation run failed.");
+            throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
         }
         #endregion
         #region Snippet:Sample_ParseEvaluations_EvaluationsWithDataSetID_Async
@@ -419,7 +455,7 @@ public class Sample_EvaluationsWithDataSetID: SamplesBase
         }
         if (runStatus == "failed")
         {
-            throw new InvalidOperationException("Evaluation run failed.");
+            throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
         }
         #endregion
         #region Snippet:Sample_ParseEvaluations_EvaluationsWithDataSetID_Sync
