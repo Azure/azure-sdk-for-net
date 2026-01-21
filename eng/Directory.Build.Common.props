@@ -112,9 +112,9 @@
   </PropertyGroup>
 
   <!-- AOT defaults -->
-  <PropertyGroup>
-    <AotCompatOptOut Condition="'$(IsShippingLibrary)' == 'true'">false</AotCompatOptOut> <!-- Set to true to opt out of all AOT checks -->
-    <AotAnalyzersOptOut Condition="'$(IsShippingLibrary)' == 'true'">false</AotAnalyzersOptOut> <!-- Set to true to disable AOT analyzers but still run AOT CI checks -->
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true'">
+    <AotCompatOptOut>false</AotCompatOptOut> <!-- Set to true to opt out of all AOT checks -->
+    <AotAnalyzersOptOut>false</AotAnalyzersOptOut> <!-- Set to true to disable AOT analyzers but still run AOT CI checks -->
   </PropertyGroup>
 
   <PropertyGroup>
