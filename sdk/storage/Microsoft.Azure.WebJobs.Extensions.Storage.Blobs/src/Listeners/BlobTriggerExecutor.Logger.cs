@@ -24,6 +24,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 LoggerMessage.Define<string, string, string, string, BlobTriggerScanSource>(LogLevel.Debug, new EventId(102, nameof(BlobAlreadyProcessed)),
                     "Blob '{blobName}' will be skipped for function '{functionName}' because this blob with ETag '{eTag}' has already been processed. PollId: '{pollId}'. Source: '{triggerSource}'.");
 
+            private static readonly Action<ILogger<BlobListener>, string, string, string, string, BlobTriggerScanSource, Exception> _blobProcessingStarted =
+                LoggerMessage.Define<string, string, string, string, BlobTriggerScanSource>(LogLevel.Debug, new EventId(102, nameof(BlobProcessingStarted)),
+                    "Blob '{blobName}' is being processed for function '{functionName}'. PollId: '{pollId}'. ProcessId: '{processId}'. Source: '{triggerSource}'.");
+
             private static readonly Action<ILogger<BlobListener>, string, string, string, string, string, BlobTriggerScanSource, Exception> _blobMessageEnqueued =
                 LoggerMessage.Define<string, string, string, string, string, BlobTriggerScanSource>(LogLevel.Debug, new EventId(103, nameof(BlobMessageEnqueued)),
                     "Blob '{blobName}' is ready for processing by function '{functionName}'. A message with id '{messageId}' has been added to queue '{queueName}'. This message will be dequeued and processed by the BlobTrigger. PollId: '{pollId}'. Source: '{triggerSource}'.");
@@ -36,6 +40,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             public static void BlobAlreadyProcessed(ILogger<BlobListener> logger, string functionName, string blobName, string eTag, string pollId, BlobTriggerScanSource triggerSource) =>
                 _blobAlreadyProcessed(logger, blobName, functionName, eTag, pollId, triggerSource, null);
+
+            public static void BlobProcessingStarted(ILogger<BlobListener> logger, string functionName, string blobName, string pollId, string processId, BlobTriggerScanSource triggerSource) =>
+                _blobProcessingStarted(logger, blobName, functionName, pollId, processId, triggerSource, null);
 
             public static void BlobMessageEnqueued(ILogger<BlobListener> logger, string functionName, string blobName, string queueMessageId, string queueName, string pollId, BlobTriggerScanSource triggerSource) =>
                 _blobMessageEnqueued(logger, blobName, functionName, queueMessageId, queueName, pollId, triggerSource, null);

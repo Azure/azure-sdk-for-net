@@ -97,6 +97,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             string leaseId = await _receiptManager.TryAcquireLeaseAsync(receiptBlob, cancellationToken).ConfigureAwait(false);
+            string processId = Guid.NewGuid().ToString();
+            Logger.BlobProcessingStarted(_logger, _functionDescriptor.LogName, value.Name, pollId, processId, triggerSource);
 
             if (leaseId == null)
             {
