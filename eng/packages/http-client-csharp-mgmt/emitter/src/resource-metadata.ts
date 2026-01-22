@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+import { isPrefix, isVariableSegment } from "./utils.js";
+
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
 const SubscriptionScopePrefix = "/subscriptions";
@@ -214,4 +216,242 @@ export function convertArmProviderSchemaToArguments(
       operationScope: m.operationScope
     }))
   };
+}
+
+/**
+ * Context for parent resource lookup during post-processing.
+ * Different detection methods provide parent information differently.
+ */
+export interface ParentResourceLookupContext {
+  /**
+   * Gets the parent resource for a given resource.
+   * Returns the parent ArmResourceSchema if found, undefined otherwise.
+   */
+  getParentResource(resource: ArmResourceSchema): ArmResourceSchema | undefined;
+}
+
+/**
+ * Post-processes ARM resources to populate parent IDs, merge incomplete resources,
+ * populate resource scopes, sort methods, and filter invalid resources.
+ * 
+ * This is a shared post-processing step used by both resolveArmResources
+ * and buildArmProviderSchema to ensure consistent behavior.
+ * 
+ * @param resources - Initial list of resources to process
+ * @param nonResourceMethods - Array to collect non-resource methods
+ * @param parentLookup - Context for looking up parent resources
+ * @returns Processed list of valid resources
+ */
+export function postProcessArmResources(
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[],
+  parentLookup: ParentResourceLookupContext
+): ArmResourceSchema[] {
+  // Step 1: Separate valid resources (with resourceIdPattern) from incomplete ones (without)
+  const validResources = resources.filter(
+    (r) => r.metadata.resourceIdPattern !== ""
+  );
+  const incompleteResources = resources.filter(
+    (r) => r.metadata.resourceIdPattern === ""
+  );
+
+  // Step 2: Populate parentResourceId in all resources
+  // Build a map for efficient parent lookup
+  const validResourceMap = new Map<string, ArmResourceSchema>();
+  for (const resource of validResources) {
+    validResourceMap.set(resource.metadata.resourceIdPattern, resource);
+  }
+
+  for (const resource of resources) {
+    // Use the provided parent lookup context to find parent
+    const parentResource = parentLookup.getParentResource(resource);
+    if (parentResource && validResourceMap.has(parentResource.metadata.resourceIdPattern)) {
+      const parent = validResourceMap.get(parentResource.metadata.resourceIdPattern)!;
+      resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
+      resource.metadata.parentResourceModelId = parent.resourceModelId;
+    }
+  }
+
+  // Step 3: Merge incomplete resources to their parents or siblings
+  for (const resource of incompleteResources) {
+    const metadata = resource.metadata;
+    let merged = false;
+
+    // First try to merge with parent if it exists
+    if (metadata.parentResourceModelId) {
+      const parent = validResources.find(
+        (r) => r.resourceModelId === metadata.parentResourceModelId
+      );
+      if (parent) {
+        parent.metadata.methods.push(...metadata.methods);
+        merged = true;
+      }
+    }
+
+    if (!merged) {
+      // No parent or parent not found - try to find another entry for the same model
+      const sibling = validResources.find(
+        (r) => r.resourceModelId === resource.resourceModelId
+      );
+      if (sibling) {
+        sibling.metadata.methods.push(...metadata.methods);
+        merged = true;
+      }
+    }
+
+    // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
+    if (!merged) {
+      for (const method of metadata.methods) {
+        nonResourceMethods.push({
+          methodId: method.methodId,
+          operationPath: method.operationPath,
+          operationScope: method.operationScope
+        });
+      }
+    }
+  }
+
+  // Step 4: Populate resourceScope for all resource methods
+  // For each method, find the longest matching resource path that is a prefix of the method's operation path
+  for (const resource of validResources) {
+    for (const method of resource.metadata.methods) {
+      // Find all candidate resource paths that could be the scope for this method
+      const candidates: string[] = [];
+      for (const otherResource of validResources) {
+        if (
+          otherResource.metadata.resourceIdPattern &&
+          isPrefix(otherResource.metadata.resourceIdPattern, method.operationPath)
+        ) {
+          candidates.push(otherResource.metadata.resourceIdPattern);
+        }
+      }
+      // Use the longest resource path as the resourceScope
+      if (candidates.length > 0) {
+        method.resourceScope = candidates.reduce((a, b) => (a.length > b.length ? a : b));
+      }
+    }
+  }
+
+  // Step 5: Populate resourceScope for list operations specifically
+  // This is a more targeted approach for list operations
+  // first we find all the converted list operations
+  const listOperations: ResourceMethod[] = [];
+  for (const resource of validResources) {
+    for (const method of resource.metadata.methods) {
+      if (method.kind === ResourceOperationKind.List) {
+        listOperations.push(method);
+      }
+    }
+  }
+  // then we gather all the resourceInstancePath for all resources as candidates
+  const resourceInstancePaths: Array<string[]> = validResources.map((r) =>
+    r.metadata.resourceIdPattern.split("/").filter((s) => s.length > 0)
+  );
+
+  // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
+  for (const listOp of listOperations) {
+    const validCandidates: Array<string[]> = [];
+    const listOperationPathSegments = listOp.operationPath
+      .split("/")
+      .filter((s) => s.length > 0);
+    
+    for (const candidatePath of resourceInstancePaths) {
+      if (canBeListResourceScope(listOperationPathSegments, candidatePath)) {
+        validCandidates.push(candidatePath);
+      }
+    }
+    
+    // Take the longest matching path as the resourceScope
+    if (validCandidates.length > 0) {
+      validCandidates.sort((a, b) => b.length - a.length);
+      listOp.resourceScope = "/" + validCandidates[0].join("/");
+    }
+  }
+
+  // Step 6: Sort methods in all valid resources for deterministic ordering
+  // This is necessary because methods may have been merged from incomplete resources
+  // and list operations may have been processed
+  for (const resource of validResources) {
+    sortResourceMethods(resource.metadata.methods);
+  }
+
+  // Step 7: Filter out resources without Get/Read operations (non-singleton resources only)
+  // Singleton resources can exist without Get operations
+  const filteredResources: ArmResourceSchema[] = [];
+  for (const resource of validResources) {
+    const hasReadOperation = resource.metadata.methods.some(
+      (m) => m.kind === ResourceOperationKind.Read
+    );
+    if (!hasReadOperation && !resource.metadata.singletonResourceName) {
+      // Try to move all methods to parent resource first, otherwise non-resource methods
+      let movedToParent = false;
+      
+      if (resource.metadata.parentResourceModelId) {
+        // Find parent resource
+        const parent = validResources.find(
+          (r) => r.resourceModelId === resource.metadata.parentResourceModelId
+        );
+        if (parent) {
+          parent.metadata.methods.push(...resource.metadata.methods);
+          movedToParent = true;
+        }
+      }
+      
+      // If no parent or parent not found, move to non-resource methods
+      if (!movedToParent) {
+        for (const method of resource.metadata.methods) {
+          nonResourceMethods.push({
+            methodId: method.methodId,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope
+          });
+        }
+      }
+      continue;
+    }
+    filteredResources.push(resource);
+  }
+
+  // Re-sort methods in resources that may have received additional methods from filtered resources
+  for (const resource of filteredResources) {
+    sortResourceMethods(resource.metadata.methods);
+  }
+
+  return filteredResources;
+}
+
+/**
+ * Helper function to determine if a resource path can be the scope for a list operation.
+ * The resource path must be a prefix of the list operation path.
+ */
+function canBeListResourceScope(
+  listPathSegments: string[],
+  resourceInstancePathSegments: string[]
+): boolean {
+  // Check if resourceInstancePath is a prefix of listPath
+  if (listPathSegments.length < resourceInstancePathSegments.length) {
+    return false;
+  }
+  for (let i = 0; i < resourceInstancePathSegments.length; i++) {
+    // if both segments are variables, we consider it as a match
+    if (
+      isVariableSegment(listPathSegments[i]) &&
+      isVariableSegment(resourceInstancePathSegments[i])
+    ) {
+      continue;
+    }
+    // if one of them is a variable, the other is not, we consider it as not a match
+    if (
+      isVariableSegment(listPathSegments[i]) ||
+      isVariableSegment(resourceInstancePathSegments[i])
+    ) {
+      return false;
+    }
+    // both are fixed strings, they must match
+    if (listPathSegments[i] !== resourceInstancePathSegments[i]) {
+      return false;
+    }
+  }
+  // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
+  return true;
 }
