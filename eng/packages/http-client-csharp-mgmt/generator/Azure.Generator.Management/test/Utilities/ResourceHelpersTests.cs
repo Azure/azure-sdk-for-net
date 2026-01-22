@@ -436,124 +436,26 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.IsTrue(result); // Changed: obsolete method now delegates to IsOperatingOnCurrentResource which returns true for matching Read operations
         }
 
-        [TestCase]
-        public void GetOperationMethodName_ForRead_WhenOperatingOnCurrentResource_ReturnsGet()
+        [TestCase("Read", false, false, true, ExpectedResult = "Get")]
+        [TestCase("Read", false, false, false, ExpectedResult = null)]
+        [TestCase("Read", true, false, true, ExpectedResult = "GetAsync")]
+        [TestCase("Read", true, false, false, ExpectedResult = null)]
+        [TestCase("List", false, true, false, ExpectedResult = null)]
+        [TestCase("List", true, true, false, ExpectedResult = null)]
+        [TestCase("List", false, true, true, ExpectedResult = "GetAll")]
+        [TestCase("List", true, true, true, ExpectedResult = "GetAllAsync")]
+        [TestCase("Delete", false, false, true, ExpectedResult = "Delete")]
+        [TestCase("Delete", false, false, false, ExpectedResult = null)]
+        [TestCase("Delete", true, false, true, ExpectedResult = "DeleteAsync")]
+        [TestCase("Delete", true, false, false, ExpectedResult = null)]
+        public string? GetOperationMethodName_ReturnsExpectedMethodName(
+            string operationKindString,
+            bool isAsync,
+            bool isResourceCollection,
+            bool isOperatingOnCurrentResource)
         {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, false, false, isOperatingOnCurrentResource: true);
-
-            // Assert
-            Assert.AreEqual("Get", result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForRead_WhenOperatingOnOtherResource_ReturnsNull()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, false, false, isOperatingOnCurrentResource: false);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForReadAsync_WhenOperatingOnCurrentResource_ReturnsGetAsync()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, true, false, isOperatingOnCurrentResource: true);
-
-            // Assert
-            Assert.AreEqual("GetAsync", result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForReadAsync_WhenOperatingOnOtherResource_ReturnsNull()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, true, false, isOperatingOnCurrentResource: false);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForList_WhenOperatingOnOtherResource_ReturnsNull()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, false, true, isOperatingOnCurrentResource: false);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForListAsync_WhenOperatingOnOtherResource_ReturnsNull()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, true, true, isOperatingOnCurrentResource: false);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForList_WhenOperatingOnCurrentResource_ReturnsGetAll()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, false, true, isOperatingOnCurrentResource: true);
-
-            // Assert
-            Assert.AreEqual("GetAll", result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForListAsync_WhenOperatingOnCurrentResource_ReturnsGetAllAsync()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, true, true, isOperatingOnCurrentResource: true);
-
-            // Assert
-            Assert.AreEqual("GetAllAsync", result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForDelete_WhenOperatingOnCurrentResource_ReturnsDelete()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isOperatingOnCurrentResource: true);
-
-            // Assert
-            Assert.AreEqual("Delete", result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForDelete_WhenOperatingOnOtherResource_ReturnsNull()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isOperatingOnCurrentResource: false);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForDeleteAsync_WhenOperatingOnCurrentResource_ReturnsDeleteAsync()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isOperatingOnCurrentResource: true);
-
-            // Assert
-            Assert.AreEqual("DeleteAsync", result);
-        }
-
-        [TestCase]
-        public void GetOperationMethodName_ForDeleteAsync_WhenOperatingOnOtherResource_ReturnsNull()
-        {
-            // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isOperatingOnCurrentResource: false);
-
-            // Assert
-            Assert.IsNull(result);
+            var operationKind = Enum.Parse<ResourceOperationKind>(operationKindString);
+            return ResourceHelpers.GetOperationMethodName(operationKind, isAsync, isResourceCollection, isOperatingOnCurrentResource);
         }
     }
 }
