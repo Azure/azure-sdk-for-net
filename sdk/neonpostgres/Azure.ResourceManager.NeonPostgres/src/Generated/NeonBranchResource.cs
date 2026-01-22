@@ -490,6 +490,226 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
+        /// Create a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonDatabaseName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NeonDatabase>> CreateOrUpdateAsync(WaitUntil waitUntil, string neonDatabaseName, NeonDatabase resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _neonDatabasesClientDiagnostics.CreateScope("NeonBranchResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonDatabaseName, NeonDatabase.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NeonPostgresArmOperation<NeonDatabase> operation = new NeonPostgresArmOperation<NeonDatabase>(
+                    new NeonDatabaseOperationSource(),
+                    _neonDatabasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonDatabaseName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NeonDatabase> CreateOrUpdate(WaitUntil waitUntil, string neonDatabaseName, NeonDatabase resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _neonDatabasesClientDiagnostics.CreateScope("NeonBranchResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonDatabaseName, NeonDatabase.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NeonPostgresArmOperation<NeonDatabase> operation = new NeonPostgresArmOperation<NeonDatabase>(
+                    new NeonDatabaseOperationSource(),
+                    _neonDatabasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonDatabaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteAsync(string neonDatabaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+
+            using DiagnosticScope scope = _neonDatabasesClientDiagnostics.CreateScope("NeonBranchResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonDatabaseName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonDatabaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Delete(string neonDatabaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+
+            using DiagnosticScope scope = _neonDatabasesClientDiagnostics.CreateScope("NeonBranchResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonDatabaseName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// List NeonDatabase resources by Branch
         /// <list type="bullet">
         /// <item>
@@ -568,6 +788,226 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
+        /// Create a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonRoleName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NeonRole>> CreateOrUpdateAsync(WaitUntil waitUntil, string neonRoleName, NeonRole resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _neonRolesClientDiagnostics.CreateScope("NeonBranchResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonRolesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonRoleName, NeonRole.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NeonPostgresArmOperation<NeonRole> operation = new NeonPostgresArmOperation<NeonRole>(
+                    new NeonRoleOperationSource(),
+                    _neonRolesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonRoleName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NeonRole> CreateOrUpdate(WaitUntil waitUntil, string neonRoleName, NeonRole resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _neonRolesClientDiagnostics.CreateScope("NeonBranchResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonRolesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonRoleName, NeonRole.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NeonPostgresArmOperation<NeonRole> operation = new NeonPostgresArmOperation<NeonRole>(
+                    new NeonRoleOperationSource(),
+                    _neonRolesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonRoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteNeonRoleAsync(string neonRoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+
+            using DiagnosticScope scope = _neonRolesClientDiagnostics.CreateScope("NeonBranchResource.DeleteNeonRole");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonRolesRestClient.CreateDeleteNeonRoleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonRoleName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="neonRoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteNeonRole(string neonRoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+
+            using DiagnosticScope scope = _neonRolesClientDiagnostics.CreateScope("NeonBranchResource.DeleteNeonRole");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _neonRolesRestClient.CreateDeleteNeonRoleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, neonRoleName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// List NeonRole resources by Branch
         /// <list type="bullet">
         /// <item>
@@ -643,6 +1083,226 @@ namespace Azure.ResourceManager.NeonPostgres
                 Id.Parent.Name,
                 Id.Name,
                 context);
+        }
+
+        /// <summary>
+        /// Create a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NeonEndpoint>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, NeonEndpoint resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NeonBranchResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _endpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, NeonEndpoint.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NeonPostgresArmOperation<NeonEndpoint> operation = new NeonPostgresArmOperation<NeonEndpoint>(
+                    new NeonEndpointOperationSource(),
+                    _endpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NeonEndpoint> CreateOrUpdate(WaitUntil waitUntil, string endpointName, NeonEndpoint resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NeonBranchResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _endpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, NeonEndpoint.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NeonPostgresArmOperation<NeonEndpoint> operation = new NeonPostgresArmOperation<NeonEndpoint>(
+                    new NeonEndpointOperationSource(),
+                    _endpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteNeonEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NeonBranchResource.DeleteNeonEndpoint");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _endpointsRestClient.CreateDeleteNeonEndpointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NeonBranchResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteNeonEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NeonBranchResource.DeleteNeonEndpoint");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _endpointsRestClient.CreateDeleteNeonEndpointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
