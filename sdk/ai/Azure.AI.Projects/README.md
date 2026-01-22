@@ -36,7 +36,8 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Fine-Tuning operations](#fine-tuning-operations)
   - [Memory store operations](#memory-store-operations)
   - [Evaluations](#evalustions)
-    - [Basic evaluations sample](#basic-evaluations-sample)
+    - [Agent evaluation](#agent-evaluation)
+    - [Model evaluation](#model-evaluation)
     - [Using uploaded datasets](#using-uploaded-datasets)
     - [Using custom prompt-based evaluator](#using-custom-prompt-based-evaluator)
     - [Using custom code-based evaluator](#using-custom-code-based-evaluator)
@@ -649,7 +650,7 @@ Evaluation in Azure AI Project client library provides quantitative, AI-assisted
 performance and Evaluate LLM Models, GenAI Application and Agents. Metrics are defined as evaluators. Built-in or
 custom evaluators can provide comprehensive evaluation insights.
 
-#### Basic evaluation sample
+#### Agent evaluation
 
 All the operations with evaluations can be performed using `EvaluationClient`. Here we will demonstrate only the basic concepts of the evaluations.
 Please see the full sample of evaluations in our samples section.
@@ -718,7 +719,7 @@ string evaluationId = fields["id"];
 Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
 ```
 
-Create the data source. It contains name, the ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent.
+Create the data source. It contains name, the ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent. The target type `azure_ai_agent` informs the service that we are evaluating Agent.
 
 ```C# Snippet:Sample_CreateDataSource_Evaluations
 object dataSource = new
@@ -821,6 +822,55 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
     } while (hasMore);
     return resultJsons;
 }
+```
+
+#### Model evaluation
+
+Model evaluation scenario differs from agent evaluation only by the target configuration in `dataSource`:
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsModel
+object dataSource = new
+{
+    type = "azure_ai_target_completions",
+    source = new
+    {
+        type = "file_content",
+        content = new[] {
+            new { item = new { query = "What is the capital of France?" } },
+            new { item = new { query = "How do I reverse a string in Python? "} },
+        }
+    },
+    input_messages = new
+    {
+        type = "template",
+        template = new[] {
+            new {
+                type = "message",
+                role = "user",
+                content = new { type = "input_text", text = "{{item.query}}" }
+            }
+        }
+    },
+    target = new
+    {
+        type = "azure_ai_model",
+        model = modelDeploymentName,
+        sampling_params = new
+        {
+            top_p = 1.0f,
+            max_completion_tokens = 2048,
+        }
+    }
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"Evaluation Run for Model {modelDeploymentName}",
+        data_source = dataSource
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
 ```
 
 #### Using uploaded datasets
