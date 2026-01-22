@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> AkriConnectorTemplateRuntimeImageConfiguration properties. </summary>
     public partial class AkriConnectorTemplateRuntimeImageConfigurationSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeImageConfigurationSettings"/>. </summary>
         /// <param name="imageName"> The image name without any registry reference, tag or digest. </param>
@@ -59,49 +31,32 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="imageName"> The image name without any registry reference, tag or digest. </param>
         /// <param name="imagePullPolicy"> The pull policy of the image. </param>
         /// <param name="replicas"> The number of replicas to be set up. </param>
-        /// <param name="registrySettings">
-        /// The registry settings for the image. You can omit this field if using the default docker hub repository or using a local image.
-        /// Please note <see cref="AkriConnectorsRegistrySettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorsContainerRegistry"/> and <see cref="AkriConnectorsRegistryEndpointRef"/>.
-        /// </param>
-        /// <param name="tagDigestSettings">
-        /// Optional image tag or digest. If not specified, the default tag is `latest`.
-        /// Please note <see cref="AkriConnectorsTagDigestSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorsDigest"/> and <see cref="AkriConnectorsTag"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AkriConnectorTemplateRuntimeImageConfigurationSettings(string imageName, AkriConnectorsImagePullPolicy? imagePullPolicy, int? replicas, AkriConnectorsRegistrySettings registrySettings, AkriConnectorsTagDigestSettings tagDigestSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="registrySettings"> The registry settings for the image. You can omit this field if using the default docker hub repository or using a local image. </param>
+        /// <param name="tagDigestSettings"> Optional image tag or digest. If not specified, the default tag is `latest`. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AkriConnectorTemplateRuntimeImageConfigurationSettings(string imageName, AkriConnectorsImagePullPolicy? imagePullPolicy, int? replicas, AkriConnectorsRegistrySettings registrySettings, AkriConnectorsTagDigestSettings tagDigestSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageName = imageName;
             ImagePullPolicy = imagePullPolicy;
             Replicas = replicas;
             RegistrySettings = registrySettings;
             TagDigestSettings = tagDigestSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeImageConfigurationSettings"/> for deserialization. </summary>
-        internal AkriConnectorTemplateRuntimeImageConfigurationSettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The image name without any registry reference, tag or digest. </summary>
         public string ImageName { get; set; }
+
         /// <summary> The pull policy of the image. </summary>
         public AkriConnectorsImagePullPolicy? ImagePullPolicy { get; set; }
+
         /// <summary> The number of replicas to be set up. </summary>
         public int? Replicas { get; set; }
-        /// <summary>
-        /// The registry settings for the image. You can omit this field if using the default docker hub repository or using a local image.
-        /// Please note <see cref="AkriConnectorsRegistrySettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorsContainerRegistry"/> and <see cref="AkriConnectorsRegistryEndpointRef"/>.
-        /// </summary>
+
+        /// <summary> The registry settings for the image. You can omit this field if using the default docker hub repository or using a local image. </summary>
         public AkriConnectorsRegistrySettings RegistrySettings { get; set; }
-        /// <summary>
-        /// Optional image tag or digest. If not specified, the default tag is `latest`.
-        /// Please note <see cref="AkriConnectorsTagDigestSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorsDigest"/> and <see cref="AkriConnectorsTag"/>.
-        /// </summary>
+
+        /// <summary> Optional image tag or digest. If not specified, the default tag is `latest`. </summary>
         public AkriConnectorsTagDigestSettings TagDigestSettings { get; set; }
     }
 }

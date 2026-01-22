@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct BrokerAuthenticationMethod : IEquatable<BrokerAuthenticationMethod>
     {
         private readonly string _value;
+        /// <summary> Custom authentication configuration. </summary>
+        private const string CustomValue = "Custom";
+        /// <summary> ServiceAccountToken authentication configuration. </summary>
+        private const string ServiceAccountTokenValue = "ServiceAccountToken";
+        /// <summary> X.509 authentication configuration. </summary>
+        private const string X509Value = "X509";
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BrokerAuthenticationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CustomValue = "Custom";
-        private const string ServiceAccountTokenValue = "ServiceAccountToken";
-        private const string X509Value = "X509";
+            _value = value;
+        }
 
         /// <summary> Custom authentication configuration. </summary>
         public static BrokerAuthenticationMethod Custom { get; } = new BrokerAuthenticationMethod(CustomValue);
+
         /// <summary> ServiceAccountToken authentication configuration. </summary>
         public static BrokerAuthenticationMethod ServiceAccountToken { get; } = new BrokerAuthenticationMethod(ServiceAccountTokenValue);
+
         /// <summary> X.509 authentication configuration. </summary>
         public static BrokerAuthenticationMethod X509 { get; } = new BrokerAuthenticationMethod(X509Value);
+
         /// <summary> Determines if two <see cref="BrokerAuthenticationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BrokerAuthenticationMethod left, BrokerAuthenticationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BrokerAuthenticationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BrokerAuthenticationMethod left, BrokerAuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BrokerAuthenticationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BrokerAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BrokerAuthenticationMethod(string value) => new BrokerAuthenticationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BrokerAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BrokerAuthenticationMethod?(string value) => value == null ? null : new BrokerAuthenticationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BrokerAuthenticationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BrokerAuthenticationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

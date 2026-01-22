@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct IotOperationsInstanceFeatureMode : IEquatable<IotOperationsInstanceFeatureMode>
     {
         private readonly string _value;
+        /// <summary> Opt in to enable a stable feature. </summary>
+        private const string StableValue = "Stable";
+        /// <summary> Opt in to enable a preview feature. </summary>
+        private const string PreviewValue = "Preview";
+        /// <summary> Opt out of a feature. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsInstanceFeatureMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotOperationsInstanceFeatureMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StableValue = "Stable";
-        private const string PreviewValue = "Preview";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Opt in to enable a stable feature. </summary>
         public static IotOperationsInstanceFeatureMode Stable { get; } = new IotOperationsInstanceFeatureMode(StableValue);
+
         /// <summary> Opt in to enable a preview feature. </summary>
         public static IotOperationsInstanceFeatureMode Preview { get; } = new IotOperationsInstanceFeatureMode(PreviewValue);
+
         /// <summary> Opt out of a feature. </summary>
         public static IotOperationsInstanceFeatureMode Disabled { get; } = new IotOperationsInstanceFeatureMode(DisabledValue);
+
         /// <summary> Determines if two <see cref="IotOperationsInstanceFeatureMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotOperationsInstanceFeatureMode left, IotOperationsInstanceFeatureMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotOperationsInstanceFeatureMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotOperationsInstanceFeatureMode left, IotOperationsInstanceFeatureMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotOperationsInstanceFeatureMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotOperationsInstanceFeatureMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotOperationsInstanceFeatureMode(string value) => new IotOperationsInstanceFeatureMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotOperationsInstanceFeatureMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotOperationsInstanceFeatureMode?(string value) => value == null ? null : new IotOperationsInstanceFeatureMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotOperationsInstanceFeatureMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotOperationsInstanceFeatureMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

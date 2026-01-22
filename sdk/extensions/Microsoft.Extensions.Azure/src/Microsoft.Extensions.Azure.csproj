@@ -9,9 +9,6 @@
     <ApiCompatVersion>1.13.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline AspNetCore Extensions</PackageTags>
 
-    <!-- Make sure that we don't pull in additional dependencies during build or package -->
-    <ImportDefaultReferences>false</ImportDefaultReferences>
-
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>

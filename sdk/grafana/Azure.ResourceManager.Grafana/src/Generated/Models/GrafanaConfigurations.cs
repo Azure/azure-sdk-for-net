@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Server configurations of a Grafana instance. </summary>
     public partial class GrafanaConfigurations
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaConfigurations"/>. </summary>
         public GrafanaConfigurations()
@@ -59,15 +30,15 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="users"> Grafana users settings. </param>
         /// <param name="security"> Grafana security settings. </param>
         /// <param name="unifiedAlertingScreenshots"> Grafana Unified Alerting Screenshots settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaConfigurations(GrafanaSmtpSettings smtp, GrafanaSnapshotsSettings snapshots, GrafanaUserSettings users, GrafanaSecuritySettings security, UnifiedAlertingScreenshots unifiedAlertingScreenshots, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaConfigurations(GrafanaSmtpSettings smtp, GrafanaSnapshotsSettings snapshots, GrafanaUserSettings users, GrafanaSecuritySettings security, UnifiedAlertingScreenshots unifiedAlertingScreenshots, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Smtp = smtp;
             Snapshots = snapshots;
             Users = users;
             Security = security;
             UnifiedAlertingScreenshots = unifiedAlertingScreenshots;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -75,46 +46,66 @@ namespace Azure.ResourceManager.Grafana.Models
         /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
         /// </summary>
         public GrafanaSmtpSettings Smtp { get; set; }
+
         /// <summary> Grafana Snapshots settings. </summary>
         internal GrafanaSnapshotsSettings Snapshots { get; set; }
+
+        /// <summary> Grafana users settings. </summary>
+        public GrafanaUserSettings Users { get; set; }
+
+        /// <summary> Grafana security settings. </summary>
+        internal GrafanaSecuritySettings Security { get; set; }
+
+        /// <summary> Grafana Unified Alerting Screenshots settings. </summary>
+        internal UnifiedAlertingScreenshots UnifiedAlertingScreenshots { get; set; }
+
         /// <summary> Set to false to disable external snapshot publish endpoint. </summary>
         public bool? IsExternalEnabled
         {
-            get => Snapshots is null ? default : Snapshots.IsExternalEnabled;
+            get
+            {
+                return Snapshots is null ? default : Snapshots.IsExternalEnabled;
+            }
             set
             {
                 if (Snapshots is null)
+                {
                     Snapshots = new GrafanaSnapshotsSettings();
+                }
                 Snapshots.IsExternalEnabled = value;
             }
         }
 
-        /// <summary> Grafana users settings. </summary>
-        public GrafanaUserSettings Users { get; set; }
-        /// <summary> Grafana security settings. </summary>
-        internal GrafanaSecuritySettings Security { get; set; }
         /// <summary> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </summary>
         public bool? IsCsrfAlwaysCheckEnabled
         {
-            get => Security is null ? default : Security.IsCsrfAlwaysCheckEnabled;
+            get
+            {
+                return Security is null ? default : Security.IsCsrfAlwaysCheckEnabled;
+            }
             set
             {
                 if (Security is null)
+                {
                     Security = new GrafanaSecuritySettings();
+                }
                 Security.IsCsrfAlwaysCheckEnabled = value;
             }
         }
 
-        /// <summary> Grafana Unified Alerting Screenshots settings. </summary>
-        internal UnifiedAlertingScreenshots UnifiedAlertingScreenshots { get; set; }
         /// <summary> Set to false to disable capture screenshot in Unified Alert due to performance issue. </summary>
         public bool? IsCaptureEnabled
         {
-            get => UnifiedAlertingScreenshots is null ? default : UnifiedAlertingScreenshots.IsCaptureEnabled;
+            get
+            {
+                return UnifiedAlertingScreenshots is null ? default : UnifiedAlertingScreenshots.IsCaptureEnabled;
+            }
             set
             {
                 if (UnifiedAlertingScreenshots is null)
+                {
                     UnifiedAlertingScreenshots = new UnifiedAlertingScreenshots();
+                }
                 UnifiedAlertingScreenshots.IsCaptureEnabled = value;
             }
         }

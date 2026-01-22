@@ -22,15 +22,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the dedicated HSM. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="sku"/> is null. </exception>
-        public DedicatedHsmData(AzureLocation location, DedicatedHsmProperties properties, DedicatedHsmSku sku) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DedicatedHsmData(AzureLocation location, DedicatedHsmProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(sku, nameof(sku));
 
             Properties = properties;
-            Sku = sku;
             Zones = new ChangeTrackingList<string>();
         }
 

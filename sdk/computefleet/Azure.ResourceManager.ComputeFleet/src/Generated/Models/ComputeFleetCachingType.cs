@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetCachingType : IEquatable<ComputeFleetCachingType>
     {
         private readonly string _value;
+        /// <summary> 'None' is default for Standard Storage. </summary>
+        private const string NoneValue = "None";
+        /// <summary> 'ReadOnly' is default for Premium Storage. </summary>
+        private const string ReadOnlyValue = "ReadOnly";
+        /// <summary> 'ReadWrite' is default for OS Disk. </summary>
+        private const string ReadWriteValue = "ReadWrite";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetCachingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetCachingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ReadOnlyValue = "ReadOnly";
-        private const string ReadWriteValue = "ReadWrite";
+            _value = value;
+        }
 
         /// <summary> 'None' is default for Standard Storage. </summary>
         public static ComputeFleetCachingType None { get; } = new ComputeFleetCachingType(NoneValue);
+
         /// <summary> 'ReadOnly' is default for Premium Storage. </summary>
         public static ComputeFleetCachingType ReadOnly { get; } = new ComputeFleetCachingType(ReadOnlyValue);
+
         /// <summary> 'ReadWrite' is default for OS Disk. </summary>
         public static ComputeFleetCachingType ReadWrite { get; } = new ComputeFleetCachingType(ReadWriteValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetCachingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetCachingType left, ComputeFleetCachingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetCachingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetCachingType left, ComputeFleetCachingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetCachingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetCachingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetCachingType(string value) => new ComputeFleetCachingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetCachingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetCachingType?(string value) => value == null ? null : new ComputeFleetCachingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetCachingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetCachingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

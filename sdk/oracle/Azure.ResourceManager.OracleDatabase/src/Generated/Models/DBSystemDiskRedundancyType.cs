@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBSystemDiskRedundancyType : IEquatable<DBSystemDiskRedundancyType>
     {
         private readonly string _value;
+        /// <summary> 3-way redundancy. </summary>
+        private const string HighValue = "High";
+        /// <summary> 2-way redundancy. </summary>
+        private const string NormalValue = "Normal";
 
         /// <summary> Initializes a new instance of <see cref="DBSystemDiskRedundancyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBSystemDiskRedundancyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HighValue = "High";
-        private const string NormalValue = "Normal";
+            _value = value;
+        }
 
         /// <summary> 3-way redundancy. </summary>
         public static DBSystemDiskRedundancyType High { get; } = new DBSystemDiskRedundancyType(HighValue);
+
         /// <summary> 2-way redundancy. </summary>
         public static DBSystemDiskRedundancyType Normal { get; } = new DBSystemDiskRedundancyType(NormalValue);
+
         /// <summary> Determines if two <see cref="DBSystemDiskRedundancyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBSystemDiskRedundancyType left, DBSystemDiskRedundancyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBSystemDiskRedundancyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBSystemDiskRedundancyType left, DBSystemDiskRedundancyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBSystemDiskRedundancyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBSystemDiskRedundancyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBSystemDiskRedundancyType(string value) => new DBSystemDiskRedundancyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBSystemDiskRedundancyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBSystemDiskRedundancyType?(string value) => value == null ? null : new DBSystemDiskRedundancyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBSystemDiskRedundancyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBSystemDiskRedundancyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

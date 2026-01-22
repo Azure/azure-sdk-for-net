@@ -6,42 +6,47 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    internal partial class OccurrencesRestOperations
+    internal partial class Occurrences
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of OccurrencesRestOperations. </summary>
+        /// <summary> Initializes a new instance of Occurrences for mocking. </summary>
+        protected Occurrences()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Occurrences. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public OccurrencesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Occurrences(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-15-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
@@ -49,197 +54,52 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/occurrences/", false);
             uri.AppendPath(occurrenceId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/occurrences/", false);
-            uri.AppendPath(occurrenceId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a Occurrence. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionOccurrenceData>> GetAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByScheduledActionRequest(Guid subscriptionId, string resourceGroupName, string scheduledActionName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionOccurrenceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionOccurrenceData.DeserializeScheduledActionOccurrenceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScheduledActionOccurrenceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a Occurrence. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionOccurrenceData> Get(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionOccurrenceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionOccurrenceData.DeserializeScheduledActionOccurrenceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScheduledActionOccurrenceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByScheduledActionRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/occurrences", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByScheduledActionRequest(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/occurrences", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List Occurrence resources by ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OccurrenceListResult>> ListByScheduledActionAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByScheduledActionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scheduledActionName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListByScheduledActionRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OccurrenceListResult.DeserializeOccurrenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> List Occurrence resources by ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OccurrenceListResult> ListByScheduledAction(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAttachedResourcesRequest(Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListByScheduledActionRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OccurrenceListResult.DeserializeOccurrenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetAttachedResourcesRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
@@ -248,100 +108,32 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(occurrenceId, true);
             uri.AppendPath("/resources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAttachedResourcesRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/occurrences/", false);
-            uri.AppendPath(occurrenceId, true);
-            uri.AppendPath("/resources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List resources attached to Scheduled Actions for the given occurrence. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OccurrenceResourceListResponse>> GetAttachedResourcesAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAttachedResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            using var message = CreateGetAttachedResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OccurrenceResourceListResponse.DeserializeOccurrenceResourceListResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> List resources attached to Scheduled Actions for the given occurrence. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OccurrenceResourceListResponse> GetAttachedResources(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            using var message = CreateGetAttachedResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OccurrenceResourceListResponse.DeserializeOccurrenceResourceListResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceCancelContent content)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
@@ -350,108 +142,22 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(occurrenceId, true);
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceCancelContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/occurrences/", false);
-            uri.AppendPath(occurrenceId, true);
-            uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionResourceOperationResult>> CancelAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceCancelContent content, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDelayRequest(Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionResourceOperationResult> Cancel(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceCancelContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDelayRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
@@ -460,264 +166,14 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(occurrenceId, true);
             uri.AppendPath("/delay", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDelayRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/occurrences/", false);
-            uri.AppendPath(occurrenceId, true);
-            uri.AppendPath("/delay", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
-        }
-
-        /// <summary> A long-running resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DelayAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateDelayRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A long-running resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delay(string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateDelayRequest(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByScheduledActionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByScheduledActionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List Occurrence resources by ScheduledAction. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OccurrenceListResult>> ListByScheduledActionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListByScheduledActionNextPageRequest(nextLink, subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OccurrenceListResult.DeserializeOccurrenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List Occurrence resources by ScheduledAction. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OccurrenceListResult> ListByScheduledActionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListByScheduledActionNextPageRequest(nextLink, subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OccurrenceListResult.DeserializeOccurrenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetAttachedResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAttachedResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List resources attached to Scheduled Actions for the given occurrence. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OccurrenceResourceListResponse>> GetAttachedResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            using var message = CreateGetAttachedResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, scheduledActionName, occurrenceId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OccurrenceResourceListResponse.DeserializeOccurrenceResourceListResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List resources attached to Scheduled Actions for the given occurrence. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OccurrenceResourceListResponse> GetAttachedResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            using var message = CreateGetAttachedResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, scheduledActionName, occurrenceId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OccurrenceResourceListResponse.DeserializeOccurrenceResourceListResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

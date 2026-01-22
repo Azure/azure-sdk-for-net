@@ -299,9 +299,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode AsynchronousCommit { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode SynchronousCommit { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode (string value) { throw null; }
@@ -317,9 +315,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode Automatic { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode (string value) { throw null; }
@@ -335,9 +331,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole Primary { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole (string value) { throw null; }
@@ -366,9 +360,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondaryMode No { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondaryMode ReadOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondaryMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondaryMode left, Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondaryMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondaryMode (string value) { throw null; }
@@ -401,9 +393,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku Standard { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku Web { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku (string value) { throw null; }
@@ -437,9 +427,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode LightWeight { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode NoAgent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode (string value) { throw null; }
@@ -471,9 +459,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType Private { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType Public { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType (string value) { throw null; }
@@ -490,9 +476,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType DR { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType Payg { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType (string value) { throw null; }
@@ -595,9 +579,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoBackupDayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoBackupDayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoBackupDayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoBackupDayOfWeek left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoBackupDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoBackupDayOfWeek (string value) { throw null; }
@@ -661,9 +643,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public SqlVmClusterConfiguration(string value) { throw null; }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterConfiguration Domainful { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterConfiguration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterConfiguration left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterConfiguration right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterConfiguration (string value) { throw null; }
@@ -678,9 +658,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public SqlVmClusterManagerType(string value) { throw null; }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterManagerType WindowsServerFailoverCluster { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterManagerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterManagerType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterManagerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterManagerType (string value) { throw null; }
@@ -696,9 +674,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterSubnetType MultiSubnet { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterSubnetType SingleSubnet { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterSubnetType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterSubnetType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterSubnetType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterSubnetType (string value) { throw null; }
@@ -715,9 +691,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmDiskConfigurationType Extend { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmDiskConfigurationType New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmDiskConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmDiskConfigurationType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmDiskConfigurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmDiskConfigurationType (string value) { throw null; }
@@ -733,9 +707,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmFullBackupFrequency Daily { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmFullBackupFrequency Weekly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmFullBackupFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmFullBackupFrequency left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmFullBackupFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmFullBackupFrequency (string value) { throw null; }
@@ -751,9 +723,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku Developer { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku Enterprise { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku (string value) { throw null; }
@@ -779,9 +749,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public SqlVmGroupScaleType(string value) { throw null; }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupScaleType HA { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupScaleType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupScaleType (string value) { throw null; }
@@ -840,9 +808,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmStorageWorkloadType General { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmStorageWorkloadType Oltp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmStorageWorkloadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmStorageWorkloadType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmStorageWorkloadType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmStorageWorkloadType (string value) { throw null; }
@@ -859,9 +825,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlWorkloadType General { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlWorkloadType Oltp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlWorkloadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlWorkloadType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlWorkloadType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlWorkloadType (string value) { throw null; }
@@ -877,9 +841,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqVmBackupScheduleType Automated { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.SqVmBackupScheduleType Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqVmBackupScheduleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqVmBackupScheduleType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqVmBackupScheduleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqVmBackupScheduleType (string value) { throw null; }

@@ -657,9 +657,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public PureStorageAvsVmType(string value) { throw null; }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmType VVol { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmType left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmType (string value) { throw null; }
@@ -675,9 +673,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public PureStorageAvsVmVolumeContainerType(string value) { throw null; }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeContainerType AVS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeContainerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeContainerType left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeContainerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeContainerType (string value) { throw null; }
@@ -707,9 +703,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public PureStorageAvsVmVolumeType(string value) { throw null; }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeType AVS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeType left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageAvsVmVolumeType (string value) { throw null; }
@@ -764,9 +758,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageBillingUsageSeverity NONE { get { throw null; } }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageBillingUsageSeverity WARNING { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageBillingUsageSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageBillingUsageSeverity left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageBillingUsageSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageBillingUsageSeverity (string value) { throw null; }
@@ -814,9 +806,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageHealthAlertLevel Info { get { throw null; } }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageHealthAlertLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageHealthAlertLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageHealthAlertLevel left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageHealthAlertLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageHealthAlertLevel (string value) { throw null; }
@@ -886,9 +876,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageMarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageMarketplaceSubscriptionStatus left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -980,9 +968,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageProvisioningState left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageProvisioningState (string value) { throw null; }
@@ -1049,9 +1035,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.PureStorageBlock.Models.PureStorageResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PureStorageBlock.Models.PureStorageResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PureStorageBlock.Models.PureStorageResourceProvisioningState left, Azure.ResourceManager.PureStorageBlock.Models.PureStorageResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PureStorageBlock.Models.PureStorageResourceProvisioningState (string value) { throw null; }

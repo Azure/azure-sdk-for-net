@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct StorageManagementType : IEquatable<StorageManagementType>
     {
         private readonly string _value;
+        /// <summary> Logical Volume management. </summary>
+        private const string LvmValue = "LVM";
 
         /// <summary> Initializes a new instance of <see cref="StorageManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageManagementType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LvmValue = "LVM";
+            _value = value;
+        }
 
         /// <summary> Logical Volume management. </summary>
         public static StorageManagementType Lvm { get; } = new StorageManagementType(LvmValue);
+
         /// <summary> Determines if two <see cref="StorageManagementType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageManagementType left, StorageManagementType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageManagementType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageManagementType left, StorageManagementType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageManagementType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageManagementType(string value) => new StorageManagementType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageManagementType?(string value) => value == null ? null : new StorageManagementType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageManagementType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageManagementType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

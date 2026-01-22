@@ -38,11 +38,8 @@ namespace Azure.Provisioning.Redis
         public RedisBuiltInRole(string value) { throw null; }
         public static Azure.Provisioning.Redis.RedisBuiltInRole RedisCacheContributor { get { throw null; } }
         public bool Equals(Azure.Provisioning.Redis.RedisBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.Redis.RedisBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.Redis.RedisBuiltInRole left, Azure.Provisioning.Redis.RedisBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.Redis.RedisBuiltInRole (string value) { throw null; }
@@ -164,7 +161,6 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -401,7 +397,6 @@ namespace Azure.Provisioning.Redis
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisResource FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.Redis.RedisAccessKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

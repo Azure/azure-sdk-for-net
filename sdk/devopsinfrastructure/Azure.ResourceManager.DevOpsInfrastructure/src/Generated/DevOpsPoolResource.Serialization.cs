@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
+    /// <summary></summary>
     public partial class DevOpsPoolResource : IJsonModel<DevOpsPoolData>
     {
-        private static DevOpsPoolData s_dataDeserializationInstance;
-        private static DevOpsPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DevOpsPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DevOpsPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DevOpsPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevOpsPoolData>)Data).Write(writer, options);
 
-        DevOpsPoolData IJsonModel<DevOpsPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevOpsPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsPoolData IJsonModel<DevOpsPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DevOpsPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevOpsPoolData>(Data, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DevOpsPoolData IPersistableModel<DevOpsPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevOpsPoolData>(data, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
 
-        string IPersistableModel<DevOpsPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevOpsPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevOpsPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

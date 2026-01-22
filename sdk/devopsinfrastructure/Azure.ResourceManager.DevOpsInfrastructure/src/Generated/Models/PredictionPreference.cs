@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct PredictionPreference : IEquatable<PredictionPreference>
     {
         private readonly string _value;
+        /// <summary> Balance between cost and performance. </summary>
+        private const string BalancedValue = "Balanced";
+        /// <summary> Optimizes for cost over performance. </summary>
+        private const string MostCostEffectiveValue = "MostCostEffective";
+        /// <summary> Halfway through cost and balanced. </summary>
+        private const string MoreCostEffectiveValue = "MoreCostEffective";
+        /// <summary> Halfway through balanced and performance. </summary>
+        private const string MorePerformanceValue = "MorePerformance";
+        /// <summary> Optimizes for performance over cost. </summary>
+        private const string BestPerformanceValue = "BestPerformance";
 
         /// <summary> Initializes a new instance of <see cref="PredictionPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PredictionPreference(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BalancedValue = "Balanced";
-        private const string MostCostEffectiveValue = "MostCostEffective";
-        private const string MoreCostEffectiveValue = "MoreCostEffective";
-        private const string MorePerformanceValue = "MorePerformance";
-        private const string BestPerformanceValue = "BestPerformance";
+            _value = value;
+        }
 
         /// <summary> Balance between cost and performance. </summary>
         public static PredictionPreference Balanced { get; } = new PredictionPreference(BalancedValue);
+
         /// <summary> Optimizes for cost over performance. </summary>
         public static PredictionPreference MostCostEffective { get; } = new PredictionPreference(MostCostEffectiveValue);
+
         /// <summary> Halfway through cost and balanced. </summary>
         public static PredictionPreference MoreCostEffective { get; } = new PredictionPreference(MoreCostEffectiveValue);
+
         /// <summary> Halfway through balanced and performance. </summary>
         public static PredictionPreference MorePerformance { get; } = new PredictionPreference(MorePerformanceValue);
+
         /// <summary> Optimizes for performance over cost. </summary>
         public static PredictionPreference BestPerformance { get; } = new PredictionPreference(BestPerformanceValue);
+
         /// <summary> Determines if two <see cref="PredictionPreference"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PredictionPreference left, PredictionPreference right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PredictionPreference"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PredictionPreference left, PredictionPreference right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PredictionPreference"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PredictionPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PredictionPreference(string value) => new PredictionPreference(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PredictionPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PredictionPreference?(string value) => value == null ? null : new PredictionPreference(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PredictionPreference other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PredictionPreference other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

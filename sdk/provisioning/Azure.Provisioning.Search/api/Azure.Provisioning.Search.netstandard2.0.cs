@@ -24,11 +24,8 @@ namespace Azure.Provisioning.Search
         public static Azure.Provisioning.Search.SearchBuiltInRole SearchIndexDataReader { get { throw null; } }
         public static Azure.Provisioning.Search.SearchBuiltInRole SearchServiceContributor { get { throw null; } }
         public bool Equals(Azure.Provisioning.Search.SearchBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.Search.SearchBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.Search.SearchBuiltInRole left, Azure.Provisioning.Search.SearchBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.Search.SearchBuiltInRole (string value) { throw null; }
@@ -81,27 +78,19 @@ namespace Azure.Provisioning.Search
         public static Azure.Provisioning.Search.SearchPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2014_07_31_Preview;
             public static readonly string V2015_02_28;
             public static readonly string V2015_08_19;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2019_10_01_Preview;
             public static readonly string V2020_03_13;
             public static readonly string V2020_08_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2020_08_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2021_04_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2021_06_06_Preview;
             public static readonly string V2022_09_01;
             public static readonly string V2023_11_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2024_03_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2024_06_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2025_02_01_Preview;
         }
     }
@@ -167,31 +156,22 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Search.SearchBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Search.SearchService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2014_07_31_Preview;
             public static readonly string V2015_02_28;
             public static readonly string V2015_08_19;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2019_10_01_Preview;
             public static readonly string V2020_03_13;
             public static readonly string V2020_08_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2020_08_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2021_04_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2021_06_06_Preview;
             public static readonly string V2022_09_01;
             public static readonly string V2023_11_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2024_03_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2024_06_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2025_02_01_Preview;
         }
     }
@@ -318,27 +298,19 @@ namespace Azure.Provisioning.Search
         public static Azure.Provisioning.Search.SharedSearchServicePrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2014_07_31_Preview;
             public static readonly string V2015_02_28;
             public static readonly string V2015_08_19;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2019_10_01_Preview;
             public static readonly string V2020_03_13;
             public static readonly string V2020_08_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2020_08_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2021_04_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2021_06_06_Preview;
             public static readonly string V2022_09_01;
             public static readonly string V2023_11_01;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2024_03_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2024_06_01_Preview;
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2025_02_01_Preview;
         }
     }

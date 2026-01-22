@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </summary>
     public partial class AutonomousDatabaseConnectionUrls
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseConnectionUrls"/>. </summary>
         internal AutonomousDatabaseConnectionUrls()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="mongoDBUri"> The URL of the MongoDB API for the Autonomous Database. </param>
         /// <param name="ordsUri"> The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database. </param>
         /// <param name="sqlDevWebUri"> Oracle SQL Developer Web URL. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseConnectionUrls(Uri apexUri, Uri databaseTransformsUri, Uri graphStudioUri, Uri machineLearningNotebookUri, Uri mongoDBUri, Uri ordsUri, Uri sqlDevWebUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutonomousDatabaseConnectionUrls(Uri apexUri, Uri databaseTransformsUri, Uri graphStudioUri, Uri machineLearningNotebookUri, Uri mongoDBUri, Uri ordsUri, Uri sqlDevWebUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApexUri = apexUri;
             DatabaseTransformsUri = databaseTransformsUri;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             MongoDBUri = mongoDBUri;
             OrdsUri = ordsUri;
             SqlDevWebUri = sqlDevWebUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Oracle Application Express (APEX) URL. </summary>
         public Uri ApexUri { get; }
+
         /// <summary> The URL of the Database Transforms for the Autonomous Database. </summary>
         public Uri DatabaseTransformsUri { get; }
+
         /// <summary> The URL of the Graph Studio for the Autonomous Database. </summary>
         public Uri GraphStudioUri { get; }
+
         /// <summary> The URL of the Oracle Machine Learning (OML) Notebook for the Autonomous Database. </summary>
         public Uri MachineLearningNotebookUri { get; }
+
         /// <summary> The URL of the MongoDB API for the Autonomous Database. </summary>
         public Uri MongoDBUri { get; }
+
         /// <summary> The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database. </summary>
         public Uri OrdsUri { get; }
+
         /// <summary> Oracle SQL Developer Web URL. </summary>
         public Uri SqlDevWebUri { get; }
     }

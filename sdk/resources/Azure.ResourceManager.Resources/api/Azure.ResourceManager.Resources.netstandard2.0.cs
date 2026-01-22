@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.Resources
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release.", false)]
         public System.Collections.Generic.IList<string> LockingAllowedActions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy LockingPolicy { get { throw null; } set { } }
@@ -819,9 +818,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName ViewDefinition { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName left, Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName (string value) { throw null; }
@@ -870,9 +867,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName MainTemplateParameters { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName left, Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName (string value) { throw null; }
@@ -889,9 +884,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode Incremental { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode left, Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode (string value) { throw null; }
@@ -962,9 +955,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode Unmanaged { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode left, Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode (string value) { throw null; }
@@ -1266,7 +1257,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ArmDeploymentPropertiesExtended() { }
         public string CorrelationId { get { throw null; } }
-        public string DebugSettingDetailLevel { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
+        public string DebugSettingDetailLevel { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmDependency> Dependencies { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DeploymentDiagnosticsDefinition> Diagnostics { get { throw null; } }
         public System.TimeSpan? Duration { get { throw null; } }
@@ -1275,7 +1266,6 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition> Extensions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentMode? Mode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmResourceReference> OutputResourceDetails { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> OutputResources { get { throw null; } }
         public System.BinaryData Outputs { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
@@ -1286,7 +1276,6 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink TemplateLink { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmResourceReference> ValidatedResourceDetails { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> ValidatedResources { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ValidationLevel? ValidationLevel { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1317,9 +1306,7 @@ namespace Azure.ResourceManager.Resources.Models
         public ArmDeploymentScriptManagedIdentityType(string value) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType left, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType (string value) { throw null; }
@@ -1415,7 +1402,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmApplicationResourceData ArmApplicationResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string managedBy = null, Azure.ResourceManager.Resources.Models.ArmApplicationSku sku = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity ArmApplicationUserAssignedIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDependency ArmDependency(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.BasicArmDependency> dependsOn = null, string id = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string resourceName = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentContent ArmDeploymentContent(Azure.Core.AzureLocation? location, Azure.ResourceManager.Resources.Models.ArmDeploymentProperties properties, System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentContent ArmDeploymentContent(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Resources.Models.ArmDeploymentProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.Resources.ArmDeploymentData ArmDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
@@ -1425,34 +1411,25 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInputDefinition ArmDeploymentExternalInputDefinition(string kind = null, System.BinaryData config = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentOperation ArmDeploymentOperation(string id = null, string operationId = null, Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties ArmDeploymentOperationProperties(Azure.ResourceManager.Resources.Models.ProvisioningOperationKind? provisioningOperation = default(Azure.ResourceManager.Resources.Models.ProvisioningOperationKind?), string provisioningState = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), string serviceRequestId = null, string statusCode = null, Azure.ResourceManager.Resources.Models.StatusMessage statusMessage = null, Azure.ResourceManager.Resources.Models.TargetResource targetResource = null, System.BinaryData requestContent = null, System.BinaryData responseContent = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentProperties ArmDeploymentProperties(System.BinaryData template, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink, System.BinaryData parameters, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode, string debugSettingDetailLevel, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentProperties ArmDeploymentProperties(System.BinaryData template, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink, System.BinaryData parameters, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode, string debugSettingDetailLevel, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope, Azure.ResourceManager.Resources.Models.ValidationLevel? validationLevel) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentProperties ArmDeploymentProperties(System.BinaryData template = null, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink = null, System.BinaryData parameters = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInput> externalInputs = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInputDefinition> externalInputDefinitions = null, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionConfigItem>> extensionConfigs = null, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode = Azure.ResourceManager.Resources.Models.ArmDeploymentMode.Incremental, string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment = null, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope = default(Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope?), Azure.ResourceManager.Resources.Models.ValidationLevel? validationLevel = default(Azure.ResourceManager.Resources.Models.ValidationLevel?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState?), string correlationId = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), System.BinaryData outputs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceProviderData> providers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmDependency> dependencies = null, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink = null, System.BinaryData parameters = null, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition> extensions = null, Azure.ResourceManager.Resources.Models.ArmDeploymentMode? mode = default(Azure.ResourceManager.Resources.Models.ArmDeploymentMode?), string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended errorDeployment = null, string templateHash = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmResourceReference> outputResourceDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmResourceReference> validatedResourceDetails = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DeploymentDiagnosticsDefinition> diagnostics = null, Azure.ResourceManager.Resources.Models.ValidationLevel? validationLevel = default(Azure.ResourceManager.Resources.Models.ValidationLevel?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? provisioningState, string correlationId, System.DateTimeOffset? timestamp, System.TimeSpan? duration, System.BinaryData outputs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceProviderData> providers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmDependency> dependencies, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink, System.BinaryData parameters, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink, Azure.ResourceManager.Resources.Models.ArmDeploymentMode? mode, string debugSettingDetailLevel, Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended errorDeployment, string templateHash, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> outputResources, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> validatedResources, Azure.ResponseError error) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? provisioningState, string correlationId, System.DateTimeOffset? timestamp, System.TimeSpan? duration, System.BinaryData outputs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceProviderData> providers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmDependency> dependencies, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink, System.BinaryData parameters, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink, Azure.ResourceManager.Resources.Models.ArmDeploymentMode? mode = default(Azure.ResourceManager.Resources.Models.ArmDeploymentMode?), string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended errorDeployment = null, string templateHash = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> outputResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> validatedResources = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DeploymentDiagnosticsDefinition> diagnostics = null, Azure.ResourceManager.Resources.Models.ValidationLevel? validationLevel = default(Azure.ResourceManager.Resources.Models.ValidationLevel?)) { throw null; }
         public static Azure.ResourceManager.Resources.ArmDeploymentScriptData ArmDeploymentScriptData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity ArmDeploymentScriptManagedIdentity(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType? identityType = default(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType?), System.Guid? tenantId = default(System.Guid?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch ArmDeploymentScriptPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult ArmDeploymentValidateResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResponseError error = null, Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult ArmDeploymentValidateResult(Azure.ResponseError error, Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended properties) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent ArmDeploymentWhatIfContent(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(System.BinaryData template, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink, System.BinaryData parameters, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode, string debugSettingDetailLevel, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope, Azure.ResourceManager.Resources.Models.ValidationLevel? validationLevel, Azure.ResourceManager.Resources.Models.WhatIfResultFormat? whatIfResultFormat) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(System.BinaryData template, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink, System.BinaryData parameters, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode, string debugSettingDetailLevel, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope, Azure.ResourceManager.Resources.Models.WhatIfResultFormat? whatIfResultFormat) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(System.BinaryData template = null, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink = null, System.BinaryData parameters = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInput> externalInputs = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInputDefinition> externalInputDefinitions = null, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionConfigItem>> extensionConfigs = null, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode = Azure.ResourceManager.Resources.Models.ArmDeploymentMode.Incremental, string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment = null, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope = default(Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope?), Azure.ResourceManager.Resources.Models.ValidationLevel? validationLevel = default(Azure.ResourceManager.Resources.Models.ValidationLevel?), Azure.ResourceManager.Resources.Models.WhatIfResultFormat? whatIfResultFormat = default(Azure.ResourceManager.Resources.Models.WhatIfResultFormat?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmResourceReference ArmResourceReference(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition extension = null, string resourceType = null, System.BinaryData identifiers = null, string apiVersion = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.AzureCliScript AzureCliScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration containerSettings = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azCliVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.AzureCliScript AzureCliScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string containerGroupName = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azCliVersion = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.AzurePowerShellScript AzurePowerShellScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration containerSettings = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azPowerShellVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.AzurePowerShellScript AzurePowerShellScript(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity, Azure.Core.AzureLocation location, System.Collections.Generic.IDictionary<string, string> tags, string containerGroupName, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azPowerShellVersion = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.BasicArmDependency BasicArmDependency(string id = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string resourceName = null) { throw null; }
         public static Azure.ResourceManager.Resources.DataBoundaryData DataBoundaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.DataBoundaryProperties properties = null) { throw null; }
@@ -1472,7 +1449,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.ScriptLogData ScriptLogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string log = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ScriptStatus ScriptStatus(string containerInstanceId = null, string storageAccountId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.StatusMessage StatusMessage(string status = null, Azure.ResponseError error = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.TargetResource TargetResource(string id, string resourceName, Azure.Core.ResourceType? resourceType) { throw null; }
         public static Azure.ResourceManager.Resources.Models.TargetResource TargetResource(string id = null, string resourceName = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition extension = null, System.BinaryData identifiers = null, string apiVersion = null, string symbolicName = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.TemplateHashResult TemplateHashResult(string minifiedTemplate = null, string templateHash = null) { throw null; }
@@ -1481,12 +1457,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.TemplateSpecVersionData TemplateSpecVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact> linkedTemplates = null, System.BinaryData metadata = null, System.BinaryData mainTemplate = null, System.BinaryData uiFormDefinition = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo TemplateSpecVersionInfo(string description = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), System.DateTimeOffset? timeModified = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch TemplateSpecVersionPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.WhatIfChange WhatIfChange(string resourceId, Azure.ResourceManager.Resources.Models.WhatIfChangeType changeType, string unsupportedReason, System.BinaryData before, System.BinaryData after, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> delta) { throw null; }
         public static Azure.ResourceManager.Resources.Models.WhatIfChange WhatIfChange(string resourceId = null, string deploymentId = null, string symbolicName = null, System.BinaryData identifiers = null, Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition extension = null, Azure.ResourceManager.Resources.Models.WhatIfChangeType changeType = Azure.ResourceManager.Resources.Models.WhatIfChangeType.Create, string unsupportedReason = null, System.BinaryData before = null, System.BinaryData after = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> delta = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.WhatIfChange WhatIfChange(string resourceId, string deploymentId, string symbolicName, System.BinaryData identifiers, Azure.ResourceManager.Resources.Models.WhatIfChangeType changeType, string unsupportedReason, System.BinaryData before, System.BinaryData after, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> delta) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.WhatIfOperationResult WhatIfOperationResult(string status, Azure.ResponseError error, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfChange> changes) { throw null; }
         public static Azure.ResourceManager.Resources.Models.WhatIfOperationResult WhatIfOperationResult(string status = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfChange> changes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfChange> potentialChanges = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DeploymentDiagnosticsDefinition> diagnostics = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.WhatIfPropertyChange WhatIfPropertyChange(string path = null, Azure.ResourceManager.Resources.Models.WhatIfPropertyChangeType propertyChangeType = Azure.ResourceManager.Resources.Models.WhatIfPropertyChangeType.Create, System.BinaryData before = null, System.BinaryData after = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> children = null) { throw null; }
@@ -1497,7 +1470,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Arguments { get { throw null; } set { } }
         public string AzCliVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? CleanupPreference { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ContainerGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration ContainerSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } }
@@ -1524,7 +1496,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Arguments { get { throw null; } set { } }
         public string AzPowerShellVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? CleanupPreference { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ContainerGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration ContainerSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } }
@@ -1566,9 +1537,7 @@ namespace Azure.ResourceManager.Resources.Models
         public DataBoundaryName(string value) { throw null; }
         public static Azure.ResourceManager.Resources.Models.DataBoundaryName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DataBoundaryName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DataBoundaryName left, Azure.ResourceManager.Resources.Models.DataBoundaryName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DataBoundaryName (string value) { throw null; }
@@ -1601,9 +1570,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState left, Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState (string value) { throw null; }
@@ -1620,9 +1587,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DataBoundaryRegion Global { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DataBoundaryRegion NotDefined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DataBoundaryRegion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DataBoundaryRegion left, Azure.ResourceManager.Resources.Models.DataBoundaryRegion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DataBoundaryRegion (string value) { throw null; }
@@ -1688,9 +1653,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DenySettingsMode DenyWriteAndDelete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DenySettingsMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DenySettingsMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DenySettingsMode left, Azure.ResourceManager.Resources.Models.DenySettingsMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DenySettingsMode (string value) { throw null; }
@@ -1710,9 +1673,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DenyStatusMode NotSupported { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DenyStatusMode RemovedBySystem { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DenyStatusMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DenyStatusMode left, Azure.ResourceManager.Resources.Models.DenyStatusMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DenyStatusMode (string value) { throw null; }
@@ -1765,9 +1726,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState Validating { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState Waiting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState left, Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState (string value) { throw null; }
@@ -1783,9 +1742,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum left, Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum (string value) { throw null; }
@@ -1913,9 +1870,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope Outer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope left, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope (string value) { throw null; }
@@ -1936,9 +1891,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ExtensionConfigPropertyType SecureString { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ExtensionConfigPropertyType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ExtensionConfigPropertyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ExtensionConfigPropertyType left, Azure.ResourceManager.Resources.Models.ExtensionConfigPropertyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ExtensionConfigPropertyType (string value) { throw null; }
@@ -1955,9 +1908,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.JitApprovalMode ManualApprove { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.JitApprovalMode NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.JitApprovalMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.JitApprovalMode left, Azure.ResourceManager.Resources.Models.JitApprovalMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.JitApprovalMode (string value) { throw null; }
@@ -1986,9 +1937,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.JitApproverType Group { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.JitApproverType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.JitApproverType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.JitApproverType left, Azure.ResourceManager.Resources.Models.JitApproverType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.JitApproverType (string value) { throw null; }
@@ -2033,9 +1982,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.JitRequestState Pending { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.JitRequestState Timeout { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.JitRequestState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.JitRequestState left, Azure.ResourceManager.Resources.Models.JitRequestState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.JitRequestState (string value) { throw null; }
@@ -2065,9 +2012,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.JitSchedulingType Once { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.JitSchedulingType Recurring { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.JitSchedulingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.JitSchedulingType left, Azure.ResourceManager.Resources.Models.JitSchedulingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.JitSchedulingType (string value) { throw null; }
@@ -2097,9 +2042,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.Level Info { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.Level Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.Level other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.Level left, Azure.ResourceManager.Resources.Models.Level right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.Level (string value) { throw null; }
@@ -2184,9 +2127,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ResourcesProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ResourcesProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState left, Azure.ResourceManager.Resources.Models.ResourcesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ResourcesProvisioningState (string value) { throw null; }
@@ -2203,9 +2144,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ResourceStatusMode Managed { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ResourceStatusMode RemoveDenyFailed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ResourceStatusMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourceStatusMode left, Azure.ResourceManager.Resources.Models.ResourceStatusMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ResourceStatusMode (string value) { throw null; }
@@ -2222,9 +2161,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ScriptCleanupOptions OnExpiration { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ScriptCleanupOptions OnSuccess { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions left, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ScriptCleanupOptions (string value) { throw null; }
@@ -2281,9 +2218,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ScriptProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ScriptProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ScriptProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ScriptProvisioningState left, Azure.ResourceManager.Resources.Models.ScriptProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ScriptProvisioningState (string value) { throw null; }
@@ -2296,7 +2231,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContainerInstanceId { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -2369,9 +2303,7 @@ namespace Azure.ResourceManager.Resources.Models
         public TemplateSpecExpandKind(string value) { throw null; }
         public static Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind Versions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind left, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind (string value) { throw null; }
@@ -2422,9 +2354,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode left, Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode (string value) { throw null; }
@@ -2440,9 +2370,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode left, Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode (string value) { throw null; }
@@ -2458,9 +2386,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode left, Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode (string value) { throw null; }
@@ -2477,9 +2403,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ValidationLevel ProviderNoRbac { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ValidationLevel Template { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ValidationLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ValidationLevel left, Azure.ResourceManager.Resources.Models.ValidationLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ValidationLevel (string value) { throw null; }

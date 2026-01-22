@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DisconnectedOperations.Models;
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
     /// <summary>
-    /// A Class representing a DisconnectedOperationsArtifact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DisconnectedOperationsArtifactResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDisconnectedOperationsArtifactResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DisconnectedOperationsImageResource"/> using the GetDisconnectedOperationsArtifact method.
+    /// A class representing a DisconnectedOperationsArtifact along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DisconnectedOperationsArtifactResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DisconnectedOperationsImageResource"/> using the GetDisconnectedOperationsArtifacts method.
     /// </summary>
     public partial class DisconnectedOperationsArtifactResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DisconnectedOperationsArtifactResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="imageName"> The imageName. </param>
-        /// <param name="artifactName"> The artifactName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string imageName, string artifactName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _disconnectedOperationsArtifactArtifactsClientDiagnostics;
-        private readonly ArtifactsRestOperations _disconnectedOperationsArtifactArtifactsRestClient;
+        private readonly ClientDiagnostics _artifactsClientDiagnostics;
+        private readonly Artifacts _artifactsRestClient;
         private readonly DisconnectedOperationsArtifactData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/disconnectedOperations/images/artifacts";
 
-        /// <summary> Initializes a new instance of the <see cref="DisconnectedOperationsArtifactResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DisconnectedOperationsArtifactResource for mocking. </summary>
         protected DisconnectedOperationsArtifactResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DisconnectedOperationsArtifactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DisconnectedOperationsArtifactResource(ArmClient client, DisconnectedOperationsArtifactData data) : this(client, data.Id)
@@ -56,71 +44,94 @@ namespace Azure.ResourceManager.DisconnectedOperations
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DisconnectedOperationsArtifactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DisconnectedOperationsArtifactResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _disconnectedOperationsArtifactArtifactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string disconnectedOperationsArtifactArtifactsApiVersion);
-            _disconnectedOperationsArtifactArtifactsRestClient = new ArtifactsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationsArtifactArtifactsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string disconnectedOperationsArtifactApiVersion);
+            _artifactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", ResourceType.Namespace, Diagnostics);
+            _artifactsRestClient = new Artifacts(_artifactsClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsArtifactApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DisconnectedOperationsArtifactData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="imageName"> The imageName. </param>
+        /// <param name="artifactName"> The artifactName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string imageName, string artifactName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifact_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DisconnectedOperationsArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DisconnectedOperationsArtifactResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _disconnectedOperationsArtifactArtifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.Get");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.Get");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationsArtifactArtifactsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DisconnectedOperationsArtifactData> response = Response.FromValue(DisconnectedOperationsArtifactData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationsArtifactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Get the resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifact_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DisconnectedOperationsArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DisconnectedOperationsArtifactResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _disconnectedOperationsArtifactArtifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.Get");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.Get");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationsArtifactArtifactsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DisconnectedOperationsArtifactData> response = Response.FromValue(DisconnectedOperationsArtifactData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationsArtifactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,31 +193,41 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Get artifact download link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}/listDownloadUri</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}/listDownloadUri. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifacts_ListDownloadUri</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_ListDownloadUri. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DisconnectedOperationsArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DisconnectedOperationsArtifactDownloadResult>> GetDownloadUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _disconnectedOperationsArtifactArtifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.GetDownloadUri");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.GetDownloadUri");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationsArtifactArtifactsRestClient.ListDownloadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DisconnectedOperationsArtifactDownloadResult> response = Response.FromValue(DisconnectedOperationsArtifactDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -212,31 +241,41 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Get artifact download link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}/listDownloadUri</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}/listDownloadUri. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifacts_ListDownloadUri</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_ListDownloadUri. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DisconnectedOperationsArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DisconnectedOperationsArtifactDownloadResult> GetDownloadUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _disconnectedOperationsArtifactArtifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.GetDownloadUri");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DisconnectedOperationsArtifactResource.GetDownloadUri");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationsArtifactArtifactsRestClient.ListDownloadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DisconnectedOperationsArtifactDownloadResult> response = Response.FromValue(DisconnectedOperationsArtifactDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Broker Retain Messages properties. </summary>
     public partial class BrokerRetainMessagesSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrokerRetainMessagesSettings"/>. </summary>
         public BrokerRetainMessagesSettings()
@@ -54,25 +26,30 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerRetainMessagesSettings"/>. </summary>
         /// <param name="topics"> List of topics under which retained messages would be persisted to disk. Wildcards # and + supported. </param>
         /// <param name="dynamic"> Controls if MQTT clients can request for disk persistence via `MQTTv5` user property. Works in addition to other groups (logical OR). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerRetainMessagesSettings(IList<string> topics, BrokerRetainMessagesDynamic @dynamic, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerRetainMessagesSettings(IList<string> topics, BrokerRetainMessagesDynamic dynamic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Topics = topics;
-            Dynamic = @dynamic;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Dynamic = dynamic;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of topics under which retained messages would be persisted to disk. Wildcards # and + supported. </summary>
         public IList<string> Topics { get; }
+
         /// <summary> Controls if MQTT clients can request for disk persistence via `MQTTv5` user property. Works in addition to other groups (logical OR). </summary>
         internal BrokerRetainMessagesDynamic Dynamic { get; set; }
+
         /// <summary> Mode of the BrokerRetainMessagesCustomPolicy. </summary>
         public IotOperationsOperationalMode? DynamicMode
         {
-            get => Dynamic is null ? default(IotOperationsOperationalMode?) : Dynamic.Mode;
+            get
+            {
+                return Dynamic is null ? default : Dynamic.Mode;
+            }
             set
             {
-                Dynamic = value.HasValue ? new BrokerRetainMessagesDynamic(value.Value) : null;
+                Dynamic = value.HasValue ? new BrokerRetainMessagesDynamic(value.Value) : default;
             }
         }
     }

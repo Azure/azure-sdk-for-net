@@ -81,5 +81,41 @@ namespace Azure.ResourceManager.Communication.Mocking
             SenderUsernameResource.ValidateResourceId(id);
             return new SenderUsernameResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CommunicationSmtpUsernameResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunicationSmtpUsernameResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationSmtpUsernameResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CommunicationSmtpUsernameResource"/> object. </returns>
+        public virtual CommunicationSmtpUsernameResource GetCommunicationSmtpUsernameResource(ResourceIdentifier id)
+        {
+            CommunicationSmtpUsernameResource.ValidateResourceId(id);
+            return new CommunicationSmtpUsernameResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EmailSuppressionListResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EmailSuppressionListResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EmailSuppressionListResource"/> object. </returns>
+        public virtual EmailSuppressionListResource GetEmailSuppressionListResource(ResourceIdentifier id)
+        {
+            EmailSuppressionListResource.ValidateResourceId(id);
+            return new EmailSuppressionListResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EmailSuppressionListAddressResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EmailSuppressionListAddressResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListAddressResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EmailSuppressionListAddressResource"/> object. </returns>
+        public virtual EmailSuppressionListAddressResource GetEmailSuppressionListAddressResource(ResourceIdentifier id)
+        {
+            EmailSuppressionListAddressResource.ValidateResourceId(id);
+            return new EmailSuppressionListAddressResource(Client, id);
+        }
     }
 }

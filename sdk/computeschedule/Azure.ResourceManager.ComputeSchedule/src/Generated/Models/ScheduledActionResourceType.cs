@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionResourceType : IEquatable<ScheduledActionResourceType>
     {
         private readonly string _value;
+        /// <summary> Resources defined are Virtual Machines. </summary>
+        private const string VirtualMachineValue = "VirtualMachine";
+        /// <summary> Resources defined are Virtual Machines Scale Sets. </summary>
+        private const string VirtualMachineScaleSetValue = "VirtualMachineScaleSet";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VirtualMachineValue = "VirtualMachine";
-        private const string VirtualMachineScaleSetValue = "VirtualMachineScaleSet";
+            _value = value;
+        }
 
         /// <summary> Resources defined are Virtual Machines. </summary>
         public static ScheduledActionResourceType VirtualMachine { get; } = new ScheduledActionResourceType(VirtualMachineValue);
+
         /// <summary> Resources defined are Virtual Machines Scale Sets. </summary>
         public static ScheduledActionResourceType VirtualMachineScaleSet { get; } = new ScheduledActionResourceType(VirtualMachineScaleSetValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionResourceType left, ScheduledActionResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionResourceType left, ScheduledActionResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionResourceType(string value) => new ScheduledActionResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionResourceType?(string value) => value == null ? null : new ScheduledActionResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

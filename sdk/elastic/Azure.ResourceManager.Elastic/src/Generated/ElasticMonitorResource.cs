@@ -7,48 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Elastic.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
-    /// A Class representing an ElasticMonitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticMonitorResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetElasticMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetElasticMonitor method.
+    /// A class representing a ElasticMonitor along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ElasticMonitorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetElasticMonitors method.
     /// </summary>
     public partial class ElasticMonitorResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ElasticMonitorResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="monitorName"> The monitorName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _elasticMonitorElasticMonitorResourcesClientDiagnostics;
-        private readonly ElasticMonitorResourcesRestOperations _elasticMonitorElasticMonitorResourcesRestClient;
+        private readonly ClientDiagnostics _elasticMonitorResourcesClientDiagnostics;
+        private readonly ElasticMonitorResources _elasticMonitorResourcesRestClient;
         private readonly ElasticMonitorData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors";
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ElasticMonitorResource for mocking. </summary>
         protected ElasticMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticMonitorResource(ArmClient client, ElasticMonitorData data) : this(client, data.Id)
@@ -57,278 +46,92 @@ namespace Azure.ResourceManager.Elastic
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticMonitorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticMonitorElasticMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string elasticMonitorElasticMonitorResourcesApiVersion);
-            _elasticMonitorElasticMonitorResourcesRestClient = new ElasticMonitorResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorElasticMonitorResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string elasticMonitorApiVersion);
+            _elasticMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
+            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Endpoint, elasticMonitorApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ElasticMonitorData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ElasticMonitoredSubscriptionResources in the ElasticMonitor. </summary>
-        /// <returns> An object representing collection of ElasticMonitoredSubscriptionResources and their operations over a ElasticMonitoredSubscriptionResource. </returns>
-        public virtual ElasticMonitoredSubscriptionCollection GetElasticMonitoredSubscriptions()
-        {
-            return GetCachedClient(client => new ElasticMonitoredSubscriptionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get detailed information about all subscriptions currently being monitored by the Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptionProperties_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ElasticMonitoredSubscriptionResource>> GetElasticMonitoredSubscriptionAsync(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetElasticMonitoredSubscriptions().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get detailed information about all subscriptions currently being monitored by the Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptionProperties_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ElasticMonitoredSubscriptionResource> GetElasticMonitoredSubscription(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return GetElasticMonitoredSubscriptions().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ElasticOpenAIIntegrationResources in the ElasticMonitor. </summary>
-        /// <returns> An object representing collection of ElasticOpenAIIntegrationResources and their operations over a ElasticOpenAIIntegrationResource. </returns>
-        public virtual ElasticOpenAIIntegrationCollection GetElasticOpenAIIntegrations()
-        {
-            return GetCachedClient(client => new ElasticOpenAIIntegrationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/openAIIntegrations/{integrationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenAIIntegrationRPModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticOpenAIIntegrationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="integrationName"> OpenAI Integration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="integrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ElasticOpenAIIntegrationResource>> GetElasticOpenAIIntegrationAsync(string integrationName, CancellationToken cancellationToken = default)
-        {
-            return await GetElasticOpenAIIntegrations().GetAsync(integrationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/openAIIntegrations/{integrationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenAIIntegrationRPModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticOpenAIIntegrationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="integrationName"> OpenAI Integration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="integrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ElasticOpenAIIntegrationResource> GetElasticOpenAIIntegration(string integrationName, CancellationToken cancellationToken = default)
-        {
-            return GetElasticOpenAIIntegrations().Get(integrationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ElasticTagRuleResources in the ElasticMonitor. </summary>
-        /// <returns> An object representing collection of ElasticTagRuleResources and their operations over a ElasticTagRuleResource. </returns>
-        public virtual ElasticTagRuleCollection GetElasticTagRules()
-        {
-            return GetCachedClient(client => new ElasticTagRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoringTagRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticTagRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ElasticTagRuleResource>> GetElasticTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
-        {
-            return await GetElasticTagRules().GetAsync(ruleSetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoringTagRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticTagRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ElasticTagRuleResource> GetElasticTagRule(string ruleSetName, CancellationToken cancellationToken = default)
-        {
-            return GetElasticTagRules().Get(ruleSetName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ElasticMonitorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Get");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Get");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,34 +145,154 @@ namespace Azure.ResourceManager.Elastic
         /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticMonitorResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Get");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Get");
             scope.Start();
             try
             {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Elastic resource model update parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ElasticMonitorResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitorPatch patch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticMonitorPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
+                    new ElasticMonitorOperationSource(Client),
+                    _elasticMonitorResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Elastic resource model update parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ElasticMonitorResource> Update(WaitUntil waitUntil, ElasticMonitorPatch patch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticMonitorPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
+                    new ElasticMonitorOperationSource(Client),
+                    _elasticMonitorResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -382,20 +305,20 @@ namespace Azure.ResourceManager.Elastic
         /// Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,14 +326,21 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Delete");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -424,20 +354,20 @@ namespace Azure.ResourceManager.Elastic
         /// Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,14 +375,21 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Delete");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Delete");
             scope.Start();
             try
             {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -463,42 +400,142 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance.
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAllTrafficFilters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_AllTrafficFiltersList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ElasticTrafficFilterListResult>> GetAllTrafficFiltersAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAllTrafficFilters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetAllTrafficFiltersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticTrafficFilterListResult> response = Response.FromValue(ElasticTrafficFilterListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAllTrafficFilters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_AllTrafficFiltersList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ElasticTrafficFilterListResult> GetAllTrafficFilters(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAllTrafficFilters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetAllTrafficFiltersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticTrafficFilterListResult> response = Response.FromValue(ElasticTrafficFilterListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/associateTrafficFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Associate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Elastic resource model update parameters. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ElasticMonitorResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AssociateTrafficFilterAsync(WaitUntil waitUntil, string rulesetId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AssociateTrafficFilter");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateAssociateTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -509,257 +546,47 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance.
+        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/associateTrafficFilter. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Associate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Elastic resource model update parameters. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ElasticMonitorResource> Update(WaitUntil waitUntil, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AssociateTrafficFilter(WaitUntil waitUntil, string rulesetId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AssociateTrafficFilter");
             scope.Start();
             try
             {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateAssociateTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listMonitoredResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetMonitoredResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredResourceInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitoredResourceInfo> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceInfo.DeserializeMonitoredResourceInfo(e), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listMonitoredResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetMonitoredResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredResourceInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitoredResourceInfo> GetMonitoredResources(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceInfo.DeserializeMonitoredResourceInfo(e), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listDeploymentInfo</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetDeploymentInfo</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ElasticDeploymentInfoResult>> GetDeploymentInfoAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetDeploymentInfo");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetDeploymentInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listDeploymentInfo</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetDeploymentInfo</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ElasticDeploymentInfoResult> GetDeploymentInfo(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetDeploymentInfo");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.GetDeploymentInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createOrUpdateExternalUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_CreateOrUpdateExternalUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Elastic External User Creation Parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ElasticExternalUserCreationResult>> CreateOrUpdateExternalUserAsync(ElasticExternalUserContent content = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateOrUpdateExternalUser");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.CreateOrUpdateExternalUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createOrUpdateExternalUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_CreateOrUpdateExternalUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Elastic External User Creation Parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ElasticExternalUserCreationResult> CreateOrUpdateExternalUser(ElasticExternalUserContent content = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateOrUpdateExternalUser");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.CreateOrUpdateExternalUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {
@@ -772,31 +599,41 @@ namespace Azure.ResourceManager.Elastic
         /// Retrieve marketplace and organization billing information mapped to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/getBillingInfo</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/getBillingInfo. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetBillingInfo</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_BillingInfoGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ElasticBillingInfoResult>> GetBillingInfoAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetBillingInfo");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetBillingInfo");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetBillingInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetBillingInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticBillingInfoResult> response = Response.FromValue(ElasticBillingInfoResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -810,31 +647,41 @@ namespace Azure.ResourceManager.Elastic
         /// Retrieve marketplace and organization billing information mapped to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/getBillingInfo</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/getBillingInfo. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetBillingInfo</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_BillingInfoGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticBillingInfoResult> GetBillingInfo(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetBillingInfo");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetBillingInfo");
             scope.Start();
             try
             {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.GetBillingInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetBillingInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticBillingInfoResult> response = Response.FromValue(ElasticBillingInfoResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -848,50 +695,52 @@ namespace Azure.ResourceManager.Elastic
         /// List all active deployments associated with the marketplace subscription linked to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listConnectedPartnerResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listConnectedPartnerResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetConnectedPartnerResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_ConnectedPartnerResourcesList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedPartnerResourceInfo> GetConnectedPartnerResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetConnectedPartnerResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetConnectedPartnerResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConnectedPartnerResourceInfo.DeserializeConnectedPartnerResourceInfo(e), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ElasticMonitorResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
         /// List all active deployments associated with the marketplace subscription linked to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listConnectedPartnerResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listConnectedPartnerResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetConnectedPartnerResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_ConnectedPartnerResourcesList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -899,59 +748,1391 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="ConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedPartnerResourceInfo> GetConnectedPartnerResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetConnectedPartnerResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetConnectedPartnerResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConnectedPartnerResourceInfo.DeserializeConnectedPartnerResourceInfo(e), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ElasticMonitorResourcesGetConnectedPartnerResourcesCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
-        /// List all VM resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listVMHost</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociateIPFilter. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetVmHosts</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_CreateAndAssociateIPFilterCreate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ips"> List of ips. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> CreateAndAssociateIPFilterAsync(WaitUntil waitUntil, string ips = default, string name = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociateIPFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateAndAssociateIPFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ips, name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociateIPFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_CreateAndAssociateIPFilterCreate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ips"> List of ips. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation CreateAndAssociateIPFilter(WaitUntil waitUntil, string ips = default, string name = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociateIPFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateAndAssociateIPFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ips, name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociatePLFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_CreateAndAssociatePLFilterCreate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="privateEndpointGuid"> Guid of the private endpoint. </param>
+        /// <param name="privateEndpointName"> Name of the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> CreateAndAssociatePrivateLinkFilterAsync(WaitUntil waitUntil, string name = default, string privateEndpointGuid = default, string privateEndpointName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociatePrivateLinkFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateAndAssociatePrivateLinkFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, privateEndpointGuid, privateEndpointName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociatePLFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_CreateAndAssociatePLFilterCreate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="privateEndpointGuid"> Guid of the private endpoint. </param>
+        /// <param name="privateEndpointName"> Name of the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation CreateAndAssociatePrivateLinkFilter(WaitUntil waitUntil, string name = default, string privateEndpointGuid = default, string privateEndpointName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociatePrivateLinkFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateAndAssociatePrivateLinkFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, privateEndpointGuid, privateEndpointName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createOrUpdateExternalUser. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Elastic External User Creation Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ElasticExternalUserCreationResult>> CreateOrUpdateExternalUserAsync(ElasticExternalUserContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateOrUpdateExternalUser");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateOrUpdateExternalUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticExternalUserContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticExternalUserCreationResult> response = Response.FromValue(ElasticExternalUserCreationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createOrUpdateExternalUser. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Elastic External User Creation Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ElasticExternalUserCreationResult> CreateOrUpdateExternalUser(ElasticExternalUserContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateOrUpdateExternalUser");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateOrUpdateExternalUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticExternalUserContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticExternalUserCreationResult> response = Response.FromValue(ElasticExternalUserCreationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listDeploymentInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_DeploymentInfoList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticVmResourceInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticVmResourceInfo> GetVmHostsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticDeploymentInfoResult>> GetDeploymentInfoAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetVmHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetVmHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ElasticVmResourceInfo.DeserializeElasticVmResourceInfo(e), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVmHosts", "value", "nextLink", cancellationToken);
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetDeploymentInfo");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetDeploymentInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticDeploymentInfoResult> response = Response.FromValue(ElasticDeploymentInfoResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listDeploymentInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_DeploymentInfoList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ElasticDeploymentInfoResult> GetDeploymentInfo(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetDeploymentInfo");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetDeploymentInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticDeploymentInfoResult> response = Response.FromValue(ElasticDeploymentInfoResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachAndDeleteTrafficFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_DetachAndDeleteTrafficFilterDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DetachAndDeleteTrafficFilterAsync(string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachAndDeleteTrafficFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDetachAndDeleteTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachAndDeleteTrafficFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_DetachAndDeleteTrafficFilterDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DetachAndDeleteTrafficFilter(string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachAndDeleteTrafficFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDetachAndDeleteTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachTrafficFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_DetachTrafficFilterUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DetachTrafficFilterAsync(WaitUntil waitUntil, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachTrafficFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDetachTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachTrafficFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_DetachTrafficFilterUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DetachTrafficFilter(WaitUntil waitUntil, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachTrafficFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDetachTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmIngestionDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Details. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<VmIngestionDetailsResult>> GetVmIngestionDetailsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetVmIngestionDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetVmIngestionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VmIngestionDetailsResult> response = Response.FromValue(VmIngestionDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmIngestionDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Details. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VmIngestionDetailsResult> GetVmIngestionDetails(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetVmIngestionDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetVmIngestionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VmIngestionDetailsResult> response = Response.FromValue(VmIngestionDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAssociatedTrafficFilters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_ListAssociatedTrafficFiltersList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ElasticTrafficFilterListResult>> GetAssociatedTrafficFiltersAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAssociatedTrafficFilters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetAssociatedTrafficFiltersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticTrafficFilterListResult> response = Response.FromValue(ElasticTrafficFilterListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAssociatedTrafficFilters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_ListAssociatedTrafficFiltersList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ElasticTrafficFilterListResult> GetAssociatedTrafficFilters(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAssociatedTrafficFilters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetAssociatedTrafficFiltersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticTrafficFilterListResult> response = Response.FromValue(ElasticTrafficFilterListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listMonitoredResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_MonitoredResourcesList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitoredResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitoredResourceInfo> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ElasticMonitorResourcesGetMonitoredResourcesAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listMonitoredResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_MonitoredResourcesList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitoredResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitoredResourceInfo> GetMonitoredResources(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ElasticMonitorResourcesGetMonitoredResourcesCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Resubscribe the Elasticsearch Organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/resubscribe. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Resubscribe. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Resubscribe Properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ElasticMonitorResource>> ResubscribeOrganizationAsync(WaitUntil waitUntil, ResubscribeProperties body = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.ResubscribeOrganization");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateResubscribeOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResubscribeProperties.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
+                    new ElasticMonitorOperationSource(Client),
+                    _elasticMonitorResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resubscribe the Elasticsearch Organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/resubscribe. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Resubscribe. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Resubscribe Properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ElasticMonitorResource> ResubscribeOrganization(WaitUntil waitUntil, ResubscribeProperties body = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.ResubscribeOrganization");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateResubscribeOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResubscribeProperties.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
+                    new ElasticMonitorOperationSource(Client),
+                    _elasticMonitorResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/deleteTrafficFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_TrafficFiltersDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteTrafficFilterAsync(string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DeleteTrafficFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/deleteTrafficFilter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_TrafficFiltersDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteTrafficFilter(string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DeleteTrafficFilter");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteTrafficFilterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rulesetId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listUpgradableVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_UpgradableVersionsDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<UpgradableVersionListResult>> GetUpgradableVersionDetailsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetUpgradableVersionDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetUpgradableVersionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<UpgradableVersionListResult> response = Response.FromValue(UpgradableVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listUpgradableVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_UpgradableVersionsDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<UpgradableVersionListResult> GetUpgradableVersionDetails(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetUpgradableVersionDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetUpgradableVersionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<UpgradableVersionListResult> response = Response.FromValue(UpgradableVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/upgrade. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Upgrade. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Elastic Monitor Upgrade Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> UpgradeMonitorAsync(WaitUntil waitUntil, ElasticMonitorUpgrade body = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpgradeMonitor");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpgradeMonitorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticMonitorUpgrade.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/upgrade. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_Upgrade. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Elastic Monitor Upgrade Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation UpgradeMonitor(WaitUntil waitUntil, ElasticMonitorUpgrade body = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpgradeMonitor");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpgradeMonitorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticMonitorUpgrade.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmCollectionUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_VMCollectionUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> VM resource Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> UpdateVmCollectionAsync(VmCollectionContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpdateVmCollection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpdateVmCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VmCollectionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmCollectionUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_VMCollectionUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> VM resource Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response UpdateVmCollection(VmCollectionContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpdateVmCollection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpdateVmCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VmCollectionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// List all VM resources currently being monitored by the Elastic monitor resource, helping you manage observability.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listVMHost</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listVMHost. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetVmHosts</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_VMHostList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticVmResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticVmResourceInfo> GetVmHostsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ElasticMonitorResourcesGetVmHostsAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// List all VM resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listVMHost. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticMonitorResources_VMHostList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticMonitorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -959,1092 +2140,14 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="ElasticVmResourceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticVmResourceInfo> GetVmHosts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetVmHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateGetVmHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ElasticVmResourceInfo.DeserializeElasticVmResourceInfo(e), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVmHosts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ElasticMonitorResourcesGetVmHostsCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
-        /// <summary>
-        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmIngestionDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetVmIngestionDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VmIngestionDetailsResult>> GetVmIngestionDetailsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetVmIngestionDetails");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetVmIngestionDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmIngestionDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetVmIngestionDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VmIngestionDetailsResult> GetVmIngestionDetails(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetVmIngestionDetails");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.GetVmIngestionDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmCollectionUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_UpdateVmCollection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> VM resource Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateVmCollectionAsync(VmCollectionContent content = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpdateVmCollection");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.UpdateVmCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/vmCollectionUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_UpdateVmCollection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> VM resource Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateVmCollection(VmCollectionContent content = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpdateVmCollection");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.UpdateVmCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listUpgradableVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetUpgradableVersionDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UpgradableVersionListResult>> GetUpgradableVersionDetailsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetUpgradableVersionDetails");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetUpgradableVersionDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listUpgradableVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetUpgradableVersionDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpgradableVersionListResult> GetUpgradableVersionDetails(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetUpgradableVersionDetails");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.GetUpgradableVersionDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_UpgradeMonitor</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Elastic Monitor Upgrade Parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> UpgradeMonitorAsync(WaitUntil waitUntil, ElasticMonitorUpgrade body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpgradeMonitor");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.UpgradeMonitorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateUpgradeMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_UpgradeMonitor</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Elastic Monitor Upgrade Parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation UpgradeMonitor(WaitUntil waitUntil, ElasticMonitorUpgrade body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.UpgradeMonitor");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.UpgradeMonitor(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateUpgradeMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAllTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetAllTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ElasticTrafficFilterListResult>> GetAllTrafficFiltersAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAllTrafficFilters");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetAllTrafficFiltersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAllTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetAllTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ElasticTrafficFilterListResult> GetAllTrafficFilters(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAllTrafficFilters");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.GetAllTrafficFilters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAssociatedTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetAssociatedTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ElasticTrafficFilterListResult>> GetAssociatedTrafficFiltersAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAssociatedTrafficFilters");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetAssociatedTrafficFiltersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAssociatedTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_GetAssociatedTrafficFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ElasticTrafficFilterListResult> GetAssociatedTrafficFilters(CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetAssociatedTrafficFilters");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.GetAssociatedTrafficFilters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociateIPFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_CreateAndAssociateIPFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ips"> List of ips. </param>
-        /// <param name="name"> Name of the traffic filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> CreateAndAssociateIPFilterAsync(WaitUntil waitUntil, string ips = null, string name = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociateIPFilter");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.CreateAndAssociateIPFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ips, name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateCreateAndAssociateIPFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ips, name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociateIPFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_CreateAndAssociateIPFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ips"> List of ips. </param>
-        /// <param name="name"> Name of the traffic filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation CreateAndAssociateIPFilter(WaitUntil waitUntil, string ips = null, string name = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociateIPFilter");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.CreateAndAssociateIPFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ips, name, cancellationToken);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateCreateAndAssociateIPFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ips, name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociatePLFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_CreateAndAssociatePrivateLinkFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the traffic filter. </param>
-        /// <param name="privateEndpointGuid"> Guid of the private endpoint. </param>
-        /// <param name="privateEndpointName"> Name of the private endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> CreateAndAssociatePrivateLinkFilterAsync(WaitUntil waitUntil, string name = null, string privateEndpointGuid = null, string privateEndpointName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociatePrivateLinkFilter");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.CreateAndAssociatePrivateLinkFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, privateEndpointGuid, privateEndpointName, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateCreateAndAssociatePrivateLinkFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, privateEndpointGuid, privateEndpointName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/createAndAssociatePLFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_CreateAndAssociatePrivateLinkFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the traffic filter. </param>
-        /// <param name="privateEndpointGuid"> Guid of the private endpoint. </param>
-        /// <param name="privateEndpointName"> Name of the private endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation CreateAndAssociatePrivateLinkFilter(WaitUntil waitUntil, string name = null, string privateEndpointGuid = null, string privateEndpointName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.CreateAndAssociatePrivateLinkFilter");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.CreateAndAssociatePrivateLinkFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, privateEndpointGuid, privateEndpointName, cancellationToken);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateCreateAndAssociatePrivateLinkFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, privateEndpointGuid, privateEndpointName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/associateTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_AssociateTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> AssociateTrafficFilterAsync(WaitUntil waitUntil, string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AssociateTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.AssociateTrafficFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateAssociateTrafficFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/associateTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_AssociateTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation AssociateTrafficFilter(WaitUntil waitUntil, string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AssociateTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.AssociateTrafficFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateAssociateTrafficFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachAndDeleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_DetachAndDeleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DetachAndDeleteTrafficFilterAsync(string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachAndDeleteTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.DetachAndDeleteTrafficFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachAndDeleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_DetachAndDeleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DetachAndDeleteTrafficFilter(string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachAndDeleteTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.DetachAndDeleteTrafficFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_DetachTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DetachTrafficFilterAsync(WaitUntil waitUntil, string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.DetachTrafficFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateDetachTrafficFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/detachTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_DetachTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation DetachTrafficFilter(WaitUntil waitUntil, string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DetachTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.DetachTrafficFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken);
-                var operation = new ElasticArmOperation(_elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateDetachTrafficFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/deleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_DeleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteTrafficFilterAsync(string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DeleteTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.DeleteTrafficFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/deleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_DeleteTrafficFilter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteTrafficFilter(string rulesetId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.DeleteTrafficFilter");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.DeleteTrafficFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesetId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resubscribe the Elasticsearch Organization.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/resubscribe</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_ResubscribeOrganization</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ElasticMonitorResource>> ResubscribeOrganizationAsync(WaitUntil waitUntil, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.ResubscribeOrganization");
-            scope.Start();
-            try
-            {
-                var response = await _elasticMonitorElasticMonitorResourcesRestClient.ResubscribeOrganizationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateResubscribeOrganizationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resubscribe the Elasticsearch Organization.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/resubscribe</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResources_ResubscribeOrganization</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ElasticMonitorResource> ResubscribeOrganization(WaitUntil waitUntil, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.ResubscribeOrganization");
-            scope.Start();
-            try
-            {
-                var response = _elasticMonitorElasticMonitorResourcesRestClient.ResubscribeOrganization(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateResubscribeOrganizationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2054,28 +2157,34 @@ namespace Azure.ResourceManager.Elastic
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AddTag");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _elasticMonitorElasticMonitorResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ElasticMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
+                    return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ElasticMonitorPatch();
-                    foreach (var tag in current.Tags)
+                    ElasticMonitorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ElasticMonitorPatch patch = new ElasticMonitorPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ElasticMonitorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -2086,27 +2195,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2116,28 +2205,34 @@ namespace Azure.ResourceManager.Elastic
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AddTag");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _elasticMonitorElasticMonitorResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ElasticMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
+                    return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ElasticMonitorPatch();
-                    foreach (var tag in current.Tags)
+                    ElasticMonitorData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ElasticMonitorPatch patch = new ElasticMonitorPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ElasticMonitorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -2148,53 +2243,39 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ElasticMonitorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.SetTags");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _elasticMonitorElasticMonitorResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ElasticMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
+                    return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ElasticMonitorPatch();
+                    ElasticMonitorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ElasticMonitorPatch patch = new ElasticMonitorPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ElasticMonitorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -2205,53 +2286,39 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ElasticMonitorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.SetTags");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _elasticMonitorElasticMonitorResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ElasticMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
+                    return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ElasticMonitorPatch();
+                    ElasticMonitorData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ElasticMonitorPatch patch = new ElasticMonitorPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ElasticMonitorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -2262,27 +2329,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -2290,28 +2337,34 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.RemoveTag");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _elasticMonitorElasticMonitorResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ElasticMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
+                    return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ElasticMonitorPatch();
-                    foreach (var tag in current.Tags)
+                    ElasticMonitorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ElasticMonitorPatch patch = new ElasticMonitorPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ElasticMonitorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -2322,27 +2375,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticMonitorResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -2350,28 +2383,34 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.RemoveTag");
+            using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _elasticMonitorElasticMonitorResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ElasticMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
+                    return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ElasticMonitorPatch();
-                    foreach (var tag in current.Tags)
+                    ElasticMonitorData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ElasticMonitorPatch patch = new ElasticMonitorPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ElasticMonitorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -2380,6 +2419,105 @@ namespace Azure.ResourceManager.Elastic
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ElasticMonitoredSubscriptions in the <see cref="ElasticMonitorResource"/>. </summary>
+        /// <returns> An object representing collection of ElasticMonitoredSubscriptions and their operations over a ElasticMonitoredSubscriptionResource. </returns>
+        public virtual ElasticMonitoredSubscriptionCollection GetElasticMonitoredSubscriptions()
+        {
+            return GetCachedClient(client => new ElasticMonitoredSubscriptionCollection(client, Id));
+        }
+
+        /// <summary> Get detailed information about all subscriptions currently being monitored by the Elastic monitor resource. </summary>
+        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ElasticMonitoredSubscriptionResource>> GetElasticMonitoredSubscriptionAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetElasticMonitoredSubscriptions().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get detailed information about all subscriptions currently being monitored by the Elastic monitor resource. </summary>
+        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ElasticMonitoredSubscriptionResource> GetElasticMonitoredSubscription(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetElasticMonitoredSubscriptions().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ElasticOpenAIIntegrations in the <see cref="ElasticMonitorResource"/>. </summary>
+        /// <returns> An object representing collection of ElasticOpenAIIntegrations and their operations over a ElasticOpenAIIntegrationResource. </returns>
+        public virtual ElasticOpenAIIntegrationCollection GetElasticOpenAIIntegrations()
+        {
+            return GetCachedClient(client => new ElasticOpenAIIntegrationCollection(client, Id));
+        }
+
+        /// <summary> Get detailed information about OpenAI integration rules for a given Elastic monitor resource. </summary>
+        /// <param name="integrationName"> OpenAI Integration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ElasticOpenAIIntegrationResource>> GetElasticOpenAIIntegrationAsync(string integrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(integrationName, nameof(integrationName));
+
+            return await GetElasticOpenAIIntegrations().GetAsync(integrationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get detailed information about OpenAI integration rules for a given Elastic monitor resource. </summary>
+        /// <param name="integrationName"> OpenAI Integration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ElasticOpenAIIntegrationResource> GetElasticOpenAIIntegration(string integrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(integrationName, nameof(integrationName));
+
+            return GetElasticOpenAIIntegrations().Get(integrationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ElasticTagRules in the <see cref="ElasticMonitorResource"/>. </summary>
+        /// <returns> An object representing collection of ElasticTagRules and their operations over a ElasticTagRuleResource. </returns>
+        public virtual ElasticTagRuleCollection GetElasticTagRules()
+        {
+            return GetCachedClient(client => new ElasticTagRuleCollection(client, Id));
+        }
+
+        /// <summary> Get detailed information about a tag rule set for a given Elastic monitor resource. </summary>
+        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ElasticTagRuleResource>> GetElasticTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+
+            return await GetElasticTagRules().GetAsync(ruleSetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get detailed information about a tag rule set for a given Elastic monitor resource. </summary>
+        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ElasticTagRuleResource> GetElasticTagRule(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+
+            return GetElasticTagRules().Get(ruleSetName, cancellationToken);
         }
     }
 }

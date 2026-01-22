@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageSync
                 StorageSyncPrivateEndpointConnectionListResult result = StorageSyncPrivateEndpointConnectionListResult.FromResponse(response);
                 yield return Page<StorageSyncPrivateEndpointConnectionData>.FromValues((IReadOnlyList<StorageSyncPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

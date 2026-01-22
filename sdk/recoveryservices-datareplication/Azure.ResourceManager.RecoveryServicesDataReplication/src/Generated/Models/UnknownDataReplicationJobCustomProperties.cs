@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Unknown version of DataReplicationJobCustomProperties. </summary>
     internal partial class UnknownDataReplicationJobCustomProperties : DataReplicationJobCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataReplicationJobCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationJobCustomProperties. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataReplicationJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDataReplicationJobCustomProperties"/> for deserialization. </summary>
-        internal UnknownDataReplicationJobCustomProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataReplicationJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", affectedObjectDetails, additionalBinaryDataProperties)
         {
         }
     }

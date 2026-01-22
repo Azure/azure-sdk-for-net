@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityAvailable()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/checkNameAvailabilityAvailable.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/communicationServices/checkNameAvailabilityAvailable.json
             // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityUnavailable()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/checkNameAvailabilityUnavailable.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/communicationServices/checkNameAvailabilityUnavailable.json
             // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCommunicationServiceResources_ListBySubscription()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/listBySubscription.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/communicationServices/listBySubscription.json
             // this example is just showing the usage of "CommunicationServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEmailServiceResources_ListEmailServiceResourcesBySubscription()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/listBySubscription.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/emailServices/listBySubscription.json
             // this example is just showing the usage of "EmailServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVerifiedExchangeOnlineDomainsEmailServices_GetVerifiedExchangeOnlineDomains()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/getVerifiedExchangeOnlineDomains.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/emailServices/getVerifiedExchangeOnlineDomains.json
             // this example is just showing the usage of "EmailServices_ListVerifiedExchangeOnlineDomains" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

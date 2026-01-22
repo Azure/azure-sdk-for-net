@@ -283,9 +283,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField TargetResourceGroup { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField TargetResourceType { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField left, Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField (string value) { throw null; }
@@ -314,9 +312,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator EqualsValue { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator NotEquals { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator left, Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator (string value) { throw null; }
@@ -412,9 +408,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek (string value) { throw null; }
@@ -430,9 +424,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder Asc { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder Desc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder (string value) { throw null; }
@@ -452,9 +444,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField Severity { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField SignalType { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField left, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField (string value) { throw null; }
@@ -504,9 +494,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField TargetResourceName { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField TargetResourceType { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField left, Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField (string value) { throw null; }
@@ -522,9 +510,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorCondition Fired { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorCondition Resolved { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition left, Azure.ResourceManager.AlertsManagement.Models.MonitorCondition right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.MonitorCondition (string value) { throw null; }
@@ -575,9 +561,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert VmInsights { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert Zabbix { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert left, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert (string value) { throw null; }
@@ -592,9 +576,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public RetrievedInformationIdentifier(string value) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier MonitorServiceList { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier left, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier (string value) { throw null; }
@@ -749,9 +731,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity Sev3 { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity Sev4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity (string value) { throw null; }
@@ -768,9 +748,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType Metric { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType (string value) { throw null; }
@@ -787,9 +765,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState Closed { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState (string value) { throw null; }
@@ -922,9 +898,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField StartDateTime { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField State { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField left, Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField (string value) { throw null; }
@@ -941,9 +915,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.SmartGroupState Closed { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.SmartGroupState New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.SmartGroupState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.SmartGroupState left, Azure.ResourceManager.AlertsManagement.Models.SmartGroupState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.SmartGroupState (string value) { throw null; }
@@ -977,9 +949,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter SevenDays { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter ThirtyDays { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter left, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter (string value) { throw null; }

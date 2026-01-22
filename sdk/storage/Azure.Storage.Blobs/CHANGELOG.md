@@ -1,6 +1,6 @@
 # Release History
 
-## 12.27.0-beta.2 (Unreleased)
+## 12.28.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.28.0-beta.1 (2026-01-20)
+
+### Features Added
+- Added support for service version 2026-04-06.
+- Added support for Content Validation via Structured Message.
+- Added support for Delete Blob Conditional Tier.
+- Added support for Server-side Encryption Rekeying.
+- Added cross-tenant support for Principal-Bound User Delegation SAS.
+- Added support for Dynamic User Delegation SAS.
+
+### Other Changes
+- Changed the default concurrency transfer count from 5 to Math.Clamp(Environment.ProcessorCount * 2, 8, 32). This controls the maximum number of concurrent tasks that will be used during large downloads or uploads, and this change should result in higher throughput for these operations by default in most environments. This can be reverted by enabling "Azure.Storage.UseLegacyDefaultConcurrency" in the AppContext switch or "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY" in the environment variable.
+
+### Bugs Fixed
+- Added BlobErrorCode.IncrementalCopyOfEarlierSnapshotNotAllowed, deprecated BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed.
+- Added support for missing SkuName values.
+
+## 12.27.0 (2026-01-08)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1
 
 ## 12.27.0-beta.1 (2025-11-17)
 

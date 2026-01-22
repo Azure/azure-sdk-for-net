@@ -9,7 +9,6 @@
     <IsClientLibrary>true</IsClientLibrary>
     <IsPackable>false</IsPackable>
     <IsSample>true</IsSample>
-    <ImportDefaultReferences>false</ImportDefaultReferences>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <Version>0.0.0-beta.1</Version>
     <NoWarn>

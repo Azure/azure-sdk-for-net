@@ -96,7 +96,23 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetBySubscriptionIdCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DynatraceMonitorResource(Client, data));
         }
 
-        /// <summary> Get Marketplace SaaS resource details. </summary>
+        /// <summary>
+        /// Get Marketplace SaaS resource details
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getMarketplaceSaaSResourceDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorsOperationGroup_GetMarketplaceSaaSResourceDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -128,7 +144,23 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             }
         }
 
-        /// <summary> Get Marketplace SaaS resource details. </summary>
+        /// <summary>
+        /// Get Marketplace SaaS resource details
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getMarketplaceSaaSResourceDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorsOperationGroup_GetMarketplaceSaaSResourceDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>

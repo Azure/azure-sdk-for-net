@@ -325,9 +325,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty CreatedWithActionGroup { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty left, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty (string value) { throw null; }
@@ -443,9 +441,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus TimedOut { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus (string value) { throw null; }
@@ -496,9 +492,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState (string value) { throw null; }
@@ -516,9 +510,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState (string value) { throw null; }
@@ -556,9 +548,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus (string value) { throw null; }
@@ -578,9 +568,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus Stopped { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus (string value) { throw null; }
@@ -630,9 +618,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType Fabric { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType Free { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType left, Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType (string value) { throw null; }
@@ -696,9 +682,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType Aad { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType Sql { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType left, Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType (string value) { throw null; }

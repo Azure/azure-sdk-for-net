@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsRegistryEndpointRef"/>. </summary>
         /// <param name="registryEndpointRef"> The name of the registry endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryEndpointRef"/> is null. </exception>
-        public AkriConnectorsRegistryEndpointRef(string registryEndpointRef)
+        public AkriConnectorsRegistryEndpointRef(string registryEndpointRef) : base(AkriConnectorsRegistrySettingsType.RegistryEndpointRef)
         {
             Argument.AssertNotNull(registryEndpointRef, nameof(registryEndpointRef));
 
             RegistryEndpointRef = registryEndpointRef;
-            RegistrySettingsType = AkriConnectorsRegistrySettingsType.RegistryEndpointRef;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsRegistryEndpointRef"/>. </summary>
         /// <param name="registrySettingsType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="registryEndpointRef"> The name of the registry endpoint. </param>
-        internal AkriConnectorsRegistryEndpointRef(AkriConnectorsRegistrySettingsType registrySettingsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string registryEndpointRef) : base(registrySettingsType, serializedAdditionalRawData)
+        internal AkriConnectorsRegistryEndpointRef(AkriConnectorsRegistrySettingsType registrySettingsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string registryEndpointRef) : base(registrySettingsType, additionalBinaryDataProperties)
         {
             RegistryEndpointRef = registryEndpointRef;
-            RegistrySettingsType = registrySettingsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorsRegistryEndpointRef"/> for deserialization. </summary>
-        internal AkriConnectorsRegistryEndpointRef()
-        {
         }
 
         /// <summary> The name of the registry endpoint. </summary>

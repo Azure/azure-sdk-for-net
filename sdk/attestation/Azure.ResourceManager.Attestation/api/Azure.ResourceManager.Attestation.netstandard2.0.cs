@@ -179,9 +179,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -198,9 +196,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -280,9 +276,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static Azure.ResourceManager.Attestation.Models.AttestationServiceStatus NotReady { get { throw null; } }
         public static Azure.ResourceManager.Attestation.Models.AttestationServiceStatus Ready { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus left, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Attestation.Models.AttestationServiceStatus (string value) { throw null; }
@@ -325,9 +319,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType Disabled { get { throw null; } }
         public static Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType left, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType (string value) { throw null; }

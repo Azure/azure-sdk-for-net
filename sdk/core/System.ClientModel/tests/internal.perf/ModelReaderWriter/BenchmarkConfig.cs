@@ -5,6 +5,7 @@ using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Reports;
 using Perfolizer.Horology;
+using Perfolizer.Metrology;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {

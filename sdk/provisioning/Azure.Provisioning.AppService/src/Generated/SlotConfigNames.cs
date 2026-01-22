@@ -18,13 +18,6 @@ namespace Azure.Provisioning.AppService;
 /// </summary>
 public partial class SlotConfigNames : ProvisionableResource
 {
-    /// <summary>
-    /// Gets the Name.
-    /// </summary>
-    public BicepValue<string> Name 
-    {
-        get { Initialize(); return _name!; }
-    }
     private BicepValue<string>? _name;
 
     /// <summary>
@@ -96,6 +89,11 @@ public partial class SlotConfigNames : ProvisionableResource
     private ResourceReference<WebSite>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new SlotConfigNames.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -116,7 +114,7 @@ public partial class SlotConfigNames : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _appSettingNames = DefineListProperty<string>("AppSettingNames", ["properties", "appSettingNames"]);
         _azureStorageConfigNames = DefineListProperty<string>("AzureStorageConfigNames", ["properties", "azureStorageConfigNames"]);
         _connectionStringNames = DefineListProperty<string>("ConnectionStringNames", ["properties", "connectionStringNames"]);

@@ -21,7 +21,10 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\query\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Query.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\flatten-property\src\_Specs_.Azure.ClientGenerator.Core.FlattenProperty.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\usage\src\_Specs_.Azure.ClientGenerator.Core.Usage.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\src\_Specs_.Azure.ClientGenerator.Core.ClientLocation.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-method-parameter-to-client\src\Specs.Azure.Tcgc.ClientLo.Param.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-existing-sub-client\src\Specs.Azure.Tcgc.ClientLo.Sub.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-new-sub-client\src\Specs.Azure.Tcgc.ClientLo.NewSub.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-root-client\src\Specs.Azure.Tcgc.ClientLo.Root.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\hierarchy-building\src\_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\src\_Specs_.Azure.ClientGenerator.Core.ClientInitialization.csproj" />
 <!--   not yet buildable <ProjectReference Include="..\Spector\http\azure\client-generator-core\override\src\_Specs_.Azure.ClientGenerator.Core.Override.csproj" />-->
@@ -96,7 +99,7 @@
     <ProjectReference Include="..\Spector\http\type\scalar\src\Type.Scalar.csproj" />
     <ProjectReference Include="..\Spector\http\type\union\src\Type.Union.csproj" />
     <ProjectReference Include="..\Spector\http\versioning\added\v1\src\Versioning.Added.V1.csproj" Aliases="VersioningAddedV1" />
-    <ProjectReference Include="..\Spector\http\versioning\added\v2\src\Versioning.Added.V2.csproj" Aliases="VersioningAddedV2"/>
+    <ProjectReference Include="..\Spector\http\versioning\added\v2\src\Versioning.Added.V2.csproj" Aliases="VersioningAddedV2" />
     <ProjectReference Include="..\Spector\http\versioning\madeOptional\v1\src\Versioning.MadeOptional.V1.csproj" Aliases="MadeOptionalV1" />
     <ProjectReference Include="..\Spector\http\versioning\madeOptional\v2\src\Versioning.MadeOptional.V2.csproj" Aliases="MadeOptionalV2" />
     <ProjectReference Include="..\Spector\http\versioning\removed\v1\src\Versioning.Removed.V1.csproj" Aliases="RemovedV1" />

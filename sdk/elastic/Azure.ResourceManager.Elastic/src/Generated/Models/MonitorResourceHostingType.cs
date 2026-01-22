@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct MonitorResourceHostingType : IEquatable<MonitorResourceHostingType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MonitorResourceHostingType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MonitorResourceHostingType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HostedValue = "Hosted";
         private const string ServerlessValue = "Serverless";
 
-        /// <summary> Hosted. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceHostingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MonitorResourceHostingType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Hosted. </summary>
         public static MonitorResourceHostingType Hosted { get; } = new MonitorResourceHostingType(HostedValue);
-        /// <summary> Serverless. </summary>
+
+        /// <summary> Gets the Serverless. </summary>
         public static MonitorResourceHostingType Serverless { get; } = new MonitorResourceHostingType(ServerlessValue);
+
         /// <summary> Determines if two <see cref="MonitorResourceHostingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorResourceHostingType left, MonitorResourceHostingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorResourceHostingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorResourceHostingType left, MonitorResourceHostingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorResourceHostingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorResourceHostingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorResourceHostingType(string value) => new MonitorResourceHostingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorResourceHostingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorResourceHostingType?(string value) => value == null ? null : new MonitorResourceHostingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorResourceHostingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorResourceHostingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

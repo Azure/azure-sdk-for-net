@@ -114,9 +114,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public static Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
@@ -233,9 +231,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public static Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState left, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState (string value) { throw null; }

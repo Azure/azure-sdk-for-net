@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowEndpointKafkaAck : IEquatable<DataflowEndpointKafkaAck>
     {
         private readonly string _value;
+        /// <summary> ZERO Option. </summary>
+        private const string ZeroValue = "Zero";
+        /// <summary> ONE Option. </summary>
+        private const string OneValue = "One";
+        /// <summary> ALL Option. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointKafkaAck"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowEndpointKafkaAck(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ZeroValue = "Zero";
-        private const string OneValue = "One";
-        private const string AllValue = "All";
+            _value = value;
+        }
 
         /// <summary> ZERO Option. </summary>
         public static DataflowEndpointKafkaAck Zero { get; } = new DataflowEndpointKafkaAck(ZeroValue);
+
         /// <summary> ONE Option. </summary>
         public static DataflowEndpointKafkaAck One { get; } = new DataflowEndpointKafkaAck(OneValue);
+
         /// <summary> ALL Option. </summary>
         public static DataflowEndpointKafkaAck All { get; } = new DataflowEndpointKafkaAck(AllValue);
+
         /// <summary> Determines if two <see cref="DataflowEndpointKafkaAck"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowEndpointKafkaAck left, DataflowEndpointKafkaAck right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowEndpointKafkaAck"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowEndpointKafkaAck left, DataflowEndpointKafkaAck right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowEndpointKafkaAck"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaAck"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowEndpointKafkaAck(string value) => new DataflowEndpointKafkaAck(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaAck"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowEndpointKafkaAck?(string value) => value == null ? null : new DataflowEndpointKafkaAck(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowEndpointKafkaAck other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowEndpointKafkaAck other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

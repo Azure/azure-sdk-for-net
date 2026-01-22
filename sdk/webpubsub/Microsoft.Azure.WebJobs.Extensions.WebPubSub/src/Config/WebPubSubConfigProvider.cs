@@ -25,26 +25,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly IConfiguration _configuration;
         private readonly INameResolver _nameResolver;
         private readonly ILogger _logger;
-        private readonly WebPubSubFunctionsOptions _options;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
         private readonly IWebPubSubServiceClientFactory _clientFactory;
         private readonly IOptionsMonitor<WebPubSubServiceAccessOptions> _accessOptions;
+        private readonly WebPubSubServiceAccessFactory _accessFactory;
 
         public WebPubSubConfigProvider(
-            IOptions<WebPubSubFunctionsOptions> options,
             INameResolver nameResolver,
             ILoggerFactory loggerFactory,
             IConfiguration configuration,
             IOptionsMonitor<WebPubSubServiceAccessOptions> accessOptions,
-            IWebPubSubServiceClientFactory clientFactory)
+            IWebPubSubServiceClientFactory clientFactory,
+            WebPubSubServiceAccessFactory accessFactory)
         {
-            _options = options.Value;
             _logger = loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("WebPubSub"));
             _nameResolver = nameResolver;
             _configuration = configuration;
-            _dispatcher = new WebPubSubTriggerDispatcher(_logger, _options);
             _accessOptions = accessOptions;
+            _dispatcher = new WebPubSubTriggerDispatcher(_logger, _accessOptions.CurrentValue);
             _clientFactory = clientFactory;
+            _accessFactory = accessFactory;
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
-                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _options, webhookException));
+                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _accessOptions.CurrentValue, webhookException, _accessFactory));
 
             // Input binding
             var webpubsubConnectionAttributeRule = context.AddBindingRule<WebPubSubConnectionAttribute>();
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             webpubsubConnectionAttributeRule.BindToInput(GetClientConnection);
 
             var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubContextAttribute>();
-            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration, _options));
+            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration, _accessOptions.CurrentValue, _accessFactory));
 
             // Output binding
             var webPubSubAttributeRule = context.AddBindingRule<WebPubSubAttribute>();

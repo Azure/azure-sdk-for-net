@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class ScheduledActionsSchedule : IUtf8JsonSerializable, IJsonModel<ScheduledActionsSchedule>
+    /// <summary> Specify the schedule in which the scheduled action is supposed to follow. </summary>
+    public partial class ScheduledActionsSchedule : IJsonModel<ScheduledActionsSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionsSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedule"/> for deserialization. </summary>
+        internal ScheduledActionsSchedule()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduledActionsSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,33 +34,32 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduledActionsSchedule)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("scheduledTime"u8);
             writer.WriteStringValue(ScheduledTime, "T");
             writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
             writer.WritePropertyName("requestedWeekDays"u8);
             writer.WriteStartArray();
-            foreach (var item in RequestedWeekDays)
+            foreach (ScheduledActionsScheduleWeekDay item in RequestedWeekDays)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("requestedMonths"u8);
             writer.WriteStartArray();
-            foreach (var item in RequestedMonths)
+            foreach (ScheduledActionsScheduleMonth item in RequestedMonths)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("requestedDaysOfTheMonth"u8);
             writer.WriteStartArray();
-            foreach (var item in RequestedDaysOfTheMonth)
+            foreach (int item in RequestedDaysOfTheMonth)
             {
                 writer.WriteNumberValue(item);
             }
@@ -69,15 +74,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("deadlineType"u8);
                 writer.WriteStringValue(DeadlineType.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +91,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        ScheduledActionsSchedule IJsonModel<ScheduledActionsSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledActionsSchedule IJsonModel<ScheduledActionsSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScheduledActionsSchedule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduledActionsSchedule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScheduledActionsSchedule(document.RootElement, options);
         }
 
-        internal static ScheduledActionsSchedule DeserializeScheduledActionsSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScheduledActionsSchedule DeserializeScheduledActionsSchedule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,74 +123,72 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             IList<int> requestedDaysOfTheMonth = default;
             ScheduledActionExecutionParameterDetail executionParameters = default;
             ScheduledActionDeadlineType? deadlineType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduledTime"u8))
+                if (prop.NameEquals("scheduledTime"u8))
                 {
-                    scheduledTime = property.Value.GetTimeSpan("T");
+                    scheduledTime = prop.Value.GetTimeSpan("T");
                     continue;
                 }
-                if (property.NameEquals("timeZone"u8))
+                if (prop.NameEquals("timeZone"u8))
                 {
-                    timeZone = property.Value.GetString();
+                    timeZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestedWeekDays"u8))
+                if (prop.NameEquals("requestedWeekDays"u8))
                 {
                     List<ScheduledActionsScheduleWeekDay> array = new List<ScheduledActionsScheduleWeekDay>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ScheduledActionsScheduleWeekDay(item.GetString()));
                     }
                     requestedWeekDays = array;
                     continue;
                 }
-                if (property.NameEquals("requestedMonths"u8))
+                if (prop.NameEquals("requestedMonths"u8))
                 {
                     List<ScheduledActionsScheduleMonth> array = new List<ScheduledActionsScheduleMonth>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ScheduledActionsScheduleMonth(item.GetString()));
                     }
                     requestedMonths = array;
                     continue;
                 }
-                if (property.NameEquals("requestedDaysOfTheMonth"u8))
+                if (prop.NameEquals("requestedDaysOfTheMonth"u8))
                 {
                     List<int> array = new List<int>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt32());
                     }
                     requestedDaysOfTheMonth = array;
                     continue;
                 }
-                if (property.NameEquals("executionParameters"u8))
+                if (prop.NameEquals("executionParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(property.Value, options);
+                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("deadlineType"u8))
+                if (prop.NameEquals("deadlineType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deadlineType = new ScheduledActionDeadlineType(property.Value.GetString());
+                    deadlineType = new ScheduledActionDeadlineType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledActionsSchedule(
                 scheduledTime,
                 timeZone,
@@ -189,13 +197,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 requestedDaysOfTheMonth,
                 executionParameters,
                 deadlineType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ScheduledActionsSchedule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScheduledActionsSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -205,15 +216,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        ScheduledActionsSchedule IPersistableModel<ScheduledActionsSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledActionsSchedule IPersistableModel<ScheduledActionsSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScheduledActionsSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScheduledActionsSchedule(document.RootElement, options);
                     }
                 default:
@@ -221,6 +237,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScheduledActionsSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

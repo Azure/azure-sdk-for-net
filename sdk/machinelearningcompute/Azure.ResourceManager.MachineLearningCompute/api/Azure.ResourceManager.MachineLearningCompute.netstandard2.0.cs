@@ -187,9 +187,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType StandardGS4 { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType StandardGS5 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType left, Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType (string value) { throw null; }
@@ -261,9 +259,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.ClusterType ACS { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningCompute.Models.ClusterType Local { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningCompute.Models.ClusterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MachineLearningCompute.Models.ClusterType left, Azure.ResourceManager.MachineLearningCompute.Models.ClusterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearningCompute.Models.ClusterType (string value) { throw null; }
@@ -389,9 +385,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus left, Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus (string value) { throw null; }
@@ -407,9 +401,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType Kubernetes { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType left, Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType (string value) { throw null; }
@@ -490,9 +482,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.Status Disabled { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningCompute.Models.Status Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningCompute.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MachineLearningCompute.Models.Status left, Azure.ResourceManager.MachineLearningCompute.Models.Status right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearningCompute.Models.Status (string value) { throw null; }
@@ -535,9 +525,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType None { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType ScoringFrontEnd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType left, Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType (string value) { throw null; }
@@ -553,9 +541,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable No { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable left, Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable (string value) { throw null; }

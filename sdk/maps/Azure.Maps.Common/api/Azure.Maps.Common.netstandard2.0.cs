@@ -25,9 +25,7 @@ namespace Azure.Maps
         public static Azure.Maps.LocalizedMapView UnitedArabEmirates { get { throw null; } }
         public static Azure.Maps.LocalizedMapView Yemen { get { throw null; } }
         public bool Equals(Azure.Maps.LocalizedMapView other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.LocalizedMapView left, Azure.Maps.LocalizedMapView right) { throw null; }
         public static implicit operator Azure.Maps.LocalizedMapView (string value) { throw null; }

@@ -196,7 +196,6 @@ namespace Azure.ResourceManager.Relay
         public string MetricId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.RelaySku Sku { get { throw null; } set { } }
@@ -543,9 +542,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayAccessKeyType PrimaryKey { get { throw null; } }
         public static Azure.ResourceManager.Relay.Models.RelayAccessKeyType SecondaryKey { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayAccessKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayAccessKeyType left, Azure.ResourceManager.Relay.Models.RelayAccessKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayAccessKeyType (string value) { throw null; }
@@ -562,9 +559,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayAccessRight Manage { get { throw null; } }
         public static Azure.ResourceManager.Relay.Models.RelayAccessRight Send { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayAccessRight other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayAccessRight left, Azure.ResourceManager.Relay.Models.RelayAccessRight right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayAccessRight (string value) { throw null; }
@@ -628,9 +623,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason SubscriptionIsDisabled { get { throw null; } }
         public static Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason TooManyNamespaceInCurrentSubscription { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason left, Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason (string value) { throw null; }
@@ -645,9 +638,7 @@ namespace Azure.ResourceManager.Relay.Models
         public RelayNetworkRuleIPAction(string value) { throw null; }
         public static Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction Allow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction left, Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction (string value) { throw null; }
@@ -663,9 +654,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction Allow { get { throw null; } }
         public static Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction left, Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction (string value) { throw null; }
@@ -697,9 +686,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -717,9 +704,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus left, Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus (string value) { throw null; }
@@ -748,9 +733,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess left, Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess (string value) { throw null; }
@@ -789,9 +772,7 @@ namespace Azure.ResourceManager.Relay.Models
         public RelaySkuName(string value) { throw null; }
         public static Azure.ResourceManager.Relay.Models.RelaySkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelaySkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelaySkuName left, Azure.ResourceManager.Relay.Models.RelaySkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelaySkuName (string value) { throw null; }
@@ -806,9 +787,7 @@ namespace Azure.ResourceManager.Relay.Models
         public RelaySkuTier(string value) { throw null; }
         public static Azure.ResourceManager.Relay.Models.RelaySkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelaySkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelaySkuTier left, Azure.ResourceManager.Relay.Models.RelaySkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelaySkuTier (string value) { throw null; }

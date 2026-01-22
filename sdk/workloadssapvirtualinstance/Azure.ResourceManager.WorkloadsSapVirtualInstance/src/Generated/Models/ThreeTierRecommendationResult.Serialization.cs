@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class ThreeTierRecommendationResult : IUtf8JsonSerializable, IJsonModel<ThreeTierRecommendationResult>
+    /// <summary> The recommended configuration for a three tier SAP system. </summary>
+    public partial class ThreeTierRecommendationResult : SapSizingRecommendationResult, IJsonModel<ThreeTierRecommendationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierRecommendationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThreeTierRecommendationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DBVmSku))
             {
@@ -67,93 +67,96 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        ThreeTierRecommendationResult IJsonModel<ThreeTierRecommendationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreeTierRecommendationResult IJsonModel<ThreeTierRecommendationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ThreeTierRecommendationResult)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SapSizingRecommendationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeThreeTierRecommendationResult(document.RootElement, options);
         }
 
-        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            SapDeploymentType deploymentType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string dbVmSku = default;
             long? databaseInstanceCount = default;
             string centralServerVmSku = default;
             long? centralServerInstanceCount = default;
             string applicationServerVmSku = default;
             long? applicationServerInstanceCount = default;
-            SapDeploymentType deploymentType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dbVmSku"u8))
+                if (prop.NameEquals("deploymentType"u8))
                 {
-                    dbVmSku = property.Value.GetString();
+                    deploymentType = new SapDeploymentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("databaseInstanceCount"u8))
+                if (prop.NameEquals("dbVmSku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    dbVmSku = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("databaseInstanceCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseInstanceCount = property.Value.GetInt64();
+                    databaseInstanceCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("centralServerVmSku"u8))
+                if (prop.NameEquals("centralServerVmSku"u8))
                 {
-                    centralServerVmSku = property.Value.GetString();
+                    centralServerVmSku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("centralServerInstanceCount"u8))
+                if (prop.NameEquals("centralServerInstanceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    centralServerInstanceCount = property.Value.GetInt64();
+                    centralServerInstanceCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("applicationServerVmSku"u8))
+                if (prop.NameEquals("applicationServerVmSku"u8))
                 {
-                    applicationServerVmSku = property.Value.GetString();
+                    applicationServerVmSku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationServerInstanceCount"u8))
+                if (prop.NameEquals("applicationServerInstanceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicationServerInstanceCount = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("deploymentType"u8))
-                {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
+                    applicationServerInstanceCount = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ThreeTierRecommendationResult(
                 deploymentType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 dbVmSku,
                 databaseInstanceCount,
                 centralServerVmSku,
@@ -162,10 +165,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 applicationServerInstanceCount);
         }
 
-        BinaryData IPersistableModel<ThreeTierRecommendationResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ThreeTierRecommendationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -175,15 +181,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        ThreeTierRecommendationResult IPersistableModel<ThreeTierRecommendationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreeTierRecommendationResult IPersistableModel<ThreeTierRecommendationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (ThreeTierRecommendationResult)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SapSizingRecommendationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeThreeTierRecommendationResult(document.RootElement, options);
                     }
                 default:
@@ -191,6 +202,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ThreeTierRecommendationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

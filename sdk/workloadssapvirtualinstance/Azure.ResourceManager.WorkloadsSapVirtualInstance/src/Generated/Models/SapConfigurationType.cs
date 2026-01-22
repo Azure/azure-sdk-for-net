@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     internal readonly partial struct SapConfigurationType : IEquatable<SapConfigurationType>
     {
         private readonly string _value;
+        /// <summary> SAP system will be deployed by service. No OS configurations will be done. </summary>
+        private const string DeploymentValue = "Deployment";
+        /// <summary> Existing SAP system will be registered. </summary>
+        private const string DiscoveryValue = "Discovery";
+        /// <summary> SAP system will be deployed by service. OS configurations will be done. </summary>
+        private const string DeploymentWithOSConfigValue = "DeploymentWithOSConfig";
 
         /// <summary> Initializes a new instance of <see cref="SapConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapConfigurationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeploymentValue = "Deployment";
-        private const string DiscoveryValue = "Discovery";
-        private const string DeploymentWithOSConfigValue = "DeploymentWithOSConfig";
+            _value = value;
+        }
 
         /// <summary> SAP system will be deployed by service. No OS configurations will be done. </summary>
         public static SapConfigurationType Deployment { get; } = new SapConfigurationType(DeploymentValue);
+
         /// <summary> Existing SAP system will be registered. </summary>
         public static SapConfigurationType Discovery { get; } = new SapConfigurationType(DiscoveryValue);
+
         /// <summary> SAP system will be deployed by service. OS configurations will be done. </summary>
         public static SapConfigurationType DeploymentWithOSConfig { get; } = new SapConfigurationType(DeploymentWithOSConfigValue);
+
         /// <summary> Determines if two <see cref="SapConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapConfigurationType left, SapConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapConfigurationType left, SapConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapConfigurationType(string value) => new SapConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapConfigurationType?(string value) => value == null ? null : new SapConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

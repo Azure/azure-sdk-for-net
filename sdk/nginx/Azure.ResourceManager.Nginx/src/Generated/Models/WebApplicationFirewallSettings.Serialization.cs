@@ -14,7 +14,7 @@ using Azure.ResourceManager.Nginx;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> Settings for the NGINX App Protect Web Application Firewall (WAF). </summary>
-    public partial class WebApplicationFirewallSettings : IJsonModel<WebApplicationFirewallSettings>
+    internal partial class WebApplicationFirewallSettings : IJsonModel<WebApplicationFirewallSettings>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class ResourceOperationDetails : IUtf8JsonSerializable, IJsonModel<ResourceOperationDetails>
+    /// <summary> The details of a response from an operation on a resource. </summary>
+    public partial class ResourceOperationDetails : IJsonModel<ResourceOperationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceOperationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/> for deserialization. </summary>
+        internal ResourceOperationDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceOperationDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
             if (Optional.IsDefined(ResourceId))
@@ -81,6 +87,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("resourceOperationError"u8);
                 writer.WriteObjectValue(ResourceOperationError, options);
             }
+            if (Optional.IsDefined(FallbackOperationInfo))
+            {
+                writer.WritePropertyName("fallbackOperationInfo"u8);
+                writer.WriteObjectValue(FallbackOperationInfo, options);
+            }
             if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedAt"u8);
@@ -91,15 +102,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,22 +119,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        ResourceOperationDetails IJsonModel<ResourceOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceOperationDetails IJsonModel<ResourceOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceOperationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceOperationDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceOperationDetails(document.RootElement, options);
         }
 
-        internal static ResourceOperationDetails DeserializeResourceOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourceOperationDetails DeserializeResourceOperationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,112 +152,120 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ScheduledActionDeadlineType? deadlineType = default;
             ScheduledActionOperationState? state = default;
             string timezone = default;
-            string timeZone = default;
+            string operationTimezone = default;
             ResourceOperationError resourceOperationError = default;
-            DateTimeOffset? completedAt = default;
+            FallbackOperationInfo fallbackOperationInfo = default;
+            DateTimeOffset? completedOn = default;
             UserRequestRetryPolicy retryPolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"u8))
+                if (prop.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetString();
+                    operationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("opType"u8))
+                if (prop.NameEquals("opType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    opType = new ResourceOperationType(property.Value.GetString());
+                    opType = new ResourceOperationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deadline"u8))
+                if (prop.NameEquals("deadline"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deadline = property.Value.GetDateTimeOffset("O");
+                    deadline = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("deadlineType"u8))
+                if (prop.NameEquals("deadlineType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deadlineType = new ScheduledActionDeadlineType(property.Value.GetString());
+                    deadlineType = new ScheduledActionDeadlineType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new ScheduledActionOperationState(property.Value.GetString());
+                    state = new ScheduledActionOperationState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timezone"u8))
+                if (prop.NameEquals("timezone"u8))
                 {
-                    timezone = property.Value.GetString();
+                    timezone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeZone"u8))
+                if (prop.NameEquals("timeZone"u8))
                 {
-                    timeZone = property.Value.GetString();
+                    operationTimezone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceOperationError"u8))
+                if (prop.NameEquals("resourceOperationError"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceOperationError = ResourceOperationError.DeserializeResourceOperationError(property.Value, options);
+                    resourceOperationError = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("completedAt"u8))
+                if (prop.NameEquals("fallbackOperationInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    completedAt = property.Value.GetDateTimeOffset("O");
+                    fallbackOperationInfo = FallbackOperationInfo.DeserializeFallbackOperationInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("retryPolicy"u8))
+                if (prop.NameEquals("completedAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retryPolicy = UserRequestRetryPolicy.DeserializeUserRequestRetryPolicy(property.Value, options);
+                    completedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("retryPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retryPolicy = UserRequestRetryPolicy.DeserializeUserRequestRetryPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceOperationDetails(
                 operationId,
                 resourceId,
@@ -251,17 +275,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 deadlineType,
                 state,
                 timezone,
-                timeZone,
+                operationTimezone,
                 resourceOperationError,
-                completedAt,
+                fallbackOperationInfo,
+                completedOn,
                 retryPolicy,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ResourceOperationDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -271,15 +299,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        ResourceOperationDetails IPersistableModel<ResourceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceOperationDetails IPersistableModel<ResourceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceOperationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceOperationDetails(document.RootElement, options);
                     }
                 default:
@@ -287,6 +320,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -17,6 +17,10 @@ import { VersioningTestLibrary } from "@typespec/versioning/testing";
 import { XmlTestLibrary } from "@typespec/xml/testing";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "../src/sdk-context-options.js";
+import {
+  ArmProviderSchema,
+  sortResourceMethods
+} from "../src/resource-metadata.js";
 
 export async function createEmitterTestHost(): Promise<TestHost> {
   return createTestHost({
@@ -109,4 +113,41 @@ export async function createCSharpSdkContext(
     context,
     new Logger(program.program, LoggerLevel.INFO)
   );
+}
+
+/**
+ * Helper function to normalize ARM provider schemas for comparison.
+ * This is useful when comparing schemas from different APIs (e.g., buildArmProviderSchema vs resolveArmResources).
+ *
+ * @param schema - The ARM provider schema to normalize
+ * @returns A normalized schema object suitable for deep comparison
+ */
+export function normalizeSchemaForComparison(schema: ArmProviderSchema) {
+  // Work on a deep copy to avoid mutating the original schema used elsewhere in tests.
+  const normalizedSchema: ArmProviderSchema = JSON.parse(
+    JSON.stringify(schema)
+  );
+
+  // it is a known issue that the following properties might different therefore we need to ignore them:
+  // - resources.metadata.resourceName
+  // - resources.metadata.parentResourceModelId
+  for (const resource of normalizedSchema.resources) {
+    resource.metadata.resourceName = "<normalized>";
+    resource.metadata.parentResourceModelId = "<normalized>";
+
+    // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
+    sortResourceMethods(resource.metadata.methods);
+  }
+
+  // sort resources by resourceIdPattern
+  normalizedSchema.resources.sort((a, b) =>
+    a.metadata.resourceIdPattern.localeCompare(b.metadata.resourceIdPattern)
+  );
+
+  // sort nonResourceMethods by methodId
+  normalizedSchema.nonResourceMethods.sort((a, b) =>
+    a.methodId.localeCompare(b.methodId)
+  );
+
+  return normalizedSchema;
 }
