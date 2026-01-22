@@ -1246,11 +1246,15 @@ interface ScheduledActionExtension {
     );
     strictEqual(getPostgresVersionsEntry.operationScope, ResourceScope.ResourceGroup);
 
-    // Note: We don't compare with resolveArmResources here because the getPostgresVersions
-    // operation uses ResourceInstanceParameters<GetAssociatedScheduledActionsRequest> which
-    // is a non-resource model, causing the ARM library to not recognize it as a valid operation.
-    // Our buildArmProviderSchema correctly includes it as a non-resource method based on its
-    // operation path not matching any resource instance pattern.
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("multiple resources sharing same model", async () => {
@@ -1492,34 +1496,34 @@ interface NoGetResources {
       "Parent should have 7 methods including all operations from NoGetResource"
     );
 
-    // Verify the list operation for NoGetResource is in parent's methods
+    // Verify the list operation for NoGetResource is in parent's methods as Action
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
-        m.kind === "List" && m.operationPath.includes("noGetResources")
+        m.kind === "Action" && m.operationPath.includes("noGetResources") && m.operationPath.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
-      "Parent resource should have the list operation for NoGetResource"
+      "Parent resource should have the list operation for NoGetResource as Action"
     );
 
-    // Verify the create operation for NoGetResource is in parent's methods
+    // Verify the create operation for NoGetResource is in parent's methods as Action
     const noGetCreateInParent = parentResource.metadata.methods.find(
       (m) =>
-        m.kind === "Create" && m.operationPath.includes("noGetResources")
+        m.kind === "Action" && m.operationPath.includes("noGetResources")
     );
     ok(
       noGetCreateInParent,
-      "Parent resource should have the create operation for NoGetResource"
+      "Parent resource should have the create operation for NoGetResource as Action"
     );
 
-    // Verify the delete operation for NoGetResource is in parent's methods
+    // Verify the delete operation for NoGetResource is in parent's methods as Action
     const noGetDeleteInParent = parentResource.metadata.methods.find(
       (m) =>
-        m.kind === "Delete" && m.operationPath.includes("noGetResources")
+        m.kind === "Action" && m.operationPath.includes("noGetResources")
     );
     ok(
       noGetDeleteInParent,
-      "Parent resource should have the delete operation for NoGetResource"
+      "Parent resource should have the delete operation for NoGetResource as Action"
     );
 
     // Verify NoGetResource is NOT in resources
