@@ -6,67 +6,23 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 using Client.Structure.Service;
-using Client.Structure.Service.TwoOperationGroup;
 
 namespace Client.Structure.TwoOperationGroup
 {
-    /// <summary> The TwoOperationGroupClient. </summary>
     public partial class TwoOperationGroupClient
     {
-        private readonly Uri _endpoint;
-        private readonly ClientType _client;
-        private Group1 _cachedGroup1;
-        private Group2 _cachedGroup2;
+        protected TwoOperationGroupClient() => throw null;
 
-        /// <summary> Initializes a new instance of TwoOperationGroupClient for mocking. </summary>
-        protected TwoOperationGroupClient()
-        {
-        }
+        public TwoOperationGroupClient(Uri endpoint, ClientType client) : this(endpoint, client, new TwoOperationGroupClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of TwoOperationGroupClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="client"> Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TwoOperationGroupClient(Uri endpoint, ClientType client) : this(endpoint, client, new TwoOperationGroupClientOptions())
-        {
-        }
+        public TwoOperationGroupClient(Uri endpoint, ClientType client, TwoOperationGroupClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of TwoOperationGroupClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="client"> Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TwoOperationGroupClient(Uri endpoint, ClientType client, TwoOperationGroupClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new TwoOperationGroupClientOptions();
+        public virtual Group1 GetGroup1Client() => throw null;
 
-            _endpoint = endpoint;
-            _client = client;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of Group1. </summary>
-        public virtual Group1 GetGroup1Client()
-        {
-            return Volatile.Read(ref _cachedGroup1) ?? Interlocked.CompareExchange(ref _cachedGroup1, new Group1(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedGroup1;
-        }
-
-        /// <summary> Initializes a new instance of Group2. </summary>
-        public virtual Group2 GetGroup2Client()
-        {
-            return Volatile.Read(ref _cachedGroup2) ?? Interlocked.CompareExchange(ref _cachedGroup2, new Group2(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedGroup2;
-        }
+        public virtual Group2 GetGroup2Client() => throw null;
     }
 }

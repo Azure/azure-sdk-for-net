@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Client.Structure.TwoOperationGroup
 {
-    /// <summary> Client options for <see cref="TwoOperationGroupClient"/>. </summary>
     public partial class TwoOperationGroupClientOptions : ClientOptions
     {
     }
