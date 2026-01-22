@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
@@ -38,6 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private readonly IPlatform _platform;
 
         internal MeterProvider? _attachStatsbeatMeterProvider;
+        internal MeterProvider? _featureStatsbeatMeterProvider;
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
@@ -71,6 +71,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             _attachStatsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.AttachStatsbeatInterval)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
+
+            _featureStatsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.FeatureStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
@@ -138,16 +144,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
                 return new Measurement<int>();
             }
-        }
-
-        internal FeatureMetricEmissionHelper GetFeatureMetricEmissionHelper()
-        {
-            if (_resourceProvider == null)
-            {
-                SetResourceProviderDetails(_platform);
-            }
-
-            return FeatureMetricEmissionHelper.GetOrCreateHelper(this._resourceProvider ?? "unknown", s_attachMode, this._customer_Ikey, this._operatingSystem);
         }
 
         internal static VmMetadataResponse? GetVmMetadataResponse()
