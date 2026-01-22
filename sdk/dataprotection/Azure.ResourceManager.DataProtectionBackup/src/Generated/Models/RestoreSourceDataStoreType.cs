@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct RestoreSourceDataStoreType : IEquatable<RestoreSourceDataStoreType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RestoreSourceDataStoreType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RestoreSourceDataStoreType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OperationalStoreValue = "OperationalStore";
         private const string VaultStoreValue = "VaultStore";
         private const string ArchiveStoreValue = "ArchiveStore";
 
-        /// <summary> OperationalStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreSourceDataStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RestoreSourceDataStoreType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OperationalStore. </summary>
         public static RestoreSourceDataStoreType OperationalStore { get; } = new RestoreSourceDataStoreType(OperationalStoreValue);
-        /// <summary> VaultStore. </summary>
+
+        /// <summary> Gets the VaultStore. </summary>
         public static RestoreSourceDataStoreType VaultStore { get; } = new RestoreSourceDataStoreType(VaultStoreValue);
-        /// <summary> ArchiveStore. </summary>
+
+        /// <summary> Gets the ArchiveStore. </summary>
         public static RestoreSourceDataStoreType ArchiveStore { get; } = new RestoreSourceDataStoreType(ArchiveStoreValue);
+
         /// <summary> Determines if two <see cref="RestoreSourceDataStoreType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RestoreSourceDataStoreType left, RestoreSourceDataStoreType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RestoreSourceDataStoreType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RestoreSourceDataStoreType left, RestoreSourceDataStoreType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RestoreSourceDataStoreType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RestoreSourceDataStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RestoreSourceDataStoreType(string value) => new RestoreSourceDataStoreType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RestoreSourceDataStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RestoreSourceDataStoreType?(string value) => value == null ? null : new RestoreSourceDataStoreType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RestoreSourceDataStoreType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RestoreSourceDataStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

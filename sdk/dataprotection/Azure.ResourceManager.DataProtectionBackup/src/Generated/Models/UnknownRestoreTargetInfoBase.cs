@@ -11,21 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Unknown version of RestoreTargetInfoBase. </summary>
     internal partial class UnknownRestoreTargetInfoBase : RestoreTargetInfoBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRestoreTargetInfoBase"/>. </summary>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreLocation"> Target Restore region. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRestoreTargetInfoBase(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, recoverySetting, restoreLocation, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRestoreTargetInfoBase"/> for deserialization. </summary>
-        internal UnknownRestoreTargetInfoBase()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRestoreTargetInfoBase(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", recoverySetting, restoreLocation, additionalBinaryDataProperties)
         {
         }
     }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Class encapsulating target details, used where the destination is not a datasource. </summary>
     public partial class RestoreFilesTargetDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetDetails"/>. </summary>
         /// <param name="filePrefix">
@@ -57,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="uri"> Url denoting the restore destination. It can point to container / file share etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePrefix"/> or <paramref name="uri"/> is null. </exception>
-        public RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, Uri uri)
+        public RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, string uri)
         {
             Argument.AssertNotNull(filePrefix, nameof(filePrefix));
             Argument.AssertNotNull(uri, nameof(uri));
@@ -82,19 +54,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// This is optional if the target subscription can be identified with the URL field. If not
         /// then this is needed if CrossSubscriptionRestore field of BackupVault is in any of the disabled states
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, Uri uri, ResourceIdentifier targetResourceArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, string uri, ResourceIdentifier targetResourceArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilePrefix = filePrefix;
             RestoreTargetLocationType = restoreTargetLocationType;
             Uri = uri;
             TargetResourceArmId = targetResourceArmId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetDetails"/> for deserialization. </summary>
-        internal RestoreFilesTargetDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -102,13 +69,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Below will be the common prefix for all of them
         /// </summary>
         public string FilePrefix { get; }
+
         /// <summary>
         /// Denotes the target location where the data will be restored,
         /// string value for the enum {Microsoft.Internal.AzureBackup.DataProtection.Common.Interface.RestoreTargetLocationType}
         /// </summary>
         public RestoreTargetLocationType RestoreTargetLocationType { get; }
+
         /// <summary> Url denoting the restore destination. It can point to container / file share etc. </summary>
-        public Uri Uri { get; }
+        public string Uri { get; }
+
         /// <summary>
         /// Full ARM Id denoting the restore destination. It is the ARM Id pointing to container / file share
         /// This is optional if the target subscription can be identified with the URL field. If not

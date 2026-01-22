@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupVaultImmutabilityState : IEquatable<BackupVaultImmutabilityState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupVaultImmutabilityState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupVaultImmutabilityState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DisabledValue = "Disabled";
         private const string UnlockedValue = "Unlocked";
         private const string LockedValue = "Locked";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultImmutabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupVaultImmutabilityState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Disabled. </summary>
         public static BackupVaultImmutabilityState Disabled { get; } = new BackupVaultImmutabilityState(DisabledValue);
-        /// <summary> Unlocked. </summary>
+
+        /// <summary> Gets the Unlocked. </summary>
         public static BackupVaultImmutabilityState Unlocked { get; } = new BackupVaultImmutabilityState(UnlockedValue);
-        /// <summary> Locked. </summary>
+
+        /// <summary> Gets the Locked. </summary>
         public static BackupVaultImmutabilityState Locked { get; } = new BackupVaultImmutabilityState(LockedValue);
+
         /// <summary> Determines if two <see cref="BackupVaultImmutabilityState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupVaultImmutabilityState left, BackupVaultImmutabilityState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupVaultImmutabilityState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupVaultImmutabilityState left, BackupVaultImmutabilityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultImmutabilityState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupVaultImmutabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupVaultImmutabilityState(string value) => new BackupVaultImmutabilityState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupVaultImmutabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupVaultImmutabilityState?(string value) => value == null ? null : new BackupVaultImmutabilityState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupVaultImmutabilityState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupVaultImmutabilityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

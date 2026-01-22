@@ -8,58 +8,76 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataProtectionBackup;
 using Azure.ResourceManager.DataProtectionBackup.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDataProtectionBackupResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _dataProtectionBackupVaultBackupVaultsClientDiagnostics;
-        private BackupVaultsRestOperations _dataProtectionBackupVaultBackupVaultsRestClient;
-        private ClientDiagnostics _dataProtectionBackupInstanceBackupInstancesClientDiagnostics;
-        private BackupInstancesRestOperations _dataProtectionBackupInstanceBackupInstancesRestClient;
-        private ClientDiagnostics _fetchCrossRegionRestoreJobClientDiagnostics;
-        private FetchCrossRegionRestoreJobRestOperations _fetchCrossRegionRestoreJobRestClient;
-        private ClientDiagnostics _fetchCrossRegionRestoreJobsClientDiagnostics;
-        private FetchCrossRegionRestoreJobsRestOperations _fetchCrossRegionRestoreJobsRestClient;
-        private ClientDiagnostics _fetchSecondaryRecoveryPointsClientDiagnostics;
-        private FetchSecondaryRecoveryPointsRestOperations _fetchSecondaryRecoveryPointsRestClient;
+        private ClientDiagnostics _resourceGuardsClientDiagnostics;
+        private ResourceGuards _resourceGuardsRestClient;
+        private ClientDiagnostics _dppBaseResourceOperationGroupClientDiagnostics;
+        private DppBaseResourceOperationGroup _dppBaseResourceOperationGroupRestClient;
+        private ClientDiagnostics _backupVaultsOperationGroupClientDiagnostics;
+        private BackupVaultsOperationGroup _backupVaultsOperationGroupRestClient;
+        private ClientDiagnostics _backupInstancesOperationGroupClientDiagnostics;
+        private BackupInstancesOperationGroup _backupInstancesOperationGroupRestClient;
+        private ClientDiagnostics _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics;
+        private FetchSecondaryRecoveryPointsOperationGroup _fetchSecondaryRecoveryPointsOperationGroupRestClient;
+        private ClientDiagnostics _fetchCrossRegionRestoreJobOperationGroupClientDiagnostics;
+        private FetchCrossRegionRestoreJobOperationGroup _fetchCrossRegionRestoreJobOperationGroupRestClient;
+        private ClientDiagnostics _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics;
+        private FetchCrossRegionRestoreJobsOperationGroup _fetchCrossRegionRestoreJobsOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataProtectionBackupResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataProtectionBackupResourceGroupResource for mocking. </summary>
         protected MockableDataProtectionBackupResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataProtectionBackupResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataProtectionBackupResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataProtectionBackupResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DataProtectionBackupVaultBackupVaultsClientDiagnostics => _dataProtectionBackupVaultBackupVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
-        private BackupVaultsRestOperations DataProtectionBackupVaultBackupVaultsRestClient => _dataProtectionBackupVaultBackupVaultsRestClient ??= new BackupVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataProtectionBackupVaultResource.ResourceType));
-        private ClientDiagnostics DataProtectionBackupInstanceBackupInstancesClientDiagnostics => _dataProtectionBackupInstanceBackupInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupInstanceResource.ResourceType.Namespace, Diagnostics);
-        private BackupInstancesRestOperations DataProtectionBackupInstanceBackupInstancesRestClient => _dataProtectionBackupInstanceBackupInstancesRestClient ??= new BackupInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataProtectionBackupInstanceResource.ResourceType));
-        private ClientDiagnostics FetchCrossRegionRestoreJobClientDiagnostics => _fetchCrossRegionRestoreJobClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private FetchCrossRegionRestoreJobRestOperations FetchCrossRegionRestoreJobRestClient => _fetchCrossRegionRestoreJobRestClient ??= new FetchCrossRegionRestoreJobRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics FetchCrossRegionRestoreJobsClientDiagnostics => _fetchCrossRegionRestoreJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private FetchCrossRegionRestoreJobsRestOperations FetchCrossRegionRestoreJobsRestClient => _fetchCrossRegionRestoreJobsRestClient ??= new FetchCrossRegionRestoreJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics FetchSecondaryRecoveryPointsClientDiagnostics => _fetchSecondaryRecoveryPointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private FetchSecondaryRecoveryPointsRestOperations FetchSecondaryRecoveryPointsRestClient => _fetchSecondaryRecoveryPointsRestClient ??= new FetchSecondaryRecoveryPointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ResourceGuardsClientDiagnostics => _resourceGuardsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ResourceGuards ResourceGuardsRestClient => _resourceGuardsRestClient ??= new ResourceGuards(ResourceGuardsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> Gets a collection of DataProtectionBackupVaultResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>
+        private ClientDiagnostics DppBaseResourceOperationGroupClientDiagnostics => _dppBaseResourceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DppBaseResourceOperationGroup DppBaseResourceOperationGroupRestClient => _dppBaseResourceOperationGroupRestClient ??= new DppBaseResourceOperationGroup(DppBaseResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics BackupVaultsOperationGroupClientDiagnostics => _backupVaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BackupVaultsOperationGroup BackupVaultsOperationGroupRestClient => _backupVaultsOperationGroupRestClient ??= new BackupVaultsOperationGroup(BackupVaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics BackupInstancesOperationGroupClientDiagnostics => _backupInstancesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BackupInstancesOperationGroup BackupInstancesOperationGroupRestClient => _backupInstancesOperationGroupRestClient ??= new BackupInstancesOperationGroup(BackupInstancesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics => _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FetchSecondaryRecoveryPointsOperationGroup FetchSecondaryRecoveryPointsOperationGroupRestClient => _fetchSecondaryRecoveryPointsOperationGroupRestClient ??= new FetchSecondaryRecoveryPointsOperationGroup(FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics FetchCrossRegionRestoreJobOperationGroupClientDiagnostics => _fetchCrossRegionRestoreJobOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FetchCrossRegionRestoreJobOperationGroup FetchCrossRegionRestoreJobOperationGroupRestClient => _fetchCrossRegionRestoreJobOperationGroupRestClient ??= new FetchCrossRegionRestoreJobOperationGroup(FetchCrossRegionRestoreJobOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics => _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FetchCrossRegionRestoreJobsOperationGroup FetchCrossRegionRestoreJobsOperationGroupRestClient => _fetchCrossRegionRestoreJobsOperationGroupRestClient ??= new FetchCrossRegionRestoreJobsOperationGroup(FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        /// <summary> Gets a collection of DataProtectionBackupVaults in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DataProtectionBackupVaults and their operations over a DataProtectionBackupVaultResource. </returns>
         public virtual DataProtectionBackupVaultCollection GetDataProtectionBackupVaults()
         {
             return GetCachedClient(client => new DataProtectionBackupVaultCollection(client, Id));
@@ -69,20 +87,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Returns a resource belonging to a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,6 +107,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DataProtectionBackupVaultResource>> GetDataProtectionBackupVaultAsync(string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
             return await GetDataProtectionBackupVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -100,20 +116,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Returns a resource belonging to a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,11 +136,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         [ForwardsClientCalls]
         public virtual Response<DataProtectionBackupVaultResource> GetDataProtectionBackupVault(string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
             return GetDataProtectionBackupVaults().Get(vaultName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGuardResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ResourceGuardResources and their operations over a ResourceGuardResource. </returns>
+        /// <summary> Gets a collection of ResourceGuards in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceGuards and their operations over a ResourceGuardResource. </returns>
         public virtual ResourceGuardCollection GetResourceGuards()
         {
             return GetCachedClient(client => new ResourceGuardCollection(client, Id));
@@ -138,20 +152,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Returns a ResourceGuard belonging to a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGuards_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +172,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGuardResource>> GetResourceGuardAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
             return await GetResourceGuards().GetAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -169,20 +181,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Returns a ResourceGuard belonging to a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGuards_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,43 +201,1059 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         [ForwardsClientCalls]
         public virtual Response<ResourceGuardResource> GetResourceGuard(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
             return GetResourceGuards().Get(resourceGuardsName, cancellationToken);
         }
 
         /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DppBaseResource>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = ResourceGuardsClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteResourceGuardProxyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ResourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DppBaseResource> GetDefaultDeleteResourceGuardProxyRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = ResourceGuardsClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteResourceGuardProxyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ResourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDisableSoftDeleteRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DppBaseResource>> GetDefaultDisableSoftDeleteRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultDisableSoftDeleteRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDisableSoftDeleteRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DppBaseResource> GetDefaultDisableSoftDeleteRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultDisableSoftDeleteRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DppBaseResource>> GetDefaultUpdateProtectedItemRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DppBaseResource> GetDefaultUpdateProtectedItemRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectionPolicyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DppBaseResource>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectionPolicyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectionPolicyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DppBaseResource> GetDefaultUpdateProtectionPolicyRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectionPolicyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDeleteProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DppBaseResource>> GetDefaultDeleteProtectedItemRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDeleteProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DppBaseResource> GetDefaultDeleteProtectedItemRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultBackupSecurityPINRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DppBaseResource>> GetDefaultBackupSecurityPINRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultBackupSecurityPINRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPINRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultBackupSecurityPINRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DppBaseResource> GetDefaultBackupSecurityPINRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = DppBaseResourceOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDefaultBackupSecurityPINRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPINRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DppBaseResource> GetDeleteResourceGuardProxyRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsAsyncCollectionResultOfT(ResourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DppBaseResource> GetDeleteResourceGuardProxyRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT(ResourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDisableSoftDeleteRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DppBaseResource> GetDisableSoftDeleteRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDisableSoftDeleteRequestsObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDisableSoftDeleteRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DppBaseResource> GetDisableSoftDeleteRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDisableSoftDeleteRequestsObjectsCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DppBaseResource> GetUpdateProtectedItemRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectedItemRequestsObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DppBaseResource> GetUpdateProtectedItemRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectedItemRequestsObjectsCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectionPolicyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DppBaseResource> GetUpdateProtectionPolicyRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyRequestsObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectionPolicyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DppBaseResource> GetUpdateProtectionPolicyRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyRequestsObjectsCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDeleteProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DppBaseResource> GetDeleteProtectedItemRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDeleteProtectedItemRequestsObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDeleteProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DppBaseResource> GetDeleteProtectedItemRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDeleteProtectedItemRequestsObjectsCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetBackupSecurityPINRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DppBaseResource> GetBackupSecurityPINRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetBackupSecurityPINRequestsObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetBackupSecurityPINRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DppBaseResource> GetBackupSecurityPINRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetBackupSecurityPINRequestsObjectsCollectionResultOfT(DppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, context);
+        }
+
+        /// <summary>
         /// API to check for resource name availability
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultsOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Check name availability request. </param>
+        /// <param name="dataProtectionBackupNameAvailabilityContent"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckDataProtectionBackupVaultNameAvailabilityAsync(AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataProtectionBackupNameAvailabilityContent"/> is null. </exception>
+        public virtual async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckNameAvailabilityAsync(AzureLocation location, DataProtectionBackupNameAvailabilityContent dataProtectionBackupNameAvailabilityContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(dataProtectionBackupNameAvailabilityContent, nameof(dataProtectionBackupNameAvailabilityContent));
 
-            using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.CheckDataProtectionBackupVaultNameAvailability");
+            using DiagnosticScope scope = BackupVaultsOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = await DataProtectionBackupVaultBackupVaultsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BackupVaultsOperationGroupRestClient.CreateCheckNameAvailabilityRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, DataProtectionBackupNameAvailabilityContent.ToRequestContent(dataProtectionBackupNameAvailabilityContent), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataProtectionBackupNameAvailabilityResult> response = Response.FromValue(DataProtectionBackupNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -243,36 +1267,42 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// API to check for resource name availability
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultsOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Check name availability request. </param>
+        /// <param name="dataProtectionBackupNameAvailabilityContent"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataProtectionBackupNameAvailabilityResult> CheckDataProtectionBackupVaultNameAvailability(AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataProtectionBackupNameAvailabilityContent"/> is null. </exception>
+        public virtual Response<DataProtectionBackupNameAvailabilityResult> CheckNameAvailability(AzureLocation location, DataProtectionBackupNameAvailabilityContent dataProtectionBackupNameAvailabilityContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(dataProtectionBackupNameAvailabilityContent, nameof(dataProtectionBackupNameAvailabilityContent));
 
-            using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.CheckDataProtectionBackupVaultNameAvailability");
+            using DiagnosticScope scope = BackupVaultsOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = DataProtectionBackupVaultBackupVaultsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BackupVaultsOperationGroupRestClient.CreateCheckNameAvailabilityRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, DataProtectionBackupNameAvailabilityContent.ToRequestContent(dataProtectionBackupNameAvailabilityContent), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataProtectionBackupNameAvailabilityResult> response = Response.FromValue(DataProtectionBackupNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -286,20 +1316,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Triggers Cross Region Restore for BackupInstance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/crossRegionRestore</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/crossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_TriggerCrossRegionRestore</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstancesOperationGroup_TriggerCrossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,18 +1334,31 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="crossRegionRestoreRequestObject"> Request body for trigger CRR operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreRequestObject"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerCrossRegionRestoreBackupInstanceAsync(WaitUntil waitUntil, AzureLocation location, CrossRegionRestoreRequestObject crossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerCrossRegionRestoreAsync(WaitUntil waitUntil, AzureLocation location, CrossRegionRestoreRequestObject crossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(crossRegionRestoreRequestObject, nameof(crossRegionRestoreRequestObject));
 
-            using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.TriggerCrossRegionRestoreBackupInstance");
+            using DiagnosticScope scope = BackupInstancesOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.TriggerCrossRegionRestore");
             scope.Start();
             try
             {
-                var response = await DataProtectionBackupInstanceBackupInstancesRestClient.TriggerCrossRegionRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, location, crossRegionRestoreRequestObject, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), DataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, DataProtectionBackupInstanceBackupInstancesRestClient.CreateTriggerCrossRegionRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, location, crossRegionRestoreRequestObject).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateTriggerCrossRegionRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CrossRegionRestoreRequestObject.ToRequestContent(crossRegionRestoreRequestObject), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
+                    new DataProtectionOperationJobExtendedInfoOperationSource(),
+                    BackupInstancesOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -333,20 +1372,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Triggers Cross Region Restore for BackupInstance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/crossRegionRestore</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/crossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_TriggerCrossRegionRestore</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstancesOperationGroup_TriggerCrossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,18 +1390,31 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="crossRegionRestoreRequestObject"> Request body for trigger CRR operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreRequestObject"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerCrossRegionRestoreBackupInstance(WaitUntil waitUntil, AzureLocation location, CrossRegionRestoreRequestObject crossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerCrossRegionRestore(WaitUntil waitUntil, AzureLocation location, CrossRegionRestoreRequestObject crossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(crossRegionRestoreRequestObject, nameof(crossRegionRestoreRequestObject));
 
-            using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.TriggerCrossRegionRestoreBackupInstance");
+            using DiagnosticScope scope = BackupInstancesOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.TriggerCrossRegionRestore");
             scope.Start();
             try
             {
-                var response = DataProtectionBackupInstanceBackupInstancesRestClient.TriggerCrossRegionRestore(Id.SubscriptionId, Id.ResourceGroupName, location, crossRegionRestoreRequestObject, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), DataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, DataProtectionBackupInstanceBackupInstancesRestClient.CreateTriggerCrossRegionRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, location, crossRegionRestoreRequestObject).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateTriggerCrossRegionRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CrossRegionRestoreRequestObject.ToRequestContent(crossRegionRestoreRequestObject), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
+                    new DataProtectionOperationJobExtendedInfoOperationSource(),
+                    BackupInstancesOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -380,20 +1428,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Validates whether Cross Region Restore can be triggered for DataSource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/validateCrossRegionRestore</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/validateCrossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_ValidateCrossRegionRestore</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstancesOperationGroup_ValidateCrossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,18 +1446,31 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="validateCrossRegionRestoreRequestObject"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateCrossRegionRestoreRequestObject"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateCrossRegionRestoreBackupInstanceAsync(WaitUntil waitUntil, AzureLocation location, ValidateCrossRegionRestoreRequestObject validateCrossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateCrossRegionRestoreAsync(WaitUntil waitUntil, AzureLocation location, ValidateCrossRegionRestoreRequestObject validateCrossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(validateCrossRegionRestoreRequestObject, nameof(validateCrossRegionRestoreRequestObject));
 
-            using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.ValidateCrossRegionRestoreBackupInstance");
+            using DiagnosticScope scope = BackupInstancesOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.ValidateCrossRegionRestore");
             scope.Start();
             try
             {
-                var response = await DataProtectionBackupInstanceBackupInstancesRestClient.ValidateCrossRegionRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, location, validateCrossRegionRestoreRequestObject, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), DataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, DataProtectionBackupInstanceBackupInstancesRestClient.CreateValidateCrossRegionRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, location, validateCrossRegionRestoreRequestObject).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateValidateCrossRegionRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateCrossRegionRestoreRequestObject.ToRequestContent(validateCrossRegionRestoreRequestObject), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
+                    new DataProtectionOperationJobExtendedInfoOperationSource(),
+                    BackupInstancesOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -427,20 +1484,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Validates whether Cross Region Restore can be triggered for DataSource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/validateCrossRegionRestore</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/validateCrossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_ValidateCrossRegionRestore</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstancesOperationGroup_ValidateCrossRegionRestore. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,18 +1502,31 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="validateCrossRegionRestoreRequestObject"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateCrossRegionRestoreRequestObject"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateCrossRegionRestoreBackupInstance(WaitUntil waitUntil, AzureLocation location, ValidateCrossRegionRestoreRequestObject validateCrossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateCrossRegionRestore(WaitUntil waitUntil, AzureLocation location, ValidateCrossRegionRestoreRequestObject validateCrossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(validateCrossRegionRestoreRequestObject, nameof(validateCrossRegionRestoreRequestObject));
 
-            using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.ValidateCrossRegionRestoreBackupInstance");
+            using DiagnosticScope scope = BackupInstancesOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.ValidateCrossRegionRestore");
             scope.Start();
             try
             {
-                var response = DataProtectionBackupInstanceBackupInstancesRestClient.ValidateCrossRegionRestore(Id.SubscriptionId, Id.ResourceGroupName, location, validateCrossRegionRestoreRequestObject, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), DataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, DataProtectionBackupInstanceBackupInstancesRestClient.CreateValidateCrossRegionRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, location, validateCrossRegionRestoreRequestObject).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateValidateCrossRegionRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateCrossRegionRestoreRequestObject.ToRequestContent(validateCrossRegionRestoreRequestObject), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
+                    new DataProtectionOperationJobExtendedInfoOperationSource(),
+                    BackupInstancesOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -471,211 +1537,269 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         }
 
         /// <summary>
-        /// Fetches the Cross Region Restore Job
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchCrossRegionRestoreJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataProtectionBackupJobResource>> GetCrossRegionRestoreJobAsync(AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = FetchCrossRegionRestoreJobClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJob");
-            scope.Start();
-            try
-            {
-                var response = await FetchCrossRegionRestoreJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the Cross Region Restore Job
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchCrossRegionRestoreJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataProtectionBackupJobResource> GetCrossRegionRestoreJob(AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = FetchCrossRegionRestoreJobClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJob");
-            scope.Start();
-            try
-            {
-                var response = FetchCrossRegionRestoreJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
-                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches list of Cross Region Restore job belonging to the vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchCrossRegionRestoreJobs_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobsAsync(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FetchCrossRegionRestoreJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchCrossRegionRestoreJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupJobResource(Client, DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(e)), FetchCrossRegionRestoreJobsClientDiagnostics, Pipeline, "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Fetches list of Cross Region Restore job belonging to the vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchCrossRegionRestoreJobs_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobs(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FetchCrossRegionRestoreJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchCrossRegionRestoreJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupJobResource(Client, DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(e)), FetchCrossRegionRestoreJobsClientDiagnostics, Pipeline, "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchSecondaryRecoveryPoints_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FetchSecondaryRecoveryPointsOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
+        /// <param name="fetchSecondaryRPsContent"> Request body for operation. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FetchSecondaryRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchSecondaryRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupRecoveryPointResource(Client, DataProtectionBackupRecoveryPointData.DeserializeDataProtectionBackupRecoveryPointData(e)), FetchSecondaryRecoveryPointsClientDiagnostics, Pipeline, "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchSecondaryRecoveryPoints_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fetchSecondaryRPsContent"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetAllAsync(AzureLocation location, FetchSecondaryRPsContent fetchSecondaryRPsContent, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(fetchSecondaryRPsContent, nameof(fetchSecondaryRPsContent));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FetchSecondaryRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchSecondaryRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupRecoveryPointResource(Client, DataProtectionBackupRecoveryPointData.DeserializeDataProtectionBackupRecoveryPointData(e)), FetchSecondaryRecoveryPointsClientDiagnostics, Pipeline, "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetAllAsyncCollectionResultOfT(
+                FetchSecondaryRecoveryPointsOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                FetchSecondaryRPsContent.ToRequestContent(fetchSecondaryRPsContent),
+                filter,
+                skipToken,
+                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchSecondaryRecoveryPointsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="fetchSecondaryRPsContent"> Request body for operation. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fetchSecondaryRPsContent"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetAll(AzureLocation location, FetchSecondaryRPsContent fetchSecondaryRPsContent, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fetchSecondaryRPsContent, nameof(fetchSecondaryRPsContent));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetAllCollectionResultOfT(
+                FetchSecondaryRecoveryPointsOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                FetchSecondaryRPsContent.ToRequestContent(fetchSecondaryRPsContent),
+                filter,
+                skipToken,
+                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Fetches the Cross Region Restore Job
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchCrossRegionRestoreJobOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="crossRegionRestoreJobContent"> Request body for operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreJobContent"/> is null. </exception>
+        public virtual async Task<Response<DataProtectionBackupJobResource>> GetAsync(AzureLocation location, CrossRegionRestoreJobContent crossRegionRestoreJobContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(crossRegionRestoreJobContent, nameof(crossRegionRestoreJobContent));
+
+            using DiagnosticScope scope = FetchCrossRegionRestoreJobOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FetchCrossRegionRestoreJobOperationGroupRestClient.CreateGetRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, CrossRegionRestoreJobContent.ToRequestContent(crossRegionRestoreJobContent), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataProtectionBackupJobData> response = Response.FromValue(DataProtectionBackupJobData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetches the Cross Region Restore Job
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchCrossRegionRestoreJobOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="crossRegionRestoreJobContent"> Request body for operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreJobContent"/> is null. </exception>
+        public virtual Response<DataProtectionBackupJobResource> Get(AzureLocation location, CrossRegionRestoreJobContent crossRegionRestoreJobContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(crossRegionRestoreJobContent, nameof(crossRegionRestoreJobContent));
+
+            using DiagnosticScope scope = FetchCrossRegionRestoreJobOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FetchCrossRegionRestoreJobOperationGroupRestClient.CreateGetRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, CrossRegionRestoreJobContent.ToRequestContent(crossRegionRestoreJobContent), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataProtectionBackupJobData> response = Response.FromValue(DataProtectionBackupJobData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetches list of Cross Region Restore job belonging to the vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchCrossRegionRestoreJobsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="crossRegionRestoreJobsContent"> Request body for operation. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreJobsContent"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupJobResource> GetAllAsync(AzureLocation location, CrossRegionRestoreJobsContent crossRegionRestoreJobsContent, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(crossRegionRestoreJobsContent, nameof(crossRegionRestoreJobsContent));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetAllAsyncCollectionResultOfT(
+                FetchCrossRegionRestoreJobsOperationGroupRestClient,
+                Id.ResourceGroupName,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                CrossRegionRestoreJobsContent.ToRequestContent(crossRegionRestoreJobsContent),
+                filter,
+                context), data => new DataProtectionBackupJobResource(Client, data));
+        }
+
+        /// <summary>
+        /// Fetches list of Cross Region Restore job belonging to the vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchCrossRegionRestoreJobsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="crossRegionRestoreJobsContent"> Request body for operation. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreJobsContent"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupJobResource> GetAll(AzureLocation location, CrossRegionRestoreJobsContent crossRegionRestoreJobsContent, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(crossRegionRestoreJobsContent, nameof(crossRegionRestoreJobsContent));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetAllCollectionResultOfT(
+                FetchCrossRegionRestoreJobsOperationGroupRestClient,
+                Id.ResourceGroupName,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                CrossRegionRestoreJobsContent.ToRequestContent(crossRegionRestoreJobsContent),
+                filter,
+                context), data => new DataProtectionBackupJobResource(Client, data));
         }
     }
 }

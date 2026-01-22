@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RangeBasedItemLevelRestoreCriteria : IUtf8JsonSerializable, IJsonModel<RangeBasedItemLevelRestoreCriteria>
+    /// <summary> Item Level target info for restore operation. </summary>
+    public partial class RangeBasedItemLevelRestoreCriteria : ItemLevelRestoreCriteria, IJsonModel<RangeBasedItemLevelRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RangeBasedItemLevelRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RangeBasedItemLevelRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MinMatchingValue))
             {
@@ -47,61 +47,67 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        RangeBasedItemLevelRestoreCriteria IJsonModel<RangeBasedItemLevelRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RangeBasedItemLevelRestoreCriteria IJsonModel<RangeBasedItemLevelRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RangeBasedItemLevelRestoreCriteria)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRangeBasedItemLevelRestoreCriteria(document.RootElement, options);
         }
 
-        internal static RangeBasedItemLevelRestoreCriteria DeserializeRangeBasedItemLevelRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RangeBasedItemLevelRestoreCriteria DeserializeRangeBasedItemLevelRestoreCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string objectType = "RangeBasedItemLevelRestoreCriteria";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string minMatchingValue = default;
             string maxMatchingValue = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("minMatchingValue"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    minMatchingValue = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxMatchingValue"u8))
+                if (prop.NameEquals("minMatchingValue"u8))
                 {
-                    maxMatchingValue = property.Value.GetString();
+                    minMatchingValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("maxMatchingValue"u8))
                 {
-                    objectType = property.Value.GetString();
+                    maxMatchingValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RangeBasedItemLevelRestoreCriteria(objectType, serializedAdditionalRawData, minMatchingValue, maxMatchingValue);
+            return new RangeBasedItemLevelRestoreCriteria(objectType, additionalBinaryDataProperties, minMatchingValue, maxMatchingValue);
         }
 
-        BinaryData IPersistableModel<RangeBasedItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RangeBasedItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -111,15 +117,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        RangeBasedItemLevelRestoreCriteria IPersistableModel<RangeBasedItemLevelRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RangeBasedItemLevelRestoreCriteria IPersistableModel<RangeBasedItemLevelRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (RangeBasedItemLevelRestoreCriteria)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRangeBasedItemLevelRestoreCriteria(document.RootElement, options);
                     }
                 default:
@@ -127,6 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RangeBasedItemLevelRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

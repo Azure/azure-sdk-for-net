@@ -7,54 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Security Level of Backup Vault. </summary>
-    public readonly partial struct BcdrSecurityLevel : IEquatable<BcdrSecurityLevel>
+    public readonly partial struct BCDRSecurityLevel : IEquatable<BCDRSecurityLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BcdrSecurityLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BcdrSecurityLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PoorValue = "Poor";
         private const string FairValue = "Fair";
         private const string GoodValue = "Good";
         private const string ExcellentValue = "Excellent";
         private const string NotSupportedValue = "NotSupported";
 
-        /// <summary> Poor. </summary>
-        public static BcdrSecurityLevel Poor { get; } = new BcdrSecurityLevel(PoorValue);
-        /// <summary> Fair. </summary>
-        public static BcdrSecurityLevel Fair { get; } = new BcdrSecurityLevel(FairValue);
-        /// <summary> Good. </summary>
-        public static BcdrSecurityLevel Good { get; } = new BcdrSecurityLevel(GoodValue);
-        /// <summary> Excellent. </summary>
-        public static BcdrSecurityLevel Excellent { get; } = new BcdrSecurityLevel(ExcellentValue);
-        /// <summary> NotSupported. </summary>
-        public static BcdrSecurityLevel NotSupported { get; } = new BcdrSecurityLevel(NotSupportedValue);
-        /// <summary> Determines if two <see cref="BcdrSecurityLevel"/> values are the same. </summary>
-        public static bool operator ==(BcdrSecurityLevel left, BcdrSecurityLevel right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="BcdrSecurityLevel"/> values are not the same. </summary>
-        public static bool operator !=(BcdrSecurityLevel left, BcdrSecurityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BcdrSecurityLevel"/>. </summary>
-        public static implicit operator BcdrSecurityLevel(string value) => new BcdrSecurityLevel(value);
+        /// <summary> Initializes a new instance of <see cref="BCDRSecurityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BCDRSecurityLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Gets the Poor. </summary>
+        public static BCDRSecurityLevel Poor { get; } = new BCDRSecurityLevel(PoorValue);
+
+        /// <summary> Gets the Fair. </summary>
+        public static BCDRSecurityLevel Fair { get; } = new BCDRSecurityLevel(FairValue);
+
+        /// <summary> Gets the Good. </summary>
+        public static BCDRSecurityLevel Good { get; } = new BCDRSecurityLevel(GoodValue);
+
+        /// <summary> Gets the Excellent. </summary>
+        public static BCDRSecurityLevel Excellent { get; } = new BCDRSecurityLevel(ExcellentValue);
+
+        /// <summary> Gets the NotSupported. </summary>
+        public static BCDRSecurityLevel NotSupported { get; } = new BCDRSecurityLevel(NotSupportedValue);
+
+        /// <summary> Determines if two <see cref="BCDRSecurityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(BCDRSecurityLevel left, BCDRSecurityLevel right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="BCDRSecurityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(BCDRSecurityLevel left, BCDRSecurityLevel right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="BCDRSecurityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BCDRSecurityLevel(string value) => new BCDRSecurityLevel(value);
+
+        /// <summary> Converts a string to a <see cref="BCDRSecurityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BCDRSecurityLevel?(string value) => value == null ? null : new BCDRSecurityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BcdrSecurityLevel other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(BcdrSecurityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is BCDRSecurityLevel other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(BCDRSecurityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
