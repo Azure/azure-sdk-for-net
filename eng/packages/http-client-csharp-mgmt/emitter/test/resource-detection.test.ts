@@ -1543,4 +1543,70 @@ interface NoGetResources {
       "Should have no NoGetResource operations in non-resource methods"
     );
   });
+
+  it("extension resource with specific scope", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A VM resource that this extension is scoped to */
+model VirtualMachine is TrackedResource<VMProperties> {
+  ...ResourceNameParameter<VirtualMachine>;
+}
+
+/** VM properties */
+model VMProperties {
+  /** Size of VM */
+  size?: string;
+}
+
+/** An extension resource scoped to VirtualMachine */
+model VmExtension is ExtensionResource<VmExtensionProperties> {
+  ...ResourceNameParameter<VmExtension>;
+}
+
+/** Extension properties */
+model VmExtensionProperties {
+  /** Extension type */
+  extensionType?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+interface VirtualMachines {
+  get is ArmResourceRead<VirtualMachine>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<VirtualMachine>;
+  delete is ArmResourceDeleteWithoutOkAsync<VirtualMachine>;
+  listByResourceGroup is ArmResourceListByParent<VirtualMachine>;
+}
+interface VmExtensions {
+  get is ArmResourceRead<VmExtension>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<VmExtension>;
+  delete is ArmResourceDeleteWithoutOkAsync<VmExtension>;
+}
+      `,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const armProviderSchema = resolveArmResources(program, sdkContext);
+
+    // Find the extension resource
+    ok(armProviderSchema.resources);
+    const extensionResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceName === "VmExtension"
+    );
+    ok(extensionResource, "Should find VmExtension resource");
+
+    // Verify it has Extension scope
+    strictEqual(
+      extensionResource.metadata.resourceScope,
+      ResourceScope.Extension,
+      "VmExtension should have Extension scope"
+    );
+
+    // Verify it has specific extension scope set to "ExternalResource"
+    // Note: ExtensionResource in TypeSpec maps to "ExternalResource" scope
+    ok(
+      extensionResource.metadata.specificExtensionScope,
+      "Should have specificExtensionScope set"
+    );
+  });
 });
