@@ -110,19 +110,19 @@ export function resolveArmResources(
 
   // Create parent lookup context for resolveArmResources
   // In this case, parent information comes from ResolvedResource objects
+  // Build validResourceMap once for efficient lookup
+  const validResourceMap = new Map<string, ArmResourceSchema>();
+  for (const r of resources.filter(r => r.metadata.resourceIdPattern !== "")) {
+    const resolvedR = schemaToResolvedResource.get(r);
+    if (resolvedR) {
+      validResourceMap.set(resolvedR.resourceInstancePath, r);
+    }
+  }
+
   const parentLookup: ParentResourceLookupContext = {
     getParentResource: (resource: ArmResourceSchema): ArmResourceSchema | undefined => {
       const resolved = schemaToResolvedResource.get(resource);
       if (!resolved) return undefined;
-
-      // Build a map for quick lookup if not already built
-      const validResourceMap = new Map<string, ArmResourceSchema>();
-      for (const r of resources.filter(r => r.metadata.resourceIdPattern !== "")) {
-        const resolvedR = schemaToResolvedResource.get(r);
-        if (resolvedR) {
-          validResourceMap.set(resolvedR.resourceInstancePath, r);
-        }
-      }
 
       // Walk up the parent chain to find a valid parent
       let parent = resolved.parent;

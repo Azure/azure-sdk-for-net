@@ -266,9 +266,11 @@ export function postProcessArmResources(
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
     if (parentResource && validResourceMap.has(parentResource.metadata.resourceIdPattern)) {
-      const parent = validResourceMap.get(parentResource.metadata.resourceIdPattern)!;
-      resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
-      resource.metadata.parentResourceModelId = parent.resourceModelId;
+      const parent = validResourceMap.get(parentResource.metadata.resourceIdPattern);
+      if (parent) {
+        resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
+        resource.metadata.parentResourceModelId = parent.resourceModelId;
+      }
     }
   }
 
