@@ -970,8 +970,13 @@ function buildArmProviderSchemaFromDetectedResources(
           // Iterate through all methods and move them to parent or non-resource methods
           for (const method of metadata.methods) {
             if (parentMetadata) {
-              // Move all operations to parent resource
-              parentMetadata.methods.push(method);
+              // When moving operations to parent resource, convert them to Action kind
+              // to avoid naming conflicts (parent might have its own Get/Delete/List methods)
+              const movedMethod: ResourceMethod = {
+                ...method,
+                kind: ResourceOperationKind.Action
+              };
+              parentMetadata.methods.push(movedMethod);
             } else {
               // No parent - move to non-resource methods
               nonResourceMethods.set(method.methodId, {
