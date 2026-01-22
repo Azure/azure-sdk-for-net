@@ -127,7 +127,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 );
 ```
 
-5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
+5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
 ```C# Snippet:Sampple_GetStringValues_EvaluationsCatalogPromptBased
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
