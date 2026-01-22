@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting : IEquatable<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting>
     {
         private readonly string _value;
+        /// <summary> Unknown Reboot setting. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> IfRequired Reboot setting. </summary>
+        private const string IfRequiredValue = "IfRequired";
+        /// <summary> Never Reboot setting. </summary>
+        private const string NeverValue = "Never";
+        /// <summary> Always Reboot setting. </summary>
+        private const string AlwaysValue = "Always";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string IfRequiredValue = "IfRequired";
-        private const string NeverValue = "Never";
-        private const string AlwaysValue = "Always";
+            _value = value;
+        }
 
         /// <summary> Unknown Reboot setting. </summary>
         public static ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
+
         /// <summary> IfRequired Reboot setting. </summary>
         public static ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
+
         /// <summary> Never Reboot setting. </summary>
         public static ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
+
         /// <summary> Always Reboot setting. </summary>
         public static ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(string value) => new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,5 +1,5 @@
 directory: specification/devcenter/DevCenter
-commit: 7a5b85e3fa81d1635a9b628b959f0c8624346c51
+commit: 3f223d61b02c0496581dfb71c78104761b448d5e
 repo: Azure/azure-rest-api-specs
 cleanup: false
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
