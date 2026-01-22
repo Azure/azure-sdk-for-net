@@ -22,12 +22,9 @@ import {
 import {
   DecoratorInfo,
   getClientType,
-  SdkClientType,
-  SdkContext,
   SdkHttpOperation,
   SdkMethod,
-  SdkModelType,
-  SdkServiceOperation
+  SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
@@ -52,7 +49,6 @@ import {
   tenantResource
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
-import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 import {
   resolveArmResources,
   getOperationScopeFromPath
