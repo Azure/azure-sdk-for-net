@@ -121,23 +121,17 @@ namespace Azure.Generator.Management.Tests.Providers
                 ResourceScope.Subscription,
                 "SitesBySubscription");
 
-            // Create clients
-            var siteClient = InputFactory.Client(
-                "SiteClient",
-                methods: [createSiteMethod],
-                decorators: [siteDecorator],
-                crossLanguageDefinitionId: "Test.SiteClient");
+            // Create a single client with all methods, but two ARM provider decorators for the two resources
+            var client = InputFactory.Client(
+                "SiteManagerClient",
+                methods: [createSiteMethod, getSiteMethod, createSiteBySubMethod, getSiteBySubMethod],
+                decorators: [siteDecorator, sitesBySubscriptionDecorator],
+                crossLanguageDefinitionId: "Test.SiteManagerClient");
 
-            var sitesBySubscriptionClient = InputFactory.Client(
-                "SitesBySubscriptionClient",
-                methods: [createSiteBySubMethod],
-                decorators: [sitesBySubscriptionDecorator],
-                crossLanguageDefinitionId: "Test.SitesBySubscriptionClient");
-
-            // Load plugin with both resources
+            // Load plugin with both resources via single client
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => [sharedModel],
-                clients: () => [siteClient, sitesBySubscriptionClient]);
+                clients: () => [client]);
 
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
             Assert.NotNull(outputLibrary);
