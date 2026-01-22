@@ -25,6 +25,7 @@ public sealed class CredentialSettings
 
         CredentialSource = section["CredentialSource"];
         Key = section["Key"];
+        AdditionalProperties = section.GetSection("AdditionalProperties");
     }
 
     /// <summary>
@@ -39,4 +40,9 @@ public sealed class CredentialSettings
     /// Gets or sets the ApiKey.
     /// </summary>
     public string? Key { get; set; }
+
+    /// <summary>
+    /// Gets or sets additional properties for the credential.
+    /// </summary>
+    public IConfigurationSection? AdditionalProperties { get; set; }
 }

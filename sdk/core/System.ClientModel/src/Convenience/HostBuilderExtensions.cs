@@ -116,10 +116,7 @@ public static class HostBuilderExtensions
     {
         TSettings settings = builder.ConfigurationSection.GetClientSettings<TSettings>();
         configureSettings?.Invoke(settings);
-        if (builder.CredentialFactory is not null)
-        {
-            settings.CredentialObject = builder.CredentialFactory.Invoke(builder.ConfigurationSection);
-        }
+        builder.PostConfigureAction?.Invoke(settings);
         return settings;
     }
 }

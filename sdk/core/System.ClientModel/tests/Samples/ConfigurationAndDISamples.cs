@@ -87,7 +87,7 @@ public class ConfigurationAndDISamples
 
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.AddClient<MyClient, MyClientSettings>("MyClient")
-            .WithCredential(section => new MyTokenProvider(section));
+            .PostConfigure(settings => settings.CredentialObject = new MyTokenProvider());
 
         IHost host = builder.Build();
 
@@ -166,13 +166,6 @@ public class ConfigurationAndDISamples
 
     private class MyTokenProvider : AuthenticationTokenProvider
     {
-        private readonly string _apiKey;
-
-        public MyTokenProvider(IConfigurationSection section)
-        {
-            _apiKey = Environment.GetEnvironmentVariable("MY_CLIENT_API_KEY") ?? string.Empty;
-        }
-
         public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
         {
             return new GetTokenOptions(properties);
@@ -180,12 +173,15 @@ public class ConfigurationAndDISamples
 
         public override AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken)
         {
-            return new AuthenticationToken(_apiKey, "ApiKey", DateTimeOffset.UtcNow.AddHours(1));
+            // In a real scenario, this would get a token from your custom authentication system
+            string token = "custom-token-from-provider";
+            return new AuthenticationToken(token, "Bearer", DateTimeOffset.UtcNow.AddHours(1));
         }
 
         public override ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, CancellationToken cancellationToken)
         {
-            return new ValueTask<AuthenticationToken>(new AuthenticationToken(_apiKey, "ApiKey", DateTimeOffset.UtcNow.AddHours(1)));
+            string token = "custom-token-from-provider";
+            return new ValueTask<AuthenticationToken>(new AuthenticationToken(token, "Bearer", DateTimeOffset.UtcNow.AddHours(1)));
         }
     }
 }

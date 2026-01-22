@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace System.ClientModel.Primitives;
@@ -14,8 +13,8 @@ namespace System.ClientModel.Primitives;
 public interface IClientBuilder : IHostApplicationBuilder
 {
     /// <summary>
-    /// Configures the <see cref="IClientBuilder"/> to use the specified factory function to create the credential object.
+    /// Adds a configuration action to be executed after the initial configuration of <see cref="ClientSettings"/>.
     /// </summary>
-    /// <param name="factory">A method that creates a credential object from the specified <see cref="IConfigurationSection"/>.</param>
-    IHostApplicationBuilder WithCredential(Func<IConfigurationSection, AuthenticationTokenProvider>? factory = default);
+    /// <param name="configure">Factory method to modify the <see cref="ClientSettings"/>.</param>
+    IHostApplicationBuilder PostConfigure(Action<ClientSettings> configure);
 }

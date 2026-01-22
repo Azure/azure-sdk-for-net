@@ -42,11 +42,11 @@ internal class ClientBuilder : IClientBuilder
         _host.ConfigureContainer(factory, configure);
     }
 
-    public IHostApplicationBuilder WithCredential(Func<IConfigurationSection, AuthenticationTokenProvider>? factory = default)
+    public IHostApplicationBuilder PostConfigure(Action<ClientSettings> configure)
     {
-        CredentialFactory = factory;
+        PostConfigureAction = configure;
         return this;
     }
 
-    internal Func<IConfigurationSection, AuthenticationTokenProvider>? CredentialFactory { get; private set; }
+    internal Action<ClientSettings>? PostConfigureAction { get; private set; }
 }

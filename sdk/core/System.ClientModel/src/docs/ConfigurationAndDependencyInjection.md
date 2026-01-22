@@ -134,7 +134,7 @@ MyClient client2 = host.Services.GetRequiredKeyedService<MyClient>("client2");
 
 ## Overriding Credentials Example
 
-Override credentials from configuration programmatically using the `configureSettings` callback.
+Override credentials from configuration programmatically using the `PostConfigure` method.
 
 **appsettings.json:**
 ```json
@@ -142,8 +142,10 @@ Override credentials from configuration programmatically using the `configureSet
   "MyClient": {
     "Endpoint": "https://api.example.com",
     "Credential": {
-      "CredentialSource": "ApiKey",
-      "Key": "default-key-from-config"
+      "CredentialSource": "TokenCredential",
+      "AdditionalProperties": {
+        "Scope": "https://api.example.com/.default"
+      }
     }
   }
 }
@@ -152,14 +154,14 @@ Override credentials from configuration programmatically using the `configureSet
 ```C# Snippet:OverridingCredentialsExample
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddClient<MyClient, MyClientSettings>("MyClient")
-    .WithCredential(section => new MyTokenProvider(section));
+    .PostConfigure(settings => settings.CredentialObject = new MyTokenProvider());
 
 IHost host = builder.Build();
 
 MyClient client = host.Services.GetRequiredService<MyClient>();
 ```
 
-In this example, the API key from configuration will be overridden by the `MY_CLIENT_API_KEY` environment variable if it exists.
+In this example, the credential provider from configuration can be overridden programmatically using `PostConfigure`.
 
 ## Configuration Reference Syntax
 

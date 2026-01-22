@@ -12,6 +12,8 @@ namespace System.ClientModel.Primitives;
 [Experimental("SCME0002")]
 public abstract class ClientSettings
 {
+    private IConfigurationSection? _section;
+
     /// <summary>
     /// Gets or sets the credential settings.
     /// </summary>
@@ -32,6 +34,8 @@ public abstract class ClientSettings
             throw new ArgumentNullException(nameof(section));
         }
 
+        _section = section;
+
         Credential ??= new CredentialSettings(section.GetSection("Credential"));
 
         BindCore(section);
@@ -41,4 +45,23 @@ public abstract class ClientSettings
     /// Allows derived classes to bind their specific properties from the <see cref="IConfigurationSection"/>.
     /// </summary>
     protected abstract void BindCore(IConfigurationSection section);
+
+    /// <summary>
+    /// Allows for additional configuration using the <see cref="IConfigurationSection"/> after the initial binding.
+    /// </summary>
+    /// <param name="configure">Factory method to modify this instance of <see cref="ClientSettings"/>.</param>
+    public void PostConfigure(Action<IConfigurationSection> configure)
+    {
+        if (configure is null)
+        {
+            throw new ArgumentNullException(nameof(configure));
+        }
+
+        if (_section is null)
+        {
+            throw new InvalidOperationException("Bind must be called before PostConfigure.");
+        }
+
+        configure(_section);
+    }
 }

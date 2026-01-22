@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
@@ -16,9 +14,8 @@ public abstract class AuthenticationPolicy : PipelinePolicy
     /// Creates an <see cref="AuthenticationPolicy"/> based on the provided <see cref="ClientSettings"/> and scope.
     /// </summary>
     /// <param name="settings">The <see cref="ClientSettings"/> to use.</param>
-    /// <param name="scope">The scope of the authentication token.</param>
     [Experimental("SCME0002")]
-    public static AuthenticationPolicy Create(ClientSettings settings, string scope)
+    public static AuthenticationPolicy Create(ClientSettings settings)
     {
         if (settings is null)
         {
@@ -35,6 +32,8 @@ public abstract class AuthenticationPolicy : PipelinePolicy
             throw new ArgumentNullException("settings.Credential.CredentialSource");
         }
 
+        string? scope = settings.Credential.AdditionalProperties?["Scope"];
+
         return settings.Credential.CredentialSource switch
         {
             "ApiKey" => CreateWithApiKey(settings, scope),
@@ -42,17 +41,40 @@ public abstract class AuthenticationPolicy : PipelinePolicy
         };
     }
 
-    private static AuthenticationPolicy CreateWithTokenCredential(ClientSettings settings, string scope)
-        => new BearerTokenPolicy(settings.CredentialObject!, scope);
+    [Experimental("SCME0002")]
+    private static AuthenticationPolicy CreateWithTokenCredential(ClientSettings settings, string? scope)
+    {
+        if (scope is null)
+        {
+            throw new InvalidOperationException(
+                $"Scope must be provided in configuration for '{settings.Credential!.CredentialSource}' authentication.");
+        }
 
-    private static AuthenticationPolicy CreateWithApiKey(ClientSettings settings, string scope)
+        if (settings.CredentialObject is null)
+        {
+            throw new InvalidOperationException("No AuthenticationTokenProvider was provided.");
+        }
+
+        return new BearerTokenPolicy(settings.CredentialObject, scope);
+    }
+
+    [Experimental("SCME0002")]
+    private static AuthenticationPolicy CreateWithApiKey(ClientSettings settings, string? scope)
     {
         string apiKey;
+
         if (settings.CredentialObject is AuthenticationTokenProvider apiKeyProvider)
         {
+            if (scope is not null)
+            {
+                throw new InvalidOperationException("Scope is not applicable for API key authentication.");
+            }
+
             GetTokenOptions options = new(new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, new string[] { scope } }
+                // TokenCredential requires at least one scope, so we provide a dummy value
+                // that will be ignored by the API key provider.
+                { GetTokenOptions.ScopesPropertyName, new string[] { "<null>" } }
             });
             apiKey = apiKeyProvider.GetToken(options, default).TokenValue;
         }

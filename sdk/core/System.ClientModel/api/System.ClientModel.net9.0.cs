@@ -111,7 +111,7 @@ namespace System.ClientModel.Primitives
     {
         protected AuthenticationPolicy() { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-        public static System.ClientModel.Primitives.AuthenticationPolicy Create(System.ClientModel.Primitives.ClientSettings settings, string scope) { throw null; }
+        public static System.ClientModel.Primitives.AuthenticationPolicy Create(System.ClientModel.Primitives.ClientSettings settings) { throw null; }
     }
     public partial class AuthenticationToken
     {
@@ -232,6 +232,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.AuthenticationTokenProvider? CredentialObject { get { throw null; } set { } }
         public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
+        public void PostConfigure(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configure) { }
     }
     public abstract partial class CollectionResult
     {
@@ -249,6 +250,7 @@ namespace System.ClientModel.Primitives
     public sealed partial class CredentialSettings
     {
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
         public string? CredentialSource { get { throw null; } set { } }
         public string? Key { get { throw null; } set { } }
     }
@@ -278,7 +280,7 @@ namespace System.ClientModel.Primitives
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
     {
-        Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider>? factory = null);
+        Microsoft.Extensions.Hosting.IHostApplicationBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

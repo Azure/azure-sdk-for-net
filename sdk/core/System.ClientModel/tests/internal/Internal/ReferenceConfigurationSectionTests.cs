@@ -437,4 +437,56 @@ public class ReferenceConfigurationSectionTests
         Assert.That(ex!.Message, Does.Contain("Circular reference detected"));
         Assert.That(ex.Message, Does.Contain("reference chain"));
     }
+
+    [Test]
+    public void CircularReferenceSelfReference_ThrowsInvalidOperationException()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["A"] = "$A"
+            })
+            .Build();
+
+        ReferenceConfigurationSection sectionA = new(config, "A");
+
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => { var value = sectionA.Value; });
+        Assert.That(ex!.Message, Does.Contain("Circular reference detected"));
+        Assert.That(ex.Message, Does.Contain("'A'"));
+    }
+
+    [Test]
+    public void ReferenceToNonExistentSection_ReturnsOriginalReferenceString()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["A"] = "$NonExistent"
+            })
+            .Build();
+
+        ReferenceConfigurationSection sectionA = new(config, "A");
+
+        Assert.That(sectionA.Value, Is.EqualTo("$NonExistent"));
+    }
+
+    [Test]
+    public void CircularReferenceAfterValidReference_ThrowsInvalidOperationException()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["A"] = "$B",
+                ["B"] = "$C",
+                ["C"] = "$D",
+                ["D"] = "$B"  // Loop back to B
+            })
+            .Build();
+
+        ReferenceConfigurationSection sectionA = new(config, "A");
+
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => { var value = sectionA.Value; });
+        Assert.That(ex!.Message, Does.Contain("Circular reference detected"));
+        Assert.That(ex.Message, Does.Contain("reference chain"));
+    }
 }
