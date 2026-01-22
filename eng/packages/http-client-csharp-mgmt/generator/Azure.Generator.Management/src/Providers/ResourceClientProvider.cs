@@ -404,13 +404,9 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    // For operations that can operate on different resources (Read, Delete, List),
-                    // check if the operation is for the current resource
-                    var isOperatingOnCurrentResource = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, _resourceMetadata.ResourceIdPattern);
-
-                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false, isOperatingOnCurrentResource);
+                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
                     operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
-                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false, isOperatingOnCurrentResource);
+                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
                     operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
                 }
             }

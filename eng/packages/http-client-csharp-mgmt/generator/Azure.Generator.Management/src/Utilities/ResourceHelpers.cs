@@ -20,9 +20,6 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class ResourceHelpers
     {
-        private static readonly System.Text.RegularExpressions.Regex PathParameterRegex =
-            new System.Text.RegularExpressions.Regex(@"\{[^}]+\}", System.Text.RegularExpressions.RegexOptions.Compiled);
-
         public static string GetClientDiagnosticsFieldName(string clientName)
         {
             var fieldName = GetClientDiagnosticsName(clientName).ToVariableName();
@@ -60,61 +57,18 @@ namespace Azure.Generator.Management.Utilities
         /// <param name="operationKind">The kind of resource operation.</param>
         /// <param name="isAsync">Whether this is an async method.</param>
         /// <param name="isResourceCollection">Whether this is used for resource collection.</param>
-        /// <param name="isOperatingOnCurrentResource">Whether the operation is operating on the current resource (true) or other resources (false). Defaults to true for backward compatibility.</param>
         /// <returns>The method name to use, or null if no override is needed.</returns>
-        public static string? GetOperationMethodName(ResourceOperationKind operationKind, bool isAsync, bool isResourceCollection, bool isOperatingOnCurrentResource = true)
+        public static string? GetOperationMethodName(ResourceOperationKind operationKind, bool isAsync, bool isResourceCollection)
         {
             return operationKind switch
             {
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
                 // For List operation, only resource collections have GetAll or GetAllAsync methods.
-                // If the operation is not for the current resource, use the original operation name.
-                ResourceOperationKind.List => !isResourceCollection ? null : (isOperatingOnCurrentResource ? (isAsync ? "GetAllAsync" : "GetAll") : null),
-                // For Read operation, only use "Get"/"GetAsync" when reading the current resource.
-                // If reading other resources, return null to use the original operation name.
-                ResourceOperationKind.Read => isOperatingOnCurrentResource ? (isAsync ? "GetAsync" : "Get") : null,
-                // For delete operations, only use "Delete"/"DeleteAsync" when deleting the current resource.
-                // If deleting other resources, return null to use the original operation name.
-                ResourceOperationKind.Delete => isOperatingOnCurrentResource ? (isAsync ? "DeleteAsync" : "Delete") : null,
+                ResourceOperationKind.List => !isResourceCollection ? null : isAsync ? "GetAllAsync" : "GetAll",
+                ResourceOperationKind.Read => isAsync ? "GetAsync" : "Get",
+                ResourceOperationKind.Delete => isAsync ? "DeleteAsync" : "Delete",
                 _ => null
             };
-        }
-
-        /// <summary>
-        /// Determines if an operation is operating on the current resource.
-        /// An operation targets the current resource if its operation path matches the resource's ID pattern.
-        /// This applies to Read, Delete, and List operations.
-        /// </summary>
-        /// <param name="resourceMethod">The resource method representing the operation.</param>
-        /// <param name="resourceIdPattern">The ID pattern of the current resource.</param>
-        /// <returns>True if the operation is operating on the current resource; otherwise, false.</returns>
-        public static bool IsOperatingOnCurrentResource(ResourceMethod resourceMethod, string resourceIdPattern)
-        {
-            // Only check for Read, Delete, and List operations that can operate on different resources
-            if (resourceMethod.Kind != ResourceOperationKind.Read &&
-                resourceMethod.Kind != ResourceOperationKind.Delete &&
-                resourceMethod.Kind != ResourceOperationKind.List)
-            {
-                return true; // For other operations, assume they operate on the current resource
-            }
-
-            // Normalize paths for comparison by converting path parameters to a standard format
-            var normalizedOperationPath = NormalizePathForComparison(resourceMethod.OperationPath);
-            var normalizedResourceIdPattern = NormalizePathForComparison(resourceIdPattern);
-
-            // The operation is operating on the current resource if the operation path matches the resource ID pattern
-            return normalizedOperationPath.Equals(normalizedResourceIdPattern, StringComparison.OrdinalIgnoreCase);
-        }
-
-        /// <summary>
-        /// Normalizes a path for comparison by converting all path parameters to a standard placeholder.
-        /// This allows comparing paths that may have different parameter names but the same structure.
-        /// For example, both "/{foo}/bar/{baz}" and "/{a}/bar/{b}" normalize to "/{}/bar/{}".
-        /// </summary>
-        private static string NormalizePathForComparison(string path)
-        {
-            // Replace all path parameters like {paramName} with {} for comparison
-            return PathParameterRegex.Replace(path, "{}");
         }
 
         /// <summary>
