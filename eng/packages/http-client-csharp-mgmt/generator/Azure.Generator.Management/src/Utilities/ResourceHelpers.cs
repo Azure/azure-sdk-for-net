@@ -57,8 +57,9 @@ namespace Azure.Generator.Management.Utilities
         /// <param name="operationKind">The kind of resource operation.</param>
         /// <param name="isAsync">Whether this is an async method.</param>
         /// <param name="isResourceCollection">Whether this is used for resource collection.</param>
+        /// <param name="isDeletingCurrentResource">For delete operations, whether the operation is deleting the current resource (true) or other resources (false). Defaults to true for backward compatibility.</param>
         /// <returns>The method name to use, or null if no override is needed.</returns>
-        public static string? GetOperationMethodName(ResourceOperationKind operationKind, bool isAsync, bool isResourceCollection)
+        public static string? GetOperationMethodName(ResourceOperationKind operationKind, bool isAsync, bool isResourceCollection, bool isDeletingCurrentResource = true)
         {
             return operationKind switch
             {
@@ -66,9 +67,44 @@ namespace Azure.Generator.Management.Utilities
                 // For List operation, only resource collections have GetAll or GetAllAsync methods.
                 ResourceOperationKind.List => !isResourceCollection ? null : isAsync ? "GetAllAsync" : "GetAll",
                 ResourceOperationKind.Read => isAsync ? "GetAsync" : "Get",
-                ResourceOperationKind.Delete => isAsync ? "DeleteAsync" : "Delete",
+                // For delete operations, only use "Delete"/"DeleteAsync" when deleting the current resource.
+                // If deleting other resources, return null to use the original operation name.
+                ResourceOperationKind.Delete => isDeletingCurrentResource ? (isAsync ? "DeleteAsync" : "Delete") : null,
                 _ => null
             };
+        }
+
+        /// <summary>
+        /// Determines if a delete operation is deleting the current resource.
+        /// A delete operation targets the current resource if its operation path matches the resource's ID pattern.
+        /// </summary>
+        /// <param name="resourceMethod">The resource method representing the delete operation.</param>
+        /// <param name="resourceIdPattern">The ID pattern of the current resource.</param>
+        /// <returns>True if the delete operation is deleting the current resource; otherwise, false.</returns>
+        public static bool IsDeletingCurrentResource(ResourceMethod resourceMethod, string resourceIdPattern)
+        {
+            if (resourceMethod.Kind != ResourceOperationKind.Delete)
+            {
+                return false;
+            }
+
+            // Normalize paths for comparison by converting path parameters to a standard format
+            var normalizedOperationPath = NormalizePathForComparison(resourceMethod.OperationPath);
+            var normalizedResourceIdPattern = NormalizePathForComparison(resourceIdPattern);
+
+            // The operation is deleting the current resource if the operation path matches the resource ID pattern
+            return normalizedOperationPath.Equals(normalizedResourceIdPattern, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Normalizes a path for comparison by converting all path parameters to a standard placeholder.
+        /// This allows comparing paths that may have different parameter names but the same structure.
+        /// For example, both "/{foo}/bar/{baz}" and "/{a}/bar/{b}" normalize to "/{}/bar/{}".
+        /// </summary>
+        private static string NormalizePathForComparison(string path)
+        {
+            // Replace all path parameters like {paramName} with {} for comparison
+            return System.Text.RegularExpressions.Regex.Replace(path, @"\{[^}]+\}", "{}");
         }
 
         /// <summary>

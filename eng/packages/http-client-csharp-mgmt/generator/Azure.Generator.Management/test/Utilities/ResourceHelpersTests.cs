@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Utilities;
 using NUnit.Framework;
@@ -160,6 +161,143 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
             // Assert
             Assert.AreEqual("Resources_Get", result);
+        }
+
+        [TestCase]
+        public void IsDeletingCurrentResource_WhenOperationPathMatchesResourceIdPattern_ReturnsTrue()
+        {
+            // Arrange
+            var operation = InputFactory.Operation("delete", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "Delete",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Delete,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase]
+        public void IsDeletingCurrentResource_WhenOperationPathDifferentFromResourceIdPattern_ReturnsFalse()
+        {
+            // Arrange
+            var operation = InputFactory.Operation("deleteChildResource", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/childResources/{childName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "DeleteChildResource",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Delete,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/childResources/{childName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestCase]
+        public void IsDeletingCurrentResource_WithDifferentParameterNames_ReturnsTrue()
+        {
+            // Arrange
+            // The operation path has different parameter names but same structure
+            var operation = InputFactory.Operation("delete", path: "/subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{name}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "Delete",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Delete,
+                serviceMethod,
+                "/subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{name}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase]
+        public void IsDeletingCurrentResource_WhenNotDeleteOperation_ReturnsFalse()
+        {
+            // Arrange
+            var operation = InputFactory.Operation("get", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "Get",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Read,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForDelete_WhenDeletingCurrentResource_ReturnsDelete()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isDeletingCurrentResource: true);
+
+            // Assert
+            Assert.AreEqual("Delete", result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForDelete_WhenDeletingOtherResource_ReturnsNull()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isDeletingCurrentResource: false);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForDeleteAsync_WhenDeletingCurrentResource_ReturnsDeleteAsync()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isDeletingCurrentResource: true);
+
+            // Assert
+            Assert.AreEqual("DeleteAsync", result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForDeleteAsync_WhenDeletingOtherResource_ReturnsNull()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isDeletingCurrentResource: false);
+
+            // Assert
+            Assert.IsNull(result);
         }
     }
 }
