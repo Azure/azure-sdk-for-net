@@ -63,7 +63,7 @@ public class ReadTimeoutStreamTests
         var timeoutStream = new ReadTimeoutStream(testStream, _defaultTimeout);
         timeoutStream.Dispose();
 
-        Assert.True(testStream.IsDisposed);
+        Assert.That(testStream.IsDisposed, Is.True);
     }
 
     #region Helpers

@@ -29,8 +29,8 @@ namespace System.ClientModel.Tests.Internal
 
         public void DetectsTextContentTypes(string contentType, bool isText, string expectedEncoding)
         {
-            Assert.AreEqual(isText, ContentTypeUtilities.TryGetTextEncoding(contentType, out Encoding? encoding));
-            Assert.AreEqual(encoding?.EncodingName, expectedEncoding);
+            Assert.That(ContentTypeUtilities.TryGetTextEncoding(contentType, out Encoding? encoding), Is.EqualTo(isText));
+            Assert.That(encoding?.EncodingName, Is.EqualTo(expectedEncoding));
         }
     }
 }

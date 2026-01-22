@@ -15,7 +15,7 @@ public class BitVectorTests
 
         for (int i = 0; i < 640; i++)
         {
-            Assert.IsFalse(vector[i]);
+            Assert.That(vector[i], Is.False);
         }
     }
 
@@ -27,7 +27,7 @@ public class BitVectorTests
         for (int i = 0; i < 640; i++)
         {
             vector[i] = true;
-            Assert.IsTrue(vector[i]);
+            Assert.That(vector[i], Is.True);
         }
     }
 
@@ -43,7 +43,7 @@ public class BitVectorTests
 
         for (int i = 0; i < 640; i++)
         {
-            Assert.IsTrue(vector[i]);
+            Assert.That(vector[i], Is.True);
         }
 
         for (int i = 0; i < 640; i++)
@@ -53,7 +53,7 @@ public class BitVectorTests
 
         for (int i = 0; i < 640; i++)
         {
-            Assert.IsFalse(vector[i]);
+            Assert.That(vector[i], Is.False);
         }
     }
 }
