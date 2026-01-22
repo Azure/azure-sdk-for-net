@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// The number of allowed unready nodes, irrespective of max-total-unready-percentage. This must be an integer. The default is 3.
         /// Serialized Name: ManagedClusterPropertiesAutoScalerProfile.ok-total-unready-count
         /// </param>
-        /// <param name="scanInterval">
+        /// <param name="scanIntervalInSeconds">
         /// How often cluster is reevaluated for scale up or down. The default is '10'. Values must be an integer number of seconds.
         /// Serialized Name: ManagedClusterPropertiesAutoScalerProfile.scan-interval
         /// </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterPropertiesAutoScalerProfile.skip-nodes-with-system-pods
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, bool? daemonsetEvictionForEmptyNodes, bool? daemonsetEvictionForOccupiedNodes, bool? ignoreDaemonsetsUtilization, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanInterval, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, bool? daemonsetEvictionForEmptyNodes, bool? daemonsetEvictionForOccupiedNodes, bool? ignoreDaemonsetsUtilization, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanIntervalInSeconds, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BalanceSimilarNodeGroups = balanceSimilarNodeGroups;
             DaemonsetEvictionForEmptyNodes = daemonsetEvictionForEmptyNodes;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             MaxTotalUnreadyPercentage = maxTotalUnreadyPercentage;
             NewPodScaleUpDelay = newPodScaleUpDelay;
             OkTotalUnreadyCount = okTotalUnreadyCount;
-            ScanInterval = scanInterval;
+            ScanIntervalInSeconds = scanIntervalInSeconds;
             ScaleDownDelayAfterAdd = scaleDownDelayAfterAdd;
             ScaleDownDelayAfterDelete = scaleDownDelayAfterDelete;
             ScaleDownDelayAfterFailure = scaleDownDelayAfterFailure;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterPropertiesAutoScalerProfile.scan-interval
         /// </summary>
         [WirePath("scan-interval")]
-        public string ScanInterval { get; set; }
+        public string ScanIntervalInSeconds { get; set; }
         /// <summary>
         /// How long after scale up that scale down evaluation resumes. The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported.
         /// Serialized Name: ManagedClusterPropertiesAutoScalerProfile.scale-down-delay-after-add

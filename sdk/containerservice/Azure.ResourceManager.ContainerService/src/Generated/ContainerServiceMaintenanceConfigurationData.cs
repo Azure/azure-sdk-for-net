@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationData"/>. </summary>
         public ContainerServiceMaintenanceConfigurationData()
         {
-            TimeInWeek = new ChangeTrackingList<ContainerServiceTimeInWeek>();
-            NotAllowedTime = new ChangeTrackingList<ContainerServiceTimeSpan>();
+            TimesInWeek = new ChangeTrackingList<ContainerServiceTimeInWeek>();
+            NotAllowedTimes = new ChangeTrackingList<ContainerServiceTimeSpan>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationData"/>. </summary>
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timeInWeek">
+        /// <param name="timesInWeek">
         /// Time slots during the week when planned maintenance is allowed to proceed. If two array entries specify the same day of the week, the applied configuration is the union of times in both entries.
         /// Serialized Name: MaintenanceConfiguration.properties.timeInWeek
         /// </param>
-        /// <param name="notAllowedTime">
+        /// <param name="notAllowedTimes">
         /// Time slots on which upgrade is not allowed.
         /// Serialized Name: MaintenanceConfiguration.properties.notAllowedTime
         /// </param>
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timeInWeek, IList<ContainerServiceTimeSpan> notAllowedTime, ContainerServiceMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes, ContainerServiceMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            TimeInWeek = timeInWeek;
-            NotAllowedTime = notAllowedTime;
+            TimesInWeek = timesInWeek;
+            NotAllowedTimes = notAllowedTimes;
             MaintenanceWindow = maintenanceWindow;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: MaintenanceConfiguration.properties.timeInWeek
         /// </summary>
         [WirePath("properties.timeInWeek")]
-        public IList<ContainerServiceTimeInWeek> TimeInWeek { get; }
+        public IList<ContainerServiceTimeInWeek> TimesInWeek { get; }
         /// <summary>
         /// Time slots on which upgrade is not allowed.
         /// Serialized Name: MaintenanceConfiguration.properties.notAllowedTime
         /// </summary>
         [WirePath("properties.notAllowedTime")]
-        public IList<ContainerServiceTimeSpan> NotAllowedTime { get; }
+        public IList<ContainerServiceTimeSpan> NotAllowedTimes { get; }
         /// <summary>
         /// Maintenance window for the maintenance configuration.
         /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow

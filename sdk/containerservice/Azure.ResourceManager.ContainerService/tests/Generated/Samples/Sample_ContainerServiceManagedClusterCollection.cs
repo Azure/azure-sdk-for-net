@@ -91,7 +91,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -178,7 +178,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -278,7 +278,7 @@ Config =
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -369,7 +369,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -459,7 +459,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -553,7 +553,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -644,7 +644,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -735,7 +735,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -826,7 +826,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -923,7 +923,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -1022,7 +1022,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 ApiServerAccessProfile = new ManagedClusterApiServerAccessProfile
@@ -1116,7 +1116,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -1174,7 +1174,7 @@ new ContainerServiceSshPublicKey("keydata")
 Count = 3,
 VmSize = "Standard_DS2_v2",
 OSType = ContainerServiceOSType.Linux,
-OSSku = Ossku.AzureLinux,
+OSSku = ContainerServiceOSSku.AzureLinux,
 AgentPoolType = AgentPoolType.VirtualMachineScaleSets,
 Mode = AgentPoolMode.System,
 EnableNodePublicIP = true,
@@ -1207,7 +1207,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -1305,7 +1305,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -1400,7 +1400,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -1491,7 +1491,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 ApiServerAccessProfile = new ManagedClusterApiServerAccessProfile
@@ -1668,7 +1668,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -1830,7 +1830,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -1921,7 +1921,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 ApiServerAccessProfile = new ManagedClusterApiServerAccessProfile
@@ -2016,7 +2016,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 ApiServerAccessProfile = new ManagedClusterApiServerAccessProfile
@@ -2116,7 +2116,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -2225,7 +2225,7 @@ new ContainerServiceSshPublicKey("keydata")
                     Expander = AutoScaleExpander.Priority,
                     MaxNodeProvisionTime = "15m",
                     NewPodScaleUpDelay = "1m",
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                     SkipNodesWithSystemPods = "false",
                 },
@@ -2326,7 +2326,7 @@ Config =
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -2448,7 +2448,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -2551,7 +2551,7 @@ new ContainerServiceSshPublicKey("keydata")
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                 },
                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des"),
@@ -2648,7 +2648,7 @@ new ContainerServiceSshPublicKey("keydata")
                             Count = 2,
                         },
                     },
-                    NetworkIPFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
+                    NetworkIPFamilies = { ContainerServiceIPFamily.IPv4, ContainerServiceIPFamily.IPv6 },
                 },
                 AutoScalerProfile = new ManagedClusterAutoScalerProfile
                 {
@@ -2656,7 +2656,7 @@ new ContainerServiceSshPublicKey("keydata")
                     Expander = AutoScaleExpander.Priority,
                     MaxNodeProvisionTime = "15m",
                     NewPodScaleUpDelay = "1m",
-                    ScanInterval = "20s",
+                    ScanIntervalInSeconds = "20s",
                     ScaleDownDelayAfterAdd = "15m",
                     SkipNodesWithSystemPods = "false",
                 },

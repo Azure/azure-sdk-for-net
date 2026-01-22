@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: PrivateLinkResource.privateLinkServiceID
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServicePrivateLinkResourceData(string id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: PrivateLinkResource.id
         /// </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary>
         /// The name of the private link resource.
         /// Serialized Name: PrivateLinkResource.name

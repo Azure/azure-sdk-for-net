@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
     /// Serialized Name: Ossku
     /// </summary>
-    public readonly partial struct Ossku : IEquatable<Ossku>
+    public readonly partial struct ContainerServiceOSSku : IEquatable<ContainerServiceOSSku>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Ossku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSSku"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Ossku(string value)
+        public ContainerServiceOSSku(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -38,54 +38,54 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Use Ubuntu as the OS for node images.
         /// Serialized Name: Ossku.Ubuntu
         /// </summary>
-        public static Ossku Ubuntu { get; } = new Ossku(UbuntuValue);
+        public static ContainerServiceOSSku Ubuntu { get; } = new ContainerServiceOSSku(UbuntuValue);
         /// <summary>
         /// Use AzureLinux as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information.
         /// Serialized Name: Ossku.AzureLinux
         /// </summary>
-        public static Ossku AzureLinux { get; } = new Ossku(AzureLinuxValue);
+        public static ContainerServiceOSSku AzureLinux { get; } = new ContainerServiceOSSku(AzureLinuxValue);
         /// <summary>
         /// Use AzureLinux3 as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. For limitations, visit https://aka.ms/aks/node-images. For OS migration guidance, see https://aka.ms/aks/upgrade-os-version.
         /// Serialized Name: Ossku.AzureLinux3
         /// </summary>
-        public static Ossku AzureLinux3 { get; } = new Ossku(AzureLinux3Value);
+        public static ContainerServiceOSSku AzureLinux3 { get; } = new ContainerServiceOSSku(AzureLinux3Value);
         /// <summary>
         /// Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead.
         /// Serialized Name: Ossku.CBLMariner
         /// </summary>
-        public static Ossku CblMariner { get; } = new Ossku(CblMarinerValue);
+        public static ContainerServiceOSSku CblMariner { get; } = new ContainerServiceOSSku(CblMarinerValue);
         /// <summary>
         /// Use Windows2019 as the OS for node images. Unsupported for system node pools. Windows2019 only supports Windows2019 containers; it cannot run Windows2022 containers and vice versa.
         /// Serialized Name: Ossku.Windows2019
         /// </summary>
-        public static Ossku Windows2019 { get; } = new Ossku(Windows2019Value);
+        public static ContainerServiceOSSku Windows2019 { get; } = new ContainerServiceOSSku(Windows2019Value);
         /// <summary>
         /// Use Windows2022 as the OS for node images. Unsupported for system node pools. Windows2022 only supports Windows2022 containers; it cannot run Windows2019 containers and vice versa.
         /// Serialized Name: Ossku.Windows2022
         /// </summary>
-        public static Ossku Windows2022 { get; } = new Ossku(Windows2022Value);
+        public static ContainerServiceOSSku Windows2022 { get; } = new ContainerServiceOSSku(Windows2022Value);
         /// <summary>
         /// Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions
         /// Serialized Name: Ossku.Ubuntu2204
         /// </summary>
-        public static Ossku Ubuntu2204 { get; } = new Ossku(Ubuntu2204Value);
+        public static ContainerServiceOSSku Ubuntu2204 { get; } = new ContainerServiceOSSku(Ubuntu2204Value);
         /// <summary>
         /// Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions
         /// Serialized Name: Ossku.Ubuntu2404
         /// </summary>
-        public static Ossku Ubuntu2404 { get; } = new Ossku(Ubuntu2404Value);
-        /// <summary> Determines if two <see cref="Ossku"/> values are the same. </summary>
-        public static bool operator ==(Ossku left, Ossku right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Ossku"/> values are not the same. </summary>
-        public static bool operator !=(Ossku left, Ossku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Ossku"/>. </summary>
-        public static implicit operator Ossku(string value) => new Ossku(value);
+        public static ContainerServiceOSSku Ubuntu2404 { get; } = new ContainerServiceOSSku(Ubuntu2404Value);
+        /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are the same. </summary>
+        public static bool operator ==(ContainerServiceOSSku left, ContainerServiceOSSku right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are not the same. </summary>
+        public static bool operator !=(ContainerServiceOSSku left, ContainerServiceOSSku right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceOSSku"/>. </summary>
+        public static implicit operator ContainerServiceOSSku(string value) => new ContainerServiceOSSku(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Ossku other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceOSSku other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Ossku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceOSSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

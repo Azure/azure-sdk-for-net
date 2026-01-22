@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
         public ManagedClusterAadProfile()
         {
-            AdminGroupObjectIds = new ChangeTrackingList<string>();
+            AdminGroupObjectIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAADProfile.tenantID
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<string> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsManagedAadEnabled = isManagedAadEnabled;
             IsAzureRbacEnabled = isAzureRbacEnabled;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterAADProfile.adminGroupObjectIDs
         /// </summary>
         [WirePath("adminGroupObjectIDs")]
-        public IList<string> AdminGroupObjectIds { get; }
+        public IList<Guid> AdminGroupObjectIds { get; }
         /// <summary>
         /// (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy.
         /// Serialized Name: ManagedClusterAADProfile.clientAppID

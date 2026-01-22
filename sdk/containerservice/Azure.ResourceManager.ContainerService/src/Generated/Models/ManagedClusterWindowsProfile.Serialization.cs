@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCsiProxy))
+            if (Optional.IsDefined(IsCsiProxyEnabled))
             {
                 writer.WritePropertyName("enableCSIProxy"u8);
-                writer.WriteBooleanValue(EnableCsiProxy.Value);
+                writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
             if (Optional.IsDefined(GmsaProfile))
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableCsiProxy), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCsiProxyEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  enableCSIProxy: ");
@@ -235,10 +235,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             else
             {
-                if (Optional.IsDefined(EnableCsiProxy))
+                if (Optional.IsDefined(IsCsiProxyEnabled))
                 {
                     builder.Append("  enableCSIProxy: ");
-                    var boolValue = EnableCsiProxy.Value == true ? "true" : "false";
+                    var boolValue = IsCsiProxyEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

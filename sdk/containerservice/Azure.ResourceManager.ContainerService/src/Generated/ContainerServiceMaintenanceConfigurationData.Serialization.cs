@@ -41,21 +41,21 @@ namespace Azure.ResourceManager.ContainerService
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeInWeek))
+            if (Optional.IsCollectionDefined(TimesInWeek))
             {
                 writer.WritePropertyName("timeInWeek"u8);
                 writer.WriteStartArray();
-                foreach (var item in TimeInWeek)
+                foreach (var item in TimesInWeek)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotAllowedTime))
+            if (Optional.IsCollectionDefined(NotAllowedTimes))
             {
                 writer.WritePropertyName("notAllowedTime"u8);
                 writer.WriteStartArray();
-                foreach (var item in NotAllowedTime)
+                foreach (var item in NotAllowedTimes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ContainerService
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeInWeek), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimesInWeek), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    timeInWeek: ");
@@ -264,13 +264,13 @@ namespace Azure.ResourceManager.ContainerService
             }
             else
             {
-                if (Optional.IsCollectionDefined(TimeInWeek))
+                if (Optional.IsCollectionDefined(TimesInWeek))
                 {
-                    if (TimeInWeek.Any())
+                    if (TimesInWeek.Any())
                     {
                         builder.Append("    timeInWeek: ");
                         builder.AppendLine("[");
-                        foreach (var item in TimeInWeek)
+                        foreach (var item in TimesInWeek)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    timeInWeek: ");
                         }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotAllowedTime), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotAllowedTimes), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    notAllowedTime: ");
@@ -287,13 +287,13 @@ namespace Azure.ResourceManager.ContainerService
             }
             else
             {
-                if (Optional.IsCollectionDefined(NotAllowedTime))
+                if (Optional.IsCollectionDefined(NotAllowedTimes))
                 {
-                    if (NotAllowedTime.Any())
+                    if (NotAllowedTimes.Any())
                     {
                         builder.Append("    notAllowedTime: ");
                         builder.AppendLine("[");
-                        foreach (var item in NotAllowedTime)
+                        foreach (var item in NotAllowedTimes)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    notAllowedTime: ");
                         }

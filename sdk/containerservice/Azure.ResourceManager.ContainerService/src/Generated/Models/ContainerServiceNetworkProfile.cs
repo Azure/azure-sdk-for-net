@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             PodCidrs = new ChangeTrackingList<string>();
             ServiceCidrs = new ChangeTrackingList<string>();
-            NetworkIPFamilies = new ChangeTrackingList<IPFamily>();
+            NetworkIPFamilies = new ChangeTrackingList<ContainerServiceIPFamily>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfile"/>. </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ContainerServiceNetworkProfile.ipFamilies
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> networkIPFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<ContainerServiceIPFamily> networkIPFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
@@ -264,6 +264,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ContainerServiceNetworkProfile.ipFamilies
         /// </summary>
         [WirePath("ipFamilies")]
-        public IList<IPFamily> NetworkIPFamilies { get; }
+        public IList<ContainerServiceIPFamily> NetworkIPFamilies { get; }
     }
 }

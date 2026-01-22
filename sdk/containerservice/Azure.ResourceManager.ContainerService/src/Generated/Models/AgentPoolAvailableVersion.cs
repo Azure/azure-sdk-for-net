@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.
+    /// The AgentPoolAvailableVersion.
     /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem
     /// </summary>
-    public partial class AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem
+    public partial class AgentPoolAvailableVersion
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem"/>. </summary>
-        internal AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem()
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
+        internal AgentPoolAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem"/>. </summary>
-        /// <param name="default">
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
+        /// <param name="isDefault">
         /// Whether this version is the default agent pool version.
         /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.default
         /// </param>
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.isPreview
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(bool? @default, string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentPoolAvailableVersion(bool? isDefault, string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Default = @default;
+            IsDefault = isDefault;
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.default
         /// </summary>
         [WirePath("default")]
-        public bool? Default { get; }
+        public bool? IsDefault { get; }
         /// <summary>
         /// The Kubernetes version (major.minor.patch).
         /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.kubernetesVersion

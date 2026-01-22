@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
-            IList<IPFamily> ipFamilies = default;
+            IList<ContainerServiceIPFamily> ipFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,10 +342,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<IPFamily> array = new List<IPFamily>();
+                    List<ContainerServiceIPFamily> array = new List<ContainerServiceIPFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new IPFamily(item.GetString()));
+                        array.Add(new ContainerServiceIPFamily(item.GetString()));
                     }
                     ipFamilies = array;
                     continue;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 staticEgressGatewayProfile,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
-                ipFamilies ?? new ChangeTrackingList<IPFamily>(),
+                ipFamilies ?? new ChangeTrackingList<ContainerServiceIPFamily>(),
                 serializedAdditionalRawData);
         }
 

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// The license type to use for Windows VMs. See [Azure Hybrid User Benefits](https://azure.microsoft.com/pricing/hybrid-benefit/faq/) for more details.
         /// Serialized Name: ManagedClusterWindowsProfile.licenseType
         /// </param>
-        /// <param name="enableCsiProxy">
+        /// <param name="isCsiProxyEnabled">
         /// Whether to enable CSI proxy. For more details on CSI proxy, see the [CSI proxy GitHub repo](https://github.com/kubernetes-csi/csi-proxy).
         /// Serialized Name: ManagedClusterWindowsProfile.enableCSIProxy
         /// </param>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterWindowsProfile.gmsaProfile
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterWindowsProfile(string adminUsername, string adminPassword, WindowsVmLicenseType? licenseType, bool? enableCsiProxy, WindowsGmsaProfile gmsaProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterWindowsProfile(string adminUsername, string adminPassword, WindowsVmLicenseType? licenseType, bool? isCsiProxyEnabled, WindowsGmsaProfile gmsaProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminUsername = adminUsername;
             AdminPassword = adminPassword;
             LicenseType = licenseType;
-            EnableCsiProxy = enableCsiProxy;
+            IsCsiProxyEnabled = isCsiProxyEnabled;
             GmsaProfile = gmsaProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterWindowsProfile.enableCSIProxy
         /// </summary>
         [WirePath("enableCSIProxy")]
-        public bool? EnableCsiProxy { get; set; }
+        public bool? IsCsiProxyEnabled { get; set; }
         /// <summary>
         /// The Windows gMSA Profile in the Managed Cluster.
         /// Serialized Name: ManagedClusterWindowsProfile.gmsaProfile

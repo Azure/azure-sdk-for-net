@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: MachineIpAddress.ip
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineIPAddress(IPFamily? family, string ip, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceMachineIPAddress(ContainerServiceIPFamily? family, string ip, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Family = family;
             IP = ip;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: MachineIpAddress.family
         /// </summary>
         [WirePath("family")]
-        public IPFamily? Family { get; }
+        public ContainerServiceIPFamily? Family { get; }
         /// <summary>
         /// IPv4 or IPv6 address of the machine
         /// Serialized Name: MachineIpAddress.ip

@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
                 OSType = ContainerServiceOSType.Linux,
-                OSSku = Ossku.AzureLinux,
+                OSSku = ContainerServiceOSSku.AzureLinux,
                 OrchestratorVersion = "",
                 KubeletConfig = new KubeletConfig
                 {
@@ -741,7 +741,7 @@ Count = 2,
                 Count = 3,
                 VmSize = "Standard_D4s_v3",
                 OSType = ContainerServiceOSType.Windows,
-                OSSku = Ossku.Windows2022,
+                OSSku = ContainerServiceOSSku.Windows2022,
                 OrchestratorVersion = "1.23.3",
             };
             ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
@@ -837,7 +837,7 @@ Count = 2,
                 Count = 3,
                 VmSize = "Standard_D4s_v3",
                 OSType = ContainerServiceOSType.Windows,
-                OSSku = Ossku.Windows2022,
+                OSSku = ContainerServiceOSSku.Windows2022,
                 OrchestratorVersion = "1.23.8",
                 IsOutboundNatDisabled = true,
             };

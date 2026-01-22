@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: Snapshot.properties.enableFIPS
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, Ossku? osSku, string vmSize, bool? enableFips, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreationData = creationData;
             SnapshotType = snapshotType;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: Snapshot.properties.osSku
         /// </summary>
         [WirePath("properties.osSku")]
-        public Ossku? OSSku { get; }
+        public ContainerServiceOSSku? OSSku { get; }
         /// <summary>
         /// The size of the VM.
         /// Serialized Name: Snapshot.properties.vmSize

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem : IUtf8JsonSerializable, IJsonModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>
+    public partial class AgentPoolAvailableVersion : IUtf8JsonSerializable, IJsonModel<AgentPoolAvailableVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolAvailableVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentPoolAvailableVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolAvailableVersion)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Default))
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteBooleanValue(Default.Value);
+                writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsDefined(KubernetesVersion))
             {
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem IJsonModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AgentPoolAvailableVersion IJsonModel<AgentPoolAvailableVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolAvailableVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(document.RootElement, options);
+            return DeserializeAgentPoolAvailableVersion(document.RootElement, options);
         }
 
-        internal static AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem DeserializeAgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AgentPoolAvailableVersion DeserializeAgentPoolAvailableVersion(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(@default, kubernetesVersion, isPreview, serializedAdditionalRawData);
+            return new AgentPoolAvailableVersion(@default, kubernetesVersion, isPreview, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  default: ");
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             else
             {
-                if (Optional.IsDefined(Default))
+                if (Optional.IsDefined(IsDefault))
                 {
                     builder.Append("  default: ");
-                    var boolValue = Default.Value == true ? "true" : "false";
+                    var boolValue = IsDefault.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AgentPoolAvailableVersion>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -207,26 +207,26 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolAvailableVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem IPersistableModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AgentPoolAvailableVersion IPersistableModel<AgentPoolAvailableVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(document.RootElement, options);
+                        return DeserializeAgentPoolAvailableVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolAvailableVersion)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentPoolAvailableVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

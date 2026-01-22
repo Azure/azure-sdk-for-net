@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ContainerService
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdvancedNetworkingObservability))]
+    [ModelReaderWriterBuildable(typeof(AgentPoolAvailableVersion))]
     [ModelReaderWriterBuildable(typeof(AgentPoolAvailableVersions))]
-    [ModelReaderWriterBuildable(typeof(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem))]
     [ModelReaderWriterBuildable(typeof(AgentPoolDeleteMachinesContent))]
     [ModelReaderWriterBuildable(typeof(AgentPoolGatewayProfile))]
     [ModelReaderWriterBuildable(typeof(AgentPoolGpuProfile))]

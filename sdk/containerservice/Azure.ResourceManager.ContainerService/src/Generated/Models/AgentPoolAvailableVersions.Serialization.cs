@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> agentPoolVersions = default;
+            IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                             {
                                 continue;
                             }
-                            List<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> array = new List<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>();
+                            List<AgentPoolAvailableVersion> array = new List<AgentPoolAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.DeserializeAgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(item, options));
+                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item, options));
                             }
                             agentPoolVersions = array;
                             continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name,
                 type,
                 systemData,
-                agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>(),
+                agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>(),
                 serializedAdditionalRawData);
         }
 

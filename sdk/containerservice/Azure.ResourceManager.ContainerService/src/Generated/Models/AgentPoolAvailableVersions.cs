@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
         internal AgentPoolAvailableVersions()
         {
-            AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>();
+            AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersion>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: AgentPoolAvailableVersions.properties.agentPoolVersions
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> agentPoolVersions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AgentPoolVersions = agentPoolVersions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: AgentPoolAvailableVersions.properties.agentPoolVersions
         /// </summary>
         [WirePath("properties.agentPoolVersions")]
-        public IReadOnlyList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> AgentPoolVersions { get; }
+        public IReadOnlyList<AgentPoolAvailableVersion> AgentPoolVersions { get; }
     }
 }
