@@ -133,8 +133,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Determines how the LLM should format its response. Defaults to 'text' response type. </summary>
         public ChatCompletionResponseFormat ResponseFormat { get; set; }
-
-        /// <summary> A URI fragment specifying the type of skill. </summary>
-        internal string OdataType { get; set; } = "#Microsoft.Skills.Custom.ChatCompletionSkill";
     }
 }

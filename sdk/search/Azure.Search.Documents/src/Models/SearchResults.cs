@@ -333,7 +333,7 @@ namespace Azure.Search.Documents.Models
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, searchFacets, facetValues));
+                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, searchFacets, facetValues.ToBinaryDataDictionary()));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;

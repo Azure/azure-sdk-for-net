@@ -181,7 +181,7 @@ namespace Azure.Search.Documents.Indexes.Models
             BlobIndexerDataToExtract? dataToExtract = default;
             BlobIndexerImageAction? imageAction = default;
             bool? allowSkillsetToReadFileData = default;
-            BlobIndexerPDFTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
+            BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
             IndexerExecutionEnvironment? executionEnvironment = default;
             string queryTimeout = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -310,7 +310,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    pdfTextRotationAlgorithm = new BlobIndexerPDFTextRotationAlgorithm(prop.Value.GetString());
+                    pdfTextRotationAlgorithm = new BlobIndexerPdfTextRotationAlgorithm(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("executionEnvironment"u8))
@@ -329,7 +329,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new IndexingParametersConfiguration(

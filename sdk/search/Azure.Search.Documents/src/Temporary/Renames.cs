@@ -772,12 +772,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
-    /// <summary> BlobIndexerPDFTextRotationAlgorithm namespace customization. </summary>
-    [CodeGenType("BlobIndexerPDFTextRotationAlgorithm")]
-    public readonly partial struct BlobIndexerPDFTextRotationAlgorithm
-    {
-    }
-
     /// <summary> IndexerExecutionEnvironment namespace customization. </summary>
     [CodeGenType("IndexerExecutionEnvironment")]
     public readonly partial struct IndexerExecutionEnvironment

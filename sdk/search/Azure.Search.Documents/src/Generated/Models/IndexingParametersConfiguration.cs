@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
         /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format "hh:mm:ss". </param>
         /// <param name="additionalProperties"></param>
-        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPDFTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, BinaryData> additionalProperties)
+        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, BinaryData> additionalProperties)
         {
             ParsingMode = parsingMode;
             ExcludedFileNameExtensions = excludedFileNameExtensions;
@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? AllowSkillsetToReadFileData { get; set; }
 
         /// <summary> Determines algorithm for text extraction from PDF files in Azure blob storage. </summary>
-        public BlobIndexerPDFTextRotationAlgorithm? PdfTextRotationAlgorithm { get; set; }
+        public BlobIndexerPdfTextRotationAlgorithm? PdfTextRotationAlgorithm { get; set; }
 
         /// <summary> Specifies the environment in which the indexer should execute. </summary>
         public IndexerExecutionEnvironment? ExecutionEnvironment { get; set; }

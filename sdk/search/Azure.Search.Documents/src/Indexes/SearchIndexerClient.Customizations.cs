@@ -6,6 +6,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 // TODO: Fix this in generator
 // namespace Azure.Search.Documents.Indexes
@@ -20,13 +21,13 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
     public partial class SearchIndexerClient
     {
         private SearchClientOptions.ServiceVersion _version;
-        private ObjectSerializer _serializer;
         private string _serviceName;
 
         /// <summary>
         /// Gets the URI endpoint of the Search service. This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
         /// </summary>
+        [Typespec.CodeGenMember("_endpoint")]
         public virtual Uri Endpoint { get; }
 
         /// <summary>
@@ -96,9 +97,11 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
+            _endpoint = Endpoint; // TODO: See if we can just change endpoint to be public
             ClientDiagnostics = new ClientDiagnostics(options);
             _keyCredential = credential;
             Pipeline = options.Build(credential);
+            _apiVersion = options.Version;
             _version = options.Version.ToServiceVersion();
         }
 
@@ -126,7 +129,9 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             Endpoint = endpoint;
             ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = tokenCredential;
+            _endpoint = Endpoint; // TODO: See if we can just change endpoint to be public
             Pipeline = options.Build(tokenCredential);
+            _apiVersion = options.Version;
             _version = options.Version.ToServiceVersion();
         }
     }

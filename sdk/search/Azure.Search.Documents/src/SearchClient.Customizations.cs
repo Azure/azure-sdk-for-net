@@ -1695,7 +1695,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSuggestPostRequest(options);
+                using HttpMessage message = CreateSuggestPostRequest(RequestContent.Create(options), cancellationToken.ToRequestContext());
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

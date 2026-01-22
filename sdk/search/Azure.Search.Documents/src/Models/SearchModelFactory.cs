@@ -450,7 +450,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
+            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties.ToBinaryDataDictionary());
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>

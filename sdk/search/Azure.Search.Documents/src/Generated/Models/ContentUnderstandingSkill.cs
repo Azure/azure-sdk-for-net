@@ -49,8 +49,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Controls the cardinality for chunking the content. </summary>
         public ContentUnderstandingSkillChunkingProperties ChunkingProperties { get; set; }
-
-        /// <summary> A URI fragment specifying the type of skill. </summary>
-        internal string OdataType { get; set; } = "#Microsoft.Skills.Util.ContentUnderstandingSkill";
     }
 }

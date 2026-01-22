@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Determines algorithm for text extraction from PDF files in Azure blob storage. </summary>
-    public readonly partial struct BlobIndexerPDFTextRotationAlgorithm : IEquatable<BlobIndexerPDFTextRotationAlgorithm>
+    public readonly partial struct BlobIndexerPdfTextRotationAlgorithm : IEquatable<BlobIndexerPdfTextRotationAlgorithm>
     {
         private readonly string _value;
         /// <summary> Leverages normal text extraction.  This is the default. </summary>
@@ -20,10 +20,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> May produce better and more readable text extraction from PDF files that have rotated text within them.  Note that there may be a small performance speed impact when this parameter is used.  This parameter only applies to PDF files, and only to PDFs with embedded text.  If the rotated text appears within an embedded image in the PDF, this parameter does not apply. </summary>
         private const string DetectAnglesValue = "detectAngles";
 
-        /// <summary> Initializes a new instance of <see cref="BlobIndexerPDFTextRotationAlgorithm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobIndexerPdfTextRotationAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BlobIndexerPDFTextRotationAlgorithm(string value)
+        public BlobIndexerPdfTextRotationAlgorithm(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Leverages normal text extraction.  This is the default. </summary>
-        public static BlobIndexerPDFTextRotationAlgorithm None { get; } = new BlobIndexerPDFTextRotationAlgorithm(NoneValue);
+        public static BlobIndexerPdfTextRotationAlgorithm None { get; } = new BlobIndexerPdfTextRotationAlgorithm(NoneValue);
 
         /// <summary> May produce better and more readable text extraction from PDF files that have rotated text within them.  Note that there may be a small performance speed impact when this parameter is used.  This parameter only applies to PDF files, and only to PDFs with embedded text.  If the rotated text appears within an embedded image in the PDF, this parameter does not apply. </summary>
-        public static BlobIndexerPDFTextRotationAlgorithm DetectAngles { get; } = new BlobIndexerPDFTextRotationAlgorithm(DetectAnglesValue);
+        public static BlobIndexerPdfTextRotationAlgorithm DetectAngles { get; } = new BlobIndexerPdfTextRotationAlgorithm(DetectAnglesValue);
 
-        /// <summary> Determines if two <see cref="BlobIndexerPDFTextRotationAlgorithm"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BlobIndexerPdfTextRotationAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(BlobIndexerPDFTextRotationAlgorithm left, BlobIndexerPDFTextRotationAlgorithm right) => left.Equals(right);
+        public static bool operator ==(BlobIndexerPdfTextRotationAlgorithm left, BlobIndexerPdfTextRotationAlgorithm right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BlobIndexerPDFTextRotationAlgorithm"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BlobIndexerPdfTextRotationAlgorithm"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(BlobIndexerPDFTextRotationAlgorithm left, BlobIndexerPDFTextRotationAlgorithm right) => !left.Equals(right);
+        public static bool operator !=(BlobIndexerPdfTextRotationAlgorithm left, BlobIndexerPdfTextRotationAlgorithm right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerPDFTextRotationAlgorithm"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BlobIndexerPdfTextRotationAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerPDFTextRotationAlgorithm(string value) => new BlobIndexerPDFTextRotationAlgorithm(value);
+        public static implicit operator BlobIndexerPdfTextRotationAlgorithm(string value) => new BlobIndexerPdfTextRotationAlgorithm(value);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerPDFTextRotationAlgorithm"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BlobIndexerPdfTextRotationAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerPDFTextRotationAlgorithm?(string value) => value == null ? null : new BlobIndexerPDFTextRotationAlgorithm(value);
+        public static implicit operator BlobIndexerPdfTextRotationAlgorithm?(string value) => value == null ? null : new BlobIndexerPdfTextRotationAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BlobIndexerPDFTextRotationAlgorithm other && Equals(other);
+        public override bool Equals(object obj) => obj is BlobIndexerPdfTextRotationAlgorithm other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(BlobIndexerPDFTextRotationAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BlobIndexerPdfTextRotationAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
