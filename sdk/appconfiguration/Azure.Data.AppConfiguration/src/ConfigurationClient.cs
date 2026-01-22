@@ -800,12 +800,14 @@ namespace Azure.Data.AppConfiguration
                 return CreateCheckKeyValuesRequest(key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
             }
 
-            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string after)
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                return CreateCheckKeyValuesRequest(key, label, _syncToken, after, dateTime, fieldsString, null, conditions, tags, context);
+                HttpMessage message = CreateNextGetConfigurationSettingsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+                message.Request.Method = RequestMethod.Head;
+                return message;
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
         }
 
         /// <summary>
@@ -1545,9 +1547,10 @@ namespace Azure.Data.AppConfiguration
             var values = new List<ConfigurationSetting>();
             string nextLink = null;
 
-            if (response.Status == 200)
+            // Only parse body if status is 200 and there is content (HEAD requests return no body)
+            if (response.Status == 200 && response.ContentStream != null && response.ContentStream.Length > 0)
             {
-                var document = response.ContentStream != null ? JsonDocument.Parse(response.ContentStream) : JsonDocument.Parse(response.Content);
+                var document = JsonDocument.Parse(response.ContentStream);
 
                 if (document.RootElement.TryGetProperty("items", out var itemsValue))
                 {
@@ -1573,25 +1576,6 @@ namespace Azure.Data.AppConfiguration
             }
 
             return (values, nextLink);
-        }
-
-        private (List<ConfigurationSetting> Values, string After) ParseCheckConfigurationSettingsResponse(Response response)
-        {
-            string after = null;
-            string nextLink = null;
-
-            // The "Link" header is formatted as:
-            // <nextLink>; rel="next"
-            if (response.Headers.TryGetValue("Link", out string linkHeader))
-            {
-                int nextLinkEndIndex = linkHeader.IndexOf('>');
-                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
-
-                NameValueCollection query = HttpUtility.ParseQueryString(nextLink);
-                after = query["after"];
-            }
-
-            return (null, after);
         }
 
         private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)
