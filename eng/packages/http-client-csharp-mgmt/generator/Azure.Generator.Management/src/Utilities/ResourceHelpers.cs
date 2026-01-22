@@ -20,6 +20,9 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class ResourceHelpers
     {
+        private static readonly System.Text.RegularExpressions.Regex PathParameterRegex =
+            new System.Text.RegularExpressions.Regex(@"\{[^}]+\}", System.Text.RegularExpressions.RegexOptions.Compiled);
+
         public static string GetClientDiagnosticsFieldName(string clientName)
         {
             var fieldName = GetClientDiagnosticsName(clientName).ToVariableName();
@@ -104,7 +107,7 @@ namespace Azure.Generator.Management.Utilities
         private static string NormalizePathForComparison(string path)
         {
             // Replace all path parameters like {paramName} with {} for comparison
-            return System.Text.RegularExpressions.Regex.Replace(path, @"\{[^}]+\}", "{}");
+            return PathParameterRegex.Replace(path, "{}");
         }
 
         /// <summary>
