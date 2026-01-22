@@ -691,7 +691,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             // Verify the options were created correctly
             Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(options.Target);
             Assert.IsNotNull(options.CustomCallingContext);
-            Assert.IsNull(options.CustomCallingContext.SipHeaders);
+            Assert.IsEmpty(options.CustomCallingContext.SipHeaders);
             Assert.IsNotNull(options.CustomCallingContext.VoipHeaders);
         }
 
@@ -709,7 +709,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             // Verify the options were created correctly
             Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(options.Target);
             Assert.IsNotNull(options.CustomCallingContext);
-            Assert.IsNull(options.CustomCallingContext.SipHeaders);
+            Assert.IsEmpty(options.CustomCallingContext.SipHeaders);
             Assert.IsNotNull(options.CustomCallingContext.VoipHeaders);
         }
 
