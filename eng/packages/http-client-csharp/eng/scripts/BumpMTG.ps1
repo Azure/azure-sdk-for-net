@@ -69,8 +69,8 @@ function Update-UnbrandedGeneratorVersion([string] $PropsFilePath, [string] $New
     Write-Host "Successfully updated UnbrandedGeneratorVersion to '$NewVersion'"
 }
 
-# Use cross-platform path resolution
-$PropsFilePath = Join-Path (Resolve-Path "$PSScriptRoot/../../../..") "Packages.Data.props"
+# Use cross-platform path resolution - Directory.Packages.props is at repo root
+$PropsFilePath = Join-Path (Resolve-Path "$PSScriptRoot/../../../../..") "Directory.Packages.props"
 
 Write-Host "Querying DevOps for the latest build for PR '$PRNumber'..."
 $BuildJson = (az pipelines build list --organization "https://dev.azure.com/azure-sdk" --project "internal" --branch "refs/pull/$PRNumber/merge" --top 1 --query "[0]" --output json | ConvertFrom-Json)

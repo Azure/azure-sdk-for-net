@@ -9,7 +9,7 @@
     
     1. Builds a local npm package of @azure-typespec/http-client-csharp with a versioned name (1.0.0-alpha.YYYYMMDD.hash)
     2. Builds and packages the NuGet generator framework packages with the same versioning
-    3. Updates Packages.Data.props in azure-sdk-for-net with the local NuGet version
+    3. Updates Directory.Packages.props in azure-sdk-for-net with the local NuGet version
     4. Updates the management plane generator (@azure-typespec/http-client-csharp-mgmt) to use local generators
     5. Updates the eng folder package.json artifacts in azure-sdk-for-net
     6. Regenerates libraries based on specified filters (all, by generator type, or interactively selected)
@@ -529,10 +529,10 @@ try {
         Set-Content $azurePackageJson $originalPackageJson -Encoding utf8 -NoNewline
     }
     
-    # Update Packages.Data.props with local NuGet version
-    $packagesDataPropsPath = Join-Path $sdkRepoPath "eng" "Packages.Data.props"
+    # Update Directory.Packages.props with local NuGet version
+    $packagesDataPropsPath = Join-Path $sdkRepoPath "eng" "Directory.Packages.props"
     if (-not (Test-Path $packagesDataPropsPath)) {
-        throw "Packages.Data.props not found at: $packagesDataPropsPath"
+        throw "Directory.Packages.props not found at: $packagesDataPropsPath"
     }
 
     Update-AzureGeneratorVersion -PackagesDataPropsPath $packagesDataPropsPath -NewVersion $localVersion

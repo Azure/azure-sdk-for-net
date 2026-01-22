@@ -1,4 +1,10 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Central Package Management (CPM) - import from eng folder
+    See: https://learn.microsoft.com/nuget/consume-packages/Central-Package-Management
+  -->
+  <Import Project="$(MSBuildThisFileDirectory)eng\Directory.Packages.props" />
+
   <PropertyGroup>
     <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
     <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>

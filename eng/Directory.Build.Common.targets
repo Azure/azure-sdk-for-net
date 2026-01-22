@@ -449,7 +449,7 @@
   <!--
     Central Package Management Enforcement
     
-    These targets prevent bypassing central package version management
+    These targets prevent partner teams from bypassing central package version management
     by re-enabling VersionOverride or disabling central package management in their
     local Directory.Build.props files.
     

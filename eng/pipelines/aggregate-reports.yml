@@ -64,7 +64,7 @@ stages:
               filePath: 'eng/scripts/dependencies/AnalyzeDeps.ps1'
               arguments: >
                 -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
-                -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
+                -LockfilePath '$(Build.SourcesDirectory)/eng/Directory.Packages.props'
                 -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
                 -DumpPath '$(Build.ArtifactStagingDirectory)/reports'
 
