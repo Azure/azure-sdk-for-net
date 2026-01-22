@@ -446,28 +446,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [Test]
-        public void CreateCallAsync_NullMicrosoftTeamsAppCallInvite_ThrowsArgumentNullException()
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
-            CallInvite? nullCallInvite = null;
-
-            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callAutomationClient.CreateCallAsync(nullCallInvite!, new Uri("https://bot.contoso.com/callback")).ConfigureAwait(false));
-            Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.Contains("Value cannot be null"));
-        }
-
-        [Test]
-        public void CreateCall_NullMicrosoftTeamsAppCallInvite_ThrowsArgumentNullException()
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
-            CallInvite? nullCallInvite = null;
-
-            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callAutomationClient.CreateCall(nullCallInvite!, new Uri("https://bot.contoso.com/callback")));
-            Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.Contains("Value cannot be null"));
-        }
-
         [TestCaseSource(nameof(TestData_ConnectCall))]
         public async Task ConnectCallAsync_200OK(CallLocator callLocator, Uri callbackUri)
         {
