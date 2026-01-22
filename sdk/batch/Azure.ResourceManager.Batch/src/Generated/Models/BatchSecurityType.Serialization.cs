@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static string ToSerialString(this BatchSecurityType value) => value switch
         {
             BatchSecurityType.TrustedLaunch => "trustedLaunch",
-            BatchSecurityType.ConfidentialVM => "confidentialVM",
+            BatchSecurityType.ConfidentialVm => "confidentialVM",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchSecurityType value.")
         };
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "confidentialVM"))
             {
-                return BatchSecurityType.ConfidentialVM;
+                return BatchSecurityType.ConfidentialVm;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchSecurityType value.");
         }

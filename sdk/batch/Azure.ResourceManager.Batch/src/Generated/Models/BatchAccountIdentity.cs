@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string TenantId { get; }
 
         /// <summary> The type of identity used for the Batch account. </summary>
-        public ResourceIdentityType Type { get; set; }
+        public ResourceIdentityType Type { get; }
 
         /// <summary> The list of user identities associated with the Batch account. </summary>
         public IDictionary<string, UserAssignedIdentities> UserAssignedIdentities { get; }

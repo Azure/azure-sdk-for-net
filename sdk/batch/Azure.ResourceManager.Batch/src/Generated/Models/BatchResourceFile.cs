@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="fileMode"> This property applies only to files being downloaded to Linux compute nodes. It will be ignored if it is specified for a resourceFile which will be downloaded to a Windows node. If this property is not specified for a Linux node, then a default value of 0770 is applied to the file. </param>
         /// <param name="identity"> The reference to a user assigned identity associated with the Batch pool which a compute node will use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchResourceFile(string autoBlobContainerName, string blobContainerUri, string httpUri, string blobPrefix, string filePath, string fileMode, ComputeNodeIdentityReference identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchResourceFile(string autoBlobContainerName, Uri blobContainerUri, Uri httpUri, string blobPrefix, string filePath, string fileMode, ComputeNodeIdentityReference identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoBlobContainerName = autoBlobContainerName;
             BlobContainerUri = blobContainerUri;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Batch.Models
         public string AutoBlobContainerName { get; set; }
 
         /// <summary> The autoStorageContainerName, storageContainerUrl and httpUrl properties are mutually exclusive and one of them must be specified. This URL must be readable and listable from compute nodes. There are three ways to get such a URL for a container in Azure storage: include a Shared Access Signature (SAS) granting read and list permissions on the container, use a managed identity with read and list permissions, or set the ACL for the container to allow public access. </summary>
-        public string BlobContainerUri { get; set; }
+        public Uri BlobContainerUri { get; set; }
 
         /// <summary> The autoStorageContainerName, storageContainerUrl and httpUrl properties are mutually exclusive and one of them must be specified. If the URL points to Azure Blob Storage, it must be readable from compute nodes. There are three ways to get such a URL for a blob in Azure storage: include a Shared Access Signature (SAS) granting read permissions on the blob, use a managed identity with read permission, or set the ACL for the blob or its container to allow public access. </summary>
-        public string HttpUri { get; set; }
+        public Uri HttpUri { get; set; }
 
         /// <summary> The property is valid only when autoStorageContainerName or storageContainerUrl is used. This prefix can be a partial filename or a subdirectory. If a prefix is not specified, all the files in the container will be downloaded. </summary>
         public string BlobPrefix { get; set; }

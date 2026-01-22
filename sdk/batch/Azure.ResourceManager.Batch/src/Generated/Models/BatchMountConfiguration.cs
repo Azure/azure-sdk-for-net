@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="cifsMountConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="fileShareConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchMountConfiguration(BatchBlobFileSystemConfiguration blobFileSystemConfiguration, BatchNFSMountConfiguration nfsMountConfiguration, BatchCifsMountConfiguration cifsMountConfiguration, BatchFileShareConfiguration fileShareConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchMountConfiguration(BatchBlobFileSystemConfiguration blobFileSystemConfiguration, BatchNfsMountConfiguration nfsMountConfiguration, BatchCifsMountConfiguration cifsMountConfiguration, BatchFileShareConfiguration fileShareConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobFileSystemConfiguration = blobFileSystemConfiguration;
             NfsMountConfiguration = nfsMountConfiguration;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchBlobFileSystemConfiguration BlobFileSystemConfiguration { get; set; }
 
         /// <summary> This property is mutually exclusive with all other properties. </summary>
-        public BatchNFSMountConfiguration NfsMountConfiguration { get; set; }
+        public BatchNfsMountConfiguration NfsMountConfiguration { get; set; }
 
         /// <summary> This property is mutually exclusive with all other properties. </summary>
         public BatchCifsMountConfiguration CifsMountConfiguration { get; set; }

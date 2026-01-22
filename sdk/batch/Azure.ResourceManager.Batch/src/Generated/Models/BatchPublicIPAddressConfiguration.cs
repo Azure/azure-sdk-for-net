@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -20,17 +21,17 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="BatchPublicIPAddressConfiguration"/>. </summary>
         public BatchPublicIPAddressConfiguration()
         {
-            IpAddressIds = new ChangeTrackingList<string>();
+            IPAddressIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPublicIPAddressConfiguration"/>. </summary>
         /// <param name="provision"> The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<string> ipAddressIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provision = provision;
-            IpAddressIds = ipAddressIds;
+            IPAddressIds = ipAddressIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +39,6 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchIPAddressProvisioningType? Provision { get; set; }
 
         /// <summary> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </summary>
-        public IList<string> IpAddressIds { get; }
+        public IList<ResourceIdentifier> IPAddressIds { get; }
     }
 }

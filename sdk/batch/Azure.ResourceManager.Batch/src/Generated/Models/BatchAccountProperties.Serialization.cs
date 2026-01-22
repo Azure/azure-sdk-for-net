@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PoolAllocationMode))
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToBatchProvisioningState();
+                    provisioningState = new BatchProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("poolAllocationMode"u8))

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchAccountProperties properties = default, BatchAccountIdentity identity = default, IReadOnlyDictionary<string, string> tags = default, AzureLocation location = default)
+        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchAccountProperties properties = default, ManagedServiceIdentity identity = default, IReadOnlyDictionary<string, string> tags = default, AzureLocation? location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -159,28 +159,6 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchVmFamilyCoreQuota(name, coreQuota, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The identity of the Batch account, if configured. This is used when the user specifies 'Microsoft.KeyVault' as their Batch account encryption configuration or when `ManagedIdentity` is selected as the auto-storage authentication mode. </summary>
-        /// <param name="principalId"> The principal id of the Batch account. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id associated with the Batch account. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the Batch account. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the Batch account. </param>
-        /// <returns> A new <see cref="Models.BatchAccountIdentity"/> instance for mocking. </returns>
-        public static BatchAccountIdentity BatchAccountIdentity(string principalId = default, string tenantId = default, ResourceIdentityType @type = default, IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentities>();
-
-            return new BatchAccountIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The list of associated user identities. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentities"/> instance for mocking. </returns>
-        public static UserAssignedIdentities UserAssignedIdentities(string principalId = default, string clientId = default)
-        {
-            return new UserAssignedIdentities(principalId, clientId, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="location"> The region in which to create the account. </param>
         /// <param name="tags"> The user-specified tags associated with the account. </param>
         /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
@@ -226,6 +204,28 @@ namespace Azure.ResourceManager.Batch.Models
                 publicNetworkAccess,
                 networkProfile,
                 null), identity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The identity of the Batch account, if configured. This is used when the user specifies 'Microsoft.KeyVault' as their Batch account encryption configuration or when `ManagedIdentity` is selected as the auto-storage authentication mode. </summary>
+        /// <param name="principalId"> The principal id of the Batch account. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant id associated with the Batch account. This property will only be provided for a system assigned identity. </param>
+        /// <param name="type"> The type of identity used for the Batch account. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with the Batch account. </param>
+        /// <returns> A new <see cref="Models.BatchAccountIdentity"/> instance for mocking. </returns>
+        public static BatchAccountIdentity BatchAccountIdentity(string principalId = default, string tenantId = default, ResourceIdentityType @type = default, IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentities>();
+
+            return new BatchAccountIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The list of associated user identities. </summary>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="clientId"> The client id of user assigned identity. </param>
+        /// <returns> A new <see cref="Models.UserAssignedIdentities"/> instance for mocking. </returns>
+        public static UserAssignedIdentities UserAssignedIdentities(string principalId = default, string clientId = default)
+        {
+            return new UserAssignedIdentities(principalId, clientId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters supplied to the RegenerateKey operation. </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
         /// <param name="serviceArtifactReferenceId"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
         /// <returns> A new <see cref="Models.BatchVmConfiguration"/> instance for mocking. </returns>
-        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, IEnumerable<BatchDiskEncryptionTarget> diskEncryptionTargets = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, string serviceArtifactReferenceId = default)
+        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, IEnumerable<BatchDiskEncryptionTarget> diskEncryptionTargets = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default)
         {
             dataDisks ??= new ChangeTrackingList<BatchVmDataDisk>();
             extensions ??= new ChangeTrackingList<BatchVmExtension>();
@@ -636,9 +636,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="provision"> The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
         /// <returns> A new <see cref="Models.BatchPublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision = default, IEnumerable<string> ipAddressIds = default)
+        public static BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision = default, IEnumerable<ResourceIdentifier> ipAddressIds = default)
         {
-            ipAddressIds ??= new ChangeTrackingList<string>();
+            ipAddressIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new BatchPublicIPAddressConfiguration(provision, ipAddressIds.ToList(), additionalBinaryDataProperties: null);
         }
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, string location = default)
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
         {
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
         }
@@ -901,11 +901,11 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Parameters for a check name availability request. </summary>
         /// <param name="name"> The name to check for availability. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.BatchNameAvailabilityContent"/> instance for mocking. </returns>
-        public static BatchNameAvailabilityContent BatchNameAvailabilityContent(string name = default, ResourceType @type = default)
+        public static BatchNameAvailabilityContent BatchNameAvailabilityContent(string name = default, ResourceType resourceType = default)
         {
-            return new BatchNameAvailabilityContent(name, @type, additionalBinaryDataProperties: null);
+            return new BatchNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The CheckNameAvailability operation response. </summary>

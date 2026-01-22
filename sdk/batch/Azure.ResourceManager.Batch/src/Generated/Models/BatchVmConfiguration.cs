@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Batch.Models
             DiskEncryptionConfiguration = diskEncryptionConfiguration;
             NodePlacementConfiguration = nodePlacementConfiguration;
             Extensions = extensions;
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             SecurityProfile = securityProfile;
             ServiceArtifactReference = serviceArtifactReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Batch.Models
         public IList<BatchVmExtension> Extensions { get; }
 
         /// <summary> Contains configuration for ephemeral OSDisk settings. </summary>
-        public BatchOSDisk OsDisk { get; set; }
+        public BatchOSDisk OSDisk { get; set; }
 
         /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
         public BatchSecurityProfile SecurityProfile { get; set; }
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </summary>
-        public string ServiceArtifactReferenceId
+        public ResourceIdentifier ServiceArtifactReferenceId
         {
             get
             {

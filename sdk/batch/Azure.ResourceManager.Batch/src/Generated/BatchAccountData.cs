@@ -20,11 +20,9 @@ namespace Azure.ResourceManager.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BatchAccountData(AzureLocation location)
+        public BatchAccountData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
@@ -37,7 +35,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BatchAccountProperties properties, BatchAccountIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location) : base(id, name, resourceType, systemData)
+        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BatchAccountProperties properties, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,15 +45,15 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public BatchAccountProperties Properties { get; }
+        public BatchAccountProperties Properties { get; set; }
 
         /// <summary> The identity of the Batch account. </summary>
-        public BatchAccountIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation Location { get; }
+        public AzureLocation? Location { get; set; }
     }
 }

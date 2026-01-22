@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string name = default;
-            ResourceType @type = default;
+            ResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new BatchNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

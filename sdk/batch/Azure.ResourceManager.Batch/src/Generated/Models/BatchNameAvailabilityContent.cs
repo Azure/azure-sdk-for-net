@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public BatchNameAvailabilityContent(string name, ResourceType @type)
+        public BatchNameAvailabilityContent(string name, ResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNameAvailabilityContent(string name, ResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNameAvailabilityContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Batch.Models
         public string Name { get; }
 
         /// <summary> The resource type. </summary>
-        public ResourceType Type { get; }
+        public ResourceType ResourceType { get; }
     }
 }

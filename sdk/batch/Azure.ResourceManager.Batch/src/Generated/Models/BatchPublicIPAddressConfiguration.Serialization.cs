@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -39,11 +40,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("provision"u8);
                 writer.WriteStringValue(Provision.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(IpAddressIds))
+            if (Optional.IsCollectionDefined(IPAddressIds))
             {
                 writer.WritePropertyName("ipAddressIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAddressIds)
+                foreach (ResourceIdentifier item in IPAddressIds)
                 {
                     if (item == null)
                     {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchIPAddressProvisioningType? provision = default;
-            IList<string> ipAddressIds = default;
+            IList<ResourceIdentifier> ipAddressIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Batch.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     ipAddressIds = array;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

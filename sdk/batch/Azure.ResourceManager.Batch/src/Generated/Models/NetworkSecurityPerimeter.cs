@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Batch.Models
         public Guid? PerimeterGuid { get; }
 
         /// <summary> Location of the network security perimeter. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

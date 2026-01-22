@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         private readonly string _value;
         private const string NonPersistedTPMValue = "NonPersistedTPM";
-        private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
+        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
 
         /// <summary> Initializes a new instance of <see cref="BatchSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Gets the NonPersistedTPM. </summary>
         public static BatchSecurityEncryptionType NonPersistedTPM { get; } = new BatchSecurityEncryptionType(NonPersistedTPMValue);
 
-        /// <summary> Gets the VMGuestStateOnly. </summary>
-        public static BatchSecurityEncryptionType VMGuestStateOnly { get; } = new BatchSecurityEncryptionType(VMGuestStateOnlyValue);
+        /// <summary> Gets the VmGuestStateOnly. </summary>
+        public static BatchSecurityEncryptionType VmGuestStateOnly { get; } = new BatchSecurityEncryptionType(VmGuestStateOnlyValue);
 
         /// <summary> Determines if two <see cref="BatchSecurityEncryptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

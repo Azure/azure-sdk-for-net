@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OsDisk))
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OsDisk, options);
+                writer.WriteObjectValue(OSDisk, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {

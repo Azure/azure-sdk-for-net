@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("storageContainerUrl"u8);
-                writer.WriteStringValue(BlobContainerUri);
+                writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(HttpUri))
             {
                 writer.WritePropertyName("httpUrl"u8);
-                writer.WriteStringValue(HttpUri);
+                writer.WriteStringValue(HttpUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string autoBlobContainerName = default;
-            string blobContainerUri = default;
-            string httpUri = default;
+            Uri blobContainerUri = default;
+            Uri httpUri = default;
             string blobPrefix = default;
             string filePath = default;
             string fileMode = default;
@@ -128,12 +128,20 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("storageContainerUrl"u8))
                 {
-                    blobContainerUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("httpUrl"u8))
                 {
-                    httpUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    httpUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("blobPrefix"u8))

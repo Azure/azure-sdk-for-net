@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchBlobFileSystemConfiguration blobFileSystemConfiguration = default;
-            BatchNFSMountConfiguration nfsMountConfiguration = default;
+            BatchNfsMountConfiguration nfsMountConfiguration = default;
             BatchCifsMountConfiguration cifsMountConfiguration = default;
             BatchFileShareConfiguration fileShareConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nfsMountConfiguration = BatchNFSMountConfiguration.DeserializeBatchNFSMountConfiguration(prop.Value, options);
+                    nfsMountConfiguration = BatchNfsMountConfiguration.DeserializeBatchNfsMountConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cifsMountConfiguration"u8))
