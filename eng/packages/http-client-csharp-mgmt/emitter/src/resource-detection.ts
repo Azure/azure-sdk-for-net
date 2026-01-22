@@ -313,6 +313,20 @@ export function buildArmProviderSchema(
   
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     const modelId = metadataKey.split("|")[0];
+    const model = resourceModelMap.get(modelId);
+    
+    // Emit diagnostic for resources without resourceIdPattern
+    if (metadata.resourceIdPattern === "" && model) {
+      sdkContext.logger.reportDiagnostic({
+        code: "general-warning",
+        messageId: "default",
+        format: {
+          message: `Cannot figure out resourceIdPattern from model ${model.name}.`
+        },
+        target: NoTarget
+      });
+    }
+    
     const resource: ArmResourceSchema = {
       resourceModelId: modelId,
       metadata: metadata
@@ -389,12 +403,33 @@ export function buildArmProviderSchema(
   // Convert non-resource methods map to array
   const nonResourceMethodsArray: NonResourceMethod[] = Array.from(nonResourceMethods.values());
 
+  // Track resources before post-processing to emit diagnostics for filtered resources
+  const resourcesBeforeFiltering = new Set(resources.filter(r => r.metadata.resourceIdPattern !== ""));
+
   // Use the shared post-processing function
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethodsArray,
     parentLookup
   );
+
+  // Emit diagnostics for resources that were filtered out (non-singleton resources without Read operations)
+  const resourcesAfterFiltering = new Set(filteredResources);
+  for (const resource of resourcesBeforeFiltering) {
+    if (!resourcesAfterFiltering.has(resource)) {
+      const model = resourceModelMap.get(resource.resourceModelId);
+      if (model) {
+        sdkContext.logger.reportDiagnostic({
+          code: "general-warning",
+          messageId: "default",
+          format: {
+            message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`
+          },
+          target: NoTarget
+        });
+      }
+    }
+  }
 
   // Update resource names: prioritize explicit ResourceName from TypeSpec, fallback to deriving from client names
   // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
@@ -407,15 +442,14 @@ export function buildArmProviderSchema(
     modelIdToResources.get(resource.resourceModelId)!.push(resource);
   }
 
-  for (const [modelId, resourceList] of modelIdToResources) {
+  for (const [, resourceList] of modelIdToResources) {
     if (resourceList.length > 1) {
       // Multiple resource paths for the same model - use explicit names or derive from client names
       for (const resource of resourceList) {
-        // Find the metadata key for this resource to look up explicit name or client name
-        for (const [metadataKey] of resourcePathToMetadataMap) {
-          const keyModelId = metadataKey.split("|")[0];
-          const keyPath = metadataKey.split("|")[1];
-          if (keyModelId === modelId && keyPath === resource.metadata.resourceIdPattern) {
+        // Use the metadataKeyToResource map to efficiently find the metadata key
+        // Look for the metadataKey that corresponds to this resource
+        for (const [metadataKey, mappedResource] of metadataKeyToResource) {
+          if (mappedResource === resource) {
             // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
             const explicitName = resourcePathToExplicitName.get(metadataKey);
             if (explicitName) {
