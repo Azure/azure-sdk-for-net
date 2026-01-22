@@ -41,14 +41,9 @@ import {
   sortResourceMethods
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
-import {
-  getCrossLanguageDefinitionId,
-  SdkContext,
-  SdkHttpOperation
-} from "@azure-tools/typespec-client-generator-core";
+import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
-import { getAllSdkClients } from "./resource-detection.js";
-import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
+import { getAllSdkClients } from "./sdk-client-utils.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -281,7 +276,7 @@ export function resolveArmResources(
   }
 
   // Get all SDK operations
-  const allSdkClients = getAllSdkClients(sdkContext as SdkContext<AzureEmitterOptions, SdkHttpOperation>);
+  const allSdkClients = getAllSdkClients(sdkContext);
   for (const client of allSdkClients) {
     for (const method of client.methods) {
       const methodId = method.crossLanguageDefinitionId;
