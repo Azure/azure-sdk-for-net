@@ -194,6 +194,9 @@
     <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
     <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
+    
+    <!-- Disable package version overrides to enforce central package management -->
+    <EnablePackageVersionOverride>false</EnablePackageVersionOverride>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
@@ -441,6 +444,36 @@
     <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true'" >
       <ProjectsToInclude Include="$(_ProjectName)" />
     </ItemGroup>
+  </Target>
+
+  <!--
+    Central Package Management Enforcement
+    
+    These targets prevent partner teams from bypassing central package version management
+    by re-enabling VersionOverride or disabling central package management in their
+    local Directory.Build.props files.
+    
+    If you have a legitimate need to override a package version, add a scoped entry
+    to eng/Packages.Data.props with appropriate conditions.
+  -->
+  <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
+    <!-- Block re-enabling VersionOverride (current custom SDK) -->
+    <Error 
+      Condition="'$(EnablePackageVersionOverride)' == 'true'" 
+      Text="Package version overrides are disabled in this repository. Do not set EnablePackageVersionOverride='true'. If you need a specific package version, add a scoped entry to eng/Packages.Data.props."
+      Code="AZSDK0001" />
+    
+    <!-- Block re-enabling VersionOverride (modern .NET CPM - future proofing) -->
+    <Error 
+      Condition="'$(CentralPackageVersionOverrideEnabled)' == 'true'" 
+      Text="Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. If you need a specific package version, add a scoped entry to eng/Packages.Data.props."
+      Code="AZSDK0002" />
+    
+    <!-- Block disabling central package management entirely -->
+    <Error 
+      Condition="'$(ManagePackageVersionsCentrally)' == 'false'" 
+      Text="Central Package Management is required in this repository. Do not set ManagePackageVersionsCentrally='false'."
+      Code="AZSDK0003" />
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
