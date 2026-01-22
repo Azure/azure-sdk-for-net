@@ -17,7 +17,6 @@ import {
   ArmProviderSchema,
   ArmResourceSchema,
   convertArmProviderSchemaToArguments,
-  sortResourceMethods,
   postProcessArmResources,
   ParentResourceLookupContext
 } from "./resource-metadata.js";
@@ -413,7 +412,7 @@ export function buildArmProviderSchema(
       // Multiple resource paths for the same model - use explicit names or derive from client names
       for (const resource of resourceList) {
         // Find the metadata key for this resource to look up explicit name or client name
-        for (const [metadataKey, _] of resourcePathToMetadataMap) {
+        for (const [metadataKey] of resourcePathToMetadataMap) {
           const keyModelId = metadataKey.split("|")[0];
           const keyPath = metadataKey.split("|")[1];
           if (keyModelId === modelId && keyPath === resource.metadata.resourceIdPattern) {

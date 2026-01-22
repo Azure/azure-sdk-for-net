@@ -38,7 +38,6 @@ import {
   ResourceMethod,
   ResourceOperationKind,
   ResourceScope,
-  sortResourceMethods,
   postProcessArmResources,
   ParentResourceLookupContext
 } from "./resource-metadata.js";
