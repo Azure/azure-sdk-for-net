@@ -503,8 +503,10 @@ function convertScopeToResourceScope(
   }
 
   // When scope is a ResolvedResource (extension resource with a specific parent resource),
-  // we preserve the parent resource type as the specific extension scope
-  // This allows the C# side to distinguish between different kinds of extension resources
+  // we preserve the scope resource's type as the specific extension scope.
+  // This allows the C# side to distinguish between different kinds of extension resources.
+  // For example, a VM extension scoped to a VirtualMachine resource would have
+  // specificExtensionScope set to "Microsoft.Compute/virtualMachines"
   return {
     resourceScope: ResourceScope.Extension,
     specificExtensionScope: formatResourceType(scope.resourceType)
