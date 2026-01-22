@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Compute Profile to use for running user's workloads. </summary>
     public partial class ComputeFleetComputeProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetComputeProfile"/>. </summary>
         /// <param name="baseVirtualMachineProfile"> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachineScaleSet.json#/definitions/VirtualMachineScaleSetVMProfile". </param>
@@ -74,28 +46,25 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// hibernationEnabled: Enables the hibernation capability on the VMSS VMs.
         /// Default value is null if not specified. This property cannot be updated once set.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetComputeProfile(ComputeFleetVmProfile baseVirtualMachineProfile, string computeApiVersion, int? platformFaultDomainCount, AdditionalCapabilities additionalVirtualMachineCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetComputeProfile(ComputeFleetVmProfile baseVirtualMachineProfile, string computeApiVersion, int? platformFaultDomainCount, AdditionalCapabilities additionalVirtualMachineCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseVirtualMachineProfile = baseVirtualMachineProfile;
             ComputeApiVersion = computeApiVersion;
             PlatformFaultDomainCount = platformFaultDomainCount;
             AdditionalVirtualMachineCapabilities = additionalVirtualMachineCapabilities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetComputeProfile"/> for deserialization. </summary>
-        internal ComputeFleetComputeProfile()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachineScaleSet.json#/definitions/VirtualMachineScaleSetVMProfile". </summary>
         public ComputeFleetVmProfile BaseVirtualMachineProfile { get; set; }
+
         /// <summary>
         /// Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machine scale sets and Virtual Machines.
         /// The default value will be the latest supported computeApiVersion by Compute Fleet.
         /// </summary>
         public string ComputeApiVersion { get; set; }
+
         /// <summary>
         /// Specifies the number of fault domains to use when creating the underlying VMSS.
         /// A fault domain is a logical group of hardware within an Azure datacenter.
@@ -104,6 +73,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// This property cannot be updated.
         /// </summary>
         public int? PlatformFaultDomainCount { get; set; }
+
         /// <summary>
         /// Specifies VMSS and VM API entity models support two additional capabilities as of today: ultraSSDEnabled and hibernationEnabled.
         /// ultraSSDEnabled: Enables UltraSSD_LRS storage account type on the VMSS VMs.

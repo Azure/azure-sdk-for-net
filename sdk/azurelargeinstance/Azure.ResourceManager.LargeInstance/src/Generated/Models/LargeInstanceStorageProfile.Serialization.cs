@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
-    public partial class LargeInstanceStorageProfile : IUtf8JsonSerializable, IJsonModel<LargeInstanceStorageProfile>
+    /// <summary> Specifies the storage settings for the Azure Large Instance disks. </summary>
+    public partial class LargeInstanceStorageProfile : IJsonModel<LargeInstanceStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LargeInstanceStorageProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LargeInstanceStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,36 +29,35 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support writing '{format}' format.");
             }
-
-            if (options.Format != "W" && Optional.IsDefined(NfsIPAddress))
+            if (Optional.IsDefined(NfsIPAddress))
             {
                 writer.WritePropertyName("nfsIpAddress"u8);
                 writer.WriteStringValue(NfsIPAddress);
             }
-            if (Optional.IsCollectionDefined(OSDisks))
+            if (Optional.IsCollectionDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in OSDisks)
+                foreach (LargeInstanceDisk item in OSDisk)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,64 +66,70 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
         }
 
-        LargeInstanceStorageProfile IJsonModel<LargeInstanceStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LargeInstanceStorageProfile IJsonModel<LargeInstanceStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LargeInstanceStorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLargeInstanceStorageProfile(document.RootElement, options);
         }
 
-        internal static LargeInstanceStorageProfile DeserializeLargeInstanceStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LargeInstanceStorageProfile DeserializeLargeInstanceStorageProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string nfsIPAddress = default;
-            IReadOnlyList<LargeInstanceDisk> osDisks = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<LargeInstanceDisk> osDisk = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nfsIpAddress"u8))
+                if (prop.NameEquals("nfsIpAddress"u8))
                 {
-                    nfsIPAddress = property.Value.GetString();
+                    nfsIPAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osDisks"u8))
+                if (prop.NameEquals("osDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<LargeInstanceDisk> array = new List<LargeInstanceDisk>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item, options));
                     }
-                    osDisks = array;
+                    osDisk = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new LargeInstanceStorageProfile(nfsIPAddress, osDisks ?? new ChangeTrackingList<LargeInstanceDisk>(), serializedAdditionalRawData);
+            return new LargeInstanceStorageProfile(nfsIPAddress, osDisk ?? new ChangeTrackingList<LargeInstanceDisk>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<LargeInstanceStorageProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LargeInstanceStorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -133,15 +139,20 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
         }
 
-        LargeInstanceStorageProfile IPersistableModel<LargeInstanceStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LargeInstanceStorageProfile IPersistableModel<LargeInstanceStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LargeInstanceStorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLargeInstanceStorageProfile(document.RootElement, options);
                     }
                 default:
@@ -149,6 +160,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LargeInstanceStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

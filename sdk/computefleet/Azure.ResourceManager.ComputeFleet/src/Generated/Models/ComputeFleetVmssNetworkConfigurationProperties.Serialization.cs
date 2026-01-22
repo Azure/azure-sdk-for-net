@@ -8,17 +8,21 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetVmssNetworkConfigurationProperties : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmssNetworkConfigurationProperties>
+    /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
+    public partial class ComputeFleetVmssNetworkConfigurationProperties : IJsonModel<ComputeFleetVmssNetworkConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmssNetworkConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssNetworkConfigurationProperties"/> for deserialization. </summary>
+        internal ComputeFleetVmssNetworkConfigurationProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmssNetworkConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +34,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssNetworkConfigurationProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                ((IJsonModel<WritableSubResource>)NetworkSecurityGroup).Write(writer, options);
+                writer.WriteObjectValue(NetworkSecurityGroup, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
-            foreach (var item in IPConfigurations)
+            foreach (ComputeFleetVmssIPConfiguration item in IPConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -93,15 +96,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("auxiliarySku"u8);
                 writer.WriteStringValue(AuxiliarySku.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,166 +113,172 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmssNetworkConfigurationProperties IJsonModel<ComputeFleetVmssNetworkConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmssNetworkConfigurationProperties IJsonModel<ComputeFleetVmssNetworkConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmssNetworkConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssNetworkConfigurationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmssNetworkConfigurationProperties(document.RootElement, options);
         }
 
-        internal static ComputeFleetVmssNetworkConfigurationProperties DeserializeComputeFleetVmssNetworkConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeFleetVmssNetworkConfigurationProperties DeserializeComputeFleetVmssNetworkConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? primary = default;
-            bool? enableAcceleratedNetworking = default;
-            bool? disableTcpStateTracking = default;
-            bool? enableFpga = default;
-            WritableSubResource networkSecurityGroup = default;
+            bool? isPrimary = default;
+            bool? isAcceleratedNetworkingEnabled = default;
+            bool? isTcpStateTrackingDisabled = default;
+            bool? isFpgaEnabled = default;
+            SubResource networkSecurityGroup = default;
             ComputeFleetVmssNetworkDnsSettings dnsSettings = default;
             IList<ComputeFleetVmssIPConfiguration> ipConfigurations = default;
-            bool? enableIPForwarding = default;
+            bool? isIPForwardingEnabled = default;
             ComputeFleetVmDeleteOption? deleteOption = default;
             ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("primary"u8))
+                if (prop.NameEquals("primary"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primary = property.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableAcceleratedNetworking"u8))
+                if (prop.NameEquals("enableAcceleratedNetworking"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableAcceleratedNetworking = property.Value.GetBoolean();
+                    isAcceleratedNetworkingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableTcpStateTracking"u8))
+                if (prop.NameEquals("disableTcpStateTracking"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableTcpStateTracking = property.Value.GetBoolean();
+                    isTcpStateTrackingDisabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableFpga"u8))
+                if (prop.NameEquals("enableFpga"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableFpga = property.Value.GetBoolean();
+                    isFpgaEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("networkSecurityGroup"u8))
+                if (prop.NameEquals("networkSecurityGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkSecurityGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default);
+                    networkSecurityGroup = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dnsSettings"u8))
+                if (prop.NameEquals("dnsSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dnsSettings = ComputeFleetVmssNetworkDnsSettings.DeserializeComputeFleetVmssNetworkDnsSettings(property.Value, options);
+                    dnsSettings = ComputeFleetVmssNetworkDnsSettings.DeserializeComputeFleetVmssNetworkDnsSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ipConfigurations"u8))
+                if (prop.NameEquals("ipConfigurations"u8))
                 {
                     List<ComputeFleetVmssIPConfiguration> array = new List<ComputeFleetVmssIPConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ComputeFleetVmssIPConfiguration.DeserializeComputeFleetVmssIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("enableIPForwarding"u8))
+                if (prop.NameEquals("enableIPForwarding"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableIPForwarding = property.Value.GetBoolean();
+                    isIPForwardingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("deleteOption"u8))
+                if (prop.NameEquals("deleteOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deleteOption = new ComputeFleetVmDeleteOption(property.Value.GetString());
+                    deleteOption = new ComputeFleetVmDeleteOption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("auxiliaryMode"u8))
+                if (prop.NameEquals("auxiliaryMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    auxiliaryMode = new ComputeFleetNetworkInterfaceAuxiliaryMode(property.Value.GetString());
+                    auxiliaryMode = new ComputeFleetNetworkInterfaceAuxiliaryMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("auxiliarySku"u8))
+                if (prop.NameEquals("auxiliarySku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    auxiliarySku = new ComputeFleetNetworkInterfaceAuxiliarySku(property.Value.GetString());
+                    auxiliarySku = new ComputeFleetNetworkInterfaceAuxiliarySku(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmssNetworkConfigurationProperties(
-                primary,
-                enableAcceleratedNetworking,
-                disableTcpStateTracking,
-                enableFpga,
+                isPrimary,
+                isAcceleratedNetworkingEnabled,
+                isTcpStateTrackingDisabled,
+                isFpgaEnabled,
                 networkSecurityGroup,
                 dnsSettings,
                 ipConfigurations,
-                enableIPForwarding,
+                isIPForwardingEnabled,
                 deleteOption,
                 auxiliaryMode,
                 auxiliarySku,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -279,15 +288,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmssNetworkConfigurationProperties IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmssNetworkConfigurationProperties IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmssNetworkConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetVmssNetworkConfigurationProperties(document.RootElement, options);
                     }
                 default:
@@ -295,6 +309,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetVmssNetworkConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -83,12 +83,12 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
+                    case "assistant":
+                        return AssistantMessageItem.DeserializeAssistantMessageItem(element, options);
                     case "system":
                         return SystemMessageItem.DeserializeSystemMessageItem(element, options);
                     case "user":
                         return UserMessageItem.DeserializeUserMessageItem(element, options);
-                    case "assistant":
-                        return AssistantMessageItem.DeserializeAssistantMessageItem(element, options);
                 }
             }
             return UnknownMessageItem.DeserializeUnknownMessageItem(element, options);

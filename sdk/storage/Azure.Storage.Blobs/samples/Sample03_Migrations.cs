@@ -872,9 +872,9 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // setup blob
@@ -920,9 +920,9 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // setup blob
@@ -959,9 +959,9 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // setup blob
