@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(ServerVersionCapabilityV2))]
     [ModelReaderWriterBuildable(typeof(SkuCapabilityV2))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownMySqlFlexibleServerBackupStoreDetails))]
+    [ModelReaderWriterBuildable(typeof(UnknownBackupStoreDetails))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidateBackupResponseProperties))]
     public partial class AzureResourceManagerMySqlContext : ModelReaderWriterContext
