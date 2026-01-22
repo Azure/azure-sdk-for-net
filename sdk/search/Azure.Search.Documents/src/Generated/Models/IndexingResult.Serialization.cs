@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("statusCode"u8);
-                writer.WriteNumberValue(StatusCode);
+                writer.WriteNumberValue(Status);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.Models
             string key = default;
             string errorMessage = default;
             bool succeeded = default;
-            int statusCode = default;
+            int status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("statusCode"u8))
                 {
-                    statusCode = prop.Value.GetInt32();
+                    status = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IndexingResult(key, errorMessage, succeeded, statusCode, additionalBinaryDataProperties);
+            return new IndexingResult(key, errorMessage, succeeded, status, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

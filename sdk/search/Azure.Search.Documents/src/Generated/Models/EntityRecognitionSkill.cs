@@ -7,25 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> This skill is deprecated. Use the V3.EntityRecognitionSkill instead. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.EntityRecognitionSkill", inputs, outputs)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
-
-            Categories = new ChangeTrackingList<EntityCategory>();
-        }
-
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
@@ -51,9 +38,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
         public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
-
-        /// <summary> Determines whether or not to include entities which are well known but don't conform to a pre-defined type. If this configuration is not set (default), set to null or set to false, entities which don't conform to one of the pre-defined types will not be surfaced. </summary>
-        public bool? IncludeTypelessEntities { get; set; }
 
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinimumPrecision { get; set; }

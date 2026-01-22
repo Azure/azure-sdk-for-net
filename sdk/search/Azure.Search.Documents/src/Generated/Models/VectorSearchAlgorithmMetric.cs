@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The similarity metric to use for vector comparisons. It is recommended to choose the same similarity metric as the embedding model was trained on. </summary>
     public readonly partial struct VectorSearchAlgorithmMetric : IEquatable<VectorSearchAlgorithmMetric>

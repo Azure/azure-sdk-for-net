@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines how the Suggest API should apply to a group of fields in the index. </summary>
     public partial class SearchSuggester : IJsonModel<SearchSuggester>

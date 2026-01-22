@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
-    public partial class DataSourceCredentials : IJsonModel<DataSourceCredentials>
+    internal partial class DataSourceCredentials : IJsonModel<DataSourceCredentials>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

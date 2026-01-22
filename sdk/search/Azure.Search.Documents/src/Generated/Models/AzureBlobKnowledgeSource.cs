@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Configuration for Azure Blob Storage knowledge source. </summary>
     public partial class AzureBlobKnowledgeSource : KnowledgeSource
@@ -30,11 +30,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
-        internal AzureBlobKnowledgeSource(string name, string description, KnowledgeSourceKind kind, string eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureBlobKnowledgeSourceParameters azureBlobParameters) : base(name, description, kind, eTag, encryptionKey, additionalBinaryDataProperties)
+        internal AzureBlobKnowledgeSource(string name, string description, KnowledgeSourceKind kind, SearchResourceEncryptionKey encryptionKey, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureBlobKnowledgeSourceParameters azureBlobParameters) : base(name, description, kind, encryptionKey, eTag, additionalBinaryDataProperties)
         {
             AzureBlobParameters = azureBlobParameters;
         }

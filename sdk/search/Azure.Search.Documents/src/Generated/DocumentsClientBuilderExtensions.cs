@@ -8,11 +8,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
-using Azure.Azure.Search.Documents.Documents;
 using Azure.Azure.Search.Documents.Documents.Indexes;
-using Azure.Azure.Search.Documents.Documents.KnowledgeBase;
 using Azure.Core.Extensions;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.KnowledgeBases;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -27,7 +27,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, <paramref name="name"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<global::Azure.Azure.Search.Documents.Documents.SearchClient, global::Azure.Azure.Search.Documents.Documents.SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, string name, AzureKeyCredential credential)
+        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, string name, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.Azure
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            return builder.RegisterClientFactory<global::Azure.Azure.Search.Documents.Documents.SearchClient, global::Azure.Azure.Search.Documents.Documents.SearchClientOptions>(options => new global::Azure.Azure.Search.Documents.Documents.SearchClient(endpoint, indexName, name, credential, options));
+            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>(options => new SearchClient(endpoint, indexName, name, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -45,14 +45,35 @@ namespace Microsoft.Extensions.Azure
         /// <param name="name"> The name of the index. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<global::Azure.Azure.Search.Documents.Documents.SearchClient, global::Azure.Azure.Search.Documents.Documents.SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, string name)
+        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, string name)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return builder.RegisterClientFactory<global::Azure.Azure.Search.Documents.Documents.SearchClient, global::Azure.Azure.Search.Documents.Documents.SearchClientOptions>((options, credential) => new global::Azure.Azure.Search.Documents.Documents.SearchClient(endpoint, indexName, name, credential, options));
+            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>((options, credential) => new SearchClient(endpoint, indexName, name, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"></param>
+        /// <param name="indexName"></param>
+        /// <param name="credential"></param>
+        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>(options => new SearchClient(endpoint, indexName, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"></param>
+        /// <param name="indexName"></param>
+        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>((options, credential) => new SearchClient(endpoint, indexName, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -60,36 +81,29 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<global::Azure.Azure.Search.Documents.Documents.SearchClient, global::Azure.Azure.Search.Documents.Documents.SearchClientOptions> AddSearchClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<global::Azure.Azure.Search.Documents.Documents.SearchClient, global::Azure.Azure.Search.Documents.Documents.SearchClientOptions>(configuration);
+            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>(configuration);
         }
 
         /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public static IAzureClientBuilder<SearchIndexClient, DocumentsClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
+        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            return builder.RegisterClientFactory<SearchIndexClient, DocumentsClientOptions>(options => new SearchIndexClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>(options => new SearchIndexClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<SearchIndexClient, DocumentsClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="endpoint"></param>
+        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<SearchIndexClient, DocumentsClientOptions>((options, credential) => new SearchIndexClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>((options, credential) => new SearchIndexClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -97,36 +111,29 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<SearchIndexClient, DocumentsClientOptions> AddSearchIndexClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<SearchIndexClient, DocumentsClientOptions>(configuration);
+            return builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>(configuration);
         }
 
         /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public static IAzureClientBuilder<SearchIndexerClient, DocumentsClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
+        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            return builder.RegisterClientFactory<SearchIndexerClient, DocumentsClientOptions>(options => new SearchIndexerClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(options => new SearchIndexerClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<SearchIndexerClient, DocumentsClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="endpoint"></param>
+        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<SearchIndexerClient, DocumentsClientOptions>((options, credential) => new SearchIndexerClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>((options, credential) => new SearchIndexerClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -134,10 +141,10 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<SearchIndexerClient, DocumentsClientOptions> AddSearchIndexerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<SearchIndexerClient, DocumentsClientOptions>(configuration);
+            return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(configuration);
         }
 
         /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -145,25 +152,46 @@ namespace Microsoft.Extensions.Azure
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, DocumentsClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, DocumentsClientOptions>(options => new KnowledgeBaseRetrievalClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, SearchClientOptions>(options => new KnowledgeBaseRetrievalClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, DocumentsClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, DocumentsClientOptions>((options, credential) => new KnowledgeBaseRetrievalClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, SearchClientOptions>((options, credential) => new KnowledgeBaseRetrievalClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"></param>
+        /// <param name="knowledgeBaseName"></param>
+        /// <param name="credential"></param>
+        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, SearchClientOptions>(options => new KnowledgeBaseRetrievalClient(endpoint, knowledgeBaseName, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"></param>
+        /// <param name="knowledgeBaseName"></param>
+        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint, string knowledgeBaseName)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, SearchClientOptions>((options, credential) => new KnowledgeBaseRetrievalClient(endpoint, knowledgeBaseName, credential, options));
         }
 
         /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -171,10 +199,10 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, DocumentsClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, DocumentsClientOptions>(configuration);
+            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, SearchClientOptions>(configuration);
         }
     }
 }

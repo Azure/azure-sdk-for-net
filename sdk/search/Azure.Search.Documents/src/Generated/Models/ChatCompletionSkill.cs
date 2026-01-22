@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that calls a language model via Azure AI Foundry's Chat Completions endpoint. </summary>
     public partial class ChatCompletionSkill : SearchIndexerSkill

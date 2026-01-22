@@ -10,14 +10,10 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for tokenizers.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClassicTokenizer"/>, <see cref="EdgeNGramTokenizer"/>, <see cref="KeywordTokenizer"/>, <see cref="KeywordTokenizerV2"/>, <see cref="MicrosoftLanguageTokenizer"/>, <see cref="MicrosoftLanguageStemmingTokenizer"/>, <see cref="NGramTokenizer"/>, <see cref="PathHierarchyTokenizerV2"/>, <see cref="PatternTokenizer"/>, <see cref="LuceneStandardTokenizer"/>, <see cref="LuceneStandardTokenizerV2"/>, and <see cref="UaxUrlEmailTokenizer"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownLexicalTokenizer))]
-    public abstract partial class LexicalTokenizer : IJsonModel<LexicalTokenizer>
+    /// <summary> Base type for tokenizers. </summary>
+    public partial class LexicalTokenizer : IJsonModel<LexicalTokenizer>
     {
         /// <summary> Initializes a new instance of <see cref="LexicalTokenizer"/> for deserialization. </summary>
         internal LexicalTokenizer()
@@ -78,47 +74,6 @@ namespace Azure.Search.Documents.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLexicalTokenizer(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LexicalTokenizer DeserializeLexicalTokenizer(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("@odata.type"u8, out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "#Microsoft.Azure.Search.ClassicTokenizer":
-                        return ClassicTokenizer.DeserializeClassicTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.EdgeNGramTokenizer":
-                        return EdgeNGramTokenizer.DeserializeEdgeNGramTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.KeywordTokenizer":
-                        return KeywordTokenizer.DeserializeKeywordTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.KeywordTokenizerV2":
-                        return KeywordTokenizerV2.DeserializeKeywordTokenizerV2(element, options);
-                    case "#Microsoft.Azure.Search.MicrosoftLanguageTokenizer":
-                        return MicrosoftLanguageTokenizer.DeserializeMicrosoftLanguageTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer":
-                        return MicrosoftLanguageStemmingTokenizer.DeserializeMicrosoftLanguageStemmingTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.NGramTokenizer":
-                        return NGramTokenizer.DeserializeNGramTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.PathHierarchyTokenizerV2":
-                        return PathHierarchyTokenizerV2.DeserializePathHierarchyTokenizerV2(element, options);
-                    case "#Microsoft.Azure.Search.PatternTokenizer":
-                        return PatternTokenizer.DeserializePatternTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.StandardTokenizer":
-                        return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(element, options);
-                    case "#Microsoft.Azure.Search.StandardTokenizerV2":
-                        return LuceneStandardTokenizerV2.DeserializeLuceneStandardTokenizerV2(element, options);
-                    case "#Microsoft.Azure.Search.UaxUrlEmailTokenizer":
-                        return UaxUrlEmailTokenizer.DeserializeUaxUrlEmailTokenizer(element, options);
-                }
-            }
-            return UnknownLexicalTokenizer.DeserializeUnknownLexicalTokenizer(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

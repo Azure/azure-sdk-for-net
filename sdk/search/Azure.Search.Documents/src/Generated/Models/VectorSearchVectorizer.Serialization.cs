@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the vectorization method to be used during query time.

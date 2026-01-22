@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Controls the cardinality for chunking the content. </summary>
     public partial class ContentUnderstandingSkillChunkingProperties

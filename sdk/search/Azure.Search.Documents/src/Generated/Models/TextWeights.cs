@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines weights on index fields for which matches should boost scoring in search queries. </summary>
     public partial class TextWeights
@@ -35,8 +35,5 @@ namespace Azure.Search.Documents.Models
             Weights = weights;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </summary>
-        public IDictionary<string, double> Weights { get; }
     }
 }

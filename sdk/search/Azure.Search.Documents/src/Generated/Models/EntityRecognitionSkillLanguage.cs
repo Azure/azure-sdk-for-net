@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Deprecated. The language codes supported for input text by EntityRecognitionSkill. </summary>
     public readonly partial struct EntityRecognitionSkillLanguage : IEquatable<EntityRecognitionSkillLanguage>

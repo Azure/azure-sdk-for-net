@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Allows you to take control over the process of converting text into indexable/searchable tokens. It's a user-defined configuration consisting of a single predefined tokenizer and one or more filters. The tokenizer is responsible for breaking text into tokens, and the filters for modifying tokens emitted by the tokenizer. </summary>
     public partial class CustomAnalyzer : LexicalAnalyzer, IJsonModel<CustomAnalyzer>
@@ -56,9 +56,14 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
-                foreach (CharFilterName item in CharFilters)
+                foreach (string item in CharFilters)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +99,7 @@ namespace Azure.Search.Documents.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             LexicalTokenizerName tokenizer = default;
             IList<TokenFilterName> tokenFilters = default;
-            IList<CharFilterName> charFilters = default;
+            IList<string> charFilters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -132,10 +137,17 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<CharFilterName> array = new List<CharFilterName>();
+                    List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new CharFilterName(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     charFilters = array;
                     continue;
@@ -151,7 +163,7 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties,
                 tokenizer,
                 tokenFilters ?? new ChangeTrackingList<TokenFilterName>(),
-                charFilters ?? new ChangeTrackingList<CharFilterName>());
+                charFilters ?? new ChangeTrackingList<string>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

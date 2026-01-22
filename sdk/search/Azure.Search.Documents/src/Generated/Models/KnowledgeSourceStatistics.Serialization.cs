@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Statistical information about knowledge source synchronization history. </summary>
     public partial class KnowledgeSourceStatistics : IJsonModel<KnowledgeSourceStatistics>

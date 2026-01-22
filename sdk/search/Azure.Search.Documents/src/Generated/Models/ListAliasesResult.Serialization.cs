@@ -12,10 +12,10 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Aliases request. If successful, it includes the associated index mappings for all aliases. </summary>
-    internal partial class ListAliasesResult : IJsonModel<ListAliasesResult>
+    public partial class ListAliasesResult : IJsonModel<ListAliasesResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

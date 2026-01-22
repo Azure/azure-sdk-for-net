@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Removes stop words from a token stream. This token filter is implemented using Apache Lucene. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html. </summary>
     public partial class StopwordsTokenFilter : TokenFilter
@@ -39,9 +39,6 @@ namespace Azure.Search.Documents.Models
             IgnoreCase = ignoreCase;
             RemoveTrailingStopWords = removeTrailingStopWords;
         }
-
-        /// <summary> The list of stopwords. This property and the stopwords list property cannot both be set. </summary>
-        public IList<string> Stopwords { get; }
 
         /// <summary> A predefined list of stopwords to use. This property and the stopwords property cannot both be set. Default is English. </summary>
         public StopwordsList? StopwordsList { get; set; }

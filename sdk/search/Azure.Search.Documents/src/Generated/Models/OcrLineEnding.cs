@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is "space". </summary>
     public readonly partial struct OcrLineEnding : IEquatable<OcrLineEnding>

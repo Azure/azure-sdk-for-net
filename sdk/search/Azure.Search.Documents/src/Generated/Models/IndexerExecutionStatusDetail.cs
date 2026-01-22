@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Details the status of an individual indexer execution. </summary>
     public readonly partial struct IndexerExecutionStatusDetail : IEquatable<IndexerExecutionStatusDetail>

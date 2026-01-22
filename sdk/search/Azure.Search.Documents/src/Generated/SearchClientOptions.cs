@@ -5,35 +5,14 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
-namespace Azure.Azure.Search.Documents.Documents
+namespace Azure.Search.Documents
 {
-    /// <summary> Client options for <see cref="SearchClient"/>. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class SearchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01_Preview;
-
-        /// <summary> Initializes a new instance of SearchClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
-        public SearchClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V2025_11_01_Preview => "2025-11-01-preview",
-                _ => throw new NotSupportedException()
-            };
-        }
-
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
-
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> The 2025-11-01-preview API version. </summary>
-            V2025_11_01_Preview = 1
-        }
     }
 }

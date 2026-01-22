@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The AML skill allows you to extend AI enrichment with a custom Azure Machine Learning (AML) model. Once an AML model is trained and deployed, an AML skill integrates it into AI enrichment. </summary>
     public partial class AzureMachineLearningSkill : SearchIndexerSkill, IJsonModel<AzureMachineLearningSkill>
@@ -50,20 +50,20 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(RawResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                writer.WriteStringValue(RawResourceId);
             }
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (Optional.IsDefined(Region))
+            if (Optional.IsDefined(RawLocation))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
+                writer.WriteStringValue(RawLocation);
             }
             if (Optional.IsDefined(DegreeOfParallelism))
             {
@@ -106,9 +106,9 @@ namespace Azure.Search.Documents.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri scoringUri = default;
             string authenticationKey = default;
-            string resourceId = default;
+            string rawResourceId = default;
             TimeSpan? timeout = default;
-            string region = default;
+            string rawLocation = default;
             int? degreeOfParallelism = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,10 +176,10 @@ namespace Azure.Search.Documents.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceId = null;
+                        rawResourceId = null;
                         continue;
                     }
-                    resourceId = prop.Value.GetString();
+                    rawResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("timeout"u8))
@@ -196,10 +196,10 @@ namespace Azure.Search.Documents.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        region = null;
+                        rawLocation = null;
                         continue;
                     }
-                    region = prop.Value.GetString();
+                    rawLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("degreeOfParallelism"u8))
@@ -227,9 +227,9 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties,
                 scoringUri,
                 authenticationKey,
-                resourceId,
+                rawResourceId,
                 timeout,
-                region,
+                rawLocation,
                 degreeOfParallelism);
         }
 

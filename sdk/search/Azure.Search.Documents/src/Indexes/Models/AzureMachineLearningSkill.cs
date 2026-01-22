@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using TypeSpec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,18 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class AzureMachineLearningSkill
     {
-        /// <summary>The key for the Azure Machine Learning service. This is required for key-based authentication.</summary>
-        [CodeGenMember("AuthenticationKey")]
-        public string AuthenticationKey { get; }
-
-        /// <summary>The scoring URI of the Azure Machine Learning service to which the JSON payload will be sent.
-        /// This is required when using no authentication or key-based authentication.
-        /// <para>Only the https URI scheme is allowed.</para>
-        /// </summary>
-        [CodeGenMember("ScoringUri")]
-        public Uri ScoringUri { get; }
-
-        [CodeGenMember("ResourceId")]
+        [TypeSpec.CodeGenMember("ResourceId")]
         internal string RawResourceId
         {
             get => ResourceId?.ToString();
@@ -39,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public ResourceIdentifier ResourceId { get; private set; }
 
-        [CodeGenMember("Region")]
+        [TypeSpec.CodeGenMember("Region")]
         internal string RawLocation
         {
             get => Location?.ToString();
@@ -95,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
-            ODataType = "#Microsoft.Skills.Custom.AmlSkill";
+            OdataType = "#Microsoft.Skills.Custom.AmlSkill";
         }
     }
 }

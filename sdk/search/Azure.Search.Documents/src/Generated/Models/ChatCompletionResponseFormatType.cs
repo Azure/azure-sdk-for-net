@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies how the LLM should format the response. </summary>
     public readonly partial struct ChatCompletionResponseFormatType : IEquatable<ChatCompletionResponseFormatType>

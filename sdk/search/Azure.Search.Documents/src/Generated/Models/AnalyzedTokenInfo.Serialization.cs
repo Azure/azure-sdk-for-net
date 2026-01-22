@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Information about a token returned by an analyzer. </summary>
     public partial class AnalyzedTokenInfo : IJsonModel<AnalyzedTokenInfo>

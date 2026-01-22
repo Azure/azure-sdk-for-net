@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores based on the value of a date-time field. </summary>
     public partial class FreshnessScoringFunction : ScoringFunction, IJsonModel<FreshnessScoringFunction>

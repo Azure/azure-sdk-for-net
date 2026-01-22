@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Contains the parameters specific to exhaustive KNN algorithm. </summary>
     public partial class ExhaustiveKnnParameters : IJsonModel<ExhaustiveKnnParameters>

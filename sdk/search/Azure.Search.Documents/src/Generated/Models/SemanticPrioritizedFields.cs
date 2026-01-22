@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Describes the title, content, and keywords fields to be used for semantic ranking, captions, highlights, and answers. </summary>
     public partial class SemanticPrioritizedFields
@@ -39,11 +39,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Defines the title field to be used for semantic ranking, captions, highlights, and answers. If you don't have a title field in your index, leave this blank. </summary>
         public SemanticField TitleField { get; set; }
-
-        /// <summary> Defines the content fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain text in natural language form. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </summary>
-        public IList<SemanticField> ContentFields { get; }
-
-        /// <summary> Defines the keyword fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain a list of keywords. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </summary>
-        public IList<SemanticField> KeywordsFields { get; }
     }
 }

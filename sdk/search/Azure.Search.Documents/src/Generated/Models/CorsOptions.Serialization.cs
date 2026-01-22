@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines options to control Cross-Origin Resource Sharing (CORS) for an index. </summary>
     public partial class CorsOptions : IJsonModel<CorsOptions>

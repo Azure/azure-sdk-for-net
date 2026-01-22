@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Credentials of a registered application created for your search service, used for authenticated access to the encryption keys stored in Azure Key Vault. </summary>
-    public partial class AzureActiveDirectoryApplicationCredentials : IJsonModel<AzureActiveDirectoryApplicationCredentials>
+    internal partial class AzureActiveDirectoryApplicationCredentials : IJsonModel<AzureActiveDirectoryApplicationCredentials>
     {
         /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryApplicationCredentials"/> for deserialization. </summary>
         internal AzureActiveDirectoryApplicationCredentials()

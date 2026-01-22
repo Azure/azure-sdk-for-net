@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code. </summary>
     public partial class WebApiSkill : SearchIndexerSkill
@@ -26,6 +26,7 @@ namespace Azure.Search.Documents.Models
             Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
+            HttpHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApiSkill"/>. </summary>
@@ -44,7 +45,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="degreeOfParallelism"> If set, the number of parallel calls that can be made to the Web API. </param>
         /// <param name="authResourceId"> Applies to custom skills that connect to external code in an Azure function or some other application that provides the transformations. This value should be the application ID created for the function or app when it was registered with Azure Active Directory. When specified, the custom skill connects to the function or app using a managed ID (either system or user-assigned) of the search service and the access token of the function or app, using this value as the resource id for creating the scope of the access token. </param>
         /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
-        internal WebApiSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, string authResourceId, SearchIndexerDataIdentity authIdentity) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal WebApiSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, string authResourceId, SearchIndexerDataIdentity authIdentity) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Uri = uri;
             HttpHeaders = httpHeaders;
@@ -55,12 +56,6 @@ namespace Azure.Search.Documents.Models
             AuthResourceId = authResourceId;
             AuthIdentity = authIdentity;
         }
-
-        /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
-
-        /// <summary> The headers required to make the http request. </summary>
-        public WebApiHttpHeaders HttpHeaders { get; set; }
 
         /// <summary> The method for the http request. </summary>
         public string HttpMethod { get; set; }

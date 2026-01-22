@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Azure.Search.Documents.Documents.Indexes
@@ -28,65 +29,6 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
         private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> Initializes a new instance of SearchIndexerClient for mocking. </summary>
-        protected SearchIndexerClient()
-        {
-        }
-
-        /// <summary> Initializes a new instance of SearchIndexerClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SearchIndexerClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentsClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of SearchIndexerClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SearchIndexerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentsClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of SearchIndexerClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SearchIndexerClient(Uri endpoint, AzureKeyCredential credential, DocumentsClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new DocumentsClientOptions();
-
-            _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of SearchIndexerClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SearchIndexerClient(Uri endpoint, TokenCredential credential, DocumentsClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new DocumentsClientOptions();
-
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -1959,7 +1901,7 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="skillNames"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ResetSkills(string name, SkillNames skillNames, CancellationToken cancellationToken = default)
+        public virtual Response ResetSkills(string name, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(skillNames, nameof(skillNames));
@@ -1974,7 +1916,7 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="skillNames"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResetSkillsAsync(string name, SkillNames skillNames, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetSkillsAsync(string name, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(skillNames, nameof(skillNames));

@@ -25,14 +25,14 @@ namespace Azure.Search.Documents.Models
         /// <param name="key"> The key of a document that was in the indexing request. </param>
         /// <param name="errorMessage"> The error message explaining why the indexing operation failed for the document identified by the key; null if indexing succeeded. </param>
         /// <param name="succeeded"> A value indicating whether the indexing operation succeeded for the document identified by the key. </param>
-        /// <param name="statusCode"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
+        /// <param name="status"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexingResult(string key, string errorMessage, bool succeeded, int statusCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexingResult(string key, string errorMessage, bool succeeded, int status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             ErrorMessage = errorMessage;
             Succeeded = succeeded;
-            StatusCode = statusCode;
+            Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,8 +44,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A value indicating whether the indexing operation succeeded for the document identified by the key. </summary>
         public bool Succeeded { get; }
-
-        /// <summary> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </summary>
-        public int StatusCode { get; }
     }
 }

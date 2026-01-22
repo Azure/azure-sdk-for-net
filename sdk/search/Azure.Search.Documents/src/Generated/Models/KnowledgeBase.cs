@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a knowledge base definition. </summary>
     public partial class KnowledgeBase
@@ -38,24 +39,24 @@ namespace Azure.Search.Documents.Models
         /// <param name="models"> Contains configuration options on how to connect to AI models. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <param name="outputMode"> The output mode for the knowledge base. </param>
-        /// <param name="eTag"> The ETag of the knowledge base. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
         /// <param name="description"> The description of the knowledge base. </param>
         /// <param name="retrievalInstructions"> Instructions considered by the knowledge base when developing query plan. </param>
         /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
+        /// <param name="etag"> The ETag of the knowledge base. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, string eTag, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             KnowledgeSources = knowledgeSources;
             Models = models;
             RetrievalReasoningEffort = retrievalReasoningEffort;
             OutputMode = outputMode;
-            ETag = eTag;
             EncryptionKey = encryptionKey;
             Description = description;
             RetrievalInstructions = retrievalInstructions;
             AnswerInstructions = answerInstructions;
+            _etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -73,9 +74,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The output mode for the knowledge base. </summary>
         public KnowledgeRetrievalOutputMode? OutputMode { get; set; }
-
-        /// <summary> The ETag of the knowledge base. </summary>
-        public string ETag { get; set; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }

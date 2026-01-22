@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that uses text analytics for key phrase extraction. </summary>
     public partial class KeyPhraseExtractionSkill : SearchIndexerSkill
@@ -48,8 +48,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A number indicating how many key phrases to return. If absent, all identified key phrases will be returned. </summary>
         public int? MaxKeyPhraseCount { get; set; }
-
-        /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
     }
 }

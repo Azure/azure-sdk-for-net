@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that extracts content and layout information, via Azure AI Services, from files within the enrichment pipeline. </summary>
     public partial class DocumentIntelligenceLayoutSkill : SearchIndexerSkill, IJsonModel<DocumentIntelligenceLayoutSkill>

@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A string indicating which domain-specific details to return. </summary>
     public readonly partial struct ImageDetail : IEquatable<ImageDetail>

@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenModel("DocumentKeysOrIds")]
+    /// <summary>
+    /// Renames generated DocumentKeysOrIds to ResetDocumentOptions and customizes property name.
+    /// </summary>
+    [CodeGenType("ResetDocumentOptions")]
     public partial class ResetDocumentOptions
     {
         /// <summary> DataSource document identifiers to be reset. </summary>

@@ -21,6 +21,9 @@
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="SearchClient.old.cs" />
+  </ItemGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
@@ -28,6 +31,9 @@
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SearchClient.old.cs" />
   </ItemGroup>
 
   <ItemGroup>

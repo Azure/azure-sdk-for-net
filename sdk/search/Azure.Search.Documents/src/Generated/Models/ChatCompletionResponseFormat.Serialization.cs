@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Determines how the language model's response should be serialized. Defaults to 'text'. </summary>
     public partial class ChatCompletionResponseFormat : IJsonModel<ChatCompletionResponseFormat>

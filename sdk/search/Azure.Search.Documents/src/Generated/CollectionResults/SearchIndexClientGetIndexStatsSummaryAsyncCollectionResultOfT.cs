@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Azure.Search.Documents.Documents.Indexes
+namespace Azure.Search.Documents.Indexes
 {
     internal partial class SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT : AsyncPageable<IndexStatisticsSummary>
     {

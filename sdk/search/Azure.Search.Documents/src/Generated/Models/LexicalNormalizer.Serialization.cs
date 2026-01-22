@@ -9,15 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for normalizers.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomNormalizer"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownLexicalNormalizer))]
-    public abstract partial class LexicalNormalizer : IJsonModel<LexicalNormalizer>
+    /// <summary> Base type for normalizers. </summary>
+    public partial class LexicalNormalizer : IJsonModel<LexicalNormalizer>
     {
         /// <summary> Initializes a new instance of <see cref="LexicalNormalizer"/> for deserialization. </summary>
         internal LexicalNormalizer()

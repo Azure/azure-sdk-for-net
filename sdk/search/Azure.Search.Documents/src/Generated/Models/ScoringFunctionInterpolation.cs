@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the function used to interpolate score boosting across a range of documents. </summary>
     public readonly partial struct ScoringFunctionInterpolation : IEquatable<ScoringFunctionInterpolation>

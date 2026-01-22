@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenModel("AutocompleteResult")]
+    /// <summary>
+    /// Renames generated AutocompleteResult to AutocompleteResults for backward compatibility.
+    /// </summary>
+    [CodeGenType("AutocompleteResult")]
     public partial class AutocompleteResults
     {
     }

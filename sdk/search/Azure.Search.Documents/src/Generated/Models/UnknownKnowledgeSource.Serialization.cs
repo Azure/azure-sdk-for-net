@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -69,8 +70,8 @@ namespace Azure.Search.Documents.Models
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
-            string eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
+            string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -89,11 +90,6 @@ namespace Azure.Search.Documents.Models
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("@odata.etag"u8))
-                {
-                    eTag = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -102,6 +98,11 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,8 +114,8 @@ namespace Azure.Search.Documents.Models
                 name,
                 description,
                 kind,
-                eTag,
                 encryptionKey,
+                eTag,
                 additionalBinaryDataProperties);
         }
 

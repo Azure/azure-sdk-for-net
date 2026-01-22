@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class KeywordTokenizerV2 : LexicalTokenizer, IJsonModel<KeywordTokenizerV2>
+    internal partial class KeywordTokenizerV2 : LexicalTokenizer, IJsonModel<KeywordTokenizerV2>
     {
         /// <summary> Initializes a new instance of <see cref="KeywordTokenizerV2"/> for deserialization. </summary>
         internal KeywordTokenizerV2()

@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </summary>
-    internal readonly partial struct ScoringStatistics : IEquatable<ScoringStatistics>
+    public readonly partial struct ScoringStatistics : IEquatable<ScoringStatistics>
     {
         private readonly string _value;
         /// <summary> The scoring statistics will be calculated locally for lower latency. </summary>

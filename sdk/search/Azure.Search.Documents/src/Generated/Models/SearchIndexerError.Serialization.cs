@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents an item- or document-level indexing error. </summary>
     public partial class SearchIndexerError : IJsonModel<SearchIndexerError>

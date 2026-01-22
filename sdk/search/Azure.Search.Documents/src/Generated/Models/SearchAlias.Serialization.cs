@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents an index alias, which describes a mapping from the alias name to an index. The alias name can be used in place of the index name for supported operations. </summary>
     public partial class SearchAlias : IJsonModel<SearchAlias>
@@ -55,10 +55,10 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Models
             }
             string name = default;
             IList<string> indexes = default;
-            string eTag = default;
+            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchAlias(name, indexes, eTag, additionalBinaryDataProperties);
+            return new SearchAlias(name, indexes, etag, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

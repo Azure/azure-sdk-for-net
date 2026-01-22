@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies runtime parameters for a web knowledge source. </summary>
     public partial class WebKnowledgeSourceParams : KnowledgeSourceParams

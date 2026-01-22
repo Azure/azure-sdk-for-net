@@ -47,20 +47,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("k"u8);
                 writer.WriteNumberValue(KNearestNeighbors.Value);
             }
-            if (Optional.IsCollectionDefined(Fields))
+            if (Optional.IsDefined(FieldsRaw))
             {
                 writer.WritePropertyName("fields"u8);
-                writer.WriteStartArray();
-                foreach (string item in Fields)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(FieldsRaw);
             }
             if (Optional.IsDefined(Exhaustive))
             {

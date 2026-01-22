@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The type of the keysOrIds. </summary>
     public partial class DocumentKeysOrIds : IJsonModel<DocumentKeysOrIds>

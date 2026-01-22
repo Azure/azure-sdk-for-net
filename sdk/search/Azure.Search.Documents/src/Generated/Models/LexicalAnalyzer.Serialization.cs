@@ -9,15 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for analyzers.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/>, and <see cref="StopAnalyzer"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownLexicalAnalyzer))]
-    public abstract partial class LexicalAnalyzer : IJsonModel<LexicalAnalyzer>
+    /// <summary> Base type for analyzers. </summary>
+    public partial class LexicalAnalyzer : IJsonModel<LexicalAnalyzer>
     {
         /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/> for deserialization. </summary>
         internal LexicalAnalyzer()

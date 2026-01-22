@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Divides text using language-specific rules and reduces words to their base forms. </summary>
     public partial class MicrosoftLanguageStemmingTokenizer : LexicalTokenizer, IJsonModel<MicrosoftLanguageStemmingTokenizer>

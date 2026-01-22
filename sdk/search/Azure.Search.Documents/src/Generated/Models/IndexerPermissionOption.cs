@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Options with various types of permission data to index. </summary>
     public readonly partial struct IndexerPermissionOption : IEquatable<IndexerPermissionOption>

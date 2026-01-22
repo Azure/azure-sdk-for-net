@@ -7,23 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Credentials of a registered application created for your search service, used for authenticated access to the encryption keys stored in Azure Key Vault. </summary>
-    public partial class AzureActiveDirectoryApplicationCredentials
+    internal partial class AzureActiveDirectoryApplicationCredentials
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryApplicationCredentials"/>. </summary>
         /// <param name="applicationId"> An AAD Application ID that was granted the required access permissions to the Azure Key Vault that is to be used when encrypting your data at rest. The Application ID should not be confused with the Object ID for your AAD Application. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public AzureActiveDirectoryApplicationCredentials(string applicationId)
         {
-            Argument.AssertNotNull(applicationId, nameof(applicationId));
-
             ApplicationId = applicationId;
         }
 

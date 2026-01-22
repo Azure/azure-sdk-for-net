@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The current synchronization status of the knowledge source. </summary>
     public readonly partial struct KnowledgeSourceSynchronizationStatus : IEquatable<KnowledgeSourceSynchronizationStatus>

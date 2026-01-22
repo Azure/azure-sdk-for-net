@@ -9,15 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for skills.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConditionalSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="OcrSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="ShaperSkill"/>, <see cref="MergeSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SentimentSkillV3"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkillV3"/>, <see cref="PIIDetectionSkill"/>, <see cref="SplitSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureMachineLearningSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="VisionVectorizeSkill"/>, <see cref="ContentUnderstandingSkill"/>, and <see cref="ChatCompletionSkill"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownSearchIndexerSkill))]
-    public abstract partial class SearchIndexerSkill : IJsonModel<SearchIndexerSkill>
+    /// <summary> Base type for skills. </summary>
+    public partial class SearchIndexerSkill : IJsonModel<SearchIndexerSkill>
     {
         /// <summary> Initializes a new instance of <see cref="SearchIndexerSkill"/> for deserialization. </summary>
         internal SearchIndexerSkill()
@@ -144,7 +141,7 @@ namespace Azure.Search.Documents.Models
                     case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill":
                         return EntityRecognitionSkillV3.DeserializeEntityRecognitionSkillV3(element, options);
                     case "#Microsoft.Skills.Text.PIIDetectionSkill":
-                        return PIIDetectionSkill.DeserializePIIDetectionSkill(element, options);
+                        return PiiDetectionSkill.DeserializePiiDetectionSkill(element, options);
                     case "#Microsoft.Skills.Text.SplitSkill":
                         return SplitSkill.DeserializeSplitSkill(element, options);
                     case "#Microsoft.Skills.Text.CustomEntityLookupSkill":

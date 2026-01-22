@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
     public partial class SearchIndex : IJsonModel<SearchIndex>
@@ -48,13 +48,6 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("fields"u8);
-            writer.WriteStartArray();
-            foreach (SearchField item in Fields)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ScoringProfiles))
             {
                 writer.WritePropertyName("scoringProfiles"u8);
@@ -165,10 +158,17 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("purviewEnabled"u8);
                 writer.WriteBooleanValue(PurviewEnabled.Value);
             }
-            if (Optional.IsDefined(ETag))
+            writer.WritePropertyName("fields"u8);
+            writer.WriteStartArray();
+            foreach (SearchField item in _fields)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -214,7 +214,6 @@ namespace Azure.Search.Documents.Models
             }
             string name = default;
             string description = default;
-            IList<SearchField> fields = default;
             IList<ScoringProfile> scoringProfiles = default;
             string defaultScoringProfile = default;
             CorsOptions corsOptions = default;
@@ -230,7 +229,8 @@ namespace Azure.Search.Documents.Models
             VectorSearch vectorSearch = default;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
             bool? purviewEnabled = default;
-            string eTag = default;
+            IList<SearchField> fields = default;
+            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -242,16 +242,6 @@ namespace Azure.Search.Documents.Models
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("fields"u8))
-                {
-                    List<SearchField> array = new List<SearchField>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(SearchField.DeserializeSearchField(item, options));
-                    }
-                    fields = array;
                     continue;
                 }
                 if (prop.NameEquals("scoringProfiles"u8))
@@ -426,9 +416,19 @@ namespace Azure.Search.Documents.Models
                     purviewEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("fields"u8))
+                {
+                    List<SearchField> array = new List<SearchField>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SearchField.DeserializeSearchField(item, options));
+                    }
+                    fields = array;
+                    continue;
+                }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -439,7 +439,6 @@ namespace Azure.Search.Documents.Models
             return new SearchIndex(
                 name,
                 description,
-                fields,
                 scoringProfiles ?? new ChangeTrackingList<ScoringProfile>(),
                 defaultScoringProfile,
                 corsOptions,
@@ -455,7 +454,8 @@ namespace Azure.Search.Documents.Models
                 vectorSearch,
                 permissionFilterOption,
                 purviewEnabled,
-                eTag,
+                fields,
+                etag,
                 additionalBinaryDataProperties);
         }
 

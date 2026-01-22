@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the identity for a datasource to use. </summary>
     public partial class SearchIndexerDataUserAssignedIdentity : SearchIndexerDataIdentity

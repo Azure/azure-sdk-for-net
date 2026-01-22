@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the mode the indexer is executing in. </summary>
     public readonly partial struct IndexingMode : IEquatable<IndexingMode>
@@ -31,12 +31,6 @@ namespace Azure.Search.Documents.Models
 
             _value = value;
         }
-
-        /// <summary> The indexer is indexing all documents in the datasource. </summary>
-        public static IndexingMode IndexingAllDocs { get; } = new IndexingMode(IndexingAllDocsValue);
-
-        /// <summary> The indexer is indexing selective, reset documents in the datasource. The documents being indexed are defined on indexer status. </summary>
-        public static IndexingMode IndexingResetDocs { get; } = new IndexingMode(IndexingResetDocsValue);
 
         /// <summary> The indexer is resyncing and indexing selective option(s) from the datasource. </summary>
         public static IndexingMode IndexingResync { get; } = new IndexingMode(IndexingResyncValue);

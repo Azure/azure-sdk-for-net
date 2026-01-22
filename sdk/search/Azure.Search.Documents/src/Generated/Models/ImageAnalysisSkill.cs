@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that analyzes image files. It extracts a rich set of visual features based on the image content. </summary>
     public partial class ImageAnalysisSkill : SearchIndexerSkill
@@ -47,11 +47,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
         public ImageAnalysisSkillLanguage? DefaultLanguageCode { get; set; }
-
-        /// <summary> A list of visual features. </summary>
-        public IList<VisualFeature> VisualFeatures { get; }
-
-        /// <summary> A string indicating which domain-specific details to return. </summary>
-        public IList<ImageDetail> Details { get; }
     }
 }

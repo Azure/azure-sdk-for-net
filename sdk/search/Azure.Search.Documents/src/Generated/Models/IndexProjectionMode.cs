@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines behavior of the index projections in relation to the rest of the indexer. </summary>
     public readonly partial struct IndexProjectionMode : IEquatable<IndexProjectionMode>

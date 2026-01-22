@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The vectorization method to be used during query time. </summary>
     public readonly partial struct VectorSearchVectorizerKind : IEquatable<VectorSearchVectorizerKind>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Forms bigrams of CJK terms that are generated from the standard tokenizer. This token filter is implemented using Apache Lucene. </summary>
     public partial class CjkBigramTokenFilter : TokenFilter, IJsonModel<CjkBigramTokenFilter>
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStartArray();
                 foreach (CjkBigramTokenFilterScripts item in IgnoreScripts)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Models
                     List<CjkBigramTokenFilterScripts> array = new List<CjkBigramTokenFilterScripts>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new CjkBigramTokenFilterScripts(item.GetString()));
+                        array.Add(item.GetString().ToCjkBigramTokenFilterScripts());
                     }
                     ignoreScripts = array;
                     continue;

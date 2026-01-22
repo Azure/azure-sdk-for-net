@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The type of the cache. </summary>
     public partial class SearchIndexerCache
@@ -38,9 +38,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A guid for the SearchIndexerCache. </summary>
         public string Id { get; set; }
-
-        /// <summary> The connection string to the storage account where the cache data will be persisted. </summary>
-        public string StorageConnectionString { get; set; }
 
         /// <summary> Specifies whether incremental reprocessing is enabled. </summary>
         public bool? EnableReprocessing { get; set; }

@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a synonym map definition. </summary>
     public partial class SynonymMap : IJsonModel<SynonymMap>
@@ -46,26 +46,16 @@ namespace Azure.Search.Documents.Models
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
             writer.WritePropertyName("synonyms"u8);
-            writer.WriteStartArray();
-            foreach (string item in Synonyms)
-            {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
+            writer.WriteStringValue(Synonyms);
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteObjectValue(EncryptionKey, options);
             }
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -111,9 +101,9 @@ namespace Azure.Search.Documents.Models
             }
             string name = default;
             string format = default;
-            IList<string> synonyms = default;
+            string synonyms = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            string eTag = default;
+            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -129,19 +119,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("synonyms"u8))
                 {
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    synonyms = array;
+                    synonyms = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("encryptionKey"u8))
@@ -156,7 +134,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +147,7 @@ namespace Azure.Search.Documents.Models
                 format,
                 synonyms,
                 encryptionKey,
-                eTag,
+                etag,
                 additionalBinaryDataProperties);
         }
 

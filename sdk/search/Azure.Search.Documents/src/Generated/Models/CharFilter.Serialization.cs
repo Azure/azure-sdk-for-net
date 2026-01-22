@@ -9,15 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for character filters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MappingCharFilter"/> and <see cref="PatternReplaceCharFilter"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownCharFilter))]
-    public abstract partial class CharFilter : IJsonModel<CharFilter>
+    /// <summary> Base type for character filters. </summary>
+    public partial class CharFilter : IJsonModel<CharFilter>
     {
         /// <summary> Initializes a new instance of <see cref="CharFilter"/> for deserialization. </summary>
         internal CharFilter()

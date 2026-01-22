@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Contains the parameters specific to Scalar Quantization. </summary>
     public partial class ScalarQuantizationParameters

@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all character filters supported by the search engine. </summary>
     public readonly partial struct CharFilterName : IEquatable<CharFilterName>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Common language model parameters for Chat Completions. If omitted, default values are used. </summary>
     public partial class ChatCompletionCommonModelParameters : IJsonModel<ChatCompletionCommonModelParameters>

@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies some text and analysis components used to break that text into tokens. </summary>
     public partial class AnalyzeTextOptions : IJsonModel<AnalyzeTextOptions>
@@ -71,9 +71,14 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
-                foreach (CharFilterName item in CharFilters)
+                foreach (string item in CharFilters)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +129,7 @@ namespace Azure.Search.Documents.Models
             LexicalTokenizerName? tokenizerName = default;
             LexicalNormalizerName? normalizerName = default;
             IList<TokenFilterName> tokenFilters = default;
-            IList<CharFilterName> charFilters = default;
+            IList<string> charFilters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,10 +185,17 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<CharFilterName> array = new List<CharFilterName>();
+                    List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new CharFilterName(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     charFilters = array;
                     continue;
@@ -199,7 +211,7 @@ namespace Azure.Search.Documents.Models
                 tokenizerName,
                 normalizerName,
                 tokenFilters ?? new ChangeTrackingList<TokenFilterName>(),
-                charFilters ?? new ChangeTrackingList<CharFilterName>(),
+                charFilters ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
 

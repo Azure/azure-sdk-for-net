@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A character filter that applies mappings defined with the mappings option. Matching is greedy (longest pattern matching at a given point wins). Replacement is allowed to be the empty string. This character filter is implemented using Apache Lucene. </summary>
     public partial class MappingCharFilter : CharFilter
@@ -36,8 +36,5 @@ namespace Azure.Search.Documents.Models
         {
             Mappings = mappings;
         }
-
-        /// <summary> A list of mappings of the following format: "a=&gt;b" (all occurrences of the character "a" will be replaced with character "b"). </summary>
-        public IList<string> Mappings { get; }
     }
 }

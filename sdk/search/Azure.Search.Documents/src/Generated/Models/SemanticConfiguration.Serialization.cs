@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a specific configuration to be used in the context of semantic capabilities. </summary>
     public partial class SemanticConfiguration : IJsonModel<SemanticConfiguration>

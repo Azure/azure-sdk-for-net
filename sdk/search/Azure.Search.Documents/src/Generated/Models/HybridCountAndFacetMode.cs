@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Determines whether the count and facets should includes all documents that matched the search query, or only the documents that are retrieved within the 'maxTextRecallSize' window. The default value is 'countAllResults'. </summary>
-    internal readonly partial struct HybridCountAndFacetMode : IEquatable<HybridCountAndFacetMode>
+    public readonly partial struct HybridCountAndFacetMode : IEquatable<HybridCountAndFacetMode>
     {
         private readonly string _value;
         /// <summary> Only include documents that were matched within the 'maxTextRecallSize' retrieval window when computing 'count' and 'facets'. </summary>

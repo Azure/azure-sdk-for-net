@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Information about the sensitivity label applied to a SharePoint document. </summary>
     public partial class SharePointSensitivityLabelInfo

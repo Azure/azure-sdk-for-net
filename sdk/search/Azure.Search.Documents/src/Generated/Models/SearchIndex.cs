@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
     public partial class SearchIndex
@@ -20,28 +18,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
         /// <param name="name"> The name of the index. </param>
-        /// <param name="fields"> The fields of the index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="fields"/> is null. </exception>
-        public SearchIndex(string name, IEnumerable<SearchField> fields)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(fields, nameof(fields));
-
-            Name = name;
-            Fields = fields.ToList();
-            ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
-            Suggesters = new ChangeTrackingList<SearchSuggester>();
-            Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
-            Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
-            TokenFilters = new ChangeTrackingList<TokenFilter>();
-            CharFilters = new ChangeTrackingList<CharFilter>();
-            Normalizers = new ChangeTrackingList<LexicalNormalizer>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
-        /// <param name="name"> The name of the index. </param>
         /// <param name="description"> The description of the index. </param>
-        /// <param name="fields"> The fields of the index. </param>
         /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
         /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
         /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the index. </param>
@@ -57,13 +34,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
         /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
-        /// <param name="eTag"> The ETag of the index. </param>
+        /// <param name="fields"> The fields of the index. </param>
+        /// <param name="etag"> The ETag of the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndex(string name, string description, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            Fields = fields;
             ScoringProfiles = scoringProfiles;
             DefaultScoringProfile = defaultScoringProfile;
             CorsOptions = corsOptions;
@@ -79,7 +56,8 @@ namespace Azure.Search.Documents.Models
             VectorSearch = vectorSearch;
             PermissionFilterOption = permissionFilterOption;
             PurviewEnabled = purviewEnabled;
-            ETag = eTag;
+            _fields = fields;
+            _etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -88,9 +66,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The description of the index. </summary>
         public string Description { get; set; }
-
-        /// <summary> The fields of the index. </summary>
-        public IList<SearchField> Fields { get; }
 
         /// <summary> The scoring profiles for the index. </summary>
         public IList<ScoringProfile> ScoringProfiles { get; }
@@ -136,8 +111,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A value indicating whether Purview is enabled for the index. </summary>
         public bool? PurviewEnabled { get; set; }
-
-        /// <summary> The ETag of the index. </summary>
-        public string ETag { get; set; }
     }
 }

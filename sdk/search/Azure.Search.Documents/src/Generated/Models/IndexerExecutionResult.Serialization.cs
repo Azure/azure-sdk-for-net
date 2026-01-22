@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the result of an individual indexer execution. </summary>
     public partial class IndexerExecutionResult : IJsonModel<IndexerExecutionResult>

@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents classes of characters on which a token filter can operate. </summary>
     public readonly partial struct TokenCharacterKind : IEquatable<TokenCharacterKind>

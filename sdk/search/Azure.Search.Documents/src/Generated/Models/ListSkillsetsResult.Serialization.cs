@@ -12,9 +12,8 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a list skillset request. If successful, it includes the full definitions of all skillsets. </summary>
     internal partial class ListSkillsetsResult : IJsonModel<ListSkillsetsResult>
     {
         /// <param name="writer"> The JSON writer. </param>

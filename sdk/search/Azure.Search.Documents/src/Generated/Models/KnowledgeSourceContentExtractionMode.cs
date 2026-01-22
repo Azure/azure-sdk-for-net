@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Optional content extraction mode. Default is 'minimal'. </summary>
     public readonly partial struct KnowledgeSourceContentExtractionMode : IEquatable<KnowledgeSourceContentExtractionMode>

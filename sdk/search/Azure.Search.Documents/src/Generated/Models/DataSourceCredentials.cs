@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
-    public partial class DataSourceCredentials
+    internal partial class DataSourceCredentials
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

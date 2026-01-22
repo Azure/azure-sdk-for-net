@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Azure.Search.Documents.Documents.Indexes
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary></summary>
     public partial class SearchIndexClient
@@ -131,7 +131,7 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             uri.AppendQuery("api-version", _apiVersion, true);
             if (allowIndexDowntime != null)
             {
-                uri.AppendQuery("allowIndexDowntime", global::Azure.Search.Documents.TypeFormatters.ConvertToString(allowIndexDowntime), true);
+                uri.AppendQuery("allowIndexDowntime", TypeFormatters.ConvertToString(allowIndexDowntime), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;

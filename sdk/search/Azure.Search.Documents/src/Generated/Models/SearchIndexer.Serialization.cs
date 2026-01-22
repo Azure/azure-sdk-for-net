@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents an indexer. </summary>
     public partial class SearchIndexer : IJsonModel<SearchIndexer>
@@ -92,11 +92,6 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("disabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
-            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
@@ -106,6 +101,11 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("cache"u8);
                 writer.WriteObjectValue(Cache, options);
+            }
+            if (Optional.IsDefined(_etag))
+            {
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(_etag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -159,9 +159,9 @@ namespace Azure.Search.Documents.Models
             IList<FieldMapping> fieldMappings = default;
             IList<FieldMapping> outputFieldMappings = default;
             bool? isDisabled = default;
-            string eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             SearchIndexerCache cache = default;
+            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -248,11 +248,6 @@ namespace Azure.Search.Documents.Models
                     isDisabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("@odata.etag"u8))
-                {
-                    eTag = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -273,6 +268,11 @@ namespace Azure.Search.Documents.Models
                     cache = SearchIndexerCache.DeserializeSearchIndexerCache(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    etag = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -289,9 +289,9 @@ namespace Azure.Search.Documents.Models
                 fieldMappings ?? new ChangeTrackingList<FieldMapping>(),
                 outputFieldMappings ?? new ChangeTrackingList<FieldMapping>(),
                 isDisabled,
-                eTag,
                 encryptionKey,
                 cache,
+                etag,
                 additionalBinaryDataProperties);
         }
 

@@ -8,9 +8,8 @@
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
-using Azure.Search.Documents;
 
-namespace Azure.Azure.Search.Documents.Documents
+namespace Azure.Search.Documents
 {
     /// <summary></summary>
     public partial class SearchClient
@@ -55,7 +54,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (includeTotalResultCount != null)
             {
-                uri.AppendQuery("$count", global::Azure.Search.Documents.TypeFormatters.ConvertToString(includeTotalResultCount), true);
+                uri.AppendQuery("$count", TypeFormatters.ConvertToString(includeTotalResultCount), true);
             }
             if (facets != null && !(facets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -82,7 +81,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (minimumCoverage != null)
             {
-                uri.AppendQuery("minimumCoverage", global::Azure.Search.Documents.TypeFormatters.ConvertToString(minimumCoverage), true);
+                uri.AppendQuery("minimumCoverage", TypeFormatters.ConvertToString(minimumCoverage), true);
             }
             if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
@@ -125,11 +124,11 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (skip != null)
             {
-                uri.AppendQuery("$skip", global::Azure.Search.Documents.TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", global::Azure.Search.Documents.TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (semanticConfiguration != null)
             {
@@ -141,7 +140,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (semanticMaxWaitInMilliseconds != null)
             {
-                uri.AppendQuery("semanticMaxWaitInMilliseconds", global::Azure.Search.Documents.TypeFormatters.ConvertToString(semanticMaxWaitInMilliseconds), true);
+                uri.AppendQuery("semanticMaxWaitInMilliseconds", TypeFormatters.ConvertToString(semanticMaxWaitInMilliseconds), true);
             }
             if (answers != null)
             {
@@ -186,7 +185,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (enableElevatedRead != null)
             {
-                request.Headers.SetValue("x-ms-enable-elevated-read", global::Azure.Search.Documents.TypeFormatters.ConvertToString(enableElevatedRead));
+                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
             }
             return message;
         }
@@ -210,7 +209,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (enableElevatedRead != null)
             {
-                request.Headers.SetValue("x-ms-enable-elevated-read", global::Azure.Search.Documents.TypeFormatters.ConvertToString(enableElevatedRead));
+                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
             }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
@@ -242,7 +241,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (enableElevatedRead != null)
             {
-                request.Headers.SetValue("x-ms-enable-elevated-read", global::Azure.Search.Documents.TypeFormatters.ConvertToString(enableElevatedRead));
+                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
             }
             return message;
         }
@@ -263,7 +262,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (useFuzzyMatching != null)
             {
-                uri.AppendQuery("fuzzy", global::Azure.Search.Documents.TypeFormatters.ConvertToString(useFuzzyMatching), true);
+                uri.AppendQuery("fuzzy", TypeFormatters.ConvertToString(useFuzzyMatching), true);
             }
             if (highlightPostTag != null)
             {
@@ -275,7 +274,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (minimumCoverage != null)
             {
-                uri.AppendQuery("minimumCoverage", global::Azure.Search.Documents.TypeFormatters.ConvertToString(minimumCoverage), true);
+                uri.AppendQuery("minimumCoverage", TypeFormatters.ConvertToString(minimumCoverage), true);
             }
             if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -291,7 +290,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", global::Azure.Search.Documents.TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -357,7 +356,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (useFuzzyMatching != null)
             {
-                uri.AppendQuery("fuzzy", global::Azure.Search.Documents.TypeFormatters.ConvertToString(useFuzzyMatching), true);
+                uri.AppendQuery("fuzzy", TypeFormatters.ConvertToString(useFuzzyMatching), true);
             }
             if (highlightPostTag != null)
             {
@@ -369,7 +368,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (minimumCoverage != null)
             {
-                uri.AppendQuery("minimumCoverage", global::Azure.Search.Documents.TypeFormatters.ConvertToString(minimumCoverage), true);
+                uri.AppendQuery("minimumCoverage", TypeFormatters.ConvertToString(minimumCoverage), true);
             }
             if (searchFields != null && !(searchFields is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -377,7 +376,7 @@ namespace Azure.Azure.Search.Documents.Documents
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", global::Azure.Search.Documents.TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

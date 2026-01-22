@@ -9,21 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for data change detection policies.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HighWaterMarkChangeDetectionPolicy"/> and <see cref="SqlIntegratedChangeTrackingPolicy"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataChangeDetectionPolicy))]
-    public abstract partial class DataChangeDetectionPolicy : IJsonModel<DataChangeDetectionPolicy>
+    /// <summary> Base type for data change detection policies. </summary>
+    public partial class DataChangeDetectionPolicy : IJsonModel<DataChangeDetectionPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/> for deserialization. </summary>
-        internal DataChangeDetectionPolicy()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataChangeDetectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

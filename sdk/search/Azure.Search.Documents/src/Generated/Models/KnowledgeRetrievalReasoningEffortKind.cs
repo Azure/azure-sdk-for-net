@@ -9,10 +9,10 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The amount of effort to use during retrieval. </summary>
-    internal readonly partial struct KnowledgeRetrievalReasoningEffortKind : IEquatable<KnowledgeRetrievalReasoningEffortKind>
+    public readonly partial struct KnowledgeRetrievalReasoningEffortKind : IEquatable<KnowledgeRetrievalReasoningEffortKind>
     {
         private readonly string _value;
         /// <summary> Does not perform any source selections, query planning, or iterative search. </summary>

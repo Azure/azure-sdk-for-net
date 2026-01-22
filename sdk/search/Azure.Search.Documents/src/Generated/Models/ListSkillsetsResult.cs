@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a list skillset request. If successful, it includes the full definitions of all skillsets. </summary>
     internal partial class ListSkillsetsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

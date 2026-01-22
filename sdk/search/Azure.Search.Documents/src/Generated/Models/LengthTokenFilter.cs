@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Removes words that are too long or too short. This token filter is implemented using Apache Lucene. </summary>
     public partial class LengthTokenFilter : TokenFilter
@@ -34,11 +34,5 @@ namespace Azure.Search.Documents.Models
             MinLength = minLength;
             MaxLength = maxLength;
         }
-
-        /// <summary> The minimum length in characters. Default is 0. Maximum is 300. Must be less than the value of max. </summary>
-        public int? MinLength { get; set; }
-
-        /// <summary> The maximum length in characters. Default and maximum is 300. </summary>
-        public int? MaxLength { get; set; }
     }
 }

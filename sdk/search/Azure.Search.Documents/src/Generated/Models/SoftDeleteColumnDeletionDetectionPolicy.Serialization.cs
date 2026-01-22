@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a data deletion detection policy that implements a soft-deletion strategy. It determines whether an item should be deleted based on the value of a designated 'soft delete' column. </summary>
     public partial class SoftDeleteColumnDeletionDetectionPolicy : DataDeletionDetectionPolicy, IJsonModel<SoftDeleteColumnDeletionDetectionPolicy>

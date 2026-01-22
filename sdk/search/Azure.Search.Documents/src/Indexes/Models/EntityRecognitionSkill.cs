@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     // Hide the versioned EntityRecognitionSkill. We unify all within a single type.
-    [CodeGenModel("EntityRecognitionSkillV3")]
+    [CodeGenType("EntityRecognitionSkillV3")]
     internal partial class EntityRecognitionSkillV3 { }
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SkillVersion skillVersion) : this(inputs, outputs)
         {
             _skillVersion = skillVersion;
-            ODataType = skillVersion.ToString();
+            OdataType = skillVersion.ToString();
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionSkill. </summary>
@@ -44,15 +44,13 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(outputs, nameof(outputs));
 
             Categories = new ChangeTrackingList<EntityCategory>();
-            ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
+            OdataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
-
-        /// <summary> A list of entity categories that should be extracted. </summary>
-        public IList<EntityCategory> Categories { get; }
 
         /// <summary> Determines whether or not to include entities which are well known but don't conform to a predefined type.
         /// If this configuration is not set (default), set to null or set to false,
         /// entities which don't conform to one of the predefined types will not be surfaced. </summary>
+        [CodeGenMember("IncludeTypelessEntities")]
         public bool? IncludeTypelessEntities
         {
             get => _includeTypelessEntities;

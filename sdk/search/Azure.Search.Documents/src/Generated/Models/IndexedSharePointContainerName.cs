@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies which SharePoint libraries to access. </summary>
     public readonly partial struct IndexedSharePointContainerName : IEquatable<IndexedSharePointContainerName>

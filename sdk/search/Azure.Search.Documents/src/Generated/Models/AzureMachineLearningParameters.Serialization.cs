@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the properties for connecting to an AML vectorizer. </summary>
     public partial class AzureMachineLearningParameters : IJsonModel<AzureMachineLearningParameters>

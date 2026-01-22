@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the vectorization method to be used during query time.
@@ -38,9 +38,6 @@ namespace Azure.Search.Documents.Models
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The name to associate with this particular vectorization method. </summary>
-        public string VectorizerName { get; set; }
 
         /// <summary> Type of VectorSearchVectorizer. </summary>
         internal VectorSearchVectorizerKind Kind { get; set; }

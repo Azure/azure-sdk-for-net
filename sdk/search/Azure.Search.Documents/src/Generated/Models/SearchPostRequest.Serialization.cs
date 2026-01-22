@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsDefined(QueryType))
             {
                 writer.WritePropertyName("queryType"u8);
-                writer.WriteStringValue(QueryType.Value.ToString());
+                writer.WriteStringValue(QueryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ScoringStatistics))
             {
@@ -168,7 +168,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsDefined(SearchMode))
             {
                 writer.WritePropertyName("searchMode"u8);
-                writer.WriteStringValue(SearchMode.Value.ToSerialString());
+                writer.WriteStringValue(SearchMode.Value.ToString());
             }
             if (Optional.IsDefined(QueryLanguage))
             {
@@ -325,7 +325,7 @@ namespace Azure.Search.Documents.Models
             string highlightPreTag = default;
             double? minimumCoverage = default;
             IList<string> orderBy = default;
-            QueryType? queryType = default;
+            SearchQueryType? queryType = default;
             ScoringStatistics? scoringStatistics = default;
             string sessionId = default;
             IList<string> scoringParameters = default;
@@ -455,7 +455,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    queryType = new QueryType(prop.Value.GetString());
+                    queryType = prop.Value.GetString().ToSearchQueryType();
                     continue;
                 }
                 if (prop.NameEquals("scoringStatistics"u8))
@@ -539,7 +539,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchMode = prop.Value.GetString().ToSearchMode();
+                    searchMode = new SearchMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("queryLanguage"u8))

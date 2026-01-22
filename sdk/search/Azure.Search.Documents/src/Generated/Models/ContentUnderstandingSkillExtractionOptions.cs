@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Controls the cardinality of the content extracted from the document by the skill. </summary>
     public readonly partial struct ContentUnderstandingSkillExtractionOptions : IEquatable<ContentUnderstandingSkillExtractionOptions>

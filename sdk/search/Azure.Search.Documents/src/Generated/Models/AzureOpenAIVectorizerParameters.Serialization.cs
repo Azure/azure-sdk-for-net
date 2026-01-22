@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the parameters for connecting to the Azure OpenAI resource. </summary>
     public partial class AzureOpenAIVectorizerParameters : IJsonModel<AzureOpenAIVectorizerParameters>

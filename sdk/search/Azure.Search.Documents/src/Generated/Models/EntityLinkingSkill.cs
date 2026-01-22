@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Using the Text Analytics API, extracts linked entities from text. </summary>
     public partial class EntityLinkingSkill : SearchIndexerSkill

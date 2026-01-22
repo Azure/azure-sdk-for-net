@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> TThe query parameters to configure hybrid search behaviors. </summary>
-    internal partial class HybridSearch : IJsonModel<HybridSearch>
+    public partial class HybridSearch : IJsonModel<HybridSearch>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

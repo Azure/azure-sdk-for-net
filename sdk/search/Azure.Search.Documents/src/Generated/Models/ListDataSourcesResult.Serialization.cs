@@ -12,9 +12,8 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a List Datasources request. If successful, it includes the full definitions of all datasources. </summary>
     internal partial class ListDataSourcesResult : IJsonModel<ListDataSourcesResult>
     {
         /// <param name="writer"> The JSON writer. </param>

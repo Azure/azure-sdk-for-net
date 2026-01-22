@@ -16,13 +16,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     public partial class KnowledgeBaseRetrievalClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The HTTP pipeline for sending and receiving REST requests and responses.
-        /// </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// Gets the URI endpoint of the Search service.  This is likely
@@ -38,7 +32,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary>
         /// Gets the generated document operations to make requests.
         /// </summary>
-        private KnowledgeRetrievalRestClient RestClient { get; }
+        private KnowledgeBaseRetrievalClient RestClient { get; }
 
         #region ctors
         /// <summary>
@@ -60,7 +54,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
         public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential) :
-            this(endpoint, knowledgeBaseName, credential, null)
+            this(endpoint, knowledgeBaseName, credential, options: null)
         {
         }
 
@@ -76,7 +70,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
         public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential tokenCredential) :
-            this(endpoint, knowledgeBaseName, tokenCredential, null)
+            this(endpoint, knowledgeBaseName, tokenCredential, options: null)
         {
         }
 
@@ -103,17 +97,13 @@ namespace Azure.Search.Documents.KnowledgeBases
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             KnowledgeBaseName = knowledgeBaseName;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = options.Build(credential);
-            _version = options.Version;
+            _version = options.Version.ToServiceVersion();
 
-            RestClient = new KnowledgeRetrievalRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                endpoint.AbsoluteUri,
+            RestClient = new KnowledgeBaseRetrievalClient(
+                endpoint,
                 KnowledgeBaseName,
-                null,
-                _version.ToVersionString());
+                credential,
+                options);
         }
 
         /// <summary>
@@ -138,17 +128,14 @@ namespace Azure.Search.Documents.KnowledgeBases
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             KnowledgeBaseName = knowledgeBaseName;
-            _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = options.Build(tokenCredential);
-            _version = options.Version;
+            _version = options.Version.ToServiceVersion();
 
-            RestClient = new KnowledgeRetrievalRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                endpoint.AbsoluteUri,
+            RestClient = new KnowledgeBaseRetrievalClient(
+                endpoint,
                 knowledgeBaseName,
-                null,
-                _version.ToVersionString());
+                tokenCredential,
+                options);
         }
         #endregion ctors
 
@@ -160,17 +147,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KnowledgeBaseRetrievalClient)}.{nameof(Retrieve)}");
-            scope.Start();
-            try
-            {
-                return RestClient.Retrieve(retrievalRequest, xMsQuerySourceAuthorization, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return RestClient.Retrieve(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
@@ -180,17 +157,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KnowledgeBaseRetrievalClient)}.{nameof(Retrieve)}");
-            scope.Start();
-            try
-            {
-                return await RestClient.RetrieveAsync(retrievalRequest, xMsQuerySourceAuthorization, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return await RestClient.RetrieveAsync(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken).ConfigureAwait(false);
         }
         #endregion Service operations
     }

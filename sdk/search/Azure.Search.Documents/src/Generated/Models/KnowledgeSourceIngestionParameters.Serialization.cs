@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Consolidates all general ingestion settings for knowledge sources. </summary>
     public partial class KnowledgeSourceIngestionParameters : IJsonModel<KnowledgeSourceIngestionParameters>

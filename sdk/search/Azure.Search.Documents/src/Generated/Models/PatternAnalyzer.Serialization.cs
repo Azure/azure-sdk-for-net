@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Flexibly separates text into terms via a regular expression pattern. This analyzer is implemented using Apache Lucene. </summary>
     public partial class PatternAnalyzer : LexicalAnalyzer, IJsonModel<PatternAnalyzer>
@@ -50,15 +50,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsCollectionDefined(Flags))
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags"u8);
-                writer.WriteStartArray();
-                foreach (RegexFlags item in Flags)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(FlagsInternal);
             }
             if (Optional.IsCollectionDefined(Stopwords))
             {
@@ -107,7 +102,7 @@ namespace Azure.Search.Documents.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? lowerCaseTerms = default;
             string pattern = default;
-            IList<RegexFlags> flags = default;
+            string flagsInternal = default;
             IList<string> stopwords = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,16 +132,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("flags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<RegexFlags> array = new List<RegexFlags>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new RegexFlags(item.GetString()));
-                    }
-                    flags = array;
+                    flagsInternal = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("stopwords"u8))
@@ -181,7 +167,7 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties,
                 lowerCaseTerms,
                 pattern,
-                flags ?? new ChangeTrackingList<RegexFlags>(),
+                flagsInternal,
                 stopwords ?? new ChangeTrackingList<string>());
         }
 

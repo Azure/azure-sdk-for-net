@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Enables a debugging tool that can be used to further explore your search results. You can enable multiple debug modes simultaneously by separating them with a | character, for example: semantic|queryRewrites. </summary>
-    internal readonly partial struct QueryDebugMode : IEquatable<QueryDebugMode>
+    public readonly partial struct QueryDebugMode : IEquatable<QueryDebugMode>
     {
         private readonly string _value;
         /// <summary> No query debugging information will be returned. </summary>

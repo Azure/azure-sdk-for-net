@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The multi-region account of an Azure AI service resource that's attached to a skillset. </summary>
     public partial class AIServicesAccountIdentity : CognitiveServicesAccount

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the AI Services Vision parameters for vectorizing a query image or text. </summary>
     public partial class AIServicesVisionParameters : IJsonModel<AIServicesVisionParameters>

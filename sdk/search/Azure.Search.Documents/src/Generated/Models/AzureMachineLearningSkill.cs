@@ -7,24 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The AML skill allows you to extend AI enrichment with a custom Azure Machine Learning (AML) model. Once an AML model is trained and deployed, an AML skill integrates it into AI enrichment. </summary>
     public partial class AzureMachineLearningSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningSkill"/>. </summary>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Custom.AmlSkill", inputs, outputs)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
-
-        }
-
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
@@ -35,17 +23,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
         /// <param name="authenticationKey"> (Required for key authentication) The key for the AML service. </param>
-        /// <param name="resourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
+        /// <param name="rawResourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
-        /// <param name="region"> (Optional for token authentication). The region the AML service is deployed in. </param>
+        /// <param name="rawLocation"> (Optional for token authentication). The region the AML service is deployed in. </param>
         /// <param name="degreeOfParallelism"> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </param>
-        internal AzureMachineLearningSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, int? degreeOfParallelism) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal AzureMachineLearningSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri scoringUri, string authenticationKey, string rawResourceId, TimeSpan? timeout, string rawLocation, int? degreeOfParallelism) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             ScoringUri = scoringUri;
             AuthenticationKey = authenticationKey;
-            ResourceId = resourceId;
+            RawResourceId = rawResourceId;
             Timeout = timeout;
-            Region = region;
+            RawLocation = rawLocation;
             DegreeOfParallelism = degreeOfParallelism;
         }
 
@@ -55,14 +43,8 @@ namespace Azure.Search.Documents.Models
         /// <summary> (Required for key authentication) The key for the AML service. </summary>
         public string AuthenticationKey { get; set; }
 
-        /// <summary> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </summary>
-        public string ResourceId { get; set; }
-
         /// <summary> (Optional) When specified, indicates the timeout for the http client making the API call. </summary>
         public TimeSpan? Timeout { get; set; }
-
-        /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
-        public string Region { get; set; }
 
         /// <summary> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </summary>
         public int? DegreeOfParallelism { get; set; }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
@@ -88,7 +89,7 @@ namespace Azure.Search.Documents.Models
                 {
                     // We only use the nextPageParameters because we do all of
                     // our searching via HTTP POST requests
-                    return SearchOptions.DeserializeSearchOptions(nextPageParams);
+                    return SearchOptions.DeserializeSearchOptions(nextPageParams, ModelReaderWriterOptions.Json);
                 }
             }
             catch (JsonException)

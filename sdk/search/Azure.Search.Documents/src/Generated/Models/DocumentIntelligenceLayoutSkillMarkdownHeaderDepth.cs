@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The depth of headers in the markdown output. Default is h6. </summary>
     public readonly partial struct DocumentIntelligenceLayoutSkillMarkdownHeaderDepth : IEquatable<DocumentIntelligenceLayoutSkillMarkdownHeaderDepth>

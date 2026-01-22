@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents the current state of an ongoing synchronization that spans multiple indexer runs. </summary>
     public partial class SynchronizationState

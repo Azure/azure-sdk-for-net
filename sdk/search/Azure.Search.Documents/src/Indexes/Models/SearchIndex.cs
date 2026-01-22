@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -51,22 +51,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
             Normalizers = new ChangeTrackingList<LexicalNormalizer>();
         }
-
-        /// <summary>
-        /// Gets the name of the index.
-        /// </summary>
-        [CodeGenMember("Name")]
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets the analyzers for the index.
-        /// </summary>
-        public IList<LexicalAnalyzer> Analyzers { get; }
-
-        /// <summary>
-        /// Gets the character filters for the index.
-        /// </summary>
-        public IList<CharFilter> CharFilters { get; }
 
         /// <summary>
         /// Gets or sets the fields in the index.
@@ -130,32 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Gets the scoring profiles for the index.
-        /// </summary>
-        public IList<ScoringProfile> ScoringProfiles { get; }
-
-        /// <summary>
-        /// Gets the suggesters for the index.
-        /// </summary>
-        public IList<SearchSuggester> Suggesters { get; }
-
-        /// <summary>
-        /// Gets the token filters for the index.
-        /// </summary>
-        public IList<TokenFilter> TokenFilters { get; }
-
-        /// <summary>
-        /// Gets the tokenizers for the index.
-        /// </summary>
-        public IList<LexicalTokenizer> Tokenizers { get; }
-
-        /// <summary>
-        /// Gets the normalizers for the index.
-        /// </summary>
-        public IList<LexicalNormalizer> Normalizers { get; }
-
-        /// <summary>
-        /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndex"/>.
+        /// The <see cref="global::Azure.ETag"/> of the <see cref="SearchIndex"/>.
         /// </summary>
         public ETag? ETag
         {

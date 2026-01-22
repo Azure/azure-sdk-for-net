@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all text analyzers supported by the search engine. </summary>
     public readonly partial struct LexicalAnalyzerName : IEquatable<LexicalAnalyzerName>

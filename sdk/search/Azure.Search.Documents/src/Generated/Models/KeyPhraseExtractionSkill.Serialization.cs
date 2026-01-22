@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that uses text analytics for key phrase extraction. </summary>
     public partial class KeyPhraseExtractionSkill : SearchIndexerSkill, IJsonModel<KeyPhraseExtractionSkill>

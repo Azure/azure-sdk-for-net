@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code. </summary>
     public partial class WebApiSkill : SearchIndexerSkill, IJsonModel<WebApiSkill>
@@ -42,10 +42,21 @@ namespace Azure.Search.Documents.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
-            if (Optional.IsDefined(HttpHeaders))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 writer.WritePropertyName("httpHeaders"u8);
-                writer.WriteObjectValue(HttpHeaders, options);
+                writer.WriteStartObject();
+                foreach (var item in HttpHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(HttpMethod))
             {
@@ -112,7 +123,7 @@ namespace Azure.Search.Documents.Models
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string uri = default;
-            WebApiHttpHeaders httpHeaders = default;
+            IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
             TimeSpan? timeout = default;
             int? batchSize = default;
@@ -172,7 +183,19 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    httpHeaders = WebApiHttpHeaders.DeserializeWebApiHttpHeaders(prop.Value, options);
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    httpHeaders = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("httpMethod"u8))
@@ -243,7 +266,7 @@ namespace Azure.Search.Documents.Models
                 outputs,
                 additionalBinaryDataProperties,
                 uri,
-                httpHeaders,
+                httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 httpMethod,
                 timeout,
                 batchSize,

@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the data type of a field in a search index. </summary>
     public readonly partial struct SearchFieldDataType : IEquatable<SearchFieldDataType>
@@ -52,44 +52,8 @@ namespace Azure.Search.Documents.Models
             _value = value;
         }
 
-        /// <summary> Indicates that a field contains a string. </summary>
-        public static SearchFieldDataType String { get; } = new SearchFieldDataType(StringValue);
-
-        /// <summary> Indicates that a field contains a 32-bit signed integer. </summary>
-        public static SearchFieldDataType Int32 { get; } = new SearchFieldDataType(Int32Value);
-
-        /// <summary> Indicates that a field contains a 64-bit signed integer. </summary>
-        public static SearchFieldDataType Int64 { get; } = new SearchFieldDataType(Int64Value);
-
-        /// <summary> Indicates that a field contains an IEEE double-precision floating point number. </summary>
-        public static SearchFieldDataType Double { get; } = new SearchFieldDataType(DoubleValue);
-
-        /// <summary> Indicates that a field contains a Boolean value (true or false). </summary>
-        public static SearchFieldDataType Boolean { get; } = new SearchFieldDataType(BooleanValue);
-
-        /// <summary> Indicates that a field contains a date/time value, including timezone information. </summary>
-        public static SearchFieldDataType DateTimeOffset { get; } = new SearchFieldDataType(DateTimeOffsetValue);
-
-        /// <summary> Indicates that a field contains a geo-location in terms of longitude and latitude. </summary>
-        public static SearchFieldDataType GeographyPoint { get; } = new SearchFieldDataType(GeographyPointValue);
-
-        /// <summary> Indicates that a field contains one or more complex objects that in turn have sub-fields of other types. </summary>
-        public static SearchFieldDataType Complex { get; } = new SearchFieldDataType(ComplexValue);
-
-        /// <summary> Indicates that a field contains a single-precision floating point number. This is only valid when used with Collection(Edm.Single). </summary>
-        public static SearchFieldDataType Single { get; } = new SearchFieldDataType(SingleValue);
-
         /// <summary> Indicates that a field contains a half-precision floating point number. This is only valid when used with Collection(Edm.Half). </summary>
         public static SearchFieldDataType Half { get; } = new SearchFieldDataType(HalfValue);
-
-        /// <summary> Indicates that a field contains a 16-bit signed integer. This is only valid when used with Collection(Edm.Int16). </summary>
-        public static SearchFieldDataType Int16 { get; } = new SearchFieldDataType(Int16Value);
-
-        /// <summary> Indicates that a field contains a 8-bit signed integer. This is only valid when used with Collection(Edm.SByte). </summary>
-        public static SearchFieldDataType SByte { get; } = new SearchFieldDataType(SByteValue);
-
-        /// <summary> Indicates that a field contains a 8-bit unsigned integer. This is only valid when used with Collection(Edm.Byte). </summary>
-        public static SearchFieldDataType Byte { get; } = new SearchFieldDataType(ByteValue);
 
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

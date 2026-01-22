@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A complex object that can be used to specify alternative spellings or synonyms to the root entity name. </summary>
     public partial class CustomEntityAlias

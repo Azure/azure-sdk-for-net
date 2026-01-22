@@ -12,10 +12,10 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a request to retrieve stats summary of all indexes. If successful, it includes the stats of each index in the service. </summary>
-    internal partial class ListIndexStatsSummary : IJsonModel<ListIndexStatsSummary>
+    public partial class ListIndexStatsSummary : IJsonModel<ListIndexStatsSummary>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

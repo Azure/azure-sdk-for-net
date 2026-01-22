@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines parameters for a search index that influence scoring in search queries. </summary>
     public partial class ScoringProfile
@@ -48,9 +48,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Parameters that boost scoring based on text matches in certain index fields. </summary>
         public TextWeights TextWeights { get; set; }
-
-        /// <summary> The collection of functions that influence the scoring of documents. </summary>
-        public IList<ScoringFunction> Functions { get; }
 
         /// <summary> A value indicating how the results of individual scoring functions should be combined. Defaults to "Sum". Ignored if there are no scoring functions. </summary>
         public ScoringFunctionAggregation? FunctionAggregation { get; set; }

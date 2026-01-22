@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that detects the language of input text and reports a single language code for every document submitted on the request. The language code is paired with a score indicating the confidence of the analysis. </summary>
     public partial class LanguageDetectionSkill : SearchIndexerSkill
@@ -43,8 +43,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </summary>
         public string DefaultCountryHint { get; set; }
-
-        /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
     }
 }

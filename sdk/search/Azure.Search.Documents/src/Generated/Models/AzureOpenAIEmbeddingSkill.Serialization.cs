@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Allows you to generate a vector embedding for a given text input using the Azure OpenAI resource. </summary>
     public partial class AzureOpenAIEmbeddingSkill : SearchIndexerSkill, IJsonModel<AzureOpenAIEmbeddingSkill>

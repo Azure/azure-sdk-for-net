@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents an indexer. </summary>
     public partial class SearchIndexer
@@ -46,11 +46,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="fieldMappings"> Defines mappings between fields in the data source and corresponding target fields in the index. </param>
         /// <param name="outputFieldMappings"> Output field mappings are applied after enrichment and immediately before indexing. </param>
         /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
-        /// <param name="eTag"> The ETag of the indexer. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
+        /// <param name="etag"> The ETag of the indexer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, string eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexerCache cache, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, SearchResourceEncryptionKey encryptionKey, SearchIndexerCache cache, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -62,9 +62,9 @@ namespace Azure.Search.Documents.Models
             FieldMappings = fieldMappings;
             OutputFieldMappings = outputFieldMappings;
             IsDisabled = isDisabled;
-            ETag = eTag;
             EncryptionKey = encryptionKey;
             Cache = cache;
+            _etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -97,9 +97,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A value indicating whether the indexer is disabled. Default is false. </summary>
         public bool? IsDisabled { get; set; }
-
-        /// <summary> The ETag of the indexer. </summary>
-        public string ETag { get; set; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }

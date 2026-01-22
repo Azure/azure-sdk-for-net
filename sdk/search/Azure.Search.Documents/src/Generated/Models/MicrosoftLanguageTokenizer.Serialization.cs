@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Divides text using language-specific rules. </summary>
     public partial class MicrosoftLanguageTokenizer : LexicalTokenizer, IJsonModel<MicrosoftLanguageTokenizer>

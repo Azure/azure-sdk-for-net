@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The kind of vector query being performed. </summary>
-    internal readonly partial struct VectorQueryKind : IEquatable<VectorQueryKind>
+    public readonly partial struct VectorQueryKind : IEquatable<VectorQueryKind>
     {
         private readonly string _value;
         /// <summary> Vector query where a raw vector value is provided. </summary>

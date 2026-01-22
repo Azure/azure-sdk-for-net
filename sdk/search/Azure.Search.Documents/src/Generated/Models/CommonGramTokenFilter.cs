@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Construct bigrams for frequently occurring terms while indexing. Single terms are still indexed too, with bigrams overlaid. This token filter is implemented using Apache Lucene. </summary>
     public partial class CommonGramTokenFilter : TokenFilter
@@ -40,9 +40,6 @@ namespace Azure.Search.Documents.Models
             IgnoreCase = ignoreCase;
             UseQueryMode = useQueryMode;
         }
-
-        /// <summary> The set of common words. </summary>
-        public IList<string> CommonWords { get; }
 
         /// <summary> A value indicating whether common words matching will be case insensitive. Default is false. </summary>
         public bool? IgnoreCase { get; set; }

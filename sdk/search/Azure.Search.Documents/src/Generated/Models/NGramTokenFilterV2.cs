@@ -7,20 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Generates n-grams of the given size(s). This token filter is implemented using Apache Lucene. </summary>
-    public partial class NGramTokenFilterV2 : TokenFilter
+    internal partial class NGramTokenFilterV2 : TokenFilter
     {
         /// <summary> Initializes a new instance of <see cref="NGramTokenFilterV2"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NGramTokenFilterV2(string name) : base("#Microsoft.Azure.Search.NGramTokenFilterV2", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="NGramTokenFilterV2"/>. </summary>

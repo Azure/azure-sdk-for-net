@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies which side of the input an n-gram should be generated from. </summary>
     public readonly partial struct EdgeNGramTokenFilterSide : IEquatable<EdgeNGramTokenFilterSide>

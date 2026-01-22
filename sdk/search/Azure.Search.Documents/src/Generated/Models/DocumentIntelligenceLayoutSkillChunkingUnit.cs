@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Controls the cardinality of the chunk unit. Default is 'characters'. </summary>
     public readonly partial struct DocumentIntelligenceLayoutSkillChunkingUnit : IEquatable<DocumentIntelligenceLayoutSkillChunkingUnit>

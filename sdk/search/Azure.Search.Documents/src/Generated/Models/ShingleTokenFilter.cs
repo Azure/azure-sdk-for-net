@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Creates combinations of tokens as a single token. This token filter is implemented using Apache Lucene. </summary>
     public partial class ShingleTokenFilter : TokenFilter

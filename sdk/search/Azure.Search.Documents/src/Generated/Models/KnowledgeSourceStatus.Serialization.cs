@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents the status and synchronization history of a knowledge source. </summary>
     public partial class KnowledgeSourceStatus : IJsonModel<KnowledgeSourceStatus>

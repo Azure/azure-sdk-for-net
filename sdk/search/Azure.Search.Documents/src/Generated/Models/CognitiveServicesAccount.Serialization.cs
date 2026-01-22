@@ -9,21 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for describing any Azure AI service resource attached to a skillset.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DefaultCognitiveServicesAccount"/>, <see cref="CognitiveServicesAccountKey"/>, <see cref="AIServicesAccountKey"/>, and <see cref="AIServicesAccountIdentity"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownCognitiveServicesAccount))]
-    public abstract partial class CognitiveServicesAccount : IJsonModel<CognitiveServicesAccount>
+    /// <summary> Base type for describing any Azure AI service resource attached to a skillset. </summary>
+    public partial class CognitiveServicesAccount : IJsonModel<CognitiveServicesAccount>
     {
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccount"/> for deserialization. </summary>
-        internal CognitiveServicesAccount()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CognitiveServicesAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

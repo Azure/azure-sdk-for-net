@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Removes words that are too long or too short. This token filter is implemented using Apache Lucene. </summary>
     public partial class LengthTokenFilter : TokenFilter, IJsonModel<LengthTokenFilter>

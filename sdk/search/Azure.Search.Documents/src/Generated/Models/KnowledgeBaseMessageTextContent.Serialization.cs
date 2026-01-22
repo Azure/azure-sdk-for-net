@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Text message type. </summary>
     public partial class KnowledgeBaseMessageTextContent : KnowledgeBaseMessageContent, IJsonModel<KnowledgeBaseMessageTextContent>

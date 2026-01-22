@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Controls the cardinality of the output produced by the skill. Default is 'oneToMany'. </summary>
     public readonly partial struct DocumentIntelligenceLayoutSkillOutputMode : IEquatable<DocumentIntelligenceLayoutSkillOutputMode>

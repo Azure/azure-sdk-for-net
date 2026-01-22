@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a List Datasources request. If successful, it includes the full definitions of all datasources. </summary>
     internal partial class ListDataSourcesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
     public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer

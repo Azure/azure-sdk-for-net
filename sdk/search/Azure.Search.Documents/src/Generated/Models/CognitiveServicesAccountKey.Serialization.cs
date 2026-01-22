@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The multi-region account key of an Azure AI service resource that's attached to a skillset. </summary>
     public partial class CognitiveServicesAccountKey : CognitiveServicesAccount, IJsonModel<CognitiveServicesAccountKey>

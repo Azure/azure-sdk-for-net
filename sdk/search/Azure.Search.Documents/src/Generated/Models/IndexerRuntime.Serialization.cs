@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the indexer's cumulative runtime consumption in the service. </summary>
     public partial class IndexerRuntime : IJsonModel<IndexerRuntime>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores based on distance from a geographic location. </summary>
     public partial class DistanceScoringFunction : ScoringFunction, IJsonModel<DistanceScoringFunction>

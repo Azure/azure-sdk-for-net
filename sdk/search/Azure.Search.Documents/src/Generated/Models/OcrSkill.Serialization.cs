@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that extracts text from image files. </summary>
     public partial class OcrSkill : SearchIndexerSkill, IJsonModel<OcrSkill>

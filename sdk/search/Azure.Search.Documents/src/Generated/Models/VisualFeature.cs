@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The strings indicating what visual feature types to return. </summary>
     public readonly partial struct VisualFeature : IEquatable<VisualFeature>

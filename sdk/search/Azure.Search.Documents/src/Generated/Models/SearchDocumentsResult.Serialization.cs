@@ -162,7 +162,7 @@ namespace Azure.Search.Documents.Models
             IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
             IReadOnlyList<QueryAnswerResult> answers = default;
             DebugInfo debugInfo = default;
-            SearchRequest nextPageParameters = default;
+            SearchOptions nextPageParameters = default;
             IReadOnlyList<SearchResult> results = default;
             string nextLink = default;
             SemanticErrorReason? semanticPartialResponseReason = default;
@@ -245,7 +245,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    nextPageParameters = SearchRequest.DeserializeSearchRequest(prop.Value, options);
+                    nextPageParameters = SearchOptions.DeserializeSearchOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("value"u8))

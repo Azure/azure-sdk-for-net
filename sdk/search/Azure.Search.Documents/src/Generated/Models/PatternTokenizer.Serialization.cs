@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tokenizer that uses regex pattern matching to construct distinct tokens. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class PatternTokenizer : LexicalTokenizer, IJsonModel<PatternTokenizer>
@@ -45,10 +45,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(Flags))
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags"u8);
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
             if (Optional.IsDefined(Group))
             {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Models
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string pattern = default;
-            RegexFlags? flags = default;
+            string flagsInternal = default;
             int? @group = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -107,11 +107,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("flags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    flags = new RegexFlags(prop.Value.GetString());
+                    flagsInternal = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("group"u8))
@@ -133,7 +129,7 @@ namespace Azure.Search.Documents.Models
                 name,
                 additionalBinaryDataProperties,
                 pattern,
-                flags,
+                flagsInternal,
                 @group);
         }
 

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Clears the identity property of a datasource. </summary>
     public partial class SearchIndexerDataNoneIdentity : SearchIndexerDataIdentity

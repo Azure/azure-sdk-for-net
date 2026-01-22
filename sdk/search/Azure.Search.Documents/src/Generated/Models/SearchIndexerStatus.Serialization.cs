@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the current status and execution history of an indexer. </summary>
     public partial class SearchIndexerStatus : IJsonModel<SearchIndexerStatus>
@@ -123,7 +123,7 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
-            IndexerCurrentState currentState = default;
+            IndexerState currentState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    currentState = IndexerCurrentState.DeserializeIndexerCurrentState(prop.Value, options);
+                    currentState = IndexerState.DeserializeIndexerState(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Run knowledge retrieval with minimal reasoning effort. </summary>
     public partial class KnowledgeRetrievalMinimalReasoningEffort : KnowledgeRetrievalReasoningEffort

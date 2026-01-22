@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class IndexingParametersConfiguration
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Models
             AllowSkillsetToReadFileData = allowSkillsetToReadFileData;
             PdfTextRotationAlgorithm = pdfTextRotationAlgorithm;
             ExecutionEnvironment = executionEnvironment;
-            QueryTimeout = queryTimeout;
+            _queryTimeout = queryTimeout;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
@@ -116,11 +116,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Specifies the environment in which the indexer should execute. </summary>
         public IndexerExecutionEnvironment? ExecutionEnvironment { get; set; }
-
-        /// <summary> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format "hh:mm:ss". </summary>
-        public string QueryTimeout { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

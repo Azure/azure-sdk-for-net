@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the parsing mode for indexing from an Azure blob data source. </summary>
     public readonly partial struct BlobIndexerParsingMode : IEquatable<BlobIndexerParsingMode>

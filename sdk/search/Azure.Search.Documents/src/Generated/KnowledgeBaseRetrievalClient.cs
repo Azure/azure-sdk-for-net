@@ -9,13 +9,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Azure.Search.Documents.Documents.Indexes;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
-namespace Azure.Azure.Search.Documents.Documents.KnowledgeBase
+namespace Azure.Search.Documents.KnowledgeBases
 {
     /// <summary> The KnowledgeBaseRetrievalClient. </summary>
     public partial class KnowledgeBaseRetrievalClient
@@ -29,8 +28,11 @@ namespace Azure.Azure.Search.Documents.Documents.KnowledgeBase
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient for mocking. </summary>
-        protected KnowledgeBaseRetrievalClient()
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new SearchClientOptions())
         {
         }
 
@@ -38,15 +40,7 @@ namespace Azure.Azure.Search.Documents.Documents.KnowledgeBase
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentsClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentsClientOptions())
+        public KnowledgeBaseRetrievalClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new SearchClientOptions())
         {
         }
 
@@ -55,12 +49,12 @@ namespace Azure.Azure.Search.Documents.Documents.KnowledgeBase
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, AzureKeyCredential credential, DocumentsClientOptions options)
+        public KnowledgeBaseRetrievalClient(Uri endpoint, AzureKeyCredential credential, SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new DocumentsClientOptions();
+            options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
             _keyCredential = credential;
@@ -74,12 +68,12 @@ namespace Azure.Azure.Search.Documents.Documents.KnowledgeBase
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, TokenCredential credential, DocumentsClientOptions options)
+        public KnowledgeBaseRetrievalClient(Uri endpoint, TokenCredential credential, SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new DocumentsClientOptions();
+            options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
             _tokenCredential = credential;

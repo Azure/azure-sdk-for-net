@@ -9,10 +9,10 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The AI model to be used for query planning. </summary>
-    internal readonly partial struct KnowledgeBaseModelKind : IEquatable<KnowledgeBaseModelKind>
+    public readonly partial struct KnowledgeBaseModelKind : IEquatable<KnowledgeBaseModelKind>
     {
         private readonly string _value;
         /// <summary> Use Azure Open AI models for query planning. </summary>

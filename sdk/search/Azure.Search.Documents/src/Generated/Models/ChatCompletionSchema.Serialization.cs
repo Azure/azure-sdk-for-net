@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Object defining the custom schema the model will use to structure its output. </summary>
     public partial class ChatCompletionSchema : IJsonModel<ChatCompletionSchema>

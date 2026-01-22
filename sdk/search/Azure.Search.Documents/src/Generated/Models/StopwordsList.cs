@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Identifies a predefined list of language-specific stopwords. </summary>
     public readonly partial struct StopwordsList : IEquatable<StopwordsList>

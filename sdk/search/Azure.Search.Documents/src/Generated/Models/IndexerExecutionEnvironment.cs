@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the environment in which the indexer should execute. </summary>
     public readonly partial struct IndexerExecutionEnvironment : IEquatable<IndexerExecutionEnvironment>

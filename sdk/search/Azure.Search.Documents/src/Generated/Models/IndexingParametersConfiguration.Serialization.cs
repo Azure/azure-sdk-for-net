@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class IndexingParametersConfiguration : IJsonModel<IndexingParametersConfiguration>
@@ -119,22 +119,25 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("executionEnvironment"u8);
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (Optional.IsDefined(_queryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteStringValue(QueryTimeout);
+                writer.WriteStringValue(_queryTimeout);
             }
-            foreach (var item in AdditionalProperties)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
@@ -324,7 +327,10 @@ namespace Azure.Search.Documents.Models
                     queryTimeout = prop.Value.GetString();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
             return new IndexingParametersConfiguration(
                 parsingMode,

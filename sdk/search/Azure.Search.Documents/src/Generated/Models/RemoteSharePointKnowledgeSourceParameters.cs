@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for remote SharePoint knowledge source. </summary>
     public partial class RemoteSharePointKnowledgeSourceParameters

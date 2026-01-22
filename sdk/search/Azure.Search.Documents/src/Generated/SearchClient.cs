@@ -13,10 +13,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 
-namespace Azure.Azure.Search.Documents.Documents
+namespace Azure.Search.Documents
 {
     /// <summary> The SearchClient. </summary>
     public partial class SearchClient
@@ -31,11 +30,6 @@ namespace Azure.Azure.Search.Documents.Documents
         private readonly string _apiVersion;
         private readonly string _indexName;
         private readonly string _name;
-
-        /// <summary> Initializes a new instance of SearchClient for mocking. </summary>
-        protected SearchClient()
-        {
-        }
 
         /// <summary> Initializes a new instance of SearchClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -342,9 +336,9 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchDocumentsResult> SearchGet(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, QueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SearchDocumentsResult> SearchGet(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
         {
-            Response result = this.SearchGet(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext());
+            Response result = SearchGet(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToString(), scoringStatistics?.ToString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext());
             return Response.FromValue((SearchDocumentsResult)result, result);
         }
 
@@ -383,9 +377,9 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchDocumentsResult>> SearchGetAsync(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, QueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SearchDocumentsResult>> SearchGetAsync(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
         {
-            Response result = await this.SearchGetAsync(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await SearchGetAsync(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToString(), scoringStatistics?.ToString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchDocumentsResult)result, result);
         }
 
@@ -487,7 +481,7 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchDocumentsResult> SearchPost(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, QueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SearchDocumentsResult> SearchPost(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
         {
             SearchPostRequest spreadModel = new SearchPostRequest(
                 includeTotalCount,
@@ -566,7 +560,7 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, QueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
         {
             SearchPostRequest spreadModel = new SearchPostRequest(
                 includeTotalCount,
@@ -899,18 +893,18 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<SuggestDocumentsResult> SuggestPost(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            SuggestPostRequest spreadModel = new SuggestPostRequest(
+            SuggestOptions spreadModel = new SuggestOptions(
                 filter,
                 useFuzzyMatching,
                 highlightPostTag,
                 highlightPreTag,
                 minimumCoverage,
-                orderBy?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                default,
                 searchText,
-                searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                @select?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                default,
+                default,
                 suggesterName,
-                top,
+                default,
                 default);
             Response result = SuggestPost(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((SuggestDocumentsResult)result, result);
@@ -932,18 +926,18 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            SuggestPostRequest spreadModel = new SuggestPostRequest(
+            SuggestOptions spreadModel = new SuggestOptions(
                 filter,
                 useFuzzyMatching,
                 highlightPostTag,
                 highlightPreTag,
                 minimumCoverage,
-                orderBy?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                default,
                 searchText,
-                searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                @select?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                default,
+                default,
                 suggesterName,
-                top,
+                default,
                 default);
             Response result = await SuggestPostAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SuggestDocumentsResult)result, result);
@@ -1009,7 +1003,7 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<IndexDocumentsResult> Index(IndexDocumentsBatch batch, CancellationToken cancellationToken = default)
+        internal virtual Response<IndexDocumentsResult> Index(InternalIndexBatch batch, CancellationToken cancellationToken = default)
         {
             Response result = Index(batch, cancellationToken.ToRequestContext());
             return Response.FromValue((IndexDocumentsResult)result, result);
@@ -1019,7 +1013,7 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch batch, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IndexDocumentsResult>> IndexAsync(InternalIndexBatch batch, CancellationToken cancellationToken = default)
         {
             Response result = await IndexAsync(batch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IndexDocumentsResult)result, result);
@@ -1112,10 +1106,10 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<AutocompleteResult> AutocompleteGet(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        internal virtual Response<AutocompleteResults> AutocompleteGet(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Response result = AutocompleteGet(searchText, suggesterName, autocompleteMode?.ToString(), filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, cancellationToken.ToRequestContext());
-            return Response.FromValue((AutocompleteResult)result, result);
+            return Response.FromValue((AutocompleteResults)result, result);
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
@@ -1131,10 +1125,10 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<AutocompleteResult>> AutocompleteGetAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AutocompleteResults>> AutocompleteGetAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Response result = await AutocompleteGetAsync(searchText, suggesterName, autocompleteMode?.ToString(), filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AutocompleteResult)result, result);
+            return Response.FromValue((AutocompleteResults)result, result);
         }
 
         /// <summary>
@@ -1206,22 +1200,22 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<AutocompleteResult> AutocompletePost(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        internal virtual Response<AutocompleteResults> AutocompletePost(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            AutocompletePostRequest spreadModel = new AutocompletePostRequest(
+            AutocompleteOptions spreadModel = new AutocompleteOptions(
                 searchText,
-                autocompleteMode,
+                default,
                 filter,
                 useFuzzyMatching,
                 highlightPostTag,
                 highlightPreTag,
                 minimumCoverage,
-                searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                default,
                 suggesterName,
-                top,
+                default,
                 default);
             Response result = AutocompletePost(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((AutocompleteResult)result, result);
+            return Response.FromValue((AutocompleteResults)result, result);
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
@@ -1237,22 +1231,22 @@ namespace Azure.Azure.Search.Documents.Documents
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<AutocompleteResult>> AutocompletePostAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AutocompleteResults>> AutocompletePostAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            AutocompletePostRequest spreadModel = new AutocompletePostRequest(
+            AutocompleteOptions spreadModel = new AutocompleteOptions(
                 searchText,
-                autocompleteMode,
+                default,
                 filter,
                 useFuzzyMatching,
                 highlightPostTag,
                 highlightPreTag,
                 minimumCoverage,
-                searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                default,
                 suggesterName,
-                top,
+                default,
                 default);
             Response result = await AutocompletePostAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AutocompleteResult)result, result);
+            return Response.FromValue((AutocompleteResults)result, result);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Definition of additional projections to secondary search indexes. </summary>
     public partial class SearchIndexerIndexProjection : IJsonModel<SearchIndexerIndexProjection>

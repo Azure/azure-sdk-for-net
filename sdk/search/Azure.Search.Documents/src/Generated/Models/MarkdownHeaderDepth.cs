@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the max header depth that will be considered while grouping markdown content. Default is `h6`. </summary>
     public readonly partial struct MarkdownHeaderDepth : IEquatable<MarkdownHeaderDepth>

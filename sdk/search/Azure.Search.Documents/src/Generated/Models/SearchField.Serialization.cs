@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
     public partial class SearchField : IJsonModel<SearchField>

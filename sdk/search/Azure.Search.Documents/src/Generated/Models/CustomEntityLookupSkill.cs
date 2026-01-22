@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill looks for text from a custom, user-defined list of words and phrases. </summary>
     public partial class CustomEntityLookupSkill : SearchIndexerSkill

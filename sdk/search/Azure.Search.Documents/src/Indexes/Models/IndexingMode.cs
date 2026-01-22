@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -9,10 +9,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> The indexer is indexing all documents in the datasource. </summary>
         [CodeGenMember("IndexingAllDocs")]
-        public static IndexingMode AllDocuments { get; } = new IndexingMode(AllDocumentsValue);
+        public static IndexingMode AllDocuments { get; } = new IndexingMode(IndexingAllDocsValue);
 
         /// <summary> The indexer is indexing selective, reset documents in the datasource. The documents being indexed are defined on indexer status. </summary>
         [CodeGenMember("IndexingResetDocs")]
-        public static IndexingMode ResetDocuments { get; } = new IndexingMode(ResetDocumentsValue);
+        public static IndexingMode ResetDocuments { get; } = new IndexingMode(IndexingResetDocsValue);
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tokenizes the input from an edge into n-grams of the given size(s). This tokenizer is implemented using Apache Lucene. </summary>
     public partial class EdgeNGramTokenizer : LexicalTokenizer, IJsonModel<EdgeNGramTokenizer>
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStartArray();
                 foreach (TokenCharacterKind item in TokenChars)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.Search.Documents.Models
                     List<TokenCharacterKind> array = new List<TokenCharacterKind>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new TokenCharacterKind(item.GetString()));
+                        array.Add(item.GetString().ToTokenCharacterKind());
                     }
                     tokenChars = array;
                     continue;

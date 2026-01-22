@@ -7,14 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for functions that can modify document scores during ranking.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/>, and <see cref="TagScoringFunction"/>.
-    /// </summary>
-    public abstract partial class ScoringFunction
+    /// <summary> Base type for functions that can modify document scores during ranking. </summary>
+    public partial class ScoringFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,8 +21,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="type"> Type of ScoringFunction. </param>
-        private protected ScoringFunction(string fieldName, double boost, string @type)
+        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="type"/> is null. </exception>
+        public ScoringFunction(string fieldName, double boost, string @type)
         {
+            Argument.AssertNotNull(fieldName, nameof(fieldName));
+            Argument.AssertNotNull(@type, nameof(@type));
+
             FieldName = fieldName;
             Boost = boost;
             Type = @type;

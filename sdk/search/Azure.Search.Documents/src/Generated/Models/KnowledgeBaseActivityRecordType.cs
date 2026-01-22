@@ -9,10 +9,10 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The type of activity record. </summary>
-    internal readonly partial struct KnowledgeBaseActivityRecordType : IEquatable<KnowledgeBaseActivityRecordType>
+    public readonly partial struct KnowledgeBaseActivityRecordType : IEquatable<KnowledgeBaseActivityRecordType>
     {
         private readonly string _value;
         /// <summary> Search index retrieval activity. </summary>

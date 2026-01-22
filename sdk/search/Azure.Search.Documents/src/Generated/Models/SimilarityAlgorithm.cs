@@ -7,22 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for similarity algorithms. Similarity algorithms are used to calculate scores that tie queries to documents. The higher the score, the more relevant the document is to that specific query. Those scores are used to rank the search results.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClassicSimilarityAlgorithm"/> and <see cref="BM25SimilarityAlgorithm"/>.
-    /// </summary>
-    public abstract partial class SimilarityAlgorithm
+    /// <summary> Base type for similarity algorithms. Similarity algorithms are used to calculate scores that tie queries to documents. The higher the score, the more relevant the document is to that specific query. Those scores are used to rank the search results. </summary>
+    public partial class SimilarityAlgorithm
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SimilarityAlgorithm"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        private protected SimilarityAlgorithm(string odataType)
+        /// <exception cref="ArgumentNullException"> <paramref name="odataType"/> is null. </exception>
+        public SimilarityAlgorithm(string odataType)
         {
+            Argument.AssertNotNull(odataType, nameof(odataType));
+
             OdataType = odataType;
         }
 

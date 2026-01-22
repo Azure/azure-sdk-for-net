@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores based on the magnitude of a numeric field. </summary>
     public partial class MagnitudeScoringFunction : ScoringFunction, IJsonModel<MagnitudeScoringFunction>

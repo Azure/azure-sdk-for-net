@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the current status and execution history of an indexer. </summary>
     public partial class SearchIndexerStatus
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerCurrentState currentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
@@ -63,6 +63,6 @@ namespace Azure.Search.Documents.Models
         public SearchIndexerLimits Limits { get; }
 
         /// <summary> All of the state that defines and dictates the indexer's current execution. </summary>
-        public IndexerCurrentState CurrentState { get; }
+        public IndexerState CurrentState { get; }
     }
 }

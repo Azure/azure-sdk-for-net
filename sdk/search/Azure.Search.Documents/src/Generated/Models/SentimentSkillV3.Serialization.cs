@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Using the Text Analytics API, evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive") based on the highest confidence score found by the service at a sentence and document-level. </summary>
-    public partial class SentimentSkillV3 : SearchIndexerSkill, IJsonModel<SentimentSkillV3>
+    internal partial class SentimentSkillV3 : SearchIndexerSkill, IJsonModel<SentimentSkillV3>
     {
         /// <summary> Initializes a new instance of <see cref="SentimentSkillV3"/> for deserialization. </summary>
         internal SentimentSkillV3()

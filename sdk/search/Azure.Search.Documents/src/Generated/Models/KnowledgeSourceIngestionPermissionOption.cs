@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Permission types to ingest together with document content. </summary>
     public readonly partial struct KnowledgeSourceIngestionPermissionOption : IEquatable<KnowledgeSourceIngestionPermissionOption>

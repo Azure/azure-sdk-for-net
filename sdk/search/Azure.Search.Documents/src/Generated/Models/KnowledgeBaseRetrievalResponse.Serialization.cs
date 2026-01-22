@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The output contract for the retrieval response. </summary>
     public partial class KnowledgeBaseRetrievalResponse : IJsonModel<KnowledgeBaseRetrievalResponse>

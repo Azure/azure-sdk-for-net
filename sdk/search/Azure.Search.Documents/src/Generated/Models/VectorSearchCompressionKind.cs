@@ -9,10 +9,10 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The compression method used for indexing and querying. </summary>
-    internal readonly partial struct VectorSearchCompressionKind : IEquatable<VectorSearchCompressionKind>
+    public readonly partial struct VectorSearchCompressionKind : IEquatable<VectorSearchCompressionKind>
     {
         private readonly string _value;
         /// <summary> Scalar Quantization, a type of compression method. In scalar quantization, the original vectors values are compressed to a narrower type by discretizing and representing each component of a vector using a reduced set of quantized values, thereby reducing the overall data size. </summary>

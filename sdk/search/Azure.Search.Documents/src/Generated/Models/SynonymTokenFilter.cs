@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Matches single or multi-word synonyms in a token stream. This token filter is implemented using Apache Lucene. </summary>
     public partial class SynonymTokenFilter : TokenFilter
@@ -40,9 +40,6 @@ namespace Azure.Search.Documents.Models
             IgnoreCase = ignoreCase;
             Expand = expand;
         }
-
-        /// <summary> A list of synonyms in following one of two formats: 1. incredible, unbelievable, fabulous =&gt; amazing - all terms on the left side of =&gt; symbol will be replaced with all terms on its right side; 2. incredible, unbelievable, fabulous, amazing - comma separated list of equivalent words. Set the expand option to change how this list is interpreted. </summary>
-        public IList<string> Synonyms { get; }
 
         /// <summary> A value indicating whether to case-fold input for matching. Default is false. </summary>
         public bool? IgnoreCase { get; set; }

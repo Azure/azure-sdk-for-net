@@ -9,21 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for data deletion detection policies.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SoftDeleteColumnDeletionDetectionPolicy"/> and <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataDeletionDetectionPolicy))]
-    public abstract partial class DataDeletionDetectionPolicy : IJsonModel<DataDeletionDetectionPolicy>
+    /// <summary> Base type for data deletion detection policies. </summary>
+    public partial class DataDeletionDetectionPolicy : IJsonModel<DataDeletionDetectionPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="DataDeletionDetectionPolicy"/> for deserialization. </summary>
-        internal DataDeletionDetectionPolicy()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataDeletionDetectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

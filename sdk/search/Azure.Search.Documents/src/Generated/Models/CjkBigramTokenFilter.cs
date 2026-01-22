@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Forms bigrams of CJK terms that are generated from the standard tokenizer. This token filter is implemented using Apache Lucene. </summary>
     public partial class CjkBigramTokenFilter : TokenFilter

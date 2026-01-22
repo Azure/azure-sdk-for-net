@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Request body for resync indexer operation. </summary>
     public partial class IndexerResyncBody : IJsonModel<IndexerResyncBody>

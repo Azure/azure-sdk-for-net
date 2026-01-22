@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The output configuration for this retrieval. </summary>
     public readonly partial struct KnowledgeRetrievalOutputMode : IEquatable<KnowledgeRetrievalOutputMode>

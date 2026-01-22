@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The result of testing an analyzer on text. </summary>
     public partial class AnalyzeResult : IJsonModel<AnalyzeResult>

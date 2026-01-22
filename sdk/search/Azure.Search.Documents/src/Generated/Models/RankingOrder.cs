@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents score to use for sort order of documents. </summary>
     public readonly partial struct RankingOrder : IEquatable<RankingOrder>

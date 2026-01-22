@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language to use for a Snowball token filter. </summary>
     public readonly partial struct SnowballTokenFilterLanguage : IEquatable<SnowballTokenFilterLanguage>

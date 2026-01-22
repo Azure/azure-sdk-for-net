@@ -11,8 +11,9 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
@@ -53,15 +54,15 @@ namespace Azure.Search.Documents.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
-            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteObjectValue(EncryptionKey, options);
+            }
+            if (Optional.IsDefined(_eTag))
+            {
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(_eTag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

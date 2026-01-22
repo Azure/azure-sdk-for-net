@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Generates n-grams of the given size(s). This token filter is implemented using Apache Lucene. </summary>
-    public partial class NGramTokenFilterV2 : TokenFilter, IJsonModel<NGramTokenFilterV2>
+    internal partial class NGramTokenFilterV2 : TokenFilter, IJsonModel<NGramTokenFilterV2>
     {
         /// <summary> Initializes a new instance of <see cref="NGramTokenFilterV2"/> for deserialization. </summary>
         internal NGramTokenFilterV2()

@@ -12,10 +12,10 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Result from listing knowledge sources. </summary>
-    internal partial class ListKnowledgeSourcesResult : IJsonModel<ListKnowledgeSourcesResult>
+    public partial class ListKnowledgeSourcesResult : IJsonModel<ListKnowledgeSourcesResult>
     {
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeSourcesResult"/> for deserialization. </summary>
         internal ListKnowledgeSourcesResult()

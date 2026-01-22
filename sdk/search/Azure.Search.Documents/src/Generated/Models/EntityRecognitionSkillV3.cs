@@ -9,20 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
-    public partial class EntityRecognitionSkillV3 : SearchIndexerSkill
+    internal partial class EntityRecognitionSkillV3 : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkillV3"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public EntityRecognitionSkillV3(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.V3.EntityRecognitionSkill", inputs, outputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
-
             Categories = new ChangeTrackingList<string>();
         }
 

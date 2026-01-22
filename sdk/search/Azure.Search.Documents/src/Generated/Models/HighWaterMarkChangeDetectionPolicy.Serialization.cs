@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a data change detection policy that captures changes based on the value of a high water mark column. </summary>
     public partial class HighWaterMarkChangeDetectionPolicy : DataChangeDetectionPolicy, IJsonModel<HighWaterMarkChangeDetectionPolicy>

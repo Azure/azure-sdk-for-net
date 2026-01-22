@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a function that transforms a value from a data source before indexing. </summary>
     public partial class FieldMappingFunction
@@ -26,14 +25,14 @@ namespace Azure.Search.Documents.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FieldMappingFunction"/>. </summary>
         /// <param name="name"> The name of the field mapping function. </param>
         /// <param name="parameters"> A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FieldMappingFunction(string name, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FieldMappingFunction(string name, IDictionary<string, object> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Parameters = parameters;
@@ -42,33 +41,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The name of the field mapping function. </summary>
         public string Name { get; set; }
-
-        /// <summary>
-        /// A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; set; }
     }
 }

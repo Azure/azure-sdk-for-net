@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Decomposes compound words found in many Germanic languages. This token filter is implemented using Apache Lucene. </summary>
     public partial class DictionaryDecompounderTokenFilter : TokenFilter
@@ -44,9 +44,6 @@ namespace Azure.Search.Documents.Models
             MaxSubwordSize = maxSubwordSize;
             OnlyLongestMatch = onlyLongestMatch;
         }
-
-        /// <summary> The list of words to match against. </summary>
-        public IList<string> WordList { get; }
 
         /// <summary> The minimum word size. Only words longer than this get processed. Default is 5. Maximum is 300. </summary>
         public int? MinWordSize { get; set; }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the parameters for connecting to the Azure OpenAI resource. </summary>
     public partial class AzureOpenAIVectorizerParameters

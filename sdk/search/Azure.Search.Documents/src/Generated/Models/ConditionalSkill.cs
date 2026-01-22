@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that enables scenarios that require a Boolean operation to determine the data to assign to an output. </summary>
     public partial class ConditionalSkill : SearchIndexerSkill

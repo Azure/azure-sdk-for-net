@@ -8,14 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for skills.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConditionalSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="OcrSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="ShaperSkill"/>, <see cref="MergeSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SentimentSkillV3"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkillV3"/>, <see cref="PIIDetectionSkill"/>, <see cref="SplitSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureMachineLearningSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="VisionVectorizeSkill"/>, <see cref="ContentUnderstandingSkill"/>, and <see cref="ChatCompletionSkill"/>.
-    /// </summary>
-    public abstract partial class SearchIndexerSkill
+    /// <summary> Base type for skills. </summary>
+    public partial class SearchIndexerSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,8 +22,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        private protected SearchIndexerSkill(string odataType, IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs)
+        /// <exception cref="ArgumentNullException"> <paramref name="odataType"/>, <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public SearchIndexerSkill(string odataType, IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs)
         {
+            Argument.AssertNotNull(odataType, nameof(odataType));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(outputs, nameof(outputs));
+
             OdataType = odataType;
             Inputs = inputs.ToList();
             Outputs = outputs.ToList();

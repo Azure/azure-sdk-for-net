@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores of documents with string values matching a given list of tags. </summary>
     public partial class TagScoringFunction : ScoringFunction, IJsonModel<TagScoringFunction>

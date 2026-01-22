@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
-    public partial class EntityRecognitionSkillV3 : SearchIndexerSkill, IJsonModel<EntityRecognitionSkillV3>
+    internal partial class EntityRecognitionSkillV3 : SearchIndexerSkill, IJsonModel<EntityRecognitionSkillV3>
     {
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkillV3"/> for deserialization. </summary>
         internal EntityRecognitionSkillV3()

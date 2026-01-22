@@ -9,10 +9,10 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The kind of the knowledge source. </summary>
-    internal readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
+    public readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
     {
         private readonly string _value;
         /// <summary> A knowledge source that reads data from a Search Index. </summary>

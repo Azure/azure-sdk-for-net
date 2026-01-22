@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
     public partial class AzureOpenAIVectorizer : VectorSearchVectorizer, IJsonModel<AzureOpenAIVectorizer>

@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
     public partial class SearchIndexerDataSourceConnection : IJsonModel<SearchIndexerDataSourceConnection>
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(SubType);
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials, options);
+            writer.WriteObjectValue(CredentialsInternal, options);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container, options);
             if (Optional.IsDefined(Identity))
@@ -84,15 +84,15 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
                 writer.WriteObjectValue(DataDeletionDetectionPolicy, options);
             }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
-            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteObjectValue(EncryptionKey, options);
+            }
+            if (Optional.IsDefined(_etag))
+            {
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(_etag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,14 +140,14 @@ namespace Azure.Search.Documents.Models
             string description = default;
             SearchIndexerDataSourceType @type = default;
             string subType = default;
-            DataSourceCredentials credentials = default;
+            DataSourceCredentials credentialsInternal = default;
             SearchIndexerDataContainer container = default;
             SearchIndexerDataIdentity identity = default;
             IList<IndexerPermissionOption> indexerPermissionOptions = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
-            string eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
+            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("credentials"u8))
                 {
-                    credentials = DataSourceCredentials.DeserializeDataSourceCredentials(prop.Value, options);
+                    credentialsInternal = DataSourceCredentials.DeserializeDataSourceCredentials(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("container"u8))
@@ -225,11 +225,6 @@ namespace Azure.Search.Documents.Models
                     dataDeletionDetectionPolicy = DataDeletionDetectionPolicy.DeserializeDataDeletionDetectionPolicy(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("@odata.etag"u8))
-                {
-                    eTag = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -238,6 +233,11 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -250,14 +250,14 @@ namespace Azure.Search.Documents.Models
                 description,
                 @type,
                 subType,
-                credentials,
+                credentialsInternal,
                 container,
                 identity,
                 indexerPermissionOptions ?? new ChangeTrackingList<IndexerPermissionOption>(),
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
-                eTag,
                 encryptionKey,
+                etag,
                 additionalBinaryDataProperties);
         }
 

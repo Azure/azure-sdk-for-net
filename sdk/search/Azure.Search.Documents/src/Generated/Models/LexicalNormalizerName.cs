@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all text normalizers supported by the search engine. </summary>
     public readonly partial struct LexicalNormalizerName : IEquatable<LexicalNormalizerName>

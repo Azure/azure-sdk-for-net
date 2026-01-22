@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-    [CodeGenModel("PermissionFilter")]
+    [CodeGenType("PermissionFilter")]
     public readonly partial struct PermissionFilter
     {
 #pragma warning disable CA1034 // Nested types should not be visible

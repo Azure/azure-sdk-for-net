@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The encoding format for interpreting vector field contents. </summary>
     public readonly partial struct VectorEncodingFormat : IEquatable<VectorEncodingFormat>

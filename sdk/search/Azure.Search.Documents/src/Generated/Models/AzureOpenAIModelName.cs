@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The Azure Open AI model name that will be called. </summary>
     public readonly partial struct AzureOpenAIModelName : IEquatable<AzureOpenAIModelName>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that extracts content from a file within the enrichment pipeline. </summary>
     public partial class DocumentExtractionSkill : SearchIndexerSkill, IJsonModel<DocumentExtractionSkill>
@@ -62,14 +62,7 @@ namespace Azure.Search.Documents.Models
                         writer.WriteNullValue();
                         continue;
                     }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue<object>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -109,7 +102,7 @@ namespace Azure.Search.Documents.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string parsingMode = default;
             string dataToExtract = default;
-            IDictionary<string, BinaryData> configuration = default;
+            IDictionary<string, object> configuration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -178,7 +171,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
                         if (prop0.Value.ValueKind == JsonValueKind.Null)
@@ -187,7 +180,7 @@ namespace Azure.Search.Documents.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetObject());
                         }
                     }
                     configuration = dictionary;
@@ -208,7 +201,7 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties,
                 parsingMode,
                 dataToExtract,
-                configuration ?? new ChangeTrackingDictionary<string, BinaryData>());
+                configuration ?? new ChangeTrackingDictionary<string, object>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

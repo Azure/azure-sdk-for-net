@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
-        internal SearchServiceCounters(ResourceCounter aliasCounter, ResourceCounter documentCounter, ResourceCounter indexCounter, ResourceCounter indexerCounter, ResourceCounter dataSourceCounter, ResourceCounter storageSizeCounter, ResourceCounter synonymMapCounter, ResourceCounter skillsetCounter, ResourceCounter vectorIndexSizeCounter)
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter)
         {
             AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceCounters(ResourceCounter aliasCounter, ResourceCounter documentCounter, ResourceCounter indexCounter, ResourceCounter indexerCounter, ResourceCounter dataSourceCounter, ResourceCounter storageSizeCounter, ResourceCounter synonymMapCounter, ResourceCounter skillsetCounter, ResourceCounter vectorIndexSizeCounter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;
@@ -65,30 +65,30 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Total number of aliases. </summary>
-        public ResourceCounter AliasCounter { get; }
+        public SearchResourceCounter AliasCounter { get; }
 
         /// <summary> Total number of documents across all indexes in the service. </summary>
-        public ResourceCounter DocumentCounter { get; }
+        public SearchResourceCounter DocumentCounter { get; }
 
         /// <summary> Total number of indexes. </summary>
-        public ResourceCounter IndexCounter { get; }
+        public SearchResourceCounter IndexCounter { get; }
 
         /// <summary> Total number of indexers. </summary>
-        public ResourceCounter IndexerCounter { get; }
+        public SearchResourceCounter IndexerCounter { get; }
 
         /// <summary> Total number of data sources. </summary>
-        public ResourceCounter DataSourceCounter { get; }
+        public SearchResourceCounter DataSourceCounter { get; }
 
         /// <summary> Total size of used storage in bytes. </summary>
-        public ResourceCounter StorageSizeCounter { get; }
+        public SearchResourceCounter StorageSizeCounter { get; }
 
         /// <summary> Total number of synonym maps. </summary>
-        public ResourceCounter SynonymMapCounter { get; }
+        public SearchResourceCounter SynonymMapCounter { get; }
 
         /// <summary> Total number of skillsets. </summary>
-        public ResourceCounter SkillsetCounter { get; }
+        public SearchResourceCounter SkillsetCounter { get; }
 
         /// <summary> Total memory consumption of all vector indexes within the service, in bytes. </summary>
-        public ResourceCounter VectorIndexSizeCounter { get; }
+        public SearchResourceCounter VectorIndexSizeCounter { get; }
     }
 }

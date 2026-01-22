@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using Azure.Azure.Search.Documents.Documents.Indexes; // TODO: Update namespace once SearchIndexerClient is in right namespace
 using Azure.Core;
 using Azure.Search.Documents.Indexes;
 

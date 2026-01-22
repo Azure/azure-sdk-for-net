@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters : IJsonModel<SearchServiceCounters>
@@ -99,61 +99,61 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            ResourceCounter aliasCounter = default;
-            ResourceCounter documentCounter = default;
-            ResourceCounter indexCounter = default;
-            ResourceCounter indexerCounter = default;
-            ResourceCounter dataSourceCounter = default;
-            ResourceCounter storageSizeCounter = default;
-            ResourceCounter synonymMapCounter = default;
-            ResourceCounter skillsetCounter = default;
-            ResourceCounter vectorIndexSizeCounter = default;
+            SearchResourceCounter aliasCounter = default;
+            SearchResourceCounter documentCounter = default;
+            SearchResourceCounter indexCounter = default;
+            SearchResourceCounter indexerCounter = default;
+            SearchResourceCounter dataSourceCounter = default;
+            SearchResourceCounter storageSizeCounter = default;
+            SearchResourceCounter synonymMapCounter = default;
+            SearchResourceCounter skillsetCounter = default;
+            SearchResourceCounter vectorIndexSizeCounter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("aliasesCount"u8))
                 {
-                    aliasCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    aliasCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("documentCount"u8))
                 {
-                    documentCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    documentCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("indexesCount"u8))
                 {
-                    indexCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    indexCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("indexersCount"u8))
                 {
-                    indexerCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    indexerCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataSourcesCount"u8))
                 {
-                    dataSourceCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    dataSourceCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageSize"u8))
                 {
-                    storageSizeCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    storageSizeCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("synonymMaps"u8))
                 {
-                    synonymMapCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    synonymMapCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("skillsetCount"u8))
                 {
-                    skillsetCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    skillsetCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vectorIndexSize"u8))
                 {
-                    vectorIndexSizeCounter = ResourceCounter.DeserializeResourceCounter(prop.Value, options);
+                    vectorIndexSizeCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents parameters for indexer execution. </summary>
     public partial class IndexingParameters : IJsonModel<IndexingParameters>
@@ -49,10 +49,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("maxFailedItemsPerBatch"u8);
                 writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                writer.WriteObjectValue(IndexingParametersConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.Models
             int? batchSize = default;
             int? maxFailedItems = default;
             int? maxFailedItemsPerBatch = default;
-            IndexingParametersConfiguration configuration = default;
+            IndexingParametersConfiguration indexingParametersConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    configuration = IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(prop.Value, options);
+                    indexingParametersConfiguration = IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, configuration, additionalBinaryDataProperties);
+            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, indexingParametersConfiguration, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

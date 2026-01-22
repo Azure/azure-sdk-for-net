@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Lists the languages supported by the Microsoft language stemming tokenizer. </summary>
     public readonly partial struct MicrosoftStemmingTokenizerLanguage : IEquatable<MicrosoftStemmingTokenizerLanguage>

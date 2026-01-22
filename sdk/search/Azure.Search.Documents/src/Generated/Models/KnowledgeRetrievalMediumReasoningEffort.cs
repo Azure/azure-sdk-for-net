@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Run knowledge retrieval with medium reasoning effort. </summary>
     public partial class KnowledgeRetrievalMediumReasoningEffort : KnowledgeRetrievalReasoningEffort

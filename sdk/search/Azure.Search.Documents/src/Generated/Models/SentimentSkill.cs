@@ -7,24 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> This skill is deprecated. Use the V3.SentimentSkill instead. </summary>
     public partial class SentimentSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public SentimentSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.SentimentSkill", inputs, outputs)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
-
-        }
-
         /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
@@ -38,8 +26,5 @@ namespace Azure.Search.Documents.Models
         {
             DefaultLanguageCode = defaultLanguageCode;
         }
-
-        /// <summary> A value indicating which language code to use. Default is `en`. </summary>
-        public SentimentSkillLanguage? DefaultLanguageCode { get; set; }
     }
 }

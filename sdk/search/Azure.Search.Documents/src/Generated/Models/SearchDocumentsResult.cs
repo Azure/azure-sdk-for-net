@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic ranking request. </param>
         /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, DebugInfo debugInfo, SearchRequest nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, DebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             Coverage = coverage;
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
         public DebugInfo DebugInfo { get; }
 
         /// <summary> Continuation JSON payload returned when the query can't return all the requested results in a single response. You can use this JSON along with. </summary>
-        public SearchRequest NextPageParameters { get; }
+        public SearchOptions NextPageParameters { get; }
 
         /// <summary> The sequence of results returned by the query. </summary>
         public IReadOnlyList<SearchResult> Results { get; }

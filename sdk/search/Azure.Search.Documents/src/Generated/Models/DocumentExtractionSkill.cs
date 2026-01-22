@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that extracts content from a file within the enrichment pipeline. </summary>
     public partial class DocumentExtractionSkill : SearchIndexerSkill
@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            Configuration = new ChangeTrackingDictionary<string, BinaryData>();
+            Configuration = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentExtractionSkill"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="parsingMode"> The parsingMode for the skill. Will be set to 'default' if not defined. </param>
         /// <param name="dataToExtract"> The type of data to be extracted for the skill. Will be set to 'contentAndMetadata' if not defined. </param>
         /// <param name="configuration"> A dictionary of configurations for the skill. </param>
-        internal DocumentExtractionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parsingMode, string dataToExtract, IDictionary<string, BinaryData> configuration) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal DocumentExtractionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parsingMode, string dataToExtract, IDictionary<string, object> configuration) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             ParsingMode = parsingMode;
             DataToExtract = dataToExtract;
@@ -77,6 +77,6 @@ namespace Azure.Search.Documents.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Configuration { get; set; }
+        public IDictionary<string, object> Configuration { get; set; }
     }
 }

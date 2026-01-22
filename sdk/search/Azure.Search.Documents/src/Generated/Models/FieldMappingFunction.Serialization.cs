@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a function that transforms a value from a data source before indexing. </summary>
     public partial class FieldMappingFunction : IJsonModel<FieldMappingFunction>
@@ -53,14 +53,7 @@ namespace Azure.Search.Documents.Models
                         writer.WriteNullValue();
                         continue;
                     }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue<object>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -107,7 +100,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string name = default;
-            IDictionary<string, BinaryData> parameters = default;
+            IDictionary<string, object> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -122,7 +115,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
                         if (prop0.Value.ValueKind == JsonValueKind.Null)
@@ -131,7 +124,7 @@ namespace Azure.Search.Documents.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetObject());
                         }
                     }
                     parameters = dictionary;
@@ -142,7 +135,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FieldMappingFunction(name, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
+            return new FieldMappingFunction(name, parameters ?? new ChangeTrackingDictionary<string, object>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

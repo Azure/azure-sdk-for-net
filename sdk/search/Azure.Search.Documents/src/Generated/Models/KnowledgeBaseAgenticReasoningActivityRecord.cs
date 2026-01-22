@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents an agentic reasoning activity record. </summary>
     public partial class KnowledgeBaseAgenticReasoningActivityRecord : KnowledgeBaseActivityRecord

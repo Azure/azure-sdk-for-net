@@ -8,7 +8,7 @@
 using Azure;
 using Azure.Core;
 
-namespace Azure.Azure.Search.Documents.Documents.KnowledgeBase
+namespace Azure.Search.Documents.KnowledgeBases
 {
     /// <summary></summary>
     public partial class KnowledgeBaseRetrievalClient

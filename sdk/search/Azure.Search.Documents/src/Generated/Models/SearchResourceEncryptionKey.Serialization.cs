@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest, such as indexes and synonym maps. </summary>
     public partial class SearchResourceEncryptionKey : IJsonModel<SearchResourceEncryptionKey>
@@ -46,18 +46,18 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("keyVaultKeyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            writer.WritePropertyName("keyVaultUri"u8);
-            writer.WriteStringValue(VaultUri);
-            if (Optional.IsDefined(AccessCredentials))
+            if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials"u8);
-                writer.WriteObjectValue(AccessCredentials, options);
+                writer.WriteObjectValue(AccessCredentialsInternal, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
+            writer.WritePropertyName("keyVaultUri"u8);
+            writer.WriteStringValue(_vaultUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,9 +102,9 @@ namespace Azure.Search.Documents.Models
             }
             string keyName = default;
             string keyVersion = default;
-            string vaultUri = default;
-            AzureActiveDirectoryApplicationCredentials accessCredentials = default;
+            AzureActiveDirectoryApplicationCredentials accessCredentialsInternal = default;
             SearchIndexerDataIdentity identity = default;
+            string vaultUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -118,18 +118,13 @@ namespace Azure.Search.Documents.Models
                     keyVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("keyVaultUri"u8))
-                {
-                    vaultUri = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("accessCredentials"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(prop.Value, options);
+                    accessCredentialsInternal = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -142,6 +137,11 @@ namespace Azure.Search.Documents.Models
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("keyVaultUri"u8))
+                {
+                    vaultUri = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -150,9 +150,9 @@ namespace Azure.Search.Documents.Models
             return new SearchResourceEncryptionKey(
                 keyName,
                 keyVersion,
-                vaultUri,
-                accessCredentials,
+                accessCredentialsInternal,
                 identity,
+                vaultUri,
                 additionalBinaryDataProperties);
         }
 

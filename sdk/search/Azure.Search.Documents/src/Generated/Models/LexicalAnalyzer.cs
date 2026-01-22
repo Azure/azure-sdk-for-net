@@ -7,14 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for analyzers.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/>, and <see cref="StopAnalyzer"/>.
-    /// </summary>
-    public abstract partial class LexicalAnalyzer
+    /// <summary> Base type for analyzers. </summary>
+    public partial class LexicalAnalyzer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,8 +20,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        private protected LexicalAnalyzer(string odataType, string name)
+        /// <exception cref="ArgumentNullException"> <paramref name="odataType"/> or <paramref name="name"/> is null. </exception>
+        public LexicalAnalyzer(string odataType, string name)
         {
+            Argument.AssertNotNull(odataType, nameof(odataType));
+            Argument.AssertNotNull(name, nameof(name));
+
             OdataType = odataType;
             Name = name;
         }

@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenType("NGramTokenizer")]
     public partial class NGramTokenizer
     {
         /// <summary> Character classes to keep in the tokens. </summary>

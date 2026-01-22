@@ -7,22 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for describing any Azure AI service resource attached to a skillset.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DefaultCognitiveServicesAccount"/>, <see cref="CognitiveServicesAccountKey"/>, <see cref="AIServicesAccountKey"/>, and <see cref="AIServicesAccountIdentity"/>.
-    /// </summary>
-    public abstract partial class CognitiveServicesAccount
+    /// <summary> Base type for describing any Azure AI service resource attached to a skillset. </summary>
+    public partial class CognitiveServicesAccount
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccount"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        private protected CognitiveServicesAccount(string odataType)
+        /// <exception cref="ArgumentNullException"> <paramref name="odataType"/> is null. </exception>
+        public CognitiveServicesAccount(string odataType)
         {
+            Argument.AssertNotNull(odataType, nameof(odataType));
+
             OdataType = odataType;
         }
 

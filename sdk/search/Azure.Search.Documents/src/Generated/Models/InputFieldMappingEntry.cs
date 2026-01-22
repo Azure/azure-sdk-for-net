@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Input field mapping for a skill. </summary>
     public partial class InputFieldMappingEntry
@@ -51,8 +51,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The source context used for selecting recursive inputs. </summary>
         public string SourceContext { get; set; }
-
-        /// <summary> The recursive inputs used when creating a complex type. </summary>
-        public IList<InputFieldMappingEntry> Inputs { get; }
     }
 }

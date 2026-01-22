@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> This skill is deprecated. Use the V3.EntityRecognitionSkill instead. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill, IJsonModel<EntityRecognitionSkill>

@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the aggregation function used to combine the results of all the scoring functions in a scoring profile. </summary>
     public readonly partial struct ScoringFunctionAggregation : IEquatable<ScoringFunctionAggregation>

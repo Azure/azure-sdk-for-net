@@ -9,15 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Base type for functions that can modify document scores during ranking.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/>, and <see cref="TagScoringFunction"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownScoringFunction))]
-    public abstract partial class ScoringFunction : IJsonModel<ScoringFunction>
+    /// <summary> Base type for functions that can modify document scores during ranking. </summary>
+    public partial class ScoringFunction : IJsonModel<ScoringFunction>
     {
         /// <summary> Initializes a new instance of <see cref="ScoringFunction"/> for deserialization. </summary>
         internal ScoringFunction()

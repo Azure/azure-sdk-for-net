@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="vectorFilterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
         /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchPostRequest(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IList<string> orderBy, QueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchPostRequest(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IList<string> orderBy, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Models
         public IList<string> OrderBy { get; }
 
         /// <summary> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </summary>
-        public QueryType? QueryType { get; }
+        public SearchQueryType? QueryType { get; }
 
         /// <summary> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </summary>
         public ScoringStatistics? ScoringStatistics { get; }

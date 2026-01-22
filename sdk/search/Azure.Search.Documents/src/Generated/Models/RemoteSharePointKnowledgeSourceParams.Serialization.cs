@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies runtime parameters for a remote SharePoint knowledge source. </summary>
     public partial class RemoteSharePointKnowledgeSourceParams : KnowledgeSourceParams, IJsonModel<RemoteSharePointKnowledgeSourceParams>

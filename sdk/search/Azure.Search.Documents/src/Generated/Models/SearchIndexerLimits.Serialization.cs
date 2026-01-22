@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the limits that can be applied to an indexer. </summary>
     public partial class SearchIndexerLimits : IJsonModel<SearchIndexerLimits>

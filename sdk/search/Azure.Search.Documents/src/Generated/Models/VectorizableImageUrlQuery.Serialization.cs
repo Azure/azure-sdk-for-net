@@ -68,7 +68,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             int? kNearestNeighbors = default;
-            IList<string> fields = default;
+            string fieldsRaw = default;
             bool? exhaustive = default;
             double? oversampling = default;
             float? weight = default;
@@ -91,23 +91,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("fields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    fields = array;
+                    fieldsRaw = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("exhaustive"u8))
@@ -177,7 +161,7 @@ namespace Azure.Search.Documents.Models
             }
             return new VectorizableImageUrlQuery(
                 kNearestNeighbors,
-                fields ?? new ChangeTrackingList<string>(),
+                fieldsRaw,
                 exhaustive,
                 oversampling,
                 weight,

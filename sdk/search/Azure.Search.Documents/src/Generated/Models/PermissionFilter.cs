@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
     public readonly partial struct PermissionFilter : IEquatable<PermissionFilter>

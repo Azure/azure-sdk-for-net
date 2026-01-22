@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Filters out tokens with same text as the previous token. This token filter is implemented using Apache Lucene. </summary>
     public partial class UniqueTokenFilter : TokenFilter, IJsonModel<UniqueTokenFilter>

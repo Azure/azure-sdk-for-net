@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Flexibly separates text into terms via a regular expression pattern. This analyzer is implemented using Apache Lucene. </summary>
     public partial class PatternAnalyzer : LexicalAnalyzer
@@ -21,7 +21,6 @@ namespace Azure.Search.Documents.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Flags = new ChangeTrackingList<RegexFlags>();
             Stopwords = new ChangeTrackingList<string>();
         }
 
@@ -31,13 +30,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lowerCaseTerms"> A value indicating whether terms should be lower-cased. Default is true. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
-        /// <param name="flags"> Regular expression flags. </param>
+        /// <param name="flagsInternal"> Regular expression flags. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
-        internal PatternAnalyzer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? lowerCaseTerms, string pattern, IList<RegexFlags> flags, IList<string> stopwords) : base(odataType, name, additionalBinaryDataProperties)
+        internal PatternAnalyzer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? lowerCaseTerms, string pattern, string flagsInternal, IList<string> stopwords) : base(odataType, name, additionalBinaryDataProperties)
         {
             LowerCaseTerms = lowerCaseTerms;
             Pattern = pattern;
-            Flags = flags;
+            FlagsInternal = flagsInternal;
             Stopwords = stopwords;
         }
 
@@ -46,11 +45,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </summary>
         public string Pattern { get; set; }
-
-        /// <summary> Regular expression flags. </summary>
-        public IList<RegexFlags> Flags { get; }
-
-        /// <summary> A list of stopwords. </summary>
-        public IList<string> Stopwords { get; }
     }
 }
