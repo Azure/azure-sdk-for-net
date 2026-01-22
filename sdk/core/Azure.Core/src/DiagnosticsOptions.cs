@@ -12,8 +12,6 @@ namespace Azure.Core
     /// </summary>
     public class DiagnosticsOptions
     {
-        private const int MaxApplicationIdLength = 24;
-
         private string? _applicationId;
 
         /// <summary>
@@ -122,10 +120,6 @@ namespace Azure.Core
             get => _applicationId;
             set
             {
-                if (value != null && value.Length > MaxApplicationIdLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
-                }
                 _applicationId = value;
             }
         }

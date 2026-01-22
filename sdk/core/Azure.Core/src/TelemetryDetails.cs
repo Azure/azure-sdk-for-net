@@ -15,7 +15,6 @@ namespace Azure.Core
     /// </summary>
     public class TelemetryDetails
     {
-        private const int MaxApplicationIdLength = 24;
         private readonly string _userAgent;
 
         /// <summary>
@@ -41,10 +40,6 @@ namespace Azure.Core
         internal TelemetryDetails(Assembly assembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
-            if (applicationId?.Length > MaxApplicationIdLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
-            }
 
             Assembly = assembly;
             ApplicationId = applicationId;
