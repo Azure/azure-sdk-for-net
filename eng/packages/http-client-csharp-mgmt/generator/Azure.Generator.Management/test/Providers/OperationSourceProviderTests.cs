@@ -58,14 +58,16 @@ namespace Azure.Generator.Management.Tests.Providers
                 "createSite",
                 createSiteOperation,
                 parameters: [siteNameMethodParam, subscriptionIdMethodParam, resourceGroupMethodParam],
-                longRunningServiceMetadata: lroMetadata1);
+                longRunningServiceMetadata: lroMetadata1,
+                crossLanguageDefinitionId: "Test.SiteClient.createSite");
 
             var getSiteMethod = InputFactory.BasicServiceMethod(
                 "getSite",
                 InputFactory.Operation(
                     name: "getSite",
                     responses: [responseType],
-                    parameters: [siteNameMethodParam, subscriptionIdMethodParam, resourceGroupMethodParam]));
+                    parameters: [siteNameMethodParam, subscriptionIdMethodParam, resourceGroupMethodParam]),
+                crossLanguageDefinitionId: "Test.SiteClient.getSite");
 
             var siteResourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SiteManager/sites/{siteName}";
             var siteDecorator = BuildArmProviderSchema(
@@ -95,14 +97,16 @@ namespace Azure.Generator.Management.Tests.Providers
                 "createSitesBySubscription",
                 createSiteBySubOperation,
                 parameters: [siteNameMethodParam2, subscriptionIdMethodParam],
-                longRunningServiceMetadata: lroMetadata2);
+                longRunningServiceMetadata: lroMetadata2,
+                crossLanguageDefinitionId: "Test.SitesBySubscriptionClient.createSitesBySubscription");
 
             var getSiteBySubMethod = InputFactory.BasicServiceMethod(
                 "getSitesBySubscription",
                 InputFactory.Operation(
                     name: "getSitesBySubscription",
                     responses: [responseType],
-                    parameters: [siteNameMethodParam2, subscriptionIdMethodParam]));
+                    parameters: [siteNameMethodParam2, subscriptionIdMethodParam]),
+                crossLanguageDefinitionId: "Test.SitesBySubscriptionClient.getSitesBySubscription");
 
             var sitesBySubscriptionResourceIdPattern = "/subscriptions/{subscriptionId}/providers/Microsoft.SiteManager/sites/{siteName}";
             var sitesBySubscriptionDecorator = BuildArmProviderSchema(
