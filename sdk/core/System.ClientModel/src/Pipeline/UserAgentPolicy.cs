@@ -17,7 +17,6 @@ public class UserAgentPolicy : PipelinePolicy
     private const int MaxApplicationIdLength = 24;
     private const int DefaultMaxUserAgentLength = 300;
     private readonly string _userAgent;
-    private readonly int _maxUserAgentLength;
 
     /// <summary>
     /// The package type represented by this <see cref="UserAgentPolicy"/> instance.
@@ -71,7 +70,6 @@ public class UserAgentPolicy : PipelinePolicy
         Assembly = callerAssembly;
         ApplicationId = applicationId;
         MaxUserAgentLength = maxUserAgentLength;
-        _maxUserAgentLength = maxUserAgentLength;
         string fullUserAgent = GenerateUserAgentString(callerAssembly, applicationId, new RuntimeInformationWrapper());
         _userAgent = TruncateUserAgent(fullUserAgent, maxUserAgentLength);
     }
