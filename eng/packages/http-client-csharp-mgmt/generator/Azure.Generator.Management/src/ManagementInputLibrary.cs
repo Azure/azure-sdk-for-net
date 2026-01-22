@@ -201,19 +201,44 @@ namespace Azure.Generator.Management
                 return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
-            var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
+            var armProviderDecorators = rootClient.Decorators
+                .Where(d => d.Name == ArmProviderSchemaDecoratorName)
+                .ToList();
 
-            if (armProviderDecorator?.Arguments != null)
+            if (armProviderDecorators.Count == 0)
             {
-                // Filter out methods that should be omitted during deserialization
-                return ArmProviderSchema.Deserialize(
-                    armProviderDecorator.Arguments,
-                    this,
-                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
+                // Fallback to empty schema if decorator not found
+                return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
-            // Fallback to empty schema if decorator not found
-            return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
+            var resourcesByIdPattern = new Dictionary<string, ResourceMetadata>(StringComparer.OrdinalIgnoreCase);
+            var nonResourceMethodsById = new Dictionary<string, NonResourceMethod>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var decorator in armProviderDecorators)
+            {
+                if (decorator.Arguments == null)
+                {
+                    continue;
+                }
+
+                // Filter out methods that should be omitted during deserialization
+                var schema = ArmProviderSchema.Deserialize(
+                    decorator.Arguments,
+                    this,
+                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
+
+                foreach (var resource in schema.Resources)
+                {
+                    resourcesByIdPattern.TryAdd(resource.ResourceIdPattern, resource);
+                }
+
+                foreach (var nonResourceMethod in schema.NonResourceMethods)
+                {
+                    nonResourceMethodsById.TryAdd(nonResourceMethod.InputMethod.CrossLanguageDefinitionId, nonResourceMethod);
+                }
+            }
+
+            return new ArmProviderSchema(resourcesByIdPattern.Values.ToList(), nonResourceMethodsById.Values.ToList());
         }
 
         internal InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)

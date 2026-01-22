@@ -469,7 +469,7 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                crossLanguageDefinitionId ?? Guid.NewGuid().ToString());
+                crossLanguageDefinitionId ?? string.Empty);
         }
 
         /// <summary>
@@ -543,7 +543,6 @@ namespace Azure.Generator.Tests.Common
         /// <param name="response"></param>
         /// <param name="exception"></param>
         /// <param name="longRunningServiceMetadata"></param>
-        /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
         public static InputLongRunningServiceMethod LongRunningServiceMethod(
             string name,
@@ -552,8 +551,7 @@ namespace Azure.Generator.Tests.Common
             IReadOnlyList<InputMethodParameter>? parameters = null,
             InputServiceMethodResponse? response = null,
             InputServiceMethodResponse? exception = null,
-            InputLongRunningServiceMetadata? longRunningServiceMetadata = null,
-            string? crossLanguageDefinitionId = null)
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
         {
             return new InputLongRunningServiceMethod(
                 name,
@@ -568,7 +566,7 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                crossLanguageDefinitionId ?? Guid.NewGuid().ToString(),
+                string.Empty,
                 longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
         }
 

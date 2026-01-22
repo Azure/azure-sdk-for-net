@@ -146,12 +146,12 @@ namespace Azure.Generator.Management.Tests.Providers
             var names = operationSourcesList.Select(os => os.Name).OrderBy(n => n).ToList();
 
             // Both resources should have their own OperationSource
-            Assert.Contains("SiteResourceOperationSource", names, "Should have SiteResourceOperationSource");
-            Assert.Contains("SitesBySubscriptionResourceOperationSource", names, "Should have SitesBySubscriptionResourceOperationSource");
+            Assert.Contains("SiteOperationSource", names, "Should have SiteResourceOperationSource");
+            Assert.Contains("SitesBySubscriptionOperationSource", names, "Should have SitesBySubscriptionResourceOperationSource");
 
             // Verify each OperationSource implements IOperationSource<CorrectResourceType>
-            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteResourceOperationSource");
-            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionResourceOperationSource");
+            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteOperationSource");
+            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionOperationSource");
 
             // Check that the OperationSource implements IOperationSource<T> with the correct T
             var siteImplements = siteOperationSource.Implements;
@@ -287,7 +287,7 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var client = InputFactory.Client(
                 TestClientName,
-                methods: [createMethod],
+                methods: [createMethod, getMethod],
                 decorators: [armProviderDecorator],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
 
