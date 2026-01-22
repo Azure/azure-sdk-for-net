@@ -454,19 +454,19 @@
     local Directory.Build.props files.
     
     If you have a legitimate need to override a package version, add a scoped entry
-    to eng/Packages.Data.props with appropriate conditions.
+    to eng/Directory.Packages.props with appropriate conditions.
   -->
   <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
-    <!-- Block re-enabling VersionOverride (current custom SDK) -->
+    <!-- Block re-enabling VersionOverride (legacy custom SDK property - kept for safety) -->
     <Error 
       Condition="'$(EnablePackageVersionOverride)' == 'true'" 
-      Text="Package version overrides are disabled in this repository. Do not set EnablePackageVersionOverride='true'. If you need a specific package version, add a scoped entry to eng/Packages.Data.props."
+      Text="Package version overrides are disabled in this repository. Do not set EnablePackageVersionOverride='true'. If you need a specific package version, add a scoped entry to eng/Directory.Packages.props."
       Code="AZSDK0001" />
     
-    <!-- Block re-enabling VersionOverride (modern .NET CPM - future proofing) -->
+    <!-- Block re-enabling VersionOverride (modern .NET CPM) -->
     <Error 
       Condition="'$(CentralPackageVersionOverrideEnabled)' == 'true'" 
-      Text="Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. If you need a specific package version, add a scoped entry to eng/Packages.Data.props."
+      Text="Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. If you need a specific package version, add a scoped entry to eng/Directory.Packages.props."
       Code="AZSDK0002" />
     
     <!-- Block disabling central package management entirely -->
@@ -475,6 +475,4 @@
       Text="Central Package Management is required in this repository. Do not set ManagePackageVersionsCentrally='false'."
       Code="AZSDK0003" />
   </Target>
-
-  <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
 </Project>
