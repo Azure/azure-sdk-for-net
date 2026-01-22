@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogFileProperties"/>. </summary>
-        internal LogFileProperties()
+        public LogFileProperties()
         {
         }
 
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The size in kb of the logFile. </summary>
-        public long? SizeInKB { get; }
+        public long? SizeInKB { get; set; }
 
         /// <summary> Creation timestamp of the log file. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Type of the log file. </summary>
-        public string TypePropertiesType { get; }
+        public string TypePropertiesType { get; set; }
 
         /// <summary> Last modified timestamp of the log file. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn { get; set; }
 
         /// <summary> The url to download the log file from. </summary>
-        public Uri Uri { get; }
+        public Uri Uri { get; set; }
     }
 }

@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    internal partial class UnknownBackupStoreDetails : BackupStoreDetails
+    internal partial class UnknownMySqlFlexibleServerBackupStoreDetails : MySqlFlexibleServerBackupStoreDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBackupStoreDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMySqlFlexibleServerBackupStoreDetails"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBackupStoreDetails(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownMySqlFlexibleServerBackupStoreDetails(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -12,13 +12,13 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> BackupAndExport API Request. </summary>
-    public partial class MySqlFlexibleServerBackupAndExportRequest : MySqlFlexibleServerBackupContentBase
+    public partial class MySqlFlexibleServerBackupAndExportContent : MySqlFlexibleServerBackupContentBase
     {
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetails"> Backup Target Store Details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
-        public MySqlFlexibleServerBackupAndExportRequest(MySqlFlexibleServerBackupSettings backupSettings, BackupStoreDetails targetDetails) : base(backupSettings)
+        public MySqlFlexibleServerBackupAndExportContent(MySqlFlexibleServerBackupSettings backupSettings, MySqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)
         {
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
             Argument.AssertNotNull(targetDetails, nameof(targetDetails));
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             TargetDetails = targetDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetDetails"> Backup Target Store Details. </param>
-        internal MySqlFlexibleServerBackupAndExportRequest(MySqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupStoreDetails targetDetails) : base(backupSettings, additionalBinaryDataProperties)
+        internal MySqlFlexibleServerBackupAndExportContent(MySqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, MySqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings, additionalBinaryDataProperties)
         {
             TargetDetails = targetDetails;
         }
 
         /// <summary> Backup Target Store Details. </summary>
-        public BackupStoreDetails TargetDetails { get; }
+        public MySqlFlexibleServerBackupStoreDetails TargetDetails { get; }
     }
 }

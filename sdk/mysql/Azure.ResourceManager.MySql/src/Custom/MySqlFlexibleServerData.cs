@@ -9,12 +9,9 @@ using System.ComponentModel;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the MySqlFlexibleServer data model.
-    /// Represents a server.
-    /// </summary>
     public partial class MySqlFlexibleServerData : TrackedResourceData
     {
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
@@ -38,7 +35,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         foreach (var gid in item.GroupIds)
                             modelGroupIds.Add(gid);
                     }
-                    model.PrivateEndpoint = item.PrivateEndpoint;
+                    model.PrivateEndpointId = item.PrivateEndpointId;
                     model.ConnectionState = item.PrivateLinkServiceConnectionState;
                     list.Add(model);
                 }

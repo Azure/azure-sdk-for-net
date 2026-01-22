@@ -20,13 +20,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/>. </summary>
-        /// <param name="properties"> The properties of a maintenance. </param>
-        internal MySqlFlexibleServerMaintenanceData(MaintenanceProperties properties)
-        {
-            Properties = properties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -40,14 +33,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> The properties of a maintenance. </summary>
-        internal MaintenanceProperties Properties { get; }
+        internal MaintenanceProperties Properties { get; set; }
 
         /// <summary> A string defines maintenance type. </summary>
         public MySqlFlexibleServerMaintenanceType? MaintenanceType
         {
             get
             {
-                return Properties.MaintenanceType;
+                return Properties is null ? default : Properties.MaintenanceType;
             }
         }
 
@@ -56,7 +49,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceState;
+                return Properties is null ? default : Properties.MaintenanceState;
             }
         }
 
@@ -65,7 +58,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceStartOn;
+                return Properties is null ? default : Properties.MaintenanceStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceProperties();
+                }
+                Properties.MaintenanceStartOn = value.Value;
             }
         }
 
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceEndOn;
+                return Properties is null ? default : Properties.MaintenanceEndOn;
             }
         }
 
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceExecutionStartOn;
+                return Properties is null ? default : Properties.MaintenanceExecutionStartOn;
             }
         }
 
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceExecutionEndOn;
+                return Properties is null ? default : Properties.MaintenanceExecutionEndOn;
             }
         }
 
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceAvailableScheduleMinOn;
+                return Properties is null ? default : Properties.MaintenanceAvailableScheduleMinOn;
             }
         }
 
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceAvailableScheduleMaxOn;
+                return Properties is null ? default : Properties.MaintenanceAvailableScheduleMaxOn;
             }
         }
 
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceTitle;
+                return Properties is null ? default : Properties.MaintenanceTitle;
             }
         }
 
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.MaintenanceDescription;
+                return Properties is null ? default : Properties.MaintenanceDescription;
             }
         }
 
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

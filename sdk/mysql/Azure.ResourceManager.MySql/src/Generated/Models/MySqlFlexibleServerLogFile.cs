@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFile"/>. </summary>
-        internal MySqlFlexibleServerLogFile()
+        public MySqlFlexibleServerLogFile()
         {
         }
 
@@ -37,14 +37,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The properties of a logFile. </summary>
-        internal LogFileProperties Properties { get; }
+        internal LogFileProperties Properties { get; set; }
 
         /// <summary> The size in kb of the logFile. </summary>
         public long? SizeInKB
         {
             get
             {
-                return Properties.SizeInKB;
+                return Properties is null ? default : Properties.SizeInKB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LogFileProperties();
+                }
+                Properties.SizeInKB = value.Value;
             }
         }
 
@@ -53,7 +61,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LogFileProperties();
+                }
+                Properties.CreatedOn = value.Value;
             }
         }
 
@@ -62,7 +78,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties.TypePropertiesType;
+                return Properties is null ? default : Properties.TypePropertiesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LogFileProperties();
+                }
+                Properties.TypePropertiesType = value;
             }
         }
 
@@ -71,7 +95,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties.LastModifiedOn;
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LogFileProperties();
+                }
+                Properties.LastModifiedOn = value.Value;
             }
         }
 
@@ -80,7 +112,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties.Uri;
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LogFileProperties();
+                }
+                Properties.Uri = value;
             }
         }
     }

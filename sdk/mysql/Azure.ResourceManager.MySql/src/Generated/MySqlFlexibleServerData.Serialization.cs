@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ServerProperties properties = default;
-            MySQLServerIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             MySqlFlexibleServerSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         continue;
                     }
-                    identity = MySQLServerIdentity.DeserializeMySQLServerIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

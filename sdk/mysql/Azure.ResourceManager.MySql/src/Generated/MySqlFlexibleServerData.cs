@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="properties"> Properties of the server. </param>
         /// <param name="identity"> The cmk identity for the server. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ServerProperties properties, MySQLServerIdentity identity, MySqlFlexibleServerSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ServerProperties properties, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         internal ServerProperties Properties { get; set; }
 
         /// <summary> The cmk identity for the server. </summary>
-        public MySQLServerIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlFlexibleServerSku Sku { get; set; }
@@ -161,6 +161,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     Properties = new ServerProperties();
                 }
                 Properties.SourceServerResourceId = value;
+            }
+        }
+
+        /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
+        public DateTimeOffset? RestorePointInOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorePointInOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.RestorePointInOn = value.Value;
             }
         }
 

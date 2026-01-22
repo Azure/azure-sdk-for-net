@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, AzureLocation locationName, RequestContext context)
+        internal HttpMessage CreateGetLocationBasedCapabilitiesRequest(Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, RequestContext context)
+        internal HttpMessage CreateNextGetLocationBasedCapabilitiesRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

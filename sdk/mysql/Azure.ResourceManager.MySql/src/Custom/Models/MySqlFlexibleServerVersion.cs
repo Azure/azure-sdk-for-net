@@ -4,8 +4,8 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The version of a server. </summary>
@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         /// <summary> 5.7. </summary>
         [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Five7")]
-        public static MySqlFlexibleServerVersion Ver5_7 { get; } = new MySqlFlexibleServerVersion(Ver5_7Value);
+        public static MySqlFlexibleServerVersion Ver5_7 { get; } = new MySqlFlexibleServerVersion(Five7Value);
         /// <summary> 8.0.21. </summary>
         [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Eight021")]
-        public static MySqlFlexibleServerVersion Ver8_0_21 { get; } = new MySqlFlexibleServerVersion(Ver8_0_21Value);
+        public static MySqlFlexibleServerVersion Ver8_0_21 { get; } = new MySqlFlexibleServerVersion(Eight021Value);
     }
 }

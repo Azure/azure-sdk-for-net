@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="advancedThreatProtectionPatch"> The server's Advanced Threat Protection body to update. </param>
+        /// <param name="patch"> The server's Advanced Threat Protection body to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advancedThreatProtectionPatch"/> is null. </exception>
-        public virtual async Task<ArmOperation<AdvancedThreatProtectionResource>> UpdateAsync(WaitUntil waitUntil, AdvancedThreatProtectionPatch advancedThreatProtectionPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<AdvancedThreatProtectionResource>> UpdateAsync(WaitUntil waitUntil, AdvancedThreatProtectionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(advancedThreatProtectionPatch, nameof(advancedThreatProtectionPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedThreatProtectionPatch.ToRequestContent(advancedThreatProtectionPatch), context);
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedThreatProtectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
                     new AdvancedThreatProtectionOperationSource(Client),
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="advancedThreatProtectionPatch"> The server's Advanced Threat Protection body to update. </param>
+        /// <param name="patch"> The server's Advanced Threat Protection body to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advancedThreatProtectionPatch"/> is null. </exception>
-        public virtual ArmOperation<AdvancedThreatProtectionResource> Update(WaitUntil waitUntil, AdvancedThreatProtectionPatch advancedThreatProtectionPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<AdvancedThreatProtectionResource> Update(WaitUntil waitUntil, AdvancedThreatProtectionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(advancedThreatProtectionPatch, nameof(advancedThreatProtectionPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionResource.Update");
             scope.Start();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedThreatProtectionPatch.ToRequestContent(advancedThreatProtectionPatch), context);
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedThreatProtectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
                     new AdvancedThreatProtectionOperationSource(Client),

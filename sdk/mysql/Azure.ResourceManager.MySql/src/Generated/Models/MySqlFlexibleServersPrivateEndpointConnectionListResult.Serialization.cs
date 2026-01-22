@@ -16,7 +16,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
-    public partial class MySqlFlexibleServersPrivateEndpointConnectionListResult : IJsonModel<MySqlFlexibleServersPrivateEndpointConnectionListResult>
+    internal partial class MySqlFlexibleServersPrivateEndpointConnectionListResult : IJsonModel<MySqlFlexibleServersPrivateEndpointConnectionListResult>
     {
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateEndpointConnectionListResult"/> for deserialization. </summary>
         internal MySqlFlexibleServersPrivateEndpointConnectionListResult()

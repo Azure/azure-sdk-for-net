@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupData"/>. </summary>
-        internal MySqlFlexibleServerBackupData()
+        public MySqlFlexibleServerBackupData()
         {
         }
 
@@ -38,14 +38,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> The properties of a server backup. </summary>
-        internal ServerBackupProperties Properties { get; }
+        internal ServerBackupProperties Properties { get; set; }
 
         /// <summary> Backup type. </summary>
         public string BackupType
         {
             get
             {
-                return Properties.BackupType;
+                return Properties is null ? default : Properties.BackupType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBackupProperties();
+                }
+                Properties.BackupType = value;
             }
         }
 
@@ -54,7 +62,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.CompletedOn;
+                return Properties is null ? default : Properties.CompletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBackupProperties();
+                }
+                Properties.CompletedOn = value.Value;
             }
         }
 
@@ -63,7 +79,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.Source;
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBackupProperties();
+                }
+                Properties.Source = value;
             }
         }
     }

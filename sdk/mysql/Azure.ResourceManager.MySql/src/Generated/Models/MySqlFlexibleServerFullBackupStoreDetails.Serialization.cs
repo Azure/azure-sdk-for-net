@@ -15,7 +15,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> FullBackupStoreDetails is used for scenarios where backup data is streamed/copied over to a storage destination. </summary>
-    public partial class MySqlFlexibleServerFullBackupStoreDetails : BackupStoreDetails, IJsonModel<MySqlFlexibleServerFullBackupStoreDetails>
+    public partial class MySqlFlexibleServerFullBackupStoreDetails : MySqlFlexibleServerBackupStoreDetails, IJsonModel<MySqlFlexibleServerFullBackupStoreDetails>
     {
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFullBackupStoreDetails"/> for deserialization. </summary>
         internal MySqlFlexibleServerFullBackupStoreDetails()
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupStoreDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MySqlFlexibleServerBackupStoreDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFullBackupStoreDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupStoreDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MySqlFlexibleServerBackupStoreDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFullBackupStoreDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

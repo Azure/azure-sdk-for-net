@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The current status of an async operation. </summary>

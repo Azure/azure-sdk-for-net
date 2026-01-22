@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerBackupProperties"/>. </summary>
-        internal ServerBackupProperties()
+        public ServerBackupProperties()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Backup type. </summary>
-        public string BackupType { get; }
+        public string BackupType { get; set; }
 
         /// <summary> Backup completed time (ISO8601 format). </summary>
-        public DateTimeOffset? CompletedOn { get; }
+        public DateTimeOffset? CompletedOn { get; set; }
 
         /// <summary> Backup source. </summary>
-        public string Source { get; }
+        public string Source { get; set; }
     }
 }

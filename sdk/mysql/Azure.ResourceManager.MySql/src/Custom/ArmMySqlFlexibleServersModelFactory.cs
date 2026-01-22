@@ -10,6 +10,16 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+{
+    /// <summary> Model factory for models. </summary>
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("ArmMySqlModelFactory")]
+    public static partial class ArmMySqlFlexibleServersModelFactory
+    {
+    }
+}
+/*
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Model factory for models. </summary>
@@ -235,3 +245,4 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             => MySqlFlexibleServerConfigurations(values, null);
     }
 }
+*/

@@ -15,21 +15,21 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal partial class LogFilesGetByServerAsyncCollectionResultOfT : AsyncPageable<MySqlFlexibleServerLogFile>
+    internal partial class ReplicasGetReplicasAsyncCollectionResultOfT : AsyncPageable<MySqlFlexibleServerData>
     {
-        private readonly LogFiles _client;
+        private readonly Replicas _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serverName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of LogFilesGetByServerAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The LogFiles client used to send requests. </param>
+        /// <summary> Initializes a new instance of ReplicasGetReplicasAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Replicas client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LogFilesGetByServerAsyncCollectionResultOfT(LogFiles client, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ReplicasGetReplicasAsyncCollectionResultOfT(Replicas client, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _context = context;
         }
 
-        /// <summary> Gets the pages of LogFilesGetByServerAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ReplicasGetReplicasAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LogFilesGetByServerAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MySqlFlexibleServerLogFile>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ReplicasGetReplicasAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<MySqlFlexibleServerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     yield break;
                 }
-                MySqlFlexibleServerLogFileListResult result = MySqlFlexibleServerLogFileListResult.FromResponse(response);
-                yield return Page<MySqlFlexibleServerLogFile>.FromValues((IReadOnlyList<MySqlFlexibleServerLogFile>)result.Value, nextPage?.AbsoluteUri, response);
+                MySqlFlexibleServerListResult result = MySqlFlexibleServerListResult.FromResponse(response);
+                yield return Page<MySqlFlexibleServerData>.FromValues((IReadOnlyList<MySqlFlexibleServerData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByServerRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _context) : _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MySqlFlexibleServerResource.GetByServer");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetReplicasRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _context) : _client.CreateGetReplicasRequest(_subscriptionId, _resourceGroupName, _serverName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MySqlFlexibleServerResource.GetReplicas");
             scope.Start();
             try
             {

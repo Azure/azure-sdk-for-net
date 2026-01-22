@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             return new MySqlFlexibleServerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual MySqlFlexibleServersPrivateEndpointConnectionResource GetMySqlFlexibleServersPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            MySqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MySqlFlexibleServerBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -105,6 +105,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             AdvancedThreatProtectionResource.ValidateResourceId(id);
             return new AdvancedThreatProtectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MySqlFlexibleServersCapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MySqlFlexibleServersCapabilityResource"/> object. </returns>
+        public virtual MySqlFlexibleServersCapabilityResource GetMySqlFlexibleServersCapabilityResource(ResourceIdentifier id)
+        {
+            MySqlFlexibleServersCapabilityResource.ValidateResourceId(id);
+            return new MySqlFlexibleServersCapabilityResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MySqlFlexibleServerMaintenanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

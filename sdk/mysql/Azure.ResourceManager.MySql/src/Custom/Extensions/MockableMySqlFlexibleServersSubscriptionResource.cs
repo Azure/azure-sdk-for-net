@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableMySqlFlexibleServersSubscriptionResource : ArmResource
     {
         /// <summary>

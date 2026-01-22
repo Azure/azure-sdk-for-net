@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.Execute");
+            using DiagnosticScope scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();
             try
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteRequest(context);
+                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> response = Response.FromValue(MySqlFlexibleServerPrivateDnsZoneSuffixResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> Execute(CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.Execute");
+            using DiagnosticScope scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();
             try
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteRequest(context);
+                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> response = Response.FromValue(MySqlFlexibleServerPrivateDnsZoneSuffixResponse.FromResponse(result), result);
                 if (response.Value == null)

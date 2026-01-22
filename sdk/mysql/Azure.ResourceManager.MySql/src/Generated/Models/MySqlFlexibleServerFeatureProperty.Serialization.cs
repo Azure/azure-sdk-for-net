@@ -14,12 +14,12 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Metadata of user assigned identity. </summary>
-    public partial class UserAssignedIdentity : IJsonModel<UserAssignedIdentity>
+    /// <summary> Server version capabilities. </summary>
+    public partial class MySqlFlexibleServerFeatureProperty : IJsonModel<MySqlFlexibleServerFeatureProperty>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MySqlFlexibleServerFeatureProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            if (options.Format != "W" && Optional.IsDefined(FeatureName))
             {
-                writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId);
+                writer.WritePropertyName("featureName"u8);
+                writer.WriteStringValue(FeatureName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClientId))
+            if (options.Format != "W" && Optional.IsDefined(FeatureValue))
             {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WritePropertyName("featureValue"u8);
+                writer.WriteStringValue(FeatureValue);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -64,42 +64,42 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentity IJsonModel<UserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MySqlFlexibleServerFeatureProperty IJsonModel<MySqlFlexibleServerFeatureProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MySqlFlexibleServerFeatureProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserAssignedIdentity(document.RootElement, options);
+            return DeserializeMySqlFlexibleServerFeatureProperty(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options)
+        internal static MySqlFlexibleServerFeatureProperty DeserializeMySqlFlexibleServerFeatureProperty(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string principalId = default;
-            string clientId = default;
+            string featureName = default;
+            string featureValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("principalId"u8))
+                if (prop.NameEquals("featureName"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    featureName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clientId"u8))
+                if (prop.NameEquals("featureValue"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    featureValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,47 +107,47 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties);
+            return new MySqlFlexibleServerFeatureProperty(featureName, featureValue, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserAssignedIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MySqlFlexibleServerFeatureProperty>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentity IPersistableModel<UserAssignedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MySqlFlexibleServerFeatureProperty IPersistableModel<MySqlFlexibleServerFeatureProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MySqlFlexibleServerFeatureProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUserAssignedIdentity(document.RootElement, options);
+                        return DeserializeMySqlFlexibleServerFeatureProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserAssignedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MySqlFlexibleServerFeatureProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

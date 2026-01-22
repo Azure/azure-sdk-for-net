@@ -32,14 +32,5 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Resource update properties. </summary>
         internal AdvancedThreatProtectionUpdateProperties Properties { get; set; }
-
-        /// <summary> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </summary>
-        public AdvancedThreatProtectionState State
-        {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
-        }
     }
 }

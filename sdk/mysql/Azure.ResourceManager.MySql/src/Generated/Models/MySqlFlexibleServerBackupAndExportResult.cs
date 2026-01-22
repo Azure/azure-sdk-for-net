@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportResult"/>. </summary>
-        internal MySqlFlexibleServerBackupAndExportResult()
+        public MySqlFlexibleServerBackupAndExportResult()
         {
         }
 
@@ -48,29 +48,37 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal BackupAndExportResponseProperties Properties { get; }
+        internal BackupAndExportResponseProperties Properties { get; set; }
 
         /// <summary> The error object. </summary>
-        public ResponseError Error { get; }
+        public ResponseError Error { get; set; }
 
         /// <summary> The operation status. </summary>
-        public MySqlFlexibleServerBackupAndExportOperationStatus? Status { get; }
+        public MySqlFlexibleServerBackupAndExportOperationStatus? Status { get; set; }
 
         /// <summary> Start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Operation progress (0-100). </summary>
-        public double? PercentComplete { get; }
+        public double? PercentComplete { get; set; }
 
         /// <summary> Size of datasource in bytes. </summary>
         public long? DatasourceSizeInBytes
         {
             get
             {
-                return Properties.DatasourceSizeInBytes;
+                return Properties is null ? default : Properties.DatasourceSizeInBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupAndExportResponseProperties();
+                }
+                Properties.DatasourceSizeInBytes = value.Value;
             }
         }
 
@@ -79,7 +87,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties.DataTransferredInBytes;
+                return Properties is null ? default : Properties.DataTransferredInBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupAndExportResponseProperties();
+                }
+                Properties.DataTransferredInBytes = value.Value;
             }
         }
 
@@ -88,7 +104,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties.BackupMetadata;
+                return Properties is null ? default : Properties.BackupMetadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupAndExportResponseProperties();
+                }
+                Properties.BackupMetadata = value;
             }
         }
     }

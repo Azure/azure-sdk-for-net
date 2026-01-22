@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("MySqlFlexibleServersExtensions")]

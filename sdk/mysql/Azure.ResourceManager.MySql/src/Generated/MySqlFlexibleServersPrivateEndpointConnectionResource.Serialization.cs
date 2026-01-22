@@ -13,7 +13,7 @@ using Azure.ResourceManager.MySql;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<MySqlFlexibleServersPrivateEndpointConnectionData>
+    public partial class MySqlFlexibleServersPrivateEndpointConnectionResource : IJsonModel<MySqlFlexibleServersPrivateEndpointConnectionData>
     {
         private static IJsonModel<MySqlFlexibleServersPrivateEndpointConnectionData> s_dataDeserializationInstance;
 

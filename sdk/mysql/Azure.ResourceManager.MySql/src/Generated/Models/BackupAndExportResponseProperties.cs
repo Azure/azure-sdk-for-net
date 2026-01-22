@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupAndExportResponseProperties"/>. </summary>
-        internal BackupAndExportResponseProperties()
+        public BackupAndExportResponseProperties()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Size of datasource in bytes. </summary>
-        public long? DatasourceSizeInBytes { get; }
+        public long? DatasourceSizeInBytes { get; set; }
 
         /// <summary> Data transferred in bytes. </summary>
-        public long? DataTransferredInBytes { get; }
+        public long? DataTransferredInBytes { get; set; }
 
         /// <summary> Metadata related to backup to be stored for restoring resource in key-value pairs. </summary>
-        public string BackupMetadata { get; }
+        public string BackupMetadata { get; set; }
     }
 }

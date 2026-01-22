@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The private endpoint connection resource. </summary>
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         internal MySqlFlexibleServersPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, MySqlFlexibleServersPrivateLinkServiceConnectionState connectionState, MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupIds = groupIds;
-            PrivateEndpoint = privateEndpoint;
+            PrivateEndpointId = privateEndpoint.Id;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -73,14 +74,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> The group ids for the private endpoint resource. </summary>
         public IReadOnlyList<string> GroupIds { get; }
-        /// <summary> The private endpoint resource. </summary>
-        internal SubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-        }
-
+        /// <summary> The private endpoint resource Id. </summary>
+        public ResourceIdentifier PrivateEndpointId { get; set; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public MySqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>

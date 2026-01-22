@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFirewallRuleData"/>. </summary>
-        /// <param name="startIpAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIpAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startIpAddress"/> or <paramref name="endIpAddress"/> is null. </exception>
-        public MySqlFlexibleServerFirewallRuleData(IPAddress startIpAddress, IPAddress endIpAddress)
+        /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
+        public MySqlFlexibleServerFirewallRuleData(IPAddress startIPAddress, IPAddress endIPAddress)
         {
-            Argument.AssertNotNull(startIpAddress, nameof(startIpAddress));
-            Argument.AssertNotNull(endIpAddress, nameof(endIpAddress));
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
-            Properties = new FirewallRuleProperties(startIpAddress, endIpAddress);
+            Properties = new FirewallRuleProperties(startIPAddress, endIPAddress);
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFirewallRuleData"/>. </summary>
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         internal FirewallRuleProperties Properties { get; set; }
 
         /// <summary> The start IP address of the server firewall rule. Must be IPv4 format. </summary>
-        public IPAddress StartIpAddress
+        public IPAddress StartIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.StartIpAddress;
+                return Properties is null ? default : Properties.StartIPAddress;
             }
             set
             {
@@ -61,16 +61,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new FirewallRuleProperties();
                 }
-                Properties.StartIpAddress = value;
+                Properties.StartIPAddress = value;
             }
         }
 
         /// <summary> The end IP address of the server firewall rule. Must be IPv4 format. </summary>
-        public IPAddress EndIpAddress
+        public IPAddress EndIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.EndIpAddress;
+                return Properties is null ? default : Properties.EndIPAddress;
             }
             set
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new FirewallRuleProperties();
                 }
-                Properties.EndIpAddress = value;
+                Properties.EndIPAddress = value;
             }
         }
     }

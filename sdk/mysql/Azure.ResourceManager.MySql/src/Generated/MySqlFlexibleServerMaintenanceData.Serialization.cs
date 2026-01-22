@@ -21,11 +21,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// <summary> Represents a maintenance. </summary>
     public partial class MySqlFlexibleServerMaintenanceData : ResourceData, IJsonModel<MySqlFlexibleServerMaintenanceData>
     {
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/> for deserialization. </summary>
-        internal MySqlFlexibleServerMaintenanceData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerMaintenanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

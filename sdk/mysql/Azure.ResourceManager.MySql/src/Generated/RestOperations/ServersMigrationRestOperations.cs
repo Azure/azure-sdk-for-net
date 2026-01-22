@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCutoverMigrationRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context)
+        internal HttpMessage CreateCutoverMigrationServersMigrationRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

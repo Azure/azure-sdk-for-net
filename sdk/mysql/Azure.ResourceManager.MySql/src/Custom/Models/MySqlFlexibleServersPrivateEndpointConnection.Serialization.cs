@@ -48,10 +48,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpointId))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
+                writer.WriteStartObject();
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(PrivateEndpointId.ToString());
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(ConnectionState))
             {

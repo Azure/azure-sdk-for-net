@@ -13,7 +13,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
-    public partial class MySqlFlexibleServersPrivateEndpointConnectionListResult
+    internal partial class MySqlFlexibleServersPrivateEndpointConnectionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

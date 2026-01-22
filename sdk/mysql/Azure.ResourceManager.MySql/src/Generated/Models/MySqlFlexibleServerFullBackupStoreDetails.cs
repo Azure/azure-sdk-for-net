@@ -13,7 +13,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> FullBackupStoreDetails is used for scenarios where backup data is streamed/copied over to a storage destination. </summary>
-    public partial class MySqlFlexibleServerFullBackupStoreDetails : BackupStoreDetails
+    public partial class MySqlFlexibleServerFullBackupStoreDetails : MySqlFlexibleServerBackupStoreDetails
     {
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFullBackupStoreDetails"/>. </summary>
         /// <param name="sasUriList"> SASUriList of storage containers where backup data is to be streamed/copied. </param>

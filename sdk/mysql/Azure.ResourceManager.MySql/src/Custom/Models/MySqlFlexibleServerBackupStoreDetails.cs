@@ -3,16 +3,14 @@
 
 #nullable disable
 
-using Azure.Core;
-
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Details about the target where the backup content will be stored.
-    /// Please note <see cref="MySqlFlexibleServerBackupStoreDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MySqlFlexibleServerFullBackupStoreDetails"/>.
-    /// </summary>
     public abstract partial class MySqlFlexibleServerBackupStoreDetails
     {
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/> for deserialization. </summary>
+        protected MySqlFlexibleServerBackupStoreDetails()
+        {
+        }
     }
 }

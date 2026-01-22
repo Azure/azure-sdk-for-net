@@ -19,33 +19,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FirewallRuleProperties"/>. </summary>
-        /// <param name="startIpAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIpAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startIpAddress"/> or <paramref name="endIpAddress"/> is null. </exception>
-        public FirewallRuleProperties(IPAddress startIpAddress, IPAddress endIpAddress)
+        /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
+        public FirewallRuleProperties(IPAddress startIPAddress, IPAddress endIPAddress)
         {
-            Argument.AssertNotNull(startIpAddress, nameof(startIpAddress));
-            Argument.AssertNotNull(endIpAddress, nameof(endIpAddress));
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
-            StartIpAddress = startIpAddress;
-            EndIpAddress = endIpAddress;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallRuleProperties"/>. </summary>
-        /// <param name="startIpAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIpAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallRuleProperties(IPAddress startIpAddress, IPAddress endIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallRuleProperties(IPAddress startIPAddress, IPAddress endIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartIpAddress = startIpAddress;
-            EndIpAddress = endIpAddress;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start IP address of the server firewall rule. Must be IPv4 format. </summary>
-        public IPAddress StartIpAddress { get; set; }
+        public IPAddress StartIPAddress { get; set; }
 
         /// <summary> The end IP address of the server firewall rule. Must be IPv4 format. </summary>
-        public IPAddress EndIpAddress { get; set; }
+        public IPAddress EndIPAddress { get; set; }
     }
 }

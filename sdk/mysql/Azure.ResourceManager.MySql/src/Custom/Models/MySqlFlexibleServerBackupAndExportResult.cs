@@ -5,6 +5,7 @@
 
 using Azure.ResourceManager.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents BackupAndExportAPI Response. </summary>

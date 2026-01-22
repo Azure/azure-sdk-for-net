@@ -14,22 +14,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// Details about the target where the backup content will be stored.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MySqlFlexibleServerFullBackupStoreDetails"/>.
     /// </summary>
-    public abstract partial class BackupStoreDetails
+    public abstract partial class MySqlFlexibleServerBackupStoreDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BackupStoreDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        private protected BackupStoreDetails(string objectType)
+        private protected MySqlFlexibleServerBackupStoreDetails(string objectType)
         {
             ObjectType = objectType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupStoreDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupStoreDetails(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MySqlFlexibleServerBackupStoreDetails(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectType = objectType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

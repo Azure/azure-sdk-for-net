@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="availabilityZone"> availability Zone information of the server. </param>
         /// <param name="createMode"> The mode to create a new MySQL server. </param>
         /// <param name="sourceServerResourceId"> The source MySQL server id. </param>
-        /// <param name="restorePointInTime"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
+        /// <param name="restorePointInOn"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
         /// <param name="replicationRole"> The replication role. </param>
         /// <param name="replicaCapacity"> The maximum number of replicas that a primary server can have. </param>
         /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maintenanceWindow"> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </param>
         /// <param name="importSourceProperties"> Source properties for import from storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerProperties(string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string fullVersion, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, int? databasePort, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerProperties(string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string fullVersion, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInOn, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, int? databasePort, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             AvailabilityZone = availabilityZone;
             CreateMode = createMode;
             SourceServerResourceId = sourceServerResourceId;
-            RestorePointInTime = restorePointInTime;
+            RestorePointInOn = restorePointInOn;
             ReplicationRole = replicationRole;
             ReplicaCapacity = replicaCapacity;
             DataEncryption = dataEncryption;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public ResourceIdentifier SourceServerResourceId { get; set; }
 
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public DateTimeOffset? RestorePointInOn { get; set; }
 
         /// <summary> The replication role. </summary>
         public MySqlFlexibleServerReplicationRole? ReplicationRole { get; set; }

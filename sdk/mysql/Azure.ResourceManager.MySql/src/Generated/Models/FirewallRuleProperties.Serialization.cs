@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 throw new FormatException($"The model {nameof(FirewallRuleProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startIpAddress"u8);
-            writer.WriteStringValue(StartIpAddress.ToString());
+            writer.WriteStringValue(StartIPAddress.ToString());
             writer.WritePropertyName("endIpAddress"u8);
-            writer.WriteStringValue(EndIpAddress.ToString());
+            writer.WriteStringValue(EndIPAddress.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            IPAddress startIpAddress = default;
-            IPAddress endIpAddress = default;
+            IPAddress startIPAddress = default;
+            IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startIpAddress"u8))
                 {
-                    startIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    startIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endIpAddress"u8))
                 {
-                    endIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    endIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FirewallRuleProperties(startIpAddress, endIpAddress, additionalBinaryDataProperties);
+            return new FirewallRuleProperties(startIPAddress, endIPAddress, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

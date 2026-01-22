@@ -16,16 +16,16 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> BackupAndExport API Request. </summary>
-    public partial class MySqlFlexibleServerBackupAndExportRequest : MySqlFlexibleServerBackupContentBase, IJsonModel<MySqlFlexibleServerBackupAndExportRequest>
+    public partial class MySqlFlexibleServerBackupAndExportContent : MySqlFlexibleServerBackupContentBase, IJsonModel<MySqlFlexibleServerBackupAndExportContent>
     {
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportRequest"/> for deserialization. </summary>
-        internal MySqlFlexibleServerBackupAndExportRequest()
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportContent"/> for deserialization. </summary>
+        internal MySqlFlexibleServerBackupAndExportContent()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MySqlFlexibleServerBackupAndExportRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MySqlFlexibleServerBackupAndExportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("targetDetails"u8);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServerBackupAndExportRequest IJsonModel<MySqlFlexibleServerBackupAndExportRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MySqlFlexibleServerBackupAndExportRequest)JsonModelCreateCore(ref reader, options);
+        MySqlFlexibleServerBackupAndExportContent IJsonModel<MySqlFlexibleServerBackupAndExportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MySqlFlexibleServerBackupAndExportContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MySqlFlexibleServerBackupContentBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMySqlFlexibleServerBackupAndExportRequest(document.RootElement, options);
+            return DeserializeMySqlFlexibleServerBackupAndExportContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MySqlFlexibleServerBackupAndExportRequest DeserializeMySqlFlexibleServerBackupAndExportRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static MySqlFlexibleServerBackupAndExportContent DeserializeMySqlFlexibleServerBackupAndExportContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             MySqlFlexibleServerBackupSettings backupSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BackupStoreDetails targetDetails = default;
+            MySqlFlexibleServerBackupStoreDetails targetDetails = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("backupSettings"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = BackupStoreDetails.DeserializeBackupStoreDetails(prop.Value, options);
+                    targetDetails = MySqlFlexibleServerBackupStoreDetails.DeserializeMySqlFlexibleServerBackupStoreDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -91,58 +91,58 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MySqlFlexibleServerBackupAndExportRequest(backupSettings, additionalBinaryDataProperties, targetDetails);
+            return new MySqlFlexibleServerBackupAndExportContent(backupSettings, additionalBinaryDataProperties, targetDetails);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MySqlFlexibleServerBackupAndExportRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MySqlFlexibleServerBackupAndExportContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServerBackupAndExportRequest IPersistableModel<MySqlFlexibleServerBackupAndExportRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServerBackupAndExportRequest)PersistableModelCreateCore(data, options);
+        MySqlFlexibleServerBackupAndExportContent IPersistableModel<MySqlFlexibleServerBackupAndExportContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServerBackupAndExportContent)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MySqlFlexibleServerBackupContentBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMySqlFlexibleServerBackupAndExportRequest(document.RootElement, options);
+                        return DeserializeMySqlFlexibleServerBackupAndExportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MySqlFlexibleServerBackupAndExportRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MySqlFlexibleServerBackupAndExportContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="mySqlFlexibleServerBackupAndExportRequest"> The <see cref="MySqlFlexibleServerBackupAndExportRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MySqlFlexibleServerBackupAndExportRequest mySqlFlexibleServerBackupAndExportRequest)
+        /// <param name="mySqlFlexibleServerBackupAndExportContent"> The <see cref="MySqlFlexibleServerBackupAndExportContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MySqlFlexibleServerBackupAndExportContent mySqlFlexibleServerBackupAndExportContent)
         {
-            if (mySqlFlexibleServerBackupAndExportRequest == null)
+            if (mySqlFlexibleServerBackupAndExportContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerBackupAndExportRequest, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerBackupAndExportContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("sourceServerResourceId"u8);
                 writer.WriteStringValue(SourceServerResourceId);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInOn))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
+                writer.WriteStringValue(RestorePointInOn.Value, "O");
             }
             if (Optional.IsDefined(ReplicationRole))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             string availabilityZone = default;
             MySqlFlexibleServerCreateMode? createMode = default;
             ResourceIdentifier sourceServerResourceId = default;
-            DateTimeOffset? restorePointInTime = default;
+            DateTimeOffset? restorePointInOn = default;
             MySqlFlexibleServerReplicationRole? replicationRole = default;
             int? replicaCapacity = default;
             MySqlFlexibleServerDataEncryption dataEncryption = default;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    restorePointInTime = prop.Value.GetDateTimeOffset("O");
+                    restorePointInOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("replicationRole"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 availabilityZone,
                 createMode,
                 sourceServerResourceId,
-                restorePointInTime,
+                restorePointInOn,
                 replicationRole,
                 replicaCapacity,
                 dataEncryption,

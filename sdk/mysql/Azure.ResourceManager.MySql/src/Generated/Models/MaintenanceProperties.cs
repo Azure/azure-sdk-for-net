@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceProperties"/>. </summary>
-        internal MaintenanceProperties()
+        public MaintenanceProperties()
         {
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerMaintenanceState? MaintenanceState { get; }
 
         /// <summary> The start time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceStartOn { get; }
+        public DateTimeOffset? MaintenanceStartOn { get; set; }
 
         /// <summary> The end time for a maintenance. </summary>
         public DateTimeOffset? MaintenanceEndOn { get; }

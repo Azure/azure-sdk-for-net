@@ -64,6 +64,74 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 
         private CheckNameAvailabilityWithoutLocation CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocation(CheckNameAvailabilityWithoutLocationClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
 
+        /// <summary> Gets a collection of MySqlFlexibleServersCapabilities in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="locationName"> The locationName for the resource. </param>
+        /// <returns> An object representing collection of MySqlFlexibleServersCapabilities and their operations over a MySqlFlexibleServersCapabilityResource. </returns>
+        public virtual MySqlFlexibleServersCapabilityCollection GetMySqlFlexibleServersCapabilities(AzureLocation locationName)
+        {
+            return GetCachedClient(client => new MySqlFlexibleServersCapabilityCollection(client, Id, locationName));
+        }
+
+        /// <summary>
+        /// Get capabilities at specified location in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocationBasedCapabilitySet_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The locationName for the resource. </param>
+        /// <param name="capabilitySetName"> Name of capability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MySqlFlexibleServersCapabilityResource>> GetMySqlFlexibleServersCapabilityAsync(AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
+
+            return await GetMySqlFlexibleServersCapabilities(locationName).GetAsync(capabilitySetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get capabilities at specified location in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocationBasedCapabilitySet_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The locationName for the resource. </param>
+        /// <param name="capabilitySetName"> Name of capability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MySqlFlexibleServersCapabilityResource> GetMySqlFlexibleServersCapability(AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
+
+            return GetMySqlFlexibleServersCapabilities(locationName).Get(capabilitySetName, cancellationToken);
+        }
+
         /// <summary>
         /// List all the servers in a given subscription.
         /// <list type="bullet">
@@ -140,13 +208,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MySqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetAllAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedCapabilitiesGetAllAsyncCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new LocationBasedCapabilitiesGetLocationBasedCapabilitiesAsyncCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
@@ -169,13 +237,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MySqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlFlexibleServerCapabilityProperties> GetAll(AzureLocation locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedCapabilitiesGetAllCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new LocationBasedCapabilitiesGetLocationBasedCapabilitiesCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
@@ -199,11 +267,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteAsync(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using DiagnosticScope scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.Execute");
+            using DiagnosticScope scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.ExecuteCheckVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
@@ -211,7 +279,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteCheckVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(MySqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,11 +316,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> Execute(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using DiagnosticScope scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.Execute");
+            using DiagnosticScope scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.ExecuteCheckVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
@@ -260,7 +328,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteCheckVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(MySqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)
