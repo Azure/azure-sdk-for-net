@@ -404,14 +404,13 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    // For delete operations, check if it's deleting the current resource
-                    var isDeletingCurrentResource = methodKind == ResourceOperationKind.Delete
-                        ? ResourceHelpers.IsDeletingCurrentResource(resourceMethod, _resourceMetadata.ResourceIdPattern)
-                        : true;
+                    // For operations that can operate on different resources (Read, Delete, List),
+                    // check if the operation is for the current resource
+                    var isOperatingOnCurrentResource = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, _resourceMetadata.ResourceIdPattern);
 
-                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false, isDeletingCurrentResource);
+                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false, isOperatingOnCurrentResource);
                     operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
-                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false, isDeletingCurrentResource);
+                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false, isOperatingOnCurrentResource);
                     operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
                 }
             }

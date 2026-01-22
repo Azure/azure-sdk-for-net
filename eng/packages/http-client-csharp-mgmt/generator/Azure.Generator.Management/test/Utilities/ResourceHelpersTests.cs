@@ -164,6 +164,102 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [TestCase]
+        public void IsOperatingOnCurrentResource_ForDelete_WhenOperationPathMatchesResourceIdPattern_ReturnsTrue()
+        {
+            // Arrange
+            var operation = InputFactory.Operation("delete", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "Delete",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Delete,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase]
+        public void IsOperatingOnCurrentResource_ForRead_WhenOperationPathMatchesResourceIdPattern_ReturnsTrue()
+        {
+            // Arrange
+            var operation = InputFactory.Operation("get", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "Get",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Read,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase]
+        public void IsOperatingOnCurrentResource_ForRead_WhenOperationPathDifferentFromResourceIdPattern_ReturnsFalse()
+        {
+            // Arrange
+            var operation = InputFactory.Operation("getChildResource", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/childResources/{childName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "GetChildResource",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Read,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/childResources/{childName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestCase]
+        public void IsOperatingOnCurrentResource_ForList_WhenOperationPathDifferentFromResourceIdPattern_ReturnsFalse()
+        {
+            // Arrange
+            var operation = InputFactory.Operation("listChildResources", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/childResources");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "ListChildResources",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.List,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/childResources",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestCase]
         public void IsDeletingCurrentResource_WhenOperationPathMatchesResourceIdPattern_ReturnsTrue()
         {
             // Arrange
@@ -181,7 +277,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
 
             // Act
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Assert
             Assert.IsTrue(result);
@@ -205,7 +303,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
 
             // Act
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Assert
             Assert.IsFalse(result);
@@ -230,14 +330,16 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
 
             // Act
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Assert
             Assert.IsTrue(result);
         }
 
         [TestCase]
-        public void IsDeletingCurrentResource_WhenNotDeleteOperation_ReturnsFalse()
+        public void IsDeletingCurrentResource_WhenNotDeleteOperation_ReturnsTrue()
         {
             // Arrange
             var operation = InputFactory.Operation("get", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
@@ -254,47 +356,109 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
 
             // Act
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = ResourceHelpers.IsDeletingCurrentResource(resourceMethod, resourceIdPattern);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result); // Changed: obsolete method now delegates to IsOperatingOnCurrentResource which returns true for matching Read operations
         }
 
         [TestCase]
-        public void GetOperationMethodName_ForDelete_WhenDeletingCurrentResource_ReturnsDelete()
+        public void GetOperationMethodName_ForRead_WhenOperatingOnCurrentResource_ReturnsGet()
         {
             // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isDeletingCurrentResource: true);
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, false, false, isOperatingOnCurrentResource: true);
 
             // Assert
-            Assert.AreEqual("Delete", result);
+            Assert.AreEqual("Get", result);
         }
 
         [TestCase]
-        public void GetOperationMethodName_ForDelete_WhenDeletingOtherResource_ReturnsNull()
+        public void GetOperationMethodName_ForRead_WhenOperatingOnOtherResource_ReturnsNull()
         {
             // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isDeletingCurrentResource: false);
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, false, false, isOperatingOnCurrentResource: false);
 
             // Assert
             Assert.IsNull(result);
         }
 
         [TestCase]
-        public void GetOperationMethodName_ForDeleteAsync_WhenDeletingCurrentResource_ReturnsDeleteAsync()
+        public void GetOperationMethodName_ForReadAsync_WhenOperatingOnCurrentResource_ReturnsGetAsync()
         {
             // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isDeletingCurrentResource: true);
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, true, false, isOperatingOnCurrentResource: true);
+
+            // Assert
+            Assert.AreEqual("GetAsync", result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForReadAsync_WhenOperatingOnOtherResource_ReturnsNull()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, true, false, isOperatingOnCurrentResource: false);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForList_WhenOperatingOnOtherResource_ReturnsNull()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, false, true, isOperatingOnCurrentResource: false);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForListAsync_WhenOperatingOnOtherResource_ReturnsNull()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, true, true, isOperatingOnCurrentResource: false);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForDelete_WhenOperatingOnCurrentResource_ReturnsDelete()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isOperatingOnCurrentResource: true);
+
+            // Assert
+            Assert.AreEqual("Delete", result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForDelete_WhenOperatingOnOtherResource_ReturnsNull()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, false, false, isOperatingOnCurrentResource: false);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForDeleteAsync_WhenOperatingOnCurrentResource_ReturnsDeleteAsync()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isOperatingOnCurrentResource: true);
 
             // Assert
             Assert.AreEqual("DeleteAsync", result);
         }
 
         [TestCase]
-        public void GetOperationMethodName_ForDeleteAsync_WhenDeletingOtherResource_ReturnsNull()
+        public void GetOperationMethodName_ForDeleteAsync_WhenOperatingOnOtherResource_ReturnsNull()
         {
             // Act
-            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isDeletingCurrentResource: false);
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, true, false, isOperatingOnCurrentResource: false);
 
             // Assert
             Assert.IsNull(result);
