@@ -22,12 +22,9 @@ import {
 import {
   DecoratorInfo,
   getClientType,
-  SdkClientType,
-  SdkContext,
   SdkHttpOperation,
   SdkMethod,
-  SdkModelType,
-  SdkServiceOperation
+  SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
@@ -52,13 +49,13 @@ import {
   tenantResource
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
-import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 import {
   resolveArmResources,
   getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { isPrefix } from "./utils.js";
+import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -797,17 +794,6 @@ function getResourceModelIdCore(
   }
 }
 
-export function getAllSdkClients(
-  sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>
-): SdkClientType<SdkServiceOperation>[] {
-  const clients: SdkClientType<SdkServiceOperation>[] = [];
-  for (const client of sdkContext.sdkPackage.clients) {
-    traverseClient(client, clients);
-  }
-
-  return clients;
-}
-
 export function getAllClients(codeModel: CodeModel): InputClient[] {
   const clients: InputClient[] = [];
   for (const client of codeModel.clients) {
@@ -815,15 +801,6 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
   }
 
   return clients;
-}
-
-function traverseClient<T extends { children?: T[] }>(client: T, clients: T[]) {
-  clients.push(client);
-  if (client.children) {
-    for (const child of client.children) {
-      traverseClient(child, clients);
-    }
-  }
 }
 
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
