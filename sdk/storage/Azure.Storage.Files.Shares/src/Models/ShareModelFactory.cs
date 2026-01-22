@@ -26,7 +26,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareProperties ShareProperties(
             string accessTier = default,
             DateTimeOffset? lastModified = default,
