@@ -394,7 +394,15 @@ export function postProcessArmResources(
           (r) => r.resourceModelId === resource.metadata.parentResourceModelId
         );
         if (parent) {
-          parent.metadata.methods.push(...resource.metadata.methods);
+          // When moving operations to parent resource, convert them to Action kind
+          // to avoid naming conflicts (parent might have its own Get/Delete/List methods)
+          for (const method of resource.metadata.methods) {
+            const movedMethod: ResourceMethod = {
+              ...method,
+              kind: ResourceOperationKind.Action
+            };
+            parent.metadata.methods.push(movedMethod);
+          }
           movedToParent = true;
         }
       }
