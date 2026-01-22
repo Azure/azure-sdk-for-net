@@ -315,7 +315,8 @@ function convertResolvedResourceToMetadata(
   resolvedResource: ResolvedResource
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
-  const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
+  const scopeInfo = convertScopeToResourceScope(resolvedResource.scope);
+  const resourceScope = scopeInfo.resourceScope;
   let resourceIdPattern = "";
 
   // Convert lifecycle operations
@@ -430,11 +431,6 @@ function convertResolvedResourceToMetadata(
     }
   }
 
-  // Convert resource scope
-  const resourceScopeValue = convertScopeToResourceScope(
-    resolvedResource.scope
-  );
-
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
@@ -443,7 +439,7 @@ function convertResolvedResourceToMetadata(
     resourceIdPattern: resourceIdPattern,
     resourceType,
     methods,
-    resourceScope: resourceScopeValue,
+    resourceScope: scopeInfo.resourceScope,
     parentResourceId: undefined,
     parentResourceModelId: undefined,
     // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
@@ -451,7 +447,8 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resolvedResource.resourceName
+    resourceName: resolvedResource.resourceName,
+    specificExtensionScope: scopeInfo.specificExtensionScope
   };
 }
 
@@ -469,38 +466,49 @@ function getMethodIdFromOperation(
 }
 
 /**
- * Convert scope string/object to ResourceScope enum
+ * Convert scope string/object to ResourceScope enum and specific extension type
+ * @returns An object with resourceScope and specificExtensionScope (only for Extension resources)
  */
 function convertScopeToResourceScope(
   scope: string | ResolvedResource | undefined
-): ResourceScope {
+): { resourceScope: ResourceScope; specificExtensionScope?: string } {
   if (!scope) {
     // TODO: does it make sense that we have something without scope??
-    return ResourceScope.ResourceGroup; // Default
+    return { resourceScope: ResourceScope.ResourceGroup }; // Default
   }
 
   if (typeof scope === "string") {
     switch (scope) {
       case "Tenant":
-        return ResourceScope.Tenant;
+        return { resourceScope: ResourceScope.Tenant };
       case "Subscription":
-        return ResourceScope.Subscription;
+        return { resourceScope: ResourceScope.Subscription };
       case "ResourceGroup":
-        return ResourceScope.ResourceGroup;
+        return { resourceScope: ResourceScope.ResourceGroup };
       case "ManagementGroup":
-        return ResourceScope.ManagementGroup;
+        return { resourceScope: ResourceScope.ManagementGroup };
       case "Scope":
+        return {
+          resourceScope: ResourceScope.Extension,
+          specificExtensionScope: "Scope"
+        };
       case "ExternalResource":
-        return ResourceScope.Extension;
+        return {
+          resourceScope: ResourceScope.Extension,
+          specificExtensionScope: "ExternalResource"
+        };
       default:
-        return ResourceScope.ResourceGroup;
+        return { resourceScope: ResourceScope.ResourceGroup };
     }
   }
 
-  // TODO: Schema update needed - when scope is a ResolvedResource (extension resource),
-  // our schema needs to support representing the specific parent resource, not just "Extension"
-  // If scope is a ResolvedResource, it's an extension resource
-  return ResourceScope.Extension;
+  // When scope is a ResolvedResource (extension resource with a specific parent resource),
+  // we preserve the parent resource type as the specific extension scope
+  // This allows the C# side to distinguish between different kinds of extension resources
+  return {
+    resourceScope: ResourceScope.Extension,
+    specificExtensionScope: formatResourceType(scope.resourceType)
+  };
 }
 
 /**
