@@ -40,18 +40,18 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void VerifyModel(XmlModelForCombinedInterface model, string format)
         {
-            Assert.AreEqual("Color", model.Key);
-            Assert.AreEqual("Red", model.Value);
+            Assert.That(model.Key, Is.EqualTo("Color"));
+            Assert.That(model.Value, Is.EqualTo("Red"));
             if (format.Equals("J"))
-                Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
+                Assert.That(model.ReadOnlyProperty, Is.EqualTo("ReadOnly"));
         }
 
         protected override void CompareModels(XmlModelForCombinedInterface model, XmlModelForCombinedInterface model2, string format)
         {
-            Assert.AreEqual(model.Key, model2.Key);
-            Assert.AreEqual(model.Value, model2.Value);
+            Assert.That(model.Key, Is.EqualTo(model2.Key));
+            Assert.That(model.Value, Is.EqualTo(model2.Value));
             if (format.Equals("J"))
-                Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
+                Assert.That(model.ReadOnlyProperty, Is.EqualTo(model2.ReadOnlyProperty));
         }
     }
 }

@@ -55,10 +55,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
         {
             Assert.That(model2.Id, Is.EqualTo(format == "W" ? null : model.Id));
-            Assert.AreEqual(model.Location, model2.Location);
-            Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
-            Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
-            Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
+            Assert.That(model.Location, Is.EqualTo(model2.Location));
+            Assert.That(format == "W" ? null : model.Name, Is.EqualTo(model2.Name));
+            Assert.That(model.PlatformFaultDomainCount, Is.EqualTo(model2.PlatformFaultDomainCount));
+            Assert.That(model.PlatformUpdateDomainCount, Is.EqualTo(model2.PlatformUpdateDomainCount));
             if (format == "J")
                 Assert.That(model2.ResourceType, Is.EqualTo(model.ResourceType));
             Assert.That(model2.Tags, Is.EquivalentTo(model.Tags));

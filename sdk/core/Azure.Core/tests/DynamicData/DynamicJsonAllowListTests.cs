@@ -99,10 +99,10 @@ namespace Azure.Core.Tests
             list.Add("d");
 
             json.Foo = list;
-            Assert.IsTrue("a" == json.Foo[0]);
-            Assert.IsTrue("b" == json.Foo[1]);
-            Assert.IsTrue("c" == json.Foo[2]);
-            Assert.IsTrue("d" == json.Foo[3]);
+            Assert.That(json.Foo[0], Is.EqualTo("a"));
+            Assert.That(json.Foo[1], Is.EqualTo("b"));
+            Assert.That(json.Foo[2], Is.EqualTo("c"));
+            Assert.That(json.Foo[3], Is.EqualTo("d"));
         }
 
         [Test]

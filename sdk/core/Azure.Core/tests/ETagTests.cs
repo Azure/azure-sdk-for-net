@@ -54,7 +54,7 @@ namespace Azure.Core.Tests
             ETag eTag = default;
 
             Assert.That(eTag, Is.EqualTo(new ETag(null)));
-            Assert.That(eTag, Is.EqualTo(default));
+            Assert.That(eTag, Is.EqualTo(default(ETag)));
         }
 
         [Test]

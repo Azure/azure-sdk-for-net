@@ -243,7 +243,7 @@ public class ClientResultTests
         value = (MockJsonModel?)result.Value;
 
         Assert.That(value, Is.Null);
-        Assert.AreEqual(200, result.GetRawResponse().Status);
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
     }
 
     #endregion

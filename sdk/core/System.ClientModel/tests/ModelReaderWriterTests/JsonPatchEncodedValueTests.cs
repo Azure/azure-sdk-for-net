@@ -17,7 +17,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.That(nullBytes.AsSpan().SequenceEqual(value.Value.Span), Is.True);
 
             value = new(nullBytes.AsSpan());
-            Assert.AreEqual(JsonPatch.ValueKind.Null, value.Kind);
+            Assert.That(value.Kind, Is.EqualTo(JsonPatch.ValueKind.Null));
             Assert.That(nullBytes.AsSpan().SequenceEqual(value.Value.Span), Is.True);
         }
 
@@ -30,7 +30,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.That(trueBytes.AsSpan().SequenceEqual(trueValue.Value.Span), Is.True);
 
             trueValue = new(trueBytes.AsSpan());
-            Assert.AreEqual(JsonPatch.ValueKind.BooleanTrue, trueValue.Kind);
+            Assert.That(trueValue.Kind, Is.EqualTo(JsonPatch.ValueKind.BooleanTrue));
             Assert.That(trueBytes.AsSpan().SequenceEqual(trueValue.Value.Span), Is.True);
         }
 
@@ -43,7 +43,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.That(falseBytes.AsSpan().SequenceEqual(falseValue.Value.Span), Is.True);
 
             falseValue = new(falseBytes.AsSpan());
-            Assert.AreEqual(JsonPatch.ValueKind.BooleanFalse, falseValue.Kind);
+            Assert.That(falseValue.Kind, Is.EqualTo(JsonPatch.ValueKind.BooleanFalse));
             Assert.That(falseBytes.AsSpan().SequenceEqual(falseValue.Value.Span), Is.True);
         }
     }

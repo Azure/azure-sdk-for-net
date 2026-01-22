@@ -171,7 +171,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         var testObject = new { Name = "test", Value = 42 };
         using BinaryContent content = BinaryContent.CreateJson(testObject);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
         Assert.That(content.TryComputeLength(out long length), Is.True);
         Assert.That(length, Is.GreaterThan(0));
 
@@ -191,7 +191,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         using BinaryContent content = BinaryContent.CreateJson(testObject, options);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
         Assert.That(content.TryComputeLength(out long length), Is.True);
         Assert.That(length, Is.GreaterThan(0));
 
@@ -219,7 +219,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         // They should have the same length
         Assert.That(content.TryComputeLength(out long contentLength), Is.True);
         Assert.That(expectedContent.TryComputeLength(out long expectedLength), Is.True);
-        Assert.AreEqual(expectedLength, contentLength);
+        Assert.That(expectedLength, Is.EqualTo(contentLength));
     }
 
     [Test]
@@ -228,15 +228,15 @@ internal class BinaryContentTests : SyncAsyncTestBase
         string jsonString = """{"name":"test","value":42}""";
         using BinaryContent content = BinaryContent.CreateJson(jsonString);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
         Assert.That(content.TryComputeLength(out long length), Is.True);
-        Assert.AreEqual(jsonString.Length, length);
+        Assert.That(length, Is.EqualTo(jsonString.Length));
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
 
         string result = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-        Assert.AreEqual(jsonString, result);
+        Assert.That(result, Is.EqualTo(jsonString));
     }
 
     [Test]
@@ -254,10 +254,10 @@ internal class BinaryContentTests : SyncAsyncTestBase
         // They should have the same length
         Assert.That(content.TryComputeLength(out long contentLength), Is.True);
         Assert.That(expectedContent.TryComputeLength(out long expectedLength), Is.True);
-        Assert.AreEqual(expectedLength, contentLength);
+        Assert.That(expectedLength, Is.EqualTo(contentLength));
 
         // Content should have JSON media type, while regular Create should not
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
         Assert.That(expectedContent.MediaType, Is.Null);
     }
 
@@ -267,9 +267,9 @@ internal class BinaryContentTests : SyncAsyncTestBase
         string validJson = """{"name":"test","value":42,"nested":{"array":[1,2,3]}}""";
         using BinaryContent content = BinaryContent.CreateJson(validJson, validate: true);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
         Assert.That(content.TryComputeLength(out long length), Is.True);
-        Assert.AreEqual(validJson.Length, length);
+        Assert.That(length, Is.EqualTo(validJson.Length));
     }
 
     [Test]
@@ -279,7 +279,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         var ex = Assert.Throws<ArgumentException>(() => BinaryContent.CreateJson(invalidJson, validate: true));
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-        Assert.AreEqual("jsonString", ex.ParamName);
+        Assert.That(ex.ParamName, Is.EqualTo("jsonString"));
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
         Assert.That(ex.Message.Contains("not valid JSON"), Is.True);
     }
@@ -291,11 +291,11 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         // Should not throw when validation is disabled (default behavior)
         using BinaryContent content = BinaryContent.CreateJson(invalidJson, validate: false);
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
 
         // Should also not throw when validation parameter is omitted
         using BinaryContent content2 = BinaryContent.CreateJson(invalidJson);
-        Assert.AreEqual("application/json", content2.MediaType);
+        Assert.That(content2.MediaType, Is.EqualTo("application/json"));
     }
 
     [Test]
@@ -304,9 +304,9 @@ internal class BinaryContentTests : SyncAsyncTestBase
         string emptyObject = "{}";
         using BinaryContent content = BinaryContent.CreateJson(emptyObject, validate: true);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
         Assert.That(content.TryComputeLength(out long length), Is.True);
-        Assert.AreEqual(2, length);
+        Assert.That(length, Is.EqualTo(2));
     }
 
     [Test]
@@ -315,9 +315,9 @@ internal class BinaryContentTests : SyncAsyncTestBase
         string emptyArray = "[]";
         using BinaryContent content = BinaryContent.CreateJson(emptyArray, validate: true);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
         Assert.That(content.TryComputeLength(out long length), Is.True);
-        Assert.AreEqual(2, length);
+        Assert.That(length, Is.EqualTo(2));
     }
 
     [Test]

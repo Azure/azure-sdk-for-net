@@ -14,42 +14,42 @@ namespace Azure.Core.Tests.Public
         public void CanConvertIntLeafToInt()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.AreEqual(5, (int)data);
+            Assert.That((int)data, Is.EqualTo(5));
         }
 
         [Test]
         public void CanConvertIntLeafPropertyToInt()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.AreEqual(5, (int)data.value);
+            Assert.That((int)data.value, Is.EqualTo(5));
         }
 
         [Test]
         public void CanConvertIntLeafToDouble()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.AreEqual(5d, (double)data);
+            Assert.That((double)data, Is.EqualTo(5d));
         }
 
         [Test]
         public void CanConvertIntLeafPropertyToDouble()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.AreEqual(5d, (double)data.value);
+            Assert.That((double)data.value, Is.EqualTo(5d));
         }
 
         [Test]
         public void CanConvertIntLeafToLong()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.AreEqual((long)5, (long)data);
+            Assert.That((long)data, Is.EqualTo((long)5));
         }
 
         [Test]
         public void CanConvertIntLeafPropertyToLong()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.AreEqual((long)5, (long)data.value);
+            Assert.That((long)data.value, Is.EqualTo((long)5));
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             data.value = 6;
-            Assert.AreEqual(6, (int)data.value);
+            Assert.That((int)data.value, Is.EqualTo(6));
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             data.value = "valid";
-            Assert.AreEqual("valid", (string)data.value);
+            Assert.That((string)data.value, Is.EqualTo("valid"));
         }
 
         #endregion

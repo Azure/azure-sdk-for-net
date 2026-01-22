@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Public
                 }
                 """).ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
-            Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
+            Assert.That((SampleModel)data, Is.EqualTo(new SampleModel("Hi", 5)));
         }
         #endregion
 
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.Public
         public void CanGetMemberOnObject()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.AreEqual(5, (int)data.value);
+            Assert.That((int)data.value, Is.EqualTo(5));
         }
 
         #endregion
@@ -54,10 +54,10 @@ namespace Azure.Core.Tests.Public
         public void CanSetMemberOnObject()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.AreEqual(5, (int)data.value);
+            Assert.That((int)data.value, Is.EqualTo(5));
 
             data.value = 6;
-            Assert.AreEqual(6, (int)data.value);
+            Assert.That((int)data.value, Is.EqualTo(6));
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
             string prop = data["value"];
-            Assert.AreEqual("hi", prop);
+            Assert.That(prop, Is.EqualTo("hi"));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
             data["value"] = "hello";
-            Assert.AreEqual("hello", (string)data["value"]);
+            Assert.That((string)data["value"], Is.EqualTo("hello"));
         }
 
         [Test]
@@ -108,12 +108,12 @@ namespace Azure.Core.Tests.Public
             int i = 0;
             foreach (dynamic property in data)
             {
-                Assert.AreEqual(expectedNames[i], property.Name);
-                Assert.AreEqual(expectedValues[i], (int)property.Value);
+                Assert.That(property.Name, Is.EqualTo(expectedNames[i]));
+                Assert.That((int)property.Value, Is.EqualTo(expectedValues[i]));
                 i++;
             }
 
-            Assert.AreEqual(2, i);
+            Assert.That(i, Is.EqualTo(2));
         }
 
         [Test]
@@ -140,7 +140,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
 
-            Assert.IsNull(data.Length);
+            Assert.That(data.Length, Is.Null);
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace Azure.Core.Tests.Public
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "Foo": 1, "Length": 2 }""");
             int length = data.Length;
 
-            Assert.AreEqual(2, length);
+            Assert.That(length, Is.EqualTo(2));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.Public
             json[2] = null;
             json[3] = "string";
 
-            Assert.AreEqual(json.ToString(), "[0,2,null,\"string\"]");
+            Assert.That(json.ToString(), Is.EqualTo("[0,2,null,\"string\"]"));
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests.Public
             dynamic json = new BinaryData("{\"a\":1}").ToDynamicFromJson();
             json["a"] = "2";
 
-            Assert.AreEqual(json.ToString(), "{\"a\":\"2\"}");
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":\"2\"}"));
         }
 
         [TestCaseSource(nameof(PrimitiveValues))]
@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Public
             dynamic json = JsonDataTestHelpers.CreateEmpty();
             json.a = value;
 
-            Assert.AreEqual(json.ToString(), "{\"a\":" + expected + "}");
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":" + expected + "}"));
         }
 
         [TestCaseSource(nameof(PrimitiveValues))]
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic json = new BinaryData(expected).ToDynamicFromJson();
 
-            Assert.AreEqual(value, (T)json);
+            Assert.That(value, Is.EqualTo((T)json));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Public
             dynamic json = JsonDataTestHelpers.CreateEmpty();
             json.a = new string[] { "a", null, "string" };
 
-            Assert.AreEqual(json.ToString(), "{\"a\":[\"a\",null,\"string\"]}");
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":[\"a\",null,\"string\"]}"));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.Core.Tests.Public
             var json = JsonDataTestHelpers.CreateEmpty();
             json.a = new { b = 2 };
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":{\"b\":2}}"));
         }
 
         [Test]
@@ -76,13 +76,13 @@ namespace Azure.Core.Tests.Public
             // DynamicData uses value semantics, so this has no effect on the parent
             anotherJson.b = 2;
 
-            Assert.AreEqual("{\"a\":{}}", json.ToString());
-            Assert.AreEqual("{\"b\":2}", anotherJson.ToString());
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":{}}"));
+            Assert.That(anotherJson.ToString(), Is.EqualTo("{\"b\":2}"));
 
             // Value can still be updated on the object directly
             json.a.b = 2;
 
-            Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":{\"b\":2}}"));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Public
             var json = JsonDataTestHelpers.CreateEmpty();
             json.a = new GeoPoint(1, 2);
 
-            Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}"));
         }
 
         [TestCaseSource(nameof(PrimitiveValues))]
@@ -101,12 +101,12 @@ namespace Azure.Core.Tests.Public
             var json = new BinaryData("{\"a\":{\"b\":2}}").ToDynamicFromJson();
             json.a.b = value;
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":" + expected + "}}");
-            Assert.AreEqual(value, (T)json.a.b);
+            Assert.That(json.ToString(), Is.EqualTo("{\"a\":{\"b\":" + expected + "}}"));
+            Assert.That(value, Is.EqualTo((T)json.a.b));
 
             dynamic reparsedJson = new BinaryData(json.ToString()).ToDynamicFromJson();
 
-            Assert.AreEqual(value, (T)reparsedJson.a.b);
+            Assert.That(value, Is.EqualTo((T)reparsedJson.a.b));
         }
 
         public static IEnumerable<object[]> PrimitiveValues()
