@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> Properties specific to Roles. </summary>
     public partial class NeonRoleProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeonRoleProperties"/>. </summary>
         public NeonRoleProperties()
@@ -64,8 +36,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="lastUpdatedOn"> Timestamp indicating when the role was last updated. </param>
         /// <param name="owns"> Databases name associated with the role. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonRoleProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, IList<string> permissions, bool? isSuperUser, string roleName, DateTimeOffset? lastUpdatedOn, string owns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeonRoleProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, IList<string> permissions, bool? isSuperUser, string roleName, DateTimeOffset? lastUpdatedOn, string owns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -78,29 +50,39 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             RoleName = roleName;
             LastUpdatedOn = lastUpdatedOn;
             Owns = owns;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the entity. </summary>
         public string EntityId { get; }
+
         /// <summary> Name of the resource. </summary>
         public string EntityName { get; set; }
+
         /// <summary> Timestamp indicating when the entity was created. </summary>
         public string CreatedAt { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public NeonResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> Additional attributes for the entity. </summary>
         public IList<Attributes> Attributes { get; }
+
         /// <summary> The ID of the branch this role belongs to. </summary>
         public string BranchId { get; set; }
+
         /// <summary> Permissions assigned to the role. </summary>
         public IList<string> Permissions { get; }
+
         /// <summary> Indicates whether the role has superuser privileges. </summary>
         public bool? IsSuperUser { get; set; }
+
         /// <summary> Name of the role. </summary>
         public string RoleName { get; set; }
+
         /// <summary> Timestamp indicating when the role was last updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
+
         /// <summary> Databases name associated with the role. </summary>
         public string Owns { get; }
     }

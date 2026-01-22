@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Node type fault simulation object with status. </summary>
     public partial class NodeTypeFaultSimulation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeFaultSimulation"/>. </summary>
         internal NodeTypeFaultSimulation()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="status"> Fault simulation status. </param>
         /// <param name="operationId"> Current or latest asynchronous operation identifier on the node type. </param>
         /// <param name="operationStatus"> Current or latest asynchronous operation status on the node type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeFaultSimulation(string nodeTypeName, FaultSimulationStatus? status, string operationId, SfmcOperationStatus? operationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeFaultSimulation(string nodeTypeName, FaultSimulationStatus? status, string operationId, SfmcOperationStatus? operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeTypeName = nodeTypeName;
             Status = status;
             OperationId = operationId;
             OperationStatus = operationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Node type name. </summary>
         public string NodeTypeName { get; }
+
         /// <summary> Fault simulation status. </summary>
         public FaultSimulationStatus? Status { get; }
+
         /// <summary> Current or latest asynchronous operation identifier on the node type. </summary>
         public string OperationId { get; }
+
         /// <summary> Current or latest asynchronous operation status on the node type. </summary>
         public SfmcOperationStatus? OperationStatus { get; }
     }

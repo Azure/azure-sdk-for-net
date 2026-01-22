@@ -20,7 +20,7 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,
-            RequestPathPattern contextualPath,
+            ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
         {
@@ -51,14 +51,8 @@ namespace Azure.Generator.Management.Utilities
                 // Create temporary parameter to check filtering conditions
                 var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
 
-                // Skip filtered parameters
-                if (contextualPath.TryGetContextualParameter(tempParameter, out _))
-                {
-                    continue;
-                }
-
-                if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
-                    collectionProvider.TryGetPrivateFieldParameter(tempParameter, out _))
+                // Skip contextual parameters
+                if (parameterMapping.TryGetValue(tempParameter.WireInfo.SerializedName, out var mapping) && mapping.ContextualParameter is not null)
                 {
                     continue;
                 }
@@ -98,7 +92,7 @@ namespace Azure.Generator.Management.Utilities
                     scopeParameterTransformed = true;
                 }
 
-                // Rename body parameters for Resource/ResourCecollection/MockableArmClient/MockableResource operations
+                // Rename body parameters for Resource/ResourceCollection/MockableArmClient/MockableResource operations
                 if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider or MockableResourceProvider) &&
                     (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {

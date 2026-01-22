@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Holds details about product hierarchy information. </summary>
     public partial class HierarchyInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HierarchyInformation"/>. </summary>
         public HierarchyInformation()
@@ -55,23 +26,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="productLineName"> Represents product line name that uniquely identifies product line. </param>
         /// <param name="productName"> Represents product name that uniquely identifies product. </param>
         /// <param name="configurationName"> Represents configuration name that uniquely identifies configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HierarchyInformation(string productFamilyName, string productLineName, string productName, string configurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="configurationIdDisplayName"> Represents Model Display Name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HierarchyInformation(string productFamilyName, string productLineName, string productName, string configurationName, string configurationIdDisplayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProductFamilyName = productFamilyName;
             ProductLineName = productLineName;
             ProductName = productName;
             ConfigurationName = configurationName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ConfigurationIdDisplayName = configurationIdDisplayName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents product family name that uniquely identifies product family. </summary>
         public string ProductFamilyName { get; set; }
+
         /// <summary> Represents product line name that uniquely identifies product line. </summary>
         public string ProductLineName { get; set; }
+
         /// <summary> Represents product name that uniquely identifies product. </summary>
         public string ProductName { get; set; }
+
         /// <summary> Represents configuration name that uniquely identifies configuration. </summary>
         public string ConfigurationName { get; set; }
+
+        /// <summary> Represents Model Display Name. </summary>
+        public string ConfigurationIdDisplayName { get; set; }
     }
 }

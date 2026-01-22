@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.Shares client library</AssemblyTitle>
-    <Version>12.26.0-beta.1</Version>
+    <Version>12.26.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>12.25.0</ApiCompatVersion>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
@@ -42,6 +42,7 @@
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ChecksumExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
@@ -85,6 +86,11 @@
     <Compile Include="$(AzureStorageSharedSources)StorageTelemetryPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StreamPartition.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessageDecodingRetriableStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessageDecodingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessageEncodingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessagePrecalculatedCrcWrapperStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessage.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />

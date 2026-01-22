@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Core;
+using Microsoft.Extensions.Primitives;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 
@@ -32,10 +34,11 @@ internal class RequestValidator
                 $"Duplicate host '{duplicateHostGroup.Key}' found in accesses.",
                 nameof(accesses));
         }
-        _allowedHosts = normalizedAccesses.ToDictionary(a => a.ServiceEndpoint.Host, a => a); _skipValidation = _allowedHosts.Count == 0;
+        _allowedHosts = normalizedAccesses.ToDictionary(a => a.ServiceEndpoint.Host, a => a);
+        _skipValidation = _allowedHosts.Count == 0;
     }
 
-    public static bool IsValidationRequest(string? method, string? originHeader, out List<string>? requestHosts)
+    public static bool IsValidationRequest(string? method, StringValues originHeader, out List<string>? requestHosts)
     {
         requestHosts = null;
         if (!string.Equals(method, "OPTIONS", StringComparison.OrdinalIgnoreCase))
@@ -43,14 +46,16 @@ internal class RequestValidator
             return false;
         }
 
-        var origins = ToHeaderList(originHeader);
-        if (origins == null)
+        if (originHeader.Count == 0)
         {
             return false;
         }
 
-        requestHosts = [.. origins];
-        return true;
+        requestHosts = originHeader
+            .SelectMany(x => (x ?? string.Empty).Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries))
+            .ToList();
+
+        return requestHosts.Count > 0;
     }
 
     public bool IsValidHost(IList<string> hosts)

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class HcxEnterpriseSiteResource : IJsonModel<HcxEnterpriseSiteData>
     {
-        private static HcxEnterpriseSiteData s_dataDeserializationInstance;
-        private static HcxEnterpriseSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HcxEnterpriseSiteData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HcxEnterpriseSiteData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HcxEnterpriseSiteData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HcxEnterpriseSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HcxEnterpriseSiteData>)Data).Write(writer, options);
 
-        HcxEnterpriseSiteData IJsonModel<HcxEnterpriseSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HcxEnterpriseSiteData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HcxEnterpriseSiteData IJsonModel<HcxEnterpriseSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HcxEnterpriseSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HcxEnterpriseSiteData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HcxEnterpriseSiteData IPersistableModel<HcxEnterpriseSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HcxEnterpriseSiteData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<HcxEnterpriseSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HcxEnterpriseSiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HcxEnterpriseSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
