@@ -3,7 +3,7 @@
     <!-- Approved override -->
     <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.6</Version>
 
     <PackageTags>Azure.AI.AgentServer.Core</PackageTags>
   </PropertyGroup>
@@ -21,4 +21,3 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 </Project>
-
