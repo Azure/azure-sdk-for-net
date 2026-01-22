@@ -17,7 +17,8 @@ import {
   ArmProviderSchema,
   ArmResourceSchema,
   convertArmProviderSchemaToArguments,
-  sortResourceMethods
+  postProcessArmResources,
+  ParentResourceLookupContext
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -207,7 +208,7 @@ export function buildArmProviderSchema(
         }
         // If no match found, use the operation path
         // This is used for List operations on resources without CRUD ops,
-        // which will be handled later in buildArmProviderSchemaFromDetectedResources
+        // which will be handled later during post-processing
         if (!resourcePath) {
           resourcePath = operationPath;
         }
@@ -306,40 +307,55 @@ export function buildArmProviderSchema(
     }
   }
 
-  // after the resourceIdPattern has been populated, we can set the parentResourceId and the resource scope of each resource method
+  // Convert metadata map to ArmResourceSchema[] for post-processing
+  const resources: ArmResourceSchema[] = [];
+  const metadataKeyToResource = new Map<string, ArmResourceSchema>();
+  
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    // Extract model ID from the key (format: "modelId|resourcePath")
     const modelId = metadataKey.split("|")[0];
+    const model = resourceModelMap.get(modelId);
+    
+    // Emit diagnostic for resources without resourceIdPattern
+    if (metadata.resourceIdPattern === "" && model) {
+      sdkContext.logger.reportDiagnostic({
+        code: "general-warning",
+        messageId: "default",
+        format: {
+          message: `Cannot figure out resourceIdPattern from model ${model.name}.`
+        },
+        target: NoTarget
+      });
+    }
+    
+    const resource: ArmResourceSchema = {
+      resourceModelId: modelId,
+      metadata: metadata
+    };
+    resources.push(resource);
+    metadataKeyToResource.set(metadataKey, resource);
+  }
 
-    // get parent resource model id
+  // Populate parentResourceModelId from decorators BEFORE calling shared post-processing
+  // This is specific to legacy resource detection
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+    const modelId = metadataKey.split("|")[0];
     const parentResourceModelId = getParentResourceModelId(
       sdkContext,
       models.get(modelId)
     );
     if (parentResourceModelId) {
-      // Find parent metadata entry - there might be multiple, so we need to find the right one
-      for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
-        const parentModelId = parentKey.split("|")[0];
-        if (
-          parentModelId === parentResourceModelId &&
-          parentMetadata.resourceIdPattern
-        ) {
-          metadata.parentResourceId = parentMetadata.resourceIdPattern;
-          metadata.parentResourceModelId = parentResourceModelId;
-          break;
-        }
-      }
+      metadata.parentResourceModelId = parentResourceModelId;
     }
+  }
 
-    // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
-    // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
+  // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
+  // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
+  // This is also specific to legacy resource detection
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     if (!metadata.parentResourceId && metadata.resourceIdPattern) {
       // Check if this resource's path is a child of another resource's path
       for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
         if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
-          // Check if this resource's path starts with the other resource's path
-          // e.g., "/providers/MgmtTypeSpec/bestPractices/{name}/versions/{versionName}"
-          // is a child of "/providers/MgmtTypeSpec/bestPractices/{name}"
           const thisPath = metadata.resourceIdPattern;
           const potentialParentPath = otherMetadata.resourceIdPattern;
 
@@ -355,125 +371,108 @@ export function buildArmProviderSchema(
         }
       }
     }
+  }
 
-    // figure out the resourceScope of all resource methods
-    for (const method of metadata.methods) {
-      method.resourceScope = getResourceScopeOfMethod(
-        method.operationPath,
-        resourcePathToMetadataMap.values()
-      );
-    }
-
-    // update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope. If neither exist, it will be set to ResourceGroup by default
+  // Update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope.
+  // This is specific to legacy resource detection
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+    const modelId = metadataKey.split("|")[0];
     const model = resourceModelMap.get(modelId);
     if (model) {
       metadata.resourceScope = getResourceScope(model, metadata.methods);
     }
   }
 
-  // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
-  const metadataKeysToDelete: string[] = [];
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
+  // Create parent lookup context for legacy resource detection
+  // In this case, parent information comes from decorators and path matching (already populated above)
+  const parentLookup: ParentResourceLookupContext = {
+    getParentResource: (resource: ArmResourceSchema): ArmResourceSchema | undefined => {
+      const parentModelId = resource.metadata.parentResourceModelId;
+      if (!parentModelId) return undefined;
 
-    // If this entry has no resourceIdPattern, try to merge it with another entry for the same model that does
-    if (metadata.resourceIdPattern === "") {
-      let merged = false;
-
-      // First try to merge with parent if it exists
-      if (metadata.parentResourceModelId) {
-        for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
-          const parentModelId = parentKey.split("|")[0];
-          if (
-            parentModelId === metadata.parentResourceModelId &&
-            parentMetadata.resourceIdPattern
-          ) {
-            parentMetadata.methods.push(...metadata.methods);
-            metadataKeysToDelete.push(metadataKey);
-            merged = true;
-            break;
-          }
-        }
-      } else {
-        // No parent - try to find another entry for the same model with a resourceIdPattern
-        for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
-          const otherModelId = otherKey.split("|")[0];
-          if (
-            otherKey !== metadataKey &&
-            otherModelId === modelId &&
-            otherMetadata.resourceIdPattern
-          ) {
-            // Merge this metadata into the other one
-            otherMetadata.methods.push(...metadata.methods);
-            metadataKeysToDelete.push(metadataKey);
-            merged = true;
-            break;
-          }
-        }
-
-        // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
-        if (!merged) {
-          for (const method of metadata.methods) {
-            nonResourceMethods.set(method.methodId, {
-              methodId: method.methodId,
-              operationPath: method.operationPath,
-              operationScope: method.operationScope
-            });
-          }
-          metadataKeysToDelete.push(metadataKey);
+      // Find parent resource with matching model ID and a valid resourceIdPattern
+      for (const r of resources) {
+        if (r.resourceModelId === parentModelId && r.metadata.resourceIdPattern) {
+          return r;
         }
       }
+      return undefined;
     }
-  }
+  };
 
-  // Remove entries that were merged or converted to non-resource methods
-  for (const key of metadataKeysToDelete) {
-    resourcePathToMetadataMap.delete(key);
-  }
+  // Convert non-resource methods map to array
+  const nonResourceMethodsArray: NonResourceMethod[] = Array.from(nonResourceMethods.values());
 
-  // the last step, add the decorator to the resource model
-  // Group metadata by model ID to add all metadata entries to their respective models
-  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-    if (!modelIdToMetadataList.has(modelId)) {
-      modelIdToMetadataList.set(modelId, []);
+  // Track resources before post-processing to emit diagnostics for filtered resources
+  const resourcesBeforeFiltering = new Set(resources.filter(r => r.metadata.resourceIdPattern !== ""));
+
+  // Use the shared post-processing function
+  const filteredResources = postProcessArmResources(
+    resources,
+    nonResourceMethodsArray,
+    parentLookup
+  );
+
+  // Emit diagnostics for resources that were filtered out (non-singleton resources without Read operations)
+  const resourcesAfterFiltering = new Set(filteredResources);
+  for (const resource of resourcesBeforeFiltering) {
+    if (!resourcesAfterFiltering.has(resource)) {
+      const model = resourceModelMap.get(resource.resourceModelId);
+      if (model) {
+        sdkContext.logger.reportDiagnostic({
+          code: "general-warning",
+          messageId: "default",
+          format: {
+            message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`
+          },
+          target: NoTarget
+        });
+      }
     }
-    modelIdToMetadataList.get(modelId)!.push(metadata);
   }
 
   // Update resource names: prioritize explicit ResourceName from TypeSpec, fallback to deriving from client names
   // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
   // TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
-  for (const [modelId, metadataList] of modelIdToMetadataList) {
-    if (metadataList.length > 1) {
+  const modelIdToResources = new Map<string, ArmResourceSchema[]>();
+  for (const resource of filteredResources) {
+    if (!modelIdToResources.has(resource.resourceModelId)) {
+      modelIdToResources.set(resource.resourceModelId, []);
+    }
+    modelIdToResources.get(resource.resourceModelId)!.push(resource);
+  }
+
+  for (const [, resourceList] of modelIdToResources) {
+    if (resourceList.length > 1) {
       // Multiple resource paths for the same model - use explicit names or derive from client names
-      for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-        const keyModelId = metadataKey.split("|")[0];
-        if (keyModelId === modelId) {
-          // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
-          const explicitName = resourcePathToExplicitName.get(metadataKey);
-          if (explicitName) {
-            metadata.resourceName = explicitName;
-          } else {
-            // Fallback: derive from client name using pluralize.singular
-            const clientName = resourcePathToClientName.get(metadataKey);
-            if (clientName) {
-              metadata.resourceName = pluralize.singular(clientName);
+      for (const resource of resourceList) {
+        // Use the metadataKeyToResource map to efficiently find the metadata key
+        // Look for the metadataKey that corresponds to this resource
+        for (const [metadataKey, mappedResource] of metadataKeyToResource) {
+          if (mappedResource === resource) {
+            // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
+            const explicitName = resourcePathToExplicitName.get(metadataKey);
+            if (explicitName) {
+              resource.metadata.resourceName = explicitName;
+            } else {
+              // Fallback: derive from client name using pluralize.singular
+              const clientName = resourcePathToClientName.get(metadataKey);
+              if (clientName) {
+                resource.metadata.resourceName = pluralize.singular(clientName);
+              }
             }
+            break;
           }
         }
       }
     }
-    // If there's only one metadata entry for this model, keep using the model name (already set)
+    // If there's only one resource for this model, keep using the model name (already set)
   }
 
-  return buildArmProviderSchemaFromDetectedResources(
-    sdkContext,
-    resourceModels,
-    resourcePathToMetadataMap,
-    nonResourceMethods
-  );
+  return {
+    resources: filteredResources,
+    nonResourceMethods: nonResourceMethodsArray
+  };
 }
 
 function isCRUDKind(kind: ResourceOperationKind): boolean {
@@ -855,27 +854,6 @@ function getResourceScope(
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
 }
 
-function getResourceScopeOfMethod(
-  path: string,
-  resources: MapIterator<ResourceMetadata>
-): string | undefined {
-  // loop all possible resource metadata and see if some of them match the operation path of this method as a prefix
-  const candidates: string[] = [];
-  for (const otherMetadata of resources) {
-    if (
-      otherMetadata.resourceIdPattern &&
-      isPrefix(otherMetadata.resourceIdPattern, path)
-    ) {
-      candidates.push(otherMetadata.resourceIdPattern);
-    }
-  }
-  // finds the longest resource path id in candidates as the resource scope
-  if (candidates.length > 0) {
-    return candidates.reduce((a, b) => (a.length > b.length ? a : b));
-  }
-  return undefined;
-}
-
 /**
  * Applies the ARM provider schema as a decorator to the root client.
  * @param codeModel - The code model to update
@@ -895,122 +873,4 @@ function applyArmProviderSchemaDecorator(
     name: armProviderSchema,
     arguments: convertArmProviderSchemaToArguments(schema)
   });
-}
-
-/**
- * Builds the ARM provider schema from detected resources and non-resource methods.
- * This consolidates all ARM resource information into a single unified structure.
- * This is a helper function called by buildArmProviderSchema.
- *
- * @param sdkContext - The emitter context
- * @param resourceModels - All resource models detected in the code model
- * @param resourcePathToMetadataMap - Map of resource paths to their metadata
- * @param nonResourceMethods - Map of non-resource methods
- * @returns The unified ARM provider schema
- */
-function buildArmProviderSchemaFromDetectedResources(
-  sdkContext: CSharpEmitterContext,
-  resourceModels: InputModelType[],
-  resourcePathToMetadataMap: Map<string, ResourceMetadata>,
-  nonResourceMethods: Map<string, NonResourceMethod>
-): ArmProviderSchema {
-  const resources: ArmResourceSchema[] = [];
-
-  // Build resource schemas from the metadata map
-  // Group by model ID since multiple paths can share the same model
-  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-    if (!modelIdToMetadataList.has(modelId)) {
-      modelIdToMetadataList.set(modelId, []);
-    }
-    modelIdToMetadataList.get(modelId)!.push(metadata);
-  }
-
-  // Create resource schemas
-  for (const model of resourceModels) {
-    const metadataList = modelIdToMetadataList.get(
-      model.crossLanguageDefinitionId
-    );
-    if (metadataList) {
-      for (const metadata of metadataList) {
-        if (metadata.resourceIdPattern === "") {
-          sdkContext.logger.reportDiagnostic({
-            code: "general-warning",
-            messageId: "default",
-            format: {
-              message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-            },
-            target: NoTarget
-          });
-          continue;
-        }
-
-        // Filter out resources without Get/Read operations (non-singleton resources only)
-        // Singleton resources can exist without Get operations
-        const hasReadOperation = metadata.methods.some(
-          (m) => m.kind === ResourceOperationKind.Read
-        );
-        if (!hasReadOperation && !metadata.singletonResourceName) {
-          // For resources without Get operation, all operations should belong to the parent resource
-          // If no parent exists, they should be treated as non-resource methods
-          
-          // Find parent resource if exists
-          let parentMetadata: ResourceMetadata | undefined;
-          if (metadata.parentResourceModelId) {
-            for (const [parentKey, parentMeta] of resourcePathToMetadataMap) {
-              const parentModelId = parentKey.split("|")[0];
-              if (parentModelId === metadata.parentResourceModelId) {
-                parentMetadata = parentMeta;
-                break;
-              }
-            }
-          }
-
-          // Iterate through all methods and move them to parent or non-resource methods
-          for (const method of metadata.methods) {
-            if (parentMetadata) {
-              // When moving operations to parent resource, convert them to Action kind
-              // to avoid naming conflicts (parent might have its own Get/Delete/List methods)
-              const movedMethod: ResourceMethod = {
-                ...method,
-                kind: ResourceOperationKind.Action
-              };
-              parentMetadata.methods.push(movedMethod);
-            } else {
-              // No parent - move to non-resource methods
-              nonResourceMethods.set(method.methodId, {
-                methodId: method.methodId,
-                operationPath: method.operationPath,
-                operationScope: method.operationScope
-              });
-            }
-          }
-
-          sdkContext.logger.reportDiagnostic({
-            code: "general-warning",
-            messageId: "default",
-            format: {
-              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`
-            },
-            target: NoTarget
-          });
-          continue;
-        }
-
-        // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
-        sortResourceMethods(metadata.methods);
-
-        resources.push({
-          resourceModelId: model.crossLanguageDefinitionId,
-          metadata: metadata
-        });
-      }
-    }
-  }
-
-  return {
-    resources: resources,
-    nonResourceMethods: Array.from(nonResourceMethods.values())
-  };
 }
