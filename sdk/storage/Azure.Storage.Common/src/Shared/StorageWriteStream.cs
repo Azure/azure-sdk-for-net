@@ -413,7 +413,7 @@ namespace Azure.Storage.Shared
         {
             if (_buffer.Length == 0)
             {
-                validationOptions =  new UploadTransferValidationOptions
+                validationOptions = new UploadTransferValidationOptions
                 {
                     ChecksumAlgorithm = StorageChecksumAlgorithm.None
                 };

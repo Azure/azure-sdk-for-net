@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
             }
 
             // Assert
-            Assert.IsEmpty(messages);
+            Assert.That(messages, Is.Empty);
         }
     }
 }

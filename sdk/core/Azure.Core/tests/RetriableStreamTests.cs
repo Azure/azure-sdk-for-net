@@ -38,19 +38,19 @@ namespace Azure.Core.Tests
                 offset => SendTestRequestAsync(pipeline, offset),
                 ResponseClassifier.Shared, maxRetries: 5);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(25, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(25));
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(50, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 25, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(50));
 
-            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(100, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 50, 50), Is.EqualTo(50));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(100));
 
-            Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 50), Is.EqualTo(0));
             AssertReads(_buffer, 100);
         }
 
@@ -71,16 +71,16 @@ namespace Azure.Core.Tests
                 offset => SendTestRequestAsync(pipeline, offset),
                 ResponseClassifier.Shared, maxRetries: 5);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
-            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
-            Assert.True(stream1.IsDisposed);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
+            Assert.That(await ReadAsync(reliableStream, _buffer, 25, 25), Is.EqualTo(25));
+            Assert.That(await ReadAsync(reliableStream, _buffer, 50, 50), Is.EqualTo(50));
+            Assert.That(stream1.IsDisposed, Is.True);
 
-            Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
-            Assert.False(stream2.IsDisposed);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 50), Is.EqualTo(0));
+            Assert.That(stream2.IsDisposed, Is.False);
 
             reliableStream.Dispose();
-            Assert.True(stream2.IsDisposed);
+            Assert.That(stream2.IsDisposed, Is.True);
 
             AssertReads(_buffer, 100);
         }
@@ -103,13 +103,13 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(25, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(25));
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(50, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 25, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(50));
 
             Assert.ThrowsAsync<InvalidOperationException>(() => reliableStream.ReadAsync(_buffer, 50, 50));
 
@@ -140,13 +140,13 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(25, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(25));
 
             var exception = await AsyncAssert.ThrowsAsync<Exception>(
                 async () => await ReadAsync(reliableStream, _buffer, 25, 25, new CancellationToken(true)));
-            Assert.IsInstanceOf(translated, exception);
+            Assert.That(exception, Is.InstanceOf(translated));
 
             AssertReads(_buffer, 25);
         }
@@ -169,17 +169,17 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(25, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(25));
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(50, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 25, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(50));
 
-            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(100, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 50, 50), Is.EqualTo(50));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
+            Assert.That(reliableStream.Position, Is.EqualTo(100));
 
             AssertReads(_buffer, 100);
         }
@@ -203,10 +203,10 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 0, 50));
-            Assert.AreEqual(50, reliableStream.Position);
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 50), Is.EqualTo(50));
+            Assert.That(reliableStream.Position, Is.EqualTo(50));
 
-            Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 50), Is.EqualTo(0));
 
             Assert.Throws<NotSupportedException>(() => _ = reliableStream.Length);
 
@@ -284,13 +284,13 @@ namespace Azure.Core.Tests
                 }, ResponseClassifier.Shared, maxRetries: 3);
 
             AggregateException aggregateException = Assert.ThrowsAsync<AggregateException>(() => ReadAsync(reliableStream, _buffer, 0, 4));
-            StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);
-            Assert.AreEqual(4, aggregateException.InnerExceptions.Count);
-            Assert.AreEqual("Failed at 0", aggregateException.InnerExceptions[0].Message);
-            Assert.AreEqual("Failed at 1", aggregateException.InnerExceptions[1].Message);
-            Assert.AreEqual("Failed at 2", aggregateException.InnerExceptions[2].Message);
-            Assert.AreEqual("Failed at 3", aggregateException.InnerExceptions[3].Message);
-            Assert.AreEqual(4, mockTransport.Requests.Count);
+            Assert.That(aggregateException.Message, Does.StartWith("Retry failed after 4 tries"));
+            Assert.That(aggregateException.InnerExceptions.Count, Is.EqualTo(4));
+            Assert.That(aggregateException.InnerExceptions[0].Message, Is.EqualTo("Failed at 0"));
+            Assert.That(aggregateException.InnerExceptions[1].Message, Is.EqualTo("Failed at 1"));
+            Assert.That(aggregateException.InnerExceptions[2].Message, Is.EqualTo("Failed at 2"));
+            Assert.That(aggregateException.InnerExceptions[3].Message, Is.EqualTo("Failed at 3"));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(4));
         }
 
         [Test]
@@ -348,7 +348,7 @@ namespace Azure.Core.Tests
         {
             for (int i = 0; i < length; i++)
             {
-                Assert.AreEqual((byte)i, buffer[i]);
+                Assert.That(buffer[i], Is.EqualTo((byte)i));
             }
         }
 
@@ -440,7 +440,7 @@ namespace Azure.Core.Tests
 
                 if (Position > _throwAfter)
                 {
-                    throw (Exception) Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
+                    throw (Exception)Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
                 }
 
                 for (int i = 0; i < left; i++)

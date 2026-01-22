@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 
             StorageMoverAgentResource agent = (await agents.GetAsync(AgentName)).Value;
             StorageMoverAgentResource agent2 = (await agent.GetAsync()).Value;
-            Assert.AreEqual(agent.Data.Name, agent2.Data.Name);
-            Assert.AreEqual(agent.Data.Id, agent2.Data.Id);
-            Assert.AreEqual(agent.Data.LocalIPAddress, agent2.Data.LocalIPAddress);
-            Assert.AreEqual(agent.Id.Name, agent2.Id.Name);
+            Assert.That(agent2.Data.Name, Is.EqualTo(agent.Data.Name));
+            Assert.That(agent2.Data.Id, Is.EqualTo(agent.Data.Id));
+            Assert.That(agent2.Data.LocalIPAddress, Is.EqualTo(agent.Data.LocalIPAddress));
+            Assert.That(agent2.Id.Name, Is.EqualTo(agent.Id.Name));
 
             int counter = 0;
             await foreach (StorageMoverAgentResource _ in agents.GetAllAsync())
             {
                 counter++;
             }
-            Assert.GreaterOrEqual(counter, 1);
+            Assert.That(counter, Is.GreaterThanOrEqualTo(1));
 
             StorageMoverAgentPatch patch = new StorageMoverAgentPatch
             {
@@ -49,29 +49,29 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             patch.UploadLimitScheduleWeeklyRecurrences.Add(uploadLimitWeeklyRecurrence);
 
             agent = (await agent.UpdateAsync(patch)).Value;
-            Assert.AreEqual(patch.Description, agent.Data.Description);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences.Count, agent.Data.UploadLimitScheduleWeeklyRecurrences.Count);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].Days[0], agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days[0]);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].Days.Count, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days.Count);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour);
-            Assert.AreEqual("0", agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Minute.ToString());
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour);
-            Assert.AreEqual("0", agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Minute.ToString());
+            Assert.That(agent.Data.Description, Is.EqualTo(patch.Description));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences.Count, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences.Count));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days[0], Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].Days[0]));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days.Count, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].Days.Count));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Minute.ToString(), Is.EqualTo("0"));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Minute.ToString(), Is.EqualTo("0"));
 
             agent = (await agents.GetAsync(AgentName)).Value;
-            Assert.AreEqual(patch.Description, agent.Data.Description);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences.Count, agent.Data.UploadLimitScheduleWeeklyRecurrences.Count);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].Days[0], agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days[0]);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].Days.Count, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days.Count);
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour);
-            Assert.AreEqual("0", agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Minute.ToString());
-            Assert.AreEqual(patch.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour, agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour);
-            Assert.AreEqual("0", agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Minute.ToString());
+            Assert.That(agent.Data.Description, Is.EqualTo(patch.Description));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences.Count, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences.Count));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].LimitInMbps));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days[0], Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].Days[0]));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].Days.Count, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].Days.Count));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Hour));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].StartTime.Minute.ToString(), Is.EqualTo("0"));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour, Is.EqualTo(patch.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Hour));
+            Assert.That(agent.Data.UploadLimitScheduleWeeklyRecurrences[0].EndTime.Minute.ToString(), Is.EqualTo("0"));
 
-            Assert.IsTrue((await agents.ExistsAsync(AgentName)).Value);
-            Assert.IsFalse((await agents.ExistsAsync(AgentName + "111")).Value);
+            Assert.That((await agents.ExistsAsync(AgentName)).Value, Is.True);
+            Assert.That((await agents.ExistsAsync(AgentName + "111")).Value, Is.False);
         }
     }
 }

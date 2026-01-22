@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             AssertModel(() => new LifetimeAction(CertificatePolicyAction.AutoRenew));
 
         #region Assertion helpers
-        private static void AssertModel<T>(Func<T> factory) where T: IJsonSerializable, IJsonDeserializable
+        private static void AssertModel<T>(Func<T> factory) where T : IJsonSerializable, IJsonDeserializable
         {
             T obj = factory();
 
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 // Check CanWrite to make sure we actually wrote it.
                 if (property.CanWrite && property.CanRead && ShouldSerialize(property, out var value))
                 {
-                    Assert.AreEqual(value, property.GetValue(obj, null));
+                    Assert.That(property.GetValue(obj, null), Is.EqualTo(value));
                 }
             }
         }

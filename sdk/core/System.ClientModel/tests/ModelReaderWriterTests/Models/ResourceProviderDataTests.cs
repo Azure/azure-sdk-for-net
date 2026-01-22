@@ -20,20 +20,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override void CompareModels(ResourceProviderData model, ResourceProviderData model2, string format)
         {
-            Assert.AreEqual(model.Id, model2.Id);
-            Assert.AreEqual(model.Namespace, model2.Namespace);
-            Assert.AreEqual(model.RegistrationState, model2.RegistrationState);
-            Assert.AreEqual(model.RegistrationPolicy, model2.RegistrationPolicy);
-            Assert.AreEqual(model.ProviderAuthorizationConsentState, model2.ProviderAuthorizationConsentState);
-            Assert.AreEqual(model.ResourceTypes.Count, model2.ResourceTypes.Count);
+            Assert.That(model2.Id, Is.EqualTo(model.Id));
+            Assert.That(model2.Namespace, Is.EqualTo(model.Namespace));
+            Assert.That(model2.RegistrationState, Is.EqualTo(model.RegistrationState));
+            Assert.That(model2.RegistrationPolicy, Is.EqualTo(model.RegistrationPolicy));
+            Assert.That(model2.ProviderAuthorizationConsentState, Is.EqualTo(model.ProviderAuthorizationConsentState));
+            Assert.That(model2.ResourceTypes.Count, Is.EqualTo(model.ResourceTypes.Count));
         }
 
         protected override string GetExpectedResult(string format) => WirePayload;
 
         protected override void VerifyModel(ResourceProviderData model, string format)
         {
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(model.Id);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(model.Id, Is.Not.Null);
         }
 
         [Test]
@@ -47,12 +47,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
             var modelFromMrw = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(WirePayload));
 
-            Assert.IsNotNull(modelFromStj);
-            Assert.IsNotNull(modelFromMrw);
+            Assert.That(modelFromStj, Is.Not.Null);
+            Assert.That(modelFromMrw, Is.Not.Null);
 
             CompareModels(modelFromStj!, modelFromMrw!, "J");
             var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
-            Assert.AreEqual(WirePayload, stjResult);
+            Assert.That(stjResult, Is.EqualTo(WirePayload));
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
             var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
-            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), NormalizeLF(stjResult));
+            Assert.That(NormalizeLF(stjResult), Is.EqualTo(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd()));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
             var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
-            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), NormalizeLF(stjResult));
+            Assert.That(NormalizeLF(stjResult), Is.EqualTo(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd()));
 #endif
         }
 

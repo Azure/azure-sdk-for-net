@@ -170,8 +170,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             DataLakeFileClient sasFileClient = InstrumentClient(new DataLakeFileClient(uriBuilder.Uri, GetOptions()));
 
-            Assert.AreEqual("?" + sasQueryParams, sasFileClient.BlobUri.Query);
-            Assert.AreEqual("?" + sasQueryParams, sasFileClient.DfsUri.Query);
+            Assert.That(sasFileClient.BlobUri.Query, Is.EqualTo("?" + sasQueryParams));
+            Assert.That(sasFileClient.DfsUri.Query, Is.EqualTo("?" + sasQueryParams));
             // Call an API that calls a DFS endpoint
             await sasFileClient.CreateAsync();
             // Call an API that calls a Blob endpoint
@@ -223,7 +223,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             try
             {
                 // Assert
-                Assert.AreEqual(serviceClient.Uri.Query, fileSystemClient.Uri.Query);
+                Assert.That(fileSystemClient.Uri.Query, Is.EqualTo(serviceClient.Uri.Query));
                 await fileSystemClient.CreateAsync();
                 fileSystemClient.GetPathsAsync();
             }
@@ -273,7 +273,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient serviceClient = dataLakeFileSystemClient.GetParentServiceClient();
 
             // Assert
-            Assert.AreEqual(dataLakeFileSystemClient.Uri.Query, serviceClient.Uri.Query);
+            Assert.That(serviceClient.Uri.Query, Is.EqualTo(dataLakeFileSystemClient.Uri.Query));
             await serviceClient.GetPropertiesAsync();
         }
 
@@ -315,7 +315,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directoryClient = dataLakeFileSystemClient.GetDirectoryClient(GetNewDirectoryName());
 
             // Assert
-            Assert.AreEqual(dataLakeFileSystemClient.Uri.Query, directoryClient.Uri.Query);
+            Assert.That(directoryClient.Uri.Query, Is.EqualTo(dataLakeFileSystemClient.Uri.Query));
             await directoryClient.CreateAsync();
         }
 
@@ -357,7 +357,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient fileClient = dataLakeFileSystemClient.GetFileClient(GetNewFileName());
 
             // Assert
-            Assert.AreEqual(dataLakeFileSystemClient.Uri.Query, fileClient.Uri.Query);
+            Assert.That(fileClient.Uri.Query, Is.EqualTo(dataLakeFileSystemClient.Uri.Query));
             await fileClient.CreateAsync();
         }
 
@@ -413,8 +413,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -438,7 +438,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey.Value);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -472,8 +472,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -495,7 +495,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasFile.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -529,8 +529,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -549,8 +549,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeUriBuilder roundtripDataLakeUriBuilder = new DataLakeUriBuilder(originalDataLakeUriBuilder.ToUri());
 
-            Assert.AreEqual(originalDataLakeUriBuilder.ToUri(), roundtripDataLakeUriBuilder.ToUri());
-            Assert.AreEqual(originalDataLakeUriBuilder.Sas.ToString(), roundtripDataLakeUriBuilder.Sas.ToString());
+            Assert.That(roundtripDataLakeUriBuilder.ToUri(), Is.EqualTo(originalDataLakeUriBuilder.ToUri()));
+            Assert.That(roundtripDataLakeUriBuilder.Sas.ToString(), Is.EqualTo(originalDataLakeUriBuilder.Sas.ToString()));
         }
 
         [RecordedTest]
@@ -600,7 +600,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey.Value);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -649,7 +649,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasFile.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -726,7 +726,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await identitySasFile.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -783,7 +783,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasFile.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -835,8 +835,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             DataLakeUriBuilder roundtripDataLakeUriBuilder = new DataLakeUriBuilder(originalDataLakeUriBuilder.ToUri());
 
-            Assert.AreEqual(originalDataLakeUriBuilder.ToUri(), roundtripDataLakeUriBuilder.ToUri());
-            Assert.AreEqual(originalDataLakeUriBuilder.Sas.ToString(), roundtripDataLakeUriBuilder.Sas.ToString());
+            Assert.That(roundtripDataLakeUriBuilder.ToUri(), Is.EqualTo(originalDataLakeUriBuilder.ToUri()));
+            Assert.That(roundtripDataLakeUriBuilder.Sas.ToString(), Is.EqualTo(originalDataLakeUriBuilder.Sas.ToString()));
         }
         #endregion DataLakeFileSystemClient
 
@@ -858,7 +858,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
 
             // Assert
-            Assert.AreEqual(directoryClient.Uri.Query, fileClient.Uri.Query);
+            Assert.That(fileClient.Uri.Query, Is.EqualTo(directoryClient.Uri.Query));
             await fileClient.CreateAsync();
         }
 
@@ -900,7 +900,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient subdirectoryClient = directoryClient.GetSubDirectoryClient(GetNewDirectoryName());
 
             // Assert
-            Assert.AreEqual(directoryClient.Uri.Query, subdirectoryClient.Uri.Query);
+            Assert.That(subdirectoryClient.Uri.Query, Is.EqualTo(directoryClient.Uri.Query));
             await subdirectoryClient.CreateAsync();
         }
 
@@ -942,7 +942,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileSystemClient dataLakeFileSystemClient = directoryClient.GetParentFileSystemClient();
 
             // Assert
-            Assert.AreEqual(directoryClient.Uri.Query, dataLakeFileSystemClient.Uri.Query);
+            Assert.That(dataLakeFileSystemClient.Uri.Query, Is.EqualTo(directoryClient.Uri.Query));
             await dataLakeFileSystemClient.GetPropertiesAsync();
         }
 
@@ -990,7 +990,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient cpkSasDirectoryClient = sasDirectoryClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasDirectoryClient.Uri.Query, cpkSasDirectoryClient.Uri.Query);
+            Assert.That(cpkSasDirectoryClient.Uri.Query, Is.EqualTo(sasDirectoryClient.Uri.Query));
             await cpkSasDirectoryClient.GetPropertiesAsync();
         }
 
@@ -1034,7 +1034,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileSystemClient dataLakeFileSystemClient = fileClient.GetParentFileSystemClient();
 
             // Assert
-            Assert.AreEqual(fileClient.Uri.Query, dataLakeFileSystemClient.Uri.Query);
+            Assert.That(dataLakeFileSystemClient.Uri.Query, Is.EqualTo(fileClient.Uri.Query));
             await dataLakeFileSystemClient.GetPropertiesAsync();
         }
 
@@ -1076,7 +1076,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directoryClient = fileClient.GetParentDirectoryClient();
 
             // Assert
-            Assert.AreEqual(fileClient.Uri.Query, directoryClient.Uri.Query);
+            Assert.That(directoryClient.Uri.Query, Is.EqualTo(fileClient.Uri.Query));
             await directoryClient.GetPropertiesAsync();
         }
 
@@ -1124,7 +1124,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient cpkSasFileClient = sasFileClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasFileClient.Uri.Query, cpkSasFileClient.Uri.Query);
+            Assert.That(cpkSasFileClient.Uri.Query, Is.EqualTo(sasFileClient.Uri.Query));
             await cpkSasFileClient.GetPropertiesAsync();
         }
 
@@ -1168,7 +1168,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileSystemClient dataLakeFileSystemClient = pathClient.GetParentFileSystemClient();
 
             // Assert
-            Assert.AreEqual(pathClient.Uri.Query, dataLakeFileSystemClient.Uri.Query);
+            Assert.That(dataLakeFileSystemClient.Uri.Query, Is.EqualTo(pathClient.Uri.Query));
             await dataLakeFileSystemClient.GetPropertiesAsync();
         }
 
@@ -1214,7 +1214,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directoryClient = pathClient.GetParentDirectoryClient();
 
             // Assert
-            Assert.AreEqual(pathClient.Uri.Query, directoryClient.Uri.Query);
+            Assert.That(directoryClient.Uri.Query, Is.EqualTo(pathClient.Uri.Query));
             await directoryClient.GetPropertiesAsync();
         }
 
@@ -1262,7 +1262,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakePathClient cpkSasPathClient = sasPathClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasPathClient.Uri.Query, cpkSasPathClient.Uri.Query);
+            Assert.That(cpkSasPathClient.Uri.Query, Is.EqualTo(sasPathClient.Uri.Query));
             await cpkSasPathClient.GetPropertiesAsync();
         }
 

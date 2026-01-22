@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanDeserializeNullWithSTJ()
         {
-            Assert.Null(JsonSerializer.Deserialize<ResponseError>("null"));
+            Assert.That(JsonSerializer.Deserialize<ResponseError>("null"), Is.Null);
         }
 
         [Test]
@@ -28,9 +28,9 @@ namespace Azure.Core.Tests
             var errorFromModel = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
 
             // MRW does not allow null to be returned from read
-            Assert.NotNull(errorFromModel);
-            Assert.Null(errorFromModel.Code);
-            Assert.Null(errorFromModel.Message);
+            Assert.That(errorFromModel, Is.Not.Null);
+            Assert.That(errorFromModel.Code, Is.Null);
+            Assert.That(errorFromModel.Message, Is.Null);
         }
 
         [Test]
@@ -60,22 +60,22 @@ namespace Azure.Core.Tests
                 error = JsonSerializer.Deserialize<ResponseError>(json);
             }
 
-            Assert.AreEqual("BadError", error.Code);
-            Assert.AreEqual("Something wasn't awesome", error.Message);
-            Assert.AreEqual("Error target", error.Target);
+            Assert.That(error.Code, Is.EqualTo("BadError"));
+            Assert.That(error.Message, Is.EqualTo("Something wasn't awesome"));
+            Assert.That(error.Target, Is.EqualTo("Error target"));
 
-            Assert.AreEqual("MoreDetailedBadError", error.InnerError.Code);
+            Assert.That(error.InnerError.Code, Is.EqualTo("MoreDetailedBadError"));
 
-            Assert.Null(error.InnerError.InnerError);
-            Assert.AreEqual("BadError: Something wasn't awesome" + Environment.NewLine +
+            Assert.That(error.InnerError.InnerError, Is.Null);
+            Assert.That(error.ToString(),
+                Is.EqualTo("BadError: Something wasn't awesome" + Environment.NewLine +
                             "Target: Error target" + Environment.NewLine +
                             Environment.NewLine +
                             "Inner Errors:" + Environment.NewLine +
                             "MoreDetailedBadError" + Environment.NewLine +
                             Environment.NewLine +
                             "Raw:" + Environment.NewLine +
-                            "{\"code\":\"BadError\",\"message\":\"Something wasn't awesome\",\"target\":\"Error target\",\"innererror\":{\"code\":\"MoreDetailedBadError\",\"message\":\"Inner message\"}}",
-                error.ToString());
+                            "{\"code\":\"BadError\",\"message\":\"Something wasn't awesome\",\"target\":\"Error target\",\"innererror\":{\"code\":\"MoreDetailedBadError\",\"message\":\"Inner message\"}}"));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(2, error.Details.Count);
 
-            Assert.Null(error.InnerError.InnerError.InnerError);
+            Assert.That(error.InnerError.InnerError.InnerError, Is.Null);
 
             Assert.AreEqual("BadError: Something wasn't awesome" + Environment.NewLine +
                             "Target: Error target" + Environment.NewLine +
@@ -190,7 +190,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(2, error.Details.Count);
 
-            Assert.Null(error.InnerError.InnerError.InnerError);
+            Assert.That(error.InnerError.InnerError.InnerError, Is.Null);
 
             Assert.AreEqual("BadError: Something wasn't awesome" + Environment.NewLine +
                             "Target: Error target" + Environment.NewLine +
@@ -220,8 +220,8 @@ namespace Azure.Core.Tests
             var error = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
 
             Assert.AreEqual("", error.Code);
-            Assert.Null(error.Message);
-            Assert.Null(error.InnerError);
+            Assert.That(error.Message, Is.Null);
+            Assert.That(error.InnerError, Is.Null);
             Assert.AreEqual(0, error.Details.Count);
         }
 
@@ -238,7 +238,7 @@ namespace Azure.Core.Tests
             var ex = Assert.Throws<FormatException>(() =>
                 ModelReaderWriter.Read<ResponseError>(binaryData, options));
 
-            Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
+            Assert.That(ex.Message.Contains("does not support 'X' format"), Is.True);
         }
 
         #endregion
@@ -253,12 +253,12 @@ namespace Azure.Core.Tests
 
             // Write to JSON using the ModelReaderWriter
             var binaryData = ModelReaderWriter.Write(originalError, ModelReaderWriterOptions.Json);
-            Assert.NotNull(binaryData);
+            Assert.That(binaryData, Is.Not.Null);
 
             // Verify the serialized content
             string jsonString = binaryData.ToString();
-            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
-            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
+            Assert.That(jsonString.Contains("\"code\":\"BadError\""), Is.True);
+            Assert.That(jsonString.Contains("\"message\":\"Something was not awesome\""), Is.True);
 
             // Deserialize back to verify round-trip
             var deserializedError = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
@@ -292,19 +292,19 @@ namespace Azure.Core.Tests
 
             // Now test the serialization
             var serializedData = ModelReaderWriter.Write(originalError, ModelReaderWriterOptions.Json);
-            Assert.NotNull(serializedData);
+            Assert.That(serializedData, Is.Not.Null);
 
             // Verify key elements are in the serialized JSON
             string jsonString = serializedData.ToString();
-            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
-            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
-            Assert.IsTrue(jsonString.Contains("\"target\":\"Error target\""));
-            Assert.IsTrue(jsonString.Contains("\"details\":["));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 1\""));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 2\""));
-            Assert.IsTrue(jsonString.Contains("\"innererror\":"));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"MoreDetailedBadError\""));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"InnerMoreDetailedBadError\""));
+            Assert.That(jsonString.Contains("\"code\":\"BadError\""), Is.True);
+            Assert.That(jsonString.Contains("\"message\":\"Something was not awesome\""), Is.True);
+            Assert.That(jsonString.Contains("\"target\":\"Error target\""), Is.True);
+            Assert.That(jsonString.Contains("\"details\":["), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"Code 1\""), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"Code 2\""), Is.True);
+            Assert.That(jsonString.Contains("\"innererror\":"), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"MoreDetailedBadError\""), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"InnerMoreDetailedBadError\""), Is.True);
 
             // Deserialize back to verify round-trip
             var roundTrippedError = ModelReaderWriter.Read<ResponseError>(serializedData, ModelReaderWriterOptions.Json);
@@ -330,7 +330,7 @@ namespace Azure.Core.Tests
             var ex = Assert.Throws<FormatException>(() =>
                 ModelReaderWriter.Write(error, options));
 
-            Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
+            Assert.That(ex.Message.Contains("does not support 'X' format"), Is.True);
         }
 
         [Test]
@@ -341,9 +341,9 @@ namespace Azure.Core.Tests
 
             // Serialize using JsonSerializer.Serialize
             var jsonString = JsonSerializer.Serialize(originalError);
-            Assert.NotNull(jsonString);
-            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
-            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
+            Assert.That(jsonString, Is.Not.Null);
+            Assert.That(jsonString.Contains("\"code\":\"BadError\""), Is.True);
+            Assert.That(jsonString.Contains("\"message\":\"Something was not awesome\""), Is.True);
 
             // Deserialize back to verify round-trip
             var deserializedError = JsonSerializer.Deserialize<ResponseError>(jsonString);
@@ -376,18 +376,18 @@ namespace Azure.Core.Tests
 
             // Serialize using JsonSerializer.Serialize
             var jsonString = JsonSerializer.Serialize(originalError);
-            Assert.NotNull(jsonString);
+            Assert.That(jsonString, Is.Not.Null);
 
             // Verify key elements are in the serialized JSON
-            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
-            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
-            Assert.IsTrue(jsonString.Contains("\"target\":\"Error target\""));
-            Assert.IsTrue(jsonString.Contains("\"details\":["));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 1\""));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 2\""));
-            Assert.IsTrue(jsonString.Contains("\"innererror\":"));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"MoreDetailedBadError\""));
-            Assert.IsTrue(jsonString.Contains("\"code\":\"InnerMoreDetailedBadError\""));
+            Assert.That(jsonString.Contains("\"code\":\"BadError\""), Is.True);
+            Assert.That(jsonString.Contains("\"message\":\"Something was not awesome\""), Is.True);
+            Assert.That(jsonString.Contains("\"target\":\"Error target\""), Is.True);
+            Assert.That(jsonString.Contains("\"details\":["), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"Code 1\""), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"Code 2\""), Is.True);
+            Assert.That(jsonString.Contains("\"innererror\":"), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"MoreDetailedBadError\""), Is.True);
+            Assert.That(jsonString.Contains("\"code\":\"InnerMoreDetailedBadError\""), Is.True);
 
             // Deserialize back to verify round-trip
             var roundTrippedError = JsonSerializer.Deserialize<ResponseError>(jsonString);
@@ -411,7 +411,7 @@ namespace Azure.Core.Tests
 
             // Deserialize back
             var deserializedError = JsonSerializer.Deserialize<ResponseError>(jsonString);
-            Assert.Null(deserializedError);
+            Assert.That(deserializedError, Is.Null);
         }
 
         #endregion

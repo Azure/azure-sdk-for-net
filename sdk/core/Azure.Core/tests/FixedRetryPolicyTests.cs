@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests
             }
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(500, response.Status);
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests
             }
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(500, response.Status);
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         [Theory]
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests
             Response response = await task.TimeoutAfterDefault();
 
             Assert.That(retryDelay, Is.EqualTo(TimeSpan.FromSeconds(expected)).Within(TimeSpan.FromSeconds(0.2 * expected)));
-            Assert.AreEqual(501, response.Status);
+            Assert.That(response.Status, Is.EqualTo(501));
         }
     }
 }

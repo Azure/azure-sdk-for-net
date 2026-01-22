@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedGuid, result.MessageText);
+            Assert.That(result.MessageText, Is.EqualTo(expectedGuid));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToStringProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedContent, result);
+            Assert.That(result, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -119,11 +119,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             ParameterBindingData result = await RunTriggerAsync<ParameterBindingData>(typeof(BindToParameterBindingData),
                 (s) => BindToParameterBindingData.TaskSource = s);
 
-            var messageData = result.Content.ToObjectFromJson<Dictionary<string,object>>();
+            var messageData = result.Content.ToObjectFromJson<Dictionary<string, object>>();
 
             // Assert
-            Assert.True(messageData.TryGetValue("MessageText", out var text));
-            Assert.AreEqual(expectedContent, text.ToString());
+            Assert.That(messageData.TryGetValue("MessageText", out var text), Is.True);
+            Assert.That(text.ToString(), Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -140,12 +140,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToStringProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
-            Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'message'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<DecoderFallbackException>(innerException);
-            StringAssert.IsMatch("Unable to translate bytes \\[FF\\] at index .*? from specified code page to Unicode.",
-                innerException.Message);
+            Assert.That(innerException, Is.InstanceOf<DecoderFallbackException>());
+            Assert.That(innerException.Message,
+                Does.Match("Unable to translate bytes \\[FF\\] at index .*? from specified code page to Unicode."));
         }
 
         [Test]
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToByteArrayProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedContent, result);
+            Assert.That(result, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToBinaryDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedContent, result.ToArray());
+            Assert.That(result.ToArray(), Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -250,13 +250,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             if (expected == null)
             {
-                Assert.Null(actual);
+                Assert.That(actual, Is.Null);
                 return;
             }
 
-            Assert.NotNull(actual);
-            Assert.AreEqual(expected.Value, actual.Value);
-            Assert.AreEqual(expected.Int32Value, actual.Int32Value);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual.Value, Is.EqualTo(expected.Value));
+            Assert.That(actual.Int32Value, Is.EqualTo(expected.Int32Value));
             AssertEqual(expected.Child, actual.Child);
         }
 
@@ -274,17 +274,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
-            Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'message'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
             const string expectedInnerMessage = "Binding parameters to complex objects (such as 'Poco') uses " +
                 "Json.NET serialization. 1. Bind the parameter type as 'string' instead of 'Poco' to get the raw " +
                 "values and avoid JSON deserialization, or2. Change the queue payload to be valid json. The JSON " +
                 "parser failed: Unexpected character encountered while parsing value: n. Path '', line 0, position " +
                 "0.";
             string actual = Regex.Replace(innerException.Message, @"[\n\r]", "");
-            Assert.AreEqual(expectedInnerMessage, actual);
+            Assert.That(actual, Is.EqualTo(expectedInnerMessage));
         }
 
         [Test]
@@ -301,17 +301,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
-            Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'message'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
             string expectedInnerMessage = "Binding parameters to complex objects (such as 'Poco') uses Json.NET " +
                 "serialization. 1. Bind the parameter type as 'string' instead of 'Poco' to get the raw values " +
                 "and avoid JSON deserialization, or2. Change the queue payload to be valid json. The JSON parser " +
                 "failed: Error converting value 123 to type '" + typeof(Poco).FullName + "'. Path '', line 1, " +
                 "position 3.";
             string actual = Regex.Replace(innerException.Message, @"[\n\r]", "");
-            Assert.AreEqual(expectedInnerMessage, actual);
+            Assert.That(actual, Is.EqualTo(expectedInnerMessage));
         }
 
         [Test]
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPocoStructProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedContent, result);
+            Assert.That(result, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedQueueTrigger, result);
+            Assert.That(result, Is.EqualTo(expectedQueueTrigger));
         }
 
         [Test]
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedQueueTrigger, result);
+            Assert.That(result, Is.EqualTo(expectedQueueTrigger));
         }
 
         [Test]
@@ -378,11 +378,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.IsInstanceOf<InvalidOperationException>(exception);
-            Assert.AreEqual("Exception binding parameter 'queueTrigger'", exception.Message);
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(exception.Message, Is.EqualTo("Exception binding parameter 'queueTrigger'"));
             Exception innerException = exception.InnerException;
-            Assert.IsInstanceOf<InvalidOperationException>(innerException);
-            Assert.AreEqual("Binding data does not contain expected value 'queueTrigger'.", innerException.Message);
+            Assert.That(innerException, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(innerException.Message, Is.EqualTo("Binding data does not contain expected value 'queueTrigger'."));
         }
 
         [Test]
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(1, result);
+            Assert.That(result, Is.EqualTo(1));
         }
 
         [Test]
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToExpirationTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(0, (int)DateTimeOffset.Now.AddDays(7).Subtract(result).TotalDays);
+            Assert.That((int)DateTimeOffset.Now.AddDays(7).Subtract(result).TotalDays, Is.EqualTo(0));
         }
 
         [Test]
@@ -430,8 +430,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToIdBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            CollectionAssert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
         }
 
         [Test]
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToInsertionTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
+            Assert.That((int)DateTimeOffset.Now.Subtract(result).TotalHours, Is.EqualTo(0));
         }
 
         [Test]
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToNextVisibleTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
+            Assert.That((int)DateTimeOffset.Now.Subtract(result).TotalHours, Is.EqualTo(0));
         }
 
         [Test]
@@ -473,8 +473,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPopReceiptBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            CollectionAssert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
         }
 
         [Test]
@@ -493,7 +493,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPocoStructPropertyBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedInt32Value, result);
+            Assert.That(result, Is.EqualTo(expectedInt32Value));
         }
 
         [Test]
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 new string[] { typeof(PoisonQueueProgram).Name + ".PutInPoisonQueue" });
 
             // Assert
-            Assert.AreEqual(expectedContents, result);
+            Assert.That(result, Is.EqualTo(expectedContents));
         }
 
         [Test]
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 FakeQueuesOptionsSetup optionsSetup = new FakeQueuesOptionsSetup();
                 QueuesOptions options = new QueuesOptions();
                 optionsSetup.Configure(options);
-                Assert.AreEqual(options.MaxDequeueCount, MaxDequeueCountProgram.DequeueCount);
+                Assert.That(MaxDequeueCountProgram.DequeueCount, Is.EqualTo(options.MaxDequeueCount));
             }
             finally
             {
@@ -573,7 +573,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.AreSame(expectedMessage, result);
+            Assert.That(result, Is.SameAs(expectedMessage));
         }
 
         [Test]
@@ -587,8 +587,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(expectedContents, result.MessageText);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.MessageText, Is.EqualTo(expectedContents));
         }
 
         [Test]
@@ -602,7 +602,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.AreSame(expectedMessage, result);
+            Assert.That(result, Is.SameAs(expectedMessage));
         }
 
         [Test]
@@ -617,7 +617,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedDequeueCount, result);
+            Assert.That(result, Is.EqualTo(expectedDequeueCount));
         }
 
         [Test]
@@ -633,7 +633,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToExpirationTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedExpirationTime, result);
+            Assert.That(result, Is.EqualTo(expectedExpirationTime));
         }
 
         [Test]
@@ -649,7 +649,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToExpirationTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(DateTimeOffset.MaxValue, result);
+            Assert.That(result, Is.EqualTo(DateTimeOffset.MaxValue));
         }
 
         [Test]
@@ -664,7 +664,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToIdBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreSame(expectedId, result);
+            Assert.That(result, Is.SameAs(expectedId));
         }
 
         [Test]
@@ -680,7 +680,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToInsertionTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedInsertionTime, result);
+            Assert.That(result, Is.EqualTo(expectedInsertionTime));
         }
 
         [Test]
@@ -696,8 +696,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToInsertionTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(0, (int)DateTimeOffset.Now.Subtract(result).TotalMinutes);
-            Assert.AreEqual(TimeSpan.Zero, result.Offset);
+            Assert.That((int)DateTimeOffset.Now.Subtract(result).TotalMinutes, Is.EqualTo(0));
+            Assert.That(result.Offset, Is.EqualTo(TimeSpan.Zero));
         }
 
         [Test]
@@ -713,7 +713,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToNextVisibleTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(expectedNextVisibleTime, result);
+            Assert.That(result, Is.EqualTo(expectedNextVisibleTime));
         }
 
         [Test]
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToNextVisibleTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(DateTimeOffset.MaxValue, result);
+            Assert.That(result, Is.EqualTo(DateTimeOffset.MaxValue));
         }
 
         [Test]
@@ -744,7 +744,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToPopReceiptBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreSame(expectedPopReceipt, result);
+            Assert.That(result, Is.SameAs(expectedPopReceipt));
         }
 
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
@@ -769,7 +769,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             var method = programType.GetMethod("Run");
-            Assert.NotNull(method);
+            Assert.That(method, Is.Not.Null);
 
             var result = await FunctionalTest.CallAsync<TResult>(b => ConfigureQueues(b), programType, method, new Dictionary<string, object>
             {

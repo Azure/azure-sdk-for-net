@@ -38,10 +38,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.AreEqual(httpStatusCode, httpResponse.StatusCode);
+            Assert.That(httpResponse.StatusCode, Is.EqualTo(httpStatusCode));
             if (expectedMessage != null)
             {
-                Assert.AreEqual(expectedMessage, await httpResponse.Content.ReadAsStringAsync());
+                Assert.That(await httpResponse.Content.ReadAsStringAsync(), Is.EqualTo(expectedMessage));
             }
         }
     }

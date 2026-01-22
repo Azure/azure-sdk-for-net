@@ -201,9 +201,10 @@ namespace Azure.Storage.Test.Shared
                 string checksum = req.AssertHeaderPresent(headerName);
                 if (expectedChecksum != default)
                 {
-                    Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
+                    Assert.That(checksum, Is.EqualTo(Convert.ToBase64String(expectedChecksum)));
                 }
-            };
+            }
+            ;
 
             return request =>
             {
@@ -277,14 +278,15 @@ namespace Azure.Storage.Test.Shared
                 {
                     if (expectedChecksum != default)
                     {
-                        Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
+                        Assert.That(checksum, Is.EqualTo(Convert.ToBase64String(expectedChecksum)));
                     }
                 }
                 else
                 {
                     Assert.Fail($"{headerName} expected on response but was not found.");
                 }
-            };
+            }
+            ;
 
             return response =>
             {
@@ -1043,7 +1045,7 @@ namespace Azure.Storage.Test.Shared
                 async () => await ParallelUploadAsync(client, new MemoryStream(data), validationOptions, transferOptions: default));
 
             // Assert
-            Assert.AreEqual("Precalculated checksum not supported when potentially partitioning an upload.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Precalculated checksum not supported when potentially partitioning an upload."));
         }
 
         [TestCaseSource(nameof(GetComposableValidationAlgorithms))]
@@ -1081,8 +1083,8 @@ namespace Azure.Storage.Test.Shared
             StorageTransferOptions transferOptions = split
                 ? new StorageTransferOptions
                 {
-                    InitialTransferSize = dataLength/2,
-                    MaximumTransferSize = dataLength/2
+                    InitialTransferSize = dataLength / 2,
+                    MaximumTransferSize = dataLength / 2
                 }
                 : new StorageTransferOptions
                 {
@@ -1278,7 +1280,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
-            Assert.IsTrue(dest.SequenceEqual(data));
+            Assert.That(dest.SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1335,7 +1337,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1398,7 +1400,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1468,7 +1470,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
         #endregion
 
@@ -1520,7 +1522,7 @@ namespace Azure.Storage.Test.Shared
             {
                 await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1565,7 +1567,7 @@ namespace Azure.Storage.Test.Shared
             {
                 await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1617,7 +1619,7 @@ namespace Azure.Storage.Test.Shared
             {
                 await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1676,7 +1678,7 @@ namespace Azure.Storage.Test.Shared
             {
                 await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
         #endregion
 
@@ -1709,23 +1711,23 @@ namespace Azure.Storage.Test.Shared
             switch (algorithm.ResolveAuto())
             {
                 case StorageChecksumAlgorithm.MD5:
-                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    Assert.That(response.Headers.Contains("Content-MD5"), Is.True);
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
+                    Assert.That(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader), Is.True);
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
             var result = dest.ToArray();
-            Assert.IsTrue(result.SequenceEqual(data));
+            Assert.That(result.SequenceEqual(data), Is.True);
         }
 
         [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader, false, false)]
-        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader-1, false, false)]
-        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader+1, true, false)]
-        [TestCase(StorageChecksumAlgorithm.MD5, Constants.StructuredMessage.MaxDownloadCrcWithHeader+1, false, true)]
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader - 1, false, false)]
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader + 1, true, false)]
+        [TestCase(StorageChecksumAlgorithm.MD5, Constants.StructuredMessage.MaxDownloadCrcWithHeader + 1, false, true)]
         public virtual async Task DownloadApporpriatelyUsesStructuredMessage(
             StorageChecksumAlgorithm algorithm,
             int? downloadLen,
@@ -1775,7 +1777,7 @@ namespace Azure.Storage.Test.Shared
             else
             {
                 Assert.That(operation, Throws.Nothing);
-                Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+                Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
             }
         }
 
@@ -1827,7 +1829,7 @@ namespace Azure.Storage.Test.Shared
                 await DoesNotThrowOrInconclusiveAsync(operation);
             }
             // data was tamepered. should be different.
-            Assert.IsFalse(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.False);
         }
 
         [Test]
@@ -1871,16 +1873,16 @@ namespace Azure.Storage.Test.Shared
             switch (clientAlgorithm.ResolveAuto())
             {
                 case StorageChecksumAlgorithm.MD5:
-                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    Assert.That(response.Headers.Contains("Content-MD5"), Is.True);
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
+                    Assert.That(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader), Is.True);
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1931,16 +1933,16 @@ namespace Azure.Storage.Test.Shared
             switch (overrideAlgorithm.ResolveAuto())
             {
                 case StorageChecksumAlgorithm.MD5:
-                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    Assert.That(response.Headers.Contains("Content-MD5"), Is.True);
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
+                    Assert.That(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader), Is.True);
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -1995,9 +1997,9 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // no policies this time; just check response headers
-            Assert.False(response.Headers.Contains("Content-MD5"));
-            Assert.False(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage));
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(response.Headers.Contains("Content-MD5"), Is.False);
+            Assert.That(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage), Is.False);
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
 
         [Test]
@@ -2005,7 +2007,8 @@ namespace Azure.Storage.Test.Shared
             [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm)
         {
             using var _ = AzureEventSourceListener.CreateConsoleLogger();
-            int dataLen = algorithm.ResolveAuto() switch {
+            int dataLen = algorithm.ResolveAuto() switch
+            {
                 StorageChecksumAlgorithm.StorageCrc64 => 5 * Constants.MB, // >4MB for multisegment
                 _ => Constants.KB,
             };
@@ -2035,16 +2038,16 @@ namespace Azure.Storage.Test.Shared
             switch (algorithm.ResolveAuto())
             {
                 case StorageChecksumAlgorithm.MD5:
-                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    Assert.That(response.Headers.Contains("Content-MD5"), Is.True);
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
+                    Assert.That(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader), Is.True);
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
         #endregion
 
@@ -2053,12 +2056,12 @@ namespace Azure.Storage.Test.Shared
         public void TestDefaults()
         {
             var uploadOptions = new UploadTransferValidationOptions();
-            Assert.AreEqual(StorageChecksumAlgorithm.None, uploadOptions.ChecksumAlgorithm);
-            Assert.IsTrue(uploadOptions.PrecalculatedChecksum.IsEmpty);
+            Assert.That(uploadOptions.ChecksumAlgorithm, Is.EqualTo(StorageChecksumAlgorithm.None));
+            Assert.That(uploadOptions.PrecalculatedChecksum.IsEmpty, Is.True);
 
             var downloadOptions = new DownloadTransferValidationOptions();
-            Assert.AreEqual(StorageChecksumAlgorithm.None, downloadOptions.ChecksumAlgorithm);
-            Assert.IsTrue(downloadOptions.AutoValidateChecksum);
+            Assert.That(downloadOptions.ChecksumAlgorithm, Is.EqualTo(StorageChecksumAlgorithm.None));
+            Assert.That(downloadOptions.AutoValidateChecksum, Is.True);
         }
 
         [Test]
@@ -2105,7 +2108,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.That(dest.ToArray().SequenceEqual(data), Is.True);
         }
         #endregion
 

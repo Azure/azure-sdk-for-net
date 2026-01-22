@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToQueueTriggerViaIBinderProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'."));
         }
 
         private static QueueClient CreateQueue(QueueServiceClient queueServiceClient, string queueName)
@@ -50,7 +50,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private async Task<Exception> RunTriggerFailureAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => {
+            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b =>
+            {
                 b.AddAzureStorageQueues();
                 b.UseQueueService(queueServiceClient);
             }, programType, setTaskSource);

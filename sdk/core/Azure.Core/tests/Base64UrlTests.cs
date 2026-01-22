@@ -20,11 +20,11 @@ namespace Azure.Core.Tests
 
             var encoded = Base64Url.Encode(data);
 
-            Assert.AreEqual(string.Empty, encoded);
+            Assert.That(encoded, Is.Empty);
 
             var decoded = Base64Url.Decode(encoded);
 
-            CollectionAssert.AreEqual(data, decoded);
+            Assert.That(decoded, Is.EqualTo(data).AsCollection);
         }
 
         [Test]
@@ -34,11 +34,11 @@ namespace Azure.Core.Tests
 
             var encoded = Base64Url.EncodeString(data);
 
-            Assert.AreEqual(string.Empty, encoded);
+            Assert.That(encoded, Is.Empty);
 
             var decoded = Base64Url.DecodeString(encoded);
 
-            Assert.AreEqual(data, decoded);
+            Assert.That(decoded, Is.EqualTo(data));
         }
 
         [Test]
@@ -60,10 +60,10 @@ namespace Azure.Core.Tests
 
                     var decoded = Base64Url.Decode(encoded);
 
-                    Assert.AreEqual(data.Length, decoded.Length, $"Data round trip failed. Seed {seed}");
+                    Assert.That(decoded.Length, Is.EqualTo(data.Length), $"Data round trip failed. Seed {seed}");
                     for (int k = 0; k < data.Length; k++)
                     {
-                        Assert.True(data[k] == decoded[k], $"Data round trip failed. Seed {seed}");
+                        Assert.That(data[k], Is.EqualTo(decoded[k]), $"Data round trip failed. Seed {seed}");
                     }
                 }
             }
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests
 
                     var decoded = Base64Url.DecodeString(encoded);
 
-                    Assert.AreEqual(data, decoded, "String round trip failed. Seed {0}", seed);
+                    Assert.That(decoded, Is.EqualTo(data), $"String round trip failed. Seed {seed}");
                 }
             }
         }
@@ -121,11 +121,11 @@ namespace Azure.Core.Tests
             {
                 var encoded = Base64Url.EncodeString(valuePair.Item1);
 
-                Assert.AreEqual(valuePair.Item2, encoded);
+                Assert.That(encoded, Is.EqualTo(valuePair.Item2));
 
                 var decoded = Base64Url.DecodeString(valuePair.Item2);
 
-                Assert.AreEqual(valuePair.Item1, decoded);
+                Assert.That(decoded, Is.EqualTo(valuePair.Item1));
             }
         }
     }

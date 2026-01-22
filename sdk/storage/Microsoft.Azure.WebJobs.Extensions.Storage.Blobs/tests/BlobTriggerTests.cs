@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 (s) => BindToCloudBlobProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(blob.Uri, result.Uri);
+            Assert.That(result.Uri, Is.EqualTo(blob.Uri));
         }
 
         private class BindToCloudBlobProgram
@@ -83,11 +83,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 (s) => BlobTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(blob.Uri, result.Uri);
-            Assert.AreEqual($"{ContainerName}/{BlobName}", BlobTriggerBindingDataProgram.BlobTrigger);
-            Assert.AreEqual(blob.Uri, BlobTriggerBindingDataProgram.Uri);
-            Assert.AreEqual(metadata, BlobTriggerBindingDataProgram.Metadata);
-            Assert.AreEqual(BlobType.Block, BlobTriggerBindingDataProgram.Properties.BlobType);
+            Assert.That(result.Uri, Is.EqualTo(blob.Uri));
+            Assert.That(BlobTriggerBindingDataProgram.BlobTrigger, Is.EqualTo($"{ContainerName}/{BlobName}"));
+            Assert.That(BlobTriggerBindingDataProgram.Uri, Is.EqualTo(blob.Uri));
+            Assert.That(BlobTriggerBindingDataProgram.Metadata, Is.EqualTo(metadata));
+            Assert.That(BlobTriggerBindingDataProgram.Properties.BlobType, Is.EqualTo(BlobType.Block));
         }
 
         private class BlobTriggerBindingDataProgram
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             await host.GetJobHost().CallAsync(typeof(BindToCloudBlob2Program).GetMethod(nameof(BindToCloudBlob2Program.Run)), new { blob });
 
-            Assert.True(app.Success);
+            Assert.That(app.Success, Is.True);
         }
 
         private class BindToCloudBlob2Program
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 [Blob("container/{metadata.m1}")] BlobBaseClient blob1
                 )
             {
-                Assert.AreEqual("v1", blob1.Name);
+                Assert.That(blob1.Name, Is.EqualTo("v1"));
                 this.Success = true;
             }
         }
@@ -163,16 +163,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             ParameterBindingData result = await RunTriggerAsyncWithConfiguration<ParameterBindingData>(typeof(BlobTriggerParameterBindingData),
                 (s) => BlobTriggerParameterBindingData.TaskSource = s);
 
-            var blobData = result.Content.ToObjectFromJson<Dictionary<string,string>>();
+            var blobData = result.Content.ToObjectFromJson<Dictionary<string, string>>();
 
             // Assert
-            Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
-            Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
-            Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+            Assert.That(blobData.TryGetValue("Connection", out var resultConnection), Is.True);
+            Assert.That(blobData.TryGetValue("ContainerName", out var resultContainerName), Is.True);
+            Assert.That(blobData.TryGetValue("BlobName", out var resultBlobName), Is.True);
 
-            Assert.AreEqual(ConnectionName, resultConnection);
-            Assert.AreEqual(ContainerName, resultContainerName);
-            Assert.AreEqual(BlobName, resultBlobName);
+            Assert.That(resultConnection, Is.EqualTo(ConnectionName));
+            Assert.That(resultContainerName, Is.EqualTo(ContainerName));
+            Assert.That(resultBlobName, Is.EqualTo(BlobName));
         }
 
         private class BlobTriggerParameterBindingData

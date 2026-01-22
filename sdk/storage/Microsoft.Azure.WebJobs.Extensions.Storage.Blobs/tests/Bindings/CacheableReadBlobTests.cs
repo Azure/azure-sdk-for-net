@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             bool isCacheHit = cacheableReadBlob.IsCacheHit;
 
             // Assert
-            Assert.True(isCacheHit);
+            Assert.That(isCacheHit, Is.True);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             bool isCacheHit = cacheableReadBlob.IsCacheHit;
 
             // Assert
-            Assert.False(isCacheHit);
+            Assert.That(isCacheHit, Is.False);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             bool result = cacheableReadBlob.TryPutToCache(sharedMemMeta, isIncrementActiveRefs);
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
             cacheMock.Verify();
         }
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             bool result = cacheableReadBlob.TryPutToCache(sharedMemMeta, isIncrementActiveRefs);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         /// <summary>

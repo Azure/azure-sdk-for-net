@@ -36,7 +36,7 @@ namespace Azure.Core.Samples
             string name = widget.name;
             #endregion
 
-            Assert.IsTrue(name == "Widget");
+            Assert.That(name, Is.EqualTo("Widget"));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.Core.Samples
             string name = widget.Name;
             #endregion
 
-            Assert.IsTrue(name == "Widget");
+            Assert.That(name, Is.EqualTo("Widget"));
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace Azure.Core.Samples
 
             #endregion
 
-            Assert.IsTrue(threw);
+            Assert.That(threw, Is.True);
         }
 
         [Test]
@@ -173,8 +173,8 @@ namespace Azure.Core.Samples
             Widget widget = (Widget)content;
             #endregion
 
-            Assert.IsTrue(widget.Id == "123");
-            Assert.IsTrue(widget.Name == "Widget");
+            Assert.That(widget.Id, Is.EqualTo("123"));
+            Assert.That(widget.Name, Is.EqualTo("Widget"));
         }
 
         #region Snippet:AzureCoreDynamicJsonPOCO
@@ -201,7 +201,7 @@ namespace Azure.Core.Samples
             string id = widget["$id"];
             #endregion
 
-            Assert.IsTrue(id == "123");
+            Assert.That(id, Is.EqualTo("123"));
         }
 
         [Test]

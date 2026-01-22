@@ -14,9 +14,9 @@ namespace Azure.Core.Tests
         {
             var point = new GeoPoint(1, 2);
 
-            Assert.AreEqual(2, point.Coordinates.Count);
-            Assert.AreEqual(1, point.Coordinates[0]);
-            Assert.AreEqual(2, point.Coordinates[1]);
+            Assert.That(point.Coordinates.Count, Is.EqualTo(2));
+            Assert.That(point.Coordinates[0], Is.EqualTo(1));
+            Assert.That(point.Coordinates[1], Is.EqualTo(2));
         }
 
         [Test]
@@ -24,11 +24,11 @@ namespace Azure.Core.Tests
         {
             var point = new GeoPoint(1, 2, 3);
 
-            Assert.AreEqual(3, point.Coordinates.Count);
+            Assert.That(point.Coordinates.Count, Is.EqualTo(3));
 
-            Assert.AreEqual(1, point.Coordinates[0]);
-            Assert.AreEqual(2, point.Coordinates[1]);
-            Assert.AreEqual(3, point.Coordinates[2]);
+            Assert.That(point.Coordinates[0], Is.EqualTo(1));
+            Assert.That(point.Coordinates[1], Is.EqualTo(2));
+            Assert.That(point.Coordinates[2], Is.EqualTo(3));
         }
 
         [Test]
@@ -41,14 +41,14 @@ namespace Azure.Core.Tests
                     new GeoPoint(3,4)
                 });
 
-            Assert.AreEqual(2, pointCollection.Coordinates.Count);
-            Assert.AreEqual(2, pointCollection.Coordinates.Count());
+            Assert.That(pointCollection.Coordinates.Count, Is.EqualTo(2));
+            Assert.That(pointCollection.Coordinates.Count(), Is.EqualTo(2));
 
-            Assert.AreEqual(1, pointCollection.Coordinates[0][0]);
-            Assert.AreEqual(2, pointCollection.Coordinates[0][1]);
+            Assert.That(pointCollection.Coordinates[0][0], Is.EqualTo(1));
+            Assert.That(pointCollection.Coordinates[0][1], Is.EqualTo(2));
 
-            Assert.AreEqual(3, pointCollection.Coordinates[1][0]);
-            Assert.AreEqual(4, pointCollection.Coordinates[1][1]);
+            Assert.That(pointCollection.Coordinates[1][0], Is.EqualTo(3));
+            Assert.That(pointCollection.Coordinates[1][1], Is.EqualTo(4));
         }
 
         [Test]
@@ -61,17 +61,17 @@ namespace Azure.Core.Tests
                 new GeoPosition(5, 6),
             });
 
-            Assert.AreEqual(3, line.Coordinates.Count);
-            Assert.AreEqual(3, line.Coordinates.Count());
+            Assert.That(line.Coordinates.Count, Is.EqualTo(3));
+            Assert.That(line.Coordinates.Count(), Is.EqualTo(3));
 
-            Assert.AreEqual(1, line.Coordinates[0][0]);
-            Assert.AreEqual(2, line.Coordinates[0][1]);
+            Assert.That(line.Coordinates[0][0], Is.EqualTo(1));
+            Assert.That(line.Coordinates[0][1], Is.EqualTo(2));
 
-            Assert.AreEqual(3, line.Coordinates[1][0]);
-            Assert.AreEqual(4, line.Coordinates[1][1]);
+            Assert.That(line.Coordinates[1][0], Is.EqualTo(3));
+            Assert.That(line.Coordinates[1][1], Is.EqualTo(4));
 
-            Assert.AreEqual(5, line.Coordinates[2][0]);
-            Assert.AreEqual(6, line.Coordinates[2][1]);
+            Assert.That(line.Coordinates[2][0], Is.EqualTo(5));
+            Assert.That(line.Coordinates[2][1], Is.EqualTo(6));
         }
 
         [Test]
@@ -89,20 +89,20 @@ namespace Azure.Core.Tests
                 }),
             });
 
-            Assert.AreEqual(2, lineCollection.Coordinates.Count);
-            Assert.AreEqual(2, lineCollection.Coordinates.Count());
+            Assert.That(lineCollection.Coordinates.Count, Is.EqualTo(2));
+            Assert.That(lineCollection.Coordinates.Count(), Is.EqualTo(2));
 
-            Assert.AreEqual(1, lineCollection.Coordinates[0][0][0]);
-            Assert.AreEqual(2, lineCollection.Coordinates[0][0][1]);
+            Assert.That(lineCollection.Coordinates[0][0][0], Is.EqualTo(1));
+            Assert.That(lineCollection.Coordinates[0][0][1], Is.EqualTo(2));
 
-            Assert.AreEqual(3, lineCollection.Coordinates[0][1][0]);
-            Assert.AreEqual(4, lineCollection.Coordinates[0][1][1]);
+            Assert.That(lineCollection.Coordinates[0][1][0], Is.EqualTo(3));
+            Assert.That(lineCollection.Coordinates[0][1][1], Is.EqualTo(4));
 
-            Assert.AreEqual(5, lineCollection.Coordinates[1][0][0]);
-            Assert.AreEqual(6, lineCollection.Coordinates[1][0][1]);
+            Assert.That(lineCollection.Coordinates[1][0][0], Is.EqualTo(5));
+            Assert.That(lineCollection.Coordinates[1][0][1], Is.EqualTo(6));
 
-            Assert.AreEqual(7, lineCollection.Coordinates[1][1][0]);
-            Assert.AreEqual(8, lineCollection.Coordinates[1][1][1]);
+            Assert.That(lineCollection.Coordinates[1][1][0], Is.EqualTo(7));
+            Assert.That(lineCollection.Coordinates[1][1][1], Is.EqualTo(8));
         }
 
         [Test]
@@ -124,32 +124,32 @@ namespace Azure.Core.Tests
                 }),
             });
 
-            Assert.AreEqual(2, polygon.Coordinates.Count);
-            Assert.AreEqual(2, polygon.Coordinates.Count());
+            Assert.That(polygon.Coordinates.Count, Is.EqualTo(2));
+            Assert.That(polygon.Coordinates.Count(), Is.EqualTo(2));
 
-            Assert.AreEqual(1, polygon.Coordinates[0][0][0]);
-            Assert.AreEqual(2, polygon.Coordinates[0][0][1]);
+            Assert.That(polygon.Coordinates[0][0][0], Is.EqualTo(1));
+            Assert.That(polygon.Coordinates[0][0][1], Is.EqualTo(2));
 
-            Assert.AreEqual(3, polygon.Coordinates[0][1][0]);
-            Assert.AreEqual(4, polygon.Coordinates[0][1][1]);
+            Assert.That(polygon.Coordinates[0][1][0], Is.EqualTo(3));
+            Assert.That(polygon.Coordinates[0][1][1], Is.EqualTo(4));
 
-            Assert.AreEqual(3, polygon.Coordinates[0][2][0]);
-            Assert.AreEqual(4, polygon.Coordinates[0][2][1]);
+            Assert.That(polygon.Coordinates[0][2][0], Is.EqualTo(3));
+            Assert.That(polygon.Coordinates[0][2][1], Is.EqualTo(4));
 
-            Assert.AreEqual(1, polygon.Coordinates[0][3][0]);
-            Assert.AreEqual(2, polygon.Coordinates[0][3][1]);
+            Assert.That(polygon.Coordinates[0][3][0], Is.EqualTo(1));
+            Assert.That(polygon.Coordinates[0][3][1], Is.EqualTo(2));
 
-            Assert.AreEqual(5, polygon.Coordinates[1][0][0]);
-            Assert.AreEqual(6, polygon.Coordinates[1][0][1]);
+            Assert.That(polygon.Coordinates[1][0][0], Is.EqualTo(5));
+            Assert.That(polygon.Coordinates[1][0][1], Is.EqualTo(6));
 
-            Assert.AreEqual(7, polygon.Coordinates[1][1][0]);
-            Assert.AreEqual(8, polygon.Coordinates[1][1][1]);
+            Assert.That(polygon.Coordinates[1][1][0], Is.EqualTo(7));
+            Assert.That(polygon.Coordinates[1][1][1], Is.EqualTo(8));
 
-            Assert.AreEqual(7, polygon.Coordinates[1][2][0]);
-            Assert.AreEqual(8, polygon.Coordinates[1][2][1]);
+            Assert.That(polygon.Coordinates[1][2][0], Is.EqualTo(7));
+            Assert.That(polygon.Coordinates[1][2][1], Is.EqualTo(8));
 
-            Assert.AreEqual(5, polygon.Coordinates[1][3][0]);
-            Assert.AreEqual(6, polygon.Coordinates[1][3][1]);
+            Assert.That(polygon.Coordinates[1][3][0], Is.EqualTo(5));
+            Assert.That(polygon.Coordinates[1][3][1], Is.EqualTo(6));
         }
 
         [Test]
@@ -189,57 +189,57 @@ namespace Azure.Core.Tests
                 }),
             });
 
-            Assert.AreEqual(2, polygonCollection.Coordinates.Count);
-            Assert.AreEqual(2, polygonCollection.Coordinates.Count());
+            Assert.That(polygonCollection.Coordinates.Count, Is.EqualTo(2));
+            Assert.That(polygonCollection.Coordinates.Count(), Is.EqualTo(2));
 
             var c = polygonCollection.Coordinates[0];
-            Assert.AreEqual(1, polygonCollection.Coordinates[0][0][0][0]);
-            Assert.AreEqual(2, polygonCollection.Coordinates[0][0][0][1]);
+            Assert.That(polygonCollection.Coordinates[0][0][0][0], Is.EqualTo(1));
+            Assert.That(polygonCollection.Coordinates[0][0][0][1], Is.EqualTo(2));
 
-            Assert.AreEqual(3, polygonCollection.Coordinates[0][0][1][0]);
-            Assert.AreEqual(4, polygonCollection.Coordinates[0][0][1][1]);
+            Assert.That(polygonCollection.Coordinates[0][0][1][0], Is.EqualTo(3));
+            Assert.That(polygonCollection.Coordinates[0][0][1][1], Is.EqualTo(4));
 
-            Assert.AreEqual(3, polygonCollection.Coordinates[0][0][2][0]);
-            Assert.AreEqual(4, polygonCollection.Coordinates[0][0][2][1]);
+            Assert.That(polygonCollection.Coordinates[0][0][2][0], Is.EqualTo(3));
+            Assert.That(polygonCollection.Coordinates[0][0][2][1], Is.EqualTo(4));
 
-            Assert.AreEqual(1, polygonCollection.Coordinates[0][0][3][0]);
-            Assert.AreEqual(2, polygonCollection.Coordinates[0][0][3][1]);
+            Assert.That(polygonCollection.Coordinates[0][0][3][0], Is.EqualTo(1));
+            Assert.That(polygonCollection.Coordinates[0][0][3][1], Is.EqualTo(2));
 
-            Assert.AreEqual(5, polygonCollection.Coordinates[0][1][0][0]);
-            Assert.AreEqual(6, polygonCollection.Coordinates[0][1][0][1]);
+            Assert.That(polygonCollection.Coordinates[0][1][0][0], Is.EqualTo(5));
+            Assert.That(polygonCollection.Coordinates[0][1][0][1], Is.EqualTo(6));
 
-            Assert.AreEqual(7, polygonCollection.Coordinates[0][1][1][0]);
-            Assert.AreEqual(8, polygonCollection.Coordinates[0][1][1][1]);
+            Assert.That(polygonCollection.Coordinates[0][1][1][0], Is.EqualTo(7));
+            Assert.That(polygonCollection.Coordinates[0][1][1][1], Is.EqualTo(8));
 
-            Assert.AreEqual(7, polygonCollection.Coordinates[0][1][2][0]);
-            Assert.AreEqual(8, polygonCollection.Coordinates[0][1][2][1]);
+            Assert.That(polygonCollection.Coordinates[0][1][2][0], Is.EqualTo(7));
+            Assert.That(polygonCollection.Coordinates[0][1][2][1], Is.EqualTo(8));
 
-            Assert.AreEqual(5, polygonCollection.Coordinates[0][1][3][0]);
-            Assert.AreEqual(6, polygonCollection.Coordinates[0][1][3][1]);
+            Assert.That(polygonCollection.Coordinates[0][1][3][0], Is.EqualTo(5));
+            Assert.That(polygonCollection.Coordinates[0][1][3][1], Is.EqualTo(6));
 
-            Assert.AreEqual(9, polygonCollection.Coordinates[1][0][0][0]);
-            Assert.AreEqual(10, polygonCollection.Coordinates[1][0][0][1]);
+            Assert.That(polygonCollection.Coordinates[1][0][0][0], Is.EqualTo(9));
+            Assert.That(polygonCollection.Coordinates[1][0][0][1], Is.EqualTo(10));
 
-            Assert.AreEqual(11, polygonCollection.Coordinates[1][0][1][0]);
-            Assert.AreEqual(12, polygonCollection.Coordinates[1][0][1][1]);
+            Assert.That(polygonCollection.Coordinates[1][0][1][0], Is.EqualTo(11));
+            Assert.That(polygonCollection.Coordinates[1][0][1][1], Is.EqualTo(12));
 
-            Assert.AreEqual(11, polygonCollection.Coordinates[1][0][2][0]);
-            Assert.AreEqual(12, polygonCollection.Coordinates[1][0][2][1]);
+            Assert.That(polygonCollection.Coordinates[1][0][2][0], Is.EqualTo(11));
+            Assert.That(polygonCollection.Coordinates[1][0][2][1], Is.EqualTo(12));
 
-            Assert.AreEqual(9, polygonCollection.Coordinates[1][0][3][0]);
-            Assert.AreEqual(10, polygonCollection.Coordinates[1][0][3][1]);
+            Assert.That(polygonCollection.Coordinates[1][0][3][0], Is.EqualTo(9));
+            Assert.That(polygonCollection.Coordinates[1][0][3][1], Is.EqualTo(10));
 
-            Assert.AreEqual(13, polygonCollection.Coordinates[1][1][0][0]);
-            Assert.AreEqual(14, polygonCollection.Coordinates[1][1][0][1]);
+            Assert.That(polygonCollection.Coordinates[1][1][0][0], Is.EqualTo(13));
+            Assert.That(polygonCollection.Coordinates[1][1][0][1], Is.EqualTo(14));
 
-            Assert.AreEqual(15, polygonCollection.Coordinates[1][1][1][0]);
-            Assert.AreEqual(16, polygonCollection.Coordinates[1][1][1][1]);
+            Assert.That(polygonCollection.Coordinates[1][1][1][0], Is.EqualTo(15));
+            Assert.That(polygonCollection.Coordinates[1][1][1][1], Is.EqualTo(16));
 
-            Assert.AreEqual(15, polygonCollection.Coordinates[1][1][2][0]);
-            Assert.AreEqual(16, polygonCollection.Coordinates[1][1][2][1]);
+            Assert.That(polygonCollection.Coordinates[1][1][2][0], Is.EqualTo(15));
+            Assert.That(polygonCollection.Coordinates[1][1][2][1], Is.EqualTo(16));
 
-            Assert.AreEqual(13, polygonCollection.Coordinates[1][1][3][0]);
-            Assert.AreEqual(14, polygonCollection.Coordinates[1][1][3][1]);
+            Assert.That(polygonCollection.Coordinates[1][1][3][0], Is.EqualTo(13));
+            Assert.That(polygonCollection.Coordinates[1][1][3][1], Is.EqualTo(14));
         }
     }
 }

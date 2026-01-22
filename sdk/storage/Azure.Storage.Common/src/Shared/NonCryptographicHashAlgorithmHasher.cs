@@ -5,8 +5,8 @@ using System;
 using System.Buffers;
 using System.IO;
 using System.IO.Hashing;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Storage
 {

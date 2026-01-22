@@ -3,11 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
-using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Resources;
-using NUnit.Framework;
 using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             string fileShareName = "myFileShare";
             FileShareData fileShareData = new FileShareData();
             ArmOperation<FileShareResource> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(WaitUntil.Started, fileShareName, fileShareData);
-            FileShareResource fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
+            FileShareResource fileShare = await fileShareCreateOperation.WaitForCompletionAsync();
             #endregion
         }
         [Test]

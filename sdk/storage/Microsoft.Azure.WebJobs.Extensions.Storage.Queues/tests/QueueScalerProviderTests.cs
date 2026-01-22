@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             metadata.ResolveProperties(resolver);
 
             // Assert
-            Assert.AreEqual(expectedOutput, metadata.QueueName);
+            Assert.That(metadata.QueueName, Is.EqualTo(expectedOutput));
         }
 
         private class TestNameResolver : INameResolver

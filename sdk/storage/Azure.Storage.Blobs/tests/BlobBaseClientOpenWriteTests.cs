@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Tests
             await stream.FlushAsync();
 
             // Assert
-            CollectionAssert.AreEqual(tags, await GetTagsAsync(client));
+            Assert.That(await GetTagsAsync(client), Is.EqualTo(tags).AsCollection);
         }
 
         [RecordedTest]
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs.Tests
                 tags: tags);
 
             // Assert
-            CollectionAssert.AreEqual(tags, await GetTagsAsync(client));
+            Assert.That(await GetTagsAsync(client), Is.EqualTo(tags).AsCollection);
         }
         #endregion
     }

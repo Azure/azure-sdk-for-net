@@ -12,10 +12,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void ConstructorArgumentValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new DownloadCertificateOptions(null));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
 
             ex = Assert.Throws<ArgumentException>(() => new DownloadCertificateOptions(string.Empty));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
         }
     }
 }

@@ -29,9 +29,9 @@ namespace Azure.Core.Tests
         public void ConstructorAllowsNullData()
         {
             var cloudEvent = new CloudEvent("source", "type", null);
-            Assert.AreEqual("source", cloudEvent.Source);
-            Assert.AreEqual("type", cloudEvent.Type);
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+            Assert.That(cloudEvent.Type, Is.EqualTo("type"));
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
         }
 
         [Test]
@@ -46,14 +46,14 @@ namespace Azure.Core.Tests
                 Time = time,
                 ExtensionAttributes = { { "key", "value" } }
             };
-            Assert.AreEqual("source", cloudEvent.Source);
-            Assert.AreEqual("type", cloudEvent.Type);
-            Assert.AreEqual("text/xml", cloudEvent.DataContentType);
-            Assert.AreEqual("schema", cloudEvent.DataSchema);
-            Assert.AreEqual("id", cloudEvent.Id);
-            Assert.AreEqual("subject", cloudEvent.Subject);
-            Assert.AreEqual(time, cloudEvent.Time);
-            Assert.AreEqual("value", cloudEvent.ExtensionAttributes["key"]);
+            Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+            Assert.That(cloudEvent.Type, Is.EqualTo("type"));
+            Assert.That(cloudEvent.DataContentType, Is.EqualTo("text/xml"));
+            Assert.That(cloudEvent.DataSchema, Is.EqualTo("schema"));
+            Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+            Assert.That(cloudEvent.Subject, Is.EqualTo("subject"));
+            Assert.That(cloudEvent.Time, Is.EqualTo(time));
+            Assert.That(cloudEvent.ExtensionAttributes["key"], Is.EqualTo("value"));
         }
 
         [Test]
@@ -128,14 +128,14 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData bd = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.Parse(bd);
-            Assert.AreEqual(233, deserialized.ExtensionAttributes["int"]);
-            Assert.AreEqual(true, deserialized.ExtensionAttributes["bool"]);
-            Assert.AreEqual(Convert.ToBase64String(new byte[] { 1 }), deserialized.ExtensionAttributes["bytearray"]);
-            Assert.AreEqual(Convert.ToBase64String(new ReadOnlyMemory<byte>(new byte[] { 1 }).ToArray()), deserialized.ExtensionAttributes["rom"]);
-            Assert.AreEqual(new Uri("http://www.contoso.com").ToString(), deserialized.ExtensionAttributes["uri"]);
-            Assert.AreEqual(new Uri("path/file", UriKind.Relative).ToString(), deserialized.ExtensionAttributes["uriref"]);
-            Assert.AreEqual(dto, DateTimeOffset.Parse((string)deserialized.ExtensionAttributes["dto"]));
-            Assert.AreEqual(dt, DateTime.Parse((string)deserialized.ExtensionAttributes["dt"]));
+            Assert.That(deserialized.ExtensionAttributes["int"], Is.EqualTo(233));
+            Assert.That(deserialized.ExtensionAttributes["bool"], Is.EqualTo(true));
+            Assert.That(deserialized.ExtensionAttributes["bytearray"], Is.EqualTo(Convert.ToBase64String(new byte[] { 1 })));
+            Assert.That(deserialized.ExtensionAttributes["rom"], Is.EqualTo(Convert.ToBase64String(new ReadOnlyMemory<byte>(new byte[] { 1 }).ToArray())));
+            Assert.That(deserialized.ExtensionAttributes["uri"], Is.EqualTo(new Uri("http://www.contoso.com").ToString()));
+            Assert.That(deserialized.ExtensionAttributes["uriref"], Is.EqualTo(new Uri("path/file", UriKind.Relative).ToString()));
+            Assert.That(DateTimeOffset.Parse((string)deserialized.ExtensionAttributes["dto"]), Is.EqualTo(dto));
+            Assert.That(DateTime.Parse((string)deserialized.ExtensionAttributes["dt"]), Is.EqualTo(dt));
         }
 
         [Test]
@@ -157,34 +157,34 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
-            Assert.AreEqual(true, deserialized.Data.ToObjectFromJson<TestModel>().B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().B, Is.EqualTo(true));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
-            Assert.AreEqual(true, deserialized.Data.ToObjectFromJson<TestModel>().B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().B, Is.EqualTo(true));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = CloudEvent.Parse(serialized);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
-            Assert.AreEqual(true, deserialized.Data.ToObjectFromJson<TestModel>().B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().B, Is.EqualTo(true));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
         }
 
         [Test]
@@ -214,55 +214,55 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
             var dataArray = deserialized.Data.ToObjectFromJson<TestModel[]>();
-            Assert.AreEqual(10, dataArray[0].A);
-            Assert.AreEqual(true, dataArray[0].B);
-            Assert.AreEqual(5, dataArray[1].A);
-            Assert.AreEqual(false, dataArray[1].B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(dataArray[0].A, Is.EqualTo(10));
+            Assert.That(dataArray[0].B, Is.EqualTo(true));
+            Assert.That(dataArray[1].A, Is.EqualTo(5));
+            Assert.That(dataArray[1].B, Is.EqualTo(false));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
             dataArray = deserialized.Data.ToObjectFromJson<TestModel[]>();
-            Assert.AreEqual(10, dataArray[0].A);
-            Assert.AreEqual(true, dataArray[0].B);
-            Assert.AreEqual(5, dataArray[1].A);
-            Assert.AreEqual(false, dataArray[1].B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(dataArray[0].A, Is.EqualTo(10));
+            Assert.That(dataArray[0].B, Is.EqualTo(true));
+            Assert.That(dataArray[1].A, Is.EqualTo(5));
+            Assert.That(dataArray[1].B, Is.EqualTo(false));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
             dataArray = deserialized.Data.ToObjectFromJson<TestModel[]>();
-            Assert.AreEqual(10, dataArray[0].A);
-            Assert.AreEqual(true, dataArray[0].B);
-            Assert.AreEqual(5, dataArray[1].A);
-            Assert.AreEqual(false, dataArray[1].B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(dataArray[0].A, Is.EqualTo(10));
+            Assert.That(dataArray[0].B, Is.EqualTo(true));
+            Assert.That(dataArray[1].A, Is.EqualTo(5));
+            Assert.That(dataArray[1].B, Is.EqualTo(false));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = CloudEvent.Parse(serialized);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
             dataArray = deserialized.Data.ToObjectFromJson<TestModel[]>();
-            Assert.AreEqual(10, dataArray[0].A);
-            Assert.AreEqual(true, dataArray[0].B);
-            Assert.AreEqual(5, dataArray[1].A);
-            Assert.AreEqual(false, dataArray[1].B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
+            Assert.That(dataArray[0].A, Is.EqualTo(10));
+            Assert.That(dataArray[0].B, Is.EqualTo(true));
+            Assert.That(dataArray[1].A, Is.EqualTo(5));
+            Assert.That(dataArray[1].B, Is.EqualTo(false));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
         }
 
         [Test]
@@ -288,34 +288,34 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObject<TestModel>(dataSerializer).A);
-            Assert.AreEqual(true, deserialized.Data.ToObject<TestModel>(dataSerializer).B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).B, Is.EqualTo(true));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObject<TestModel>(dataSerializer).A);
-            Assert.AreEqual(true, deserialized.Data.ToObject<TestModel>(dataSerializer).B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).B, Is.EqualTo(true));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = CloudEvent.Parse(serialized);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObject<TestModel>(dataSerializer).A);
-            Assert.AreEqual(true, deserialized.Data.ToObject<TestModel>(dataSerializer).B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).B, Is.EqualTo(true));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
         }
 
         [Test]
@@ -335,37 +335,37 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.AreEqual(data, cloudEvent.Data.ToObjectFromJson<string>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<string>(), Is.EqualTo(data));
 
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(data, deserialized.Data.ToObjectFromJson<string>());
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<string>(), Is.EqualTo(data));
 
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(data, deserialized.Data.ToObjectFromJson<string>());
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<string>(), Is.EqualTo(data));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
 
             deserialized = CloudEvent.Parse(serialized);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(data, deserialized.Data.ToObjectFromJson<string>());
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<string>(), Is.EqualTo(data));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
         }
 
         [Test]
@@ -379,20 +379,20 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             AssertCloudEvent();
 
             deserialized = CloudEvent.Parse(serialized);
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             AssertCloudEvent();
 
             cloudEvent = new CloudEvent("source", "type", new BinaryData("null"), "application/json", CloudEventDataFormat.Json)
@@ -402,19 +402,19 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             serialized = serializer.Serialize(cloudEvent);
 
             deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             AssertCloudEvent();
 
             deserialized = CloudEvent.Parse(serialized);
-            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<object>(), Is.Null);
             AssertCloudEvent();
 
             cloudEvent = new CloudEvent("source", "type", null, "application/json", CloudEventDataFormat.Json)
@@ -424,29 +424,29 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.IsNull(cloudEvent.Data);
+            Assert.That(cloudEvent.Data, Is.Null);
             serialized = serializer.Serialize(cloudEvent);
 
             deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.IsNull(cloudEvent.Data);
+            Assert.That(cloudEvent.Data, Is.Null);
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.IsNull(cloudEvent.Data);
+            Assert.That(cloudEvent.Data, Is.Null);
             AssertCloudEvent();
 
             deserialized = CloudEvent.Parse(serialized);
-            Assert.IsNull(cloudEvent.Data);
+            Assert.That(cloudEvent.Data, Is.Null);
             AssertCloudEvent();
 
             void AssertCloudEvent()
             {
-                Assert.AreEqual("source", deserialized.Source);
-                Assert.AreEqual("type", deserialized.Type);
-                Assert.AreEqual("subject", deserialized.Subject);
-                Assert.AreEqual("schema", deserialized.DataSchema);
-                Assert.AreEqual("id", deserialized.Id);
-                Assert.AreEqual(time, deserialized.Time);
+                Assert.That(deserialized.Source, Is.EqualTo("source"));
+                Assert.That(deserialized.Type, Is.EqualTo("type"));
+                Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+                Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+                Assert.That(deserialized.Id, Is.EqualTo("id"));
+                Assert.That(deserialized.Time, Is.EqualTo(time));
             }
         }
 
@@ -461,7 +461,7 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.IsTrue(cloudEvent.Data.ToObjectFromJson<bool>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<bool>(), Is.True);
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
@@ -481,7 +481,7 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.IsTrue(cloudEvent.Data.ToObjectFromJson<bool>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<bool>(), Is.True);
             serialized = serializer.Serialize(cloudEvent);
 
             deserialized = CloudEvent.ParseMany(serialized)[0];
@@ -495,13 +495,13 @@ namespace Azure.Core.Tests
 
             void AssertCloudEvent()
             {
-                Assert.IsTrue(cloudEvent.Data.ToObjectFromJson<bool>());
-                Assert.AreEqual("source", deserialized.Source);
-                Assert.AreEqual("type", deserialized.Type);
-                Assert.AreEqual("subject", deserialized.Subject);
-                Assert.AreEqual("schema", deserialized.DataSchema);
-                Assert.AreEqual("id", deserialized.Id);
-                Assert.AreEqual(time, deserialized.Time);
+                Assert.That(cloudEvent.Data.ToObjectFromJson<bool>(), Is.True);
+                Assert.That(deserialized.Source, Is.EqualTo("source"));
+                Assert.That(deserialized.Type, Is.EqualTo("type"));
+                Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+                Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+                Assert.That(deserialized.Id, Is.EqualTo("id"));
+                Assert.That(deserialized.Time, Is.EqualTo(time));
             }
         }
 
@@ -516,7 +516,7 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<int>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<int>(), Is.EqualTo(5));
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
@@ -536,7 +536,7 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<int>());
+            Assert.That(cloudEvent.Data.ToObjectFromJson<int>(), Is.EqualTo(5));
             serialized = serializer.Serialize(cloudEvent);
 
             deserialized = CloudEvent.ParseMany(serialized)[0];
@@ -550,13 +550,13 @@ namespace Azure.Core.Tests
 
             void AssertCloudEvent()
             {
-                Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<int>());
-                Assert.AreEqual("source", deserialized.Source);
-                Assert.AreEqual("type", deserialized.Type);
-                Assert.AreEqual("subject", deserialized.Subject);
-                Assert.AreEqual("schema", deserialized.DataSchema);
-                Assert.AreEqual("id", deserialized.Id);
-                Assert.AreEqual(time, deserialized.Time);
+                Assert.That(cloudEvent.Data.ToObjectFromJson<int>(), Is.EqualTo(5));
+                Assert.That(deserialized.Source, Is.EqualTo("source"));
+                Assert.That(deserialized.Type, Is.EqualTo("type"));
+                Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+                Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+                Assert.That(deserialized.Id, Is.EqualTo("id"));
+                Assert.That(deserialized.Time, Is.EqualTo(time));
             }
         }
 
@@ -575,13 +575,13 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(data, deserialized.Data.ToArray());
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToArray(), Is.EqualTo(data));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
         }
 
         [Test]
@@ -601,13 +601,13 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(data, deserialized.Data.ToArray());
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToArray(), Is.EqualTo(data));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
         }
 
         [Test]
@@ -635,10 +635,10 @@ namespace Azure.Core.Tests
 
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObject<TestModel>(dataSerializer).A);
-            Assert.AreEqual(true, deserialized.Data.ToObject<TestModel>(dataSerializer).B);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObject<TestModel>(dataSerializer).B, Is.EqualTo(true));
         }
 
         [Test]
@@ -657,10 +657,10 @@ namespace Azure.Core.Tests
 
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
-            Assert.AreEqual(true, deserialized.Data.ToObjectFromJson<TestModel>().B);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().B, Is.EqualTo(true));
         }
 
         [Test]
@@ -683,22 +683,22 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
             CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
-            Assert.AreEqual(true, deserialized.Data.ToObjectFromJson<TestModel>().B);
-            Assert.AreEqual(0, deserialized.Data.ToObjectFromJson<DerivedModel>().DerivedProperty);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().B, Is.EqualTo(true));
+            Assert.That(deserialized.Data.ToObjectFromJson<DerivedModel>().DerivedProperty, Is.EqualTo(0));
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
-            Assert.AreEqual("source", deserialized.Source);
-            Assert.AreEqual("type", deserialized.Type);
-            Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
-            Assert.AreEqual(true, deserialized.Data.ToObjectFromJson<TestModel>().B);
-            Assert.AreEqual("subject", deserialized.Subject);
-            Assert.AreEqual("schema", deserialized.DataSchema);
-            Assert.AreEqual("id", deserialized.Id);
-            Assert.AreEqual(time, deserialized.Time);
-            Assert.AreEqual(0, deserialized.Data.ToObjectFromJson<DerivedModel>().DerivedProperty);
+            Assert.That(deserialized.Source, Is.EqualTo("source"));
+            Assert.That(deserialized.Type, Is.EqualTo("type"));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().A, Is.EqualTo(10));
+            Assert.That(deserialized.Data.ToObjectFromJson<TestModel>().B, Is.EqualTo(true));
+            Assert.That(deserialized.Subject, Is.EqualTo("subject"));
+            Assert.That(deserialized.DataSchema, Is.EqualTo("schema"));
+            Assert.That(deserialized.Id, Is.EqualTo("id"));
+            Assert.That(deserialized.Time, Is.EqualTo(time));
+            Assert.That(deserialized.Data.ToObjectFromJson<DerivedModel>().DerivedProperty, Is.EqualTo(0));
         }
 
         [Test]
@@ -739,10 +739,10 @@ namespace Azure.Core.Tests
                 CloudEvent[] events = CloudEvent.ParseMany(requestContent, skipValidation);
                 foreach (CloudEvent cloudEvent in events)
                 {
-                    Assert.IsNull(cloudEvent.Id);
-                    Assert.IsNull(cloudEvent.Source);
-                    Assert.IsNull(cloudEvent.Type);
-                    Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                    Assert.That(cloudEvent.Id, Is.Null);
+                    Assert.That(cloudEvent.Source, Is.Null);
+                    Assert.That(cloudEvent.Type, Is.Null);
+                    Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
                 }
             }
         }
@@ -763,18 +763,18 @@ namespace Azure.Core.Tests
             else
             {
                 var cloudEvent = CloudEvent.Parse(requestContent, skipValidation);
-                Assert.IsNull(cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("type", cloudEvent.Type);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.Source, Is.Null);
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Type, Is.EqualTo("type"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
 
                 var serializer = new JsonObjectSerializer();
                 BinaryData bd = serializer.Serialize(cloudEvent);
                 cloudEvent = CloudEvent.Parse(bd, skipValidation);
-                Assert.IsNull(cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("type", cloudEvent.Type);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.Source, Is.Null);
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Type, Is.EqualTo("type"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
             }
         }
 
@@ -794,19 +794,19 @@ namespace Azure.Core.Tests
             else
             {
                 var cloudEvent = CloudEvent.Parse(requestContent, skipValidation);
-                Assert.IsNull(cloudEvent.Type);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
-                Assert.AreEqual("1.0", cloudEvent.SpecVersion);
+                Assert.That(cloudEvent.Type, Is.Null);
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
+                Assert.That(cloudEvent.SpecVersion, Is.EqualTo("1.0"));
 
                 var serializer = new JsonObjectSerializer();
                 BinaryData bd = serializer.Serialize(cloudEvent);
                 cloudEvent = CloudEvent.Parse(bd, skipValidation);
-                Assert.IsNull(cloudEvent.Type);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.Type, Is.Null);
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
             }
         }
 
@@ -826,18 +826,18 @@ namespace Azure.Core.Tests
             else
             {
                 var cloudEvent = CloudEvent.Parse(requestContent, skipValidation);
-                Assert.IsNull(cloudEvent.SpecVersion);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.SpecVersion, Is.Null);
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
 
                 var serializer = new JsonObjectSerializer();
                 BinaryData bd = serializer.Serialize(cloudEvent);
                 cloudEvent = CloudEvent.Parse(bd, skipValidation);
-                Assert.IsNull(cloudEvent.SpecVersion);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.SpecVersion, Is.Null);
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
             }
         }
 
@@ -857,18 +857,18 @@ namespace Azure.Core.Tests
             else
             {
                 var cloudEvent = CloudEvent.Parse(requestContent, skipValidation);
-                Assert.AreEqual("1.1", cloudEvent.SpecVersion);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.SpecVersion, Is.EqualTo("1.1"));
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
 
                 var serializer = new JsonObjectSerializer();
                 BinaryData bd = serializer.Serialize(cloudEvent);
                 cloudEvent = CloudEvent.Parse(bd, skipValidation);
-                Assert.AreEqual("1.1", cloudEvent.SpecVersion);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("id", cloudEvent.Id);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.SpecVersion, Is.EqualTo("1.1"));
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Id, Is.EqualTo("id"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
             }
         }
 
@@ -888,17 +888,17 @@ namespace Azure.Core.Tests
             else
             {
                 var cloudEvent = CloudEvent.Parse(requestContent, skipValidation);
-                Assert.IsNull(cloudEvent.Id);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("type", cloudEvent.Type);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.Id, Is.Null);
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Type, Is.EqualTo("type"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
 
                 var serializer = new JsonObjectSerializer();
                 BinaryData bd = serializer.Serialize(cloudEvent);
                 cloudEvent = CloudEvent.Parse(bd, skipValidation);
-                Assert.AreEqual("source", cloudEvent.Source);
-                Assert.AreEqual("type", cloudEvent.Type);
-                Assert.AreEqual("Subject-0", cloudEvent.Subject);
+                Assert.That(cloudEvent.Source, Is.EqualTo("source"));
+                Assert.That(cloudEvent.Type, Is.EqualTo("type"));
+                Assert.That(cloudEvent.Subject, Is.EqualTo("Subject-0"));
             }
         }
 
@@ -919,11 +919,11 @@ namespace Azure.Core.Tests
             else
             {
                 var evt = CloudEvent.ParseMany(json, true)[0];
-                Assert.AreEqual("Subject-0", evt.Subject);
-                Assert.AreEqual("type", evt.Type);
-                Assert.AreEqual("value", evt.ExtensionAttributes["KEY"]);
-                Assert.AreEqual(true, ((IDictionary<string, object>)evt.ExtensionAttributes["dict"])["key1"]);
-                Assert.AreEqual(5, ((IDictionary<string, object>)evt.ExtensionAttributes["dict"])["key2"]);
+                Assert.That(evt.Subject, Is.EqualTo("Subject-0"));
+                Assert.That(evt.Type, Is.EqualTo("type"));
+                Assert.That(evt.ExtensionAttributes["KEY"], Is.EqualTo("value"));
+                Assert.That(((IDictionary<string, object>)evt.ExtensionAttributes["dict"])["key1"], Is.EqualTo(true));
+                Assert.That(((IDictionary<string, object>)evt.ExtensionAttributes["dict"])["key2"], Is.EqualTo(5));
             }
         }
 
@@ -944,9 +944,9 @@ namespace Azure.Core.Tests
             else
             {
                 var evt = CloudEvent.ParseMany(json, true)[0];
-                Assert.AreEqual("Subject-0", evt.Subject);
-                Assert.AreEqual("type", evt.Type);
-                Assert.IsNull(evt.ExtensionAttributes["key"]);
+                Assert.That(evt.Subject, Is.EqualTo("Subject-0"));
+                Assert.That(evt.Type, Is.EqualTo("type"));
+                Assert.That(evt.ExtensionAttributes["key"], Is.Null);
             }
         }
     }

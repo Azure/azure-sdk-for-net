@@ -20,7 +20,7 @@ namespace Azure.Identity.Tests
             {
                 ClientAppFactory = (useCae) =>
                 {
-                    Assert.AreEqual(useCae, enableCae);
+                    Assert.That(enableCae, Is.EqualTo(useCae));
                     return Moq.Mock.Of<IConfidentialClientApplication>();
                 }
             };
@@ -49,8 +49,8 @@ namespace Azure.Identity.Tests
             var caeEnabledCache = await client.GetTokenCache(true);
             var caeDisabledCache = await client.GetTokenCache(false);
 
-            Assert.True(caeEnabledCache.IsCaeEnabled);
-            Assert.False(caeDisabledCache.IsCaeEnabled);
+            Assert.That(caeEnabledCache.IsCaeEnabled, Is.True);
+            Assert.That(caeDisabledCache.IsCaeEnabled, Is.False);
         }
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions

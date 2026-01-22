@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement.Tests
             public Task CleanUpAsync() => Task.CompletedTask;
         }
 
-        private static void AssertProgressUpdates(List<TransferProgress> expected,  List<TransferProgress> actual)
+        private static void AssertProgressUpdates(List<TransferProgress> expected, List<TransferProgress> actual)
         {
             Assert.That(actual.Count, Is.EqualTo(expected.Count));
             for (int i = 0; i < expected.Count; i++)

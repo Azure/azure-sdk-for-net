@@ -58,7 +58,8 @@ namespace Azure.Storage.Blobs.Tests
                         await containerClient.DeleteIfExistsAsync();
                     }
                 }
-            } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
+            }
+            catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
                 TestContext.Error.WriteLine($"Blob Probing OAuth - not ready {Process.GetCurrentProcess().Id}");
                 return false;

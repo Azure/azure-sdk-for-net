@@ -35,12 +35,12 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(5, observations.Count);
-        Assert.AreEqual("Request:PerCallPolicy", observations[index++]);
-        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
-        Assert.AreEqual("Transport:Transport", observations[index++]);
-        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
-        Assert.AreEqual("Response:PerCallPolicy", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(5));
+        Assert.That(observations[index++], Is.EqualTo("Request:PerCallPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Request:RetryPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Transport:Transport"));
+        Assert.That(observations[index++], Is.EqualTo("Response:RetryPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:PerCallPolicy"));
     }
 
     [Test]
@@ -62,12 +62,12 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(5, observations.Count);
-        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
-        Assert.AreEqual("Request:PerTryPolicy", observations[index++]);
-        Assert.AreEqual("Transport:Transport", observations[index++]);
-        Assert.AreEqual("Response:PerTryPolicy", observations[index++]);
-        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(5));
+        Assert.That(observations[index++], Is.EqualTo("Request:RetryPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Request:PerTryPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Transport:Transport"));
+        Assert.That(observations[index++], Is.EqualTo("Response:PerTryPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:RetryPolicy"));
     }
 
     [Test]
@@ -89,12 +89,12 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(5, observations.Count);
-        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
-        Assert.AreEqual("Request:BeforeTransportPolicy", observations[index++]);
-        Assert.AreEqual("Transport:Transport", observations[index++]);
-        Assert.AreEqual("Response:BeforeTransportPolicy", observations[index++]);
-        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(5));
+        Assert.That(observations[index++], Is.EqualTo("Request:RetryPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Request:BeforeTransportPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Transport:Transport"));
+        Assert.That(observations[index++], Is.EqualTo("Response:BeforeTransportPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:RetryPolicy"));
     }
 
     [Test]
@@ -122,27 +122,27 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(13, observations.Count);
+        Assert.That(observations.Count, Is.EqualTo(13));
 
-        Assert.AreEqual("Request:PerCallPolicyA", observations[index++]);
-        Assert.AreEqual("Request:PerCallPolicyB", observations[index++]);
+        Assert.That(observations[index++], Is.EqualTo("Request:PerCallPolicyA"));
+        Assert.That(observations[index++], Is.EqualTo("Request:PerCallPolicyB"));
 
-        Assert.AreEqual("Request:PerTryPolicyA", observations[index++]);
-        Assert.AreEqual("Request:PerTryPolicyB", observations[index++]);
+        Assert.That(observations[index++], Is.EqualTo("Request:PerTryPolicyA"));
+        Assert.That(observations[index++], Is.EqualTo("Request:PerTryPolicyB"));
 
-        Assert.AreEqual("Request:BeforeTransportPolicyA", observations[index++]);
-        Assert.AreEqual("Request:BeforeTransportPolicyB", observations[index++]);
+        Assert.That(observations[index++], Is.EqualTo("Request:BeforeTransportPolicyA"));
+        Assert.That(observations[index++], Is.EqualTo("Request:BeforeTransportPolicyB"));
 
-        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.That(observations[index++], Is.EqualTo("Transport:Transport"));
 
-        Assert.AreEqual("Response:BeforeTransportPolicyB", observations[index++]);
-        Assert.AreEqual("Response:BeforeTransportPolicyA", observations[index++]);
+        Assert.That(observations[index++], Is.EqualTo("Response:BeforeTransportPolicyB"));
+        Assert.That(observations[index++], Is.EqualTo("Response:BeforeTransportPolicyA"));
 
-        Assert.AreEqual("Response:PerTryPolicyB", observations[index++]);
-        Assert.AreEqual("Response:PerTryPolicyA", observations[index++]);
+        Assert.That(observations[index++], Is.EqualTo("Response:PerTryPolicyB"));
+        Assert.That(observations[index++], Is.EqualTo("Response:PerTryPolicyA"));
 
-        Assert.AreEqual("Response:PerCallPolicyB", observations[index++]);
-        Assert.AreEqual("Response:PerCallPolicyA", observations[index++]);
+        Assert.That(observations[index++], Is.EqualTo("Response:PerCallPolicyB"));
+        Assert.That(observations[index++], Is.EqualTo("Response:PerCallPolicyA"));
     }
 
     [Test]

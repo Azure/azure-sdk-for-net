@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
-using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -54,7 +54,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             await foreach (KeyProperties key in client.GetPropertiesOfKeysAsync())
             {
 #if !SNIPPET
-                if (key.Managed) continue;
+                if (key.Managed)
+                    continue;
 #endif
                 KeyVaultKey keyWithType = await client.GetKeyAsync(key.Name);
                 Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyType}");

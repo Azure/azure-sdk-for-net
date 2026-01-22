@@ -151,7 +151,7 @@ namespace Azure.Core.Tests
                 parsedChallenges.Add(parsedChallenge);
             }
 
-            Assert.AreEqual(1, parsedChallenges.Count);
+            Assert.That(parsedChallenges.Count, Is.EqualTo(1));
 
             ValidateParsedChallenge(ParsedChallenges[challengeKey], parsedChallenges[0]);
         }
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests
                 parsedChallenges.Add(parsedChallenge);
             }
 
-            Assert.AreEqual(MultipleParsedChallenges.Count, parsedChallenges.Count);
+            Assert.That(parsedChallenges.Count, Is.EqualTo(MultipleParsedChallenges.Count));
 
             for (int i = 0; i < parsedChallenges.Count; i++)
             {
@@ -207,7 +207,7 @@ namespace Azure.Core.Tests
                 parsedChallenges.Add(parsedChallenge);
             }
 
-            Assert.AreEqual(2, parsedChallenges.Count);
+            Assert.That(parsedChallenges.Count, Is.EqualTo(2));
 
             for (int i = 0; i < parsedChallenges.Count; i++)
             {
@@ -217,9 +217,9 @@ namespace Azure.Core.Tests
 
         private void ValidateParsedChallenge(Challenge expected, Challenge actual)
         {
-            Assert.AreEqual(expected.Scheme, actual.Scheme);
+            Assert.That(actual.Scheme, Is.EqualTo(expected.Scheme));
 
-            CollectionAssert.AreEquivalent(expected.Parameters, actual.Parameters);
+            Assert.That(actual.Parameters, Is.EquivalentTo(expected.Parameters));
         }
     }
 }

@@ -127,7 +127,7 @@ namespace Azure.Storage.Files.Shares.Tests
                         range: range,
                         sourceRange: range,
                         options: options),
-                    e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("CannotVerifyCopySource")));
             }
             finally
             {

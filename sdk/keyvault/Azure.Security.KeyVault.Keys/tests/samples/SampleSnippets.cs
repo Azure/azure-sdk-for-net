@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
-using Azure.Identity;
-using Azure.Security.KeyVault.Keys.Cryptography;
-using NUnit.Framework;
 using System;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Security.KeyVault.Tests;
-using System.Security.Cryptography;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -277,15 +277,15 @@ namespace Azure.Security.KeyVault.Keys.Samples
         private async Task MigrationGuide()
         {
             {
-            #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
-            KeyClient client = new KeyClient(
-                new Uri("https://myvault.vault.azure.net"),
-                new DefaultAzureCredential());
+                #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
+                KeyClient client = new KeyClient(
+                    new Uri("https://myvault.vault.azure.net"),
+                    new DefaultAzureCredential());
 
-            CryptographyClient cryptoClient = new CryptographyClient(
-                new Uri("https://myvault.vault.azure.net"),
-                new DefaultAzureCredential());
-            #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
+                CryptographyClient cryptoClient = new CryptographyClient(
+                    new Uri("https://myvault.vault.azure.net"),
+                    new DefaultAzureCredential());
+                #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
             }
 
             #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions

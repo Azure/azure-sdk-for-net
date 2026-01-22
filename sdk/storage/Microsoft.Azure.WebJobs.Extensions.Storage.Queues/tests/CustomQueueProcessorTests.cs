@@ -62,9 +62,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public async Task FactoriesShouldNotOverwriteSettings()
         {
             // make sure inputs are correct
-            Assert.IsFalse(AreOptionsEqual(ExpectedQueuesOptions1, ExpectedQueuesOptions2));
-            Assert.IsFalse(AreOptionsEqual(ExpectedQueuesOptions1, ExpectedQueuesOptions3));
-            Assert.IsFalse(AreOptionsEqual(ExpectedQueuesOptions2, ExpectedQueuesOptions3));
+            Assert.That(AreOptionsEqual(ExpectedQueuesOptions1, ExpectedQueuesOptions2), Is.False);
+            Assert.That(AreOptionsEqual(ExpectedQueuesOptions1, ExpectedQueuesOptions3), Is.False);
+            Assert.That(AreOptionsEqual(ExpectedQueuesOptions2, ExpectedQueuesOptions3), Is.False);
 
             // run triggers
             await queueServiceClient.GetQueueClient(QueueName1).SendMessageAsync(TestQueueMessage);
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 b => ConfigureStorage(b), typeof(SampleProgram), s => SampleProgram.TaskSource = s);
 
             // assert options were not overwritten
-            Assert.IsTrue(AreOptionsEqual(ExpectedQueuesOptions1, ActualQueuesOptions1));
-            Assert.IsTrue(AreOptionsEqual(ExpectedQueuesOptions2, ActualQueuesOptions2));
-            Assert.IsTrue(AreOptionsEqual(ExpectedQueuesOptions3, ActualQueuesOptions3));
+            Assert.That(AreOptionsEqual(ExpectedQueuesOptions1, ActualQueuesOptions1), Is.True);
+            Assert.That(AreOptionsEqual(ExpectedQueuesOptions2, ActualQueuesOptions2), Is.True);
+            Assert.That(AreOptionsEqual(ExpectedQueuesOptions3, ActualQueuesOptions3), Is.True);
         }
 
         private bool AreOptionsEqual(QueuesOptions queuesOptions1, QueuesOptions queuesOptions2)

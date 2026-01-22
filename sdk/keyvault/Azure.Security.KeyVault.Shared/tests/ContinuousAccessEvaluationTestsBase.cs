@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using Azure.Core.TestFramework;
-using Azure.Core;
 using System.IO;
+using System.Text;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 
 namespace Azure.Security.KeyVault.Tests
 {
@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Tests
         private const string VaultHost = "test.vault.azure.net";
         protected Uri VaultUri => new Uri("https://" + VaultHost);
 
-        protected MockTransport GetMockTransportWithCaeChallenges(int numberOfCaeChallenges = 1, MockResponse final200response = null )
+        protected MockTransport GetMockTransportWithCaeChallenges(int numberOfCaeChallenges = 1, MockResponse final200response = null)
         {
             if (numberOfCaeChallenges < 1)
             {

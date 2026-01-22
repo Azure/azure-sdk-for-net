@@ -16,54 +16,54 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void CertificatePolicyWithSubjectValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy(null, (string)null));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, (string)null));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", (string)null));
-            Assert.AreEqual("subject", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subject"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", string.Empty));
-            Assert.AreEqual("subject", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subject"));
         }
 
         [Test]
         public void CertificatePolicyWithSubjectAlternativeNamesValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy(null, (SubjectAlternativeNames)null));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, "CN=contoso.com"));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", (SubjectAlternativeNames)null));
-            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subjectAlternativeNames"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", new SubjectAlternativeNames()));
-            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subjectAlternativeNames"));
         }
 
         [Test]
         public void CertificatePolicyWithSubjectAndSubjectAlternativeNamesValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy(null, null, null));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, null, null));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", null, null));
-            Assert.AreEqual("subject", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subject"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", string.Empty, null));
-            Assert.AreEqual("subject", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subject"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", (SubjectAlternativeNames)null));
-            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subjectAlternativeNames"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", new SubjectAlternativeNames()));
-            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("subjectAlternativeNames"));
         }
 
         [Test]
@@ -115,25 +115,25 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 policy.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(CertificateKeyType.Rsa, policy.KeyType);
-            Assert.IsFalse(policy.ReuseKey);
-            Assert.IsTrue(policy.Exportable);
-            Assert.AreEqual(2048, policy.KeySize);
-            Assert.AreEqual(CertificateContentType.Pkcs12, policy.ContentType);
-            Assert.AreEqual("CN=KeyVaultTest", policy.Subject);
-            Assert.NotNull(policy.KeyUsage);
-            CollectionAssert.IsEmpty(policy.KeyUsage);
-            Assert.NotNull(policy.EnhancedKeyUsage);
-            CollectionAssert.IsEmpty(policy.EnhancedKeyUsage);
-            Assert.AreEqual(297, policy.ValidityInMonths);
-            Assert.NotNull(policy.LifetimeActions);
-            Assert.AreEqual(1, policy.LifetimeActions.Count);
-            Assert.AreEqual(80, policy.LifetimeActions[0].LifetimePercentage);
-            Assert.AreEqual(CertificatePolicyAction.EmailContacts, policy.LifetimeActions[0].Action);
-            Assert.AreEqual("Unknown", policy.IssuerName);
-            Assert.IsTrue(policy.Enabled);
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.CreatedOn);
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.UpdatedOn);
+            Assert.That(policy.KeyType, Is.EqualTo(CertificateKeyType.Rsa));
+            Assert.That(policy.ReuseKey, Is.False);
+            Assert.That(policy.Exportable, Is.True);
+            Assert.That(policy.KeySize, Is.EqualTo(2048));
+            Assert.That(policy.ContentType, Is.EqualTo(CertificateContentType.Pkcs12));
+            Assert.That(policy.Subject, Is.EqualTo("CN=KeyVaultTest"));
+            Assert.That(policy.KeyUsage, Is.Not.Null);
+            Assert.That(policy.KeyUsage, Is.Empty);
+            Assert.That(policy.EnhancedKeyUsage, Is.Not.Null);
+            Assert.That(policy.EnhancedKeyUsage, Is.Empty);
+            Assert.That(policy.ValidityInMonths, Is.EqualTo(297));
+            Assert.That(policy.LifetimeActions, Is.Not.Null);
+            Assert.That(policy.LifetimeActions.Count, Is.EqualTo(1));
+            Assert.That(policy.LifetimeActions[0].LifetimePercentage, Is.EqualTo(80));
+            Assert.That(policy.LifetimeActions[0].Action, Is.EqualTo(CertificatePolicyAction.EmailContacts));
+            Assert.That(policy.IssuerName, Is.EqualTo("Unknown"));
+            Assert.That(policy.Enabled, Is.True);
+            Assert.That(policy.CreatedOn, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1482188947)));
+            Assert.That(policy.UpdatedOn, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1482188947)));
 
             const string expectedJson = @"{
   ""key_props"": {
@@ -177,7 +177,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using JsonStream actualStream = new JsonStream();
             actualStream.WriteObject(policy);
 
-            Assert.AreEqual(expectedStream.ToString(), actualStream.ToString());
+            Assert.That(actualStream.ToString(), Is.EqualTo(expectedStream.ToString()));
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 json.WriteObject(policy);
 
-                Assert.AreEqual(@"{}", json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(@"{}"));
             }
 
             policy.Enabled = false;
@@ -198,7 +198,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 json.WriteObject(policy);
 
-                Assert.AreEqual(@"{""attributes"":{""enabled"":false}}", json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(@"{""attributes"":{""enabled"":false}}"));
             }
         }
 
@@ -232,34 +232,34 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private static void AssertAreEqual(CertificatePolicy expected, CertificatePolicy actual)
         {
-            Assert.AreEqual(expected.Subject, actual.Subject);
+            Assert.That(actual.Subject, Is.EqualTo(expected.Subject));
             AssertAreEqual(expected.SubjectAlternativeNames, actual.SubjectAlternativeNames);
-            Assert.AreEqual(expected.IssuerName, actual.IssuerName);
+            Assert.That(actual.IssuerName, Is.EqualTo(expected.IssuerName));
 
-            Assert.AreEqual(expected.CertificateTransparency, actual.CertificateTransparency);
-            Assert.AreEqual(expected.CertificateType, actual.CertificateType);
-            Assert.AreEqual(expected.ContentType, actual.ContentType);
-            Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
-            Assert.AreEqual(expected.Enabled, actual.Enabled);
-            CollectionAssert.AreEqual(expected.EnhancedKeyUsage, actual.EnhancedKeyUsage);
-            Assert.AreEqual(expected.Exportable, actual.Exportable);
-            Assert.AreEqual(expected.KeyCurveName, actual.KeyCurveName);
-            Assert.AreEqual(expected.KeySize, actual.KeySize);
-            Assert.AreEqual(expected.KeyType, actual.KeyType);
-            CollectionAssert.AreEqual(expected.KeyUsage, actual.KeyUsage);
-            CollectionAssert.AreEqual(expected.LifetimeActions, actual.LifetimeActions, LifetimeActionComparer.Instance);
-            Assert.AreEqual(expected.ReuseKey, actual.ReuseKey);
-            Assert.AreEqual(expected.UpdatedOn, actual.UpdatedOn);
-            Assert.AreEqual(expected.ValidityInMonths, actual.ValidityInMonths);
+            Assert.That(actual.CertificateTransparency, Is.EqualTo(expected.CertificateTransparency));
+            Assert.That(actual.CertificateType, Is.EqualTo(expected.CertificateType));
+            Assert.That(actual.ContentType, Is.EqualTo(expected.ContentType));
+            Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
+            Assert.That(actual.Enabled, Is.EqualTo(expected.Enabled));
+            Assert.That(actual.EnhancedKeyUsage, Is.EqualTo(expected.EnhancedKeyUsage).AsCollection);
+            Assert.That(actual.Exportable, Is.EqualTo(expected.Exportable));
+            Assert.That(actual.KeyCurveName, Is.EqualTo(expected.KeyCurveName));
+            Assert.That(actual.KeySize, Is.EqualTo(expected.KeySize));
+            Assert.That(actual.KeyType, Is.EqualTo(expected.KeyType));
+            Assert.That(actual.KeyUsage, Is.EqualTo(expected.KeyUsage).AsCollection);
+            Assert.That(actual.LifetimeActions, Is.EqualTo(expected.LifetimeActions).Using(LifetimeActionComparer.Instance));
+            Assert.That(actual.ReuseKey, Is.EqualTo(expected.ReuseKey));
+            Assert.That(actual.UpdatedOn, Is.EqualTo(expected.UpdatedOn));
+            Assert.That(actual.ValidityInMonths, Is.EqualTo(expected.ValidityInMonths));
         }
 
         private static void AssertAreEqual(SubjectAlternativeNames expected, SubjectAlternativeNames actual)
         {
-            CollectionAssert.AreEqual(expected?.DnsNames, actual?.DnsNames, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.Emails, actual?.Emails, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.UserPrincipalNames, actual?.UserPrincipalNames, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.UniformResourceIdentifiers, actual?.UniformResourceIdentifiers, StringComparer.Ordinal);
-            CollectionAssert.AreEqual(expected?.IpAddresses, actual?.IpAddresses, StringComparer.Ordinal);
+            Assert.That(actual?.DnsNames, Is.EqualTo(expected?.DnsNames).Using(StringComparer.Ordinal));
+            Assert.That(actual?.Emails, Is.EqualTo(expected?.Emails).Using(StringComparer.Ordinal));
+            Assert.That(actual?.UserPrincipalNames, Is.EqualTo(expected?.UserPrincipalNames).Using(StringComparer.Ordinal));
+            Assert.That(actual?.UniformResourceIdentifiers, Is.EqualTo(expected?.UniformResourceIdentifiers).Using(StringComparer.Ordinal));
+            Assert.That(actual?.IpAddresses, Is.EqualTo(expected?.IpAddresses).Using(StringComparer.Ordinal));
         }
 
         private class LifetimeActionComparer : IComparer<LifetimeAction>, IComparer

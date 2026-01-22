@@ -32,12 +32,12 @@ namespace Azure.Core.Tests
         {
             dynamic value = new BinaryData(testJson).ToDynamicFromJson();
 
-            Assert.AreEqual(1, (int)value.camel);
-            Assert.AreEqual("hi", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
-            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+            Assert.That((int)value.camel, Is.EqualTo(1));
+            Assert.That((string)value.Pascal, Is.EqualTo("hi"));
+            Assert.That((bool)value.parentCamel.nestedCamel, Is.EqualTo(true));
+            Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(false));
+            Assert.That((string)value.ParentPascal.nestedCamel, Is.EqualTo("a"));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("b"));
         }
 
         [Test]
@@ -61,15 +61,15 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
-            Assert.AreEqual(1, (int)value.camel);
-            Assert.AreEqual(1, (int)value.Camel);
-            Assert.AreEqual("hi", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual(true, (bool)value.ParentCamel.NestedCamel);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual(false, (bool)value.ParentCamel.NestedPascal);
-            Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
-            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+            Assert.That((int)value.camel, Is.EqualTo(1));
+            Assert.That((int)value.Camel, Is.EqualTo(1));
+            Assert.That((string)value.Pascal, Is.EqualTo("hi"));
+            Assert.That((bool)value.parentCamel.nestedCamel, Is.EqualTo(true));
+            Assert.That((bool)value.ParentCamel.NestedCamel, Is.EqualTo(true));
+            Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(false));
+            Assert.That((bool)value.ParentCamel.NestedPascal, Is.EqualTo(false));
+            Assert.That((string)value.ParentPascal.nestedCamel, Is.EqualTo("a"));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("b"));
         }
 
         [Test]
@@ -96,12 +96,12 @@ namespace Azure.Core.Tests
             value.ParentPascal.nestedCamel = "c";
             value.ParentPascal.NestedPascal = "d";
 
-            Assert.AreEqual(2, (int)value.camel);
-            Assert.AreEqual("new", (string)value.Pascal);
-            Assert.AreEqual(false, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual(true, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("c", (string)value.ParentPascal.nestedCamel);
-            Assert.AreEqual("d", (string)value.ParentPascal.NestedPascal);
+            Assert.That((int)value.camel, Is.EqualTo(2));
+            Assert.That((string)value.Pascal, Is.EqualTo("new"));
+            Assert.That((bool)value.parentCamel.nestedCamel, Is.EqualTo(false));
+            Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(true));
+            Assert.That((string)value.ParentPascal.nestedCamel, Is.EqualTo("c"));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("d"));
         }
 
         [Test]
@@ -116,19 +116,19 @@ namespace Azure.Core.Tests
             value.ParentPascal.NestedCamel = "c";
             value.ParentPascal.nestedPascal = "d";
 
-            Assert.AreEqual(1, (int)value.camel);
-            Assert.AreEqual("hi", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
-            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+            Assert.That((int)value.camel, Is.EqualTo(1));
+            Assert.That((string)value.Pascal, Is.EqualTo("hi"));
+            Assert.That((bool)value.parentCamel.nestedCamel, Is.EqualTo(true));
+            Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(false));
+            Assert.That((string)value.ParentPascal.nestedCamel, Is.EqualTo("a"));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("b"));
 
-            Assert.AreEqual(2, (int)value.Camel);
-            Assert.AreEqual("new", (string)value.pascal);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedCamel);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedPascal);
-            Assert.AreEqual("c", (string)value.ParentPascal.NestedCamel);
-            Assert.AreEqual("d", (string)value.ParentPascal.nestedPascal);
+            Assert.That((int)value.Camel, Is.EqualTo(2));
+            Assert.That((string)value.pascal, Is.EqualTo("new"));
+            Assert.That((bool)value.parentCamel.NestedCamel, Is.EqualTo(false));
+            Assert.That((bool)value.parentCamel.nestedPascal, Is.EqualTo(true));
+            Assert.That((string)value.ParentPascal.NestedCamel, Is.EqualTo("c"));
+            Assert.That((string)value.ParentPascal.nestedPascal, Is.EqualTo("d"));
         }
 
         [Test]
@@ -141,17 +141,17 @@ namespace Azure.Core.Tests
             value.parentCamel.nestedCamel = false;
             value.ParentPascal.nestedCamel = "c";
 
-            Assert.AreEqual(2, (int)value.camel);
-            Assert.AreEqual(false, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual("c", (string)value.ParentPascal.nestedCamel);
+            Assert.That((int)value.camel, Is.EqualTo(2));
+            Assert.That((bool)value.parentCamel.nestedCamel, Is.EqualTo(false));
+            Assert.That((string)value.ParentPascal.nestedCamel, Is.EqualTo("c"));
 
             value.Camel = 3;
             value.ParentCamel.NestedCamel = true;
             value.ParentPascal.NestedCamel = "d";
 
-            Assert.AreEqual(3, (int)value.Camel);
-            Assert.AreEqual(true, (bool)value.ParentCamel.NestedCamel);
-            Assert.AreEqual("d", (string)value.ParentPascal.NestedCamel);
+            Assert.That((int)value.Camel, Is.EqualTo(3));
+            Assert.That((bool)value.ParentCamel.NestedCamel, Is.EqualTo(true));
+            Assert.That((string)value.ParentPascal.NestedCamel, Is.EqualTo("d"));
         }
 
         [Test]
@@ -163,13 +163,13 @@ namespace Azure.Core.Tests
             value.parentCamel.NestedPascal = true;
             value.ParentPascal.NestedPascal = "c";
 
-            Assert.AreEqual("new", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("c", (string)value.ParentPascal.NestedPascal);
+            Assert.That((string)value.Pascal, Is.EqualTo("new"));
+            Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(true));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("c"));
 
-            Assert.IsNull((string)value.pascal);
-            Assert.IsNull((bool?)value.parentCamel.nestedPascal);
-            Assert.IsNull((string)value.ParentPascal.nestedPascal);
+            Assert.That((string)value.pascal, Is.Null);
+            Assert.That((bool?)value.parentCamel.nestedPascal, Is.Null);
+            Assert.That((string)value.ParentPascal.nestedPascal, Is.Null);
         }
 
         [Test]
@@ -186,12 +186,12 @@ namespace Azure.Core.Tests
             value.ParentPascal.nestedCamel = "a";
             value.ParentPascal.NestedPascal = "b";
 
-            Assert.AreEqual(1, (int)value.camel);
-            Assert.AreEqual("hi", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
-            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+            Assert.That((int)value.camel, Is.EqualTo(1));
+            Assert.That((string)value.Pascal, Is.EqualTo("hi"));
+            Assert.That((bool)value.parentCamel.nestedCamel, Is.EqualTo(true));
+            Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(false));
+            Assert.That((string)value.ParentPascal.nestedCamel, Is.EqualTo("a"));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("b"));
         }
 
         [Test]
@@ -209,18 +209,18 @@ namespace Azure.Core.Tests
             value.ParentPascal.nestedCamel = "a";
             value.ParentPascal.NestedPascal = "b";
 
-            Assert.AreEqual(1, (int)value.camel);
-            Assert.AreEqual("hi", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
-            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+            Assert.That((int)value.camel, Is.EqualTo(1));
+            Assert.That((string)value.Pascal, Is.EqualTo("hi"));
+            Assert.That((bool)value.parentCamel.nestedCamel, Is.EqualTo(true));
+            Assert.That((bool)value.parentCamel.NestedPascal, Is.EqualTo(false));
+            Assert.That((string)value.ParentPascal.nestedCamel, Is.EqualTo("a"));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("b"));
 
             // All sets are written camelCase.
-            Assert.AreEqual("hi", (string)value.pascal);
-            Assert.AreEqual(false, (bool)value.parentCamel.nestedPascal);
-            Assert.AreEqual("a", (string)value.parentPascal.nestedCamel);
-            Assert.AreEqual("b", (string)value.parentPascal.nestedPascal);
+            Assert.That((string)value.pascal, Is.EqualTo("hi"));
+            Assert.That((bool)value.parentCamel.nestedPascal, Is.EqualTo(false));
+            Assert.That((string)value.parentPascal.nestedCamel, Is.EqualTo("a"));
+            Assert.That((string)value.parentPascal.nestedPascal, Is.EqualTo("b"));
         }
 
         [Test]
@@ -265,19 +265,19 @@ namespace Azure.Core.Tests
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             dynamic item = e.Current;
-            Assert.AreEqual("a", (string)item.Name);
-            Assert.AreEqual("description of a", (string)item.Value.description);
-            Assert.AreEqual(1, (int)item.Value.index);
+            Assert.That((string)item.Name, Is.EqualTo("a"));
+            Assert.That((string)item.Value.description, Is.EqualTo("description of a"));
+            Assert.That((int)item.Value.index, Is.EqualTo(1));
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             item = e.Current;
-            Assert.AreEqual("b", (string)item.Name);
-            Assert.AreEqual("description of b", (string)item.Value.description);
-            Assert.AreEqual(2, (int)item.Value.index);
+            Assert.That((string)item.Name, Is.EqualTo("b"));
+            Assert.That((string)item.Value.description, Is.EqualTo("description of b"));
+            Assert.That((int)item.Value.index, Is.EqualTo(2));
 
-            Assert.IsFalse(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.False);
         }
 
         [Test]
@@ -300,19 +300,19 @@ namespace Azure.Core.Tests
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             dynamic item = e.Current;
-            Assert.AreEqual("a", (string)item.Name);
-            Assert.AreEqual("description of a", (string)item.Value.Description);
-            Assert.AreEqual(1, (int)item.Value.Index);
+            Assert.That((string)item.Name, Is.EqualTo("a"));
+            Assert.That((string)item.Value.Description, Is.EqualTo("description of a"));
+            Assert.That((int)item.Value.Index, Is.EqualTo(1));
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             item = e.Current;
-            Assert.AreEqual("b", (string)item.Name);
-            Assert.AreEqual("description of b", (string)item.Value.Description);
-            Assert.AreEqual(2, (int)item.Value.Index);
+            Assert.That((string)item.Name, Is.EqualTo("b"));
+            Assert.That((string)item.Value.Description, Is.EqualTo("description of b"));
+            Assert.That((int)item.Value.Index, Is.EqualTo(2));
 
-            Assert.IsFalse(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.False);
         }
 
         [Test]
@@ -334,15 +334,15 @@ namespace Azure.Core.Tests
             IEnumerable ary = (IEnumerable)jsonData.array;
             IEnumerator e = ary.GetEnumerator();
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             dynamic item = e.Current;
-            Assert.AreEqual("a", (string)item.foo);
+            Assert.That((string)item.foo, Is.EqualTo("a"));
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             item = e.Current;
-            Assert.AreEqual("b", (string)item.foo);
+            Assert.That((string)item.foo, Is.EqualTo("b"));
 
-            Assert.IsFalse(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.False);
         }
 
         [Test]
@@ -365,15 +365,15 @@ namespace Azure.Core.Tests
             IEnumerable ary = (IEnumerable)jsonData.Array;
             IEnumerator e = ary.GetEnumerator();
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             dynamic item = e.Current;
-            Assert.AreEqual("a", (string)item.Foo);
+            Assert.That((string)item.Foo, Is.EqualTo("a"));
 
-            Assert.IsTrue(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.True);
             item = e.Current;
-            Assert.AreEqual("b", (string)item.Foo);
+            Assert.That((string)item.Foo, Is.EqualTo("b"));
 
-            Assert.IsFalse(e.MoveNext());
+            Assert.That(e.MoveNext(), Is.False);
         }
 
         [Test]
@@ -387,13 +387,13 @@ namespace Azure.Core.Tests
             value.ParentCamel["NestedPascal"] = true;
             value.ParentPascal["NestedPascal"] = "c";
 
-            Assert.AreEqual("new", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.ParentCamel.NestedPascal);
-            Assert.AreEqual("c", (string)value.ParentPascal.NestedPascal);
+            Assert.That((string)value.Pascal, Is.EqualTo("new"));
+            Assert.That((bool)value.ParentCamel.NestedPascal, Is.EqualTo(true));
+            Assert.That((string)value.ParentPascal.NestedPascal, Is.EqualTo("c"));
 
-            Assert.AreEqual("new", (string)value["Pascal"]);
-            Assert.AreEqual(true, (bool)value.ParentCamel["NestedPascal"]);
-            Assert.AreEqual("c", (string)value.ParentPascal["NestedPascal"]);
+            Assert.That((string)value["Pascal"], Is.EqualTo("new"));
+            Assert.That((bool)value.ParentCamel["NestedPascal"], Is.EqualTo(true));
+            Assert.That((string)value.ParentPascal["NestedPascal"], Is.EqualTo("c"));
         }
 
         [Test]
@@ -405,11 +405,11 @@ namespace Azure.Core.Tests
             value.PIICategories = "categories";
             value.IPAddress = "127.0.0.1";
 
-            Assert.AreEqual("categories", (string)value.PIICategories);
-            Assert.AreEqual("127.0.0.1", (string)value.IPAddress);
+            Assert.That((string)value.PIICategories, Is.EqualTo("categories"));
+            Assert.That((string)value.IPAddress, Is.EqualTo("127.0.0.1"));
 
-            Assert.AreEqual("categories", (string)value.piiCategories);
-            Assert.AreEqual("127.0.0.1", (string)value.ipAddress);
+            Assert.That((string)value.piiCategories, Is.EqualTo("categories"));
+            Assert.That((string)value.ipAddress, Is.EqualTo("127.0.0.1"));
         }
 
         [Test]
@@ -423,10 +423,10 @@ namespace Azure.Core.Tests
             // New property
             value.Bar = 2;
 
-            Assert.AreEqual(1, (int)value.Foo);
-            Assert.AreEqual(1, (int)value.foo);
-            Assert.AreEqual(2, (int)value.Bar);
-            Assert.AreEqual(2, (int)value.bar);
+            Assert.That((int)value.Foo, Is.EqualTo(1));
+            Assert.That((int)value.foo, Is.EqualTo(1));
+            Assert.That((int)value.Bar, Is.EqualTo(2));
+            Assert.That((int)value.bar, Is.EqualTo(2));
 
             // Serialized model - existing property
             value.Foo = new
@@ -441,8 +441,8 @@ namespace Azure.Core.Tests
             };
 
             // Show they can be accessed with PascalCase
-            Assert.AreEqual(3, (int)value.Foo.A);
-            Assert.AreEqual(4, (int)value.Bar.B);
+            Assert.That((int)value.Foo.A, Is.EqualTo(3));
+            Assert.That((int)value.Bar.B, Is.EqualTo(4));
 
             // And that they serialized to camelCase
             Assert.AreEqual("""{"a":3}""", value.Foo.ToString());
@@ -460,9 +460,9 @@ namespace Azure.Core.Tests
             // New property
             value.Bar = 2;
 
-            Assert.AreEqual(1, (int)value.Foo);
-            Assert.AreEqual("orig", (string)value.foo);
-            Assert.AreEqual(2, (int)value.Bar);
+            Assert.That((int)value.Foo, Is.EqualTo(1));
+            Assert.That((string)value.foo, Is.EqualTo("orig"));
+            Assert.That((int)value.Bar, Is.EqualTo(2));
             Assert.IsNull(value.bar);
 
             // Serialized model - existing property
@@ -478,9 +478,9 @@ namespace Azure.Core.Tests
             };
 
             // Show what happens with PascalCase
-            Assert.AreEqual(3, (int)value.Foo.A);
-            Assert.AreEqual("orig", (string)value.foo);
-            Assert.AreEqual(4, (int)value.Bar.B);
+            Assert.That((int)value.Foo.A, Is.EqualTo(3));
+            Assert.That((string)value.foo, Is.EqualTo("orig"));
+            Assert.That((int)value.Bar.B, Is.EqualTo(4));
             Assert.IsNull(value.bar);
 
             // And that they serialized to PascalCase
@@ -495,24 +495,24 @@ namespace Azure.Core.Tests
             dynamic b = BinaryData.FromString("""{"b": "b"}""").ToDynamicFromJson(JsonPropertyNames.CamelCase, "x");
 
             b.DateTime = new DateTimeOffset(2023, 10, 19, 10, 19, 10, 19, new TimeSpan(0));
-            Assert.AreEqual("b", (string)b.B);
-            Assert.AreEqual(1697710750, (int)b.DateTime);
+            Assert.That((string)b.B, Is.EqualTo("b"));
+            Assert.That((int)b.DateTime, Is.EqualTo(1697710750));
 
             a.Foo = b;
             a.Bar = b;
 
-            Assert.AreEqual("b", (string)a.Foo.B);
-            Assert.AreEqual("b", (string)a.Bar.B);
-            Assert.AreEqual(1697710750, (int)a.Foo.DateTime);
-            Assert.AreEqual(1697710750, (int)a.Bar.DateTime);
+            Assert.That((string)a.Foo.B, Is.EqualTo("b"));
+            Assert.That((string)a.Bar.B, Is.EqualTo("b"));
+            Assert.That((int)a.Foo.DateTime, Is.EqualTo(1697710750));
+            Assert.That((int)a.Bar.DateTime, Is.EqualTo(1697710750));
 
             a.Foo.DateTime = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
             a.Bar.DateTime = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
             a.Foo.UpdatedOn = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
 
-            Assert.AreEqual(1697797210, (int)a.Foo.DateTime);
-            Assert.AreEqual(1697797210, (int)a.Foo.UpdatedOn);
-            Assert.AreEqual(1697797210, (int)a.Bar.DateTime);
+            Assert.That((int)a.Foo.DateTime, Is.EqualTo(1697797210));
+            Assert.That((int)a.Foo.UpdatedOn, Is.EqualTo(1697797210));
+            Assert.That((int)a.Bar.DateTime, Is.EqualTo(1697797210));
         }
     }
 }

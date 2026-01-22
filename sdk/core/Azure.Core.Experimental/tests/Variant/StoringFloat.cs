@@ -22,13 +22,13 @@ namespace Azure.Core.Experimental.Tests
         public void FloatImplicit([ValueSource("FloatData")] float testValue)
         {
             Variant value = testValue;
-            Assert.AreEqual(testValue, value.As<float>());
-            Assert.AreEqual(typeof(float), value.Type);
+            Assert.That(value.As<float>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(float)));
 
             float? source = testValue;
             value = source;
-            Assert.AreEqual(source, value.As<float?>());
-            Assert.AreEqual(typeof(float), value.Type);
+            Assert.That(value.As<float?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(float)));
         }
 
         [Test]
@@ -40,8 +40,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(testValue);
             }
 
-            Assert.AreEqual(testValue, value.As<float>());
-            Assert.AreEqual(typeof(float), value.Type);
+            Assert.That(value.As<float>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(float)));
 
             float? source = testValue;
 
@@ -50,8 +50,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(source);
             }
 
-            Assert.AreEqual(source, value.As<float?>());
-            Assert.AreEqual(typeof(float), value.Type);
+            Assert.That(value.As<float?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(float)));
         }
 
         [Test]
@@ -59,11 +59,11 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             bool success = value.TryGetValue(out float result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<float>());
-            Assert.AreEqual(testValue, (float)value);
+            Assert.That(value.As<float>(), Is.EqualTo(testValue));
+            Assert.That((float)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -73,12 +73,12 @@ namespace Azure.Core.Experimental.Tests
             Variant value = new(source);
 
             bool success = value.TryGetValue(out float result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<float>());
+            Assert.That(value.As<float>(), Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (float)value);
+            Assert.That((float)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace Azure.Core.Experimental.Tests
             float source = testValue;
             Variant value = new(source);
             bool success = value.TryGetValue(out float? result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (float?)value);
+            Assert.That((float?)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -100,21 +100,21 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.AreEqual(typeof(float), value.Type);
-            Assert.True(value.TryGetValue(out float result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out float? nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(float)));
+            Assert.That(value.TryGetValue(out float result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out float? nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
 
             float? n = testValue;
             o = n;
             value = new(o);
 
-            Assert.AreEqual(typeof(float), value.Type);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(float)));
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -122,9 +122,9 @@ namespace Azure.Core.Experimental.Tests
         {
             float? source = null;
             Variant value = source;
-            Assert.Null(value.Type);
-            Assert.AreEqual(source, value.As<float?>());
-            Assert.False(value.As<float?>().HasValue);
+            Assert.That(value.Type, Is.Null);
+            Assert.That(value.As<float?>(), Is.EqualTo(source));
+            Assert.That(value.As<float?>().HasValue, Is.False);
         }
 
         [Test]
@@ -132,14 +132,14 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             object o = value.As<object>();
-            Assert.AreEqual(typeof(float), o.GetType());
-            Assert.AreEqual(testValue, (float)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(float)));
+            Assert.That((float)o, Is.EqualTo(testValue));
 
             float? n = testValue;
             value = new(n);
             o = value.As<object>();
-            Assert.AreEqual(typeof(float), o.GetType());
-            Assert.AreEqual(testValue, (float)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(float)));
+            Assert.That((float)o, Is.EqualTo(testValue));
         }
     }
 }

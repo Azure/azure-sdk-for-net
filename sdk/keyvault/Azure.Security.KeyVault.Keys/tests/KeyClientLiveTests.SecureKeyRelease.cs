@@ -34,12 +34,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(key.Name);
 
             JwtSecurityToken jws = await ReleaseKeyAsync(keyName);
-            Assert.IsTrue(jws.Payload.TryGetValue("response", out object response));
+            Assert.That(jws.Payload.TryGetValue("response", out object response), Is.True);
 
             JsonDocument doc = JsonDocument.Parse(response.ToString());
             JsonElement keyElement = doc.RootElement.GetProperty("key").GetProperty("key");
-            Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
-            Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
+            Assert.That(keyElement.GetProperty("kid").GetString(), Is.EqualTo(key.Id));
+            Assert.That(keyElement.GetProperty("key_hsm").ValueKind, Is.EqualTo(JsonValueKind.String));
         }
 
         [RecordedTest]
@@ -66,8 +66,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.UpdateKeyPropertiesAsync(keyProperties));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("BadParameter", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.ErrorCode, Is.EqualTo("BadParameter"));
         }
 
         [RecordedTest]
@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey key = await Client.CreateRsaKeyAsync(options);
             RegisterForCleanup(key.Name);
 
-            Assert.AreEqual(immutable, key.Properties.ReleasePolicy.Immutable);
+            Assert.That(key.Properties.ReleasePolicy.Immutable, Is.EqualTo(immutable));
             KeyProperties properties = new(key.Name)
             {
                 Exportable = true,
@@ -100,13 +100,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             if (immutable)
             {
                 RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.UpdateKeyPropertiesAsync(properties));
-                Assert.AreEqual(400, ex.Status);
-                Assert.AreEqual("BadParameter", ex.ErrorCode);
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("BadParameter"));
             }
             else
             {
                 key = await Client.UpdateKeyPropertiesAsync(properties);
-                Assert.IsFalse(key.Properties.ReleasePolicy.Immutable);
+                Assert.That(key.Properties.ReleasePolicy.Immutable, Is.False);
             }
         }
 

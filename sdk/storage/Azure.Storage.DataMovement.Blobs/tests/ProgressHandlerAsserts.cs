@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement.Tests
             long failedCount = 0,
             params int[] pauseIndexes)
         {
-            Assert.IsNotEmpty(updates);
+            Assert.That(updates, Is.Not.Empty);
 
             long completed = 0;
             long skipped = 0;
@@ -53,11 +53,11 @@ namespace Azure.Storage.DataMovement.Tests
             skipped += final.SkippedCount;
             failed += final.FailedCount;
 
-            Assert.AreEqual(0, final.QueuedCount);
-            Assert.AreEqual(0, final.InProgressCount);
-            Assert.AreEqual(fileCount - skippedCount - failedCount, completed);
-            Assert.AreEqual(skippedCount, skipped);
-            Assert.AreEqual(failedCount, failed);
+            Assert.That(final.QueuedCount, Is.EqualTo(0));
+            Assert.That(final.InProgressCount, Is.EqualTo(0));
+            Assert.That(completed, Is.EqualTo(fileCount - skippedCount - failedCount));
+            Assert.That(skipped, Is.EqualTo(skippedCount));
+            Assert.That(failed, Is.EqualTo(failedCount));
         }
 
         public static void AssertBytesTransferred(
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Get only changes in BytesTransferred
             IEnumerable<long> actualUpdates = bytesUpdates.Select(u => u.Value).Distinct();
-            CollectionAssert.AreEqual(expectedUpdates, actualUpdates);
+            Assert.That(actualUpdates, Is.EqualTo(expectedUpdates).AsCollection);
         }
 
         private static void AssertProgressUpdates(IEnumerable<TransferProgress> updates, long fileCount)
@@ -85,15 +85,15 @@ namespace Azure.Storage.DataMovement.Tests
             foreach (TransferProgress update in updates)
             {
                 // Queued/InProgress should never be below zero or above total
-                Assert.GreaterOrEqual(update.QueuedCount, 0);
-                Assert.LessOrEqual(update.QueuedCount, fileCount);
-                Assert.GreaterOrEqual(update.InProgressCount, 0);
-                Assert.LessOrEqual(update.InProgressCount, fileCount);
+                Assert.That(update.QueuedCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(update.QueuedCount, Is.LessThanOrEqualTo(fileCount));
+                Assert.That(update.InProgressCount, Is.GreaterThanOrEqualTo(0));
+                Assert.That(update.InProgressCount, Is.LessThanOrEqualTo(fileCount));
 
                 // Completed, Skipped, and Failed should never go backwards
-                Assert.GreaterOrEqual(update.CompletedCount, completed);
-                Assert.GreaterOrEqual(update.SkippedCount, skipped);
-                Assert.GreaterOrEqual(update.FailedCount, failed);
+                Assert.That(update.CompletedCount, Is.GreaterThanOrEqualTo(completed));
+                Assert.That(update.SkippedCount, Is.GreaterThanOrEqualTo(skipped));
+                Assert.That(update.FailedCount, Is.GreaterThanOrEqualTo(failed));
 
                 completed = update.CompletedCount;
                 skipped = update.SkippedCount;

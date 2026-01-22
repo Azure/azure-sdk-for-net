@@ -17,9 +17,9 @@ public class ClientConnectionTests
         if (credentialKind is null)
         {
             conn = new(id: "123", locator: "www.microsoft.com");
-            Assert.IsNull(conn.Credential);
-            Assert.AreEqual(CredentialKind.None, conn.CredentialKind);
-            Assert.AreEqual(0, conn.Metadata.Count);
+            Assert.That(conn.Credential, Is.Null);
+            Assert.That(conn.CredentialKind, Is.EqualTo(CredentialKind.None));
+            Assert.That(conn.Metadata.Count, Is.EqualTo(0));
         }
         else
         {
@@ -27,7 +27,7 @@ public class ClientConnectionTests
             if (!hasMetadata)
             {
                 conn = new(id: "123", locator: "www.microsoft.com", credential: credential, credentialKind: credentialKind.Value);
-                Assert.AreEqual(conn.Metadata.Count, 0);
+                Assert.That(conn.Metadata.Count, Is.EqualTo(0));
             }
             else
             {
@@ -37,13 +37,13 @@ public class ClientConnectionTests
                     { "test2", "456" }
                 };
                 conn = new(id: "123", locator: "www.microsoft.com", credential: credential, credentialKind: credentialKind.Value, metadata: metadata);
-                Assert.AreEqual(conn.Metadata.Count, metadata.Count);
+                Assert.That(metadata.Count, Is.EqualTo(conn.Metadata.Count));
             }
-            Assert.AreEqual(conn.CredentialKind, credentialKind);
-            Assert.AreEqual(conn.Credential, credential);
+            Assert.That(credentialKind, Is.EqualTo(conn.CredentialKind));
+            Assert.That(credential, Is.EqualTo(conn.Credential));
         }
-        Assert.AreEqual(conn.Id, "123");
-        Assert.AreEqual(conn.Locator, "www.microsoft.com");
+        Assert.That(conn.Id, Is.EqualTo("123"));
+        Assert.That(conn.Locator, Is.EqualTo("www.microsoft.com"));
     }
 
 #nullable disable
@@ -79,10 +79,10 @@ public class ClientConnectionTests
     public void TestConstructorWithCredentialsNone()
     {
         ClientConnection conn = new(id: "123", locator: "www.microsoft.com", credential: null, credentialKind: CredentialKind.None);
-        Assert.AreEqual("123", conn.Id);
-        Assert.AreEqual("www.microsoft.com", conn.Locator);
-        Assert.AreEqual(CredentialKind.None, conn.CredentialKind);
-        Assert.AreEqual(0, conn.Metadata.Count);
+        Assert.That(conn.Id, Is.EqualTo("123"));
+        Assert.That(conn.Locator, Is.EqualTo("www.microsoft.com"));
+        Assert.That(conn.CredentialKind, Is.EqualTo(CredentialKind.None));
+        Assert.That(conn.Metadata.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -118,10 +118,10 @@ public class ClientConnectionTests
             }
         }
         ClientConnection conn = new(id: "123", locator: "www.microsoft.com", credential: null, credentialKind: CredentialKind.None, metadata: metadata);
-        Assert.AreEqual("123", conn.Id);
-        Assert.AreEqual("www.microsoft.com", conn.Locator);
-        Assert.AreEqual(CredentialKind.None, conn.CredentialKind);
-        Assert.AreEqual(dictionarySize, conn.Metadata.Count);
+        Assert.That(conn.Id, Is.EqualTo("123"));
+        Assert.That(conn.Locator, Is.EqualTo("www.microsoft.com"));
+        Assert.That(conn.CredentialKind, Is.EqualTo(CredentialKind.None));
+        Assert.That(conn.Metadata.Count, Is.EqualTo(dictionarySize));
     }
 #nullable enable
 }

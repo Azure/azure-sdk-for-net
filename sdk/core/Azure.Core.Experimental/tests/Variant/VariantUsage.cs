@@ -15,28 +15,28 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant variant = "hi";
 
-            Assert.AreEqual("hi", (string)variant);
+            Assert.That((string)variant, Is.EqualTo("hi"));
 
-            Assert.IsTrue("hi" == (string)variant);
-            Assert.IsTrue((string)variant == "hi");
+            Assert.That("hi", Is.EqualTo((string)variant));
+            Assert.That((string)variant, Is.EqualTo("hi"));
 
-            Assert.AreEqual("hi", $"{(string)variant}");
+            Assert.That($"{(string)variant}", Is.EqualTo("hi"));
         }
 
         [Test]
         public void CanTestForNull()
         {
             Variant variant = Variant.Null;
-            Assert.True(variant.IsNull);
+            Assert.That(variant.IsNull, Is.True);
 
-            Assert.True(new Variant((object)null).IsNull);
+            Assert.That(new Variant((object)null).IsNull, Is.True);
         }
 
         [TestCaseSource(nameof(VariantValues))]
         public void CanGetAsString(Variant v, Variant s)
         {
             string value = (string)s;
-            Assert.AreEqual(value, v.ToString());
+            Assert.That(v.ToString(), Is.EqualTo(value));
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace Azure.Core.Experimental.Tests
             Variant a = new("hi");
             Variant b = new(a);
 
-            Assert.AreEqual(a, b);
-            Assert.AreEqual(typeof(string), b.Type);
+            Assert.That(b, Is.EqualTo(a));
+            Assert.That(b.Type, Is.EqualTo(typeof(string)));
         }
 
         [Test]
@@ -71,24 +71,24 @@ namespace Azure.Core.Experimental.Tests
             List<string> list = new List<string> { "1" };
             Variant a = new(list);
 
-            Assert.AreEqual("1", list[0]);
-            Assert.AreEqual("1", a.As<List<string>>()[0]);
+            Assert.That(list[0], Is.EqualTo("1"));
+            Assert.That(a.As<List<string>>()[0], Is.EqualTo("1"));
 
             list[0] = "2";
 
-            Assert.AreEqual("2", list[0]);
-            Assert.AreEqual("2", a.As<List<string>>()[0]);
+            Assert.That(list[0], Is.EqualTo("2"));
+            Assert.That(a.As<List<string>>()[0], Is.EqualTo("2"));
 
             Variant b = new(a);
 
-            Assert.AreEqual(a, b);
-            Assert.AreEqual("2", b.As<List<string>>()[0]);
+            Assert.That(b, Is.EqualTo(a));
+            Assert.That(b.As<List<string>>()[0], Is.EqualTo("2"));
 
             list[0] = "3";
 
-            Assert.AreEqual("3", list[0]);
-            Assert.AreEqual("3", a.As<List<string>>()[0]);
-            Assert.AreEqual("3", b.As<List<string>>()[0]);
+            Assert.That(list[0], Is.EqualTo("3"));
+            Assert.That(a.As<List<string>>()[0], Is.EqualTo("3"));
+            Assert.That(b.As<List<string>>()[0], Is.EqualTo("3"));
         }
 
         [Test]
@@ -97,14 +97,14 @@ namespace Azure.Core.Experimental.Tests
             string s = null;
             Variant stringVariant = new(s);
 
-            Assert.AreEqual(Variant.Null, stringVariant);
-            Assert.IsNull(stringVariant.As<string>());
+            Assert.That(stringVariant, Is.EqualTo(Variant.Null));
+            Assert.That(stringVariant.As<string>(), Is.Null);
 
             List<int> list = null;
             Variant listVariant = new(list);
 
-            Assert.AreEqual(Variant.Null, listVariant);
-            Assert.IsNull(listVariant.As<string>());
+            Assert.That(listVariant, Is.EqualTo(Variant.Null));
+            Assert.That(listVariant.As<string>(), Is.Null);
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Azure.Core.Experimental.Tests
             int? i = null;
             Variant intVariant = new(i);
 
-            Assert.AreEqual(Variant.Null, intVariant);
+            Assert.That(intVariant, Is.EqualTo(Variant.Null));
             Assert.Throws<InvalidCastException>(() => intVariant.As<int>());
         }
 
@@ -123,8 +123,8 @@ namespace Azure.Core.Experimental.Tests
             int? i = null;
             Variant intVariant = new(i);
 
-            Assert.AreEqual(Variant.Null, intVariant);
-            Assert.IsNull(intVariant.As<int?>());
+            Assert.That(intVariant, Is.EqualTo(Variant.Null));
+            Assert.That(intVariant.As<int?>(), Is.Null);
         }
 
         #region Helpers

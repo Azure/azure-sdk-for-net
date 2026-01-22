@@ -193,33 +193,33 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private void AssertKeysEqual(JsonWebKey exp, JsonWebKey act)
         {
-            Assert.AreEqual(exp.Id, act.Id);
-            Assert.AreEqual(exp.KeyType, act.KeyType);
+            Assert.That(act.Id, Is.EqualTo(exp.Id));
+            Assert.That(act.KeyType, Is.EqualTo(exp.KeyType));
             AssertAreEqual(exp.KeyOps, act.KeyOps);
-            Assert.AreEqual(exp.CurveName, act.CurveName);
-            Assert.AreEqual(exp.K, act.K);
-            Assert.AreEqual(exp.N, act.N);
+            Assert.That(act.CurveName, Is.EqualTo(exp.CurveName));
+            Assert.That(act.K, Is.EqualTo(exp.K));
+            Assert.That(act.N, Is.EqualTo(exp.N));
 
             // TODO: Simply assert when https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
             AssertAreEqual(exp.E, act.E);
 
-            Assert.AreEqual(exp.X, act.X);
-            Assert.AreEqual(exp.Y, act.Y);
-            Assert.AreEqual(exp.D, act.D);
-            Assert.AreEqual(exp.DP, act.DP);
-            Assert.AreEqual(exp.DQ, act.DQ);
-            Assert.AreEqual(exp.QI, act.QI);
-            Assert.AreEqual(exp.P, act.P);
-            Assert.AreEqual(exp.Q, act.Q);
-            Assert.AreEqual(exp.T, act.T);
+            Assert.That(act.X, Is.EqualTo(exp.X));
+            Assert.That(act.Y, Is.EqualTo(exp.Y));
+            Assert.That(act.D, Is.EqualTo(exp.D));
+            Assert.That(act.DP, Is.EqualTo(exp.DP));
+            Assert.That(act.DQ, Is.EqualTo(exp.DQ));
+            Assert.That(act.QI, Is.EqualTo(exp.QI));
+            Assert.That(act.P, Is.EqualTo(exp.P));
+            Assert.That(act.Q, Is.EqualTo(exp.Q));
+            Assert.That(act.T, Is.EqualTo(exp.T));
         }
 
         protected void AssertKeyPropertiesEqual(KeyProperties exp, KeyProperties act)
         {
-            Assert.AreEqual(exp.Managed, act.Managed);
-            Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
-            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
-            Assert.AreEqual(exp.NotBefore, act.NotBefore);
+            Assert.That(act.Managed, Is.EqualTo(exp.Managed));
+            Assert.That(act.RecoveryLevel, Is.EqualTo(exp.RecoveryLevel));
+            Assert.That(act.ExpiresOn, Is.EqualTo(exp.ExpiresOn));
+            Assert.That(act.NotBefore, Is.EqualTo(exp.NotBefore));
             AssertAreEqual(exp.Tags, act.Tags);
         }
 
@@ -250,7 +250,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 act = TrimStart(act);
             }
 
-            Assert.AreEqual(exp, act);
+            Assert.That(act, Is.EqualTo(exp));
         }
 
         protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)
@@ -258,7 +258,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             if (exp is null && act is null)
                 return;
 
-            CollectionAssert.AreEquivalent(exp, act);
+            Assert.That(act, Is.EquivalentTo(exp));
         }
 
         protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)
@@ -267,14 +267,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return;
 
             if (exp?.Count != act?.Count)
-                Assert.Fail("Actual count {0} does not match expected count {1}", act?.Count, exp?.Count);
+                Assert.Fail($"Actual count {act?.Count} does not match expected count {exp?.Count}");
 
             foreach (KeyValuePair<TKey, TValue> pair in exp)
             {
                 if (!act.TryGetValue(pair.Key, out TValue value))
-                    Assert.Fail("Actual dictionary does not contain expected key '{0}'", pair.Key);
+                    Assert.Fail($"Actual dictionary does not contain expected key '{pair.Key}'");
 
-                Assert.AreEqual(pair.Value, value);
+                Assert.That(value, Is.EqualTo(pair.Value));
             }
         }
 
@@ -287,7 +287,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
@@ -310,7 +311,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using (Recording.DisableRecording())
             {
                 delay ??= PollingInterval;
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);

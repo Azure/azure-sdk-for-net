@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ClientModel.TestFramework.Mocks;
-using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.ClientModel.TestFramework.Mocks;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync;
 
@@ -270,7 +270,8 @@ public class SyncAsyncPolicyTestBaseTests
                 throw new InvalidOperationException("Test async exception");
 
             return new ValueTask();
-        }        public void Process(PipelineMessage message)
+        }
+        public void Process(PipelineMessage message)
         {
             ProcessSyncCalled = true;
             ProcessedMessage = message;

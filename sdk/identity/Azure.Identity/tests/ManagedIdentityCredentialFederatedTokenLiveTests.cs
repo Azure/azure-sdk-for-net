@@ -75,7 +75,7 @@ namespace Azure.Identity.Tests
 
                     var accessToken = await credential.GetTokenAsync(tokenRequestContext);
 
-                    Assert.IsNotNull(accessToken.Token);
+                    Assert.That(accessToken.Token, Is.Not.Null);
                 }
             }
             finally

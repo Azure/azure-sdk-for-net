@@ -348,7 +348,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Pause transfer
             using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferManager.PauseTransferAsync(transfer.Id, tokenSource.Token);
-            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Paused));
 
             // Record the current number of progress updates to use during assertions
             int pause = progressHandler.Updates.Count;
@@ -362,7 +362,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await resumeTransfer.WaitForCompletionAsync(tokenSource2.Token);
 
             // Assert
-            Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
+            Assert.That(resumeTransfer.Status.State, Is.EqualTo(TransferState.Completed));
             ProgressHandlerAsserts.AssertFileProgress(progressHandler.Updates, 5, pauseIndexes: pause);
             ProgressHandlerAsserts.AssertBytesTransferred(progressHandler.Updates, _expectedBytesTransferred);
         }

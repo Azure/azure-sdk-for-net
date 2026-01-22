@@ -134,7 +134,7 @@ namespace Azure.Storage.Blobs.Tests
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Storage.Blobs.Tests
                 blob.OpenWriteAsync(
                     overwrite: true,
                     position: 0),
-                e => Assert.AreEqual("options.Size must be set if overwrite is set to true", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("options.Size must be set if overwrite is set to true")));
         }
 
         [RecordedTest]
@@ -165,7 +165,7 @@ namespace Azure.Storage.Blobs.Tests
                 blob.OpenWriteAsync(
                     overwrite: false,
                     position: 0),
-                e => Assert.AreEqual("options.Size must be set if the Page Blob is being created for the first time", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("options.Size must be set if the Page Blob is being created for the first time")));
         }
 
         [RecordedTest]
@@ -189,24 +189,24 @@ namespace Azure.Storage.Blobs.Tests
                 overwrite: false,
                 position: 0);
 
-            Assert.AreEqual(0, openWriteStream.Position);
+            Assert.That(openWriteStream.Position, Is.EqualTo(0));
 
             await dataStream0.CopyToAsync(openWriteStream);
 
-            Assert.AreEqual(512, openWriteStream.Position);
+            Assert.That(openWriteStream.Position, Is.EqualTo(512));
 
             await dataStream1.CopyToAsync(openWriteStream);
 
-            Assert.AreEqual(1024, openWriteStream.Position);
+            Assert.That(openWriteStream.Position, Is.EqualTo(1024));
 
             await openWriteStream.FlushAsync();
 
-            Assert.AreEqual(1024, openWriteStream.Position);
+            Assert.That(openWriteStream.Position, Is.EqualTo(1024));
 
             Response<BlobDownloadInfo> result = await blob.DownloadAsync();
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
@@ -239,7 +239,7 @@ namespace Azure.Storage.Blobs.Tests
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
-            Assert.AreEqual(new string('A', 512) + new string('B', 1024) + new string('C', 512), Encoding.ASCII.GetString(dataResult));
+            Assert.That(Encoding.ASCII.GetString(dataResult), Is.EqualTo(new string('A', 512) + new string('B', 1024) + new string('C', 512)));
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.Tests.Shared;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -15,9 +15,9 @@ namespace Azure.Storage.Files.Shares.Tests
             MockStream stream = new MockStream();
             ShareFileDownloadInfo storageFileDownloadInfo =
                 FilesModelFactory.StorageFileDownloadInfo(content: stream);
-            Assert.IsFalse(stream.IsDisposed);
+            Assert.That(stream.IsDisposed, Is.False);
             storageFileDownloadInfo.Dispose();
-            Assert.IsTrue(stream.IsDisposed);
+            Assert.That(stream.IsDisposed, Is.True);
         }
     }
 }

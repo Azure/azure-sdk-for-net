@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 drainModeManager: null);
 
             int result = localListener.GetMessageReceiveCount();
-            Assert.AreEqual(1, result);
+            Assert.That(result, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -132,13 +132,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public void GetMessageReceiveCount_ReturnsExpectedValue()
         {
             int result = _listener.GetMessageReceiveCount();
-            Assert.AreEqual(_mockQueueProcessor.Object.QueuesOptions.BatchSize, result);
+            Assert.That(result, Is.EqualTo(_mockQueueProcessor.Object.QueuesOptions.BatchSize));
         }
 
         [Test]
         public void ScaleMonitor_Id_ReturnsExpectedValue()
         {
-            Assert.AreEqual("testfunction-queuetrigger-testqueue", _scaleMonitor.Descriptor.Id);
+            Assert.That(_scaleMonitor.Descriptor.Id, Is.EqualTo("testfunction-queuetrigger-testqueue"));
         }
 
         [Test]
@@ -150,11 +150,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
 
             // verify the non-generic implementation works properly
             status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
         }
 
         [Test]
@@ -178,15 +178,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual("QueueLength (2900) > workerCount (1) * 1,000", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("QueueLength (2900) > workerCount (1) * 1,000"));
             log = logs[1];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual($"Length of queue (testqueue, 2900) is too high relative to the number of instances (1).", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Length of queue (testqueue, 2900) is too high relative to the number of instances (1)."));
 
             // verify again with a non generic context instance
             var context2 = new ScaleStatusContext
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 Metrics = queueTriggerMetrics
             };
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context2);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
         }
 
         [Test]
@@ -218,12 +218,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual("Queue length is increasing for 'testqueue'", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("Queue length is increasing for 'testqueue'"));
         }
 
         [Test]
@@ -246,12 +246,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual("Queue time is increasing for 'testqueue'", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("Queue time is increasing for 'testqueue'"));
         }
 
         [Test]
@@ -274,12 +274,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual("Queue length is decreasing for 'testqueue'", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("Queue length is decreasing for 'testqueue'"));
         }
 
         [Test]
@@ -302,12 +302,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual("Queue time is decreasing for 'testqueue'", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("Queue time is decreasing for 'testqueue'"));
         }
 
         [Test]
@@ -330,12 +330,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual("Queue 'testqueue' is steady", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("Queue 'testqueue' is steady"));
         }
 
         [Test]
@@ -358,12 +358,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.AreEqual("Queue 'testqueue' is idle", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("Queue 'testqueue' is idle"));
         }
 
         [Test]
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var status = _scaleMonitor.GetScaleStatus(context);
 
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
         }
 
         [Test]
@@ -422,17 +422,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // pull the message and process it again (to have it go through the poison queue flow)
             messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            Assert.AreEqual(2, messageFromCloud.DequeueCount);
+            Assert.That(messageFromCloud.DequeueCount, Is.EqualTo(2));
 
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromMinutes(10), CancellationToken.None);
 
             // Make sure the message was processed and deleted.
             QueueProperties queueProperties = await queue.GetPropertiesAsync();
-            Assert.AreEqual(0, queueProperties.ApproximateMessagesCount);
+            Assert.That(queueProperties.ApproximateMessagesCount, Is.EqualTo(0));
 
             // The Listener has inserted a message to the poison queue.
             QueueProperties poisonQueueProperties = await poisonQueue.GetPropertiesAsync();
-            Assert.AreEqual(1, poisonQueueProperties.ApproximateMessagesCount);
+            Assert.That(poisonQueueProperties.ApproximateMessagesCount, Is.EqualTo(1));
 
             mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Make sure the message was processed and deleted.
             await Task.Delay(TimeSpan.FromSeconds(10));
             messageFromCloud = await queue.ReceiveMessageAsync();
-            Assert.IsNull(messageFromCloud);
+            Assert.That(messageFromCloud, Is.Null);
         }
 
         [Test]
@@ -504,10 +504,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // create for a host queue - don't expect custom factory to be invoked
             QueueClient queue = new QueueClient(new Uri(string.Format("https://test.queue.core.windows.net/{0}", HostQueueNames.GetHostQueueName("12345"))));
             QueueProcessor queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
-            Assert.False(processorFactoryInvoked);
-            Assert.AreNotSame(expectedQueueProcessor, queueProcessor);
+            Assert.That(processorFactoryInvoked, Is.False);
+            Assert.That(queueProcessor, Is.Not.SameAs(expectedQueueProcessor));
             queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
-            Assert.True(poisonMessageHandlerInvoked);
+            Assert.That(poisonMessageHandlerInvoked, Is.True);
 
             QueueProcessorOptions processorFactoryContext = null;
             mockQueueProcessorFactory.Setup(p => p.Create(It.IsAny<QueueProcessorOptions>()))
@@ -515,10 +515,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 {
                     processorFactoryInvoked = true;
 
-                    Assert.AreSame(queue, mockProcessorContext.Queue);
-                    Assert.AreSame(poisonQueue, mockProcessorContext.PoisonQueue);
-                    Assert.AreEqual(queueConfig.MaxDequeueCount, mockProcessorContext.Options.MaxDequeueCount);
-                    Assert.NotNull(mockProcessorContext.Logger);
+                    Assert.That(mockProcessorContext.Queue, Is.SameAs(queue));
+                    Assert.That(mockProcessorContext.PoisonQueue, Is.SameAs(poisonQueue));
+                    Assert.That(mockProcessorContext.Options.MaxDequeueCount, Is.EqualTo(queueConfig.MaxDequeueCount));
+                    Assert.That(mockProcessorContext.Logger, Is.Not.Null);
 
                     processorFactoryContext = mockProcessorContext;
                 })
@@ -533,19 +533,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             processorFactoryInvoked = false;
             queue = new QueueClient(new Uri("https://test.queue.core.windows.net/testqueue"));
             queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
-            Assert.True(processorFactoryInvoked);
-            Assert.AreSame(expectedQueueProcessor, queueProcessor);
+            Assert.That(processorFactoryInvoked, Is.True);
+            Assert.That(queueProcessor, Is.SameAs(expectedQueueProcessor));
             queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
-            Assert.True(poisonMessageHandlerInvoked);
+            Assert.That(poisonMessageHandlerInvoked, Is.True);
 
             // if poison message watcher not specified, event not subscribed to
             poisonMessageHandlerInvoked = false;
             processorFactoryInvoked = false;
             queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, null) as QueueProcessor;
-            Assert.True(processorFactoryInvoked);
-            Assert.AreSame(expectedQueueProcessor, queueProcessor);
+            Assert.That(processorFactoryInvoked, Is.True);
+            Assert.That(queueProcessor, Is.SameAs(expectedQueueProcessor));
             queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
-            Assert.False(poisonMessageHandlerInvoked);
+            Assert.That(poisonMessageHandlerInvoked, Is.False);
         }
 
         [Test]
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>())).Throws(exception);
 
             var result = await _listener.ExecuteAsync(cancellationToken);
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             await result.Wait;
         }
 
@@ -680,7 +680,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Act
             await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), CancellationToken.None);
 
-            Assert.AreEqual(systemShutdownCts.Token, testQueueProcessor.CapturedDeleteToken);
+            Assert.That(testQueueProcessor.CapturedDeleteToken, Is.EqualTo(systemShutdownCts.Token));
         }
 
         [Test]
@@ -710,7 +710,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await listener.StopAsync(CancellationToken.None);
 
             // Assert
-            Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode is not enabled.");
+            Assert.That(executionCancellationTokenSource.Token.IsCancellationRequested, Is.True, "Execution token should be canceled when drain mode is not enabled.");
         }
 
         [Test]
@@ -741,7 +741,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await listener.StopAsync(CancellationToken.None);
 
             // Assert
-            Assert.IsFalse(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should not be canceled when drain mode is enabled.");
+            Assert.That(executionCancellationTokenSource.Token.IsCancellationRequested, Is.False, "Execution token should not be canceled when drain mode is enabled.");
         }
 
         [Test]
@@ -771,7 +771,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await listener.StopAsync(CancellationToken.None);
 
             // Assert
-            Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode manager is null.");
+            Assert.That(executionCancellationTokenSource.Token.IsCancellationRequested, Is.True, "Execution token should be canceled when drain mode manager is null.");
         }
 
         private static void SetCancellationToken(QueueListener listener, CancellationTokenSource cts, string fieldName)
@@ -806,7 +806,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 drainModeManager: null);
 
             var result = localListener.GetTargetScaler();
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         public class TestFixture : IDisposable

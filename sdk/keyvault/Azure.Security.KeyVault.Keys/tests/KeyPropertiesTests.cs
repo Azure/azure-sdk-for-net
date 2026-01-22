@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 properties.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(expected, properties.Managed);
+            Assert.That(properties.Managed, Is.EqualTo(expected));
         }
 
         [TestCase(@"{""kid"":""https://vault/keys/key-name""}", null)]
@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 properties.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(expected, properties.RecoverableDays);
+            Assert.That(properties.RecoverableDays, Is.EqualTo(expected));
         }
 
         [TestCase(@"{""kid"":""https://vault/keys/key-name""}", null)]
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 properties.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(expected, properties.HsmPlatform);
+            Assert.That(properties.HsmPlatform, Is.EqualTo(expected));
         }
     }
 }

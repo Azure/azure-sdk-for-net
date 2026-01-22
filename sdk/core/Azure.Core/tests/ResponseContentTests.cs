@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
             Response response = await client.GetValueAsync();
             dynamic value = response.Content.ToDynamicFromJson();
             Assert.IsNull(value.Foo);
-            Assert.AreEqual(1, (int)value.foo);
+            Assert.That((int)value.foo, Is.EqualTo(1));
         }
 
         [Test]
@@ -30,8 +30,8 @@ namespace Azure.Core.Tests
             Response response = await client.GetValueAsync();
             dynamic value = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
-            Assert.AreEqual(1, (int)value.Foo);
-            Assert.AreEqual(1, (int)value.foo);
+            Assert.That((int)value.Foo, Is.EqualTo(1));
+            Assert.That((int)value.foo, Is.EqualTo(1));
         }
 
         #region Helpers

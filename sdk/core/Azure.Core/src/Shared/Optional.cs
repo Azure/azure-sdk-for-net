@@ -26,7 +26,7 @@ namespace Azure.Core
             return !(collection is ChangeTrackingDictionary<TKey, TValue> changeTrackingList && changeTrackingList.IsUndefined);
         }
 
-        public static bool IsDefined<T>(T? value) where T: struct
+        public static bool IsDefined<T>(T? value) where T : struct
         {
             return value.HasValue;
         }
@@ -79,7 +79,7 @@ namespace Azure.Core
             return new ChangeTrackingList<T>(optional.Value);
         }
 
-        public static T? ToNullable<T>(Optional<T> optional) where T: struct
+        public static T? ToNullable<T>(Optional<T> optional) where T : struct
         {
             if (optional.HasValue)
             {
@@ -88,7 +88,7 @@ namespace Azure.Core
             return default;
         }
 
-        public static T? ToNullable<T>(Optional<T?> optional) where T: struct
+        public static T? ToNullable<T>(Optional<T?> optional) where T : struct
         {
             return optional.Value;
         }

@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Security.Cryptography;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Rest.Azure;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.KeyVault.Samples

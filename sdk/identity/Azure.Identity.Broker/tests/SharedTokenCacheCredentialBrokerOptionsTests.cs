@@ -19,7 +19,7 @@ namespace Azure.Identity.Broker.Tests
             var credentialOptions = new SharedTokenCacheCredentialBrokerOptions(persistenceOptions);
 #pragma warning restore CS0618 // Type or member is obsolete
 
-            Assert.AreEqual(persistenceOptions, credentialOptions.TokenCachePersistenceOptions);
+            Assert.That(credentialOptions.TokenCachePersistenceOptions, Is.EqualTo(persistenceOptions));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Identity.Broker.Tests
             credentialOptions.BeforeBuildClient(builder);
 
             BrokerOptions options = GetBrokerOptions(builder);
-            Assert.AreEqual(enableMsaPassthrough ?? false, options?.MsaPassthrough);
+            Assert.That(options?.MsaPassthrough, Is.EqualTo(enableMsaPassthrough ?? false));
         }
 
         private BrokerOptions GetBrokerOptions(PublicClientApplicationBuilder builder)

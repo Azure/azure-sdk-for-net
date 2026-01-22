@@ -4,20 +4,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Azure.Storage.Test;
-using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues.Tests;
-using NUnit.Framework;
-using Azure.Core;
-using Azure.Storage.Sas;
 using System.Text;
-using Moq;
-using Azure.Storage.Queues.Specialized;
-using Moq.Protected;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using System.Threading;
+using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Specialized;
+using Azure.Storage.Queues.Tests;
+using Azure.Storage.Sas;
+using Azure.Storage.Test;
+using Moq;
+using Moq.Protected;
+using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -49,8 +49,8 @@ namespace Azure.Storage.Queues.Test
             var builder1 = new QueueUriBuilder(client1.Uri);
             var builder2 = new QueueUriBuilder(client2.Uri);
 
-            Assert.AreEqual(queueName, builder1.QueueName);
-            Assert.AreEqual(queueName, builder2.QueueName);
+            Assert.That(builder1.QueueName, Is.EqualTo(queueName));
+            Assert.That(builder2.QueueName, Is.EqualTo(queueName));
 
             //Assert.AreEqual("accountName", builder.AccountName);
         }
@@ -97,8 +97,8 @@ namespace Azure.Storage.Queues.Test
                 Response<QueueProperties> prop2 = await queueClient2.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(prop1.Value.Metadata);
-                Assert.IsNotNull(prop2.Value.Metadata);
+                Assert.That(prop1.Value.Metadata, Is.Not.Null);
+                Assert.That(prop2.Value.Metadata, Is.Not.Null);
             }
             finally
             {
@@ -124,8 +124,8 @@ namespace Azure.Storage.Queues.Test
 
             QueueClient queue = new QueueClient(connectionString.ToString(true), queueName);
 
-            Assert.AreEqual(queueName, queue.Name);
-            Assert.AreEqual(accountName, queue.AccountName);
+            Assert.That(queue.Name, Is.EqualTo(queueName));
+            Assert.That(queue.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -139,7 +139,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(new QueueClient(queueEndpoint, credentials));
             var builder = new QueueUriBuilder(queue.Uri);
 
-            Assert.AreEqual(accountName, builder.AccountName);
+            Assert.That(builder.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -167,8 +167,8 @@ namespace Azure.Storage.Queues.Test
 
             QueueClient queueClient = new QueueClient(queueEndpoint, credentials);
 
-            Assert.AreEqual(accountName, queueClient.AccountName);
-            Assert.AreEqual(queueName, queueClient.Name);
+            Assert.That(queueClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(queueClient.Name, Is.EqualTo(queueName));
         }
 
         [RecordedTest]
@@ -184,7 +184,7 @@ namespace Azure.Storage.Queues.Test
             QueueProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -223,7 +223,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             bool exists = await aadQueue.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -247,7 +247,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             bool exists = await aadQueue.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -271,7 +271,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             bool exists = await aadQueue.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -296,7 +296,7 @@ namespace Azure.Storage.Queues.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadQueue.ExistsAsync(),
-                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidAuthenticationInfo")));
         }
 
         [RecordedTest]
@@ -313,7 +313,7 @@ namespace Azure.Storage.Queues.Test
                 Response result = await queue.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+                Assert.That(result.Headers.RequestId, Is.Not.Null, $"{nameof(result)} may not be populated");
             }
             finally
             {
@@ -331,7 +331,7 @@ namespace Azure.Storage.Queues.Test
                 Response<QueueClient> result = await service.CreateQueueAsync(name);
                 QueueClient queue = result.Value;
                 Response<QueueProperties> properties = await queue.GetPropertiesAsync();
-                Assert.AreEqual(0, properties.Value.ApproximateMessagesCount);
+                Assert.That(properties.Value.ApproximateMessagesCount, Is.EqualTo(0));
                 var accountName = new QueueUriBuilder(service.Uri).AccountName;
                 TestHelper.AssertCacheableProperty(accountName, () => queue.AccountName);
                 TestHelper.AssertCacheableProperty(name, () => queue.Name);
@@ -356,7 +356,7 @@ namespace Azure.Storage.Queues.Test
                 Response result = await queue.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+                Assert.That(result.Headers.RequestId, Is.Not.Null, $"{nameof(result)} may not be populated");
             }
             finally
             {
@@ -384,7 +384,7 @@ namespace Azure.Storage.Queues.Test
                 Response result = await queue.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+                Assert.That(result.Headers.RequestId, Is.Not.Null, $"{nameof(result)} may not be populated");
             }
             finally
             {
@@ -406,7 +406,7 @@ namespace Azure.Storage.Queues.Test
                 Response result = await queue.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+                Assert.That(result.Headers.RequestId, Is.Not.Null, $"{nameof(result)} may not be populated");
             }
             finally
             {
@@ -456,7 +456,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.CreateAsync(metadata: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { { "key", "value" } }),
-                actualException => Assert.AreEqual("QueueAlreadyExists", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("QueueAlreadyExists")));
         }
 
         [RecordedTest]
@@ -471,7 +471,7 @@ namespace Azure.Storage.Queues.Test
             Response response = await queue.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
 
             // Cleanup
             await queue.DeleteIfExistsAsync();
@@ -490,7 +490,7 @@ namespace Azure.Storage.Queues.Test
             Response response = await queue.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.That(response, Is.Null);
 
             // Cleanup
             await queue.DeleteIfExistsAsync();
@@ -510,7 +510,7 @@ namespace Azure.Storage.Queues.Test
             Response response = await queue.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.That(response, Is.Null);
 
             // Cleanup
             await queue.DeleteIfExistsAsync();
@@ -528,7 +528,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("NoAuthenticationInformation")));
         }
 
         [RecordedTest]
@@ -544,7 +544,7 @@ namespace Azure.Storage.Queues.Test
             Response<bool> response = await queue.ExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
 
             // Cleanup
             await queue.DeleteIfExistsAsync();
@@ -562,7 +562,7 @@ namespace Azure.Storage.Queues.Test
             Response<bool> response = await queue.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -577,7 +577,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.ExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("NoAuthenticationInformation")));
         }
 
         [RecordedTest]
@@ -593,7 +593,7 @@ namespace Azure.Storage.Queues.Test
             Response<bool> response = await queue.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
         }
 
         [RecordedTest]
@@ -608,7 +608,7 @@ namespace Azure.Storage.Queues.Test
             Response<bool> response = await queue.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -623,7 +623,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("NoAuthenticationInformation")));
         }
 
         [RecordedTest]
@@ -636,7 +636,7 @@ namespace Azure.Storage.Queues.Test
             Response<Models.QueueProperties> queueProperties = await test.Queue.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(queueProperties);
+            Assert.That(queueProperties, Is.Not.Null);
         }
 
         [TestCase(0)]
@@ -657,9 +657,9 @@ namespace Azure.Storage.Queues.Test
             Response<Models.QueueProperties> queueProperties = await test.Queue.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(queueProperties);
-            Assert.AreEqual(messageCount, queueProperties.Value.ApproximateMessagesCount);
-            Assert.AreEqual(messageCount, queueProperties.Value.ApproximateMessagesCountLong);
+            Assert.That(queueProperties, Is.Not.Null);
+            Assert.That(queueProperties.Value.ApproximateMessagesCount, Is.EqualTo(messageCount));
+            Assert.That(queueProperties.Value.ApproximateMessagesCountLong, Is.EqualTo(messageCount));
         }
 
         [RecordedTest]
@@ -682,8 +682,8 @@ namespace Azure.Storage.Queues.Test
             var result = await mockQueue.Object.GetPropertiesAsync();
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(msgCount, result.Value.ApproximateMessagesCountLong);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Value.ApproximateMessagesCountLong, Is.EqualTo(msgCount));
             Assert.DoesNotThrow(() => _ = result.Value.ApproximateMessagesCount);
         }
 
@@ -698,7 +698,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetPropertiesAsync(),
-                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("QueueNotFound")));
         }
 
         #region Secondary Storage
@@ -712,8 +712,8 @@ namespace Azure.Storage.Queues.Test
                 async () => await queueClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
 
-            Assert.IsNotNull(properties);
-            Assert.AreEqual(200, properties.GetRawResponse().Status);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.GetRawResponse().Status, Is.EqualTo(200));
 
             await queueClient.DeleteIfExistsAsync();
             AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
@@ -729,8 +729,8 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<Models.QueueProperties> result = await test.Queue.GetPropertiesAsync();
-            Assert.AreEqual("bar", result.Value.Metadata["foo"]);
-            Assert.AreEqual("data", result.Value.Metadata["meta"]);
+            Assert.That(result.Value.Metadata["foo"], Is.EqualTo("bar"));
+            Assert.That(result.Value.Metadata["meta"], Is.EqualTo("data"));
         }
 
         [RecordedTest]
@@ -745,8 +745,8 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Response<Models.QueueProperties> result = await test.Queue.GetPropertiesAsync();
-            Assert.AreEqual("bar", result.Value.Metadata["foo"]);
-            Assert.AreEqual("data", result.Value.Metadata["meta"]);
+            Assert.That(result.Value.Metadata["foo"], Is.EqualTo("bar"));
+            Assert.That(result.Value.Metadata["meta"], Is.EqualTo("data"));
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -762,7 +762,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SetMetadataAsync(metadata),
-                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("QueueNotFound")));
         }
 
         [RecordedTest]
@@ -780,11 +780,11 @@ namespace Azure.Storage.Queues.Test
             Response<IEnumerable<Models.QueueSignedIdentifier>> result = await test.Queue.GetAccessPolicyAsync();
             Models.QueueSignedIdentifier acl = result.Value.First();
 
-            Assert.AreEqual(1, result.Value.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+            Assert.That(result.Value.Count(), Is.EqualTo(1));
+            Assert.That(acl.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(acl.AccessPolicy.StartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.StartsOn));
+            Assert.That(acl.AccessPolicy.ExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.ExpiresOn));
+            Assert.That(acl.AccessPolicy.Permissions, Is.EqualTo(signedIdentifiers[0].AccessPolicy.Permissions));
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -799,7 +799,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetAccessPolicyAsync(),
-                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("QueueNotFound")));
         }
 
         [RecordedTest]
@@ -822,7 +822,7 @@ namespace Azure.Storage.Queues.Test
 
             Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
             Response result = await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(result.Headers.RequestId));
+            Assert.That(string.IsNullOrWhiteSpace(result.Headers.RequestId), Is.False);
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -838,7 +838,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SetAccessPolicyAsync(signedIdentifiers),
-                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("QueueNotFound")));
         }
 
         [RecordedTest]
@@ -854,7 +854,7 @@ namespace Azure.Storage.Queues.Test
             Response result = await queue.DeleteAsync();
 
             // Assert
-            Assert.AreNotEqual(default, result.Headers.RequestId, $"{nameof(result)} may not be populated");
+            Assert.That(result.Headers.RequestId, Is.Not.EqualTo(default), $"{nameof(result)} may not be populated");
         }
 
         [RecordedTest]
@@ -888,7 +888,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.DeleteAsync(),
-                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("QueueNotFound")));
         }
 
         [RecordedTest]
@@ -904,7 +904,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -917,12 +917,12 @@ namespace Azure.Storage.Queues.Test
             Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: null);
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
 
             // Act
             QueueMessage receivedMessage = (await test.Queue.ReceiveMessagesAsync()).Value.First();
 
-            Assert.AreEqual(string.Empty, receivedMessage.MessageText);
+            Assert.That(receivedMessage.MessageText, Is.Empty);
         }
 
         [RecordedTest]
@@ -938,12 +938,12 @@ namespace Azure.Storage.Queues.Test
             Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(messageText: messageText);
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
 
             // Act
             QueueMessage receivedMessage = (await test.Queue.ReceiveMessagesAsync()).Value.First();
 
-            Assert.AreEqual(encodedText, receivedMessage.MessageText);
+            Assert.That(receivedMessage.MessageText, Is.EqualTo(encodedText));
         }
 
         [RecordedTest]
@@ -961,12 +961,12 @@ namespace Azure.Storage.Queues.Test
             Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(data);
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
 
             // Act
             QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
 
-            Assert.AreEqual("payload", receivedMessage.Body.ToString());
+            Assert.That(receivedMessage.Body.ToString(), Is.EqualTo("payload"));
         }
 
         [RecordedTest]
@@ -981,13 +981,13 @@ namespace Azure.Storage.Queues.Test
             Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: encodedText);
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
 
             // Act
             QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
 
             // Assert
-            Assert.AreEqual(messageText, receivedMessage.MessageText);
+            Assert.That(receivedMessage.MessageText, Is.EqualTo(messageText));
         }
 
         [RecordedTest]
@@ -1002,13 +1002,13 @@ namespace Azure.Storage.Queues.Test
             Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: encodedText);
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
 
             // Act
             PeekedMessage receivedMessage = (await encodingClient.PeekMessagesAsync()).Value.First();
 
             // Assert
-            Assert.AreEqual(messageText, receivedMessage.MessageText);
+            Assert.That(receivedMessage.MessageText, Is.EqualTo(messageText));
         }
 
         [RecordedTest]
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.Queues.Test
                 encodingClient.PeekMessagesAsync(),
                 e =>
                 {
-                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                    Assert.That(e.Message, Does.Contain("The input is not a valid Base-64 string"));
                 });
         }
 
@@ -1059,11 +1059,11 @@ namespace Azure.Storage.Queues.Test
             PeekedMessage[] peekedMessages = await encodingClient.PeekMessagesAsync(10);
 
             // Assert
-            Assert.AreEqual(1, peekedMessages.Count());
-            Assert.NotNull(badMessage);
-            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
-            Assert.NotNull(badMessage2);
-            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+            Assert.That(peekedMessages.Count(), Is.EqualTo(1));
+            Assert.That(badMessage, Is.Not.Null);
+            Assert.That(badMessage.Body.ToString(), Is.EqualTo(nonEncodedContent));
+            Assert.That(badMessage2, Is.Not.Null);
+            Assert.That(badMessage2.Body.ToString(), Is.EqualTo(nonEncodedContent));
         }
 
         [RecordedTest]
@@ -1092,9 +1092,9 @@ namespace Azure.Storage.Queues.Test
                 encodingClient.PeekMessagesAsync(10),
                 e =>
                 {
-                    Assert.AreEqual(2, e.InnerExceptions.Count);
-                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
-                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                    Assert.That(e.InnerExceptions.Count, Is.EqualTo(2));
+                    Assert.That(e.InnerExceptions[0].Message, Is.EqualTo("KABOOM1"));
+                    Assert.That(e.InnerExceptions[1].Message, Is.EqualTo("KABOOM2"));
                 });
         }
 
@@ -1110,13 +1110,13 @@ namespace Azure.Storage.Queues.Test
             Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(message: BinaryData.FromBytes(content));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
 
             // Act
             QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
 
             // Assert
-            CollectionAssert.AreEqual(content, receivedMessage.Body.ToArray());
+            Assert.That(receivedMessage.Body.ToArray(), Is.EqualTo(content).AsCollection);
         }
 
         [RecordedTest]
@@ -1134,7 +1134,7 @@ namespace Azure.Storage.Queues.Test
                 encodingClient.ReceiveMessagesAsync(),
                 e =>
                 {
-                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                    Assert.That(e.Message, Does.Contain("The input is not a valid Base-64 string"));
                 });
         }
 
@@ -1167,11 +1167,11 @@ namespace Azure.Storage.Queues.Test
             QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
 
             // Assert
-            Assert.AreEqual(1, queueMessages.Count());
-            Assert.NotNull(badMessage);
-            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
-            Assert.NotNull(badMessage2);
-            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+            Assert.That(queueMessages.Count(), Is.EqualTo(1));
+            Assert.That(badMessage, Is.Not.Null);
+            Assert.That(badMessage.Body.ToString(), Is.EqualTo(nonEncodedContent));
+            Assert.That(badMessage2, Is.Not.Null);
+            Assert.That(badMessage2.Body.ToString(), Is.EqualTo(nonEncodedContent));
         }
 
         [RecordedTest]
@@ -1212,12 +1212,12 @@ namespace Azure.Storage.Queues.Test
             QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
 
             // Assert
-            Assert.AreEqual(1, queueMessages.Count());
-            Assert.NotNull(badMessage);
-            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
-            Assert.NotNull(badMessage2);
-            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
-            Assert.Null(badMessage3);
+            Assert.That(queueMessages.Count(), Is.EqualTo(1));
+            Assert.That(badMessage, Is.Not.Null);
+            Assert.That(badMessage.Body.ToString(), Is.EqualTo(nonEncodedContent));
+            Assert.That(badMessage2, Is.Not.Null);
+            Assert.That(badMessage2.Body.ToString(), Is.EqualTo(nonEncodedContent));
+            Assert.That(badMessage3, Is.Null);
         }
 
         [RecordedTest]
@@ -1246,9 +1246,9 @@ namespace Azure.Storage.Queues.Test
                 encodingClient.ReceiveMessagesAsync(10),
                 e =>
                 {
-                    Assert.AreEqual(2, e.InnerExceptions.Count);
-                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
-                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                    Assert.That(e.InnerExceptions.Count, Is.EqualTo(2));
+                    Assert.That(e.InnerExceptions[0].Message, Is.EqualTo("KABOOM1"));
+                    Assert.That(e.InnerExceptions[1].Message, Is.EqualTo("KABOOM2"));
                 });
         }
 
@@ -1283,7 +1283,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1329,7 +1329,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1342,7 +1342,7 @@ namespace Azure.Storage.Queues.Test
             Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(string.Empty);
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1359,8 +1359,8 @@ namespace Azure.Storage.Queues.Test
                     timeToLive: TimeSpan.FromSeconds(7)),
                 e =>
                 {
-                    Assert.AreEqual(QueueErrorCode.InvalidQueryParameterValue.ToString(), e.ErrorCode);
-                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}QueryParameterName: visibilitytimeout{Environment.NewLine}QueryParameterValue: 10{Environment.NewLine}Reason: messagettl must be greater than visibilitytimeout"));
+                    Assert.That(e.ErrorCode, Is.EqualTo(QueueErrorCode.InvalidQueryParameterValue.ToString()));
+                    Assert.That(e.Message.Contains($"Additional Information:{Environment.NewLine}QueryParameterName: visibilitytimeout{Environment.NewLine}QueryParameterValue: 10{Environment.NewLine}Reason: messagettl must be greater than visibilitytimeout"), Is.True);
                 });
         }
 
@@ -1376,7 +1376,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SendMessageAsync(string.Empty),
-                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("QueueNotFound")));
         }
 
         [RecordedTest]
@@ -1475,7 +1475,7 @@ namespace Azure.Storage.Queues.Test
             Response<Models.QueueMessage> response = await test.Queue.ReceiveMessageAsync();
 
             // Assert
-            Assert.IsNull(response.Value);
+            Assert.That(response.Value, Is.Null);
         }
 
         [RecordedTest]
@@ -1490,7 +1490,7 @@ namespace Azure.Storage.Queues.Test
             Models.QueueMessage message = await test.Queue.ReceiveMessageAsync();
 
             // Assert
-            Assert.IsNull(message);
+            Assert.That(message, Is.Null);
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -1598,7 +1598,7 @@ namespace Azure.Storage.Queues.Test
             Response<Models.PeekedMessage> response = await test.Queue.PeekMessageAsync();
 
             // Assert
-            Assert.IsNull(response.Value);
+            Assert.That(response.Value, Is.Null);
         }
 
         [RecordedTest]
@@ -1611,7 +1611,7 @@ namespace Azure.Storage.Queues.Test
             Models.PeekedMessage message = await test.Queue.PeekMessageAsync();
 
             // Assert
-            Assert.IsNull(message);
+            Assert.That(message, Is.Null);
         }
 
         [RecordedTest]
@@ -1628,7 +1628,7 @@ namespace Azure.Storage.Queues.Test
             Response response = await test.Queue.ClearMessagesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Headers.RequestId);
+            Assert.That(response.Headers.RequestId, Is.Not.Null);
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -1657,7 +1657,7 @@ namespace Azure.Storage.Queues.Test
             Response result = await test.Queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
 
             // Assert
-            Assert.IsNotNull(result.Headers.RequestId);
+            Assert.That(result.Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1684,7 +1684,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             await test.Queue.PeekMessagesAsync();
-            Assert.IsNotNull(result.Headers.RequestId);
+            Assert.That(result.Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1705,7 +1705,7 @@ namespace Azure.Storage.Queues.Test
                 new TimeSpan(100));
 
             // Assert
-            Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
+            Assert.That(result.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1725,7 +1725,7 @@ namespace Azure.Storage.Queues.Test
                 message1);
 
             // Assert
-            Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
+            Assert.That(result.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1744,8 +1744,8 @@ namespace Azure.Storage.Queues.Test
                 message.PopReceipt,
                 message1);
 
-            Assert.AreNotEqual(update.Value.PopReceipt, message.PopReceipt);
-            Assert.AreNotEqual(update.Value.NextVisibleOn, message.NextVisibleOn);
+            Assert.That(message.PopReceipt, Is.Not.EqualTo(update.Value.PopReceipt));
+            Assert.That(message.NextVisibleOn, Is.Not.EqualTo(update.Value.NextVisibleOn));
 
             Models.QueueMessage newMessage = message.Update(update);
             Assert.AreEqual(message.MessageId, newMessage.MessageId);
@@ -1753,8 +1753,8 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(message.InsertedOn, newMessage.InsertedOn);
             Assert.AreEqual(message.ExpiresOn, newMessage.ExpiresOn);
             Assert.AreEqual(message.DequeueCount, newMessage.DequeueCount);
-            Assert.AreNotEqual(message.PopReceipt, newMessage.PopReceipt);
-            Assert.AreNotEqual(message.NextVisibleOn, newMessage.NextVisibleOn);
+            Assert.That(newMessage.PopReceipt, Is.Not.EqualTo(message.PopReceipt));
+            Assert.That(newMessage.NextVisibleOn, Is.Not.EqualTo(message.NextVisibleOn));
             Assert.AreEqual(update.Value.PopReceipt, newMessage.PopReceipt);
             Assert.AreEqual(update.Value.NextVisibleOn, newMessage.NextVisibleOn);
         }
@@ -1828,27 +1828,27 @@ namespace Azure.Storage.Queues.Test
             QueueClient container = InstrumentClient(new QueueClient(
                 connectionString,
                 GetNewQueueName()));
-            Assert.IsTrue(container.CanGenerateSasUri);
+            Assert.That(container.CanGenerateSasUri, Is.True);
 
             // Act - QueueClient(string connectionString, string blobContainerName, BlobClientOptions options)
             QueueClient container2 = InstrumentClient(new QueueClient(
                 connectionString,
                 GetNewQueueName(),
                 GetOptions()));
-            Assert.IsTrue(container2.CanGenerateSasUri);
+            Assert.That(container2.CanGenerateSasUri, Is.True);
 
             // Act - QueueClient(Uri blobContainerUri, BlobClientOptions options = default)
             QueueClient container3 = InstrumentClient(new QueueClient(
                 blobEndpoint,
                 GetOptions()));
-            Assert.IsFalse(container3.CanGenerateSasUri);
+            Assert.That(container3.CanGenerateSasUri, Is.False);
 
             // Act - QueueClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             QueueClient container4 = InstrumentClient(new QueueClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            Assert.IsTrue(container4.CanGenerateSasUri);
+            Assert.That(container4.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -1859,13 +1859,13 @@ namespace Azure.Storage.Queues.Test
             directory.Setup(x => x.CanGenerateSasUri).Returns(false);
 
             // Assert
-            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.False);
 
             // Act
             directory.Setup(x => x.CanGenerateSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -1891,7 +1891,7 @@ namespace Azure.Storage.Queues.Test
             string stringToSign = null;
 
             // Act
-            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
+            Uri sasUri = queueClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
@@ -1904,7 +1904,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1947,7 +1947,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -2055,8 +2055,8 @@ namespace Azure.Storage.Queues.Test
             var queueServiceClient = queueClientMock.Object.GetParentQueueServiceClient();
 
             // Assert
-            Assert.IsNotNull(queueServiceClient);
-            Assert.AreSame(queueServiceClientMock.Object, queueServiceClient);
+            Assert.That(queueServiceClient, Is.Not.Null);
+            Assert.That(queueServiceClient, Is.SameAs(queueServiceClientMock.Object));
         }
 
         [RecordedTest]

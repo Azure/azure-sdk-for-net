@@ -57,15 +57,15 @@ namespace Azure.Core.Tests
             {
                 if (typeof(T) == typeof(int))
                 {
-                    Assert.AreEqual(expectedList[count++], property.GetInt32());
+                    Assert.That(property.GetInt32(), Is.EqualTo(expectedList[count++]));
                 }
                 else if (typeof(T) == typeof(string))
                 {
-                    Assert.AreEqual(expectedList[count++], property.GetString());
+                    Assert.That(property.GetString(), Is.EqualTo(expectedList[count++]));
                 }
                 else if (typeof(T) == typeof(bool))
                 {
-                    Assert.AreEqual(expectedList[count++], property.GetBoolean());
+                    Assert.That(property.GetBoolean(), Is.EqualTo(expectedList[count++]));
                 }
             }
         }
@@ -86,11 +86,11 @@ namespace Azure.Core.Tests
             {
                 if (property.ValueKind == JsonValueKind.Null)
                 {
-                    Assert.IsNull(expectedList[count++]);
+                    Assert.That(expectedList[count++], Is.Null);
                 }
                 else
                 {
-                    Assert.AreEqual(expectedList[count++].ToObjectFromJson(), BinaryData.FromString(property.GetRawText()).ToObjectFromJson());
+                    Assert.That(BinaryData.FromString(property.GetRawText()).ToObjectFromJson(), Is.EqualTo(expectedList[count++].ToObjectFromJson()));
                 }
             }
         }
@@ -119,15 +119,15 @@ namespace Azure.Core.Tests
             {
                 if (typeof(T) == typeof(int))
                 {
-                    Assert.AreEqual(expectedDictionary["k" + count++], property.Value.GetInt32());
+                    Assert.That(property.Value.GetInt32(), Is.EqualTo(expectedDictionary["k" + count++]));
                 }
                 else if (typeof(T) == typeof(string))
                 {
-                    Assert.AreEqual(expectedDictionary["k" + count++], property.Value.GetString());
+                    Assert.That(property.Value.GetString(), Is.EqualTo(expectedDictionary["k" + count++]));
                 }
                 else if (typeof(T) == typeof(bool))
                 {
-                    Assert.AreEqual(expectedDictionary["k" + count++], property.Value.GetBoolean());
+                    Assert.That(property.Value.GetBoolean(), Is.EqualTo(expectedDictionary["k" + count++]));
                 }
             }
         }
@@ -154,11 +154,11 @@ namespace Azure.Core.Tests
             {
                 if (property.Value.ValueKind == JsonValueKind.Null)
                 {
-                    Assert.IsNull(expectedDictionary["k" + count++]);
+                    Assert.That(expectedDictionary["k" + count++], Is.Null);
                 }
                 else
                 {
-                    Assert.AreEqual(expectedDictionary["k" + count++].ToObjectFromJson(), BinaryData.FromString(property.Value.GetRawText()).ToObjectFromJson());
+                    Assert.That(BinaryData.FromString(property.Value.GetRawText()).ToObjectFromJson(), Is.EqualTo(expectedDictionary["k" + count++].ToObjectFromJson()));
                 }
             }
         }
@@ -178,21 +178,21 @@ namespace Azure.Core.Tests
             switch (value)
             {
                 case string:
-                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
-                    Assert.AreEqual($"\"{value}\"", document.RootElement.GetRawText());
+                    Assert.That(document.RootElement.ValueKind, Is.EqualTo(JsonValueKind.String));
+                    Assert.That(document.RootElement.GetRawText(), Is.EqualTo($"\"{value}\""));
                     break;
                 case bool:
-                    Assert.AreEqual(value, document.RootElement.GetBoolean());
+                    Assert.That(document.RootElement.GetBoolean(), Is.EqualTo(value));
                     break;
                 case int:
-                    Assert.AreEqual(value, document.RootElement.GetInt32());
+                    Assert.That(document.RootElement.GetInt32(), Is.EqualTo(value));
                     break;
                 case double:
-                    Assert.AreEqual(value, document.RootElement.GetDouble());
+                    Assert.That(document.RootElement.GetDouble(), Is.EqualTo(value));
                     break;
                 case DateTimeOffset:
-                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
-                    Assert.AreEqual(value, DateTimeOffset.Parse(document.RootElement.GetString()));
+                    Assert.That(document.RootElement.ValueKind, Is.EqualTo(JsonValueKind.String));
+                    Assert.That(DateTimeOffset.Parse(document.RootElement.GetString()), Is.EqualTo(value));
                     break;
             }
         }
@@ -205,7 +205,7 @@ namespace Azure.Core.Tests
             content.WriteTo(stream, default);
             stream.Position = 0;
             var document = JsonDocument.Parse(stream);
-            Assert.AreEqual(value.ToObjectFromJson(), BinaryData.FromString(document.RootElement.GetRawText()).ToObjectFromJson());
+            Assert.That(BinaryData.FromString(document.RootElement.GetRawText()).ToObjectFromJson(), Is.EqualTo(value.ToObjectFromJson()));
         }
     }
 }

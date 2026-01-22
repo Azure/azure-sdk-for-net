@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using BaseBlobs::Azure.Storage.Blobs.Models;
+using Azure.Core;
+using Azure.Identity;
 using Azure.Storage.Test;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
-using Azure.Core;
-using Azure.Identity;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -156,8 +155,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
                 : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
-            Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+            Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
+            Assert.That(storageResource, Is.InstanceOf(typeof(BlockBlobStorageResource)));
         }
 
         [Test]
@@ -184,21 +183,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource storageResource = (BlockBlobStorageResource)await new BlobsStorageResourceProvider(_tokenCredential)
                     .FromDestinationInternalHookAsync(transferProperties);
 
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointDetails.IsAccessTierSet, storageResource._options._isAccessTierSet);
-            Assert.AreEqual(checkpointDetails.AccessTierValue.Value, storageResource._options.AccessTier.Value);
-            Assert.AreEqual(checkpointDetails.IsMetadataSet, storageResource._options._isMetadataSet);
-            Assert.AreEqual(checkpointDetails.Metadata, storageResource._options.Metadata);
-            Assert.AreEqual(checkpointDetails.IsCacheControlSet, storageResource._options._isCacheControlSet);
-            Assert.AreEqual(checkpointDetails.CacheControl, storageResource._options.CacheControl);
-            Assert.AreEqual(checkpointDetails.IsContentDispositionSet, storageResource._options._isContentDispositionSet);
-            Assert.AreEqual(checkpointDetails.ContentDisposition, storageResource._options.ContentDisposition);
-            Assert.AreEqual(checkpointDetails.IsContentEncodingSet, storageResource._options._isContentEncodingSet);
-            Assert.AreEqual(checkpointDetails.ContentEncoding, storageResource._options.ContentEncoding);
-            Assert.AreEqual(checkpointDetails.IsContentLanguageSet, storageResource._options._isContentLanguageSet);
-            Assert.AreEqual(checkpointDetails.ContentLanguage, storageResource._options.ContentLanguage);
-            Assert.AreEqual(checkpointDetails.IsContentTypeSet, storageResource._options._isContentTypeSet);
-            Assert.AreEqual(checkpointDetails.ContentType, storageResource._options.ContentType);
+            Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(destinationPath));
+            Assert.That(storageResource._options._isAccessTierSet, Is.EqualTo(checkpointDetails.IsAccessTierSet));
+            Assert.That(storageResource._options.AccessTier.Value, Is.EqualTo(checkpointDetails.AccessTierValue.Value));
+            Assert.That(storageResource._options._isMetadataSet, Is.EqualTo(checkpointDetails.IsMetadataSet));
+            Assert.That(storageResource._options.Metadata, Is.EqualTo(checkpointDetails.Metadata));
+            Assert.That(storageResource._options._isCacheControlSet, Is.EqualTo(checkpointDetails.IsCacheControlSet));
+            Assert.That(storageResource._options.CacheControl, Is.EqualTo(checkpointDetails.CacheControl));
+            Assert.That(storageResource._options._isContentDispositionSet, Is.EqualTo(checkpointDetails.IsContentDispositionSet));
+            Assert.That(storageResource._options.ContentDisposition, Is.EqualTo(checkpointDetails.ContentDisposition));
+            Assert.That(storageResource._options._isContentEncodingSet, Is.EqualTo(checkpointDetails.IsContentEncodingSet));
+            Assert.That(storageResource._options.ContentEncoding, Is.EqualTo(checkpointDetails.ContentEncoding));
+            Assert.That(storageResource._options._isContentLanguageSet, Is.EqualTo(checkpointDetails.IsContentLanguageSet));
+            Assert.That(storageResource._options.ContentLanguage, Is.EqualTo(checkpointDetails.ContentLanguage));
+            Assert.That(storageResource._options._isContentTypeSet, Is.EqualTo(checkpointDetails.IsContentTypeSet));
+            Assert.That(storageResource._options.ContentType, Is.EqualTo(checkpointDetails.ContentType));
         }
 
         [Test]
@@ -227,14 +226,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
                     : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
             if (isSource)
             {
-                Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(BlockBlobStorageResource)));
             }
             else
             {
-                Assert.IsInstanceOf(typeof(PageBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(PageBlobStorageResource)));
             }
         }
 
@@ -262,21 +261,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             PageBlobStorageResource storageResource = (PageBlobStorageResource)await new BlobsStorageResourceProvider(_tokenCredential)
                     .FromDestinationInternalHookAsync(transferProperties);
 
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointDetails.IsMetadataSet, storageResource._options._isMetadataSet);
-            Assert.AreEqual(checkpointDetails.Metadata, storageResource._options.Metadata);
-            Assert.AreEqual(checkpointDetails.IsAccessTierSet, storageResource._options._isAccessTierSet);
-            Assert.AreEqual(checkpointDetails.AccessTierValue.Value, storageResource._options.AccessTier.Value);
-            Assert.AreEqual(checkpointDetails.IsCacheControlSet, storageResource._options._isCacheControlSet);
-            Assert.AreEqual(checkpointDetails.CacheControl, storageResource._options.CacheControl);
-            Assert.AreEqual(checkpointDetails.IsContentDispositionSet, storageResource._options._isContentDispositionSet);
-            Assert.AreEqual(checkpointDetails.ContentDisposition, storageResource._options.ContentDisposition);
-            Assert.AreEqual(checkpointDetails.IsContentEncodingSet, storageResource._options._isContentEncodingSet);
-            Assert.AreEqual(checkpointDetails.ContentEncoding, storageResource._options.ContentEncoding);
-            Assert.AreEqual(checkpointDetails.IsContentLanguageSet, storageResource._options._isContentLanguageSet);
-            Assert.AreEqual(checkpointDetails.ContentLanguage, storageResource._options.ContentLanguage);
-            Assert.AreEqual(checkpointDetails.IsContentTypeSet, storageResource._options._isContentTypeSet);
-            Assert.AreEqual(checkpointDetails.ContentType, storageResource._options.ContentType);
+            Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(destinationPath));
+            Assert.That(storageResource._options._isMetadataSet, Is.EqualTo(checkpointDetails.IsMetadataSet));
+            Assert.That(storageResource._options.Metadata, Is.EqualTo(checkpointDetails.Metadata));
+            Assert.That(storageResource._options._isAccessTierSet, Is.EqualTo(checkpointDetails.IsAccessTierSet));
+            Assert.That(storageResource._options.AccessTier.Value, Is.EqualTo(checkpointDetails.AccessTierValue.Value));
+            Assert.That(storageResource._options._isCacheControlSet, Is.EqualTo(checkpointDetails.IsCacheControlSet));
+            Assert.That(storageResource._options.CacheControl, Is.EqualTo(checkpointDetails.CacheControl));
+            Assert.That(storageResource._options._isContentDispositionSet, Is.EqualTo(checkpointDetails.IsContentDispositionSet));
+            Assert.That(storageResource._options.ContentDisposition, Is.EqualTo(checkpointDetails.ContentDisposition));
+            Assert.That(storageResource._options._isContentEncodingSet, Is.EqualTo(checkpointDetails.IsContentEncodingSet));
+            Assert.That(storageResource._options.ContentEncoding, Is.EqualTo(checkpointDetails.ContentEncoding));
+            Assert.That(storageResource._options._isContentLanguageSet, Is.EqualTo(checkpointDetails.IsContentLanguageSet));
+            Assert.That(storageResource._options.ContentLanguage, Is.EqualTo(checkpointDetails.ContentLanguage));
+            Assert.That(storageResource._options._isContentTypeSet, Is.EqualTo(checkpointDetails.IsContentTypeSet));
+            Assert.That(storageResource._options.ContentType, Is.EqualTo(checkpointDetails.ContentType));
         }
 
         [Test]
@@ -305,14 +304,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
                     : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
             if (isSource)
             {
-                Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(BlockBlobStorageResource)));
             }
             else
             {
-                Assert.IsInstanceOf(typeof(AppendBlobStorageResource), storageResource);
+                Assert.That(storageResource, Is.InstanceOf(typeof(AppendBlobStorageResource)));
             }
         }
 
@@ -340,19 +339,19 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             AppendBlobStorageResource storageResource = (AppendBlobStorageResource)await new BlobsStorageResourceProvider(_tokenCredential)
                 .FromDestinationInternalHookAsync(transferProperties);
 
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointDetails.IsMetadataSet, storageResource._options._isMetadataSet);
-            Assert.AreEqual(checkpointDetails.Metadata, storageResource._options.Metadata);
-            Assert.AreEqual(checkpointDetails.IsCacheControlSet, storageResource._options._isCacheControlSet);
-            Assert.AreEqual(checkpointDetails.CacheControl, storageResource._options.CacheControl);
-            Assert.AreEqual(checkpointDetails.IsContentDispositionSet, storageResource._options._isContentDispositionSet);
-            Assert.AreEqual(checkpointDetails.ContentDisposition, storageResource._options.ContentDisposition);
-            Assert.AreEqual(checkpointDetails.IsContentEncodingSet, storageResource._options._isContentEncodingSet);
-            Assert.AreEqual(checkpointDetails.ContentEncoding, storageResource._options.ContentEncoding);
-            Assert.AreEqual(checkpointDetails.IsContentLanguageSet, storageResource._options._isContentLanguageSet);
-            Assert.AreEqual(checkpointDetails.ContentLanguage, storageResource._options.ContentLanguage);
-            Assert.AreEqual(checkpointDetails.IsContentTypeSet, storageResource._options._isContentTypeSet);
-            Assert.AreEqual(checkpointDetails.ContentType, storageResource._options.ContentType);
+            Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(destinationPath));
+            Assert.That(storageResource._options._isMetadataSet, Is.EqualTo(checkpointDetails.IsMetadataSet));
+            Assert.That(storageResource._options.Metadata, Is.EqualTo(checkpointDetails.Metadata));
+            Assert.That(storageResource._options._isCacheControlSet, Is.EqualTo(checkpointDetails.IsCacheControlSet));
+            Assert.That(storageResource._options.CacheControl, Is.EqualTo(checkpointDetails.CacheControl));
+            Assert.That(storageResource._options._isContentDispositionSet, Is.EqualTo(checkpointDetails.IsContentDispositionSet));
+            Assert.That(storageResource._options.ContentDisposition, Is.EqualTo(checkpointDetails.ContentDisposition));
+            Assert.That(storageResource._options._isContentEncodingSet, Is.EqualTo(checkpointDetails.IsContentEncodingSet));
+            Assert.That(storageResource._options.ContentEncoding, Is.EqualTo(checkpointDetails.ContentEncoding));
+            Assert.That(storageResource._options._isContentLanguageSet, Is.EqualTo(checkpointDetails.IsContentLanguageSet));
+            Assert.That(storageResource._options.ContentLanguage, Is.EqualTo(checkpointDetails.ContentLanguage));
+            Assert.That(storageResource._options._isContentTypeSet, Is.EqualTo(checkpointDetails.IsContentTypeSet));
+            Assert.That(storageResource._options.ContentType, Is.EqualTo(checkpointDetails.ContentType));
         }
 
         [Test]
@@ -391,8 +390,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
                     : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
-            Assert.IsInstanceOf(typeof(BlobStorageResourceContainer), storageResource);
+            Assert.That(storageResource.Uri.AbsoluteUri, Is.EqualTo(originalPath));
+            Assert.That(storageResource, Is.InstanceOf(typeof(BlobStorageResourceContainer)));
         }
     }
 }

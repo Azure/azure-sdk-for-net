@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Samples
             batch.DeleteBlobs(new Uri[] { foo.Uri, bar.Uri, baz.Uri });
             #endregion
 
-            Assert.AreEqual(0, container.GetBlobs().ToList().Count);
+            Assert.That(container.GetBlobs().ToList().Count, Is.EqualTo(0));
             // Clean up after we're finished
             container.Delete();
         }
@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.Samples
 
             foreach (BlobItem blob in container.GetBlobs())
             {
-                Assert.AreEqual(AccessTier.Cool, blob.Properties.AccessTier);
+                Assert.That(blob.Properties.AccessTier, Is.EqualTo(AccessTier.Cool));
             }
             // Clean up after the test when we're finished
         }
@@ -138,8 +138,8 @@ namespace Azure.Storage.Blobs.Samples
             };
 
             Pageable<BlobItem> blobs = container.GetBlobs(options);
-            Assert.AreEqual(1, blobs.Count());
-            Assert.AreEqual("bar", blobs.FirstOrDefault().Name);
+            Assert.That(blobs.Count(), Is.EqualTo(1));
+            Assert.That(blobs.FirstOrDefault().Name, Is.EqualTo("bar"));
             // Clean up after the test when we're finished
             container.Delete();
         }

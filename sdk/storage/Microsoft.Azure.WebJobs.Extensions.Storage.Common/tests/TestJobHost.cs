@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
         }
 
         // Start listeners and run until the Task source is set.
-        public async Task<TResult> RunTriggerAsync<TResult>(TaskCompletionSource<TResult> taskSource= null)
+        public async Task<TResult> RunTriggerAsync<TResult>(TaskCompletionSource<TResult> taskSource = null)
         {
             // Program was registered with the job activator, so we can get it
             TProgram prog = _jobActivator.CreateInstance<TProgram>();
@@ -75,11 +75,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             catch (FunctionIndexingException e)
             {
                 string functionName = typeof(TProgram).Name + "." + methodName;
-                Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
-                StringAssert.Contains(expectedErrorMessage, e.InnerException.Message);
+                Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
+                Assert.That(e.InnerException.Message, Does.Contain(expectedErrorMessage));
                 return;
             }
-            Assert.True(false, "Invoker should have failed");
+            Assert.That(false, Is.True, "Invoker should have failed");
         }
     }
 

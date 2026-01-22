@@ -14,16 +14,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void ConstructorArgumentValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificateIssuer((string)null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificateIssuer(string.Empty));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new CertificateIssuer("test", null));
-            Assert.AreEqual("provider", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("provider"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificateIssuer("test", string.Empty));
-            Assert.AreEqual("provider", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("provider"));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 writer.WriteEndObject();
             }
 
-            Assert.AreEqual(@"{""provider"":""provider"",""credentials"":{""account_id"":""accountId""}}", json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo(@"{""provider"":""provider"",""credentials"":{""account_id"":""accountId""}}"));
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             // Assert that the CertificateIssuer was serialized properly.
-            Assert.That(expectedJson, Is.EqualTo(json.ToString()));
+            Assert.That(json.ToString(), Is.EqualTo(expectedJson));
 
             // De-Serialze the CertificateIssuer.
             var jDoc = JsonDocument.Parse(expectedJson);

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
 
             var serializedMessage = JsonConvert.SerializeObject(message, Formatting.None);
 
-            Assert.AreEqual(expectedMessage, serializedMessage);
+            Assert.That(serializedMessage, Is.EqualTo(expectedMessage));
         }
 
         [TestCase("containerName", "blobName", BlobType.Block, "etag", "functionId",
@@ -42,11 +42,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
         {
             var message = JsonConvert.DeserializeObject<BlobTriggerMessage>(incomingMessage);
 
-            Assert.AreEqual(containerName, message.ContainerName);
-            Assert.AreEqual(blobName, message.BlobName);
-            Assert.AreEqual(blobType, message.BlobType);
-            Assert.AreEqual(etag, message.ETag);
-            Assert.AreEqual(functionId, message.FunctionId);
+            Assert.That(message.ContainerName, Is.EqualTo(containerName));
+            Assert.That(message.BlobName, Is.EqualTo(blobName));
+            Assert.That(message.BlobType, Is.EqualTo(blobType));
+            Assert.That(message.ETag, Is.EqualTo(etag));
+            Assert.That(message.FunctionId, Is.EqualTo(functionId));
         }
 
         // In track 1 BlobType enum had different values.
@@ -60,11 +60,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
         {
             var message = JsonConvert.DeserializeObject<BlobTriggerMessage>(incomingMessage);
 
-            Assert.AreEqual(containerName, message.ContainerName);
-            Assert.AreEqual(blobName, message.BlobName);
-            Assert.AreEqual(blobType, message.BlobType);
-            Assert.AreEqual(etag, message.ETag);
-            Assert.AreEqual(functionId, message.FunctionId);
+            Assert.That(message.ContainerName, Is.EqualTo(containerName));
+            Assert.That(message.BlobName, Is.EqualTo(blobName));
+            Assert.That(message.BlobType, Is.EqualTo(blobType));
+            Assert.That(message.ETag, Is.EqualTo(etag));
+            Assert.That(message.FunctionId, Is.EqualTo(functionId));
         }
     }
 }

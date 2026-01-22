@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 waitUntil: WaitUntil.Completed,
                 patch: amlFilesystemPatch);
 
-            Assert.AreEqual(lro.Value.Data.MaintenanceWindow.DayOfWeek, amlFilesystemPatch.MaintenanceWindow.DayOfWeek);
-            Assert.AreEqual(lro.Value.Data.MaintenanceWindow.TimeOfDayUTC, amlFilesystemPatch.MaintenanceWindow.TimeOfDayUTC);
+            Assert.That(amlFilesystemPatch.MaintenanceWindow.DayOfWeek, Is.EqualTo(lro.Value.Data.MaintenanceWindow.DayOfWeek));
+            Assert.That(amlFilesystemPatch.MaintenanceWindow.TimeOfDayUTC, Is.EqualTo(lro.Value.Data.MaintenanceWindow.TimeOfDayUTC));
         }
 
         [TestCase]
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 FilesystemPath = @"/",
             };
             Response response = await amlFSResource.ArchiveAsync(amlFilesystemArchiveContent);
-            Assert.IsFalse(response.IsError);
+            Assert.That(response.IsError, Is.False);
             //cancelarchive
             response = await amlFSResource.CancelArchiveAsync();
-            Assert.IsFalse(response.IsError);
+            Assert.That(response.IsError, Is.False);
         }
     }
 }

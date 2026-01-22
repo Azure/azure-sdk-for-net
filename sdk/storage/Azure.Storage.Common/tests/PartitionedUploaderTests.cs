@@ -59,8 +59,8 @@ namespace Azure.Storage.Tests
             mock.Setup(del => del(It.IsNotNull<Stream>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), s_operationName, IsAsync, s_cancellation))
                 .Returns<Stream, object, IProgress<long>, UploadTransferValidationOptions, string, bool, CancellationToken>((stream, obj, progress, validationOptions, operation, async, cancellation) =>
                 {
-                    Assert.IsTrue(stream.CanSeek, "PartitionedUploader sent non-seekable stream to the REST client");
-                    Assert.AreEqual(expectedSize, stream.Read(new byte[expectedSize], 0, expectedSize));
+                    Assert.That(stream.CanSeek, Is.True, "PartitionedUploader sent non-seekable stream to the REST client");
+                    Assert.That(stream.Read(new byte[expectedSize], 0, expectedSize), Is.EqualTo(expectedSize));
                     validationOptionsAssertion?.Invoke(validationOptions);
                     return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
                 });
@@ -76,7 +76,7 @@ namespace Azure.Storage.Tests
             mock.Setup(del => del(It.IsNotNull<BinaryData>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), s_operationName, IsAsync, s_cancellation))
                 .Returns<BinaryData, object, IProgress<long>, UploadTransferValidationOptions, string, bool, CancellationToken>((content, obj, progress, validationOptions, operation, async, cancellation) =>
                 {
-                    Assert.AreEqual(expectedSize, content.ToMemory().Length);
+                    Assert.That(content.ToMemory().Length, Is.EqualTo(expectedSize));
                     validationOptionsAssertion?.Invoke(validationOptions);
                     return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
                 });
@@ -101,8 +101,8 @@ namespace Azure.Storage.Tests
             mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
                 .Returns<Stream, long, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((stream, offset, obj, progress, validationOptions, async, cancellation) =>
                 {
-                    Assert.IsTrue(stream.CanSeek, "PartitionedUploader sent non-seekable stream to the REST client");
-                    Assert.GreaterOrEqual(maxSize, stream.Read(new byte[maxSize], 0, maxSize));
+                    Assert.That(stream.CanSeek, Is.True, "PartitionedUploader sent non-seekable stream to the REST client");
+                    Assert.That(maxSize, Is.GreaterThanOrEqualTo(stream.Read(new byte[maxSize], 0, maxSize)));
                     validationOptionsAssertion?.Invoke(validationOptions);
                     return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
                 });
@@ -118,7 +118,7 @@ namespace Azure.Storage.Tests
             mock.Setup(del => del(It.IsNotNull<BinaryData>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
                 .Returns<BinaryData, long, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((content, offset, obj, progress, validationOptions, async, cancellation) =>
                 {
-                    Assert.GreaterOrEqual(maxSize, content.ToMemory().Length);
+                    Assert.That(maxSize, Is.GreaterThanOrEqualTo(content.ToMemory().Length));
                     validationOptionsAssertion?.Invoke(validationOptions);
                     return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
                 });
@@ -208,7 +208,7 @@ namespace Azure.Storage.Tests
             Response<object> result = await partitionedUploader.UploadInternal(stream.Object, default, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);
 
             // assert streams were actually sent to delegates; the delegates themselves threw if conditions weren't met
-            Assert.Greater(mocks.SingleUploadStream.Invocations.Count + mocks.PartitionUploadStream.Invocations.Count, 0);
+            Assert.That(mocks.SingleUploadStream.Invocations.Count + mocks.PartitionUploadStream.Invocations.Count, Is.GreaterThan(0));
         }
 
         [Test]
@@ -253,15 +253,15 @@ namespace Azure.Storage.Tests
             // Assert
             if (oneshot)
             {
-                Assert.AreEqual(1, mocks.SingleUploadStream.Invocations.Count);
-                Assert.IsEmpty(mocks.PartitionUploadStream.Invocations);
-                Assert.IsEmpty(mocks.Commit.Invocations);
+                Assert.That(mocks.SingleUploadStream.Invocations.Count, Is.EqualTo(1));
+                Assert.That(mocks.PartitionUploadStream.Invocations, Is.Empty);
+                Assert.That(mocks.Commit.Invocations, Is.Empty);
             }
             else
             {
-                Assert.IsEmpty(mocks.SingleUploadStream.Invocations);
-                Assert.AreEqual(numPartitions, mocks.PartitionUploadStream.Invocations.Count);
-                Assert.AreEqual(1, mocks.Commit.Invocations.Count);
+                Assert.That(mocks.SingleUploadStream.Invocations, Is.Empty);
+                Assert.That(mocks.PartitionUploadStream.Invocations.Count, Is.EqualTo(numPartitions));
+                Assert.That(mocks.Commit.Invocations.Count, Is.EqualTo(1));
             }
         }
 
@@ -299,11 +299,11 @@ namespace Azure.Storage.Tests
                 ? (1, 0, 0)
                 : (0, (int)Math.Ceiling((double)dataSize / maxTransfer), 1);
 
-            Assert.AreEqual(expectedSingleUpload, mocks.SingleUploadStream.Invocations.Count);
-            Assert.AreEqual(expectedPartitionUpload, mocks.PartitionUploadStream.Invocations.Count);
-            Assert.AreEqual(expectedCommit, mocks.Commit.Invocations.Count);
-            Assert.AreEqual(0, mocks.SingleUploadBinaryData.Invocations.Count);
-            Assert.AreEqual(0, mocks.PartitionUploadBinaryData.Invocations.Count);
+            Assert.That(mocks.SingleUploadStream.Invocations.Count, Is.EqualTo(expectedSingleUpload));
+            Assert.That(mocks.PartitionUploadStream.Invocations.Count, Is.EqualTo(expectedPartitionUpload));
+            Assert.That(mocks.Commit.Invocations.Count, Is.EqualTo(expectedCommit));
+            Assert.That(mocks.SingleUploadBinaryData.Invocations.Count, Is.EqualTo(0));
+            Assert.That(mocks.PartitionUploadBinaryData.Invocations.Count, Is.EqualTo(0));
         }
 
         [TestCase(1024, 2048, 2048)]
@@ -335,11 +335,11 @@ namespace Azure.Storage.Tests
                 ? (1, 0, 0)
                 : (0, (int)Math.Ceiling((double)dataSize / maxTransfer), 1);
 
-            Assert.AreEqual(expectedSingleUpload, mocks.SingleUploadBinaryData.Invocations.Count);
-            Assert.AreEqual(expectedPartitionUpload, mocks.PartitionUploadBinaryData.Invocations.Count);
-            Assert.AreEqual(expectedCommit, mocks.Commit.Invocations.Count);
-            Assert.AreEqual(0, mocks.SingleUploadStream.Invocations.Count);
-            Assert.AreEqual(0, mocks.PartitionUploadStream.Invocations.Count);
+            Assert.That(mocks.SingleUploadBinaryData.Invocations.Count, Is.EqualTo(expectedSingleUpload));
+            Assert.That(mocks.PartitionUploadBinaryData.Invocations.Count, Is.EqualTo(expectedPartitionUpload));
+            Assert.That(mocks.Commit.Invocations.Count, Is.EqualTo(expectedCommit));
+            Assert.That(mocks.SingleUploadStream.Invocations.Count, Is.EqualTo(0));
+            Assert.That(mocks.PartitionUploadStream.Invocations.Count, Is.EqualTo(0));
         }
 
         [TestCase(Constants.KB)]
@@ -376,8 +376,8 @@ namespace Azure.Storage.Tests
             // assert every pool rental was returned
             int rents = arraypool.Invocations.Where(i => i.Method.Name == "Rent").Count();
             int returns = arraypool.Invocations.Where(i => i.Method.Name == "Return").Count();
-            Assert.Greater(rents, 0);
-            Assert.AreEqual(rents, returns);
+            Assert.That(rents, Is.GreaterThan(0));
+            Assert.That(returns, Is.EqualTo(rents));
         }
 
         [TestCase(DataType.BinaryData, true)]       // calculates because it's in-place
@@ -400,7 +400,7 @@ namespace Azure.Storage.Tests
 
             // and mocks to detect a calculated checksum
             var mocks = GetMockBehaviors(dataSize, dataSize,
-                validationOptionsAssertion: vo => Assert.AreNotEqual(expectCalculation, vo.PrecalculatedChecksum.IsEmpty));
+                validationOptionsAssertion: vo => Assert.That(vo.PrecalculatedChecksum.IsEmpty, Is.Not.EqualTo(expectCalculation)));
 
             // and a configured uploader
             var partitionedUploader = new PartitionedUploader<object, object>(
@@ -422,13 +422,13 @@ namespace Azure.Storage.Tests
             });
 
             // Then oneshot occured
-            Assert.AreEqual(1, dataType switch
+            Assert.That(dataType switch
             {
                 DataType.SeekableStream => mocks.SingleUploadStream.Invocations.Count,
                 DataType.UnseekableStream => mocks.SingleUploadStream.Invocations.Count,
                 DataType.BinaryData => mocks.SingleUploadBinaryData.Invocations.Count,
                 _ => throw Errors.InvalidArgument(nameof(dataType)),
-            });
+            }, Is.EqualTo(1));
         }
 
         [TestCase(DataType.BinaryData)]
@@ -473,7 +473,7 @@ namespace Azure.Storage.Tests
                 _ => throw Errors.InvalidArgument(nameof(dataType)),
             }));
 
-            Assert.IsTrue(exception.Message.Contains(Convert.ToBase64String(garbageCrc)));
+            Assert.That(exception.Message.Contains(Convert.ToBase64String(garbageCrc)), Is.True);
         }
 
         [TestCase(DataType.BinaryData)]
@@ -501,7 +501,7 @@ namespace Azure.Storage.Tests
             // and a configured uploader
             var mocks = GetMockBehaviors(dataSize, dataSize, validationOptionsAssertion: options =>
                 // Mock asserts the garbage CRC was passed to the client
-                Assert.IsTrue(garbageCrc.Span.SequenceEqual(options.PrecalculatedChecksum.Span)));
+                Assert.That(garbageCrc.Span.SequenceEqual(options.PrecalculatedChecksum.Span), Is.True));
             var partitionedUploader = new PartitionedUploader<object, object>(
                 mocks.ToBehaviors(),
                 transferOptions,

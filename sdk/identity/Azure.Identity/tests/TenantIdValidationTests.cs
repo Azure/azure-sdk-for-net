@@ -252,11 +252,11 @@ namespace Azure.Identity.Tests
 
         private void ValidateTenantIdArgumentException(string tenantId, string argumentName, ArgumentException ex)
         {
-            Assert.AreEqual(argumentName, ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo(argumentName));
 
             if (tenantId == null)
             {
-                Assert.True(ex is ArgumentNullException);
+                Assert.That(ex is ArgumentNullException, Is.True);
             }
         }
     }

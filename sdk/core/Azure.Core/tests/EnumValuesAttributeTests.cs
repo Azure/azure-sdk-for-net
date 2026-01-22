@@ -11,51 +11,51 @@ namespace Azure.Core.Tests
     public class EnumValuesAttributeTests
     {
         [Test]
-        public void DiscoversValues([EnumValues]Data data)
+        public void DiscoversValues([EnumValues] Data data)
         {
             Assert.That(data, Is.AnyOf(Data.Field1, Data.Field2, Data.Property1, Data.Property2));
         }
 
         [Test]
-        public void IncludesNamedValues([EnumValues(nameof(Data.Field1), nameof(Data.Property1), nameof(Data.InternalField), nameof(Data.InternalProperty))]Data data)
+        public void IncludesNamedValues([EnumValues(nameof(Data.Field1), nameof(Data.Property1), nameof(Data.InternalField), nameof(Data.InternalProperty))] Data data)
         {
             Assert.That(data, Is.AnyOf(Data.Field1, Data.Property1));
         }
 
         [Test]
-        public void ExcludesNamedValues([EnumValues(Exclude = new[] { nameof(Data.Field2), nameof(Data.Property2) })]Data data)
+        public void ExcludesNamedValues([EnumValues(Exclude = new[] { nameof(Data.Field2), nameof(Data.Property2) })] Data data)
         {
             Assert.That(data, Is.AnyOf(Data.Field1, Data.Property1));
         }
 
         [Test]
-        public void ExcludesNamedValuesOverride([EnumValues(nameof(Data.Field1), nameof(Data.Field2), nameof(Data.Property1), nameof(Data.Property2), Exclude = new[] { nameof(Data.Field2), nameof(Data.Property2) })]Data data)
+        public void ExcludesNamedValuesOverride([EnumValues(nameof(Data.Field1), nameof(Data.Field2), nameof(Data.Property1), nameof(Data.Property2), Exclude = new[] { nameof(Data.Field2), nameof(Data.Property2) })] Data data)
         {
             Assert.That(data, Is.AnyOf(Data.Field1, Data.Property1));
         }
 
         [Test]
-        public void DiscoversEnumValues([EnumValues]DataEnum data)
+        public void DiscoversEnumValues([EnumValues] DataEnum data)
         {
             Assert.That(data, Is.AnyOf(DataEnum.A, DataEnum.B));
         }
 
         [Test]
-        public void IncludesNamedEnumValues([EnumValues(nameof(DataEnum.A))]DataEnum data)
+        public void IncludesNamedEnumValues([EnumValues(nameof(DataEnum.A))] DataEnum data)
         {
-            Assert.AreEqual(DataEnum.A, data);
+            Assert.That(data, Is.EqualTo(DataEnum.A));
         }
 
         [Test]
-        public void ExcludesNamedEnumValues([EnumValues(Exclude = new[] { nameof(DataEnum.B) })]DataEnum data)
+        public void ExcludesNamedEnumValues([EnumValues(Exclude = new[] { nameof(DataEnum.B) })] DataEnum data)
         {
-            Assert.AreEqual(DataEnum.A, data);
+            Assert.That(data, Is.EqualTo(DataEnum.A));
         }
 
         [Test]
-        public void ExcludesNamedEnumValuesOverride([EnumValues(nameof(DataEnum.A), nameof(DataEnum.B), Exclude = new[] { nameof(DataEnum.B) })]DataEnum data)
+        public void ExcludesNamedEnumValuesOverride([EnumValues(nameof(DataEnum.A), nameof(DataEnum.B), Exclude = new[] { nameof(DataEnum.B) })] DataEnum data)
         {
-            Assert.AreEqual(DataEnum.A, data);
+            Assert.That(data, Is.EqualTo(DataEnum.A));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Azure.Core.Tests
             EnumValuesAttribute sut = new EnumValuesAttribute();
 
             Exception ex = Assert.Throws<InvalidDataSourceException>(() => sut.GetMembers(GetType(), "source"));
-            Assert.AreEqual(@"No enumeration members found on parameter ""source"".", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(@"No enumeration members found on parameter ""source""."));
         }
 
         // Should work for fields and properties alike.

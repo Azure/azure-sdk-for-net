@@ -27,9 +27,9 @@ internal class BinaryContentTests : SyncAsyncTestBase
         BinaryData data = BinaryData.FromString(value);
         using BinaryContent content = BinaryContent.Create(data);
 
-        Assert.IsNull(content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
-        Assert.AreEqual(value.Length, length);
+        Assert.That(content.MediaType, Is.Null);
+        Assert.That(content.TryComputeLength(out long length), Is.True);
+        Assert.That(length, Is.EqualTo(value.Length));
     }
 
     [Test]
@@ -42,8 +42,8 @@ internal class BinaryContentTests : SyncAsyncTestBase
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
 
-        Assert.AreEqual(bytes.Length, stream.Position);
-        Assert.AreEqual(bytes, stream.ToArray());
+        Assert.That(stream.Position, Is.EqualTo(bytes.Length));
+        Assert.That(stream.ToArray(), Is.EqualTo(bytes));
     }
 
     [Test]
@@ -52,9 +52,9 @@ internal class BinaryContentTests : SyncAsyncTestBase
         MockPersistableModel model = new MockPersistableModel(404, "abcde");
         using BinaryContent content = BinaryContent.Create(model);
 
-        Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
-        Assert.AreEqual(model.SerializedValue.Length, length);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
+        Assert.That(content.TryComputeLength(out long length), Is.True);
+        Assert.That(length, Is.EqualTo(model.SerializedValue.Length));
     }
 
     [Test]
@@ -63,15 +63,15 @@ internal class BinaryContentTests : SyncAsyncTestBase
         MockPersistableModel model = new MockPersistableModel(404, "abcde");
         using BinaryContent content = BinaryContent.Create(model);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
 
-        Assert.AreEqual(model.SerializedValue.Length, stream.Position);
+        Assert.That(stream.Position, Is.EqualTo(model.SerializedValue.Length));
 
         BinaryData serializedContent = ((IPersistableModel<object>)model).Write(ModelReaderWriterOptions.Json);
-        Assert.AreEqual(serializedContent.ToArray(), stream.ToArray());
+        Assert.That(stream.ToArray(), Is.EqualTo(serializedContent.ToArray()));
     }
 
     [Test]
@@ -80,9 +80,9 @@ internal class BinaryContentTests : SyncAsyncTestBase
         MockJsonModel model = new MockJsonModel(404, "abcde");
         using BinaryContent content = BinaryContent.Create(model, ModelReaderWriterOptions.Json);
 
-        Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
-        Assert.AreEqual(model.Utf8BytesValue.Length, length);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
+        Assert.That(content.TryComputeLength(out long length), Is.True);
+        Assert.That(length, Is.EqualTo(model.Utf8BytesValue.Length));
     }
 
     [Test]
@@ -91,12 +91,12 @@ internal class BinaryContentTests : SyncAsyncTestBase
         MockJsonModel model = new MockJsonModel(404, "abcde");
         using BinaryContent content = BinaryContent.Create(model, ModelReaderWriterOptions.Json);
 
-        Assert.AreEqual("application/json", content.MediaType);
+        Assert.That(content.MediaType, Is.EqualTo("application/json"));
 
         MemoryStream contentStream = new MemoryStream();
         await content.WriteToSyncOrAsync(contentStream, CancellationToken.None, IsAsync);
 
-        Assert.AreEqual(model.Utf8BytesValue.Length, contentStream.Position);
+        Assert.That(contentStream.Position, Is.EqualTo(model.Utf8BytesValue.Length));
 
         MemoryStream modelStream = new MemoryStream();
         using Utf8JsonWriter writer = new Utf8JsonWriter(modelStream);
@@ -104,7 +104,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         ((IJsonModel<object>)model).Write(writer, ModelReaderWriterOptions.Json);
         writer.Flush();
 
-        Assert.AreEqual(model.Utf8BytesValue, contentStream.ToArray());
+        Assert.That(contentStream.ToArray(), Is.EqualTo(model.Utf8BytesValue));
     }
 
     [Test]
@@ -118,8 +118,8 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         using BinaryContent content = BinaryContent.Create(stream);
 
-        Assert.IsTrue(content.TryComputeLength(out long length));
-        Assert.AreEqual(size, length);
+        Assert.That(content.TryComputeLength(out long length), Is.True);
+        Assert.That(length, Is.EqualTo(size));
     }
 
     [Test]
@@ -138,9 +138,9 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         await content.WriteToSyncOrAsync(destination, CancellationToken.None, IsAsync);
 
-        Assert.AreEqual(size, destination.Position);
+        Assert.That(destination.Position, Is.EqualTo(size));
 
-        Assert.AreEqual(source.ToArray(), destination.ToArray().AsSpan().Slice(0, size).ToArray());
+        Assert.That(destination.ToArray().AsSpan().Slice(0, size).ToArray(), Is.EqualTo(source.ToArray()));
     }
 
     [Test]
@@ -172,15 +172,15 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent content = BinaryContent.CreateJson(testObject);
 
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
-        Assert.Greater(length, 0);
+        Assert.That(content.TryComputeLength(out long length), Is.True);
+        Assert.That(length, Is.GreaterThan(0));
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
 
         string json = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-        Assert.IsTrue(json.Contains("test"));
-        Assert.IsTrue(json.Contains("42"));
+        Assert.That(json.Contains("test"), Is.True);
+        Assert.That(json.Contains("42"), Is.True);
     }
 
     [Test]
@@ -192,16 +192,16 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent content = BinaryContent.CreateJson(testObject, options);
 
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
-        Assert.Greater(length, 0);
+        Assert.That(content.TryComputeLength(out long length), Is.True);
+        Assert.That(length, Is.GreaterThan(0));
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
 
         string json = System.Text.Encoding.UTF8.GetString(stream.ToArray());
         // With camelCase naming policy, "Name" should become "name"
-        Assert.IsTrue(json.Contains("name"));
-        Assert.IsTrue(json.Contains("value"));
+        Assert.That(json.Contains("name"), Is.True);
+        Assert.That(json.Contains("value"), Is.True);
     }
 
     [Test]
@@ -217,8 +217,8 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent expectedContent = BinaryContent.Create(binaryData);
 
         // They should have the same length
-        Assert.IsTrue(content.TryComputeLength(out long contentLength));
-        Assert.IsTrue(expectedContent.TryComputeLength(out long expectedLength));
+        Assert.That(content.TryComputeLength(out long contentLength), Is.True);
+        Assert.That(expectedContent.TryComputeLength(out long expectedLength), Is.True);
         Assert.AreEqual(expectedLength, contentLength);
     }
 
@@ -229,7 +229,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent content = BinaryContent.CreateJson(jsonString);
 
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.That(content.TryComputeLength(out long length), Is.True);
         Assert.AreEqual(jsonString.Length, length);
 
         MemoryStream stream = new MemoryStream();
@@ -252,13 +252,13 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent expectedContent = BinaryContent.Create(binaryData);
 
         // They should have the same length
-        Assert.IsTrue(content.TryComputeLength(out long contentLength));
-        Assert.IsTrue(expectedContent.TryComputeLength(out long expectedLength));
+        Assert.That(content.TryComputeLength(out long contentLength), Is.True);
+        Assert.That(expectedContent.TryComputeLength(out long expectedLength), Is.True);
         Assert.AreEqual(expectedLength, contentLength);
 
         // Content should have JSON media type, while regular Create should not
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsNull(expectedContent.MediaType);
+        Assert.That(expectedContent.MediaType, Is.Null);
     }
 
     [Test]
@@ -268,7 +268,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent content = BinaryContent.CreateJson(validJson, validate: true);
 
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.That(content.TryComputeLength(out long length), Is.True);
         Assert.AreEqual(validJson.Length, length);
     }
 
@@ -281,7 +281,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.AreEqual("jsonString", ex.ParamName);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-        Assert.IsTrue(ex.Message.Contains("not valid JSON"));
+        Assert.That(ex.Message.Contains("not valid JSON"), Is.True);
     }
 
     [Test]
@@ -305,7 +305,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent content = BinaryContent.CreateJson(emptyObject, validate: true);
 
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.That(content.TryComputeLength(out long length), Is.True);
         Assert.AreEqual(2, length);
     }
 
@@ -316,7 +316,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         using BinaryContent content = BinaryContent.CreateJson(emptyArray, validate: true);
 
         Assert.AreEqual("application/json", content.MediaType);
-        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.That(content.TryComputeLength(out long length), Is.True);
         Assert.AreEqual(2, length);
     }
 

@@ -63,11 +63,11 @@ namespace Azure.Storage.Tests
             await stream.FlushAsync();
 
             // Assert
-            Assert.AreEqual(4, stream.ApiCalls.Count);     // 1280 bytes to write (writeSize=256 * writeCount=9)
-            Assert.AreEqual(s_append, stream.ApiCalls[0]); // first bufferSize=1024 bytes
-            Assert.AreEqual(s_append, stream.ApiCalls[1]); // next bufferSize=1024 bytes
-            Assert.AreEqual(s_append, stream.ApiCalls[2]); // remaining 256 bytes
-            Assert.AreEqual(s_flush, stream.ApiCalls[3]);
+            Assert.That(stream.ApiCalls.Count, Is.EqualTo(4));     // 1280 bytes to write (writeSize=256 * writeCount=9)
+            Assert.That(stream.ApiCalls[0], Is.EqualTo(s_append)); // first bufferSize=1024 bytes
+            Assert.That(stream.ApiCalls[1], Is.EqualTo(s_append)); // next bufferSize=1024 bytes
+            Assert.That(stream.ApiCalls[2], Is.EqualTo(s_append)); // remaining 256 bytes
+            Assert.That(stream.ApiCalls[3], Is.EqualTo(s_flush));
 
             for (int i = 0; i < writeCount; i++)
             {
@@ -121,11 +121,11 @@ namespace Azure.Storage.Tests
             await stream.FlushAsync();
 
             // Assert
-            Assert.AreEqual(4, stream.ApiCalls.Count);     // write 2500 bytes
-            Assert.AreEqual(s_append, stream.ApiCalls[0]); // 1024
-            Assert.AreEqual(s_append, stream.ApiCalls[1]); // 2048
-            Assert.AreEqual(s_append, stream.ApiCalls[2]); // 2500
-            Assert.AreEqual(s_flush, stream.ApiCalls[3]);
+            Assert.That(stream.ApiCalls.Count, Is.EqualTo(4));     // write 2500 bytes
+            Assert.That(stream.ApiCalls[0], Is.EqualTo(s_append)); // 1024
+            Assert.That(stream.ApiCalls[1], Is.EqualTo(s_append)); // 2048
+            Assert.That(stream.ApiCalls[2], Is.EqualTo(s_append)); // 2500
+            Assert.That(stream.ApiCalls[3], Is.EqualTo(s_flush));
 
             mockBuffer.Verify(r => r.WriteAsync(data[0], 0, writeSize, default));
             mockBuffer.Verify(r => r.WriteAsync(data[1], 0, writeSize, default));
@@ -177,12 +177,12 @@ namespace Azure.Storage.Tests
             await stream.FlushAsync();
 
             // Assert
-            Assert.AreEqual(5, stream.ApiCalls.Count);     // total of 4000 bytes to be written
-            Assert.AreEqual(s_append, stream.ApiCalls[0]); // 1024
-            Assert.AreEqual(s_append, stream.ApiCalls[1]); // 2048
-            Assert.AreEqual(s_append, stream.ApiCalls[2]); // 3072
-            Assert.AreEqual(s_append, stream.ApiCalls[3]); // 4000
-            Assert.AreEqual(s_flush, stream.ApiCalls[4]);
+            Assert.That(stream.ApiCalls.Count, Is.EqualTo(5));     // total of 4000 bytes to be written
+            Assert.That(stream.ApiCalls[0], Is.EqualTo(s_append)); // 1024
+            Assert.That(stream.ApiCalls[1], Is.EqualTo(s_append)); // 2048
+            Assert.That(stream.ApiCalls[2], Is.EqualTo(s_append)); // 3072
+            Assert.That(stream.ApiCalls[3], Is.EqualTo(s_append)); // 4000
+            Assert.That(stream.ApiCalls[4], Is.EqualTo(s_flush));
 
             mockBuffer.Verify(r => r.WriteAsync(data[0], 0, bufferSize, default));
             mockBuffer.Verify(r => r.WriteAsync(data[0], bufferSize, 976, default));
@@ -225,13 +225,13 @@ namespace Azure.Storage.Tests
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(stream.Dispose);
 
             // Assert
-            Assert.AreEqual(2, stream.ApiCalls.Count);
-            Assert.AreEqual(s_append, stream.ApiCalls[0]);
-            Assert.AreEqual(s_flush, stream.ApiCalls[1]);
-            Assert.AreEqual(ex.Message, "Flush failed");
+            Assert.That(stream.ApiCalls.Count, Is.EqualTo(2));
+            Assert.That(stream.ApiCalls[0], Is.EqualTo(s_append));
+            Assert.That(stream.ApiCalls[1], Is.EqualTo(s_flush));
+            Assert.That(ex.Message, Is.EqualTo("Flush failed"));
 
-            Assert.AreEqual(3, bufferPool.RentCount); // Crc, Checksum, and buffer is rented from the bufferPool
-            Assert.AreEqual(3, bufferPool.ReturnCount, "Not all allocated array pool arrays were properly returned");
+            Assert.That(bufferPool.RentCount, Is.EqualTo(3)); // Crc, Checksum, and buffer is rented from the bufferPool
+            Assert.That(bufferPool.ReturnCount, Is.EqualTo(3), "Not all allocated array pool arrays were properly returned");
         }
 
         internal class StorageWriteStreamImplementation : StorageWriteStream

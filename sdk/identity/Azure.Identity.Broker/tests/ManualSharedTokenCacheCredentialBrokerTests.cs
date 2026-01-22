@@ -25,11 +25,11 @@ namespace Azure.Identity.Broker.Tests
 
             // to fully manually verify the InteractiveBrowserCredential this test should be run both authenticating with a
             // school / organization account as well as a personal live account, i.e. a @outlook.com, @live.com, or @hotmail.com
-            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { TokenCachePersistenceOptions = persistenceOptions});
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { TokenCachePersistenceOptions = persistenceOptions });
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
 #pragma warning disable CS0618 // Type or member is obsolete
             var silentCred = new SharedTokenCacheCredential(new SharedTokenCacheCredentialBrokerOptions());
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -37,11 +37,11 @@ namespace Azure.Identity.Broker.Tests
             // The calls below this should be silent and not require user interaction
             token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
 
             token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://management.core.windows.net//.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Azure.Identity.Broker.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
     }
 }

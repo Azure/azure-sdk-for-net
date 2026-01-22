@@ -26,8 +26,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                 // Testing private static code ...
                 var readIsDynamicSku = typeof(SkuUtility).GetMethod("ReadIsDynamicSku", BindingFlags.Static | BindingFlags.NonPublic);
                 var isSku = (bool)readIsDynamicSku.Invoke(null, new object[0]);
-                Assert.AreEqual(expectedResult, isSku);
-            } finally
+                Assert.That(isSku, Is.EqualTo(expectedResult));
+            }
+            finally
             {
                 Environment.SetEnvironmentVariable(AzureWebsiteSku, originalEnvValue);
             }
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             // Testing private static code ...
             var getProcessorCount = typeof(SkuUtility).GetMethod("GetProcessorCount", BindingFlags.Static | BindingFlags.NonPublic);
             var processorCount = (int)getProcessorCount.Invoke(null, new object[] { true });
-            Assert.AreEqual(1, processorCount);
+            Assert.That(processorCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             // Testing private static code ...
             var getProcessorCount = typeof(SkuUtility).GetMethod("GetProcessorCount", BindingFlags.Static | BindingFlags.NonPublic);
             var processorCount = (int)getProcessorCount.Invoke(null, new object[] { false });
-            Assert.AreEqual(Environment.ProcessorCount, processorCount);
+            Assert.That(processorCount, Is.EqualTo(Environment.ProcessorCount));
         }
     }
 }

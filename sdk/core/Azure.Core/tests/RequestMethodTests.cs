@@ -13,8 +13,8 @@ namespace Azure.Core.Tests
         {
             RequestMethod method = default;
 
-            Assert.AreEqual(0, method.GetHashCode());
-            Assert.AreEqual("<null>", method.ToString());
+            Assert.That(method.GetHashCode(), Is.EqualTo(0));
+            Assert.That(method.ToString(), Is.EqualTo("<null>"));
         }
 
         public static object[][] Methods => new[]
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(Methods))]
         public void ParseReturnsCachedValue(RequestMethod method, string stringValue)
         {
-            Assert.AreSame(method.Method, RequestMethod.Parse(stringValue).Method);
+            Assert.That(RequestMethod.Parse(stringValue).Method, Is.SameAs(method.Method));
         }
     }
 }

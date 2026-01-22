@@ -52,9 +52,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("testqueue", result.Name);
-            Assert.True(await result.ExistsAsync());
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo("testqueue"));
+            Assert.That((bool)await result.ExistsAsync(), Is.True);
         }
 
         [Test]
@@ -84,9 +84,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("testqueue", result.Name);
-            Assert.True(await result.ExistsAsync());
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo("testqueue"));
+            Assert.That((bool)await result.ExistsAsync(), Is.True);
         }
 
         [Test]
@@ -116,9 +116,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = prog.Result;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("testqueue", result.Name);
-            Assert.True(await result.ExistsAsync());
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo("testqueue"));
+            Assert.That((bool)await result.ExistsAsync(), Is.True);
         }
 
         private void SetupAzurite(IWebJobsBuilder builder)

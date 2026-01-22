@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 properties.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual(expected, properties.RecoverableDays);
+            Assert.That(properties.RecoverableDays, Is.EqualTo(expected));
         }
 
         [TestCase(null, null)]
@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 X509Thumbprint = base64source is not null ? Convert.FromBase64String(base64source) : null,
             };
 
-            Assert.AreEqual(expected, properties.X509ThumbprintString);
+            Assert.That(properties.X509ThumbprintString, Is.EqualTo(expected));
         }
     }
 }

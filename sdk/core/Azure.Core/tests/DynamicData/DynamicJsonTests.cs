@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
 
             int value = jsonData.Foo;
 
-            Assert.AreEqual(1, value);
+            Assert.That(value, Is.EqualTo(1));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
 
             int value = jsonData.Foo.Bar;
 
-            Assert.AreEqual(1, value);
+            Assert.That(value, Is.EqualTo(1));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
 
             jsonData.Foo = 2;
 
-            Assert.AreEqual(2, (int)jsonData.Foo);
+            Assert.That((int)jsonData.Foo, Is.EqualTo(2));
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests
 
             jsonData.Foo.Bar = 2;
 
-            Assert.AreEqual(2, (int)jsonData.Foo.Bar);
+            Assert.That((int)jsonData.Foo.Bar, Is.EqualTo(2));
         }
 
         [Test]
@@ -79,9 +79,9 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""[0, 1, 2]""");
 
-            Assert.AreEqual(0, (int)jsonData[0]);
-            Assert.AreEqual(1, (int)jsonData[1]);
-            Assert.AreEqual(2, (int)jsonData[2]);
+            Assert.That((int)jsonData[0], Is.EqualTo(0));
+            Assert.That((int)jsonData[1], Is.EqualTo(1));
+            Assert.That((int)jsonData[2], Is.EqualTo(2));
         }
 
         [Test]
@@ -93,9 +93,9 @@ namespace Azure.Core.Tests
                 }
                 """);
 
-            Assert.AreEqual(0, (int)jsonData.Foo[0]);
-            Assert.AreEqual(1, (int)jsonData.Foo[1]);
-            Assert.AreEqual(2, (int)jsonData.Foo[2]);
+            Assert.That((int)jsonData.Foo[0], Is.EqualTo(0));
+            Assert.That((int)jsonData.Foo[1], Is.EqualTo(1));
+            Assert.That((int)jsonData.Foo[2], Is.EqualTo(2));
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Azure.Core.Tests
                 }
                 """);
 
-            Assert.AreEqual(1, (int)jsonData["foo"]);
+            Assert.That((int)jsonData["foo"], Is.EqualTo(1));
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests
                 }
                 """);
 
-            Assert.AreEqual(1, (int)jsonData.Foo["bar"]);
+            Assert.That((int)jsonData.Foo["bar"], Is.EqualTo(1));
         }
 
         [Test]
@@ -133,9 +133,9 @@ namespace Azure.Core.Tests
             jsonData[1] = 5;
             jsonData[2] = 6;
 
-            Assert.AreEqual(4, (int)jsonData[0]);
-            Assert.AreEqual(5, (int)jsonData[1]);
-            Assert.AreEqual(6, (int)jsonData[2]);
+            Assert.That((int)jsonData[0], Is.EqualTo(4));
+            Assert.That((int)jsonData[1], Is.EqualTo(5));
+            Assert.That((int)jsonData[2], Is.EqualTo(6));
         }
 
         [Test]
@@ -151,9 +151,9 @@ namespace Azure.Core.Tests
             jsonData.Foo[1] = 5;
             jsonData.Foo[2] = 6;
 
-            Assert.AreEqual(4, (int)jsonData.Foo[0]);
-            Assert.AreEqual(5, (int)jsonData.Foo[1]);
-            Assert.AreEqual(6, (int)jsonData.Foo[2]);
+            Assert.That((int)jsonData.Foo[0], Is.EqualTo(4));
+            Assert.That((int)jsonData.Foo[1], Is.EqualTo(5));
+            Assert.That((int)jsonData.Foo[2], Is.EqualTo(6));
         }
 
         [Test]
@@ -189,10 +189,10 @@ namespace Azure.Core.Tests
             jsonData[2] = true;
             jsonData[3] = "string";
 
-            Assert.AreEqual(0, (int)jsonData[0]);
-            Assert.AreEqual(4, (int)jsonData[1]);
-            Assert.AreEqual(true, (bool)jsonData[2]);
-            Assert.AreEqual("string", (string)jsonData[3]);
+            Assert.That((int)jsonData[0], Is.EqualTo(0));
+            Assert.That((int)jsonData[1], Is.EqualTo(4));
+            Assert.That((bool)jsonData[2], Is.EqualTo(true));
+            Assert.That((string)jsonData[3], Is.EqualTo("string"));
         }
 
         [Test]
@@ -208,10 +208,10 @@ namespace Azure.Core.Tests
             jsonData.Foo[2] = true;
             jsonData.Foo[3] = "string";
 
-            Assert.AreEqual(0, (int)jsonData.Foo[0]);
-            Assert.AreEqual(4, (int)jsonData.Foo[1]);
-            Assert.AreEqual(true, (bool)jsonData.Foo[2]);
-            Assert.AreEqual("string", (string)jsonData.Foo[3]);
+            Assert.That((int)jsonData.Foo[0], Is.EqualTo(0));
+            Assert.That((int)jsonData.Foo[1], Is.EqualTo(4));
+            Assert.That((bool)jsonData.Foo[2], Is.EqualTo(true));
+            Assert.That((string)jsonData.Foo[3], Is.EqualTo("string"));
         }
 
         [Test]
@@ -219,8 +219,8 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""{ "foo" : null }""");
 
-            Assert.IsNull((CustomType)jsonData.Foo);
-            Assert.IsNull((int?)jsonData.Foo);
+            Assert.That((CustomType)jsonData.Foo, Is.Null);
+            Assert.That((int?)jsonData.Foo, Is.Null);
             Assert.IsNull(jsonData.Foo);
             Assert.IsNull(jsonData.foo);
         }
@@ -230,8 +230,8 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""[ null ]""");
 
-            Assert.IsNull((CustomType)jsonData[0]);
-            Assert.IsNull((int?)jsonData[0]);
+            Assert.That((CustomType)jsonData[0], Is.Null);
+            Assert.That((int?)jsonData[0], Is.Null);
             Assert.IsNull(jsonData[0]);
         }
 
@@ -242,8 +242,8 @@ namespace Azure.Core.Tests
 
             jsonData.Foo = null;
 
-            Assert.IsNull((CustomType)jsonData.Foo);
-            Assert.IsNull((int?)jsonData.Foo);
+            Assert.That((CustomType)jsonData.Foo, Is.Null);
+            Assert.That((int?)jsonData.Foo, Is.Null);
             Assert.IsNull(jsonData.Foo);
             Assert.IsNull(jsonData.foo);
         }
@@ -255,8 +255,8 @@ namespace Azure.Core.Tests
 
             jsonData[0] = null;
 
-            Assert.IsNull((CustomType)jsonData[0]);
-            Assert.IsNull((int?)jsonData[0]);
+            Assert.That((CustomType)jsonData[0], Is.Null);
+            Assert.That((int?)jsonData[0], Is.Null);
             Assert.IsNull(jsonData[0]);
         }
 
@@ -271,7 +271,7 @@ namespace Azure.Core.Tests
 
             jsonData["Foo"] = 4;
 
-            Assert.AreEqual(4, (int)jsonData["Foo"]);
+            Assert.That((int)jsonData["Foo"], Is.EqualTo(4));
         }
 
         [Test]
@@ -287,7 +287,7 @@ namespace Azure.Core.Tests
 
             jsonData["foo"]["bar"] = 4;
 
-            Assert.AreEqual(4, (int)jsonData.Foo["bar"]);
+            Assert.That((int)jsonData.Foo["bar"], Is.EqualTo(4));
         }
 
         [Test]
@@ -301,8 +301,8 @@ namespace Azure.Core.Tests
 
             jsonData.Bar = 2;
 
-            Assert.AreEqual(1, (int)jsonData.Foo);
-            Assert.AreEqual(2, (int)jsonData.Bar);
+            Assert.That((int)jsonData.Foo, Is.EqualTo(1));
+            Assert.That((int)jsonData.Bar, Is.EqualTo(2));
         }
 
         [Test]
@@ -315,16 +315,16 @@ namespace Azure.Core.Tests
                 }
                 """).ToDynamicFromJson(options);
 
-            Assert.AreEqual(1, (int)jsonData.Foo);
+            Assert.That((int)jsonData.Foo, Is.EqualTo(1));
 
             jsonData.Foo = "hi";
 
-            Assert.AreEqual("hi", (string)jsonData.Foo);
+            Assert.That((string)jsonData.Foo, Is.EqualTo("hi"));
 
             jsonData.Bar = 2;
 
-            Assert.AreEqual("hi", (string)jsonData.Foo);
-            Assert.AreEqual(2, (int)jsonData.Bar);
+            Assert.That((string)jsonData.Foo, Is.EqualTo("hi"));
+            Assert.That((int)jsonData.Bar, Is.EqualTo(2));
         }
 
         [Test]
@@ -366,10 +366,10 @@ namespace Azure.Core.Tests
             Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
             Assert.IsTrue(roundTripValue.model.number == value.Model.Number);
 
-            Assert.AreEqual(model, (SampleModel)roundTripValue.model);
-            Assert.AreEqual(model, (SampleModel)roundTripValue.Model);
-            Assert.AreEqual(model, (SampleModel)value.model);
-            Assert.AreEqual(model, (SampleModel)value.Model);
+            Assert.That((SampleModel)roundTripValue.model, Is.EqualTo(model));
+            Assert.That((SampleModel)roundTripValue.Model, Is.EqualTo(model));
+            Assert.That((SampleModel)value.model, Is.EqualTo(model));
+            Assert.That((SampleModel)value.Model, Is.EqualTo(model));
         }
 
         [Test]
@@ -406,15 +406,16 @@ namespace Azure.Core.Tests
             BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
             BinaryData dataBuffer = GetWriteToBuffer(value);
 
-            Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
-            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+            Assert.That(dataBuffer.ToString(), Is.EqualTo(jdocBuffer.ToString()));
+            Assert.That(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+                Is.True,
                 "JsonDocument buffer does not match MutableJsonDocument buffer.");
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
             dynamic roundTripValue = bd.ToDynamicFromJson(options);
-            Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Model.Value);
-            Assert.AreEqual(model, (ParentModel)roundTripValue.Model);
+            Assert.That((ChildModel)roundTripValue.Model.Value, Is.EqualTo(model.Value));
+            Assert.That((ParentModel)roundTripValue.Model, Is.EqualTo(model));
         }
 
         [Test]
@@ -449,15 +450,16 @@ namespace Azure.Core.Tests
             BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
             BinaryData dataBuffer = GetWriteToBuffer(value);
 
-            Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
-            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+            Assert.That(dataBuffer.ToString(), Is.EqualTo(jdocBuffer.ToString()));
+            Assert.That(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+                Is.True,
                 "JsonDocument buffer does not match MutableJsonDocument buffer.");
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
             dynamic roundTripValue = bd.ToDynamicFromJson(options);
-            Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Foo.Value);
-            Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
+            Assert.That((ChildModel)roundTripValue.Foo.Value, Is.EqualTo(model.Value));
+            Assert.That((ParentModel)roundTripValue.Foo, Is.EqualTo(model));
         }
 
         internal static BinaryData GetWriteToBuffer(dynamic data)
@@ -535,7 +537,7 @@ namespace Azure.Core.Tests
 
             // Property is present
             Assert.IsFalse(json.OptionalValue == null);
-            Assert.AreEqual(5, (int)json.OptionalValue);
+            Assert.That((int)json.OptionalValue, Is.EqualTo(5));
         }
 
         [Test]
@@ -634,17 +636,17 @@ namespace Azure.Core.Tests
                 """).ToDynamicFromJson(options);
 
             // Get from parsed JSON
-            Assert.AreEqual((byte)42, (byte)json.Foo);
+            Assert.That((byte)json.Foo, Is.EqualTo((byte)42));
             Assert.IsTrue(((byte)42) == json.Foo);
 
             // Get from assigned existing value
             json.Foo = (byte)43;
-            Assert.AreEqual((byte)43, (byte)json.Foo);
+            Assert.That((byte)json.Foo, Is.EqualTo((byte)43));
             Assert.IsTrue(((byte)43) == json.Foo);
 
             // Get from added value
             json.Bar = (byte)44;
-            Assert.AreEqual((byte)44, (byte)json.Bar);
+            Assert.That((byte)json.Bar, Is.EqualTo((byte)44));
             Assert.IsTrue(((byte)44) == json.Bar);
 
             // Doesn't work if number change is outside byte range
@@ -663,19 +665,19 @@ namespace Azure.Core.Tests
             dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
-            Assert.AreEqual(x, (T)json.Foo);
+            Assert.That((T)json.Foo, Is.EqualTo(x));
             Assert.IsTrue(x == json.Foo);
             Assert.IsTrue(json.Foo == x);
 
             // Get from assigned existing value
             json.Foo = y;
-            Assert.AreEqual(y, (T)json.Foo);
+            Assert.That((T)json.Foo, Is.EqualTo(y));
             Assert.IsTrue(y == json.Foo);
             Assert.IsTrue(json.Foo == y);
 
             // Get from added value
             json.Bar = z;
-            Assert.AreEqual(z, (T)json.Bar);
+            Assert.That((T)json.Bar, Is.EqualTo(z));
             Assert.IsTrue(z == json.Bar);
             Assert.IsTrue(json.Bar == z);
 
@@ -700,30 +702,30 @@ namespace Azure.Core.Tests
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
-            Assert.AreEqual(guid, (Guid)json.Foo);
-            Assert.IsTrue(guid == (Guid)json.Foo);
-            Assert.IsTrue((Guid)json.Foo == guid);
+            Assert.That((Guid)json.Foo, Is.EqualTo(guid));
+            Assert.That(guid, Is.EqualTo((Guid)json.Foo));
+            Assert.That((Guid)json.Foo, Is.EqualTo(guid));
 
             // Get from assigned existing value
             Guid fooValue = Guid.NewGuid();
             json.Foo = fooValue;
-            Assert.AreEqual(fooValue, (Guid)json.Foo);
-            Assert.IsTrue(fooValue == (Guid)json.Foo);
-            Assert.IsTrue((Guid)json.Foo == fooValue);
+            Assert.That((Guid)json.Foo, Is.EqualTo(fooValue));
+            Assert.That(fooValue, Is.EqualTo((Guid)json.Foo));
+            Assert.That((Guid)json.Foo, Is.EqualTo(fooValue));
 
             // Get from added value
             Guid barValue = Guid.NewGuid();
             json.Bar = barValue;
-            Assert.AreEqual(barValue, (Guid)json.Bar);
-            Assert.IsTrue(barValue == (Guid)json.Bar);
-            Assert.IsTrue((Guid)json.Bar == barValue);
+            Assert.That((Guid)json.Bar, Is.EqualTo(barValue));
+            Assert.That(barValue, Is.EqualTo((Guid)json.Bar));
+            Assert.That((Guid)json.Bar, Is.EqualTo(barValue));
 
             // Also works as a string
-            Assert.AreEqual(fooValue.ToString(), (string)json.Foo);
+            Assert.That((string)json.Foo, Is.EqualTo(fooValue.ToString()));
             Assert.IsTrue(fooValue.ToString() == json.Foo);
             Assert.IsTrue(json.Foo == fooValue.ToString());
 
-            Assert.AreEqual(barValue.ToString(), (string)json.Bar);
+            Assert.That((string)json.Bar, Is.EqualTo(barValue.ToString()));
             Assert.IsTrue(barValue.ToString() == json.Bar);
             Assert.IsTrue(json.Bar == barValue.ToString());
 
@@ -741,32 +743,32 @@ namespace Azure.Core.Tests
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
-            Assert.AreEqual(dateTime, (DateTime)json.Foo);
-            Assert.IsTrue(dateTime == (DateTime)json.Foo);
-            Assert.IsTrue((DateTime)json.Foo == dateTime);
+            Assert.That((DateTime)json.Foo, Is.EqualTo(dateTime));
+            Assert.That(dateTime, Is.EqualTo((DateTime)json.Foo));
+            Assert.That((DateTime)json.Foo, Is.EqualTo(dateTime));
 
             // Get from assigned existing value
             DateTime fooValue = DateTime.UtcNow.AddDays(1);
             json.Foo = fooValue;
-            Assert.AreEqual(fooValue, (DateTime)json.Foo);
-            Assert.IsTrue(fooValue == (DateTime)json.Foo);
-            Assert.IsTrue((DateTime)json.Foo == fooValue);
+            Assert.That((DateTime)json.Foo, Is.EqualTo(fooValue));
+            Assert.That(fooValue, Is.EqualTo((DateTime)json.Foo));
+            Assert.That((DateTime)json.Foo, Is.EqualTo(fooValue));
 
             // Get from added value
             DateTime barValue = DateTime.UtcNow.AddDays(2);
             json.Bar = barValue;
-            Assert.AreEqual(barValue, (DateTime)json.Bar);
-            Assert.IsTrue(barValue == (DateTime)json.Bar);
-            Assert.IsTrue((DateTime)json.Bar == barValue);
+            Assert.That((DateTime)json.Bar, Is.EqualTo(barValue));
+            Assert.That(barValue, Is.EqualTo((DateTime)json.Bar));
+            Assert.That((DateTime)json.Bar, Is.EqualTo(barValue));
 
             // Also works as a string
             string fooValueString = FormatDateTime(fooValue);
-            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.That((string)json.Foo, Is.EqualTo(fooValueString));
             Assert.IsTrue(fooValueString == json.Foo);
             Assert.IsTrue(json.Foo == fooValueString);
 
             string barValueString = FormatDateTime(barValue);
-            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.That((string)json.Bar, Is.EqualTo(barValueString));
             Assert.IsTrue(barValueString == json.Bar);
             Assert.IsTrue(json.Bar == barValueString);
 
@@ -784,32 +786,32 @@ namespace Azure.Core.Tests
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
-            Assert.AreEqual(dateTime, (DateTimeOffset)json.Foo);
-            Assert.IsTrue(dateTime == (DateTimeOffset)json.Foo);
-            Assert.IsTrue((DateTimeOffset)json.Foo == dateTime);
+            Assert.That((DateTimeOffset)json.Foo, Is.EqualTo(dateTime));
+            Assert.That(dateTime, Is.EqualTo((DateTimeOffset)json.Foo));
+            Assert.That((DateTimeOffset)json.Foo, Is.EqualTo(dateTime));
 
             // Get from assigned existing value
             DateTimeOffset fooValue = DateTimeOffset.UtcNow.AddDays(1);
             json.Foo = fooValue;
-            Assert.AreEqual(fooValue, (DateTimeOffset)json.Foo);
-            Assert.IsTrue(fooValue == (DateTimeOffset)json.Foo);
-            Assert.IsTrue((DateTimeOffset)json.Foo == fooValue);
+            Assert.That((DateTimeOffset)json.Foo, Is.EqualTo(fooValue));
+            Assert.That(fooValue, Is.EqualTo((DateTimeOffset)json.Foo));
+            Assert.That((DateTimeOffset)json.Foo, Is.EqualTo(fooValue));
 
             // Get from added value
             DateTimeOffset barValue = DateTimeOffset.UtcNow.AddDays(2);
             json.Bar = barValue;
-            Assert.AreEqual(barValue, (DateTimeOffset)json.Bar);
-            Assert.IsTrue(barValue == (DateTimeOffset)json.Bar);
-            Assert.IsTrue((DateTimeOffset)json.Bar == barValue);
+            Assert.That((DateTimeOffset)json.Bar, Is.EqualTo(barValue));
+            Assert.That(barValue, Is.EqualTo((DateTimeOffset)json.Bar));
+            Assert.That((DateTimeOffset)json.Bar, Is.EqualTo(barValue));
 
             // Also works as a string
             string fooValueString = FormatDateTimeOffset(fooValue);
-            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.That((string)json.Foo, Is.EqualTo(fooValueString));
             Assert.IsTrue(fooValueString == json.Foo);
             Assert.IsTrue(json.Foo == fooValueString);
 
             string barValueString = FormatDateTimeOffset(barValue);
-            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.That((string)json.Bar, Is.EqualTo(barValueString));
             Assert.IsTrue(barValueString == json.Bar);
             Assert.IsTrue(json.Bar == barValueString);
 
@@ -846,9 +848,9 @@ namespace Azure.Core.Tests
 
             void validate(dynamic a, dynamic b)
             {
-                Assert.AreEqual((long)a, (long)b);
-                Assert.AreEqual((DateTime)a, (DateTime)b);
-                Assert.AreEqual((DateTimeOffset)a, (DateTimeOffset)b);
+                Assert.That((long)b, Is.EqualTo((long)a));
+                Assert.That((DateTime)b, Is.EqualTo((DateTime)a));
+                Assert.That((DateTimeOffset)b, Is.EqualTo((DateTimeOffset)a));
             }
 
             string json = value.ToString();
@@ -925,7 +927,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson(expected);
 
-            Assert.AreEqual(value, (T)json);
+            Assert.That((T)json, Is.EqualTo(value));
         }
 
         [Test]
@@ -988,35 +990,35 @@ namespace Azure.Core.Tests
             json.a.b = value;
 
             Assert.AreEqual("{\"a\":{\"b\":" + expected + "}}", json.ToString());
-            Assert.AreEqual(value, (T)json.a.b);
+            Assert.That((T)json.a.b, Is.EqualTo(value));
 
             dynamic reparsedJson = DynamicJsonTests.GetDynamicJson(json.ToString());
 
-            Assert.AreEqual(value, (T)reparsedJson.a.b);
+            Assert.That((T)reparsedJson.a.b, Is.EqualTo(value));
         }
         [Test]
-        public void DynamicCanConvertToString() => Assert.AreEqual("string", JsonAsType<string>("\"string\""));
+        public void DynamicCanConvertToString() => Assert.That(JsonAsType<string>("\"string\""), Is.EqualTo("string"));
 
         [Test]
-        public void DynamicCanConvertToInt() => Assert.AreEqual(5, JsonAsType<int>("5"));
+        public void DynamicCanConvertToInt() => Assert.That(JsonAsType<int>("5"), Is.EqualTo(5));
 
         [Test]
-        public void DynamicCanConvertToLong() => Assert.AreEqual(5L, JsonAsType<long>("5"));
+        public void DynamicCanConvertToLong() => Assert.That(JsonAsType<long>("5"), Is.EqualTo(5L));
 
         [Test]
-        public void DynamicCanConvertToBool() => Assert.AreEqual(true, JsonAsType<bool>("true"));
+        public void DynamicCanConvertToBool() => Assert.That(JsonAsType<bool>("true"), Is.EqualTo(true));
 
         [Test]
-        public void DynamicCanConvertToNullAsString() => Assert.AreEqual(null, JsonAsType<string>("null"));
+        public void DynamicCanConvertToNullAsString() => Assert.That(JsonAsType<string>("null"), Is.EqualTo(null));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableInt() => Assert.AreEqual(null, JsonAsType<int?>("null"));
+        public void DynamicCanConvertToNullAsNullableInt() => Assert.That(JsonAsType<int?>("null"), Is.EqualTo(null));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableLong() => Assert.AreEqual(null, JsonAsType<long?>("null"));
+        public void DynamicCanConvertToNullAsNullableLong() => Assert.That(JsonAsType<long?>("null"), Is.EqualTo(null));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonAsType<bool?>("null"));
+        public void DynamicCanConvertToNullAsNullableBool() => Assert.That(JsonAsType<bool?>("null"), Is.EqualTo(null));
 
         [Test]
         public void DynamicCanConvertToIEnumerableDynamic()
@@ -1028,13 +1030,13 @@ namespace Azure.Core.Tests
                 switch (i)
                 {
                     case 0:
-                        Assert.AreEqual(1, (int)dynamicItem);
+                        Assert.That((int)dynamicItem, Is.EqualTo(1));
                         break;
                     case 1:
-                        Assert.AreEqual(null, (string)dynamicItem);
+                        Assert.That((string)dynamicItem, Is.EqualTo(null));
                         break;
                     case 2:
-                        Assert.AreEqual("s", (string)dynamicItem);
+                        Assert.That((string)dynamicItem, Is.EqualTo("s"));
                         break;
                     default:
                         Assert.Fail();
@@ -1043,7 +1045,7 @@ namespace Azure.Core.Tests
 
                 i++;
             }
-            Assert.AreEqual(3, i);
+            Assert.That(i, Is.EqualTo(3));
         }
 
         [Test]
@@ -1053,11 +1055,11 @@ namespace Azure.Core.Tests
             int i = 0;
             foreach (int dynamicItem in jsonData)
             {
-                Assert.AreEqual(i, dynamicItem);
+                Assert.That(dynamicItem, Is.EqualTo(i));
 
                 i++;
             }
-            Assert.AreEqual(4, i);
+            Assert.That(i, Is.EqualTo(4));
         }
 
         [Test]
@@ -1072,8 +1074,8 @@ namespace Azure.Core.Tests
               }
             """);
 
-            Assert.AreEqual("Hello", (string)jsonData.primitive);
-            Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
+            Assert.That((string)jsonData.primitive, Is.EqualTo("Hello"));
+            Assert.That((bool)jsonData.nested.nestedPrimitive, Is.EqualTo(true));
         }
 
         [Test]
@@ -1096,7 +1098,7 @@ namespace Azure.Core.Tests
                     count++;
                 }
 
-                Assert.IsTrue(count == 1);
+                Assert.That(count, Is.EqualTo(1));
             }
 
             validate(orig);

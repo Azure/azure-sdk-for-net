@@ -33,8 +33,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         {
             ShareFileSourceCheckpointDetails data = new(ShareProtocol.Nfs);
 
-            Assert.That(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion, Is.EqualTo(data.Version));
-            Assert.That(ShareProtocol.Nfs, Is.EqualTo(data.ShareProtocol));
+            Assert.That(data.Version, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion));
+            Assert.That(data.ShareProtocol, Is.EqualTo(ShareProtocol.Nfs));
         }
 
         [Test]

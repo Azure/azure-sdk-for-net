@@ -15,13 +15,13 @@ namespace Azure.Core.Tests.Diagnostics
         [Test]
         public void IsActiveIsFalseForDefaultValueStopwatch()
         {
-            Assert.False(default(ValueStopwatch).IsActive);
+            Assert.That(default(ValueStopwatch).IsActive, Is.False);
         }
 
         [Test]
         public void IsActiveIsTrueWhenValueStopwatchStartedWithStartNew()
         {
-            Assert.True(ValueStopwatch.StartNew().IsActive);
+            Assert.That(ValueStopwatch.StartNew().IsActive, Is.True);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Diagnostics
         {
             var stopwatch = ValueStopwatch.StartNew();
             await Task.Delay(200);
-            Assert.True(stopwatch.GetElapsedTime().TotalMilliseconds > 0);
+            Assert.That(stopwatch.GetElapsedTime().TotalMilliseconds > 0, Is.True);
         }
     }
 }

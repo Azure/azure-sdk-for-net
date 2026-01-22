@@ -50,14 +50,14 @@ public class PaginatedCollectionTests
             PipelineResponse response = page.GetRawResponse();
             ValueItemPage conveniencePage = ValueItemPage.FromJson(response.Content);
 
-            Assert.AreEqual(MockPageResponseData.DefaultPageSize, conveniencePage.Values.Count);
-            Assert.AreEqual(expectedValueId, conveniencePage.Values[0].Id);
+            Assert.That(conveniencePage.Values.Count, Is.EqualTo(MockPageResponseData.DefaultPageSize));
+            Assert.That(conveniencePage.Values[0].Id, Is.EqualTo(expectedValueId));
 
             pageCount++;
             expectedValueId += MockPageResponseData.DefaultPageSize;
         }
 
-        Assert.AreEqual(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize, pageCount);
+        Assert.That(pageCount, Is.EqualTo(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize));
     }
 
     [Test]
@@ -84,13 +84,13 @@ public class PaginatedCollectionTests
             ValueItemPage originalPage = ValueItemPage.FromJson(originalPageResult.GetRawResponse().Content);
             ValueItemPage rehydratedPage = ValueItemPage.FromJson(rehydratedPageResult.GetRawResponse().Content);
 
-            Assert.AreEqual(originalPage.Values.Count, rehydratedPage.Values.Count);
-            Assert.AreEqual(originalPage.Values[0].Id, rehydratedPage.Values[0].Id);
+            Assert.That(rehydratedPage.Values.Count, Is.EqualTo(originalPage.Values.Count));
+            Assert.That(rehydratedPage.Values[0].Id, Is.EqualTo(originalPage.Values[0].Id));
 
             rehydratedPageCount++;
         }
 
-        Assert.AreEqual(totalPageCount - 1, rehydratedPageCount);
+        Assert.That(rehydratedPageCount, Is.EqualTo(totalPageCount - 1));
     }
 
     [Test]
@@ -108,14 +108,14 @@ public class PaginatedCollectionTests
             PipelineResponse response = page.GetRawResponse();
             ValueItemPage conveniencePage = ValueItemPage.FromJson(response.Content);
 
-            Assert.AreEqual(MockPageResponseData.DefaultPageSize, conveniencePage.Values.Count);
-            Assert.AreEqual(expectedValueId, conveniencePage.Values[0].Id);
+            Assert.That(conveniencePage.Values.Count, Is.EqualTo(MockPageResponseData.DefaultPageSize));
+            Assert.That(conveniencePage.Values[0].Id, Is.EqualTo(expectedValueId));
 
             pageCount++;
             expectedValueId += MockPageResponseData.DefaultPageSize;
         }
 
-        Assert.AreEqual(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize, pageCount);
+        Assert.That(pageCount, Is.EqualTo(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize));
     }
 
     [Test]
@@ -142,13 +142,13 @@ public class PaginatedCollectionTests
             ValueItemPage originalPage = ValueItemPage.FromJson(originalPageResult.GetRawResponse().Content);
             ValueItemPage rehydratedPage = ValueItemPage.FromJson(rehydratedPageResult.GetRawResponse().Content);
 
-            Assert.AreEqual(originalPage.Values.Count, rehydratedPage.Values.Count);
-            Assert.AreEqual(originalPage.Values[0].Id, rehydratedPage.Values[0].Id);
+            Assert.That(rehydratedPage.Values.Count, Is.EqualTo(originalPage.Values.Count));
+            Assert.That(rehydratedPage.Values[0].Id, Is.EqualTo(originalPage.Values[0].Id));
 
             rehydratedPageCount++;
         }
 
-        Assert.AreEqual(totalPageCount - 1, rehydratedPageCount);
+        Assert.That(rehydratedPageCount, Is.EqualTo(totalPageCount - 1));
     }
 
     [Test]
@@ -160,11 +160,11 @@ public class PaginatedCollectionTests
         int count = 0;
         foreach (ValueItem value in values)
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.AreEqual(MockPageResponseData.TotalItemCount, count);
+        Assert.That(count, Is.EqualTo(MockPageResponseData.TotalItemCount));
     }
 
     [Test]
@@ -199,14 +199,14 @@ public class PaginatedCollectionTests
                 PipelineResponse response = page.GetRawResponse();
                 ValueItemPage conveniencePage = ValueItemPage.FromJson(response.Content);
 
-                Assert.AreEqual(MockPageResponseData.DefaultPageSize, conveniencePage.Values.Count);
-                Assert.AreEqual(expectedValueId, conveniencePage.Values[0].Id);
+                Assert.That(conveniencePage.Values.Count, Is.EqualTo(MockPageResponseData.DefaultPageSize));
+                Assert.That(conveniencePage.Values[0].Id, Is.EqualTo(expectedValueId));
 
                 pageCount++;
                 expectedValueId += MockPageResponseData.DefaultPageSize;
             }
 
-            Assert.AreEqual(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize, pageCount);
+            Assert.That(pageCount, Is.EqualTo(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize));
             return true;
         }
 
@@ -218,8 +218,8 @@ public class PaginatedCollectionTests
         PaginatedCollectionClient convenienceClient = new();
         CollectionResult convenienceCollection = convenienceClient.GetValues();
 
-        Assert.IsTrue(Validate(protocolCollection));
-        Assert.IsTrue(Validate(convenienceCollection));
+        Assert.That(Validate(protocolCollection), Is.True);
+        Assert.That(Validate(convenienceCollection), Is.True);
     }
 
     [Test]
@@ -236,11 +236,11 @@ public class PaginatedCollectionTests
         int count = 0;
         foreach (ValueItem value in convenienceCollection)
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.AreEqual(MockPageResponseData.TotalItemCount, count);
+        Assert.That(count, Is.EqualTo(MockPageResponseData.TotalItemCount));
     }
 
     [Test]
@@ -252,11 +252,11 @@ public class PaginatedCollectionTests
         int count = 0;
         await foreach (ValueItem value in values)
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.AreEqual(MockPageResponseData.TotalItemCount, count);
+        Assert.That(count, Is.EqualTo(MockPageResponseData.TotalItemCount));
     }
 
     [Test]
@@ -292,7 +292,7 @@ public class PaginatedCollectionTests
             threwException = true;
         }
 
-        Assert.IsTrue(threwException);
+        Assert.That(threwException, Is.True);
     }
 
     [Test]
@@ -315,14 +315,14 @@ public class PaginatedCollectionTests
                 PipelineResponse response = page.GetRawResponse();
                 ValueItemPage conveniencePage = ValueItemPage.FromJson(response.Content);
 
-                Assert.AreEqual(MockPageResponseData.DefaultPageSize, conveniencePage.Values.Count);
-                Assert.AreEqual(expectedValueId, conveniencePage.Values[0].Id);
+                Assert.That(conveniencePage.Values.Count, Is.EqualTo(MockPageResponseData.DefaultPageSize));
+                Assert.That(conveniencePage.Values[0].Id, Is.EqualTo(expectedValueId));
 
                 pageCount++;
                 expectedValueId += MockPageResponseData.DefaultPageSize;
             }
 
-            Assert.AreEqual(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize, pageCount);
+            Assert.That(pageCount, Is.EqualTo(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize));
             return true;
         }
 
@@ -334,8 +334,8 @@ public class PaginatedCollectionTests
         PaginatedCollectionClient convenienceClient = new();
         AsyncCollectionResult convenienceCollection = convenienceClient.GetValuesAsync();
 
-        Assert.IsTrue(await ValidateAsync(protocolCollection));
-        Assert.IsTrue(await ValidateAsync(convenienceCollection));
+        Assert.That(await ValidateAsync(protocolCollection), Is.True);
+        Assert.That(await ValidateAsync(convenienceCollection), Is.True);
     }
 
     [Test]
@@ -352,11 +352,11 @@ public class PaginatedCollectionTests
         int count = 0;
         await foreach (ValueItem value in convenienceCollection)
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.AreEqual(MockPageResponseData.TotalItemCount, count);
+        Assert.That(count, Is.EqualTo(MockPageResponseData.TotalItemCount));
     }
 
     [Test]
@@ -389,12 +389,12 @@ public class PaginatedCollectionTests
             PipelineResponse response = message.Response!;
             valuePage = ValueItemPage.FromJson(response.Content);
 
-            Assert.AreEqual(MockPageResponseData.DefaultPageSize, valuePage.Values.Count);
+            Assert.That(valuePage.Values.Count, Is.EqualTo(MockPageResponseData.DefaultPageSize));
 
             pageCount++;
         }
         while (valuePage.HasMore);
 
-        Assert.AreEqual(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize, pageCount);
+        Assert.That(pageCount, Is.EqualTo(MockPageResponseData.TotalItemCount / MockPageResponseData.DefaultPageSize));
     }
 }

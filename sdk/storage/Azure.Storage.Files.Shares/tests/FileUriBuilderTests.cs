@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var expectedUri = WebUtility.UrlDecode(serviceUri.Uri.AbsoluteUri);
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
 
-            Assert.AreEqual(expectedUri, actualUri, "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
+            Assert.That(actualUri, Is.EqualTo(expectedUri), "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
         }
 
         [RecordedTest]
@@ -45,16 +45,16 @@ namespace Azure.Storage.Files.Shares.Tests
             Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", fileUriBuilder.Scheme);
-            Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
-            Assert.AreEqual("account", fileUriBuilder.AccountName);
-            Assert.AreEqual(443, fileUriBuilder.Port);
-            Assert.AreEqual("", fileUriBuilder.ShareName);
-            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("", fileUriBuilder.Snapshot);
-            Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("comp=list", fileUriBuilder.Query);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(fileUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(fileUriBuilder.Host, Is.EqualTo("account.file.core.windows.net"));
+            Assert.That(fileUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(fileUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(fileUriBuilder.ShareName, Is.Empty);
+            Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
+            Assert.That(fileUriBuilder.Snapshot, Is.Empty);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
+            Assert.That(fileUriBuilder.Query, Is.EqualTo("comp=list"));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -69,17 +69,17 @@ namespace Azure.Storage.Files.Shares.Tests
             Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", fileUriBuilder.Scheme);
-            Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
-            Assert.AreEqual("account", fileUriBuilder.AccountName);
-            Assert.AreEqual(443, fileUriBuilder.Port);
-            Assert.AreEqual("share", fileUriBuilder.ShareName);
-            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("", fileUriBuilder.Snapshot);
-            Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("restype=share", fileUriBuilder.Query);
-            Assert.AreEqual(originalUri, newUri);
-            Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
+            Assert.That(fileUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(fileUriBuilder.Host, Is.EqualTo("account.file.core.windows.net"));
+            Assert.That(fileUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(fileUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(fileUriBuilder.ShareName, Is.EqualTo("share"));
+            Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
+            Assert.That(fileUriBuilder.Snapshot, Is.Empty);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
+            Assert.That(fileUriBuilder.Query, Is.EqualTo("restype=share"));
+            Assert.That(newUri, Is.EqualTo(originalUri));
+            Assert.That(fileUriBuilder.LastDirectoryOrFileName, Is.Empty);
         }
 
         [RecordedTest]
@@ -94,17 +94,17 @@ namespace Azure.Storage.Files.Shares.Tests
             Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", fileUriBuilder.Scheme);
-            Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
-            Assert.AreEqual("account", fileUriBuilder.AccountName);
-            Assert.AreEqual(443, fileUriBuilder.Port);
-            Assert.AreEqual("share", fileUriBuilder.ShareName);
-            Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
-            Assert.AreEqual("", fileUriBuilder.Snapshot);
-            Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("restype=directory&comp=list", fileUriBuilder.Query);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(fileUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(fileUriBuilder.Host, Is.EqualTo("account.file.core.windows.net"));
+            Assert.That(fileUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(fileUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(fileUriBuilder.ShareName, Is.EqualTo("share"));
+            Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.EqualTo("path"));
+            Assert.That(fileUriBuilder.LastDirectoryOrFileName, Is.EqualTo("path"));
+            Assert.That(fileUriBuilder.Snapshot, Is.Empty);
+            Assert.That(fileUriBuilder.Sas, Is.Null);
+            Assert.That(fileUriBuilder.Query, Is.EqualTo("restype=directory&comp=list"));
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -116,8 +116,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
-            Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
+            Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.EqualTo("path"));
+            Assert.That(fileUriBuilder.LastDirectoryOrFileName, Is.EqualTo("path"));
         }
 
         [RecordedTest]
@@ -141,16 +141,16 @@ namespace Azure.Storage.Files.Shares.Tests
                 Uri newUri = fileUriBuilder.ToUri();
 
                 // Assert
-                Assert.AreEqual("https", fileUriBuilder.Scheme);
-                Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
-                Assert.AreEqual("account", fileUriBuilder.AccountName);
-                Assert.AreEqual(443, fileUriBuilder.Port);
-                Assert.AreEqual("share", fileUriBuilder.ShareName);
-                Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
-                Assert.AreEqual("2011-03-09T01:42:34.9360000Z", fileUriBuilder.Snapshot);
-                Assert.IsNull(fileUriBuilder.Sas);
-                Assert.AreEqual("", fileUriBuilder.Query);
-                Assert.IsTrue(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.That(fileUriBuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(fileUriBuilder.Host, Is.EqualTo("account.file.core.windows.net"));
+                Assert.That(fileUriBuilder.AccountName, Is.EqualTo("account"));
+                Assert.That(fileUriBuilder.Port, Is.EqualTo(443));
+                Assert.That(fileUriBuilder.ShareName, Is.EqualTo("share"));
+                Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
+                Assert.That(fileUriBuilder.Snapshot, Is.EqualTo("2011-03-09T01:42:34.9360000Z"));
+                Assert.That(fileUriBuilder.Sas, Is.Null);
+                Assert.That(fileUriBuilder.Query, Is.Empty);
+                Assert.That(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase), Is.True);
             }
         }
 
@@ -166,36 +166,36 @@ namespace Azure.Storage.Files.Shares.Tests
             Uri newUri = fileUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", fileUriBuilder.Scheme);
-            Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
-            Assert.AreEqual("account", fileUriBuilder.AccountName);
-            Assert.AreEqual(443, fileUriBuilder.Port);
-            Assert.AreEqual("share", fileUriBuilder.ShareName);
-            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.That(fileUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(fileUriBuilder.Host, Is.EqualTo("account.file.core.windows.net"));
+            Assert.That(fileUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(fileUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(fileUriBuilder.ShareName, Is.EqualTo("share"));
+            Assert.That(fileUriBuilder.DirectoryOrFilePath, Is.Empty);
+            Assert.That(fileUriBuilder.Snapshot, Is.Empty);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), fileUriBuilder.Sas.ExpiresOn);
-            Assert.AreEqual("", fileUriBuilder.Sas.Identifier);
-            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), fileUriBuilder.Sas.IPRange);
-            Assert.AreEqual("rw", fileUriBuilder.Sas.Permissions);
-            Assert.AreEqual(SasProtocol.Https, fileUriBuilder.Sas.Protocol);
-            Assert.AreEqual("b", fileUriBuilder.Sas.Resource);
-            Assert.IsNull(fileUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(fileUriBuilder.Sas.Services);
-            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", fileUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), fileUriBuilder.Sas.StartsOn);
-            Assert.AreEqual("2015-04-05", fileUriBuilder.Sas.Version);
+            Assert.That(fileUriBuilder.Sas.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+            Assert.That(fileUriBuilder.Sas.Identifier, Is.Empty);
+            Assert.That(fileUriBuilder.Sas.IPRange, Is.EqualTo(SasIPRange.Parse("168.1.5.60-168.1.5.70")));
+            Assert.That(fileUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
+            Assert.That(fileUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
+            Assert.That(fileUriBuilder.Sas.Resource, Is.EqualTo("b"));
+            Assert.That(fileUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(fileUriBuilder.Sas.Services, Is.Null);
+            Assert.That(fileUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
+            Assert.That(fileUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+            Assert.That(fileUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
 
-            Assert.AreEqual("comp=list", fileUriBuilder.Query);
+            Assert.That(fileUriBuilder.Query, Is.EqualTo("comp=list"));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
         public void FileUriBuilder_RegularUrl_CNAME()
         {
             var shareUriBuilder = new ShareUriBuilder(new Uri("http://www.contoso.com"));
-            Assert.AreEqual(string.Empty, shareUriBuilder.AccountName);
+            Assert.That(shareUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var fileUriBuilder = new ShareUriBuilder(new Uri("https://account.z.file.core.windows.net/share/dir"));
 
-            Assert.AreEqual("account", fileUriBuilder.AccountName);
+            Assert.That(fileUriBuilder.AccountName, Is.EqualTo("account"));
         }
 
         [RecordedTest]
@@ -211,7 +211,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var fileUriBuilder = new ShareUriBuilder(new Uri("http://notaurl"));
 
-            Assert.IsEmpty(fileUriBuilder.AccountName);
+            Assert.That(fileUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -226,9 +226,9 @@ namespace Azure.Storage.Files.Shares.Tests
             // empty service
             var shareUriBuilder3 = new ShareUriBuilder(new Uri("https://account./share/dir"));
 
-            Assert.AreEqual(string.Empty, shareUriBuilder1.AccountName);
-            Assert.AreEqual(string.Empty, shareUriBuilder2.AccountName);
-            Assert.AreEqual(string.Empty, shareUriBuilder3.AccountName);
+            Assert.That(shareUriBuilder1.AccountName, Is.Empty);
+            Assert.That(shareUriBuilder2.AccountName, Is.Empty);
+            Assert.That(shareUriBuilder3.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -242,9 +242,9 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             Uri uri = shareUriBuilder.ToUri();
 
-            Assert.AreEqual(
-                new Uri("https://account.file.core.windows.net/share/%21%27%28%29%3B/%5B%5D%40%26%25%3D%2B%24/%2C%23äÄö/ÖüÜß%3B"),
-                uri);
+            Assert.That(
+                uri,
+                Is.EqualTo(new Uri("https://account.file.core.windows.net/share/%21%27%28%29%3B/%5B%5D%40%26%25%3D%2B%24/%2C%23äÄö/ÖüÜß%3B")));
 
             // Encoded.  We want to encode again, because this is the literal path the customer wants.
             path = "%21%27%28%29%3B/%5B%5D%40%26%25%3D%2B%24/%2C%23äÄö/ÖüÜß%3B";
@@ -254,9 +254,9 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             uri = shareUriBuilder.ToUri();
 
-            Assert.AreEqual(
-                new Uri("https://account.file.core.windows.net/share/%2521%2527%2528%2529%253B/%255B%255D%2540%2526%2525%253D%252B%2524/%252C%2523äÄö/ÖüÜß%253B"),
-                uri);
+            Assert.That(
+                uri,
+                Is.EqualTo(new Uri("https://account.file.core.windows.net/share/%2521%2527%2528%2529%253B/%255B%255D%2540%2526%2525%253D%252B%2524/%252C%2523äÄö/ÖüÜß%253B")));
         }
 
         [RecordedTest]
@@ -274,9 +274,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Uri resultUri = shareUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual(initialUri, resultUri);
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"));
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
+            Assert.That(resultUri, Is.EqualTo(initialUri));
+            Assert.That(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"), Is.True);
+            Assert.That(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"), Is.True);
         }
 
         [RecordedTest]
@@ -294,7 +294,7 @@ namespace Azure.Storage.Files.Shares.Tests
             }
             catch (FormatException e)
             {
-                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+                Assert.That(e.Message.Contains("was not recognized as a valid DateTime."), Is.True);
             }
         }
     }

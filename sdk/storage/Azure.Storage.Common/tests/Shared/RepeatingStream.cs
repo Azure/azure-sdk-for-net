@@ -51,7 +51,7 @@ namespace Azure.Storage.Tests.Shared
                 throw new ArgumentOutOfRangeException(nameof(count));
             }
 
-            int dataOffset = (int) (Position % _data.Length);
+            int dataOffset = (int)(Position % _data.Length);
             int toRead = (int)Math.Min(Math.Min(count, _length - Position), _data.Length - dataOffset);
             _data.Slice(dataOffset, toRead).CopyTo(new Memory<byte>(buffer, offset, count));
 

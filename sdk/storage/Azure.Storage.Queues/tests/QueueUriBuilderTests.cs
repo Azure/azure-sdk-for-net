@@ -30,17 +30,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("account.queue.core.windows.net", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("comp=list", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("account.queue.core.windows.net"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.Empty);
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.EqualTo("comp=list"));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -55,17 +55,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("account.queue.core.windows.net", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("account.queue.core.windows.net"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -80,17 +80,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("account.queue.core.windows.net", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.IsTrue(queueUriBuilder.Messages);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("account.queue.core.windows.net"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.Messages, Is.True);
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -105,17 +105,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("account.queue.core.windows.net", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsTrue(queueUriBuilder.Messages);
-            Assert.AreEqual("messageId", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("account.queue.core.windows.net"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.True);
+            Assert.That(queueUriBuilder.MessageId, Is.EqualTo("messageId"));
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -130,17 +130,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("account.queue.core.windows.net", queueUriBuilder.Host);
-            Assert.AreEqual(8080, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("account.queue.core.windows.net"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(8080));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -155,29 +155,29 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("account.queue.core.windows.net", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("account.queue.core.windows.net"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiresOn);
-            Assert.AreEqual("", queueUriBuilder.Sas.Identifier);
-            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.IPRange);
-            Assert.AreEqual("rw", queueUriBuilder.Sas.Permissions);
-            Assert.AreEqual(SasProtocol.Https, queueUriBuilder.Sas.Protocol);
-            Assert.AreEqual("b", queueUriBuilder.Sas.Resource);
-            Assert.IsNull(queueUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(queueUriBuilder.Sas.Services);
-            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", queueUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), queueUriBuilder.Sas.StartsOn);
-            Assert.AreEqual("2015-04-05", queueUriBuilder.Sas.Version);
+            Assert.That(queueUriBuilder.Sas.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+            Assert.That(queueUriBuilder.Sas.Identifier, Is.Empty);
+            Assert.That(queueUriBuilder.Sas.IPRange, Is.EqualTo(SasIPRange.Parse("168.1.5.60-168.1.5.70")));
+            Assert.That(queueUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
+            Assert.That(queueUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
+            Assert.That(queueUriBuilder.Sas.Resource, Is.EqualTo("b"));
+            Assert.That(queueUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(queueUriBuilder.Sas.Services, Is.Null);
+            Assert.That(queueUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
+            Assert.That(queueUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+            Assert.That(queueUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
 
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -192,17 +192,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("comp=list", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.Empty);
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.EqualTo("comp=list"));
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -217,17 +217,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -242,17 +242,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsTrue(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.True);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -267,17 +267,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsTrue(queueUriBuilder.Messages);
-            Assert.AreEqual("messageId", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.True);
+            Assert.That(queueUriBuilder.MessageId, Is.EqualTo("messageId"));
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -292,17 +292,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(8080, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(8080));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.Empty);
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -317,17 +317,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(8080, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(8080));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -342,17 +342,17 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
-            Assert.IsNull(queueUriBuilder.Sas);
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.Empty);
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
+            Assert.That(queueUriBuilder.Sas, Is.Null);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
@@ -367,36 +367,36 @@ namespace Azure.Storage.Queues.Test
             Uri newUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual("https", queueUriBuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
-            Assert.AreEqual(443, queueUriBuilder.Port);
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
-            Assert.AreEqual("queue", queueUriBuilder.QueueName);
-            Assert.IsFalse(queueUriBuilder.Messages);
-            Assert.AreEqual("", queueUriBuilder.MessageId);
+            Assert.That(queueUriBuilder.Scheme, Is.EqualTo("https"));
+            Assert.That(queueUriBuilder.Host, Is.EqualTo("127.0.0.1"));
+            Assert.That(queueUriBuilder.Port, Is.EqualTo(443));
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
+            Assert.That(queueUriBuilder.QueueName, Is.EqualTo("queue"));
+            Assert.That(queueUriBuilder.Messages, Is.False);
+            Assert.That(queueUriBuilder.MessageId, Is.Empty);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), queueUriBuilder.Sas.ExpiresOn);
-            Assert.AreEqual("", queueUriBuilder.Sas.Identifier);
-            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), queueUriBuilder.Sas.IPRange);
-            Assert.AreEqual("rw", queueUriBuilder.Sas.Permissions);
-            Assert.AreEqual(SasProtocol.Https, queueUriBuilder.Sas.Protocol);
-            Assert.AreEqual("b", queueUriBuilder.Sas.Resource);
-            Assert.IsNull(queueUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(queueUriBuilder.Sas.Services);
-            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", queueUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), queueUriBuilder.Sas.StartsOn);
-            Assert.AreEqual("2015-04-05", queueUriBuilder.Sas.Version);
+            Assert.That(queueUriBuilder.Sas.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+            Assert.That(queueUriBuilder.Sas.Identifier, Is.Empty);
+            Assert.That(queueUriBuilder.Sas.IPRange, Is.EqualTo(SasIPRange.Parse("168.1.5.60-168.1.5.70")));
+            Assert.That(queueUriBuilder.Sas.Permissions, Is.EqualTo("rw"));
+            Assert.That(queueUriBuilder.Sas.Protocol, Is.EqualTo(SasProtocol.Https));
+            Assert.That(queueUriBuilder.Sas.Resource, Is.EqualTo("b"));
+            Assert.That(queueUriBuilder.Sas.ResourceTypes, Is.Null);
+            Assert.That(queueUriBuilder.Sas.Services, Is.Null);
+            Assert.That(queueUriBuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
+            Assert.That(queueUriBuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+            Assert.That(queueUriBuilder.Sas.Version, Is.EqualTo("2015-04-05"));
 
-            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.That(queueUriBuilder.Query, Is.Empty);
 
-            Assert.AreEqual(originalUri, newUri);
+            Assert.That(newUri, Is.EqualTo(originalUri));
         }
 
         [RecordedTest]
         public void QueueUriBuilder_RegularUrl_CNAME()
         {
             var queueUriBUilder = new QueueUriBuilder(new Uri("http://www.contoso.com"));
-            Assert.AreEqual(string.Empty, queueUriBUilder.AccountName);
+            Assert.That(queueUriBUilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -404,7 +404,7 @@ namespace Azure.Storage.Queues.Test
         {
             var queueUriBuilder = new QueueUriBuilder(new Uri("https://account.z.queue.core.windows.net/share/dir"));
 
-            Assert.AreEqual("account", queueUriBuilder.AccountName);
+            Assert.That(queueUriBuilder.AccountName, Is.EqualTo("account"));
         }
 
         [RecordedTest]
@@ -412,7 +412,7 @@ namespace Azure.Storage.Queues.Test
         {
             var queueUriBuilder = new QueueUriBuilder(new Uri("http://notaurl"));
 
-            Assert.IsEmpty(queueUriBuilder.AccountName);
+            Assert.That(queueUriBuilder.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -427,9 +427,9 @@ namespace Azure.Storage.Queues.Test
             // empty service
             var queueUriBuilder3 = new QueueUriBuilder(new Uri("https://account./queue"));
 
-            Assert.AreEqual(string.Empty, queueUriBuilder1.AccountName);
-            Assert.AreEqual(string.Empty, queueUriBuilder2.AccountName);
-            Assert.AreEqual(string.Empty, queueUriBuilder3.AccountName);
+            Assert.That(queueUriBuilder1.AccountName, Is.Empty);
+            Assert.That(queueUriBuilder2.AccountName, Is.Empty);
+            Assert.That(queueUriBuilder3.AccountName, Is.Empty);
         }
 
         [RecordedTest]
@@ -447,9 +447,9 @@ namespace Azure.Storage.Queues.Test
             Uri resultUri = queueUriBuilder.ToUri();
 
             // Assert
-            Assert.AreEqual(initialUri, resultUri);
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"));
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
+            Assert.That(resultUri, Is.EqualTo(initialUri));
+            Assert.That(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"), Is.True);
+            Assert.That(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"), Is.True);
         }
 
         [RecordedTest]
@@ -467,7 +467,7 @@ namespace Azure.Storage.Queues.Test
             }
             catch (FormatException e)
             {
-                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+                Assert.That(e.Message.Contains("was not recognized as a valid DateTime."), Is.True);
             }
         }
     }

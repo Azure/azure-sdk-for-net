@@ -43,18 +43,18 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 if (callCount == 0)
                 {
                     // The first challenge should not have any claims.
-                    Assert.IsNull(r.Claims);
+                    Assert.That(r.Claims, Is.Null);
                 }
                 else if (callCount == 1)
                 {
-                    Assert.AreEqual(expectedClaims, r.Claims);
+                    Assert.That(r.Claims, Is.EqualTo(expectedClaims));
                 }
                 else
                 {
                     Assert.Fail("unexpected token request");
                 }
                 Interlocked.Increment(ref callCount);
-                Assert.AreEqual(true, r.IsCaeEnabled);
+                Assert.That(r.IsCaeEnabled, Is.EqualTo(true));
 
                 return new(callCount.ToString(), DateTimeOffset.Now.AddHours(2));
             }, true);
@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             });
 
             Response<KeyVaultCertificateWithPolicy> response = await client.GetCertificateAsync("certificate");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(401, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(401));
                 return;
             }
             catch (Exception ex)

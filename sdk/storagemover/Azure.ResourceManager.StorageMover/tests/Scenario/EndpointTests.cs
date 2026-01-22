@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
     {
         public EndpointTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
-            {
-            }
+        {
+        }
 
         [Test]
         [RecordedTest]
@@ -37,32 +37,32 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             StorageMoverEndpointData data = new StorageMoverEndpointData(containerEndpointProperties);
             data.Properties.Description = "New container endpoint";
             StorageMoverEndpointResource cEndpoint = (await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, cEndpointName, data)).Value;
-            Assert.AreEqual(cEndpoint.Data.Name, cEndpointName);
-            Assert.AreEqual("AzureStorageBlobContainer", cEndpoint.Data.Properties.EndpointType.ToString());
+            Assert.That(cEndpointName, Is.EqualTo(cEndpoint.Data.Name));
+            Assert.That(cEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("AzureStorageBlobContainer"));
 
             StorageMoverEndpointResource cEndpoint2 = (await cEndpoint.GetAsync()).Value;
-            Assert.AreEqual(cEndpoint2.Data.Name, cEndpointName);
-            Assert.AreEqual(cEndpoint2.Data.Properties.EndpointType.ToString(), "AzureStorageBlobContainer");
+            Assert.That(cEndpointName, Is.EqualTo(cEndpoint2.Data.Name));
+            Assert.That(cEndpoint2.Data.Properties.EndpointType.ToString(), Is.EqualTo("AzureStorageBlobContainer"));
 
             cEndpoint = (await endpoints.GetAsync(cEndpointName)).Value;
-            Assert.AreEqual(cEndpoint.Data.Name, cEndpointName);
-            Assert.AreEqual("AzureStorageBlobContainer", cEndpoint.Data.Properties.EndpointType.ToString());
+            Assert.That(cEndpointName, Is.EqualTo(cEndpoint.Data.Name));
+            Assert.That(cEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("AzureStorageBlobContainer"));
 
             // Create and get a NFS endpoint
             NfsMountEndpointProperties nfsMountEndpointProperties = new NfsMountEndpointProperties("10.0.0.1", "/");
             data = new StorageMoverEndpointData(nfsMountEndpointProperties);
             data.Properties.Description = "New NFS endpoint";
             StorageMoverEndpointResource nfsEndpoint = (await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, nfsEndpointName, data)).Value;
-            Assert.AreEqual(nfsEndpoint.Data.Name, nfsEndpointName);
-            Assert.AreEqual("NfsMount", nfsEndpoint.Data.Properties.EndpointType.ToString());
-            Assert.AreEqual(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Export, "/");
-            Assert.AreEqual(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Host, "10.0.0.1");
+            Assert.That(nfsEndpointName, Is.EqualTo(nfsEndpoint.Data.Name));
+            Assert.That(nfsEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("NfsMount"));
+            Assert.That(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Export, Is.EqualTo("/"));
+            Assert.That(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Host, Is.EqualTo("10.0.0.1"));
 
             nfsEndpoint = (await endpoints.GetAsync(nfsEndpointName)).Value;
-            Assert.AreEqual(nfsEndpoint.Data.Name, nfsEndpointName);
-            Assert.AreEqual("NfsMount", nfsEndpoint.Data.Properties.EndpointType.ToString());
-            Assert.AreEqual(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Export, "/");
-            Assert.AreEqual(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Host, "10.0.0.1");
+            Assert.That(nfsEndpointName, Is.EqualTo(nfsEndpoint.Data.Name));
+            Assert.That(nfsEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("NfsMount"));
+            Assert.That(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Export, Is.EqualTo("/"));
+            Assert.That(((NfsMountEndpointProperties)nfsEndpoint.Data.Properties).Host, Is.EqualTo("10.0.0.1"));
 
             // Create, get, update and delete a SMB endpoint
             SmbMountEndpointProperties smbMountEndpointProperties = new SmbMountEndpointProperties("10.0.0.1", "testshare");
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             smbMountEndpointProperties.Credentials = credentials;
             data.Properties.Description = "New Smb mount endpoint";
             StorageMoverEndpointResource smbEndpoint = (await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, smbEndpointName, data)).Value;
-            Assert.AreEqual(smbEndpoint.Data.Name, smbEndpointName);
-            Assert.AreEqual(smbEndpoint.Data.Properties.EndpointType.ToString(), "SmbMount");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, "10.0.0.1");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, "testshare");
+            Assert.That(smbEndpointName, Is.EqualTo(smbEndpoint.Data.Name));
+            Assert.That(smbEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("SmbMount"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, Is.EqualTo("https://examples-azureKeyVault.vault.azure.net/secrets/examples-username"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, Is.EqualTo("https://examples-azureKeyVault.vault.azure.net/secrets/examples-password"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, Is.EqualTo("10.0.0.1"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, Is.EqualTo("testshare"));
 
             smbEndpoint = (await endpoints.GetAsync(smbEndpointName)).Value;
-            Assert.AreEqual(smbEndpoint.Data.Name, smbEndpointName);
-            Assert.AreEqual(smbEndpoint.Data.Properties.EndpointType.ToString(), "SmbMount");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, "10.0.0.1");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, "testshare");
+            Assert.That(smbEndpointName, Is.EqualTo(smbEndpoint.Data.Name));
+            Assert.That(smbEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("SmbMount"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, Is.EqualTo("https://examples-azureKeyVault.vault.azure.net/secrets/examples-username"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, Is.EqualTo("https://examples-azureKeyVault.vault.azure.net/secrets/examples-password"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, Is.EqualTo("10.0.0.1"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, Is.EqualTo("testshare"));
 
             credentials.UsernameUriString = "";
             credentials.PasswordUriString = "";
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             };
             patch.Properties = updateProperties;
             smbEndpoint = (await smbEndpoint.UpdateAsync(patch)).Value;
-            Assert.AreEqual(smbEndpoint.Data.Name, smbEndpointName);
-            Assert.AreEqual(smbEndpoint.Data.Properties.EndpointType.ToString(), "SmbMount");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, "");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, "");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, "10.0.0.1");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, "testshare");
+            Assert.That(smbEndpointName, Is.EqualTo(smbEndpoint.Data.Name));
+            Assert.That(smbEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("SmbMount"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, Is.EqualTo(""));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, Is.EqualTo(""));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, Is.EqualTo("10.0.0.1"));
+            Assert.That(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, Is.EqualTo("testshare"));
 
             await smbEndpoint.DeleteAsync(WaitUntil.Completed);
 
@@ -117,27 +117,27 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             data = new StorageMoverEndpointData(fileShareEndpointProperties);
             data.Properties.Description = "new file share endpoint";
             StorageMoverEndpointResource fsEndpoint = (await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, fsEndpointName, data)).Value;
-            Assert.AreEqual(fsEndpoint.Data.Name, fsEndpointName);
-            Assert.AreEqual(fsEndpoint.Data.Properties.EndpointType.ToString(), "AzureStorageSmbFileShare");
-            Assert.AreEqual(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).FileShareName, "testfileshare");
-            Assert.AreEqual(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).Description, "new file share endpoint");
+            Assert.That(fsEndpointName, Is.EqualTo(fsEndpoint.Data.Name));
+            Assert.That(fsEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("AzureStorageSmbFileShare"));
+            Assert.That(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).FileShareName, Is.EqualTo("testfileshare"));
+            Assert.That(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).Description, Is.EqualTo("new file share endpoint"));
 
             fsEndpoint = (await endpoints.GetAsync(fsEndpointName)).Value;
-            Assert.AreEqual(fsEndpoint.Data.Name, fsEndpointName);
-            Assert.AreEqual(fsEndpoint.Data.Properties.EndpointType.ToString(), "AzureStorageSmbFileShare");
-            Assert.AreEqual(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).FileShareName, "testfileshare");
-            Assert.AreEqual(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).Description, "new file share endpoint");
+            Assert.That(fsEndpointName, Is.EqualTo(fsEndpoint.Data.Name));
+            Assert.That(fsEndpoint.Data.Properties.EndpointType.ToString(), Is.EqualTo("AzureStorageSmbFileShare"));
+            Assert.That(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).FileShareName, Is.EqualTo("testfileshare"));
+            Assert.That(((AzureStorageSmbFileShareEndpointProperties)fsEndpoint.Data.Properties).Description, Is.EqualTo("new file share endpoint"));
 
             int counter = 0;
             await foreach (StorageMoverEndpointResource _ in endpoints.GetAllAsync())
             {
                 counter++;
             }
-            Assert.Greater(counter, 1);
+            Assert.That(counter, Is.GreaterThan(1));
 
-            Assert.IsTrue(await endpoints.ExistsAsync(cEndpointName));
-            Assert.IsFalse(await endpoints.ExistsAsync(cEndpointName + "111"));
-            Assert.IsFalse(await endpoints.ExistsAsync(smbEndpointName));
+            Assert.That((bool)await endpoints.ExistsAsync(cEndpointName), Is.True);
+            Assert.That((bool)await endpoints.ExistsAsync(cEndpointName + "111"), Is.False);
+            Assert.That((bool)await endpoints.ExistsAsync(smbEndpointName), Is.False);
         }
     }
 }

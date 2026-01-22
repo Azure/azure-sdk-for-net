@@ -91,7 +91,7 @@ namespace Azure.Storage.Blobs.Tests
         public override async Task AssertExpectedExceptionOpenReadModifiedAsync(Task readTask)
             => await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 readTask,
-                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ConditionNotMet")));
         #endregion
     }
 }

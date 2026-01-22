@@ -21,23 +21,24 @@ namespace Azure.Core.TestFramework.Tests
         [Test]
         public void HasValidAdditionalParam()
         {
-            Assert.IsTrue(
+            Assert.That(
                 _param == someParam1 ||
-                _param == someParam2);
+                _param == someParam2,
+                Is.True);
         }
 
         [Test]
         [AsyncOnly]
         public void AsyncOnlyWorks()
         {
-            Assert.IsTrue(IsAsync);
+            Assert.That(IsAsync, Is.True);
         }
 
         [Test]
         [SyncOnly]
         public void SyncOnlyWorks()
         {
-            Assert.IsFalse(IsAsync);
+            Assert.That(IsAsync, Is.False);
         }
 
         public const string someParam1 = "someParam1";

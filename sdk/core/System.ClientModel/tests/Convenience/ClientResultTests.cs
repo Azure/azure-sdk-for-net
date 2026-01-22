@@ -26,14 +26,14 @@ public class ClientResultTests
     {
         PipelineResponse response = new MockPipelineResponse(200, "MockReason");
         MockClientResult mockResult = new MockClientResult(response);
-        Assert.AreEqual(response, mockResult.GetRawResponse());
-        Assert.AreEqual(response.Status, mockResult.GetRawResponse().Status);
-        Assert.AreEqual(response.ReasonPhrase, mockResult.GetRawResponse().ReasonPhrase);
+        Assert.That(mockResult.GetRawResponse(), Is.EqualTo(response));
+        Assert.That(mockResult.GetRawResponse().Status, Is.EqualTo(response.Status));
+        Assert.That(mockResult.GetRawResponse().ReasonPhrase, Is.EqualTo(response.ReasonPhrase));
 
         ClientResult result = ClientResult.FromResponse(response);
-        Assert.AreEqual(response, result.GetRawResponse());
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
-        Assert.AreEqual(response.ReasonPhrase, result.GetRawResponse().ReasonPhrase);
+        Assert.That(result.GetRawResponse(), Is.EqualTo(response));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(response.Status));
+        Assert.That(result.GetRawResponse().ReasonPhrase, Is.EqualTo(response.ReasonPhrase));
     }
 
     #endregion
@@ -48,22 +48,22 @@ public class ClientResultTests
         PipelineResponse response = new MockPipelineResponse(200);
         ClientResult<bool?> result = ClientResult.FromOptionalValue<bool?>(true, response);
 
-        Assert.IsTrue(result.Value);
-        Assert.IsTrue(result.Value.HasValue);
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.True);
+        Assert.That(result.Value.HasValue, Is.True);
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(response.Status));
 
         response = new MockPipelineResponse(400);
         result = ClientResult.FromOptionalValue<bool?>(false, response);
 
-        Assert.IsFalse(result.Value);
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.False);
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(response.Status));
 
         response = new MockPipelineResponse(500);
         result = ClientResult.FromOptionalValue<bool?>(null, response);
 
-        Assert.IsNull(result.Value);
-        Assert.IsFalse(result.Value.HasValue);
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.Null);
+        Assert.That(result.Value.HasValue, Is.False);
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(response.Status));
     }
 
     [Test]
@@ -73,19 +73,19 @@ public class ClientResultTests
         MockPersistableModel model = new MockPersistableModel(1, "a");
         MockClientResult<MockPersistableModel?> result = new MockClientResult<MockPersistableModel?>(model, response);
 
-        Assert.AreEqual(model.IntValue, result.Value!.IntValue);
-        Assert.AreEqual(model.StringValue, result.Value!.StringValue);
+        Assert.That(result.Value!.IntValue, Is.EqualTo(model.IntValue));
+        Assert.That(result.Value!.StringValue, Is.EqualTo(model.StringValue));
 
         model = new MockPersistableModel(2, "b");
 
         result.SetValue(model);
 
-        Assert.AreEqual(model.IntValue, result.Value!.IntValue);
-        Assert.AreEqual(model.StringValue, result.Value!.StringValue);
+        Assert.That(result.Value!.IntValue, Is.EqualTo(model.IntValue));
+        Assert.That(result.Value!.StringValue, Is.EqualTo(model.StringValue));
 
         result.SetValue(null);
 
-        Assert.IsNull(result.Value);
+        Assert.That(result.Value, Is.Null);
     }
 
     #endregion
@@ -122,8 +122,8 @@ public class ClientResultTests
         PipelineResponse response = new MockPipelineResponse(200);
         DerivedClientResult<string> result = new(value, response);
 
-        Assert.AreEqual(value, result.Value);
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.EqualTo(value));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(response.Status));
     }
 
     [Test]
@@ -134,19 +134,19 @@ public class ClientResultTests
         string plainString = "hello";
         ClientResult<string> resultAsClientResultOfString = ClientResult.FromValue(plainString, response);
         string resultAsPlainString = ClientResult.FromValue(plainString, response);
-        Assert.AreEqual(resultAsClientResultOfString.Value, resultAsPlainString);
+        Assert.That(resultAsPlainString, Is.EqualTo(resultAsClientResultOfString.Value));
 
         string? nullableString = null;
         ClientResult<string?> resultAsClientResultOfNullableString = ClientResult.FromOptionalValue(nullableString, response);
         string? resultAsNullableString = ClientResult.FromOptionalValue(nullableString, response);
-        Assert.IsNull(resultAsNullableString);
-        Assert.AreEqual(resultAsClientResultOfNullableString.Value, resultAsNullableString);
+        Assert.That(resultAsNullableString, Is.Null);
+        Assert.That(resultAsNullableString, Is.EqualTo(resultAsClientResultOfNullableString.Value));
 
         int? nullableInt = null;
         ClientResult<int?> resultAsClientResultOfNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
         int? resultAsNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
-        Assert.IsNull(resultAsNullableInt);
-        Assert.AreEqual(resultAsClientResultOfNullableInt.Value, resultAsNullableInt);
+        Assert.That(resultAsNullableInt, Is.Null);
+        Assert.That(resultAsNullableInt, Is.EqualTo(resultAsClientResultOfNullableInt.Value));
     }
 
     #endregion
@@ -159,9 +159,9 @@ public class ClientResultTests
         MockClient client = new MockClient();
         ClientResult<MockJsonModel> result = client.GetModel(1, "a");
 
-        Assert.AreEqual(1, result.Value.IntValue);
-        Assert.AreEqual("a", result.Value.StringValue);
-        Assert.AreEqual(200, result.GetRawResponse().Status);
+        Assert.That(result.Value.IntValue, Is.EqualTo(1));
+        Assert.That(result.Value.StringValue, Is.EqualTo("a"));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
     }
 
     [Test]
@@ -170,14 +170,14 @@ public class ClientResultTests
         MockClient client = new MockClient();
         ClientResult<MockJsonModel?> result = client.GetOptionalModel(1, "a", hasValue: true);
 
-        Assert.IsNotNull(result.Value);
-        Assert.AreEqual(1, result.Value!.IntValue);
-        Assert.AreEqual("a", result.Value!.StringValue);
-        Assert.AreEqual(200, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.Not.Null);
+        Assert.That(result.Value!.IntValue, Is.EqualTo(1));
+        Assert.That(result.Value!.StringValue, Is.EqualTo("a"));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
 
         result = client.GetOptionalModel(1, "a", hasValue: false);
-        Assert.IsNull(result.Value);
-        Assert.AreEqual(404, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.Null);
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(404));
     }
 
     [Test]
@@ -186,8 +186,8 @@ public class ClientResultTests
         MockClient client = new MockClient();
         ClientResult<int> result = client.GetCount(1);
 
-        Assert.AreEqual(1, result.Value);
-        Assert.AreEqual(200, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.EqualTo(1));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
     }
 
     [Test]
@@ -196,15 +196,15 @@ public class ClientResultTests
         MockClient client = new MockClient();
         ClientResult<int?> result = client.GetOptionalCount(1, hasValue: true);
 
-        Assert.IsNotNull(result.Value);
-        Assert.IsTrue(result.Value.HasValue);
-        Assert.AreEqual(1, result.Value);
-        Assert.AreEqual(200, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.Not.Null);
+        Assert.That(result.Value.HasValue, Is.True);
+        Assert.That(result.Value, Is.EqualTo(1));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
 
         result = client.GetOptionalCount(1, hasValue: false);
-        Assert.IsNull(result.Value);
-        Assert.IsFalse(result.Value.HasValue);
-        Assert.AreEqual(404, result.GetRawResponse().Status);
+        Assert.That(result.Value, Is.Null);
+        Assert.That(result.Value.HasValue, Is.False);
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(404));
     }
 
     #endregion
@@ -220,9 +220,9 @@ public class ClientResultTests
 
         MockJsonModel value = (MockJsonModel)result.Value;
 
-        Assert.AreEqual(model.IntValue, value.IntValue);
-        Assert.AreEqual(model.StringValue, value.StringValue);
-        Assert.AreEqual(200, result.GetRawResponse().Status);
+        Assert.That(value.IntValue, Is.EqualTo(model.IntValue));
+        Assert.That(value.StringValue, Is.EqualTo(model.StringValue));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
     }
 
     [Test]
@@ -234,15 +234,15 @@ public class ClientResultTests
 
         MockJsonModel? value = (MockJsonModel?)result.Value;
 
-        Assert.IsNotNull(value);
-        Assert.AreEqual(model.IntValue, value!.IntValue);
-        Assert.AreEqual(model.StringValue, value!.StringValue);
-        Assert.AreEqual(200, result.GetRawResponse().Status);
+        Assert.That(value, Is.Not.Null);
+        Assert.That(value!.IntValue, Is.EqualTo(model.IntValue));
+        Assert.That(value!.StringValue, Is.EqualTo(model.StringValue));
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
 
         result = new(default, response);
         value = (MockJsonModel?)result.Value;
 
-        Assert.IsNull(value);
+        Assert.That(value, Is.Null);
         Assert.AreEqual(200, result.GetRawResponse().Status);
     }
 

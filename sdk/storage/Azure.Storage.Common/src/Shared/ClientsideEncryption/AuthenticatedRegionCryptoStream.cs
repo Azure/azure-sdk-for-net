@@ -54,7 +54,7 @@ namespace Azure.Storage.Cryptography
             // determine if the stream's main buffer will hold ciphertext or plaintext and size accordingly.
             // do this calculation once in the constructor and never worry again in the read/write code.
             int bufferSize;
-                // write plaintext to _buffer, then encrypt buffer and push ciphertext to innerStream
+            // write plaintext to _buffer, then encrypt buffer and push ciphertext to innerStream
             if ((transform.TransformMode == TransformMode.Encrypt && streamMode == CryptoStreamMode.Write) ||
                 // read and decrypt ciphertext from innerStream, then store plaintext results in _buffer to be read by caller
                 (transform.TransformMode == TransformMode.Decrypt && streamMode == CryptoStreamMode.Read))
@@ -62,7 +62,7 @@ namespace Azure.Storage.Cryptography
                 bufferSize = regionDataSize;
                 _tempRefillBufferSize = transform.NonceLength + regionDataSize + transform.TagLength;
             }
-                // read and encrypt plaintext from innerStream, then store ciphertext results in _buffer to be read by caller
+            // read and encrypt plaintext from innerStream, then store ciphertext results in _buffer to be read by caller
             else if ((transform.TransformMode == TransformMode.Encrypt && streamMode == CryptoStreamMode.Read) ||
                 // write ciphertext to _buffer, then decrypt buffer and push ciphertext to innerStream
                 (transform.TransformMode == TransformMode.Decrypt && streamMode == CryptoStreamMode.Write))
