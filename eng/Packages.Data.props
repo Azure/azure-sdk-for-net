@@ -580,6 +580,46 @@
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageReference Update="NUnit" Version="4.4.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+  </ItemGroup>
+
+  <!--
+    Scoped package versions for specific projects.
+    These replace VersionOverride usage in individual csproj files to maintain
+    central visibility of all package versions.
+  -->
+
+  <!-- Azure.Test.Perf needs older Azure.Core for maximum compatibility with test projects -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Test.Perf'))">
+    <PackageReference Update="Azure.Core" Version="1.40.0" />
+  </ItemGroup>
+
+  <!-- Legacy Batch tests require ADAL and specific MSAL versions -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
+    <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.2, 4.0.0)" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.61.3" />
+  </ItemGroup>
+
+  <!-- Azure.Core.TestFramework needs pinned AutoRest version (workaround for pipeline conflicts) -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Core.TestFramework'))">
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20231107.1" />
+  </ItemGroup>
+
+  <!-- SecurityCenter.Tests needs beta versions of IotHub and Logic -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.ResourceManager.SecurityCenter'))">
+    <PackageReference Update="Azure.ResourceManager.IotHub" Version="1.2.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.Logic" Version="1.2.0-beta.1" />
+  </ItemGroup>
+
+  <!-- SignalRService compat issue with Microsoft.Azure.SignalR.Management (tracked by #51460) -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.SignalRService')) and '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
+  </ItemGroup>
+
+  <!-- Tables.Tests needs legacy WebJobs.Extensions.Storage for T1 testing -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.Tables.Tests'))">
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.5" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

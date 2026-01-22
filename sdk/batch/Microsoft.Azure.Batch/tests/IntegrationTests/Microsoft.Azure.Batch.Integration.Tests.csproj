@@ -31,8 +31,9 @@
   <ItemGroup>
 		<PackageReference Include="Azure.Storage.Blobs" />
 		<PackageReference Include="Microsoft.Azure.Management.Batch" />
-		<PackageReference Include="Microsoft.Identity.Client" VersionOverride="4.61.3" />
-		<PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
+		<!-- Legacy ADAL/MSAL versions scoped in eng/Packages.Data.props -->
+		<PackageReference Include="Microsoft.Identity.Client" />
+		<PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 		<PackageReference Include="xunit" />
 		<PackageReference Include="xunit.runner.visualstudio" />
