@@ -1,2 +1,25 @@
 # SearchResults<T> can safely be made abstract because it has no public constructors
 CannotMakeTypeAbstract : Type 'Azure.Search.Documents.Models.SearchResults<T>' is abstract in the implementation but is not abstract in the contract.
+
+# Enum to extensible enum (struct) conversions - intentional migration to TypeSpec generator pattern
+# These types are now readonly partial structs to support adding new values without breaking changes
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.IndexerStatus' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.PhoneticEncoder' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.StopwordsList' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.TokenCharacterKind' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.AutocompleteMode' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.IndexActionType' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.ScoringStatistics' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Models.SearchMode' does not inherit from base type 'System.Enum' in the implementation but it does in the contract.
+
+# SearchIndexerClient is not being generated in the right namespace - known emitter issue, will be fixed when emitter is updated
+TypesMustExist : Type 'Azure.Search.Documents.Indexes.SearchIndexerClient' does not exist in the implementation but it does exist in the contract.

@@ -14,11 +14,11 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1' parameter). </summary>
-    public partial class BM25SimilarityAlgorithm : SimilarityAlgorithm, IJsonModel<BM25SimilarityAlgorithm>
+    public partial class BM25Similarity : SimilarityAlgorithm, IJsonModel<BM25Similarity>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BM25SimilarityAlgorithm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BM25Similarity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BM25SimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BM25SimilarityAlgorithm)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BM25Similarity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(K1))
@@ -49,24 +49,24 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BM25SimilarityAlgorithm IJsonModel<BM25SimilarityAlgorithm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BM25SimilarityAlgorithm)JsonModelCreateCore(ref reader, options);
+        BM25Similarity IJsonModel<BM25Similarity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BM25Similarity)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SimilarityAlgorithm JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BM25SimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BM25SimilarityAlgorithm)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BM25Similarity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBM25SimilarityAlgorithm(document.RootElement, options);
+            return DeserializeBM25Similarity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BM25SimilarityAlgorithm DeserializeBM25SimilarityAlgorithm(JsonElement element, ModelReaderWriterOptions options)
+        internal static BM25Similarity DeserializeBM25Similarity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,47 +108,47 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BM25SimilarityAlgorithm(odataType, additionalBinaryDataProperties, k1, b);
+            return new BM25Similarity(odataType, additionalBinaryDataProperties, k1, b);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BM25SimilarityAlgorithm>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BM25Similarity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BM25SimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BM25SimilarityAlgorithm)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BM25SimilarityAlgorithm IPersistableModel<BM25SimilarityAlgorithm>.Create(BinaryData data, ModelReaderWriterOptions options) => (BM25SimilarityAlgorithm)PersistableModelCreateCore(data, options);
+        BM25Similarity IPersistableModel<BM25Similarity>.Create(BinaryData data, ModelReaderWriterOptions options) => (BM25Similarity)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SimilarityAlgorithm PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BM25SimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBM25SimilarityAlgorithm(document.RootElement, options);
+                        return DeserializeBM25Similarity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BM25SimilarityAlgorithm)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BM25SimilarityAlgorithm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BM25Similarity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a get service statistics request. If successful, it includes service level counters and limits. </summary>
     public partial class SearchServiceStatistics : IJsonModel<SearchServiceStatistics>

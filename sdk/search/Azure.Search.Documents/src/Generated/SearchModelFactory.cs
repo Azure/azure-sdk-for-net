@@ -1482,19 +1482,19 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Legacy similarity algorithm which uses the Lucene TFIDFSimilarity implementation of TF-IDF. This variation of TF-IDF introduces static document length normalization as well as coordinating factors that penalize documents that only partially match the searched queries. </summary>
-        /// <returns> A new <see cref="Indexes.Models.ClassicSimilarityAlgorithm"/> instance for mocking. </returns>
-        public static ClassicSimilarityAlgorithm ClassicSimilarityAlgorithm()
+        /// <returns> A new <see cref="Indexes.Models.ClassicSimilarity"/> instance for mocking. </returns>
+        public static ClassicSimilarity ClassicSimilarity()
         {
-            return new ClassicSimilarityAlgorithm("#Microsoft.Azure.Search.ClassicSimilarity", additionalBinaryDataProperties: null);
+            return new ClassicSimilarity("#Microsoft.Azure.Search.ClassicSimilarity", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1' parameter). </summary>
         /// <param name="k1"> This property controls the scaling function between the term frequency of each matching terms and the final relevance score of a document-query pair. By default, a value of 1.2 is used. A value of 0.0 means the score does not scale with an increase in term frequency. </param>
         /// <param name="b"> This property controls how the length of a document affects the relevance score. By default, a value of 0.75 is used. A value of 0.0 means no length normalization is applied, while a value of 1.0 means the score is fully normalized by the length of the document. </param>
-        /// <returns> A new <see cref="Indexes.Models.BM25SimilarityAlgorithm"/> instance for mocking. </returns>
-        public static BM25SimilarityAlgorithm BM25SimilarityAlgorithm(double? k1 = default, double? b = default)
+        /// <returns> A new <see cref="Indexes.Models.BM25Similarity"/> instance for mocking. </returns>
+        public static BM25Similarity BM25Similarity(double? k1 = default, double? b = default)
         {
-            return new BM25SimilarityAlgorithm("#Microsoft.Azure.Search.BM25Similarity", additionalBinaryDataProperties: null, k1, b);
+            return new BM25Similarity("#Microsoft.Azure.Search.BM25Similarity", additionalBinaryDataProperties: null, k1, b);
         }
 
         /// <summary> Defines parameters for a search index that influence semantic capabilities. </summary>
@@ -2357,7 +2357,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
         /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
-        /// <returns> A new <see cref="Models.SearchServiceStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.SearchServiceStatistics"/> instance for mocking. </returns>
         public static SearchServiceStatistics SearchServiceStatistics(SearchServiceCounters counters = default, SearchServiceLimits limits = default, ServiceIndexersRuntime indexersRuntime = default)
         {
             return new SearchServiceStatistics(counters, limits, indexersRuntime, additionalBinaryDataProperties: null);
@@ -2396,7 +2396,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
         /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative indexer runtime in seconds allowed for the service. </param>
-        /// <returns> A new <see cref="Models.SearchServiceLimits"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
         public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = default, int? maxFieldNestingDepthPerIndex = default, int? maxComplexCollectionFieldsPerIndex = default, int? maxComplexObjectsInCollectionsPerDocument = default, long? maxStoragePerIndexInBytes = default, long? maxCumulativeIndexerRuntimeSeconds = default)
         {
             return new SearchServiceLimits(

@@ -27,12 +27,6 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
     }
-
-    //// <summary> SearchIndexerClient namespace customization. </summary>
-    //[CodeGenType("SearchIndexerClient")]
-    //public partial class SearchIndexerClient
-    //{
-    //}
 }
 
 namespace Azure.Search.Documents.KnowledgeBases
@@ -1253,6 +1247,18 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
+    /// <summary> SearchServiceLimits namespace customization. </summary>
+    [CodeGenType("SearchServiceLimits")]
+    public partial class SearchServiceLimits
+    {
+    }
+
+    /// <summary> SearchServiceStatistics namespace customization. </summary>
+    [CodeGenType("SearchServiceStatistics")]
+    public partial class SearchServiceStatistics
+    {
+    }
+
     /// <summary> KnowledgeBase namespace customization. </summary>
     [CodeGenType("KnowledgeBase")]
     public partial class KnowledgeBase
@@ -2024,18 +2030,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> PatternReplaceCharFilter namespace customization. </summary>
     [CodeGenType("PatternReplaceCharFilter")]
     public partial class PatternReplaceCharFilter
-    {
-    }
-
-    /// <summary> ClassicSimilarityAlgorithm namespace customization. </summary>
-    [CodeGenType("ClassicSimilarityAlgorithm")]
-    public partial class ClassicSimilarityAlgorithm
-    {
-    }
-
-    /// <summary> BM25SimilarityAlgorithm namespace customization. </summary>
-    [CodeGenType("BM25SimilarityAlgorithm")]
-    public partial class BM25SimilarityAlgorithm
     {
     }
 

@@ -83,9 +83,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Azure.Search.ClassicSimilarity":
-                        return ClassicSimilarityAlgorithm.DeserializeClassicSimilarityAlgorithm(element, options);
+                        return ClassicSimilarity.DeserializeClassicSimilarity(element, options);
                     case "#Microsoft.Azure.Search.BM25Similarity":
-                        return BM25SimilarityAlgorithm.DeserializeBM25SimilarityAlgorithm(element, options);
+                        return BM25Similarity.DeserializeBM25Similarity(element, options);
                 }
             }
             return UnknownSimilarityAlgorithm.DeserializeUnknownSimilarityAlgorithm(element, options);

@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -2199,19 +2198,19 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Documents.Models.SearchServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
         {
             Response result = GetServiceStatistics(cancellationToken.ToRequestContext());
-            return Response.FromValue((Documents.Models.SearchServiceStatistics)result, result);
+            return Response.FromValue((SearchServiceStatistics)result, result);
         }
 
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Documents.Models.SearchServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetServiceStatisticsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Documents.Models.SearchServiceStatistics)result, result);
+            return Response.FromValue((SearchServiceStatistics)result, result);
         }
 
         /// <summary>

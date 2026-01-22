@@ -14,11 +14,11 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Legacy similarity algorithm which uses the Lucene TFIDFSimilarity implementation of TF-IDF. This variation of TF-IDF introduces static document length normalization as well as coordinating factors that penalize documents that only partially match the searched queries. </summary>
-    public partial class ClassicSimilarityAlgorithm : SimilarityAlgorithm, IJsonModel<ClassicSimilarityAlgorithm>
+    public partial class ClassicSimilarity : SimilarityAlgorithm, IJsonModel<ClassicSimilarity>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClassicSimilarityAlgorithm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClassicSimilarity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,34 +29,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassicSimilarityAlgorithm)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassicSimilarity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClassicSimilarityAlgorithm IJsonModel<ClassicSimilarityAlgorithm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClassicSimilarityAlgorithm)JsonModelCreateCore(ref reader, options);
+        ClassicSimilarity IJsonModel<ClassicSimilarity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClassicSimilarity)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SimilarityAlgorithm JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassicSimilarityAlgorithm)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassicSimilarity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClassicSimilarityAlgorithm(document.RootElement, options);
+            return DeserializeClassicSimilarity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClassicSimilarityAlgorithm DeserializeClassicSimilarityAlgorithm(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClassicSimilarity DeserializeClassicSimilarity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,47 +76,47 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClassicSimilarityAlgorithm(odataType, additionalBinaryDataProperties);
+            return new ClassicSimilarity(odataType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClassicSimilarityAlgorithm>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ClassicSimilarity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClassicSimilarityAlgorithm)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassicSimilarity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClassicSimilarityAlgorithm IPersistableModel<ClassicSimilarityAlgorithm>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClassicSimilarityAlgorithm)PersistableModelCreateCore(data, options);
+        ClassicSimilarity IPersistableModel<ClassicSimilarity>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClassicSimilarity)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SimilarityAlgorithm PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarityAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClassicSimilarity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClassicSimilarityAlgorithm(document.RootElement, options);
+                        return DeserializeClassicSimilarity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClassicSimilarityAlgorithm)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassicSimilarity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClassicSimilarityAlgorithm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClassicSimilarity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
