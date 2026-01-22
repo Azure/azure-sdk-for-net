@@ -260,6 +260,78 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [TestCase]
+        public void IsOperatingOnCurrentResource_ForAction_ReturnsTrue()
+        {
+            // Arrange - Action operations always return true regardless of path
+            var operation = InputFactory.Operation("customAction", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/someAction");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "CustomAction",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Action,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/someAction",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase]
+        public void IsOperatingOnCurrentResource_ForCreate_ReturnsTrue()
+        {
+            // Arrange - Create operations always return true regardless of path
+            var operation = InputFactory.Operation("createOrUpdate", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "CreateOrUpdate",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Create,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase]
+        public void IsOperatingOnCurrentResource_ForUpdate_ReturnsTrue()
+        {
+            // Arrange - Update operations always return true regardless of path
+            var operation = InputFactory.Operation("update", path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                name: "Update",
+                operation: operation);
+            var resourceMethod = new ResourceMethod(
+                ResourceOperationKind.Update,
+                serviceMethod,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                ResourceScope.ResourceGroup,
+                null,
+                InputFactory.Client("VirtualMachines"));
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+
+            // Act
+            var result = ResourceHelpers.IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase]
         public void IsDeletingCurrentResource_WhenOperationPathMatchesResourceIdPattern_ReturnsTrue()
         {
             // Arrange
@@ -422,6 +494,26 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
             // Assert
             Assert.IsNull(result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForList_WhenOperatingOnCurrentResource_ReturnsGetAll()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, false, true, isOperatingOnCurrentResource: true);
+
+            // Assert
+            Assert.AreEqual("GetAll", result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_ForListAsync_WhenOperatingOnCurrentResource_ReturnsGetAllAsync()
+        {
+            // Act
+            var result = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, true, true, isOperatingOnCurrentResource: true);
+
+            // Assert
+            Assert.AreEqual("GetAllAsync", result);
         }
 
         [TestCase]

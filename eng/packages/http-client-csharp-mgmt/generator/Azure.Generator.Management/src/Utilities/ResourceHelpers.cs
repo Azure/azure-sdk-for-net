@@ -90,8 +90,10 @@ namespace Azure.Generator.Management.Utilities
         /// <returns>True if the operation is operating on the current resource; otherwise, false.</returns>
         public static bool IsOperatingOnCurrentResource(ResourceMethod resourceMethod, string resourceIdPattern)
         {
-            // Only check for CRUD operations (Read, Delete, List) that can operate on different resources
-            if (!resourceMethod.Kind.IsCrudKind() && resourceMethod.Kind != ResourceOperationKind.List)
+            // Only check for Read, Delete, and List operations that can operate on different resources
+            if (resourceMethod.Kind != ResourceOperationKind.Read &&
+                resourceMethod.Kind != ResourceOperationKind.Delete &&
+                resourceMethod.Kind != ResourceOperationKind.List)
             {
                 return true; // For other operations, assume they operate on the current resource
             }
