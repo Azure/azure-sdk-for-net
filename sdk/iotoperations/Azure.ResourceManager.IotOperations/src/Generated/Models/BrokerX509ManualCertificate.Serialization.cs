@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> X509 Certificate Authentication properties. </summary>
-    public partial class BrokerX509ManualCertificate : IJsonModel<BrokerX509ManualCertificate>
+    internal partial class BrokerX509ManualCertificate : IJsonModel<BrokerX509ManualCertificate>
     {
         /// <summary> Initializes a new instance of <see cref="BrokerX509ManualCertificate"/> for deserialization. </summary>
         internal BrokerX509ManualCertificate()

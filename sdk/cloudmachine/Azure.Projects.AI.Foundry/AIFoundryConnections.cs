@@ -16,24 +16,30 @@ namespace Azure.Projects.AIFoundry
     /// </summary>
     internal class AIFoundryConnections
     {
-        private readonly ConnectionsClient _connectionsClient;
+        private readonly AIProjectConnectionsOperations _connectionsClient;
         private readonly ReaderWriterLockSlim _cacheLock = new(LockRecursionPolicy.NoRecursion);
-        private readonly Dictionary<ConnectionType, ConnectionResponse> _connectionCache = new();
+        private readonly Dictionary<ConnectionType, AIProjectConnection> _connectionCache = new();
 
         /// <summary>
         /// Creates a new <see cref="AIFoundryConnections"/> that uses the specified
-        /// Foundry connection string and token credential for authentication.
+        /// Foundry endpoint and token credential for authentication.
         /// </summary>
-        /// <param name="foundryConnectionString">The Foundry connection string.</param>
+        /// <param name="endpoint">The project endpoint URL.</param>
         /// <param name="credential">The token credential to use for authentication.</param>
-        public AIFoundryConnections(string foundryConnectionString, TokenCredential credential)
+        public AIFoundryConnections(Uri endpoint, TokenCredential credential)
         {
-            _connectionsClient = new ConnectionsClient(foundryConnectionString, credential);
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+
+            var aiProjectClient = new AIProjectClient(endpoint, credential);
+            _connectionsClient = aiProjectClient.Connections;
         }
 
         /// <summary>
         /// Returns a <see cref="ClientConnection"/> for the specified connectionId,
-        /// retrieving or caching it from the Foundry <see cref="ConnectionsClient"/>.
+        /// retrieving or caching it from the Foundry <see cref="AIProjectConnectionsOperations"/>.
         /// </summary>
         /// <param name="connectionId">The well-known ID of the Foundry connection.</param>
         /// <returns>A <see cref="ClientConnection"/> representing the Foundry resource.</returns>
@@ -46,7 +52,7 @@ namespace Azure.Projects.AIFoundry
             ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
 
             // 2) Check cache
-            ConnectionResponse response;
+            AIProjectConnection response;
             _cacheLock.EnterReadLock();
             try
             {
@@ -65,7 +71,7 @@ namespace Azure.Projects.AIFoundry
                 {
                     if (!_connectionCache.TryGetValue(connectionType, out response))
                     {
-                        response = _connectionsClient.GetDefaultConnection(connectionType, true);
+                        response = _connectionsClient.GetDefaultConnection(connectionType, includeCredentials: true);
                         _connectionCache[connectionType] = response;
                     }
                 }
@@ -76,18 +82,18 @@ namespace Azure.Projects.AIFoundry
             }
 
             // 4) Validate response, build a ClientConnection
-            if (response.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuth)
+            if (response.Credentials is AIProjectConnectionApiKeyCredential apiKeyAuth)
             {
-                if (string.IsNullOrWhiteSpace(apiKeyAuth.Target))
+                if (string.IsNullOrWhiteSpace(response.Target))
                 {
                     throw new ArgumentException($"The API key target URI is missing or invalid for '{connectionId}'.");
                 }
-                if (apiKeyAuth.Credentials?.Key is null or { Length: 0 })
+                if (apiKeyAuth.ApiKey is null or { Length: 0 })
                 {
                     throw new ArgumentException($"The API key is missing or invalid for '{connectionId}'.");
                 }
 
-                return new ClientConnection(connectionId, apiKeyAuth.Target, apiKeyAuth.Credentials.Key);
+                return new ClientConnection(connectionId, response.Target, apiKeyAuth.ApiKey, CredentialKind.ApiKeyString);
             }
             else
             {
@@ -113,10 +119,10 @@ namespace Azure.Projects.AIFoundry
                 case "OpenAI.Embeddings.EmbeddingClient":
                     return ConnectionType.AzureOpenAI;
 
-                // Inference
+                // Inference - note: there's no Serverless ConnectionType in new API
                 case "Azure.AI.Inference.ChatCompletionsClient":
                 case "Azure.AI.Inference.EmbeddingsClient":
-                    return ConnectionType.Serverless;
+                    return ConnectionType.APIKey;
 
                 // AzureAISearch
                 case "Azure.Search.Documents.SearchClient":

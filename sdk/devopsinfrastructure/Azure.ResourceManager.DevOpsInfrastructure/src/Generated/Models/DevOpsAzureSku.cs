@@ -12,7 +12,7 @@ using Azure.ResourceManager.DevOpsInfrastructure;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The Azure SKU of the machines in the pool. </summary>
-    public partial class DevOpsAzureSku
+    internal partial class DevOpsAzureSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

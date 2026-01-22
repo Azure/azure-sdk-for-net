@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct MonitorResourceProjectType : IEquatable<MonitorResourceProjectType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MonitorResourceProjectType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MonitorResourceProjectType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ElasticsearchValue = "Elasticsearch";
         private const string ObservabilityValue = "Observability";
         private const string SecurityValue = "Security";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> Elasticsearch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceProjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MonitorResourceProjectType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Elasticsearch. </summary>
         public static MonitorResourceProjectType Elasticsearch { get; } = new MonitorResourceProjectType(ElasticsearchValue);
-        /// <summary> Observability. </summary>
+
+        /// <summary> Gets the Observability. </summary>
         public static MonitorResourceProjectType Observability { get; } = new MonitorResourceProjectType(ObservabilityValue);
-        /// <summary> Security. </summary>
+
+        /// <summary> Gets the Security. </summary>
         public static MonitorResourceProjectType Security { get; } = new MonitorResourceProjectType(SecurityValue);
-        /// <summary> NotApplicable. </summary>
+
+        /// <summary> Gets the NotApplicable. </summary>
         public static MonitorResourceProjectType NotApplicable { get; } = new MonitorResourceProjectType(NotApplicableValue);
+
         /// <summary> Determines if two <see cref="MonitorResourceProjectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorResourceProjectType left, MonitorResourceProjectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorResourceProjectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorResourceProjectType left, MonitorResourceProjectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorResourceProjectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorResourceProjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorResourceProjectType(string value) => new MonitorResourceProjectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorResourceProjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorResourceProjectType?(string value) => value == null ? null : new MonitorResourceProjectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorResourceProjectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorResourceProjectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

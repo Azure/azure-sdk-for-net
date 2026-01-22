@@ -49,7 +49,7 @@ new DevOpsOrganization(new Uri("https://mseng.visualstudio.com"))
 {
 OpenAccess = true,
 }
-            }), new DevOpsStatelessAgentProfile(), new DevOpsVmssFabricProfile(new DevOpsAzureSku("Standard_D4ads_v5"), new DevOpsPoolVmImage[]
+            }), new DevOpsStatelessAgentProfile(), new DevOpsVmssFabricProfile("Standard_D4ads_v5", new DevOpsPoolVmImage[]
             {
 new DevOpsPoolVmImage
 {

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MongoCluster
 {
+    /// <summary></summary>
     public partial class MongoClusterPrivateEndpointConnectionResource : IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>
     {
-        private static MongoClusterPrivateEndpointConnectionResourceData s_dataDeserializationInstance;
-        private static MongoClusterPrivateEndpointConnectionResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MongoClusterPrivateEndpointConnectionResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MongoClusterPrivateEndpointConnectionResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MongoClusterPrivateEndpointConnectionResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>)Data).Write(writer, options);
 
-        MongoClusterPrivateEndpointConnectionResourceData IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoClusterPrivateEndpointConnectionResourceData IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoClusterPrivateEndpointConnectionResourceData>(Data, options, AzureResourceManagerMongoClusterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MongoClusterPrivateEndpointConnectionResourceData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        string IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

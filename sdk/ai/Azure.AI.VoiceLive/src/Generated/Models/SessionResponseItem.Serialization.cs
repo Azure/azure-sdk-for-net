@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, and <see cref="SessionResponseMcpApprovalResponseItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSessionResponseItem))]
     public abstract partial class SessionResponseItem : IJsonModel<SessionResponseItem>
@@ -105,6 +105,14 @@ namespace Azure.AI.VoiceLive
                         return ResponseFunctionCallItem.DeserializeResponseFunctionCallItem(element, options);
                     case "function_call_output":
                         return ResponseFunctionCallOutputItem.DeserializeResponseFunctionCallOutputItem(element, options);
+                    case "mcp_list_tools":
+                        return SessionResponseMcpListToolItem.DeserializeSessionResponseMcpListToolItem(element, options);
+                    case "mcp_call":
+                        return SessionResponseMcpCallItem.DeserializeSessionResponseMcpCallItem(element, options);
+                    case "mcp_approval_request":
+                        return SessionResponseMcpApprovalRequestItem.DeserializeSessionResponseMcpApprovalRequestItem(element, options);
+                    case "mcp_approval_response":
+                        return SessionResponseMcpApprovalResponseItem.DeserializeSessionResponseMcpApprovalResponseItem(element, options);
                 }
             }
             return UnknownSessionResponseItem.DeserializeUnknownSessionResponseItem(element, options);

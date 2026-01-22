@@ -19,15 +19,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
         /// <param name="certificateAuthorityConfiguration"> The configuration to set up an ICA. </param>
-        /// <param name="leafCertificateConfiguration"> The leaf certificate configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateAuthorityConfiguration"/> or <paramref name="leafCertificateConfiguration"/> is null. </exception>
-        public CertificateConfiguration(CertificateAuthorityConfiguration certificateAuthorityConfiguration, LeafCertificateConfiguration leafCertificateConfiguration)
+        /// <param name="leafCertificateValidityPeriodInDays"> The validity period in days. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateAuthorityConfiguration"/> is null. </exception>
+        public CertificateConfiguration(CertificateAuthorityConfiguration certificateAuthorityConfiguration, int? leafCertificateValidityPeriodInDays)
         {
             Argument.AssertNotNull(certificateAuthorityConfiguration, nameof(certificateAuthorityConfiguration));
-            Argument.AssertNotNull(leafCertificateConfiguration, nameof(leafCertificateConfiguration));
 
             CertificateAuthorityConfiguration = certificateAuthorityConfiguration;
-            LeafCertificateConfiguration = leafCertificateConfiguration;
+            LeafCertificateConfiguration = leafCertificateValidityPeriodInDays is null ? default : new LeafCertificateConfiguration(leafCertificateValidityPeriodInDays.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>

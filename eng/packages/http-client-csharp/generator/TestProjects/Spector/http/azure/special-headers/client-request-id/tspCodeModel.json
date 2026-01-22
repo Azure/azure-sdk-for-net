@@ -130,7 +130,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

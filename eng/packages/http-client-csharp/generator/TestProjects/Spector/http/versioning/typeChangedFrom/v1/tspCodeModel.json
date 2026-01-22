@@ -400,7 +400,8 @@
       "crossLanguageDefinitionId": "Versioning.TypeChangedFrom",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

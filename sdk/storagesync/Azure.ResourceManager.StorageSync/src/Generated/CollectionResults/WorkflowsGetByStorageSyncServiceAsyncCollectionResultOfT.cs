@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageSync
                 WorkflowArray result = WorkflowArray.FromResponse(response);
                 yield return Page<StorageSyncWorkflowData>.FromValues((IReadOnlyList<StorageSyncWorkflowData>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

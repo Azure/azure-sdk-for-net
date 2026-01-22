@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                                 SerializationFormat = DataflowGraphConnectionSchemaSerializationFormat.Avro,
                                 SchemaRef = "aio-sr://namespace/temperature:1",
                             },
-                        }, new DataflowGraphConnectionOutput("my-graph")),
+                        }, "my-graph"),
                         new DataflowGraphNodeConnection(new DataflowGraphConnectionInput("my-graph.alert-output")
                         {
                             Schema = new DataflowGraphConnectionSchemaSettings
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                                 SerializationFormat = DataflowGraphConnectionSchemaSerializationFormat.Avro,
                                 SchemaRef = "aio-sr://namespace/alert:1",
                             },
-                        }, new DataflowGraphConnectionOutput("alert")),
+                        }, "alert"),
                         new DataflowGraphNodeConnection(new DataflowGraphConnectionInput("my-graph.fabric-output")
                         {
                             Schema = new DataflowGraphConnectionSchemaSettings
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                                 SerializationFormat = DataflowGraphConnectionSchemaSerializationFormat.Avro,
                                 SchemaRef = "aio-sr://namespace/fabric:1",
                             },
-                        }, new DataflowGraphConnectionOutput("fabric")),
+                        }, "fabric"),
                     }
                                                 )
             };

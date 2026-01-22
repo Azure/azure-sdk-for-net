@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> System assigned managed identity properties. </summary>
-    public partial class RegistryEndpointSystemAssignedManagedIdentitySettings
+    internal partial class RegistryEndpointSystemAssignedManagedIdentitySettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

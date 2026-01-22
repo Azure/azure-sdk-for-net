@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageSync
                 SyncGroupArray result = SyncGroupArray.FromResponse(response);
                 yield return Page<StorageSyncGroupData>.FromValues((IReadOnlyList<StorageSyncGroupData>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

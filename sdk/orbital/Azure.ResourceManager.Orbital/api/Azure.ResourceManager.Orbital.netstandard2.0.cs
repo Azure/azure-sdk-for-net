@@ -332,9 +332,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static Azure.ResourceManager.Orbital.Models.GroundStationCapability Communication { get { throw null; } }
         public static Azure.ResourceManager.Orbital.Models.GroundStationCapability EarthObservation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Orbital.Models.GroundStationCapability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Orbital.Models.GroundStationCapability left, Azure.ResourceManager.Orbital.Models.GroundStationCapability right) { throw null; }
         public static implicit operator Azure.ResourceManager.Orbital.Models.GroundStationCapability (string value) { throw null; }
@@ -350,9 +348,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode GA { get { throw null; } }
         public static Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode Preview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode left, Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode (string value) { throw null; }
@@ -474,9 +470,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static Azure.ResourceManager.Orbital.Models.OrbitalContactProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Orbital.Models.OrbitalContactProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Orbital.Models.OrbitalContactProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Orbital.Models.OrbitalContactProtocol left, Azure.ResourceManager.Orbital.Models.OrbitalContactProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Orbital.Models.OrbitalContactProtocol (string value) { throw null; }
@@ -495,9 +489,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static Azure.ResourceManager.Orbital.Models.OrbitalContactStatus Scheduled { get { throw null; } }
         public static Azure.ResourceManager.Orbital.Models.OrbitalContactStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Orbital.Models.OrbitalContactStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Orbital.Models.OrbitalContactStatus left, Azure.ResourceManager.Orbital.Models.OrbitalContactStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Orbital.Models.OrbitalContactStatus (string value) { throw null; }
@@ -513,9 +505,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection Downlink { get { throw null; } }
         public static Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection Uplink { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection left, Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection (string value) { throw null; }
@@ -533,9 +523,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization LinearVertical { get { throw null; } }
         public static Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization Rhcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization left, Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization right) { throw null; }
         public static implicit operator Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization (string value) { throw null; }
@@ -555,9 +543,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState left, Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState (string value) { throw null; }

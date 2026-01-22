@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = new Uri(prop.Value.GetString());
+                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("headers"u8))

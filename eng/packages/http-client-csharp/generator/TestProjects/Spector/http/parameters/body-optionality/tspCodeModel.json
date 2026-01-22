@@ -644,7 +644,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
+              "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -653,9 +653,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "12"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

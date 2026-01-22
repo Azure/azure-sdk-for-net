@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                         }
                         else
                         {
-                            array.Add(new Uri(item.GetString()));
+                            array.Add(string.IsNullOrEmpty(item.GetString()) ? null : new Uri(item.GetString()));
                         }
                     }
                     observedCertificates = array;

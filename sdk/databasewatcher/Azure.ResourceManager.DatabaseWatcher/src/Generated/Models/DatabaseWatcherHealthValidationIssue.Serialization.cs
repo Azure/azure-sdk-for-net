@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     {
                         continue;
                     }
-                    recommendationUri = new Uri(prop.Value.GetString());
+                    recommendationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relatedResourceId"u8))

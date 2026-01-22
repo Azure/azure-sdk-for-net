@@ -17,7 +17,10 @@ import { VersioningTestLibrary } from "@typespec/versioning/testing";
 import { XmlTestLibrary } from "@typespec/xml/testing";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "../src/sdk-context-options.js";
-import { ArmProviderSchema } from "../src/resource-metadata.js";
+import {
+  ArmProviderSchema,
+  sortResourceMethods
+} from "../src/resource-metadata.js";
 
 export async function createEmitterTestHost(): Promise<TestHost> {
   return createTestHost({
@@ -121,11 +124,19 @@ export async function createCSharpSdkContext(
  */
 export function normalizeSchemaForComparison(schema: ArmProviderSchema) {
   // Work on a deep copy to avoid mutating the original schema used elsewhere in tests.
-  const normalizedSchema: ArmProviderSchema = JSON.parse(JSON.stringify(schema));
+  const normalizedSchema: ArmProviderSchema = JSON.parse(
+    JSON.stringify(schema)
+  );
 
-  // it is a known issue that the resources.metadata.resourceName might be different therefore we need to ignore it
+  // it is a known issue that the following properties might different therefore we need to ignore them:
+  // - resources.metadata.resourceName
+  // - resources.metadata.parentResourceModelId
   for (const resource of normalizedSchema.resources) {
     resource.metadata.resourceName = "<normalized>";
+    resource.metadata.parentResourceModelId = "<normalized>";
+
+    // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
+    sortResourceMethods(resource.metadata.methods);
   }
 
   // sort resources by resourceIdPattern
@@ -134,7 +145,9 @@ export function normalizeSchemaForComparison(schema: ArmProviderSchema) {
   );
 
   // sort nonResourceMethods by methodId
-  normalizedSchema.nonResourceMethods.sort((a, b) => a.methodId.localeCompare(b.methodId));
+  normalizedSchema.nonResourceMethods.sort((a, b) =>
+    a.methodId.localeCompare(b.methodId)
+  );
 
   return normalizedSchema;
 }

@@ -6,56 +6,12 @@ namespace Azure.ResourceManager.RecoveryServices
         public static Azure.ResourceManager.RecoveryServices.AzureResourceManagerRecoveryServicesContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class RecoveryServicesDeletedVaultCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected RecoveryServicesDeletedVaultCollection() { }
-        public virtual Azure.Response<bool> Exists(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> Get(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource>> GetAsync(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> GetIfExists(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource>> GetIfExistsAsync(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class RecoveryServicesDeletedVaultData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>
-    {
-        internal RecoveryServicesDeletedVaultData() { }
-        public Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties Properties { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RecoveryServicesDeletedVaultResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected RecoveryServicesDeletedVaultResource() { }
-        public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string deletedVaultName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Undelete(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UndeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public static partial class RecoveryServicesExtensions
     {
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult> GetRecoveryServiceCapabilities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVault(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource>> GetRecoveryServicesDeletedVaultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource GetRecoveryServicesDeletedVaultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultCollection GetRecoveryServicesDeletedVaults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaultsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVault(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> GetRecoveryServicesVaultAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -112,10 +68,8 @@ namespace Azure.ResourceManager.RecoveryServices
     {
         protected RecoveryServicesVaultCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -212,10 +166,8 @@ namespace Azure.ResourceManager.RecoveryServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch patch, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch patch, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
@@ -224,7 +176,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
     public partial class MockableRecoveryServicesArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableRecoveryServicesArmClient() { }
-        public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource GetRecoveryServicesDeletedVaultResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource GetRecoveryServicesVaultResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -243,11 +194,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         protected MockableRecoveryServicesSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult> GetRecoveryServiceCapabilities(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVault(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource>> GetRecoveryServicesDeletedVaultAsync(string location, string deletedVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultCollection GetRecoveryServicesDeletedVaults() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaults(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaultsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVaults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -256,21 +202,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public static partial class ArmRecoveryServicesModelFactory
     {
-        public static Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties DeletedVaultProperties(string vaultId = null, System.DateTimeOffset? vaultDeletionOn = default(System.DateTimeOffset?), System.DateTimeOffset? purgeOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.RecoveryServicesDeletedVaultData RecoveryServicesDeletedVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType> groupIds = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties RecoveryServicesPrivateEndpointConnectionVaultProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResourceData RecoveryServicesPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState RecoveryServicesPrivateLinkServiceConnectionState(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus? status = default(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState? immutabilityState, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings softDeleteSettings, Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization? multiUserAuthorization) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState? immutabilityState = default(Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState?), Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings softDeleteSettings = null, Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization? multiUserAuthorization = default(Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization?), Azure.ResourceManager.RecoveryServices.Models.SourceScanConfiguration sourceScanConfiguration = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData RecoveryServicesVaultData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties properties = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku sku = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData RecoveryServicesVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku sku = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoData RecoveryServicesVaultExtendedInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string integrityKey = null, string encryptionKey = null, string encryptionKeyThumbprint = null, string algorithm = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch RecoveryServicesVaultPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties properties = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState, Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails upgradeDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState? privateEndpointStateForBackup, Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption encryption, Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails moveDetails, Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState? moveState, Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion? backupStorageVersion, Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings monitoringSettings, Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState? crossSubscriptionRestoreState, Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings redundancySettings, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings securitySettings, Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel? secureScore) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = null, Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails upgradeDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = null, Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState? privateEndpointStateForBackup = default(Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState?), Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default(Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState?), Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption encryption = null, Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails moveDetails = null, Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState? moveState = default(Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState?), Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion? backupStorageVersion = default(Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion?), Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess?), Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings monitoringSettings = null, Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default(Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState?), Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings redundancySettings = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings securitySettings = null, Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel? secureScore = default(Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel?), Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel? bcdrSecurityLevel = default(Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel?), System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.ReplicationJobSummary ReplicationJobSummary(int? failedJobs = default(int?), int? suspendedJobs = default(int?), int? inProgressJobs = default(int?)) { throw null; }
@@ -296,9 +238,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion V1 { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion V2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion left, Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion (string value) { throw null; }
@@ -316,9 +256,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel Good { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel Poor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel left, Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel (string value) { throw null; }
@@ -357,9 +295,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore Disabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore left, Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore (string value) { throw null; }
@@ -376,49 +312,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState Enabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState PermanentlyDisabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState left, Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState left, Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DeletedVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>
-    {
-        internal DeletedVaultProperties() { }
-        public System.DateTimeOffset? PurgeOn { get { throw null; } }
-        public System.DateTimeOffset? VaultDeletionOn { get { throw null; } }
-        public string VaultId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeletedVaultUndeleteContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>
-    {
-        public DeletedVaultUndeleteContent(Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties properties) { }
-        public string DeletedVaultUndeleteInputRecoveryResourceGroupId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeletedVaultUndeleteInputProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties>
-    {
-        public DeletedVaultUndeleteInputProperties(string recoveryResourceGroupId) { }
-        public string RecoveryResourceGroupId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DeletedVaultUndeleteInputProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsZone : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZone>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DnsZone>
     {
@@ -452,9 +351,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState Locked { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState Unlocked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState left, Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState (string value) { throw null; }
@@ -470,9 +367,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.InfrastructureEncryptionState Disabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.InfrastructureEncryptionState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.InfrastructureEncryptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.InfrastructureEncryptionState left, Azure.ResourceManager.RecoveryServices.Models.InfrastructureEncryptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.InfrastructureEncryptionState (string value) { throw null; }
@@ -489,9 +384,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization Enabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization left, Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization (string value) { throw null; }
@@ -519,9 +412,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState Disabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState (string value) { throw null; }
@@ -552,9 +443,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType AzureActiveDirectory { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType (string value) { throw null; }
@@ -608,9 +497,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesEnhancedSecurityState Enabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesEnhancedSecurityState Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesEnhancedSecurityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesEnhancedSecurityState left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesEnhancedSecurityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesEnhancedSecurityState (string value) { throw null; }
@@ -626,9 +513,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesIdentityType left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesIdentityType (string value) { throw null; }
@@ -685,9 +570,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState Pending { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -705,9 +588,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus (string value) { throw null; }
@@ -777,9 +658,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSkuName RS0 { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSkuName left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSkuName (string value) { throw null; }
@@ -810,9 +689,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteState Enabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteState Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteState left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteState (string value) { throw null; }
@@ -829,9 +706,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSourceScanState Enabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSourceScanState Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSourceScanState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSourceScanState left, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSourceScanState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSourceScanState (string value) { throw null; }
@@ -859,7 +734,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.BcdrSecurityLevel? BcdrSecurityLevel { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState? CrossSubscriptionRestoreState { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption Encryption { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState? ImmutabilityState { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings MonitoringSettings { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails MoveDetails { get { throw null; } set { } }
@@ -997,9 +871,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState PrepareTimedout { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState left, Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState (string value) { throw null; }
@@ -1017,9 +889,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel Minimum { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel left, Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel (string value) { throw null; }
@@ -1049,9 +919,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy LocallyRedundant { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy ZoneRedundant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy left, Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy (string value) { throw null; }
@@ -1072,10 +940,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public partial class VaultMonitoringSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings>
     {
         public VaultMonitoringSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState? AzureMonitorAlertAlertsForAllJobFailures { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAzureMonitorAlertSettings AzureMonitorAlertSettings { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState? ClassicAlertAlertsForCriticalOperations { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesClassicAlertSettings ClassicAlertSettings { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1110,9 +976,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState Enabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState left, Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState (string value) { throw null; }
@@ -1168,9 +1032,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess left, Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.VaultPublicNetworkAccess (string value) { throw null; }
@@ -1187,9 +1049,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType AzureBackupSecondary { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType AzureSiteRecovery { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType left, Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType (string value) { throw null; }
@@ -1226,9 +1086,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState Unknown { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState Upgraded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState left, Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState (string value) { throw null; }
@@ -1244,9 +1102,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeTriggerType ForcedUpgrade { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeTriggerType UserTriggered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeTriggerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeTriggerType left, Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeTriggerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeTriggerType (string value) { throw null; }
@@ -1294,9 +1150,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static Azure.ResourceManager.RecoveryServices.Models.VaultUsageUnit Percent { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServices.Models.VaultUsageUnit Seconds { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServices.Models.VaultUsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.VaultUsageUnit left, Azure.ResourceManager.RecoveryServices.Models.VaultUsageUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.VaultUsageUnit (string value) { throw null; }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.DevOpsInfrastructure;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The Azure SKU of the machines in the pool. </summary>
-    public partial class DevOpsAzureSku : IJsonModel<DevOpsAzureSku>
+    internal partial class DevOpsAzureSku : IJsonModel<DevOpsAzureSku>
     {
         /// <summary> Initializes a new instance of <see cref="DevOpsAzureSku"/> for deserialization. </summary>
         internal DevOpsAzureSku()

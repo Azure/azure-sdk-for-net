@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 RulestackAppIdListResult result = RulestackAppIdListResult.FromResponse(response);
                 yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

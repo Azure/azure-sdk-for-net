@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public partial class EventStorageDestination : EventDestination
     {
         /// <summary> Initializes a new instance of <see cref="EventStorageDestination"/>. </summary>
-        /// <param name="configuration"> The storage destination configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
-        public EventStorageDestination(StorageDestinationConfiguration configuration)
+        /// <param name="path"> The storage destination path. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
+        public EventStorageDestination(string path)
         {
-            Argument.AssertNotNull(configuration, nameof(configuration));
+            Argument.AssertNotNull(path, nameof(path));
 
-            Configuration = configuration;
+            Configuration = new StorageDestinationConfiguration(path);
             Target = EventDestinationTarget.Storage;
         }
 

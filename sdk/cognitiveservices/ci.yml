@@ -12,19 +12,6 @@ trigger:
     exclude:
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/cognitiveservices/
-    exclude:
-    - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -149,7 +149,7 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceEndpointPolicy.</param>
     public ServiceEndpointPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/serviceEndpointPolicies", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.Network/serviceEndpointPolicies", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -178,6 +178,16 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

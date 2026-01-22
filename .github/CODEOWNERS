@@ -16,17 +16,11 @@
 ################
 # Orphaned paths
 ################
-# As of 2/1/2023 these paths have no owners:
+# As of 1/15/2026 these paths have no owners:
 
 # /**
-# /.config/
 # /.devcontainer/
-# /.vscode/
 # /common/Perf/
-# /common/Stress/
-# /doc/
-# /samples/
-# /tools/
 
 ##################
 # Repository root
@@ -34,6 +28,12 @@
 # Catch all for loose files in the root, which are mostly global configuration and
 # should not be changed without team discussion.
 /*                                                                 @jsquire @Azure/azure-sdk-write-net-core
+
+# Common repository-wide assets and configuration
+/.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
+/.vscode/                                                          @jsquire @m-redding
+/doc/                                                              @jsquire @scottaddie
+/samples/                                                          @jsquire @m-redding
 
 ################
 # Automation
@@ -218,13 +218,13 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Content Understanding
-/sdk/contentunderstanding/                                         @yungshinlintw @bojunehsu @changjian-wang
+/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @yungshinlintw @bojunehsu
+/sdk/documentintelligence/                                         @changjian-wang @bojunehsu
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @yungshinlintw @bojunehsu
+/sdk/formrecognizer/                                               @changjian-wang @bojunehsu
 
 # ServiceLabel: %Cognitive - Form Recognizer
 # ServiceOwners:                                                   @vkurpad
@@ -386,10 +386,10 @@
 # ServiceOwners:                                                   @drishtipeshwani09
 
 # PRLabel: %Container Registry
-/sdk/containerregistry/                                            @Azure/azsdk-acr
+/sdk/containerregistry/                                            @Azure/azure-sdk-write-acr
 
 # ServiceLabel: %Container Registry
-# ServiceOwners:                                                   @toddysm @Azure/azsdk-acr
+# ServiceOwners:                                                   @Azure/azure-sdk-write-acr
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
@@ -497,14 +497,14 @@
 # ServiceOwners:                                                   @Kishp01 @shankarsama @rajeshka
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                                     @axisc @sjkwak @hmlam @jsquire
+/sdk/eventhub/                                                     @axisc @sjkwak @hmlam @j7nw4r @jsquire
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @axisc @sjkwak @hmlam @jsquire
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @axisc @sjkwak @hmlam @j7nw4r @jsquire
 
 # ServiceLabel: %Event Hubs
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @axisc @sjkwak @hmlam
+# ServiceOwners:                                                   @axisc @sjkwak @hmlam @j7nw4r
 
 # PRLabel: %Extension - WCF
 /sdk/extension-wcf/                                                @mconnew
@@ -820,14 +820,14 @@
 # ServiceOwners:                                                   @amirkeren
 
 # PRLabel: %Service Bus
-/sdk/servicebus/                                                   @skarri-microsoft @EldertGrootenboer @jsquire
+/sdk/servicebus/                                                   @skarri-microsoft @EldertGrootenboer @j7nw4r @jsquire
 
 # PRLabel: %Service Bus %Functions
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @skarri-microsoft @EldertGrootenboer @jsquire
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @skarri-microsoft @EldertGrootenboer @j7nw4r @jsquire
 
 # ServiceLabel: %Service Bus
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @skarri-microsoft @EldertGrootenboer
+# ServiceOwners:                                                   @skarri-microsoft @EldertGrootenboer @j7nw4r
 
 # PRLabel: %SignalR
 /sdk/signalr/                                                      @chenkennt @vicancy @JialinXin @Y-Sindo
@@ -1011,6 +1011,12 @@
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
+# PRLabel: %File Shares
+/sdk/fileshares/Azure.ResourceManager.FileShares/                  @ankushbindlish2
+
+# ServiceLabel: %File Shares %Mgmt
+# ServiceOwners:                                                   @ankushbindlish2
+
 # PRLabel: %Grafana
 /sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao
 
@@ -1063,7 +1069,7 @@
 # ServiceOwners:                                                   @audunn
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - Edge Actions
 /sdk/edgeactions/Azure.ResourceManager.*/                          @tundwed @anamikanupur
@@ -1078,7 +1084,7 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
@@ -1210,6 +1216,8 @@
 /eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 /eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 /eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/http-client-csharp-emitter-package.json                            @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
 

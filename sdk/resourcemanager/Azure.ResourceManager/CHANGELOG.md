@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed `ArgumentNullException` when deserializing `ManagedServiceIdentity` with null or empty `type` property value.
+
 ### Other Changes
 
 ## 1.13.2 (2025-07-18)

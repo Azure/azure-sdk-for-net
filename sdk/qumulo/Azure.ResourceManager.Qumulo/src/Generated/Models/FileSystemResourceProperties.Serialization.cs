@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    clusterLoginUri = new Uri(prop.Value.GetString());
+                    clusterLoginUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateIPs"u8))

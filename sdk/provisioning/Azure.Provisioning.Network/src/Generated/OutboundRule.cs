@@ -132,7 +132,7 @@ public partial class OutboundRule : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the OutboundRule.</param>
     public OutboundRule(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/loadBalancers/outboundRules", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.Network/loadBalancers/outboundRules", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -160,6 +160,16 @@ public partial class OutboundRule : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

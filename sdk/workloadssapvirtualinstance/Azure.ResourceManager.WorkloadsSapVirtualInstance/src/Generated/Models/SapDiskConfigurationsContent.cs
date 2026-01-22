@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> The SAP request to get list of disk configurations. </summary>
     public partial class SapDiskConfigurationsContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
@@ -73,8 +45,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
         /// <param name="dbVmSku"> The VM SKU for database instance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppLocation = appLocation;
             Environment = environment;
@@ -82,24 +54,24 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             DatabaseType = databaseType;
             DeploymentType = deploymentType;
             DBVmSku = dbVmSku;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/> for deserialization. </summary>
-        internal SapDiskConfigurationsContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>
         public AzureLocation AppLocation { get; }
+
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; }
+
         /// <summary> Defines the SAP Product type. </summary>
         public SapProductType SapProduct { get; }
+
         /// <summary> The database type. Eg: HANA, DB2, etc. </summary>
         public SapDatabaseType DatabaseType { get; }
+
         /// <summary> The deployment type. Eg: SingleServer/ThreeTier. </summary>
         public SapDeploymentType DeploymentType { get; }
+
         /// <summary> The VM SKU for database instance. </summary>
         public string DBVmSku { get; }
     }

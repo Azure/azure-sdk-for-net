@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> RegistryEndpoint Artifact Pull Secret authentication properties. </summary>
-    public partial class RegistryEndpointArtifactPullSecretSettings : IJsonModel<RegistryEndpointArtifactPullSecretSettings>
+    internal partial class RegistryEndpointArtifactPullSecretSettings : IJsonModel<RegistryEndpointArtifactPullSecretSettings>
     {
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointArtifactPullSecretSettings"/> for deserialization. </summary>
         internal RegistryEndpointArtifactPullSecretSettings()

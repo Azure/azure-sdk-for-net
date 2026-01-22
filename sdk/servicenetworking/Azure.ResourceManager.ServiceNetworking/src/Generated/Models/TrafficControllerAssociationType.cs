@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     public readonly partial struct TrafficControllerAssociationType : IEquatable<TrafficControllerAssociationType>
     {
         private readonly string _value;
+        /// <summary> Association of Type Subnet. </summary>
+        private const string SubnetsValue = "subnets";
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TrafficControllerAssociationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SubnetsValue = "subnets";
+            _value = value;
+        }
 
         /// <summary> Association of Type Subnet. </summary>
         public static TrafficControllerAssociationType Subnets { get; } = new TrafficControllerAssociationType(SubnetsValue);
+
         /// <summary> Determines if two <see cref="TrafficControllerAssociationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrafficControllerAssociationType left, TrafficControllerAssociationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrafficControllerAssociationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrafficControllerAssociationType left, TrafficControllerAssociationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficControllerAssociationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrafficControllerAssociationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrafficControllerAssociationType(string value) => new TrafficControllerAssociationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrafficControllerAssociationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrafficControllerAssociationType?(string value) => value == null ? null : new TrafficControllerAssociationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrafficControllerAssociationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrafficControllerAssociationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

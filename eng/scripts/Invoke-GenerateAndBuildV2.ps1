@@ -45,6 +45,30 @@ $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 $apiVersion = $inputJson.apiVersion
 $sdkReleaseType = $inputJson.sdkReleaseType
 
+function Test-MgmtSdkUsingNewGenerator {
+    param(
+        [string]$serviceType,
+        [string]$tspConfigFile,
+        [string]$sdkProjectFolder
+    )
+
+    if ($serviceType -ne 'resource-manager') {
+        return $false
+    }
+
+    $tspLocationFile = Join-Path $sdkProjectFolder "tsp-location.yaml"
+
+    if (-not (Test-Path $tspConfigFile) -or -not (Test-Path $tspLocationFile)) {
+        return $false
+    }
+
+    $tspConfigContent = Get-Content $tspConfigFile -Raw
+    $isNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
+    $tspLocationContent = Get-Content $tspLocationFile -Raw
+    $hasNewEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json'
+    return ($isNewMgmtEmitter -and $hasNewEmitterPackageJson)
+}
+
 function Update-PackageVersionSuffix {
     param(
         [string]$csprojPath,
@@ -203,7 +227,7 @@ if ($relatedTypeSpecProjectFolder) {
             $serviceType = "resource-manager"
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
-        Write-host "Start to call tsp-client to generate package:$packageName"
+        Write-Host "Start to call tsp-client to generate package: $packageName, serviceType: $serviceType, sdkProjectFolder: $sdkProjectFolder"
         
         # Install tsp-client dependencies from eng/common/tsp-client
         $tspClientDir = Resolve-Path (Join-Path $PSScriptRoot "../common/tsp-client")
@@ -263,8 +287,7 @@ if ($relatedTypeSpecProjectFolder) {
             -specRepoRoot $swaggerDir
         }
 
-        $tspConfigContent = Get-Content $tspConfigFile -Raw
-        if (($serviceType -eq 'resource-manager' -and $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt') -or $serviceType -eq "data-plane") {
+        if ((Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder) -or $serviceType -eq "data-plane") {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
         }
     }
