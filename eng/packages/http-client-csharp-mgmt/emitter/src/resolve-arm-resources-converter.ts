@@ -240,17 +240,28 @@ export function resolveArmResources(
     sortResourceMethods(resource.metadata.methods);
   }
 
+  // Validate and prune resources and methods that cannot be found in the library
+  // This must happen before filtering resources without Get/Read operations
+  // because pruning could remove methods and leave a resource without a read operation
+  const { validatedResources, validatedNonResourceMethods } =
+    validateAndPruneSchema(
+      program,
+      sdkContext,
+      validResources,
+      nonResourceMethods
+    );
+
   // Filter out resources without Get/Read operations (non-singleton resources only)
   // Singleton resources can exist without Get operations
   const filteredResources: ArmResourceSchema[] = [];
-  for (const resource of validResources) {
+  for (const resource of validatedResources) {
     const hasReadOperation = resource.metadata.methods.some(
       (m) => m.kind === ResourceOperationKind.Read
     );
     if (!hasReadOperation && !resource.metadata.singletonResourceName) {
       // Move all methods to non-resource methods since there's no Get operation
       for (const method of resource.metadata.methods) {
-        nonResourceMethods.push({
+        validatedNonResourceMethods.push({
           methodId: method.methodId,
           operationPath: method.operationPath,
           operationScope: method.operationScope
@@ -303,7 +314,100 @@ export function resolveArmResources(
 
   return {
     resources: filteredResources,
-    nonResourceMethods
+    nonResourceMethods: validatedNonResourceMethods
+  };
+}
+
+/**
+ * Validates and prunes resources and methods that cannot be found in the library
+ * by their crossLanguageDefinitionId.
+ *
+ * This function removes:
+ * - Resources whose model ID doesn't exist in the SDK package
+ * - Methods (in resources) whose operation ID doesn't exist in the SDK package
+ * - Non-resource methods whose operation ID doesn't exist in the SDK package
+ *
+ * @param program - The TypeSpec program
+ * @param sdkContext - The emitter context containing SDK package information
+ * @param resources - The resources to validate
+ * @param nonResourceMethods - The non-resource methods to validate
+ * @returns Validated resources and non-resource methods with invalid items removed
+ */
+function validateAndPruneSchema(
+  program: Program,
+  sdkContext: CSharpEmitterContext,
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[]
+): {
+  validatedResources: ArmResourceSchema[];
+  validatedNonResourceMethods: NonResourceMethod[];
+} {
+  // Build sets of valid model IDs and operation IDs from the SDK package
+  const validModelIds = new Set<string>(
+    sdkContext.sdkPackage.models.map((m) => m.crossLanguageDefinitionId)
+  );
+
+  const validOperationIds = new Set<string>();
+  
+  // Traverse all clients and their methods to collect valid operation IDs
+  function collectOperationIds(
+    clients: Array<{ methods: Array<{ crossLanguageDefinitionId: string }>, children?: any[] }>
+  ) {
+    for (const client of clients) {
+      for (const method of client.methods) {
+        validOperationIds.add(method.crossLanguageDefinitionId);
+      }
+      if (client.children) {
+        collectOperationIds(client.children);
+      }
+    }
+  }
+  
+  collectOperationIds(sdkContext.sdkPackage.clients);
+
+  // Validate and prune resources
+  const validatedResources: ArmResourceSchema[] = [];
+  for (const resource of resources) {
+    // Check if the resource model exists in the SDK package
+    if (!validModelIds.has(resource.resourceModelId)) {
+      continue;
+    }
+
+    // Validate methods in this resource
+    const validatedMethods: ResourceMethod[] = [];
+    for (const method of resource.metadata.methods) {
+      if (!validOperationIds.has(method.methodId)) {
+        continue;
+      }
+      validatedMethods.push(method);
+    }
+
+    // Only include the resource if it has at least one valid method
+    if (validatedMethods.length > 0) {
+      // Create a new resource object to avoid mutating the original
+      const validatedResource: ArmResourceSchema = {
+        resourceModelId: resource.resourceModelId,
+        metadata: {
+          ...resource.metadata,
+          methods: validatedMethods
+        }
+      };
+      validatedResources.push(validatedResource);
+    }
+  }
+
+  // Validate and prune non-resource methods
+  const validatedNonResourceMethods: NonResourceMethod[] = [];
+  for (const method of nonResourceMethods) {
+    if (!validOperationIds.has(method.methodId)) {
+      continue;
+    }
+    validatedNonResourceMethods.push(method);
+  }
+
+  return {
+    validatedResources,
+    validatedNonResourceMethods
   };
 }
 

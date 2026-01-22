@@ -1543,4 +1543,62 @@ interface NoGetResources {
       "Should have no NoGetResource operations in non-resource methods"
     );
   });
+
+  it("validation step should not affect valid resources and methods", async () => {
+    // This test verifies that the validation/pruning step added to resolveArmResources
+    // doesn't affect valid resources and methods (i.e., those with valid crossLanguageDefinitionIds)
+    const program = await typeSpecCompile(
+      `
+/** A test resource */
+model TestResource is TrackedResource<TestResourceProperties> {
+  ...ResourceNameParameter<TestResource>;
+}
+
+/** Test resource properties */
+model TestResourceProperties {
+  /** A test property */
+  testProperty?: string;
+}
+
+@armResourceOperations
+interface TestResources {
+  get is ArmResourceRead<TestResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<TestResource>;
+  update is ArmCustomPatchSync<TestResource, TestResourceProperties>;
+  delete is ArmResourceDeleteWithoutOkAsync<TestResource>;
+  listByResourceGroup is ArmResourceListByParent<TestResource>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema using both methods
+    const legacySchema = buildArmProviderSchema(sdkContext, root);
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+
+    // Verify both schemas produce the same results
+    // The validation step should not have pruned anything since all IDs are valid
+    ok(resolvedSchema);
+    ok(resolvedSchema.resources);
+    strictEqual(resolvedSchema.resources.length, 1);
+    
+    // Verify the resource has all expected methods
+    const resource = resolvedSchema.resources[0];
+    ok(resource);
+    strictEqual(resource.metadata.methods.length, 5); // get, create, update, delete, list
+    
+    // Verify non-resource methods (should have Operations interface)
+    ok(resolvedSchema.nonResourceMethods);
+    
+    // Compare with legacy schema to ensure validation didn't change behavior
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(legacySchema)
+    );
+  });
 });
