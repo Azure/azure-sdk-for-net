@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -17,50 +18,80 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetSecurityEncryptionType : IEquatable<ComputeFleetSecurityEncryptionType>
     {
         private readonly string _value;
+        /// <summary>
+        /// EncryptionType of the managed disk is set to VMGuestStateOnly for encryption
+        /// of just the VMGuestState blob.
+        /// </summary>
+        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
+        /// <summary>
+        /// EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption
+        /// of the managed disk along with VMGuestState blob.
+        /// </summary>
+        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
+        /// <summary>
+        /// EncryptionType of the managed disk is set to NonPersistedTPM for not persisting
+        /// firmware state in the VMGuestState blob.
+        /// </summary>
+        private const string NonPersistedTpmValue = "NonPersistedTPM";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetSecurityEncryptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
-        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
-        private const string NonPersistedTpmValue = "NonPersistedTPM";
+            _value = value;
+        }
 
         /// <summary>
         /// EncryptionType of the managed disk is set to VMGuestStateOnly for encryption
         /// of just the VMGuestState blob.
         /// </summary>
         public static ComputeFleetSecurityEncryptionType VmGuestStateOnly { get; } = new ComputeFleetSecurityEncryptionType(VmGuestStateOnlyValue);
+
         /// <summary>
         /// EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption
         /// of the managed disk along with VMGuestState blob.
         /// </summary>
         public static ComputeFleetSecurityEncryptionType DiskWithVmGuestState { get; } = new ComputeFleetSecurityEncryptionType(DiskWithVmGuestStateValue);
+
         /// <summary>
         /// EncryptionType of the managed disk is set to NonPersistedTPM for not persisting
         /// firmware state in the VMGuestState blob.
         /// </summary>
         public static ComputeFleetSecurityEncryptionType NonPersistedTpm { get; } = new ComputeFleetSecurityEncryptionType(NonPersistedTpmValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetSecurityEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetSecurityEncryptionType left, ComputeFleetSecurityEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetSecurityEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetSecurityEncryptionType left, ComputeFleetSecurityEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetSecurityEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetSecurityEncryptionType(string value) => new ComputeFleetSecurityEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetSecurityEncryptionType?(string value) => value == null ? null : new ComputeFleetSecurityEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetSecurityEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetSecurityEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

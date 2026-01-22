@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetVmssExtensionProperties : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmssExtensionProperties>
+    /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
+    public partial class ComputeFleetVmssExtensionProperties : IJsonModel<ComputeFleetVmssExtensionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmssExtensionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmssExtensionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssExtensionProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -119,8 +119,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("provisionAfterExtensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProvisionAfterExtensions)
+                foreach (string item in ProvisionAfterExtensions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -135,15 +140,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
                 writer.WriteObjectValue(ProtectedSettingsFromKeyVault, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -152,185 +157,198 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmssExtensionProperties IJsonModel<ComputeFleetVmssExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmssExtensionProperties IJsonModel<ComputeFleetVmssExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmssExtensionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssExtensionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmssExtensionProperties(document.RootElement, options);
         }
 
-        internal static ComputeFleetVmssExtensionProperties DeserializeComputeFleetVmssExtensionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeFleetVmssExtensionProperties DeserializeComputeFleetVmssExtensionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string forceUpdateTag = default;
             string publisher = default;
-            string type = default;
+            string extensionType = default;
             string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
-            bool? enableAutomaticUpgrade = default;
+            bool? shouldAutoUpgradeMinorVersion = default;
+            bool? isAutomaticUpgradeEnabled = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> protectedSettings = default;
             string provisioningState = default;
             IList<string> provisionAfterExtensions = default;
-            bool? suppressFailures = default;
+            bool? isSuppressFailuresEnabled = default;
             ComputeFleetKeyVaultSecretReference protectedSettingsFromKeyVault = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("forceUpdateTag"u8))
+                if (prop.NameEquals("forceUpdateTag"u8))
                 {
-                    forceUpdateTag = property.Value.GetString();
+                    forceUpdateTag = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"u8))
+                if (prop.NameEquals("publisher"u8))
                 {
-                    publisher = property.Value.GetString();
+                    publisher = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    extensionType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeHandlerVersion"u8))
+                if (prop.NameEquals("typeHandlerVersion"u8))
                 {
-                    typeHandlerVersion = property.Value.GetString();
+                    typeHandlerVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoUpgradeMinorVersion"u8))
+                if (prop.NameEquals("autoUpgradeMinorVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = property.Value.GetBoolean();
+                    shouldAutoUpgradeMinorVersion = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableAutomaticUpgrade"u8))
+                if (prop.NameEquals("enableAutomaticUpgrade"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableAutomaticUpgrade = property.Value.GetBoolean();
+                    isAutomaticUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("settings"u8))
+                if (prop.NameEquals("settings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     settings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("protectedSettings"u8))
+                if (prop.NameEquals("protectedSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     protectedSettings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisionAfterExtensions"u8))
+                if (prop.NameEquals("provisionAfterExtensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     provisionAfterExtensions = array;
                     continue;
                 }
-                if (property.NameEquals("suppressFailures"u8))
+                if (prop.NameEquals("suppressFailures"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    suppressFailures = property.Value.GetBoolean();
+                    isSuppressFailuresEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("protectedSettingsFromKeyVault"u8))
+                if (prop.NameEquals("protectedSettingsFromKeyVault"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectedSettingsFromKeyVault = ComputeFleetKeyVaultSecretReference.DeserializeComputeFleetKeyVaultSecretReference(property.Value, options);
+                    protectedSettingsFromKeyVault = ComputeFleetKeyVaultSecretReference.DeserializeComputeFleetKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmssExtensionProperties(
                 forceUpdateTag,
                 publisher,
-                type,
+                extensionType,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
+                shouldAutoUpgradeMinorVersion,
+                isAutomaticUpgradeEnabled,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 provisioningState,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
-                suppressFailures,
+                isSuppressFailuresEnabled,
                 protectedSettingsFromKeyVault,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeFleetVmssExtensionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetVmssExtensionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -340,15 +358,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmssExtensionProperties IPersistableModel<ComputeFleetVmssExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVmssExtensionProperties IPersistableModel<ComputeFleetVmssExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmssExtensionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetVmssExtensionProperties(document.RootElement, options);
                     }
                 default:
@@ -356,6 +379,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetVmssExtensionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

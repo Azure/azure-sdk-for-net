@@ -10,87 +10,108 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> List of Products. </summary>
+    /// <summary> Represents a product. </summary>
     public partial class EdgeOrderProduct
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProduct"/>. </summary>
         internal EdgeOrderProduct()
         {
-            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
-            Configurations = new ChangeTrackingList<ProductConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProduct"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
-        /// <param name="configurations"> List of configurations for the product. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProduct(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductConfiguration> configurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of product. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProduct(ProductProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            Description = description;
-            ImageInformation = imageInformation;
-            CostInformation = costInformation;
-            AvailabilityInformation = availabilityInformation;
-            HierarchyInformation = hierarchyInformation;
-            FilterableProperties = filterableProperties;
-            Configurations = configurations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of product. </summary>
+        internal ProductProperties Properties { get; }
+
         /// <summary> Display Name for the product system. </summary>
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties.DisplayName;
+            }
+        }
+
         /// <summary> Description related to the product system. </summary>
-        public ProductDescription Description { get; }
+        public ProductDescription Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> Image information for the product system. </summary>
-        public IReadOnlyList<EdgeOrderProductImageInformation> ImageInformation { get; }
+        public IReadOnlyList<EdgeOrderProductImageInformation> ImageInformation
+        {
+            get
+            {
+                return Properties.ImageInformation;
+            }
+        }
+
         /// <summary> Cost information for the product system. </summary>
-        public EdgeOrderProductCostInformation CostInformation { get; }
+        public EdgeOrderProductCostInformation CostInformation
+        {
+            get
+            {
+                return Properties.CostInformation;
+            }
+        }
+
         /// <summary> Availability information of the product system. </summary>
-        public ProductAvailabilityInformation AvailabilityInformation { get; }
+        public ProductAvailabilityInformation AvailabilityInformation
+        {
+            get
+            {
+                return Properties.AvailabilityInformation;
+            }
+        }
+
         /// <summary> Hierarchy information of a product. </summary>
-        public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
-        public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
+        public HierarchyInformation HierarchyInformation
+        {
+            get
+            {
+                return Properties.HierarchyInformation;
+            }
+        }
+
+        /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
+        public EdgeOrderFulfillmentType? FulfilledBy
+        {
+            get
+            {
+                return Properties.FulfilledBy;
+            }
+        }
+
+        /// <summary> List of filters supported for a product. </summary>
+        public IReadOnlyList<FilterableProperty> FilterableProperties
+        {
+            get
+            {
+                return Properties.FilterableProperties;
+            }
+        }
+
         /// <summary> List of configurations for the product. </summary>
-        public IReadOnlyList<ProductConfiguration> Configurations { get; }
+        public IReadOnlyList<ProductConfiguration> Configurations
+        {
+            get
+            {
+                return Properties.Configurations;
+            }
+        }
     }
 }
