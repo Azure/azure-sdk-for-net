@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNull(creationDataSourceId, nameof(creationDataSourceId));
 
-            Properties = new SnapshotProperties(new SnapshotCreationInfo(creationDataSourceId, null));
+            Properties = new SnapshotProperties(creationDataSourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotData"/>. </summary>

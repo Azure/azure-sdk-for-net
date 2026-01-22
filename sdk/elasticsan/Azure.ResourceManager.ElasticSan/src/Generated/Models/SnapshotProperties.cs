@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
-        /// <param name="creationData"> Data used when creating a volume snapshot. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creationData"/> is null. </exception>
-        public SnapshotProperties(SnapshotCreationInfo creationData)
+        /// <param name="creationDataSourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="creationDataSourceId"/> is null. </exception>
+        public SnapshotProperties(ResourceIdentifier creationDataSourceId)
         {
-            Argument.AssertNotNull(creationData, nameof(creationData));
+            Argument.AssertNotNull(creationDataSourceId, nameof(creationDataSourceId));
 
-            CreationData = creationData;
+            CreationData = new SnapshotCreationInfo(creationDataSourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
