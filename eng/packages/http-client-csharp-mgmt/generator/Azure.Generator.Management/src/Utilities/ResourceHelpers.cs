@@ -107,19 +107,6 @@ namespace Azure.Generator.Management.Utilities
         }
 
         /// <summary>
-        /// Determines if a delete operation is deleting the current resource.
-        /// A delete operation targets the current resource if its operation path matches the resource's ID pattern.
-        /// </summary>
-        /// <param name="resourceMethod">The resource method representing the delete operation.</param>
-        /// <param name="resourceIdPattern">The ID pattern of the current resource.</param>
-        /// <returns>True if the delete operation is deleting the current resource; otherwise, false.</returns>
-        [Obsolete("Use IsOperatingOnCurrentResource instead")]
-        public static bool IsDeletingCurrentResource(ResourceMethod resourceMethod, string resourceIdPattern)
-        {
-            return IsOperatingOnCurrentResource(resourceMethod, resourceIdPattern);
-        }
-
-        /// <summary>
         /// Normalizes a path for comparison by converting all path parameters to a standard placeholder.
         /// This allows comparing paths that may have different parameter names but the same structure.
         /// For example, both "/{foo}/bar/{baz}" and "/{a}/bar/{b}" normalize to "/{}/bar/{}".
