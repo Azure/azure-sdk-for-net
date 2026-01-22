@@ -14,21 +14,21 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this KeyVaultCreateMode value) => value switch
         {
-            KeyVaultCreateMode.Default => "default",
             KeyVaultCreateMode.Recover => "recover",
+            KeyVaultCreateMode.Default => "default",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultCreateMode value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static KeyVaultCreateMode ToKeyVaultCreateMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default"))
-            {
-                return KeyVaultCreateMode.Default;
-            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover"))
             {
                 return KeyVaultCreateMode.Recover;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default"))
+            {
+                return KeyVaultCreateMode.Default;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultCreateMode value.");
         }

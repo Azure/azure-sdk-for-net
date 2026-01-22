@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
         public static KeyVaultData KeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, KeyVaultProperties properties = default, IDictionary<string, string> tags = default)
         {
