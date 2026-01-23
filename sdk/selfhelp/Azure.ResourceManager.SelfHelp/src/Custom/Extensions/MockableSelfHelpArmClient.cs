@@ -43,10 +43,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            // Argument.AssertNotNull(scope, nameof(scope));
-
-            // HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DiscoverySolutionDiscoverSolutionsCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
         }
 
         /// <summary>
@@ -73,12 +74,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            // Argument.AssertNotNull(scope, nameof(scope));
-
-            // HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
-            // HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
-            // return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
         }
     }
 }
