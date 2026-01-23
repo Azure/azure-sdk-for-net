@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Device details. </summary>
     public partial class EdgeOrderProductDeviceDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProductDeviceDetails"/>. </summary>
         internal EdgeOrderProductDeviceDetails()
@@ -51,23 +22,40 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProductDeviceDetails"/>. </summary>
-        /// <param name="serialNumber"> device serial number. </param>
+        /// <param name="serialNumber"> Device serial number. </param>
+        /// <param name="displaySerialNumber"> Device serial number to be displayed. </param>
         /// <param name="managementResourceId"> Management Resource Id. </param>
         /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProductDeviceDetails(string serialNumber, string managementResourceId, string managementResourceTenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="provisioningSupport"> Determining nature of provisioning that the configuration supports. </param>
+        /// <param name="provisioningDetails"> Provisioning Details for the device. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProductDeviceDetails(string serialNumber, string displaySerialNumber, string managementResourceId, string managementResourceTenantId, EdgeOrderProvisioningSupport? provisioningSupport, EdgeOrderProvisioningDetails provisioningDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SerialNumber = serialNumber;
+            DisplaySerialNumber = displaySerialNumber;
             ManagementResourceId = managementResourceId;
             ManagementResourceTenantId = managementResourceTenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ProvisioningSupport = provisioningSupport;
+            ProvisioningDetails = provisioningDetails;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> device serial number. </summary>
+        /// <summary> Device serial number. </summary>
         public string SerialNumber { get; }
+
+        /// <summary> Device serial number to be displayed. </summary>
+        public string DisplaySerialNumber { get; }
+
         /// <summary> Management Resource Id. </summary>
         public string ManagementResourceId { get; }
+
         /// <summary> Management Resource Tenant ID. </summary>
         public string ManagementResourceTenantId { get; }
+
+        /// <summary> Determining nature of provisioning that the configuration supports. </summary>
+        public EdgeOrderProvisioningSupport? ProvisioningSupport { get; }
+
+        /// <summary> Provisioning Details for the device. </summary>
+        public EdgeOrderProvisioningDetails ProvisioningDetails { get; }
     }
 }

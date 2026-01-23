@@ -13,69 +13,34 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> An instant Fleet's virtual machine. </summary>
-    public partial class ComputeFleetVirtualMachine : ResourceData
+    public partial class ComputeFleetVirtualMachine
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/>. </summary>
-        /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
-        internal ComputeFleetVirtualMachine(ComputeFleetVmOperationStatus operationStatus)
-        {
-            OperationStatus = operationStatus;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
-        /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            OperationStatus = operationStatus;
-            Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/> for deserialization. </summary>
         internal ComputeFleetVirtualMachine()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
+        /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
+        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error) : base(id, name, resourceType, systemData)
+        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            OperationStatus = operationStatus;
+            Error = error;
+        }
+
         /// <summary> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </summary>
         public ComputeFleetVmOperationStatus OperationStatus { get; }
+
         /// <summary> Error information when `operationStatus` is `Failed`. </summary>
         public ComputeFleetApiError Error { get; }
     }
