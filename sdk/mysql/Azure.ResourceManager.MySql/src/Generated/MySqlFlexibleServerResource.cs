@@ -2022,39 +2022,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetMySqlFlexibleServerAadAdministrators().Get(administratorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MySqlFlexibleServersPrivateEndpointConnections in the <see cref="MySqlFlexibleServerResource"/>. </summary>
-        /// <returns> An object representing collection of MySqlFlexibleServersPrivateEndpointConnections and their operations over a MySqlFlexibleServersPrivateEndpointConnectionResource. </returns>
-        public virtual MySqlFlexibleServersPrivateEndpointConnectionCollection GetMySqlFlexibleServersPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new MySqlFlexibleServersPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets a private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MySqlFlexibleServersPrivateEndpointConnectionResource>> GetMySqlFlexibleServersPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetMySqlFlexibleServersPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MySqlFlexibleServersPrivateEndpointConnectionResource> GetMySqlFlexibleServersPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetMySqlFlexibleServersPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of MySqlFlexibleServerBackups in the <see cref="MySqlFlexibleServerResource"/>. </summary>
         /// <returns> An object representing collection of MySqlFlexibleServerBackups and their operations over a MySqlFlexibleServerBackupResource. </returns>
         public virtual MySqlFlexibleServerBackupCollection GetMySqlFlexibleServerBackups()
@@ -2276,6 +2243,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
             return GetMySqlFlexibleServerMaintenances().Get(maintenanceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MySqlFlexibleServersPrivateEndpointConnections in the <see cref="MySqlFlexibleServerResource"/>. </summary>
+        /// <returns> An object representing collection of MySqlFlexibleServersPrivateEndpointConnections and their operations over a MySqlFlexibleServersPrivateEndpointConnectionResource. </returns>
+        public virtual MySqlFlexibleServersPrivateEndpointConnectionCollection GetMySqlFlexibleServersPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new MySqlFlexibleServersPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets a private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MySqlFlexibleServersPrivateEndpointConnectionResource>> GetMySqlFlexibleServersPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetMySqlFlexibleServersPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MySqlFlexibleServersPrivateEndpointConnectionResource> GetMySqlFlexibleServersPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetMySqlFlexibleServersPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
     }
 }

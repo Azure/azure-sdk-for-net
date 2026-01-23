@@ -3,13 +3,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownMySqlFlexibleServerBackupStoreDetails")]
+    [CodeGenType("UnknownMySqlFlexibleServerBackupStoreDetails")]
     internal partial class UnknownBackupStoreDetails
     {
     }

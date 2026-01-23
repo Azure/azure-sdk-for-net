@@ -44,15 +44,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             return new MySqlFlexibleServerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual MySqlFlexibleServersPrivateEndpointConnectionResource GetMySqlFlexibleServersPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            MySqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="MySqlFlexibleServerBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MySqlFlexibleServerBackupResource"/> object. </returns>
@@ -123,6 +114,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             MySqlFlexibleServerMaintenanceResource.ValidateResourceId(id);
             return new MySqlFlexibleServerMaintenanceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual MySqlFlexibleServersPrivateEndpointConnectionResource GetMySqlFlexibleServersPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            MySqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
         }
     }
 }
