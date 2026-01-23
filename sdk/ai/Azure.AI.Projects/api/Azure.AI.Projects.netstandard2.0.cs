@@ -2441,6 +2441,7 @@ namespace Azure.AI.Projects
     }
     public partial class PromptBasedEvaluatorDefinition : Azure.AI.Projects.EvaluatorDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptBasedEvaluatorDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptBasedEvaluatorDefinition>
     {
+        public PromptBasedEvaluatorDefinition(System.BinaryData initParameters, System.BinaryData dataSchema, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorMetric> metrics, string promptText) { }
         public PromptBasedEvaluatorDefinition(string promptText) { }
         public string PromptText { get { throw null; } set { } }
         protected override Azure.AI.Projects.EvaluatorDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
