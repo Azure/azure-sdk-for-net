@@ -223,7 +223,7 @@ namespace System.ClientModel.Primitives
     {
         protected ClientSettings() { }
         public System.ClientModel.Primitives.CredentialSettings? Credential { get { throw null; } set { } }
-        public System.ClientModel.AuthenticationTokenProvider? CredentialObject { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? CredentialProvider { get { throw null; } set { } }
         public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
         public void PostConfigure(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configure) { }

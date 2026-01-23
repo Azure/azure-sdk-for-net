@@ -59,7 +59,7 @@ public static class HostBuilderExtensions
     {
         IConfigurationSection section = host.Configuration.GetSection(sectionName);
         ClientBuilder builder = new(host, section);
-        host.Services.AddKeyedSingleton(key, (sp, key) =>
+        host.Services.AddKeyedSingleton(key, (_, _) =>
         {
             return CreateSettings(configureSettings, builder);
         });
@@ -104,7 +104,7 @@ public static class HostBuilderExtensions
     {
         IConfigurationSection section = host.Configuration.GetSection(sectionName);
         ClientBuilder builder = new(host, section);
-        host.Services.AddSingleton(sp =>
+        host.Services.AddSingleton(_ =>
         {
             return CreateSettings(configureSettings, builder);
         });

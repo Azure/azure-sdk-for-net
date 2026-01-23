@@ -20,9 +20,9 @@ public abstract class ClientSettings
     public CredentialSettings? Credential { get; set; }
 
     /// <summary>
-    /// Gets or sets the credential object.
+    /// Gets or sets the credential provider.
     /// </summary>
-    public AuthenticationTokenProvider? CredentialObject { get; set; }
+    public AuthenticationTokenProvider? CredentialProvider { get; set; }
 
     /// <summary>
     /// Binds the values from the <see cref="IConfigurationSection"/> to the properties of the <see cref="ClientSettings"/>.

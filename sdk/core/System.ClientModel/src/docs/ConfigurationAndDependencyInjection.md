@@ -1,6 +1,10 @@
 # Configuration and Dependency Injection
 
-This document demonstrates how to use the configuration and dependency injection features in `System.ClientModel`.
+This document demonstrates how to use the configuration and dependency injection
+features in `System.ClientModel`.
+
+> [!NOTE]
+> For each of the examples using environment variable configuration the name is derived from the convention defined [here](https://learn.microsoft.com/dotnet/core/extensions/configuration-providers#environment-variable-configuration-provider).
 
 ## Table of Contents
 
@@ -164,11 +168,11 @@ IServiceProvider provider = builder.Services.BuildServiceProvider();
 MyClient client = provider.GetRequiredService<MyClient>();
 ```
 
-In this example, the credential provider from configuration can be overridden programmatically using `PostConfigure`.
-
 ## Configuration Reference Syntax
 
-Use reference syntax to avoid duplicating configuration values across multiple sections. Reference another configuration value using a `$` followed by the path to the section you want to reference.
+Use reference syntax to avoid duplicating configuration values across multiple sections.
+Reference another configuration value using a `$` followed by the path to the section
+you want to reference.  This makes it easier to maintain and update shared settings in one place.
 
 **appsettings.json:**
 ```json
@@ -200,5 +204,3 @@ IServiceProvider provider = builder.Services.BuildServiceProvider();
 MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
 MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
 ```
-
-In this example, both clients share the same credential configuration without duplicating the values. This makes it easier to maintain and update shared settings in one place.
