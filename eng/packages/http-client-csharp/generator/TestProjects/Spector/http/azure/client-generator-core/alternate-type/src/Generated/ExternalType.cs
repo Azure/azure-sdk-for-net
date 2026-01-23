@@ -31,9 +31,9 @@ namespace Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType
 
         public virtual Task<Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response PutModel(object body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response PutModel(global::NetTopologySuite.IO.GeoJSON.Feature body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutModelAsync(object body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> PutModelAsync(global::NetTopologySuite.IO.GeoJSON.Feature body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetProperty(RequestContext context) => throw null;
 

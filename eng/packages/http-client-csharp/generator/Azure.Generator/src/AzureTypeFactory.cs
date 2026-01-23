@@ -105,8 +105,11 @@ namespace Azure.Generator
                     return knownType;
                 }
 
-                // External types should be handled by the base class
-                // Skip custom handling and let base handle it
+                // Handle external types (e.g., @alternateType decorator)
+                if (inputModelType.External != null)
+                {
+                    return CreateExternalType(inputModelType.External);
+                }
             }
             else if (inputType is InputArrayType inputArrayType)
             {
@@ -154,6 +157,50 @@ namespace Azure.Generator
 
             // Return DataFactoryElement<T>
             return new CSharpType(typeof(DataFactoryElement<>), innerType);
+        }
+
+        private static CSharpType CreateExternalType(InputExternalTypeMetadata external)
+        {
+            // Parse the fully qualified type name into namespace and type name
+            var lastDotIndex = external.Identity.LastIndexOf('.');
+            var ns = lastDotIndex > 0 ? external.Identity.Substring(0, lastDotIndex) : string.Empty;
+            var typeName = lastDotIndex > 0 ? external.Identity.Substring(lastDotIndex + 1) : external.Identity;
+
+            // Use reflection to call the internal CSharpType constructor
+            // internal CSharpType(string name, string ns, bool isValueType, bool isNullable,
+            //     CSharpType? declaringType, IReadOnlyList<CSharpType> args, bool isPublic, bool isStruct,
+            //     CSharpType? baseType = null, Type? underlyingEnumType = null)
+            var constructor = typeof(CSharpType).GetConstructor(
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+                null,
+                new[] {
+                    typeof(string), typeof(string), typeof(bool), typeof(bool),
+                    typeof(CSharpType), typeof(IReadOnlyList<CSharpType>), typeof(bool), typeof(bool),
+                    typeof(CSharpType), typeof(Type)
+                },
+                null);
+
+            if (constructor == null)
+            {
+                throw new InvalidOperationException($"Could not find internal CSharpType constructor for external type: {external.Identity}");
+            }
+
+            // Create the CSharpType with the parsed namespace and type name
+            // External types are assumed to be public, reference types (not value types or structs)
+            var csharpType = (CSharpType)constructor.Invoke(new object?[] {
+                typeName,              // name
+                ns,                    // namespace
+                false,                 // isValueType
+                false,                 // isNullable
+                null,                  // declaringType
+                Array.Empty<CSharpType>(), // args
+                true,                  // isPublic
+                false,                 // isStruct
+                null,                  // baseType
+                null                   // underlyingEnumType
+            });
+
+            return csharpType;
         }
 
         /// <inheritdoc/>

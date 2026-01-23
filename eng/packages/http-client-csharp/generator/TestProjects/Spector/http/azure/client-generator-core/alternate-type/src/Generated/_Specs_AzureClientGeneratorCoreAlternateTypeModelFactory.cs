@@ -17,6 +17,6 @@ namespace Specs.Azure.ClientGenerator.Core.AlternateType
 
         public static Geometry Geometry(string @type = default, IEnumerable<double> coordinates = default) => throw null;
 
-        public static ModelWithFeatureProperty ModelWithFeatureProperty(object feature = default, string additionalProperty = default) => throw null;
+        public static ModelWithFeatureProperty ModelWithFeatureProperty(global::NetTopologySuite.IO.GeoJSON.Feature feature = default, string additionalProperty = default) => throw null;
     }
 }
