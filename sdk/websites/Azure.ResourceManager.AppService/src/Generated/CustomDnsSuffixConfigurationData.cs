@@ -61,24 +61,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"></param>
         /// <param name="provisioningDetails"></param>
         /// <param name="dnsSuffix"> The default custom domain suffix to use for all sites deployed on the ASE. </param>
         /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
         /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDnsSuffixConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, Uri certificateUri, string keyVaultReferenceIdentity, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CustomDnsSuffixConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, Uri certificateUri, string keyVaultReferenceIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ProvisioningState = provisioningState;
             ProvisioningDetails = provisioningDetails;
             DnsSuffix = dnsSuffix;
             CertificateUri = certificateUri;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Gets the provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public CustomDnsSuffixProvisioningState? ProvisioningState { get; }
@@ -94,8 +97,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </summary>
         [WirePath("properties.keyVaultReferenceIdentity")]
         public string KeyVaultReferenceIdentity { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

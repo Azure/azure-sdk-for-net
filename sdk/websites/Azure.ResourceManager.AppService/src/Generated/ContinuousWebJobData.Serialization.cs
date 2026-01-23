@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             ContinuousWebJobStatus? status = default;
             string detailedStatus = default;
             Uri logUrl = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -298,6 +298,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 status,
                 detailedStatus,
                 logUrl,
@@ -308,7 +309,6 @@ namespace Azure.ResourceManager.AppService
                 error,
                 usingSdk,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? meterId, AzureLocation? billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, Guid? meterId, AzureLocation? billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MeterId = meterId;
             BillingLocation = billingLocation;

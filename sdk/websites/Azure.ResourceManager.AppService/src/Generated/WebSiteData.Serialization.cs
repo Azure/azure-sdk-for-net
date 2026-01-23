@@ -174,20 +174,13 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
-                if (TrafficManagerHostNames != null)
+                writer.WritePropertyName("trafficManagerHostNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in TrafficManagerHostNames)
                 {
-                    writer.WritePropertyName("trafficManagerHostNames"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in TrafficManagerHostNames)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("trafficManagerHostNames");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(IsScmSiteAlsoStopped))
             {
@@ -201,15 +194,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
-                if (HostingEnvironmentProfile != null)
-                {
-                    writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
-                }
-                else
-                {
-                    writer.WriteNull("hostingEnvironmentProfile");
-                }
+                writer.WritePropertyName("hostingEnvironmentProfile"u8);
+                writer.WriteObjectValue(HostingEnvironmentProfile, options);
             }
             if (Optional.IsDefined(IsClientAffinityEnabled))
             {
@@ -288,39 +274,18 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsDefined(SuspendOn))
             {
-                if (SuspendOn != null)
-                {
-                    writer.WritePropertyName("suspendedTill"u8);
-                    writer.WriteStringValue(SuspendOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("suspendedTill");
-                }
+                writer.WritePropertyName("suspendedTill"u8);
+                writer.WriteStringValue(SuspendOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(MaxNumberOfWorkers))
             {
-                if (MaxNumberOfWorkers != null)
-                {
-                    writer.WritePropertyName("maxNumberOfWorkers"u8);
-                    writer.WriteNumberValue(MaxNumberOfWorkers.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxNumberOfWorkers");
-                }
+                writer.WritePropertyName("maxNumberOfWorkers"u8);
+                writer.WriteNumberValue(MaxNumberOfWorkers.Value);
             }
             if (Optional.IsDefined(CloningInfo))
             {
-                if (CloningInfo != null)
-                {
-                    writer.WritePropertyName("cloningInfo"u8);
-                    writer.WriteObjectValue(CloningInfo, options);
-                }
-                else
-                {
-                    writer.WriteNull("cloningInfo");
-                }
+                writer.WritePropertyName("cloningInfo"u8);
+                writer.WriteObjectValue(CloningInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -339,15 +304,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsDefined(SlotSwapStatus))
             {
-                if (SlotSwapStatus != null)
-                {
-                    writer.WritePropertyName("slotSwapStatus"u8);
-                    writer.WriteObjectValue(SlotSwapStatus, options);
-                }
-                else
-                {
-                    writer.WriteNull("slotSwapStatus");
-                }
+                writer.WritePropertyName("slotSwapStatus"u8);
+                writer.WriteObjectValue(SlotSwapStatus, options);
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
@@ -361,15 +319,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsDefined(InProgressOperationId))
             {
-                if (InProgressOperationId != null)
-                {
-                    writer.WritePropertyName("inProgressOperationId"u8);
-                    writer.WriteStringValue(InProgressOperationId.Value);
-                }
-                else
-                {
-                    writer.WriteNull("inProgressOperationId");
-                }
+                writer.WritePropertyName("inProgressOperationId"u8);
+                writer.WriteStringValue(InProgressOperationId.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -437,7 +388,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string state = default;
             IReadOnlyList<string> hostNames = default;
             string repositorySiteName = default;
@@ -561,7 +512,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -760,7 +711,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                trafficManagerHostNames = null;
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -789,7 +739,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                hostingEnvironmentProfile = null;
                                 continue;
                             }
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
@@ -918,7 +867,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                suspendedTill = null;
                                 continue;
                             }
                             suspendedTill = property0.Value.GetDateTimeOffset("O");
@@ -928,7 +876,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                maxNumberOfWorkers = null;
                                 continue;
                             }
                             maxNumberOfWorkers = property0.Value.GetInt32();
@@ -938,7 +885,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                cloningInfo = null;
                                 continue;
                             }
                             cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value, options);
@@ -967,7 +913,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                slotSwapStatus = null;
                                 continue;
                             }
                             slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value, options);
@@ -995,7 +940,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                inProgressOperationId = null;
                                 continue;
                             }
                             inProgressOperationId = property0.Value.GetGuid();
@@ -1066,6 +1010,7 @@ namespace Azure.ResourceManager.AppService
                 location,
                 identity,
                 extendedLocation,
+                kind,
                 state,
                 hostNames ?? new ChangeTrackingList<string>(),
                 repositorySiteName,
@@ -1122,7 +1067,6 @@ namespace Azure.ResourceManager.AppService
                 virtualNetworkSubnetId,
                 managedEnvironmentId,
                 sku,
-                kind,
                 serializedAdditionalRawData);
         }
 

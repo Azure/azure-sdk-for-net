@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 entityName,
                 entityConnectionString,
                 resourceConnectionString,
                 hostname,
                 port,
                 biztalkUri,
-                kind,
                 serializedAdditionalRawData);
         }
 

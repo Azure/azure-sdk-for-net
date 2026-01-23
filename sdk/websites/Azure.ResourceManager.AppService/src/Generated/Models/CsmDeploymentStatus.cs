@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="deploymentId"> Deployment operation id. </param>
         /// <param name="status"> Deployment build status. </param>
         /// <param name="numberOfInstancesInProgress"> Number of site instances currently being provisioned. </param>
@@ -66,10 +67,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="numberOfInstancesFailed"> Number of site instances failed to provision. </param>
         /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
         /// <param name="errors"> List of errors. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CsmDeploymentStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, IList<ResponseError> errors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CsmDeploymentStatus(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, IList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             DeploymentId = deploymentId;
             Status = status;
             NumberOfInstancesInProgress = numberOfInstancesInProgress;
@@ -77,10 +78,12 @@ namespace Azure.ResourceManager.AppService.Models
             NumberOfInstancesFailed = numberOfInstancesFailed;
             FailedInstancesLogs = failedInstancesLogs;
             Errors = errors;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Deployment operation id. </summary>
         [WirePath("properties.deploymentId")]
         public string DeploymentId { get; set; }
@@ -99,8 +102,5 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> List of URLs pointing to logs for instances which failed to provision. </summary>
         [WirePath("properties.failedInstancesLogs")]
         public IList<string> FailedInstancesLogs { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

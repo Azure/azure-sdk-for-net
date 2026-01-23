@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Deployment status. </param>
         /// <param name="message"> Details about deployment status. </param>
         /// <param name="author"> Who authored the deployment. </param>
@@ -69,10 +70,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endOn"> End time. </param>
         /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Status = status;
             Message = message;
             Author = author;
@@ -82,10 +83,12 @@ namespace Azure.ResourceManager.AppService
             EndOn = endOn;
             IsActive = isActive;
             Details = details;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Deployment status. </summary>
         [WirePath("properties.status")]
         public int? Status { get; set; }
@@ -113,8 +116,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Details on deployment. </summary>
         [WirePath("properties.details")]
         public string Details { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

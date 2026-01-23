@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="entries"> List of log entry messages. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppMSDeployLog(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<WebAppMSDeployLogEntry> entries, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppMSDeployLog(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IReadOnlyList<WebAppMSDeployLogEntry> entries, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Entries = entries;
             Kind = kind;

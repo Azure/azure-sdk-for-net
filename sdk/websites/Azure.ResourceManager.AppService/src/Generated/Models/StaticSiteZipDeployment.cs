@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteZipDeployment(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteZipDeployment(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AppZipUri = appZipUri;
             ApiZipUri = apiZipUri;

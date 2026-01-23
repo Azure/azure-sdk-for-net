@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="siteName"> App Service app name. </param>
         /// <param name="domainId"> Fully qualified ARM domain resource URI. </param>
         /// <param name="azureResourceName"> Azure resource name. </param>
@@ -70,10 +71,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sslState"> SSL type. </param>
         /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             SiteName = siteName;
             DomainId = domainId;
             AzureResourceName = azureResourceName;
@@ -83,10 +84,12 @@ namespace Azure.ResourceManager.AppService
             SslState = sslState;
             ThumbprintString = thumbprintString;
             VirtualIP = virtualIP;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> App Service app name. </summary>
         [WirePath("properties.siteName")]
         public string SiteName { get; set; }
@@ -114,8 +117,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         [WirePath("properties.virtualIP")]
         public string VirtualIP { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

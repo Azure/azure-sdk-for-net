@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 publishingUserName,
                 publishingPassword,
                 publishingPasswordHash,
                 publishingPasswordHashSalt,
                 scmUri,
-                kind,
                 serializedAdditionalRawData);
         }
 

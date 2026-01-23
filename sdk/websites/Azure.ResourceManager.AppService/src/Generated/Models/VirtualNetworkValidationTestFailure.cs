@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="details"> The details of what caused the failure, e.g. the blocking rule name, etc. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkValidationTestFailure(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string testName, string details, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal VirtualNetworkValidationTestFailure(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string testName, string details, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TestName = testName;
             Details = details;

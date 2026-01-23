@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteMode"> Site mode used for this usage. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceName = resourceName;

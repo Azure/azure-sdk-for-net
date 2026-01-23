@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="frontEndScaleFactor"> Scale factor for front-ends. </param>
         /// <param name="isSuspended">
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
-        ///  (most likely because NSG blocked the incoming traffic).
+        /// (most likely because NSG blocked the incoming traffic).
         /// </param>
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, AppServiceEnvironmentUpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, AppServiceEnvironmentUpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? FrontEndScaleFactor { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
-        ///  (most likely because NSG blocked the incoming traffic).
+        /// (most likely because NSG blocked the incoming traffic).
         /// </summary>
         [WirePath("properties.suspended")]
         public bool? IsSuspended { get; }

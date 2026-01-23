@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// - If the property is null or empty (default), all hosts(or lack of) are allowed.
         /// - A value is compared using ordinal-ignore-case (excluding port number).
         /// - Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
-        ///  but not the root domain contoso.com or multi-level foo.bar.contoso.com
+        /// but not the root domain contoso.com or multi-level foo.bar.contoso.com
         /// - Unicode host names are allowed but are converted to Punycode for matching.
         ///
         /// X-Forwarded-For (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// - If the property is null or empty (default), all hosts(or lack of) are allowed.
         /// - A value is compared using ordinal-ignore-case (excluding port number).
         /// - Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
-        ///  but not the root domain contoso.com or multi-level foo.bar.contoso.com
+        /// but not the root domain contoso.com or multi-level foo.bar.contoso.com
         /// - Unicode host names are allowed but are converted to Punycode for matching.
         ///
         /// X-Forwarded-For (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AppServiceTokenStore"/>. </summary>
         /// <param name="isEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  The default is &lt;code&gt;false&lt;/code&gt;.
+        /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </param>
         /// <param name="tokenRefreshExtensionHours">
         /// The number of hours after session token expiration that a session token can be used to
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  The default is &lt;code&gt;false&lt;/code&gt;.
+        /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }

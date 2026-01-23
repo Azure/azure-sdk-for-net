@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="orgDomain"> Display name for region. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceGeoRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string displayName, string orgDomain, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceGeoRegion(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string description, string displayName, string orgDomain, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             DisplayName = displayName;

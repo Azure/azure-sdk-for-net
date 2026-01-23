@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="migrationType"> The type of migration operation to be done. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectionString, MySqlMigrationType? migrationType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string connectionString, MySqlMigrationType? migrationType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConnectionString = connectionString;
             MigrationType = migrationType;

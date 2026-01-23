@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="validationMethod"> Validation method for adding a custom domain. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteCustomDomainContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string validationMethod, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteCustomDomainContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string validationMethod, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ValidationMethod = validationMethod;
             Kind = kind;

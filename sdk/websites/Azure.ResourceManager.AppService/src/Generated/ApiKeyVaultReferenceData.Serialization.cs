@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string reference = default;
             ResolveStatus? status = default;
             string vaultName = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
             string secretVersion = default;
             ManagedServiceIdentity identityType = default;
             string details = default;
-            ConfigReferenceSource? source = default;
+            ApiKVReferencePropertiesSource? source = default;
             string activeVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            source = new ConfigReferenceSource(property0.Value.GetString());
+                            source = new ApiKVReferencePropertiesSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("activeVersion"u8))
@@ -240,6 +240,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 reference,
                 status,
                 vaultName,
@@ -249,7 +250,6 @@ namespace Azure.ResourceManager.AppService
                 details,
                 source,
                 activeVersion,
-                kind,
                 serializedAdditionalRawData);
         }
 

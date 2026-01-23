@@ -60,21 +60,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> String representation of the identity. </param>
         /// <param name="kind"> Kind of resource. </param>
+        /// <param name="value"> String representation of the identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
             Kind = kind;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> String representation of the identity. </summary>
-        [WirePath("properties.id")]
-        public string Value { get; set; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary> String representation of the identity. </summary>
+        [WirePath("properties.id")]
+        public string Value { get; set; }
     }
 }

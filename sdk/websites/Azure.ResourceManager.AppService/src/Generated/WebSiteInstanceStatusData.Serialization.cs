@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             SiteRuntimeState? state = default;
             Uri statusUrl = default;
             Uri detectorUrl = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -238,6 +238,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 state,
                 statusUrl,
                 detectorUrl,
@@ -245,7 +246,6 @@ namespace Azure.ResourceManager.AppService
                 healthCheckUrl,
                 containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
                 physicalZone,
-                kind,
                 serializedAdditionalRawData);
         }
 

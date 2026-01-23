@@ -60,22 +60,25 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serviceIPAddress"> Main public virtual IP. </param>
         /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ServiceIPAddress = serviceIPAddress;
             InternalIPAddress = internalIPAddress;
             OutboundIPAddresses = outboundIPAddresses;
             VirtualIPMappings = virtualIPMappings;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Main public virtual IP. </summary>
         [WirePath("properties.serviceIpAddress")]
         public IPAddress ServiceIPAddress { get; set; }
@@ -88,8 +91,5 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Additional virtual IPs. </summary>
         [WirePath("properties.vipMappings")]
         public IList<VirtualIPMapping> VirtualIPMappings { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

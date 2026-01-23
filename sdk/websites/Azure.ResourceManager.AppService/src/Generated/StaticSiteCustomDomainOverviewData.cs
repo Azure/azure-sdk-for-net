@@ -61,24 +61,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="domainName"> The domain name for the static site custom domain. </param>
         /// <param name="createdOn"> The date and time on which the custom domain was created for the static site. </param>
         /// <param name="status"> The status of the custom domain. </param>
         /// <param name="validationToken"> The TXT record validation token. </param>
         /// <param name="errorMessage"></param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             DomainName = domainName;
             CreatedOn = createdOn;
             Status = status;
             ValidationToken = validationToken;
             ErrorMessage = errorMessage;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The domain name for the static site custom domain. </summary>
         [WirePath("properties.domainName")]
         public string DomainName { get; }
@@ -94,8 +97,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the error message. </summary>
         [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

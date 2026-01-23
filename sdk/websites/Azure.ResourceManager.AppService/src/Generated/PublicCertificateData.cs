@@ -61,20 +61,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="blob"> Public Certificate byte array. </param>
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
         /// <param name="thumbprintString"> Certificate Thumbprint. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Blob = blob;
             PublicCertificateLocation = publicCertificateLocation;
             ThumbprintString = thumbprintString;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Public Certificate byte array. </summary>
         [WirePath("properties.blob")]
         public byte[] Blob { get; set; }
@@ -84,8 +87,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Certificate Thumbprint. </summary>
         [WirePath("properties.thumbprint")]
         public string ThumbprintString { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string deploymentId = default;
             DeploymentBuildStatus? status = default;
             int? numberOfInstancesInProgress = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -262,6 +262,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 type,
                 systemData,
+                kind,
                 deploymentId,
                 status,
                 numberOfInstancesInProgress,
@@ -269,7 +270,6 @@ namespace Azure.ResourceManager.AppService.Models
                 numberOfInstancesFailed,
                 failedInstancesLogs ?? new ChangeTrackingList<string>(),
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

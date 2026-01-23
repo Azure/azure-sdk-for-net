@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             KubeEnvironmentProvisioningState? provisioningState = default;
             string deploymentErrors = default;
             bool? internalLoadBalancerEnabled = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -304,6 +304,7 @@ namespace Azure.ResourceManager.AppService
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
+                kind,
                 provisioningState,
                 deploymentErrors,
                 internalLoadBalancerEnabled,
@@ -314,7 +315,6 @@ namespace Azure.ResourceManager.AppService
                 appLogsConfiguration,
                 containerAppsConfiguration,
                 aksResourceId,
-                kind,
                 serializedAdditionalRawData);
         }
 

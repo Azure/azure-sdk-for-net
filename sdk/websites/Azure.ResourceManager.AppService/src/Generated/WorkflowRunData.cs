@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunData"/>. </summary>
-        internal WorkflowRunData()
+        public WorkflowRunData()
         {
             Outputs = new ChangeTrackingDictionary<string, WorkflowOutputContent>();
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WaitEndOn = waitEndOn;
             StartOn = startOn;
@@ -143,12 +143,18 @@ namespace Azure.ResourceManager.AppService
         [WirePath("properties.correlationId")]
         public string CorrelationId { get; }
         /// <summary> The run correlation. </summary>
-        internal Correlation Correlation { get; }
+        internal Correlation Correlation { get; set; }
         /// <summary> The client tracking id. </summary>
         [WirePath("properties.correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
-            get => Correlation?.ClientTrackingId;
+            get => Correlation is null ? default : Correlation.ClientTrackingId;
+            set
+            {
+                if (Correlation is null)
+                    Correlation = new Correlation();
+                Correlation.ClientTrackingId = value;
+            }
         }
 
         /// <summary> Gets the reference to workflow version. </summary>

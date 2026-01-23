@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="latestRun"> Latest job run information. </param>
         /// <param name="historyUri"> History URL. </param>
         /// <param name="schedulerLogsUri"> Scheduler Logs URL. </param>
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             LatestRun = latestRun;
             HistoryUri = historyUri;
             SchedulerLogsUri = schedulerLogsUri;
@@ -90,10 +91,12 @@ namespace Azure.ResourceManager.AppService
             PublicNetworkAccess = publicNetworkAccess;
             IsStorageAccountRequired = isStorageAccountRequired;
             Settings = settings;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Latest job run information. </summary>
         [WirePath("properties.latest_run")]
         public TriggeredJobRun LatestRun { get; set; }
@@ -159,8 +162,5 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

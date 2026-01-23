@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="repoUri"> Repository or source control URL. </param>
         /// <param name="branch"> Name of branch to use for deployment. </param>
         /// <param name="isManualIntegration"> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </param>
@@ -68,10 +69,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isDeploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             RepoUri = repoUri;
             Branch = branch;
             IsManualIntegration = isManualIntegration;
@@ -79,10 +80,12 @@ namespace Azure.ResourceManager.AppService
             IsDeploymentRollbackEnabled = isDeploymentRollbackEnabled;
             IsMercurial = isMercurial;
             GitHubActionConfiguration = gitHubActionConfiguration;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Repository or source control URL. </summary>
         [WirePath("properties.repoUrl")]
         public Uri RepoUri { get; set; }
@@ -104,8 +107,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> If GitHub Action is selected, than the associated configuration. </summary>
         [WirePath("properties.gitHubActionConfiguration")]
         public GitHubActionConfiguration GitHubActionConfiguration { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

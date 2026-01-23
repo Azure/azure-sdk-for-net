@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkConnectionState privateLinkServiceConnectionState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, PrivateLinkConnectionState privateLinkServiceConnectionState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             Kind = kind;

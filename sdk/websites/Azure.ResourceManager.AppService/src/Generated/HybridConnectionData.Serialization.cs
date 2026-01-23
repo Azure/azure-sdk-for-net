@@ -224,6 +224,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 serviceBusNamespace,
                 relayName,
                 relayArmUri,
@@ -232,7 +233,6 @@ namespace Azure.ResourceManager.AppService
                 sendKeyName,
                 sendKeyValue,
                 serviceBusSuffix,
-                kind,
                 serializedAdditionalRawData);
         }
 

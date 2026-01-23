@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkProperties"/>. </summary>
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
-        /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-        /// Point-To-Site VPN connection.
-        /// </param>
+        /// <param name="certBlob"> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
         /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
@@ -82,10 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The client certificate thumbprint. </summary>
         [WirePath("certThumbprint")]
         public string CertThumbprintString { get; }
-        /// <summary>
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-        /// Point-To-Site VPN connection.
-        /// </summary>
+        /// <summary> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </summary>
         [WirePath("certBlob")]
         public string CertBlob { get; }
         /// <summary> The routes that this Virtual Network connection uses. </summary>

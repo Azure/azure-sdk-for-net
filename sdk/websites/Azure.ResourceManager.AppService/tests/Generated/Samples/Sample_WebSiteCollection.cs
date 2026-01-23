@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CloneWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/CloneWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/CloneWebApp.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.AppService.Samples
             string name = "sitef6141";
             WebSiteData data = new WebSiteData(new AzureLocation("East US"))
             {
+                Kind = "app",
                 CloningInfo = new CloningInfo(new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg456/providers/Microsoft.Web/sites/srcsiteg478"))
                 {
                     CanOverwrite = false,
@@ -57,7 +58,6 @@ namespace Azure.ResourceManager.AppService.Samples
 },
                     ConfigureLoadBalancing = false,
                 },
-                Kind = "app",
             };
             ArmOperation<WebSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             WebSiteResource result = lro.Value;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateFlexConsumptionFunctionApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/CreateOrUpdateFunctionAppFlexConsumption.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/CreateOrUpdateFunctionAppFlexConsumption.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,6 +95,7 @@ namespace Azure.ResourceManager.AppService.Samples
             string name = "sitef6141";
             WebSiteData data = new WebSiteData(new AzureLocation("East US"))
             {
+                Kind = "functionapp,linux",
                 SiteConfig = new SiteConfigProperties
                 {
                     AppSettings = {new AppServiceNameValuePair
@@ -111,7 +112,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 {
                     DeploymentStorage = new FunctionAppStorage
                     {
-                        StorageType = FunctionAppStorageType.BlobContainer,
+                        FunctionsDeploymentStorageType = FunctionsDeploymentStorageType.BlobContainer,
                         Value = new Uri("https://storageAccountName.blob.core.windows.net/containername"),
                         Authentication = new FunctionAppStorageAuthentication
                         {
@@ -130,7 +131,6 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                         FunctionAppInstanceMemoryMB = 2048,
                     },
                 },
-                Kind = "functionapp,linux",
             };
             ArmOperation<WebSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             WebSiteResource result = lro.Value;
@@ -146,7 +146,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateFlexConsumptionFunctionAppWithDetails()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/CreateOrUpdateFunctionAppFlexConsumptionWithDetails.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/CreateOrUpdateFunctionAppFlexConsumptionWithDetails.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,6 +168,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
             string name = "sitef6141";
             WebSiteData data = new WebSiteData(new AzureLocation("East US"))
             {
+                Kind = "functionapp,linux",
                 SiteConfig = new SiteConfigProperties
                 {
                     AppSettings = {new AppServiceNameValuePair
@@ -184,7 +185,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 {
                     DeploymentStorage = new FunctionAppStorage
                     {
-                        StorageType = FunctionAppStorageType.BlobContainer,
+                        FunctionsDeploymentStorageType = FunctionsDeploymentStorageType.BlobContainer,
                         Value = new Uri("https://storageAccountName.blob.core.windows.net/containername"),
                         Authentication = new FunctionAppStorageAuthentication
                         {
@@ -209,7 +210,6 @@ AlwaysReadyInstanceCount = 2,
                         ConcurrentHttpPerInstanceConcurrency = 16,
                     },
                 },
-                Kind = "functionapp,linux",
             };
             ArmOperation<WebSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             WebSiteResource result = lro.Value;
@@ -225,7 +225,7 @@ AlwaysReadyInstanceCount = 2,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/CreateOrUpdateWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/CreateOrUpdateWebApp.json
             // this example is just showing the usage of "WebApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,8 +247,8 @@ AlwaysReadyInstanceCount = 2,
             string name = "sitef6141";
             WebSiteData data = new WebSiteData(new AzureLocation("East US"))
             {
-                AppServicePlanId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.Web/serverfarms/DefaultAsp"),
                 Kind = "app",
+                AppServicePlanId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.Web/serverfarms/DefaultAsp"),
             };
             ArmOperation<WebSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             WebSiteResource result = lro.Value;
@@ -264,7 +264,7 @@ AlwaysReadyInstanceCount = 2,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebApp.json
             // this example is just showing the usage of "WebApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -297,7 +297,7 @@ AlwaysReadyInstanceCount = 2,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListWebAppsByResourceGroup()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListWebAppsByResourceGroup.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ListWebAppsByResourceGroup.json
             // this example is just showing the usage of "WebApps_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,7 +332,7 @@ AlwaysReadyInstanceCount = 2,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebApp.json
             // this example is just showing the usage of "WebApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -361,7 +361,7 @@ AlwaysReadyInstanceCount = 2,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetWebApp.json
             // this example is just showing the usage of "WebApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

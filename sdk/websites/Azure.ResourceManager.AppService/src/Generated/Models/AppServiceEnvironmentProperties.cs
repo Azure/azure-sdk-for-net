@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="frontEndScaleFactor"> Scale factor for front-ends. </param>
         /// <param name="isSuspended">
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
-        ///  (most likely because NSG blocked the incoming traffic).
+        /// (most likely because NSG blocked the incoming traffic).
         /// </param>
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? FrontEndScaleFactor { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
-        ///  (most likely because NSG blocked the incoming traffic).
+        /// (most likely because NSG blocked the incoming traffic).
         /// </summary>
         [WirePath("suspended")]
         public bool? IsSuspended { get; }

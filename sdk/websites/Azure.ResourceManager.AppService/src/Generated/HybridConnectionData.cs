@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
         /// <param name="relayName"> The name of the Service Bus relay. </param>
         /// <param name="relayArmId"> The ARM URI to the Service Bus relay. </param>
@@ -71,10 +72,10 @@ namespace Azure.ResourceManager.AppService
         /// normally, use the POST /listKeys API instead.
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceBusNamespace, string relayName, ResourceIdentifier relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serviceBusNamespace, string relayName, ResourceIdentifier relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ServiceBusNamespace = serviceBusNamespace;
             RelayName = relayName;
             RelayArmId = relayArmId;
@@ -83,10 +84,12 @@ namespace Azure.ResourceManager.AppService
             SendKeyName = sendKeyName;
             SendKeyValue = sendKeyValue;
             ServiceBusSuffix = serviceBusSuffix;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The name of the Service Bus namespace. </summary>
         [WirePath("properties.serviceBusNamespace")]
         public string ServiceBusNamespace { get; set; }
@@ -114,8 +117,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </summary>
         [WirePath("properties.serviceBusSuffix")]
         public string ServiceBusSuffix { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

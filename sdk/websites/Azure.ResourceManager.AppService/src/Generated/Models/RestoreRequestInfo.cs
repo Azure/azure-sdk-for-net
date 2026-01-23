@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canOverwrite"> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </param>
         /// <param name="siteName"> Name of an app. </param>
         /// <param name="databases"> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </param>
-        /// <param name="ignoreConflictingHostNames">
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to
-        /// the app's object when it is being restored, but that might fail due to conflicts during the operation.
-        /// </param>
+        /// <param name="ignoreConflictingHostNames"> Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation. </param>
         /// <param name="ignoreDatabases"> Ignore the databases and only restore the site content. </param>
         /// <param name="appServicePlan"> Specify app service plan that will own restored site. </param>
         /// <param name="operationType"> Operation type. </param>
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -106,10 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
         [WirePath("properties.databases")]
         public IList<AppServiceDatabaseBackupSetting> Databases { get; }
-        /// <summary>
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to
-        /// the app's object when it is being restored, but that might fail due to conflicts during the operation.
-        /// </summary>
+        /// <summary> Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation. </summary>
         [WirePath("properties.ignoreConflictingHostNames")]
         public bool? IgnoreConflictingHostNames { get; set; }
         /// <summary> Ignore the databases and only restore the site content. </summary>

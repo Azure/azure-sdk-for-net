@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="startAddress"> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </param>
         /// <param name="endAddress"> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </param>
         /// <param name="routeType">
@@ -67,17 +68,19 @@ namespace Azure.ResourceManager.AppService.Models
         ///
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             StartAddress = startAddress;
             EndAddress = endAddress;
             RouteType = routeType;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </summary>
         [WirePath("properties.startAddress")]
         public string StartAddress { get; set; }
@@ -94,8 +97,5 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("properties.routeType")]
         public AppServiceVirtualNetworkRouteType? RouteType { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

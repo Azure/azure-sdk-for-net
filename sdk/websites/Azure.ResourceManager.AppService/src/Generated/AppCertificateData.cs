@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="friendlyName"> Friendly name of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="serverFarmId"> Resource ID of the associated App Service plan. </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprintString, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprintString, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Kind = kind;
             Password = password;
             FriendlyName = friendlyName;
             SubjectName = subjectName;
@@ -111,7 +112,6 @@ namespace Azure.ResourceManager.AppService
             ServerFarmId = serverFarmId;
             CanonicalName = canonicalName;
             DomainValidationMethod = domainValidationMethod;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -120,6 +120,9 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Certificate password. </summary>
         [WirePath("properties.password")]
         public string Password { get; set; }
@@ -183,8 +186,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Method of domain validation for free cert. </summary>
         [WirePath("properties.domainValidationMethod")]
         public string DomainValidationMethod { get; set; }
-        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

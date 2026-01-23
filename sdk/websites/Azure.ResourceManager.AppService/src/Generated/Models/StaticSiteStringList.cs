@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> List of string resources. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteStringList(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteStringList(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IList<string> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;

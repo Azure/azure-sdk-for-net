@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryData"/>. </summary>
-        internal WorkflowTriggerHistoryData()
+        public WorkflowTriggerHistoryData()
         {
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, bool? isFired, WorkflowResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, bool? isFired, WorkflowResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -142,12 +142,18 @@ namespace Azure.ResourceManager.AppService
         [WirePath("properties.trackingId")]
         public string TrackingId { get; }
         /// <summary> The run correlation. </summary>
-        internal Correlation Correlation { get; }
+        internal Correlation Correlation { get; set; }
         /// <summary> The client tracking id. </summary>
         [WirePath("properties.correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
-            get => Correlation?.ClientTrackingId;
+            get => Correlation is null ? default : Correlation.ClientTrackingId;
+            set
+            {
+                if (Correlation is null)
+                    Correlation = new Correlation();
+                Correlation.ClientTrackingId = value;
+            }
         }
 
         /// <summary> Gets the link to input parameters. </summary>

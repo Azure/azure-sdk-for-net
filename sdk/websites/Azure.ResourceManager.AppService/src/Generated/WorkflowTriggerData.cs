@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerData"/>. </summary>
-        internal WorkflowTriggerData()
+        public WorkflowTriggerData()
         {
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="recurrence"> Gets the workflow trigger recurrence. </param>
         /// <param name="workflow"> Gets the reference to workflow. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, WorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, WorkflowTriggerRecurrence recurrence, WorkflowResourceReference workflow, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, WorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, WorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, WorkflowTriggerRecurrence recurrence, WorkflowResourceReference workflow, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;

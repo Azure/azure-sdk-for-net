@@ -57,19 +57,74 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
+        /// <param name="identifier"> Site extension ID. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="process"> Process URI. </param>
+        /// <param name="startAddress"> Start address. </param>
+        /// <param name="currentPriority"> Current thread priority. </param>
+        /// <param name="priorityLevel"> Thread priority level. </param>
+        /// <param name="basePriority"> Base priority. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="totalProcessorTime"> Total processor time. </param>
+        /// <param name="userProcessorTime"> User processor time. </param>
+        /// <param name="state"> Thread state. </param>
+        /// <param name="waitReason"> Wait reason. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebAppProcessThreadProperties properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startOn, string totalProcessorTime, string userProcessorTime, string state, string waitReason, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            Identifier = identifier;
+            Href = href;
+            Process = process;
+            StartAddress = startAddress;
+            CurrentPriority = currentPriority;
+            PriorityLevel = priorityLevel;
+            BasePriority = basePriority;
+            StartOn = startOn;
+            TotalProcessorTime = totalProcessorTime;
+            UserProcessorTime = userProcessorTime;
+            State = state;
+            WaitReason = waitReason;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ProcessThreadInfo resource specific properties. </summary>
-        [WirePath("properties")]
-        public WebAppProcessThreadProperties Properties { get; set; }
+        /// <summary> Site extension ID. </summary>
+        [WirePath("properties.identifier")]
+        public int? Identifier { get; }
+        /// <summary> HRef URI. </summary>
+        [WirePath("properties.href")]
+        public string Href { get; set; }
+        /// <summary> Process URI. </summary>
+        [WirePath("properties.process")]
+        public string Process { get; set; }
+        /// <summary> Start address. </summary>
+        [WirePath("properties.start_address")]
+        public string StartAddress { get; set; }
+        /// <summary> Current thread priority. </summary>
+        [WirePath("properties.current_priority")]
+        public int? CurrentPriority { get; set; }
+        /// <summary> Thread priority level. </summary>
+        [WirePath("properties.priority_level")]
+        public string PriorityLevel { get; set; }
+        /// <summary> Base priority. </summary>
+        [WirePath("properties.base_priority")]
+        public int? BasePriority { get; set; }
+        /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
+        public DateTimeOffset? StartOn { get; set; }
+        /// <summary> Total processor time. </summary>
+        [WirePath("properties.total_processor_time")]
+        public string TotalProcessorTime { get; set; }
+        /// <summary> User processor time. </summary>
+        [WirePath("properties.user_processor_time")]
+        public string UserProcessorTime { get; set; }
+        /// <summary> Thread state. </summary>
+        [WirePath("properties.state")]
+        public string State { get; set; }
+        /// <summary> Wait reason. </summary>
+        [WirePath("properties.wait_reason")]
+        public string WaitReason { get; set; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

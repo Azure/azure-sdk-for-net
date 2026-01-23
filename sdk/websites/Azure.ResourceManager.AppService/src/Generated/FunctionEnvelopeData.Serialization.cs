@@ -302,6 +302,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 functionAppId,
                 scriptRootPathHref,
                 scriptHref,
@@ -315,7 +316,6 @@ namespace Azure.ResourceManager.AppService
                 invokeUrlTemplate,
                 language,
                 isDisabled,
-                kind,
                 serializedAdditionalRawData);
         }
 

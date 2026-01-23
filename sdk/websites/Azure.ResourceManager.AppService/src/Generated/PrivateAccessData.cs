@@ -62,26 +62,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="isEnabled"> Whether private access is enabled or not. </param>
         /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             IsEnabled = isEnabled;
             VirtualNetworks = virtualNetworks;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Whether private access is enabled or not. </summary>
         [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The Virtual Networks (and subnets) allowed to access the site privately. </summary>
         [WirePath("properties.virtualNetworks")]
         public IList<PrivateAccessVirtualNetwork> VirtualNetworks { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

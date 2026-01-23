@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Resource metric definition properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;

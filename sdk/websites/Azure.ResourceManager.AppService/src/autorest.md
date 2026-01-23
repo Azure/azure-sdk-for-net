@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/6dcfdfb7f4da9ec8a0f04b2970ea0b3f95eefa6b/specification/web/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8f7e56841fd83b8085984e13016953fc0f42219b/specification/web/resource-manager/Microsoft.Web/AppService/readme.md
 #tag: package-2024-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -747,6 +747,19 @@ models-to-treat-empty-string-as-null:
   - AppServiceApiDefinitionInfo
 
 directive:
+# Resolve media type */*
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/dump'].get
+    transform: $["produces"] = ["application/octet-stream"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/dump'].get
+    transform: $["produces"] = ["application/octet-stream"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/dump'].get
+    transform: $["produces"] = ["application/octet-stream"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/dump'].get
+    transform: $["produces"] = ["application/octet-stream"]
 # operation removal - should be temporary
 # pageable lro
   - remove-operation: AppServiceEnvironments_ChangeVnet
@@ -760,71 +773,68 @@ directive:
 # this operation is a LRO operation
   - remove-operation: Global_GetSubscriptionOperationWithAsyncResponse
 # ResourceId
-  - from: KubeEnvironments.json
+  - from: openapi.json
     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VnetInfo.properties.vnetResourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: Recommendations.json
+  - from: openapi.json
     where: $.definitions.Recommendation.properties.properties.properties.resourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: ResourceProvider.json
+  - from: openapi.json
     where: $.definitions.BillingMeter.properties.properties.properties.meterId
     transform: $["x-ms-format"] = "uuid"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.CloningInfo.properties.sourceWebAppId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.CloningInfo.properties.trafficManagerProfileId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.SupportTopic.properties.pesId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VnetInfo.properties.vnetResourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VirtualNetworkProfile.properties.id
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VirtualNetworkProfile.properties.type
     transform: $["x-ms-format"] = "resource-type"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.HostingEnvironmentProfile.properties.id
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.HostingEnvironmentProfile.properties.type
     transform: $["x-ms-format"] = "resource-type"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.KubeEnvironmentProfile.properties.id
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.KubeEnvironmentProfile.properties.type
     transform: $["x-ms-format"] = "resource-type"
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.DeletedAppRestoreRequest.properties.properties.properties.deletedSiteId
     transform: $["x-ms-format"] = "arm-id"
-  - from: ResourceProvider.json
+  - from: openapi.json
     where: $.definitions.SkuInfos.properties.resourceType
     transform: $["x-ms-format"] = "resource-type"
-  - from: AppServiceEnvironments.json
-    where: $.definitions.SkuInfo.properties.resourceType
-    transform: $["x-ms-format"] = "resource-type"
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.SnapshotRecoverySource.properties.id
     transform: $["x-ms-format"] = "arm-id"
 #   - from: StaticSites.json
 #     where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
 #     transform: $["x-ms-format"] = "arm-id"
-  - from: StaticSites.json
+  - from: openapi.json
     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
 # StaticSiteUserProvidedFunctionAppARMResource and StaticSiteUserProvidedFunctionApp are two models with exactly same properties but different names. Here we manually replace the references so that these two models are combined
-  - from: StaticSites.json
+  - from: openapi.json
     where: $.definitions.StaticSite.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
-  - from: StaticSites.json
+  - from: openapi.json
     where: $.definitions.StaticSiteBuildARMResource.properties.properties.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
 # Enum rename
@@ -857,7 +867,7 @@ directive:
             "modelAsString": true
           }
 # workaround incorrect definition in swagger before it's fixed. github issue 35146
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.KeyInfo
     transform: >
       $["properties"] = {
@@ -947,39 +957,59 @@ directive:
     where: $.definitions.SiteSourceControl.properties.properties.properties.gitHubActionConfiguration
     transform: >
         $["x-nullable"] = true;
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.LogSpecification.properties.blobDuration
     transform: >
         $["format"] = "duration";
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.MetricAvailability.properties.blobDuration
     transform: >
         $["format"] = "duration";
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.TriggeredJobRun.properties.duration
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
-  - from: WebApps.json
+  - from: openapi.json
+    where: $.definitions.WebAppCollection.properties.nextLink
+    transform: >
+        $["format"] = "string";
+  - from: openapi.json
+    where: $.definitions.IdentifierCollection.properties.nextLink
+    transform: >
+        $["format"] = "string";
+  - from: openapi.json
+    where: $.definitions.ResourceHealthMetadataCollection.properties.nextLink
+    transform: >
+        $["format"] = "string";
+  - from: openapi.json
+    where: $.definitions.SiteConfigResourceCollection.properties.nextLink
+    transform: >
+        $["format"] = "string";
+  - from: openapi.json
+    where: $.definitions.BackupItemCollection.properties.nextLink
+    transform: >
+        $["format"] = "string";
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers'].post
     transform: >
         $['responses'] = {
             "200":{
-                "description": "No Content"
+                "description": "There is no content to send for this request, but the headers may be useful."
             },
             "204": {
-                "description": "No Content"
+                "description": "There is no content to send for this request, but the headers may be useful."
             },
             "default": {
-                "description": "App Service error response.",
+                "description": "An unexpected error response.",
                 "schema": {
-                    "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+                    "$ref": "#/definitions/DefaultErrorResponse"
                 }
             }
         };
   # Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/43295
-  - from: WebApps.json
-    where: $.definitions.TriggeredJobRun.properties.status
+  - from: openapi.json
+    where: $.definitions.TriggeredWebJobStatus
     transform: >
         $["enum"] = [
             "Success",
@@ -988,21 +1018,21 @@ directive:
             "Aborted",
             "Running"
         ]
-  - from: WebApps.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays'].get
     transform: >
-        $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
-  - from: WebApps.json
+        $['responses']['200']['schema']['$ref'] = "#/definitions/HybridConnectionCollection";
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays'].get
     transform: >
-        $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
+        $['responses']['200']['schema']['$ref'] = "#/definitions/HybridConnectionCollection";
   # Fix https://github.com/Azure/azure-sdk-for-net/issues/47267, fix the issue of data type mismatch in the AsyncPageable return values.
-  - from: AppServicePlans.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites'].get
     transform: >
-        $['responses']['200']['schema']['$ref'] = "./CommonDefinitions.json#/definitions/WebAppCollection";
+        $['responses']['200']['schema']['$ref'] = "#/definitions/WebAppCollection";
   # The Enum name "StorageType" is shared by artifactsStorageType, cause the apicompat error
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.FunctionsDeployment.properties.storage.properties.type
     transform: >
         $["x-ms-enum"] = {
@@ -1025,7 +1055,7 @@ directive:
           delete $[path];
       }
   # Reuse defined DayOfWeek
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.RecurrenceSchedule.properties.weekDays
     transform: >
         $.items = {
@@ -1033,7 +1063,7 @@ directive:
             "description": "The days of the week."
           };
   # Fix https://github.com/Azure/azure-sdk-for-net/issues/39126, fix the `ProcessThreadInfo` definition based on the return result
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions
     transform: >
         $.ProcessThreadProperties = {
@@ -1056,42 +1086,26 @@ directive:
               }
             }
           };
-  - from: WebApps.json
-    where: $.definitions.ProcessThreadInfo
-    transform: >
-        $.properties = {
-            "properties": {
-              "$ref": "#/definitions/ProcessThreadProperties",
-              "description": "ProcessThreadInfo resource specific properties",
-              "type": "object"
-            }
-          };
-  - from: WebApps.json
-    where: $.definitions.ProcessInfo
-    transform: >
-        $.properties.properties.properties.threads.items = {
-            "$ref": "#/definitions/ProcessThreadProperties"
-          };
   # Fix for issue: https://github.com/Azure/azure-sdk-for-net/issues/46854
   # TODO: Remove this workaround after the issue is resolved. Issue link: https://github.com/Azure/azure-rest-api-specs/issues/19022
-  - from: Certificates.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}'].put
     transform: >
         $["x-ms-long-running-operation"] = true;
         $['responses'] = {
             "200": {
-                "description": "OK.",
+                "description": "Resource 'Certificate' update operation succeeded",
                 "schema": {
-                    "$ref": "./CommonDefinitions.json#/definitions/Certificate"
+                    "$ref": "#/definitions/Certificate"
                 }
             },
             "202": {
-                "description": "OK.",
+                "description": "Resource 'Certificate' update operation succeeded",
             },
             "default": {
-                "description": "App Service error response.",
+                "description": "An unexpected error response.",
                 "schema": {
-                    "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+                    "$ref": "#/definitions/DefaultErrorResponse"
                 }
             }
         };

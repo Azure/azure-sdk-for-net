@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="masterLogErrorsMaxLength"> Master log_errors_max_len setting. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LocalLogErrors = localLogErrors;
             MasterLogErrors = masterLogErrors;

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             int? workerSizeId = default;
             ComputeModeOption? computeMode = default;
             string workerSize = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.AppService
                 type,
                 systemData,
                 sku,
+                kind,
                 workerSizeId,
                 computeMode,
                 workerSize,
                 workerCount,
                 instanceNames ?? new ChangeTrackingList<string>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="databases"> Databases included in the backup. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppBackupInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupName, bool? isEnabled, Uri storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppBackupInfo(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string backupName, bool? isEnabled, Uri storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupName = backupName;
             IsEnabled = isEnabled;

@@ -63,28 +63,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="workerSizeId"> Worker size ID for referencing this worker pool. </param>
         /// <param name="computeMode"> Shared or dedicated app hosting. </param>
         /// <param name="workerSize"> VM size of the worker pool instances. </param>
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceSkuDescription sku, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AppServiceSkuDescription sku, string kind, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
+            Kind = kind;
             WorkerSizeId = workerSizeId;
             ComputeMode = computeMode;
             WorkerSize = workerSize;
             WorkerCount = workerCount;
             InstanceNames = instanceNames;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
         [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; set; }
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Worker size ID for referencing this worker pool. </summary>
         [WirePath("properties.workerSizeId")]
         public int? WorkerSizeId { get; set; }
@@ -100,8 +103,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Names of all instances in the worker pool (read only). </summary>
         [WirePath("properties.instanceNames")]
         public IReadOnlyList<string> InstanceNames { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="shouldUpdateRepository"> Determines whether the repository should be updated with the new properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteResetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string repositoryToken, bool? shouldUpdateRepository, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteResetContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string repositoryToken, bool? shouldUpdateRepository, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RepositoryToken = repositoryToken;
             ShouldUpdateRepository = shouldUpdateRepository;

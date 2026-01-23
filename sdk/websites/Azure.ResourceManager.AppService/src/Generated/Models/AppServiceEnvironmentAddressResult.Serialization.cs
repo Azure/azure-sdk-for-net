@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             IPAddress serviceIPAddress = default;
             IPAddress internalIPAddress = default;
             IList<IPAddress> outboundIPAddresses = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 type,
                 systemData,
+                kind,
                 serviceIPAddress,
                 internalIPAddress,
                 outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

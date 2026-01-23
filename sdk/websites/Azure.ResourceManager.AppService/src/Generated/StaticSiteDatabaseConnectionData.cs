@@ -62,24 +62,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
         /// <param name="connectionString"> The connection string to use to connect to the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ResourceId = resourceId;
             ConnectionIdentity = connectionIdentity;
             ConnectionString = connectionString;
             Region = region;
             ConfigurationFiles = configurationFiles;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
@@ -95,8 +98,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> A list of configuration files associated with this database connection. </summary>
         [WirePath("properties.configurationFiles")]
         public IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

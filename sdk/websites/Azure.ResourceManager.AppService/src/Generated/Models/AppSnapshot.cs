@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="time"> The time the snapshot was taken. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppSnapshot(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string time, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppSnapshot(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string time, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Time = time;
             Kind = kind;

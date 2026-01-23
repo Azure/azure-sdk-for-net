@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="backupId"> Id of the backup. </param>
         /// <param name="storageAccountUri"> SAS URL for the storage account container which contains this backup. </param>
         /// <param name="blobName"> Name of the blob which contains data for this backup. </param>
@@ -76,10 +77,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="finishedOn"> Timestamp when this backup finished. </param>
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, int? backupId, Uri storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -94,10 +95,12 @@ namespace Azure.ResourceManager.AppService
             FinishedOn = finishedOn;
             CorrelationId = correlationId;
             WebsiteSizeInBytes = websiteSizeInBytes;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Id of the backup. </summary>
         [WirePath("properties.id")]
         public int? BackupId { get; }
@@ -140,8 +143,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Size of the original web app which has been backed up. </summary>
         [WirePath("properties.websiteSizeInBytes")]
         public long? WebsiteSizeInBytes { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

@@ -61,20 +61,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="migrationOperationStatus"> Status of the migration task. </param>
         /// <param name="operationId"> Operation ID for the migration task. </param>
         /// <param name="isLocalMySqlEnabled"> True if the web app has in app MySql enabled. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string kind, AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             MigrationOperationStatus = migrationOperationStatus;
             OperationId = operationId;
             IsLocalMySqlEnabled = isLocalMySqlEnabled;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Status of the migration task. </summary>
         [WirePath("properties.migrationOperationStatus")]
         public AppServiceOperationStatus? MigrationOperationStatus { get; }
@@ -84,8 +87,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> True if the web app has in app MySql enabled. </summary>
         [WirePath("properties.localMySqlEnabled")]
         public bool? IsLocalMySqlEnabled { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

@@ -334,6 +334,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
@@ -342,7 +343,6 @@ namespace Azure.ResourceManager.AppService
                 ftpEnabled,
                 remoteDebugEnabled,
                 inboundIPAddressOverride,
-                kind,
                 serializedAdditionalRawData);
         }
 
