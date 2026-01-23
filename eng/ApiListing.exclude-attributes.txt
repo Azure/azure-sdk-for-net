@@ -38,4 +38,3 @@ T:Azure.Monitor.Query.Logs.CodeGenMemberAttribute
 T:Azure.AI.Projects.CodeGenMemberAttribute
 T:Azure.AI.Projects.CodeGenTypeAttribute
 T:Azure.AI.VoiceLive.CodeGenMemberAttribute
-T:System.ComponentModel.EditorBrowsableAttribute
