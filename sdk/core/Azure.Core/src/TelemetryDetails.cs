@@ -37,7 +37,7 @@ namespace Azure.Core
             : this(assembly, applicationId, new RuntimeInformationWrapper(), maxApplicationIdLength: 24)
         { }
 
-        internal TelemetryDetails(Assembly assembly, string? applicationId, RuntimeInformationWrapper? runtimeInformation, int maxApplicationIdLength = 24)
+        internal TelemetryDetails(Assembly assembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default, int maxApplicationIdLength = 24)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
             if (applicationId != null && applicationId.Length > maxApplicationIdLength)
