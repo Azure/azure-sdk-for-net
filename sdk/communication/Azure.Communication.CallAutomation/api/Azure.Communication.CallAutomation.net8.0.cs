@@ -341,6 +341,7 @@ namespace Azure.Communication.CallAutomation
     public partial class CallInvite
     {
         public CallInvite(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
+        public CallInvite(Azure.Communication.MicrosoftTeamsAppIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber) { }
         public CallInvite(Azure.Communication.TeamsExtensionUserIdentifier targetIdentity) { }
