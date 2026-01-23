@@ -97,8 +97,11 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
+            // MSAL now performs an IMDS probe request before the actual token request to confirm IMDS availability.
+            // The probe expects a 400 error response to indicate IMDS is present (successful probe).
+            var initialResponse = CreateErrorMockResponse(400, "mock error");
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(initialResponse, response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -111,7 +114,8 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
 
-            MockRequest request = mockTransport.Requests[0];
+            // The actual token request is at index 1 because MSAL sends a probe request first (index 0)
+            MockRequest request = mockTransport.Requests[1];
 
             string query = request.Uri.Query;
 
