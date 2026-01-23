@@ -110,6 +110,11 @@ namespace Azure.Identity
                     await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
                     _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
             }
+            // If all managed identity sources are unavailable, throw a CredentialUnavailableException.
+            catch (MsalClientException ex) when (ex.ErrorCode == "managed_identity_all_sources_unavailable")
+            {
+                throw new CredentialUnavailableException(MsiUnavailableError, ex);
+            }
             // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
             catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
             {
