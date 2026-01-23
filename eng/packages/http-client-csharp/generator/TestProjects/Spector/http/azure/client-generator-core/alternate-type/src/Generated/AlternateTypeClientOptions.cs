@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType
 {
     public partial class AlternateTypeClientOptions : ClientOptions
     {

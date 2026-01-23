@@ -7,17 +7,11 @@
 
 using System.Collections.Generic;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType
 {
     public partial class Geometry
     {
-        public Geometry(string @type, IEnumerable<double> coordinates) => throw null;
-
-        public string Type
-        {
-            get => throw null;
-            set => throw null;
-        }
+        public string Type => throw null;
 
         public IList<double> Coordinates => throw null;
     }

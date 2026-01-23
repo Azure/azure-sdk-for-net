@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType
 {
     public partial class ExternalType
     {
@@ -31,9 +31,9 @@ namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
 
         public virtual Task<Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response PutModel(Feature body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response PutModel(object body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutModelAsync(Feature body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> PutModelAsync(object body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetProperty(RequestContext context) => throw null;
 

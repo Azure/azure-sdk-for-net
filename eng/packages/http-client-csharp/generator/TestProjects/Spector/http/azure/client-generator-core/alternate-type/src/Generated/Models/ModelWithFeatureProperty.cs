@@ -5,17 +5,13 @@
 
 #nullable disable
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType
 {
     public partial class ModelWithFeatureProperty
     {
-        public ModelWithFeatureProperty(Feature feature, string additionalProperty) => throw null;
+        public ModelWithFeatureProperty(string additionalProperty) => throw null;
 
-        public Feature Feature
-        {
-            get => throw null;
-            set => throw null;
-        }
+        public object Feature => throw null;
 
         public string AdditionalProperty
         {

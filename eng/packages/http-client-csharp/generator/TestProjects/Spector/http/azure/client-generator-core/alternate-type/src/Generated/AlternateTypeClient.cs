@@ -7,9 +7,9 @@
 
 using System;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType;
+using Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType
 {
     public partial class AlternateTypeClient
     {

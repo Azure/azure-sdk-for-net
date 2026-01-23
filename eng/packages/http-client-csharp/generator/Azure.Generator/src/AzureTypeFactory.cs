@@ -57,13 +57,24 @@ namespace Azure.Generator
         {
             get
             {
-                var packages = new List<CSharpProjectWriter.CSProjDependencyPackage>(2)
+                var packages = new List<CSharpProjectWriter.CSProjDependencyPackage>
                 {
                     new("Azure.Core")
                 };
                 if (AzureClientGenerator.Instance.HasDataFactoryElement)
                 {
                     packages.Add(new("Azure.Core.Expressions.DataFactory"));
+                }
+
+                // Add external packages from @alternateType decorator
+                var addedPackages = new HashSet<string>();
+                foreach (var externalType in AzureClientGenerator.Instance.ExternalTypes)
+                {
+                    if (!string.IsNullOrEmpty(externalType.Package) && addedPackages.Add(externalType.Package))
+                    {
+                        // Don't specify version for external packages to use centralized package management
+                        packages.Add(new(externalType.Package));
+                    }
                 }
 
                 return packages;
@@ -93,6 +104,9 @@ namespace Azure.Generator
                 {
                     return knownType;
                 }
+
+                // External types should be handled by the base class
+                // Skip custom handling and let base handle it
             }
             else if (inputType is InputArrayType inputArrayType)
             {
