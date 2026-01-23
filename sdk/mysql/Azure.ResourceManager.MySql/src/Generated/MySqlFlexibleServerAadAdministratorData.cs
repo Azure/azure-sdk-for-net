@@ -13,43 +13,11 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the MySqlFlexibleServerAadAdministrator data model.
-    /// Represents a Administrator.
-    /// </summary>
+    /// <summary> Represents a Administrator. </summary>
     public partial class MySqlFlexibleServerAadAdministratorData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorData"/>. </summary>
         public MySqlFlexibleServerAadAdministratorData()
@@ -57,35 +25,104 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="administratorType"> Type of the sever administrator. </param>
-        /// <param name="login"> Login name of the server administrator. </param>
-        /// <param name="sid"> SID (object ID) of the server administrator. </param>
-        /// <param name="tenantId"> Tenant ID of the administrator. </param>
-        /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerAdministratorType? administratorType, string login, string sid, Guid? tenantId, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of an administrator. </param>
+        internal MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdministratorProperties properties) : base(id, name, resourceType, systemData)
         {
-            AdministratorType = administratorType;
-            Login = login;
-            Sid = sid;
-            TenantId = tenantId;
-            IdentityResourceId = identityResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of an administrator. </summary>
+        internal AdministratorProperties Properties { get; set; }
+
         /// <summary> Type of the sever administrator. </summary>
-        public MySqlFlexibleServerAdministratorType? AdministratorType { get; set; }
+        public MySqlFlexibleServerAdministratorType? AdministratorType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorProperties();
+                }
+                Properties.AdministratorType = value.Value;
+            }
+        }
+
         /// <summary> Login name of the server administrator. </summary>
-        public string Login { get; set; }
+        public string Login
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Login;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorProperties();
+                }
+                Properties.Login = value;
+            }
+        }
+
         /// <summary> SID (object ID) of the server administrator. </summary>
-        public string Sid { get; set; }
+        public string Sid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sid;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorProperties();
+                }
+                Properties.Sid = value;
+            }
+        }
+
         /// <summary> Tenant ID of the administrator. </summary>
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorProperties();
+                }
+                Properties.TenantId = value.Value;
+            }
+        }
+
         /// <summary> The resource id of the identity used for AAD Authentication. </summary>
-        public ResourceIdentifier IdentityResourceId { get; set; }
+        public ResourceIdentifier IdentityResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentityResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorProperties();
+                }
+                Properties.IdentityResourceId = value;
+            }
+        }
     }
 }

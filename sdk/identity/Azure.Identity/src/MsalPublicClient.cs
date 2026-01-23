@@ -47,7 +47,7 @@ namespace Azure.Identity
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder
                 .Create(ClientId)
                 .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? Constants.OrganizationsTenantId, false)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline), false)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
 
             if (!string.IsNullOrEmpty(RedirectUrl))

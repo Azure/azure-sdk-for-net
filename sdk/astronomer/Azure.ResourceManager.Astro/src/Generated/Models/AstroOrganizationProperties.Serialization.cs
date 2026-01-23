@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Models
 {
-    public partial class AstroOrganizationProperties : IUtf8JsonSerializable, IJsonModel<AstroOrganizationProperties>
+    /// <summary> Properties specific to Data Organization resource. </summary>
+    public partial class AstroOrganizationProperties : IJsonModel<AstroOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroOrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AstroOrganizationProperties"/> for deserialization. </summary>
+        internal AstroOrganizationProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AstroOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AstroOrganizationProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("marketplace"u8);
             writer.WriteObjectValue(Marketplace, options);
             writer.WritePropertyName("user"u8);
@@ -48,15 +53,15 @@ namespace Azure.ResourceManager.Astro.Models
                 writer.WritePropertyName("partnerOrganizationProperties"u8);
                 writer.WriteObjectValue(PartnerOrganizationProperties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,22 +70,27 @@ namespace Azure.ResourceManager.Astro.Models
             }
         }
 
-        AstroOrganizationProperties IJsonModel<AstroOrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AstroOrganizationProperties IJsonModel<AstroOrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AstroOrganizationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AstroOrganizationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAstroOrganizationProperties(document.RootElement, options);
         }
 
-        internal static AstroOrganizationProperties DeserializeAstroOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AstroOrganizationProperties DeserializeAstroOrganizationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,51 +99,52 @@ namespace Azure.ResourceManager.Astro.Models
             AstroUserDetails user = default;
             AstroResourceProvisioningState? provisioningState = default;
             AstroPartnerOrganizationProperties partnerOrganizationProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("marketplace"u8))
+                if (prop.NameEquals("marketplace"u8))
                 {
-                    marketplace = AstroMarketplaceDetails.DeserializeAstroMarketplaceDetails(property.Value, options);
+                    marketplace = AstroMarketplaceDetails.DeserializeAstroMarketplaceDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("user"u8))
+                if (prop.NameEquals("user"u8))
                 {
-                    user = AstroUserDetails.DeserializeAstroUserDetails(property.Value, options);
+                    user = AstroUserDetails.DeserializeAstroUserDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new AstroResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new AstroResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("partnerOrganizationProperties"u8))
+                if (prop.NameEquals("partnerOrganizationProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    partnerOrganizationProperties = AstroPartnerOrganizationProperties.DeserializeAstroPartnerOrganizationProperties(property.Value, options);
+                    partnerOrganizationProperties = AstroPartnerOrganizationProperties.DeserializeAstroPartnerOrganizationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, serializedAdditionalRawData);
+            return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AstroOrganizationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AstroOrganizationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -143,15 +154,20 @@ namespace Azure.ResourceManager.Astro.Models
             }
         }
 
-        AstroOrganizationProperties IPersistableModel<AstroOrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AstroOrganizationProperties IPersistableModel<AstroOrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AstroOrganizationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAstroOrganizationProperties(document.RootElement, options);
                     }
                 default:
@@ -159,6 +175,7 @@ namespace Azure.ResourceManager.Astro.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AstroOrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

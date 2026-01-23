@@ -30,21 +30,30 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="AvatarConfiguration"/>. </summary>
+        /// <param name="type"> Type of avatar to use. </param>
         /// <param name="iceServers"> Optional list of ICE servers to use for WebRTC connection establishment. </param>
         /// <param name="character"> The character name or ID used for the avatar. </param>
         /// <param name="style"> Optional avatar style, such as emotional tone or speaking style. </param>
+        /// <param name="model"> Base model to use for the avatar. Required for photo avatar. </param>
         /// <param name="customized"> Indicates whether the avatar is customized or not. </param>
         /// <param name="video"> Optional video configuration including resolution, bitrate, and codec. </param>
+        /// <param name="outputProtocol"> Output protocol for avatar streaming. Default is 'webrtc'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvatarConfiguration(IList<IceServer> iceServers, string character, string style, bool customized, VideoParams video, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvatarConfiguration(AvatarConfigTypes? @type, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseModes? model, bool customized, VideoParams video, AvatarOutputProtocol? outputProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Type = @type;
             IceServers = iceServers;
             Character = character;
             Style = style;
+            Model = model;
             Customized = customized;
             Video = video;
+            OutputProtocol = outputProtocol;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Type of avatar to use. </summary>
+        public AvatarConfigTypes? Type { get; set; }
 
         /// <summary> Optional list of ICE servers to use for WebRTC connection establishment. </summary>
         public IList<IceServer> IceServers { get; }
@@ -55,10 +64,16 @@ namespace Azure.AI.VoiceLive
         /// <summary> Optional avatar style, such as emotional tone or speaking style. </summary>
         public string Style { get; set; }
 
+        /// <summary> Base model to use for the avatar. Required for photo avatar. </summary>
+        public PhotoAvatarBaseModes? Model { get; set; }
+
         /// <summary> Indicates whether the avatar is customized or not. </summary>
         public bool Customized { get; set; }
 
         /// <summary> Optional video configuration including resolution, bitrate, and codec. </summary>
         public VideoParams Video { get; set; }
+
+        /// <summary> Output protocol for avatar streaming. Default is 'webrtc'. </summary>
+        public AvatarOutputProtocol? OutputProtocol { get; set; }
     }
 }

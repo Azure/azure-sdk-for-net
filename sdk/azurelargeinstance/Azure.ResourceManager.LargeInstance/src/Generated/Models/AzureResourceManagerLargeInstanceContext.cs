@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.LargeInstance.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.LargeInstance
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AzureLargeInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(AzureLargeStorageInstanceListResult))]
@@ -23,18 +24,21 @@ namespace Azure.ResourceManager.LargeInstance
     [ModelReaderWriterBuildable(typeof(LargeInstanceHardwareProfile))]
     [ModelReaderWriterBuildable(typeof(LargeInstanceIPAddress))]
     [ModelReaderWriterBuildable(typeof(LargeInstanceNetworkProfile))]
-    [ModelReaderWriterBuildable(typeof(LargeInstanceOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(LargeInstanceOSProfile))]
     [ModelReaderWriterBuildable(typeof(LargeInstancePatch))]
+    [ModelReaderWriterBuildable(typeof(LargeInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(LargeInstanceResource))]
     [ModelReaderWriterBuildable(typeof(LargeInstanceStorageBillingProperties))]
     [ModelReaderWriterBuildable(typeof(LargeInstanceStorageProfile))]
     [ModelReaderWriterBuildable(typeof(LargeInstanceStorageProperties))]
     [ModelReaderWriterBuildable(typeof(LargeStorageInstanceData))]
     [ModelReaderWriterBuildable(typeof(LargeStorageInstancePatch))]
+    [ModelReaderWriterBuildable(typeof(LargeStorageInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(LargeStorageInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerLargeInstanceContext : ModelReaderWriterContext
     {
     }

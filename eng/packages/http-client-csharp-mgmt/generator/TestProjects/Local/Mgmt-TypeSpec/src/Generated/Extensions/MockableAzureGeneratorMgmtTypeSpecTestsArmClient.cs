@@ -359,6 +359,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new WorkloadNetworkSegmentResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TargetResource"/> object. </returns>
+        public virtual TargetResource GetTargetResource(ResourceIdentifier id)
+        {
+            TargetResource.ValidateResourceId(id);
+            return new TargetResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

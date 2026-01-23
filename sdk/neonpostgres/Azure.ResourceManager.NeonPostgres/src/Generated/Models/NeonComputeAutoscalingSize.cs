@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     /// <summary> Represents the compute units size range for autoscaling. </summary>
     public partial class NeonComputeAutoscalingSize
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeonComputeAutoscalingSize"/>. </summary>
         /// <param name="autoscalingLimitMinCu"> The minimum compute units for autoscaling. </param>
@@ -57,21 +28,17 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Initializes a new instance of <see cref="NeonComputeAutoscalingSize"/>. </summary>
         /// <param name="autoscalingLimitMinCu"> The minimum compute units for autoscaling. </param>
         /// <param name="autoscalingLimitMaxCu"> The maximum compute units for autoscaling. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonComputeAutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeonComputeAutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoscalingLimitMinCu = autoscalingLimitMinCu;
             AutoscalingLimitMaxCu = autoscalingLimitMaxCu;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NeonComputeAutoscalingSize"/> for deserialization. </summary>
-        internal NeonComputeAutoscalingSize()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The minimum compute units for autoscaling. </summary>
         public float AutoscalingLimitMinCu { get; set; }
+
         /// <summary> The maximum compute units for autoscaling. </summary>
         public float AutoscalingLimitMaxCu { get; set; }
     }

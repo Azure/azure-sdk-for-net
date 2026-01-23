@@ -215,7 +215,7 @@ function Set-ApiViewCommentForPR {
   try {
     $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $PrNumber -AuthToken $AuthToken
     $existingAPIViewComment = $existingComment | Where-Object {
-      $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) -or $_.body.StartsWith("## API Change Check", [StringComparison]::OrdinalIgnoreCase) }
+      $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) -or $_.body.StartsWith("## API Change Check", [StringComparison]::OrdinalIgnoreCase) } | Select-Object -Last 1
   } catch {
     LogWarning "Failed to get comments from Pull Request: $PrNumber in repo: $repoFullName"
   }

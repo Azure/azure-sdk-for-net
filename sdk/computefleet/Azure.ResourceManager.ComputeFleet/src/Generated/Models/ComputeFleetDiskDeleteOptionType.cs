@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -20,38 +21,57 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetDiskDeleteOptionType : IEquatable<ComputeFleetDiskDeleteOptionType>
     {
         private readonly string _value;
+        /// <summary> If this value is used, the managed disk is deleted when VM gets deleted. </summary>
+        private const string DeleteValue = "Delete";
+        /// <summary> If this value is used, the managed disk is retained after VM gets deleted. </summary>
+        private const string DetachValue = "Detach";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetDiskDeleteOptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeleteValue = "Delete";
-        private const string DetachValue = "Detach";
+            _value = value;
+        }
 
         /// <summary> If this value is used, the managed disk is deleted when VM gets deleted. </summary>
         public static ComputeFleetDiskDeleteOptionType Delete { get; } = new ComputeFleetDiskDeleteOptionType(DeleteValue);
+
         /// <summary> If this value is used, the managed disk is retained after VM gets deleted. </summary>
         public static ComputeFleetDiskDeleteOptionType Detach { get; } = new ComputeFleetDiskDeleteOptionType(DetachValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiskDeleteOptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetDiskDeleteOptionType left, ComputeFleetDiskDeleteOptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiskDeleteOptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetDiskDeleteOptionType left, ComputeFleetDiskDeleteOptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetDiskDeleteOptionType(string value) => new ComputeFleetDiskDeleteOptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetDiskDeleteOptionType?(string value) => value == null ? null : new ComputeFleetDiskDeleteOptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetDiskDeleteOptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetDiskDeleteOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

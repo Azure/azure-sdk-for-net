@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes a virtual machine scale set operating system disk. </summary>
     public partial class ComputeFleetVmssOSDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssOSDisk"/>. </summary>
         /// <param name="createOption">
@@ -105,8 +77,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// is set to **Delete**. User cannot change the delete option for Ephemeral OS
         /// Disk.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssOSDisk(string name, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, ComputeFleetDiffDiskSettings diffDiskSettings, int? diskSizeGB, ComputeFleetOperatingSystemType? osType, ComputeFleetVirtualHardDisk image, IList<string> vhdContainers, ComputeFleetVmssManagedDisk managedDisk, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssOSDisk(string name, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, ComputeFleetDiffDiskSettings diffDiskSettings, int? diskSizeGB, ComputeFleetOperatingSystemType? osType, ComputeFleetVirtualHardDisk image, IList<string> vhdContainers, ComputeFleetVmssManagedDisk managedDisk, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Caching = caching;
@@ -119,24 +91,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
             DeleteOption = deleteOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssOSDisk"/> for deserialization. </summary>
-        internal ComputeFleetVmssOSDisk()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk name. </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Specifies the caching requirements. Possible values are: **None,**
         /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </summary>
         public ComputeFleetCachingType? Caching { get; set; }
+
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? IsWriteAcceleratorEnabled { get; set; }
+
         /// <summary>
         /// Specifies how the virtual machines in the scale set should be created. The only
         /// allowed value is: **FromImage.** This value is used when you are using an image
@@ -145,11 +115,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// image, you  also use the plan element previously described.
         /// </summary>
         public ComputeFleetDiskCreateOptionType CreateOption { get; set; }
+
         /// <summary>
         /// Specifies the ephemeral disk Settings for the operating system disk used by the
         /// virtual machine scale set.
         /// </summary>
         public ComputeFleetDiffDiskSettings DiffDiskSettings { get; set; }
+
         /// <summary>
         /// Specifies the size of an empty data disk in gigabytes. This element can be used
         /// to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB'
@@ -157,33 +129,26 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// be larger than 1023.
         /// </summary>
         public int? DiskSizeGB { get; set; }
+
         /// <summary>
         /// This property allows you to specify the type of the OS that is included in the
         /// disk if creating a VM from user-image or a specialized VHD. Possible values
         /// are: **Windows,** **Linux.**
         /// </summary>
         public ComputeFleetOperatingSystemType? OSType { get; set; }
+
         /// <summary> Specifies information about the unmanaged user image to base the scale set on. </summary>
         internal ComputeFleetVirtualHardDisk Image { get; set; }
-        /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public Uri ImageUri
-        {
-            get => Image is null ? default : Image.Uri;
-            set
-            {
-                if (Image is null)
-                    Image = new ComputeFleetVirtualHardDisk();
-                Image.Uri = value;
-            }
-        }
 
         /// <summary>
         /// Specifies the container urls that are used to store operating system disks for
         /// the scale set.
         /// </summary>
         public IList<string> VhdContainers { get; }
+
         /// <summary> The managed disk parameters. </summary>
         public ComputeFleetVmssManagedDisk ManagedDisk { get; set; }
+
         /// <summary>
         /// Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion
         /// (This feature is available for VMSS with Flexible OrchestrationMode only).
@@ -195,5 +160,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Disk.
         /// </summary>
         public ComputeFleetDiskDeleteOptionType? DeleteOption { get; set; }
+
+        /// <summary> Specifies the virtual hard disk's uri. </summary>
+        public Uri ImageUri
+        {
+            get
+            {
+                return Image is null ? default : Image.Uri;
+            }
+            set
+            {
+                if (Image is null)
+                {
+                    Image = new ComputeFleetVirtualHardDisk();
+                }
+                Image.Uri = value;
+            }
+        }
     }
 }

@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
     /// Specifies the mode of VM Guest Patch Assessment for the IaaS virtual
-    /// machine.<br /><br /> Possible values are:<br /><br /> **ImageDefault** - You
-    /// control the timing of patch assessments on a virtual machine. <br /><br />
+    /// machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - You
+    /// control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt;
     /// **AutomaticByPlatform** - The platform will trigger periodic patch assessments.
     /// The property provisionVMAgent must be true.
     /// </summary>
     public readonly partial struct ComputeFleetLinuxPatchAssessmentMode : IEquatable<ComputeFleetLinuxPatchAssessmentMode>
     {
         private readonly string _value;
+        /// <summary> You control the timing of patch assessments on a virtual machine. </summary>
+        private const string ImageDefaultValue = "ImageDefault";
+        /// <summary> The platform will trigger periodic patch assessments.The property provisionVMAgent must be true. </summary>
+        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxPatchAssessmentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetLinuxPatchAssessmentMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImageDefaultValue = "ImageDefault";
-        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
+            _value = value;
+        }
 
         /// <summary> You control the timing of patch assessments on a virtual machine. </summary>
         public static ComputeFleetLinuxPatchAssessmentMode ImageDefault { get; } = new ComputeFleetLinuxPatchAssessmentMode(ImageDefaultValue);
+
         /// <summary> The platform will trigger periodic patch assessments.The property provisionVMAgent must be true. </summary>
         public static ComputeFleetLinuxPatchAssessmentMode AutomaticByPlatform { get; } = new ComputeFleetLinuxPatchAssessmentMode(AutomaticByPlatformValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetLinuxPatchAssessmentMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetLinuxPatchAssessmentMode left, ComputeFleetLinuxPatchAssessmentMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetLinuxPatchAssessmentMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetLinuxPatchAssessmentMode left, ComputeFleetLinuxPatchAssessmentMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetLinuxPatchAssessmentMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxPatchAssessmentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetLinuxPatchAssessmentMode(string value) => new ComputeFleetLinuxPatchAssessmentMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxPatchAssessmentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetLinuxPatchAssessmentMode?(string value) => value == null ? null : new ComputeFleetLinuxPatchAssessmentMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetLinuxPatchAssessmentMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetLinuxPatchAssessmentMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
