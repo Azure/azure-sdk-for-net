@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Disabled MSAL's internal retry logic for `ConfidentialClientApplication` and `PublicClientApplication` to prevent double retries when combined with Azure SDK's retry policy. Only the configured Azure SDK retry policy is applied, avoiding unexpected additional retry attempts.
+
 ### Other Changes
 
 ## 1.18.0-beta.2 (2025-11-19)
