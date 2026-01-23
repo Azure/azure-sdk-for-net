@@ -34,9 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier privateEndpointId, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku, ManagedServiceIdentity identity)
-        {
-            return ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateLinkServiceConnectionState, provisioningState, privateEndpointId, sku, identity, etag, tags);
-        }
+            => ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateLinkServiceConnectionState, provisioningState, privateEndpointId, sku, identity, etag, tags);
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData" />. </summary>
         /// <param name="id"> The id. </param>
@@ -53,9 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier privateEndpointId, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku)
-        {
-            return ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, etag, privateEndpointId, privateLinkServiceConnectionState, provisioningState, sku, identity: default);
-        }
+            => ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, etag, privateEndpointId, privateLinkServiceConnectionState, provisioningState, sku, identity: default);
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData" />. </summary>
         /// <param name="id"> The id. </param>
@@ -71,9 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames, ManagedHsmSku sku)
-        {
-            return ManagedHsmPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, groupId: groupId, requiredMembers: requiredMembers, requiredZoneNames: requiredZoneNames, sku: sku, identity: default);
-        }
+            => ManagedHsmPrivateLinkResourceData(id, name, resourceType, systemData, tags, location, groupId, requiredMembers, requiredZoneNames, sku, identity: default);
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -89,9 +83,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier privateEndpointId, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location, IReadOnlyDictionary<string, string> tags)
-        {
-            return KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, connectionState, provisioningState, privateEndpointId, location, tags, etag);
-        }
+            => KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, connectionState, provisioningState, privateEndpointId, location, tags, etag);
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmData" />. </summary>
         /// <param name="id"> The id. </param>
@@ -105,9 +97,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedHsmData ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku)
-        {
-            return ManagedHsmData(id, name, resourceType, systemData, location, properties, sku, default, tags);
-        }
+            => ManagedHsmData(id, name, resourceType, systemData, location, properties, sku, default, tags);
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultAccessPolicyParameters"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -117,10 +107,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> The resource type of the access policy. </param>
         /// <param name="accessPolicies"> Properties of the access policy. </param>
         /// <returns> A new <see cref="Models.KeyVaultAccessPolicyParameters"/> instance for mocking. </returns>
-        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IEnumerable<KeyVaultAccessPolicy> accessPolicies = null)
-        {
-            return KeyVaultAccessPolicyParameters(id, resourceType, systemData, name, location, accessPolicies);
-        }
+        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(ResourceIdentifier id, string name, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IEnumerable<KeyVaultAccessPolicy> accessPolicies = null)
+            => KeyVaultAccessPolicyParameters(id, resourceType, systemData, name, location, accessPolicies);
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -131,10 +119,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
-        public static KeyVaultData KeyVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KeyVaultProperties properties = null)
-        {
-            return KeyVaultData(id, name, resourceType, systemData, location, properties, tags);
-        }
+        public static KeyVaultData KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, KeyVaultProperties properties = null)
+            => KeyVaultData(id, name, resourceType, systemData, location, properties, tags);
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -149,9 +135,23 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="sku"> SKU details. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
+        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default)
         {
-            return ManagedHsmPrivateLinkResourceData(id, name, resourceType, systemData, tags, location, groupId, requiredMembers, requiredZoneNames, sku, identity);
+            return new ManagedHsmPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                null,
+                tags,
+                location,
+                new MhsmPrivateLinkResourceProperties(
+                    groupId,
+                    requiredMembers.ToList(),
+                    requiredZoneNames.ToList(),
+                    null),
+                sku,
+                identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
@@ -161,10 +161,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            return ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId, privateLinkServiceConnectionState, provisioningState);
-        }
+        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id, ETag? etag, ResourceIdentifier privateEndpointId, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
+            => ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateLinkServiceConnectionState, provisioningState, privateEndpointId);
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -180,10 +178,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            return ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateLinkServiceConnectionState, provisioningState, privateEndpointId, sku, identity, etag, tags);
-        }
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
+            => ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateLinkServiceConnectionState, provisioningState, privateEndpointId, sku, identity, etag, tags);
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -196,10 +192,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="sku"> SKU details. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmData"/> instance for mocking. </returns>
-        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmProperties properties = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
-        {
-            return ManagedHsmData(id, name, resourceType, systemData, location, properties, sku, identity, tags);
-        }
+        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, ManagedHsmProperties properties = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
+            => ManagedHsmData(id, name, resourceType, systemData, location, properties, sku, identity, tags);
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -212,10 +206,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <returns> A new <see cref="Models.KeyVaultPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            return KeyVaultPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers, requiredZoneNames, location, tags);
-        }
+        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+            => KeyVaultPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers, requiredZoneNames, location, tags);
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -229,10 +221,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            return KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, connectionState, provisioningState, privateEndpointId, location, tags, etag);
-        }
+        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
+            => KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, connectionState, provisioningState, privateEndpointId, location, tags, etag);
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/>. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
@@ -241,9 +231,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            return KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId, connectionState, provisioningState);
-        }
+        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id, ETag? etag, ResourceIdentifier privateEndpointId, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
+            => KeyVaultPrivateEndpointConnectionItemData(id, etag, connectionState, provisioningState, privateEndpointId);
     }
 }
