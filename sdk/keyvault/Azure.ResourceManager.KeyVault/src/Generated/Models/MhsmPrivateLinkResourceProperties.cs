@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MhsmPrivateLinkResourceProperties"/>. </summary>
-        internal MhsmPrivateLinkResourceProperties()
+        public MhsmPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

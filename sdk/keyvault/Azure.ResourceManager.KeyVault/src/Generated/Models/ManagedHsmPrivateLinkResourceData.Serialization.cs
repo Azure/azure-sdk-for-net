@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                SerializeIdentity(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -175,7 +175,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    DeserializeIdentity(prop, ref identity);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

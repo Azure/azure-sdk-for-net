@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="keyVaultPatch"> Parameters to patch the vault. </param>
+        /// <param name="patch"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultPatch"/> is null. </exception>
-        public virtual async Task<Response<KeyVaultResource>> UpdateAsync(KeyVaultPatch keyVaultPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<KeyVaultResource>> UpdateAsync(KeyVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(keyVaultPatch, nameof(keyVaultPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("KeyVaultResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(keyVaultPatch), context);
+                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="keyVaultPatch"> Parameters to patch the vault. </param>
+        /// <param name="patch"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultPatch"/> is null. </exception>
-        public virtual Response<KeyVaultResource> Update(KeyVaultPatch keyVaultPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<KeyVaultResource> Update(KeyVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(keyVaultPatch, nameof(keyVaultPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("KeyVaultResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(keyVaultPatch), context);
+                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                 if (response.Value == null)
