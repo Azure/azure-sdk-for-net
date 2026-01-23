@@ -95,6 +95,7 @@ jobs:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABEL_SERVICE_API_KEY: ${{ env.LABEL_SERVICE_API_KEY }}
+          APP_CONFIG_ENDPOINT: https://gh-triage-app-config.azconfig.io
 
       - name: Archive github event data
         uses: actions/upload-artifact@v6
