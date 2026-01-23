@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStringValue(KubernetesVersion);
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService
             SystemData systemData = default;
             string kubernetesVersion = default;
             ContainerServiceOSType osType = default;
-            IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default;
+            IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default;
             string latestNodeImageVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

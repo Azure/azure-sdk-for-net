@@ -236,5 +236,7 @@ directive:
   - from: managedClusters.json
     where: $.definitions
     transform: >
-      $.ManagedClusterPoolUpgradeProfile.properties.upgrades['readonly'] = true;
+      $.ManagedClusterPoolUpgradeProfile.properties.upgrades['readOnly'] = true;
+      $.ManagedClusterUpgradeProfileProperties.properties.agentPoolProfiles['readOnly'] = true;
+      $.AgentPoolUpgradeProfileProperties.properties.upgrades['readOnly'] = true;
 ```

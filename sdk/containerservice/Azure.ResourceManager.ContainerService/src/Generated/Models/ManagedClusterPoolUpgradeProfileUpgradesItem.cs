@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
-        public ManagedClusterPoolUpgradeProfileUpgradesItem()
+        internal ManagedClusterPoolUpgradeProfileUpgradesItem()
         {
         }
 
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterPoolUpgradeProfileUpgradesItem.kubernetesVersion
         /// </summary>
         [WirePath("kubernetesVersion")]
-        public string KubernetesVersion { get; set; }
+        public string KubernetesVersion { get; }
         /// <summary>
         /// Whether the Kubernetes version is currently in preview.
         /// Serialized Name: ManagedClusterPoolUpgradeProfileUpgradesItem.isPreview
         /// </summary>
         [WirePath("isPreview")]
-        public bool? IsPreview { get; set; }
+        public bool? IsPreview { get; }
     }
 }

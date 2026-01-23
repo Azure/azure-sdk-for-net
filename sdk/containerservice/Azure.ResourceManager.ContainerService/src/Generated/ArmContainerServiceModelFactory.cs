@@ -1657,6 +1657,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AgentPoolUpgradeProfilePropertiesUpgradesItem"/>. </summary>
+        /// <param name="kubernetesVersion">
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: AgentPoolUpgradeProfilePropertiesUpgradesItem.kubernetesVersion
+        /// </param>
+        /// <param name="isPreview">
+        /// Whether the Kubernetes version is currently in preview.
+        /// Serialized Name: AgentPoolUpgradeProfilePropertiesUpgradesItem.isPreview
+        /// </param>
+        /// <returns> A new <see cref="Models.AgentPoolUpgradeProfilePropertiesUpgradesItem"/> instance for mocking. </returns>
+        public static AgentPoolUpgradeProfilePropertiesUpgradesItem AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion = null, bool? isPreview = null)
+        {
+            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion, isPreview, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AgentPoolAvailableVersions"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2074,6 +2089,46 @@ namespace Azure.ResourceManager.ContainerService.Models
                 controlPlaneProfile,
                 agentPoolProfiles?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterPoolUpgradeProfile"/>. </summary>
+        /// <param name="kubernetesVersion">
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.kubernetesVersion
+        /// </param>
+        /// <param name="name">
+        /// The Agent Pool name.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.name
+        /// </param>
+        /// <param name="osType">
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.osType
+        /// </param>
+        /// <param name="upgrades">
+        /// List of orchestrator types and versions available for upgrade.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.upgrades
+        /// </param>
+        /// <returns> A new <see cref="Models.ManagedClusterPoolUpgradeProfile"/> instance for mocking. </returns>
+        public static ManagedClusterPoolUpgradeProfile ManagedClusterPoolUpgradeProfile(string kubernetesVersion = null, string name = null, ContainerServiceOSType osType = default, IEnumerable<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = null)
+        {
+            upgrades ??= new List<ManagedClusterPoolUpgradeProfileUpgradesItem>();
+
+            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
+        /// <param name="kubernetesVersion">
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: ManagedClusterPoolUpgradeProfileUpgradesItem.kubernetesVersion
+        /// </param>
+        /// <param name="isPreview">
+        /// Whether the Kubernetes version is currently in preview.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfileUpgradesItem.isPreview
+        /// </param>
+        /// <returns> A new <see cref="Models.ManagedClusterPoolUpgradeProfileUpgradesItem"/> instance for mocking. </returns>
+        public static ManagedClusterPoolUpgradeProfileUpgradesItem ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion = null, bool? isPreview = null)
+        {
+            return new ManagedClusterPoolUpgradeProfileUpgradesItem(kubernetesVersion, isPreview, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ContainerService.Models.KubernetesVersion" />. </summary>

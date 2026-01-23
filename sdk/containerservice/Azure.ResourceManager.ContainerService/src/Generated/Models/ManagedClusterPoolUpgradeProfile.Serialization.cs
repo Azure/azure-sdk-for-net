@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string kubernetesVersion = default;
             string name = default;
             ContainerServiceOSType osType = default;
-            IList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
+            IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

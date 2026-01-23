@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterPoolUpgradeProfile.upgrades
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KubernetesVersion = kubernetesVersion;
             Name = name;
@@ -122,6 +122,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Serialized Name: ManagedClusterPoolUpgradeProfile.upgrades
         /// </summary>
         [WirePath("upgrades")]
-        public IList<ManagedClusterPoolUpgradeProfileUpgradesItem> Upgrades { get; }
+        public IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> Upgrades { get; }
     }
 }

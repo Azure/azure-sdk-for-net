@@ -62,11 +62,10 @@ namespace Azure.ResourceManager.ContainerService
         /// The list of available upgrade versions for agent pools.
         /// Serialized Name: ManagedClusterUpgradeProfile.properties.agentPoolProfiles
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> is null. </exception>
         public ManagedClusterUpgradeProfileData(ManagedClusterPoolUpgradeProfile controlPlaneProfile, IEnumerable<ManagedClusterPoolUpgradeProfile> agentPoolProfiles)
         {
             Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
-            Argument.AssertNotNull(agentPoolProfiles, nameof(agentPoolProfiles));
 
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles.ToList();
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: ManagedClusterUpgradeProfile.properties.agentPoolProfiles
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedClusterPoolUpgradeProfile controlPlaneProfile, IList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedClusterPoolUpgradeProfile controlPlaneProfile, IReadOnlyList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles;
@@ -109,6 +108,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: ManagedClusterUpgradeProfile.properties.agentPoolProfiles
         /// </summary>
         [WirePath("properties.agentPoolProfiles")]
-        public IList<ManagedClusterPoolUpgradeProfile> AgentPoolProfiles { get; }
+        public IReadOnlyList<ManagedClusterPoolUpgradeProfile> AgentPoolProfiles { get; }
     }
 }
